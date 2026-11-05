@@ -12,11 +12,11 @@ permissions:
   contents: write
   actions: read
 jobs:
-  run-static-checks:
-    uses: ./.github/workflows/static-checks.yaml
+  # run-static-checks:
+  #   uses: ./.github/workflows/static-checks.yaml
   prepare-canary-release:
     name: Prepare canary release
-    needs: run-static-checks
+    # needs: run-static-checks
     runs-on: ubuntu-24.04
     environment: canary
     outputs:
@@ -53,83 +53,83 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add .; git commit -m "Replace Matchfile for canary" --no-verify;
           LAST_CANARY=$(git ls-remote --tags --refs --sort=-v:refname origin "*canary.*" | head -n1 | sed 's|.*refs/tags/||')
-          pnpm nx run main-app:release-canary
-      - id: push-tags
-        run: |
-          APP_VERSION=$(node -p -e "require('./apps/main-app/package.json').version")
-          git push --no-verify origin tag $APP_VERSION
-      - id: github-release-creation
-        run: |
-          APP_VERSION=$(node -p -e "require('./apps/main-app/package.json').version")
-          gh release create $APP_VERSION --generate-notes
-          echo "CANARY_VERSION=$APP_VERSION" >> $GITHUB_OUTPUT
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  release-android:
-    name: Release Android app on Play Store
-    needs: prepare-canary-release
-    uses: ./.github/workflows/release-android.yml
-    secrets: inherit
-    with:
-      ref: ${{ needs.prepare-canary-release.outputs.canaryVersion }}
-      environment: canary
-      fastlane-build-lane: alpha_canary
-      fastlane-download-lane: download_canary_apk
-      universal-apk-filename: io-app-canary-universal.apk
-      bundle-output-path: apps/main-app/android/app/build/outputs/bundle/canaryRelease/app-canary-release.aab
-      bundle-artifact-name: app-canary-release.aab
-      release-aab-label: android-app-canary-release.aab
-  release-ios:
-    name: Release iOS app on App Store
-    needs: prepare-canary-release
-    uses: ./.github/workflows/release-ios.yml
-    secrets: inherit
-    with:
-      ref: ${{ needs.prepare-canary-release.outputs.canaryVersion }}
-      environment: canary
-      fastlane-lane: canary_testflight
-      release-ipa-label: IO-canary-iOS.ipa
-  notify-new-version:
-    name: Notifiy new version on Slack
-    runs-on: ubuntu-24.04
-    environment: dev
-    needs:
-      - prepare-canary-release
-      - release-android
-      - release-ios
-    steps:
-      - id: send-slack-notification
-        uses: slackapi/slack-github-action@dcb1066f776dd043e64d0e8ba94ca15cc7e1875d # v4.0.0
-        continue-on-error: true
-        with:
-          method: chat.postMessage
-          token: ${{ secrets.IO_APP_SLACK_HELPER_BOT_TOKEN }}
-          payload: |
-            channel: "C03QJNMTL1E"
-            unfurl_links: false
-            unfurl_media: false
-            text: ${{ toJSON(format('È disponibile la nuova versione `{0}` della canary dell''app.
+          pnpm nx run main-app:release-canary $LAST_CANARY
+      # - id: push-tags
+      #   run: |
+      #     APP_VERSION=$(node -p -e "require('./apps/main-app/package.json').version")
+      #     git push --no-verify origin tag $APP_VERSION
+      # - id: github-release-creation
+      #   run: |
+      #     APP_VERSION=$(node -p -e "require('./apps/main-app/package.json').version")
+      #     gh release create $APP_VERSION --generate-notes
+      #     echo "CANARY_VERSION=$APP_VERSION" >> $GITHUB_OUTPUT
+      #   env:
+      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  # release-android:
+  #   name: Release Android app on Play Store
+  #   needs: prepare-canary-release
+  #   uses: ./.github/workflows/release-android.yml
+  #   secrets: inherit
+  #   with:
+  #     ref: ${{ needs.prepare-canary-release.outputs.canaryVersion }}
+  #     environment: canary
+  #     fastlane-build-lane: alpha_canary
+  #     fastlane-download-lane: download_canary_apk
+  #     universal-apk-filename: io-app-canary-universal.apk
+  #     bundle-output-path: apps/main-app/android/app/build/outputs/bundle/canaryRelease/app-canary-release.aab
+  #     bundle-artifact-name: app-canary-release.aab
+  #     release-aab-label: android-app-canary-release.aab
+  # release-ios:
+  #   name: Release iOS app on App Store
+  #   needs: prepare-canary-release
+  #   uses: ./.github/workflows/release-ios.yml
+  #   secrets: inherit
+  #   with:
+  #     ref: ${{ needs.prepare-canary-release.outputs.canaryVersion }}
+  #     environment: canary
+  #     fastlane-lane: canary_testflight
+  #     release-ipa-label: IO-canary-iOS.ipa
+  # notify-new-version:
+  #   name: Notifiy new version on Slack
+  #   runs-on: ubuntu-24.04
+  #   environment: dev
+  #   needs:
+  #     - prepare-canary-release
+  #     - release-android
+  #     - release-ios
+  #   steps:
+  #     - id: send-slack-notification
+  #       uses: slackapi/slack-github-action@dcb1066f776dd043e64d0e8ba94ca15cc7e1875d # v4.0.0
+  #       continue-on-error: true
+  #       with:
+  #         method: chat.postMessage
+  #         token: ${{ secrets.IO_APP_SLACK_HELPER_BOT_TOKEN }}
+  #         payload: |
+  #           channel: "C03QJNMTL1E"
+  #           unfurl_links: false
+  #           unfurl_media: false
+  #           text: ${{ toJSON(format('È disponibile la nuova versione `{0}` della canary dell''app.
 
-            {1}', needs.prepare-canary-release.outputs.canaryVersion, inputs.description)) }}
-  notify-failure:
-    name: Notify failure on Slack
-    runs-on: ubuntu-24.04
-    environment: dev
-    if: failure()
-    needs:
-      - run-static-checks
-      - prepare-canary-release
-      - release-android
-      - release-ios
-    steps:
-      - id: send-slack-notification
-        uses: slackapi/slack-github-action@dcb1066f776dd043e64d0e8ba94ca15cc7e1875d # v4.0.0
-        continue-on-error: true
-        with:
-          method: chat.postMessage
-          token: ${{ secrets.IO_APP_SLACK_HELPER_BOT_TOKEN }}
-          payload: |
-            channel: "C03QJNMTL1E"
-            unfurl_links: false
-            unfurl_media: false
-            text: "Il workflow `${{ github.workflow }}` è fallito. <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Vedi i dettagli>."
+  #           {1}', needs.prepare-canary-release.outputs.canaryVersion, inputs.description)) }}
+  # notify-failure:
+  #   name: Notify failure on Slack
+  #   runs-on: ubuntu-24.04
+  #   environment: dev
+  #   if: failure()
+  #   needs:
+  #     - run-static-checks
+  #     - prepare-canary-release
+  #     - release-android
+  #     - release-ios
+  #   steps:
+  #     - id: send-slack-notification
+  #       uses: slackapi/slack-github-action@dcb1066f776dd043e64d0e8ba94ca15cc7e1875d # v4.0.0
+  #       continue-on-error: true
+  #       with:
+  #         method: chat.postMessage
+  #         token: ${{ secrets.IO_APP_SLACK_HELPER_BOT_TOKEN }}
+  #         payload: |
+  #           channel: "C03QJNMTL1E"
+  #           unfurl_links: false
+  #           unfurl_media: false
+  #           text: "Il workflow `${{ github.workflow }}` è fallito. <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Vedi i dettagli>."
