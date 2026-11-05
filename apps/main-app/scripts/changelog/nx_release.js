@@ -41,11 +41,16 @@ for (const [relativePath, updater] of versionUpdates) {
 }
 
 if (preid === "canary") {
+  const lastCanary = process.env.LAST_CANARY;
+  if (!lastCanary) {
+    throw new Error("Expected LAST_CANARY environment variable for canary release");
+  }
   run("pnpm", [
     "nx",
     "release",
     "changelog",
     version,
+    `--from=${lastCanary}`,
     "--group=main-app",
     "--git-commit=false",
     "--git-tag=false",
