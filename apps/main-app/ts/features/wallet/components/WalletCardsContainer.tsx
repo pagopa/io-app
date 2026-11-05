@@ -140,52 +140,25 @@ const OtherWalletCardsContainer = withWalletCategoryFilter("other", () => {
   }
 
   return (
-    <View
-      experimental_accessibilityOrder={OTHER_CARDS_ACCESSIBILITY_ORDER}
-      testID="otherWalletCardsSectionTestID"
-    >
+    // Not flattened on Android: TalkBack would otherwise sort the section
+    // children together with the rest of the wallet, announcing the header
+    // after the cards
+    <View collapsable={false} testID="otherWalletCardsSectionTestID">
       <ListItemHeader
         label={I18n.t("features.wallet.cards.categories.other")}
-        nativeID={OtherCardsAccessibilityId.HEADER}
         testID={"walletCardsCategoryOtherHeaderTestID"}
       />
-      <View
-        collapsable={false}
-        nativeID={OtherCardsAccessibilityId.CARDS}
-        style={styles.cardsWrapper}
-      >
+      <View style={styles.cardsWrapper}>
         <WalletCardsCategoryContainer
           cards={cards}
           key="cards_category_other"
           testID="otherWalletCardsContainerTestID"
         />
       </View>
-      <View
-        collapsable={false}
-        nativeID={OtherCardsAccessibilityId.RETRY_BANNER}
-      >
-        <WalletCardsCategoryRetryErrorBanner />
-      </View>
+      <WalletCardsCategoryRetryErrorBanner />
     </View>
   );
 });
-
-/**
- * Screen readers announced the section header after the cards (SIW-5353), so
- * the order is set explicitly. On iOS, children missing from this list are not
- * reachable by VoiceOver: keep it in sync with the rendered children.
- */
-enum OtherCardsAccessibilityId {
-  CARDS = "walletOtherCardsList",
-  HEADER = "walletOtherCardsHeader",
-  RETRY_BANNER = "walletOtherCardsRetryBanner"
-}
-
-const OTHER_CARDS_ACCESSIBILITY_ORDER = [
-  OtherCardsAccessibilityId.HEADER,
-  OtherCardsAccessibilityId.CARDS,
-  OtherCardsAccessibilityId.RETRY_BANNER
-];
 
 export {
   ItwWalletCardsContainer,

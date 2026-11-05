@@ -440,27 +440,6 @@ describe("OtherWalletCardsContainer", () => {
     expect(queryByTestId(`walletCardTestID_cgn_cgn_3`)).not.toBeNull();
   });
 
-  it("should announce the header before the cards to screen readers", () => {
-    jest
-      .spyOn(walletSelectors, "selectWalletOtherCards")
-      .mockImplementation(() => [T_CARDS["1"], T_CARDS["2"], T_CARDS["3"]]);
-
-    const { getByTestId } = renderComponent(<OtherWalletCardsContainer />);
-    const section = getByTestId("otherWalletCardsSectionTestID");
-    const [headerId, cardsId] = section.props.experimental_accessibilityOrder;
-    const header = within(
-      getByTestId("walletCardsCategoryOtherHeaderTestID")
-    ).getByRole("header");
-    const [cardsWrapper] = section.findAll(
-      node => typeof node.type === "string" && node.props.nativeID === cardsId
-    );
-
-    expect(header.props.nativeID).toBe(headerId);
-    expect(
-      within(cardsWrapper).getByTestId("otherWalletCardsContainerTestID")
-    ).toBeTruthy();
-  });
-
   it("should render header if there are more than one category", () => {
     jest
       .spyOn(walletSelectors, "selectWalletOtherCards")
@@ -632,3 +611,46 @@ const renderComponent = (component: React.ReactElement) => {
     store
   );
 };
+
+describe("wallet sections screen reader grouping", () => {
+  // A flattened section lets TalkBack sort its header after the cards
+  test.each([
+    {
+      name: "IT-Wallet",
+      headerTestID: "walletCardsCategoryItwIdCardHeaderTestID",
+      render: () => {
+        jest
+          .spyOn(walletSelectors, "shouldRenderItwCardsContainerSelector")
+          .mockReturnValue(true);
+        jest
+          .spyOn(itwSelectors, "itwShouldRenderNewItWalletSelector")
+          .mockReturnValue(true);
+        jest
+          .spyOn(walletSelectors, "selectWalletCardsByCategory")
+          .mockReturnValue([]);
+        return renderComponent(<ItwWalletCardsContainer />);
+      },
+      sectionTestID: "itwWalletCardsSectionTestID"
+    },
+    {
+      name: "other",
+      headerTestID: "walletCardsCategoryOtherHeaderTestID",
+      render: () => {
+        jest
+          .spyOn(walletSelectors, "selectWalletOtherCards")
+          .mockImplementation(() => [T_CARDS["1"], T_CARDS["2"]]);
+        return renderComponent(<OtherWalletCardsContainer />);
+      },
+      sectionTestID: "otherWalletCardsSectionTestID"
+    }
+  ])(
+    "should keep the $name section as a native group",
+    ({ headerTestID, render, sectionTestID }) => {
+      const { getByTestId } = render();
+      const section = getByTestId(sectionTestID);
+
+      expect(section.props.collapsable).toBe(false);
+      expect(within(section).getByTestId(headerTestID)).toBeTruthy();
+    }
+  );
+});
