@@ -28,6 +28,21 @@ button:hover {
   background: #e6e6e6;
 }
 
+.toolbar button[aria-pressed="true"] {
+  border-color: #d48806;
+  background: #d48806;
+  color: #fff;
+  font-weight: 600;
+}
+
+.toolbar button[aria-pressed="true"]::before {
+  content: "● ";
+}
+
+.toolbar button[aria-pressed="true"]:hover {
+  background: #ad6800;
+}
+
 [role="tablist"] {
   display: flex;
   border-bottom: 1px solid #e6e6e6;

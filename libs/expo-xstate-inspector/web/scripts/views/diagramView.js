@@ -2,8 +2,8 @@ import { buildStateDiagram } from "../builders/stateDiagram.js";
 
 /**
  * Draws the selected machine with `renderDiagram`, highlighting its state.
- * Snapshots that keep the same state do not redraw it; a new machine is fitted
- * in `viewport`, while state changes keep the user zoom.
+ * Snapshots that keep the same state do not redraw it; `viewport` is told
+ * whether a new machine is shown.
  */
 export const createDiagramView = (container, renderDiagram, viewport) => {
   const shown = { code: undefined, definition: undefined };
@@ -11,7 +11,7 @@ export const createDiagramView = (container, renderDiagram, viewport) => {
     shown.code = undefined;
     shown.definition = undefined;
     container.textContent = text;
-    viewport.fit();
+    viewport.update({ isNew: true });
   };
   return {
     render: async actor => {
@@ -30,10 +30,9 @@ export const createDiagramView = (container, renderDiagram, viewport) => {
           return;
         }
         container.innerHTML = svg;
-        if (actor.definition !== shown.definition) {
-          shown.definition = actor.definition;
-          viewport.fit();
-        }
+        const isNew = actor.definition !== shown.definition;
+        shown.definition = actor.definition;
+        viewport.update({ isNew });
       } catch (error) {
         showMessage(`Could not render the diagram: ${error.message}`);
       }

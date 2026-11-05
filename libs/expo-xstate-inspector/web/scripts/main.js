@@ -16,7 +16,9 @@ const element = id => document.getElementById(id);
 
 bindTabs(element("tabs"));
 bindPanelResizer(element("resizer"));
-const panZoom = bindPanZoom(element("diagram"), element("diagram-canvas"));
+const panZoom = bindPanZoom(element("diagram"), element("diagram-canvas"), () =>
+  element("diagram-canvas").querySelectorAll("g.active")
+);
 bindZoomControls(element("zoom-controls"), panZoom);
 
 const controller = createInspectorController({
