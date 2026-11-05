@@ -18,20 +18,38 @@
     ></script>
   </head>
   <body>
-    <aside>
-      <h3>Machines</h3>
-      <nav id="actors"></nav>
-    </aside>
     <main id="diagram">Waiting for the app…</main>
-    <section>
-      <h3>State</h3>
-      <pre id="state"></pre>
-      <details>
-        <summary>Context</summary>
-        <pre id="context"></pre>
-      </details>
-      <h3>Events</h3>
-      <ol id="events"></ol>
+    <div
+      id="resizer"
+      role="separator"
+      aria-orientation="vertical"
+      aria-label="Resize panel"
+    ></div>
+    <section id="panel">
+      <nav id="tabs" role="tablist">
+        <button role="tab" aria-controls="state-tab" aria-selected="true">
+          State
+        </button>
+        <button role="tab" aria-controls="events-tab" aria-selected="false">
+          Events
+        </button>
+        <button role="tab" aria-controls="actors-tab" aria-selected="false">
+          Actors
+        </button>
+      </nav>
+      <div id="state-tab" role="tabpanel">
+        <pre id="state"></pre>
+        <details>
+          <summary>Context</summary>
+          <pre id="context"></pre>
+        </details>
+      </div>
+      <div id="events-tab" role="tabpanel" hidden>
+        <ol id="events"></ol>
+      </div>
+      <div id="actors-tab" role="tabpanel" hidden>
+        <nav id="actors"></nav>
+      </div>
     </section>
   </body>
 </html>

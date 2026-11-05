@@ -1,7 +1,3 @@
-h3 {
-  margin: 8px 0 4px;
-}
-
 button {
   all: unset;
   display: block;
@@ -14,6 +10,22 @@ button {
 
 button:hover {
   background: #e6e6e6;
+}
+
+[role="tablist"] {
+  display: flex;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+[role="tab"] {
+  padding: 8px;
+  border-radius: 0;
+  text-align: center;
+}
+
+[role="tab"][aria-selected="true"] {
+  box-shadow: inset 0 -2px #d48806;
+  font-weight: 600;
 }
 
 button[aria-current="true"] {
