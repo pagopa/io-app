@@ -1,4 +1,5 @@
 import { useIOToast } from "@io-app/design-system";
+import { inspect } from "@io-app/expo-xstate-inspector";
 import { createActorContext } from "@xstate/react";
 import { PropsWithChildren } from "react";
 
@@ -33,6 +34,7 @@ export const ItwTrustmarkMachineProvider = ({
     <ItwTrustmarkMachineContext.Provider
       logic={itwTrustmarkMachine}
       options={{
+        inspect,
         input: {
           credentialType,
           deps: { env, itwVersion, navigation, store, toast }
