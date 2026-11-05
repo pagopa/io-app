@@ -1,0 +1,47 @@
+h3 {
+  margin: 8px 0 4px;
+}
+
+button {
+  all: unset;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #e6e6e6;
+}
+
+button[aria-current="true"] {
+  background: #d6e4ff;
+}
+
+button.stopped {
+  opacity: 0.5;
+}
+
+#diagram svg {
+  max-width: none !important;
+}
+
+ol {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+li {
+  padding: 2px 0;
+  border-bottom: 1px solid #e6e6e6;
+  font-family: ui-monospace, monospace;
+  overflow-wrap: anywhere;
+}
+
+pre {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
