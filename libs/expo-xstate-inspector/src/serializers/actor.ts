@@ -13,12 +13,24 @@ const readDefinition = (actor: AnyActor) => {
     : undefined;
 };
 
-export const serializeActor = (actor: AnyActor): InspectorMessages["actor"] => {
+export const serializeActor = (
+  actor: AnyActor,
+  startedAt: number
+): InspectorMessages["actor"] => {
   const definition = readDefinition(actor);
   return {
     definition: serializeValue(definition),
+    id: actor.id,
+    input: serializeValue(actor.options.input),
     name: definition?.id ?? actor.id,
+    // XState exposes the parent only as `_parent`.
+    // eslint-disable-next-line no-underscore-dangle
+    parentId: actor._parent?.sessionId,
     sessionId: actor.sessionId,
-    snapshot: serializeSnapshot(readSnapshot(actor))
+    snapshot: serializeSnapshot(readSnapshot(actor)),
+    // Inline logic has no name, only actors referenced by key do.
+    src: typeof actor.src === "string" ? actor.src : undefined,
+    startedAt,
+    systemId: actor.systemId
   };
 };

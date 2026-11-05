@@ -3,9 +3,13 @@ export const createInspectorController = ({ actors, selection, views }) => {
   const renderActorList = () =>
     views.actorList.render(actors.machines(), selection.current());
 
+  const renderChildActors = () =>
+    views.childActors.render(actors.childrenOf(selection.current()));
+
   const select = (sessionId, { pin }) => {
     selection.select(sessionId, { pin });
     renderActorList();
+    renderChildActors();
     views.details.render(actors.get(sessionId));
     views.diagram.render(actors.get(sessionId));
   };
@@ -27,6 +31,13 @@ export const createInspectorController = ({ actors, selection, views }) => {
         return;
       }
       renderActorList();
+      if (
+        method !== "event" &&
+        selection.current() !== undefined &&
+        actors.get(sessionId).parentId === selection.current()
+      ) {
+        renderChildActors();
+      }
       if (sessionId !== selection.current()) {
         return;
       }

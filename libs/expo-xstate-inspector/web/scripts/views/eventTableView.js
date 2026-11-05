@@ -1,10 +1,6 @@
-import { buildJsonNode } from "../builders/jsonNode.js";
-
-const createCell = (...children) => {
-  const cell = document.createElement("td");
-  cell.append(...children);
-  return cell;
-};
+import { buildJsonTree } from "../builders/jsonNode.js";
+import { createCell } from "../utils/dom.js";
+import { formatTime } from "../utils/time.js";
 
 /** Shows the events received by the selected machine, newest first. */
 export const createEventTableView = container => {
@@ -18,11 +14,12 @@ export const createEventTableView = container => {
   };
   const createRow = entry => {
     const { type, ...payload } = entry.event;
-    const tree = document.createElement("div");
-    tree.className = "json-tree";
-    tree.append(buildJsonNode(undefined, payload, [], expandedOf(entry)));
     const row = document.createElement("tr");
-    row.append(createCell(entry.time), createCell(type), createCell(tree));
+    row.append(
+      createCell(formatTime(entry.timestamp)),
+      createCell(type),
+      createCell(buildJsonTree(payload, expandedOf(entry)))
+    );
     return row;
   };
   return {

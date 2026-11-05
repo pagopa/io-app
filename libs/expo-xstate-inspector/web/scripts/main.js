@@ -4,6 +4,7 @@ import { createMermaidRenderer } from "./renderers/mermaidRenderer.js";
 import { createActorStore } from "./stores/actorStore.js";
 import { createSelectionStore } from "./stores/selectionStore.js";
 import { createActorListView } from "./views/actorListView.js";
+import { createChildActorTableView } from "./views/childActorTableView.js";
 import { createDetailsView } from "./views/detailsView.js";
 import { createDiagramView } from "./views/diagramView.js";
 import { bindPanelResizer } from "./widgets/panelResizer.js";
@@ -23,6 +24,7 @@ const controller = createInspectorController({
       context: element("context"),
       events: element("events")
     }),
+    childActors: createChildActorTableView(element("child-actors")),
     diagram: createDiagramView(element("diagram"), createMermaidRenderer()),
     actorList: createActorListView(element("actors"), sessionId =>
       controller.selectByUser(sessionId)

@@ -24,8 +24,9 @@ export const handleActor = (
 ) => {
   // Inspection events always carry actor instances.
   const actor = event.actorRef as AnyActor;
-  registry.register(actor);
-  transport.send("actor", serializeActor(actor));
+  const startedAt = Date.now();
+  registry.register(actor, startedAt);
+  transport.send("actor", serializeActor(actor, startedAt));
 };
 
 export const handleEvent = (
@@ -34,7 +35,8 @@ export const handleEvent = (
 ) =>
   transport.send("event", {
     event: serializeValue(event.event),
-    sessionId: event.actorRef.sessionId
+    sessionId: event.actorRef.sessionId,
+    timestamp: Date.now()
   });
 
 export const handleSnapshot = (
@@ -43,5 +45,6 @@ export const handleSnapshot = (
 ) =>
   transport.send("snapshot", {
     sessionId: event.actorRef.sessionId,
-    snapshot: serializeSnapshot(event.snapshot as RawSnapshot)
+    snapshot: serializeSnapshot(event.snapshot as RawSnapshot),
+    timestamp: Date.now()
   });

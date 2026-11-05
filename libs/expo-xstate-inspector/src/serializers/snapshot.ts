@@ -10,6 +10,8 @@ export const serializeSnapshot = (
     ? undefined
     : (serializeValue({
         context: snapshot.context,
+        error: snapshot.error,
+        output: snapshot.output,
         status: snapshot.status,
         value: snapshot.value
       }) as SerializedSnapshot);
