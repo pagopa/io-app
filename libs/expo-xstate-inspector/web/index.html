@@ -30,7 +30,16 @@
       <h3>Machines</h3>
       <nav id="actors"></nav>
     </aside>
-    <main id="diagram">Waiting for the app…</main>
+    <main id="diagram">
+      <div id="diagram-canvas">Waiting for the app…</div>
+      <div id="zoom-controls" class="toolbar" role="toolbar" aria-label="Zoom">
+        <button data-zoom="out" title="Zoom out" aria-label="Zoom out">
+          −
+        </button>
+        <button data-zoom="in" title="Zoom in" aria-label="Zoom in">+</button>
+        <button data-zoom="fit" title="Fit (double-click)">Fit</button>
+      </div>
+    </main>
     <div
       id="resizer"
       role="separator"

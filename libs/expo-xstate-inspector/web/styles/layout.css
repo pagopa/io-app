@@ -22,6 +22,33 @@ aside h3 {
   margin: 8px 0 4px;
 }
 
+#diagram {
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+  cursor: grab;
+  touch-action: none;
+}
+
+#diagram.panning {
+  cursor: grabbing;
+}
+
+#diagram-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: max-content;
+  transform-origin: 0 0;
+}
+
+#zoom-controls {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  cursor: default;
+}
+
 #resizer {
   cursor: col-resize;
   background: #e6e6e6;
