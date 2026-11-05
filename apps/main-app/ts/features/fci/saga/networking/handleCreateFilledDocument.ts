@@ -103,7 +103,9 @@ export function* watchFciPollSaga(
   while (true) {
     try {
       yield* put(fciPollFilledDocument.request());
-      const response = yield* call(fetch, qtspFilledDocumentUrl);
+      const response = yield* call(fetch, qtspFilledDocumentUrl, {
+        headers: { "Cache-Control": "no-cache, no-store" }
+      });
       const responseStatus = response.status;
       if (responseStatus === 200) {
         yield* put(
