@@ -1,0 +1,21 @@
+body {
+  margin: 0;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 240px 1fr 360px;
+  font:
+    13px system-ui,
+    sans-serif;
+}
+
+aside,
+main,
+section {
+  overflow: auto;
+  padding: 8px;
+}
+
+aside,
+section {
+  background: #f6f6f6;
+}
