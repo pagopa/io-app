@@ -10,7 +10,9 @@ export const createMermaidRenderer = sandbox => {
     startOnLoad: false,
     theme: "neutral",
     securityLevel: "strict",
-    suppressErrorRendering: true
+    suppressErrorRendering: true,
+    // Natural size, so the pan and zoom start from real proportions.
+    state: { useMaxWidth: false }
   });
   const renders = { count: 0 };
   return async code => {

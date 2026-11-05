@@ -12,6 +12,22 @@ button:hover {
   background: #e6e6e6;
 }
 
+.toolbar {
+  display: flex;
+  gap: 4px;
+}
+
+.toolbar button {
+  width: auto;
+  padding: 2px 8px;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+}
+
+.toolbar button:hover {
+  background: #e6e6e6;
+}
+
 [role="tablist"] {
   display: flex;
   border-bottom: 1px solid #e6e6e6;
@@ -34,8 +50,4 @@ button[aria-current="true"] {
 
 button.stopped {
   opacity: 0.5;
-}
-
-#diagram svg {
-  max-width: none !important;
 }

@@ -16,7 +16,7 @@ export const createJsonTreeView = container => {
   const setAllOpen = open =>
     tree.querySelectorAll("details").forEach(node => (node.open = open));
   const toolbar = document.createElement("div");
-  toolbar.className = "json-toolbar";
+  toolbar.className = "json-toolbar toolbar";
   toolbar.append(
     createButton("Expand all", () => setAllOpen(true)),
     createButton("Collapse all", () => setAllOpen(false)),

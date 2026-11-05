@@ -1,14 +1,5 @@
 .json-toolbar {
-  display: flex;
-  gap: 4px;
   margin-bottom: 8px;
-}
-
-.json-toolbar button {
-  width: auto;
-  padding: 2px 8px;
-  border: 1px solid #d9d9d9;
-  background: #fff;
 }
 
 .json-tree {
