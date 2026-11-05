@@ -1,8 +1,63 @@
+:root {
+  color-scheme: light dark;
+  --color-background: #fff;
+  --color-surface: #f6f6f6;
+  --color-text: #000;
+  --color-muted: #808080;
+  --color-border: #d9d9d9;
+  --color-separator: #e6e6e6;
+  --color-hover: #e6e6e6;
+  --color-selected: #d6e4ff;
+  --color-accent: #d48806;
+  --color-accent-hover: #ad6800;
+  --color-on-accent: #fff;
+  --color-active-background: #ffe58f;
+  --color-active-border: #d48806;
+  --color-visited-background: #e6f4ff;
+  --color-visited-border: #1677ff;
+  --color-visited-text: #0958d9;
+  --color-json-key: #881391;
+  --color-json-string: #c41a16;
+  --color-json-number: #1c00cf;
+  --color-status-active: #1c00cf;
+  --color-success: #389e0d;
+  --color-error: #cf1322;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: #141414;
+    --color-surface: #1f1f1f;
+    --color-text: #f0f0f0;
+    --color-muted: #a6a6a6;
+    --color-border: #595959;
+    --color-separator: #434343;
+    --color-hover: #303030;
+    --color-selected: #15395b;
+    --color-accent: #d89614;
+    --color-accent-hover: #e8b339;
+    --color-on-accent: #141414;
+    --color-active-background: #594214;
+    --color-active-border: #e8b339;
+    --color-visited-background: #112a45;
+    --color-visited-border: #69b1ff;
+    --color-visited-text: #91caff;
+    --color-json-key: #d897eb;
+    --color-json-string: #ff9c99;
+    --color-json-number: #b7a3ff;
+    --color-status-active: #b7a3ff;
+    --color-success: #95de64;
+    --color-error: #ff7875;
+  }
+}
+
 body {
   margin: 0;
   height: 100vh;
   display: grid;
   grid-template-columns: 240px 1fr 4px var(--panel-width, 440px);
+  background: var(--color-background);
+  color: var(--color-text);
   font:
     13px system-ui,
     sans-serif;
@@ -15,7 +70,7 @@ main {
 }
 
 aside {
-  background: #f6f6f6;
+  background: var(--color-surface);
 }
 
 aside h3 {
@@ -66,20 +121,20 @@ aside h3 {
 
 #resizer {
   cursor: col-resize;
-  background: #e6e6e6;
+  background: var(--color-separator);
   touch-action: none;
 }
 
 #resizer:hover,
 #resizer.dragging {
-  background: #d48806;
+  background: var(--color-accent);
 }
 
 #panel {
   display: flex;
   flex-direction: column;
   min-width: 0;
-  background: #f6f6f6;
+  background: var(--color-surface);
 }
 
 [role="tabpanel"] {
