@@ -1,3 +1,17 @@
+## 3.43.0-rc.4 (2026-11-04)
+
+### Bug Fixes
+
+- [[IOPLT-2222](https://pagopa.atlassian.net/browse/IOPLT-2222)] Avoid `IT-Wallet` text break across lines ([#8820](https://github.com/pagopa/io-app/pull/8820))
+
+### Chores
+
+- [[IOPLT-2256](https://pagopa.atlassian.net/browse/IOPLT-2256)] Bump `@faker-js/faker` to `10.x` ([#8832](https://github.com/pagopa/io-app/pull/8832))
+
+### ❤️ Thank You
+
+- Damiano Plebani
+
 ## 3.43.0-rc.3 (2026-11-03)
 
 ### Bug Fixes
