@@ -1,11 +1,11 @@
 /** Keeps the views in sync with the app messages and the user selection. */
 export const createInspectorController = ({ actors, selection, views }) => {
-  const renderSidebar = () =>
-    views.sidebar.render(actors.machines(), selection.current());
+  const renderActorList = () =>
+    views.actorList.render(actors.machines(), selection.current());
 
   const select = (sessionId, { pin }) => {
     selection.select(sessionId, { pin });
-    renderSidebar();
+    renderActorList();
     views.details.render(actors.get(sessionId));
     views.diagram.render(actors.get(sessionId));
   };
@@ -26,7 +26,7 @@ export const createInspectorController = ({ actors, selection, views }) => {
         select(sessionId, { pin: false });
         return;
       }
-      renderSidebar();
+      renderActorList();
       if (sessionId !== selection.current()) {
         return;
       }

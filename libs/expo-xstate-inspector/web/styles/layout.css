@@ -2,20 +2,37 @@ body {
   margin: 0;
   height: 100vh;
   display: grid;
-  grid-template-columns: 240px 1fr 360px;
+  grid-template-columns: 1fr 4px var(--panel-width, 360px);
   font:
     13px system-ui,
     sans-serif;
 }
 
-aside,
-main,
-section {
+main {
   overflow: auto;
   padding: 8px;
 }
 
-aside,
-section {
+#resizer {
+  cursor: col-resize;
+  background: #e6e6e6;
+  touch-action: none;
+}
+
+#resizer:hover,
+#resizer.dragging {
+  background: #d48806;
+}
+
+#panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
   background: #f6f6f6;
+}
+
+[role="tabpanel"] {
+  flex: 1;
+  overflow: auto;
+  padding: 8px;
 }
