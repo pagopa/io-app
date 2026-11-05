@@ -2,6 +2,7 @@ import type {
   AnyActor,
   InspectedActorEvent,
   InspectedEventEvent,
+  InspectedMicrostepEvent,
   InspectedSnapshotEvent
 } from "xstate";
 
@@ -11,6 +12,7 @@ import type { RawSnapshot } from "../utils/snapshot";
 
 import { serializeActor } from "../serializers/actor";
 import { serializeSnapshot } from "../serializers/snapshot";
+import { serializeTransition } from "../serializers/transition";
 import { serializeValue } from "../serializers/value";
 
 type Dependencies = {
@@ -37,6 +39,18 @@ export const handleEvent = (
     event: serializeValue(event.event),
     sessionId: event.actorRef.sessionId,
     timestamp: Date.now()
+  });
+
+export const handleMicrostep = (
+  event: InspectedMicrostepEvent,
+  { transport }: Dependencies
+) =>
+  transport.send("microstep", {
+    sessionId: event.actorRef.sessionId,
+    // XState exposes the transitions only as `_transitions`.
+    // eslint-disable-next-line no-underscore-dangle
+    transitions: event._transitions.map(serializeTransition),
+    value: serializeValue((event.snapshot as RawSnapshot)?.value)
   });
 
 export const handleSnapshot = (
