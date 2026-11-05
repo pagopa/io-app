@@ -17,20 +17,22 @@ export const useCieIdWebViewLoginNavigation = ({
 
   const navigateToCieIdAuthenticationError = useCallback(
     (failureData: FailureData) => {
-      navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR,
-        params: { failureData }
-      });
+      navigation.dispatch(
+        StackActions.replace(AUTHENTICATION_ROUTES.CIE_ID_ERROR, {
+          failureData
+        })
+      );
     },
     [navigation]
   );
 
   const navigateToCieIdAuthUrlError = useCallback(
     (url: string) => {
-      navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL,
-        params: { url }
-      });
+      navigation.dispatch(
+        StackActions.replace(AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL, {
+          url
+        })
+      );
     },
     [navigation]
   );

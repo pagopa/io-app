@@ -65,7 +65,7 @@ export const ItwPresentationPidDetail = ({ credential }: Props) => {
     <View>
       <ItwEidLifecycleAlert
         currentScreenName={currentScreenName}
-        lifecycleStatus={["jwtExpiring", "jwtExpired"]}
+        lifecycleStatus={["jwtExpiring", "jwtExpired", "invalid"]}
         navigation={navigation}
         skipViewTracking={false}
       />

@@ -1,8 +1,10 @@
 import {
   isItwDiscoveryBannerRenderableSelector,
   isItwProximityEnabledSelector,
+  isItwProximityNfcEnabledSelector,
   itwIsL2FallbackSelector,
   itwOfflineAccessAvailableSelector,
+  itwShouldHideEidLifecycleAlert,
   itwShouldRenderDiscoveryBannerSelector,
   itwShouldRenderInboxDiscoveryBannerSelector,
   itwShouldRenderL2EngagementBannerForInactiveWalletSelector,
@@ -664,6 +666,44 @@ describe("isItwProximityEnabledSelector", () => {
 
       expect(isItwProximityEnabledSelector({} as unknown as GlobalState)).toBe(
         expected
+      );
+    }
+  );
+});
+
+describe("isItwProximityNfcEnabledSelector", () => {
+  test.each([
+    { name: "both flags off", remote: false, local: false, expected: false },
+    { name: "remote flag on", remote: true, local: false, expected: true },
+    { name: "local flag on", remote: false, local: true, expected: true },
+    { name: "both flags on", remote: true, local: true, expected: true }
+  ])("returns $expected with $name", ({ remote, local, expected }) => {
+    jest
+      .spyOn(
+        remoteConfigSelectors,
+        "isItwProximityNfcMinAppVersionSupportedSelector"
+      )
+      .mockReturnValue(remote);
+    jest
+      .spyOn(preferencesSelectors, "itwIsProximityNfcLocallyEnabledSelector")
+      .mockReturnValue(local);
+
+    expect(isItwProximityNfcEnabledSelector({} as unknown as GlobalState)).toBe(
+      expected
+    );
+  });
+});
+
+describe("itwShouldHideEidLifecycleAlert", () => {
+  test.each(["jwtExpired", "invalid"] as const)(
+    "should never hide the alert when the eID is %s",
+    eidStatus => {
+      jest
+        .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
+        .mockReturnValue(eidStatus);
+
+      expect(itwShouldHideEidLifecycleAlert({} as unknown as GlobalState)).toBe(
+        false
       );
     }
   );
