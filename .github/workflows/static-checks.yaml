@@ -107,7 +107,7 @@ jobs:
         run: pnpm nx affected --targets=test --configuration=ci --exclude=io-app-design-system,api-types,dev-api-server -- --shard=${{ matrix.shard }}/4
       - id: run-all-tests
         if: github.event_name != 'pull_request'
-        run: pnpm nx run @io-app/main-app:test --configuration=ci -- --shard=${{ matrix.shard }}/4
+        run: pnpm nx run main-app:test --configuration=ci -- --shard=${{ matrix.shard }}/4
 
       - id: codecov-script
         uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
