@@ -3,5 +3,5 @@
 cp .env.production .env
 pnpm postinstall
 pnpm cie-ios ci
-touch ./ios/fastlane/AuthKey_$APP_STORE_API_KEY_ID.p8
-echo -e "$APP_STORE_API_PRIVATE_KEY" > ./ios/fastlane/AuthKey_$APP_STORE_API_KEY_ID.p8
+touch ./fastlane/ios/AuthKey_$APP_STORE_API_KEY_ID.p8
+echo -e "$APP_STORE_API_PRIVATE_KEY" > ./fastlane/ios/AuthKey_$APP_STORE_API_KEY_ID.p8
