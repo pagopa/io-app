@@ -408,15 +408,10 @@ export function* computeAndTrackInAppBrowserOpening() {
 }
 
 export function* handleInAppBrowserErrorIfNeeded(error: unknown) {
-  const debugMessage = `InApp Browser opening failed: ${inAppBrowserErrorToHumanReadable(
-    error
-  )}`;
+  const debugMessage = `InApp Browser opening failed: ${JSON.stringify(error)}`;
   yield* call(computeAndTrackAuthenticationError, debugMessage);
   yield* call(IOToast.error, I18n.t("FIMS.consentsScreen.inAppBrowserError"));
 }
-
-const inAppBrowserErrorToHumanReadable = (error: unknown) =>
-  JSON.stringify(error);
 
 export function* enrichFimsRedirectUrl(
   redirectUrl: string
