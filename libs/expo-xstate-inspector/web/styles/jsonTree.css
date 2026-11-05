@@ -21,20 +21,20 @@
 }
 
 .json-key {
-  color: #881391;
+  color: var(--color-json-key);
 }
 
 .json-string {
-  color: #c41a16;
+  color: var(--color-json-string);
 }
 
 .json-number,
 .json-boolean {
-  color: #1c00cf;
+  color: var(--color-json-number);
 }
 
 .json-null,
 .json-undefined,
 .json-preview {
-  color: #808080;
+  color: var(--color-muted);
 }

@@ -9,7 +9,7 @@ button {
 }
 
 button:hover {
-  background: #e6e6e6;
+  background: var(--color-hover);
 }
 
 .toolbar {
@@ -20,18 +20,18 @@ button:hover {
 .toolbar button {
   width: auto;
   padding: 2px 8px;
-  border: 1px solid #d9d9d9;
-  background: #fff;
+  border: 1px solid var(--color-border);
+  background: var(--color-background);
 }
 
 .toolbar button:hover {
-  background: #e6e6e6;
+  background: var(--color-hover);
 }
 
 .toolbar button[aria-pressed="true"] {
-  border-color: #d48806;
-  background: #d48806;
-  color: #fff;
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
   font-weight: 600;
 }
 
@@ -40,12 +40,12 @@ button:hover {
 }
 
 .toolbar button[aria-pressed="true"]:hover {
-  background: #ad6800;
+  background: var(--color-accent-hover);
 }
 
 [role="tablist"] {
   display: flex;
-  border-bottom: 1px solid #e6e6e6;
+  border-bottom: 1px solid var(--color-separator);
 }
 
 [role="tab"] {
@@ -55,12 +55,12 @@ button:hover {
 }
 
 [role="tab"][aria-selected="true"] {
-  box-shadow: inset 0 -2px #d48806;
+  box-shadow: inset 0 -2px var(--color-accent);
   font-weight: 600;
 }
 
 button[aria-current="true"] {
-  background: #d6e4ff;
+  background: var(--color-selected);
 }
 
 button.stopped {

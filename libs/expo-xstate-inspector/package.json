@@ -14,6 +14,7 @@
   ],
   "scripts": {
     "prepare": "tsc -p tsconfig.web.json",
+    "test": "pnpm run prepare && node --test",
     "tsc-noemit": "tsc --noEmit && tsc -p tsconfig.web.json --noEmit"
   },
   "devDependencies": {

@@ -1,17 +1,17 @@
 /* Transitions taken by the selected machine, see utils/svgEdges.js. */
 #diagram-canvas path.taken {
-  stroke: #1677ff !important;
+  stroke: var(--color-visited-border) !important;
   stroke-width: 2.5px !important;
 }
 
 #diagram-canvas marker.taken path {
-  fill: #1677ff !important;
-  stroke: #1677ff !important;
+  fill: var(--color-visited-border) !important;
+  stroke: var(--color-visited-border) !important;
 }
 
 #diagram-canvas .edgeLabel.taken p,
 #diagram-canvas .edgeLabel.taken span {
-  background-color: #e6f4ff !important;
-  color: #0958d9 !important;
+  background-color: var(--color-visited-background) !important;
+  color: var(--color-visited-text) !important;
   font-weight: 600;
 }

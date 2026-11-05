@@ -19,10 +19,10 @@ export const buildActiveStyles = (
   const active = new Set([...leaves, ...parents].map(toNodeId));
   const past = [...visited].filter(id => !active.has(id));
   return [
-    "  classDef visited fill:#e6f4ff,stroke:#1677ff,stroke-width:2px",
-    "  classDef visitedParent stroke:#1677ff,stroke-width:2px",
-    "  classDef active fill:#ffe58f,stroke:#d48806,stroke-width:3px",
-    "  classDef activeParent stroke:#d48806,stroke-width:3px",
+    "  classDef visited fill:var(--color-visited-background),stroke:var(--color-visited-border),color:var(--color-text),stroke-width:2px",
+    "  classDef visitedParent stroke:var(--color-visited-border),stroke-width:2px",
+    "  classDef active fill:var(--color-active-background),stroke:var(--color-active-border),color:var(--color-text),stroke-width:3px",
+    "  classDef activeParent stroke:var(--color-active-border),stroke-width:3px",
     ...classLine(
       past.filter(id => !compound.has(id)),
       "visited"
