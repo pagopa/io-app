@@ -1,4 +1,4 @@
-import { PublicKey } from "@pagopa/io-react-native-crypto";
+import { PublicKey } from "@io-app/expo-crypto";
 import { LoginUtilsError } from "@pagopa/io-react-native-login-utils";
 import { err } from "neverthrow";
 

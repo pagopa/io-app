@@ -1,6 +1,6 @@
 import { AssertionRef } from "@io-app/api-types/generated/definitions/session_manager/AssertionRef";
 import { PublicSession } from "@io-app/api-types/generated/definitions/session_manager/PublicSession";
-import { PublicKey } from "@pagopa/io-react-native-crypto";
+import { PublicKey } from "@io-app/expo-crypto";
 import { expectSaga } from "redux-saga-test-plan";
 import {
   EffectProviders,

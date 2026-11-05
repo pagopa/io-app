@@ -1,4 +1,4 @@
-import { ECKey, RSAKey } from "@pagopa/io-react-native-crypto";
+import { ECKey, RSAKey } from "@io-app/expo-crypto";
 import MockDate from "mockdate";
 import URLParse from "url-parse";
 

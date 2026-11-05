@@ -4,7 +4,7 @@ import {
   generate,
   getPublicKey,
   PublicKey
-} from "@pagopa/io-react-native-crypto";
+} from "@io-app/expo-crypto";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { call, delay, put, select } from "typed-redux-saga/macro";
 import { v4 as uuid } from "uuid";

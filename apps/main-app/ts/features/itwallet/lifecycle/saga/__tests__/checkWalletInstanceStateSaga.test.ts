@@ -22,10 +22,6 @@ import {
 } from "../checkWalletInstanceStateSaga";
 import { handleWalletInstanceResetSaga } from "../handleWalletInstanceResetSaga";
 
-jest.mock("@pagopa/io-react-native-crypto", () => ({
-  deleteKey: jest.fn
-}));
-
 const mockGetStatus = jest.fn();
 const mockPid = {
   credentialType: "pid",

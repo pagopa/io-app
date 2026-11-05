@@ -1,4 +1,4 @@
-import { deleteKey, generate } from "@pagopa/io-react-native-crypto";
+import { deleteKey, generate } from "@io-app/expo-crypto";
 import { getAttestation as getAttestationIntegrity } from "@pagopa/io-react-native-integrity";
 import {
   createCryptoContextFor,

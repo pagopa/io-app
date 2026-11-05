@@ -1,4 +1,4 @@
-import { sign } from "@pagopa/io-react-native-crypto";
+import { sign } from "@io-app/expo-crypto";
 import {
   decodeAssertion,
   generateHardwareKey,

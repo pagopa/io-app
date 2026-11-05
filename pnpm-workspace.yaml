@@ -5,6 +5,7 @@ packages:
 nodeLinker: hoisted
 
 overrides:
+  "@pagopa/io-react-native-crypto": "workspace:@io-app/expo-crypto@*"
   # Required because jest defines a version of react-is that is incompatible with react 19. It can be removed after updating jest to version 30.4.0 or higher.
   pretty-format>react-is: "19.0.0"
 

@@ -1,4 +1,4 @@
-import { PublicKey } from "@pagopa/io-react-native-crypto";
+import { PublicKey } from "@io-app/expo-crypto";
 import pako from "pako";
 
 import { toBase64EncodedThumbprint } from "../crypto";

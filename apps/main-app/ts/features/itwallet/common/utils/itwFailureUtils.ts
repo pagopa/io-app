@@ -1,4 +1,4 @@
-import { CryptoErrorCodes } from "@pagopa/io-react-native-crypto";
+import { CryptoErrorCodes } from "@io-app/expo-crypto";
 import {
   IntegrityError,
   IntegrityErrorCodes

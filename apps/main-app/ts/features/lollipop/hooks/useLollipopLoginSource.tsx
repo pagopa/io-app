@@ -1,4 +1,4 @@
-import { PublicKey } from "@pagopa/io-react-native-crypto";
+import { PublicKey } from "@io-app/expo-crypto";
 import { useCallback, useState } from "react";
 import { WebViewSource } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
