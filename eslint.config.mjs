@@ -480,6 +480,16 @@ export default defineConfig([
     }
   },
   {
+    // Browser page driving the DOM imperatively, speaking the Expo dev tools
+    // protocol (e.g. `__isHandshakeMessages`).
+    files: ["libs/expo-xstate-inspector/web/src/**/*.ts"],
+
+    rules: {
+      "functional/immutable-data": "off",
+      "no-underscore-dangle": "off"
+    }
+  },
+  {
     // Dev-only screens: the Design System showcase, playgrounds, debug tools
     files: [
       "**/{design-system,playgrounds,devMode,debug,__mocks__}/**/*.{ts,tsx}"

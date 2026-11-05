@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ES2022",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "strict": true,
+    "importHelpers": false,
+    "rootDir": "web/src",
+    "outDir": "web/scripts"
+  },
+  "include": ["web/src"]
+}
