@@ -28,10 +28,15 @@ aside h3 {
   padding: 0;
   cursor: grab;
   touch-action: none;
+  user-select: none;
 }
 
 #diagram.panning {
   cursor: grabbing;
+}
+
+#diagram.following {
+  cursor: default;
 }
 
 #diagram-canvas {

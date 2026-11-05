@@ -5,6 +5,7 @@ import {
   MIN_ZOOM,
   WHEEL_ZOOM_SPEED
 } from "../constants/zoom.js";
+import { unionRect } from "../utils/rects.js";
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
@@ -12,10 +13,12 @@ const isOnControl = event => event.target.closest("button") !== null;
 
 /**
  * Lets `canvas` be zoomed (ctrl/⌘ + wheel, pinch) and panned (drag, scroll)
- * inside `viewport`. Double-click fits it.
+ * inside `viewport`. Double-click fits it. While following, panning is off and
+ * the elements returned by `findFocus` stay centred.
  */
-export const bindPanZoom = (viewport, canvas) => {
-  const view = { scale: 1, x: 0, y: 0 };
+export const bindPanZoom = (viewport, canvas, findFocus) => {
+  const view = { following: false, scale: 1, x: 0, y: 0 };
+  const listeners = new Set();
   const apply = () => {
     canvas.style.transform = `translate(${view.x}px, ${view.y}px) scale(${view.scale})`;
   };
@@ -28,6 +31,31 @@ export const bindPanZoom = (viewport, canvas) => {
     view.scale = scale;
     apply();
   };
+  const centerFocus = () => {
+    const focus = unionRect(findFocus());
+    if (focus === undefined) {
+      return;
+    }
+    const { left, top, width, height } = viewport.getBoundingClientRect();
+    view.x += left + width / 2 - (focus.left + focus.width / 2);
+    view.y += top + height / 2 - (focus.top + focus.height / 2);
+    apply();
+  };
+  const setFollowing = following => {
+    view.following = following;
+    viewport.classList.toggle("following", following);
+    listeners.forEach(listener => listener(following));
+    if (following) {
+      centerFocus();
+    }
+  };
+  const zoomBy = factor => {
+    const { left, top, width, height } = viewport.getBoundingClientRect();
+    zoomAt(factor, left + width / 2, top + height / 2);
+    if (view.following) {
+      centerFocus();
+    }
+  };
   const fit = () => {
     const width = viewport.clientWidth - FIT_MARGIN * 2;
     const height = viewport.clientHeight - FIT_MARGIN * 2;
@@ -39,6 +67,9 @@ export const bindPanZoom = (viewport, canvas) => {
     view.x = FIT_MARGIN + (width - canvas.offsetWidth * view.scale) / 2;
     view.y = FIT_MARGIN;
     apply();
+    if (view.following) {
+      setFollowing(false);
+    }
   };
 
   viewport.addEventListener(
@@ -52,6 +83,12 @@ export const bindPanZoom = (viewport, canvas) => {
           event.clientX,
           event.clientY
         );
+        if (view.following) {
+          centerFocus();
+        }
+        return;
+      }
+      if (view.following) {
         return;
       }
       view.x -= event.deltaX;
@@ -61,7 +98,7 @@ export const bindPanZoom = (viewport, canvas) => {
     { passive: false }
   );
   viewport.onpointerdown = event => {
-    if (event.button !== 0 || isOnControl(event)) {
+    if (event.button !== 0 || isOnControl(event) || view.following) {
       return;
     }
     event.preventDefault();
@@ -83,11 +120,21 @@ export const bindPanZoom = (viewport, canvas) => {
     }
   };
 
+  new ResizeObserver(() => view.following && centerFocus()).observe(viewport);
+
   return {
     fit,
-    zoomBy: factor => {
-      const { left, top, width, height } = viewport.getBoundingClientRect();
-      zoomAt(factor, left + width / 2, top + height / 2);
-    }
+    isFollowing: () => view.following,
+    onFollowingChange: listener => listeners.add(listener),
+    setFollowing,
+    /** Call after the canvas content changed; a new diagram is fitted. */
+    update: ({ isNew }) => {
+      if (view.following) {
+        centerFocus();
+      } else if (isNew) {
+        fit();
+      }
+    },
+    zoomBy
   };
 };
