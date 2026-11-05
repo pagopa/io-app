@@ -1,2 +1,0 @@
-json_key_file "/tmp/json-key.json" # Path to the json secret file - Follow https://github.com/fastlane/supply#setup to get one
-package_name "it.pagopa.io.app" # e.g. com.krausefx.app

@@ -2,5 +2,5 @@
 /ios
 /android
 
-# App Store Connect API key written by scripts/ios-release-build.sh
-/fastlane/ios/AuthKey_*.p8
+# App Store Connect API key written by scripts/ios-app-store-api-key.sh
+/fastlane/AuthKey_*.p8

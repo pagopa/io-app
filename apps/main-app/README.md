@@ -174,6 +174,10 @@ Prebuild always regenerates the folders from scratch. iOS pods are installed wit
 
 Run prebuild again after you change any of the sources above, add or update a dependency with native code, or switch between the production and canary app.
 
+#### Release builds
+
+Release builds run on CI through the Fastlane lanes in `fastlane/`, which you run from `apps/main-app` (for example `bundle exec fastlane ios beta_testflight` or `bundle exec fastlane android alpha`). The lanes expect a generated native project: the release workflows prebuild it first and set `APP_VARIANT=canary` for canary lanes, since there are no canary Xcode configurations or Gradle flavors.
+
 ### Code generation only
 
 ```bash
@@ -370,4 +374,4 @@ The app is built exclusively with components from [`@io-app/design-system`](../.
 ## Appendix
 
 - [Internationalisation (locales)](locales/README.md)
-- [iOS push notification certificates](fastlane/ios/PUSH_CERTIFICATES.md)
+- [iOS push notification certificates](fastlane/PUSH_CERTIFICATES.md)

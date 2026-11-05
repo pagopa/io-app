@@ -1,7 +1,11 @@
 #!/bin/bash
 
-# Recreate google-services.json from ENV variable
-echo $ENCODED_IOAPP_GOOGLE_SERVICES_JSON_FILE | base64 --decode > $1/google-services.json
+# Writes the Android release secrets outside the generated android/ folder,
+# which `expo prebuild --clean` wipes.
+
+# Recreate google-services.json from ENV variable: pass it to `expo prebuild`
+# through GOOGLE_SERVICES_JSON (see app.config.ts)
+echo $ENCODED_IOAPP_GOOGLE_SERVICES_JSON_FILE | base64 --decode > /tmp/google-services.json
 
 # Recreate JSON key file (for Google Play) from ENV variable
 echo $ENCODED_IOAPP_JSON_KEY_FILE | base64 --decode > /tmp/json-key.json
