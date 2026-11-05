@@ -1,2 +1,2 @@
-// Must match `PLUGIN_NAME` in web/scripts/constants/plugin.js.
+// Must match `PLUGIN_NAME` in web/src/constants/plugin.ts.
 export const PLUGIN_NAME = "expo-xstate-inspector";

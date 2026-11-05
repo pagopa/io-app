@@ -13,7 +13,8 @@
     "expo-module.config.json"
   ],
   "scripts": {
-    "tsc-noemit": "tsc --noEmit"
+    "prepare": "tsc -p tsconfig.web.json",
+    "tsc-noemit": "tsc --noEmit && tsc -p tsconfig.web.json --noEmit"
   },
   "devDependencies": {
     "expo": "^55.0.8",
