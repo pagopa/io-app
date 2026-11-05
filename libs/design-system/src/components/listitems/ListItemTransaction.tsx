@@ -2,7 +2,7 @@ import { isValidElement, ReactNode } from "react";
 import { ImageURISource, View } from "react-native";
 
 import { useIOColors } from "../../context";
-import { IODimensions, IOListItemStyles } from "../../core";
+import { IODimensions } from "../../core";
 import { WithTestID } from "../../utils/types";
 import { isImageUri } from "../../utils/url";
 import { Avatar } from "../avatar/Avatar";
@@ -17,6 +17,7 @@ import {
   PressableListItemBase,
   PressableListItemBaseProps
 } from "./PressableListItemBase";
+import { IOListItemStyles } from "./styles";
 
 export type ListItemTransaction = WithTestID<
   PressableListItemBaseProps & {

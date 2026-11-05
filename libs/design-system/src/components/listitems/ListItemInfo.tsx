@@ -3,7 +3,7 @@ import { AccessibilityRole, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
 import { useIOColors } from "../../context";
-import { IODimensions, IOListItemStyles } from "../../core";
+import { IODimensions } from "../../core";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
@@ -14,6 +14,7 @@ import { Icon, IOIcons, IOIconSizeScale } from "../icons";
 import { VSpacer } from "../layout";
 import { IOLogoPaymentType } from "../logos";
 import { BodySmall, H6 } from "../typography";
+import { IOListItemStyles } from "./styles";
 
 export type ListItemInfo = GraphicProps &
   InteractiveProps &

@@ -3,10 +3,10 @@ import { GestureResponderEvent, Pressable } from "react-native";
 import Animated, { useReducedMotion } from "react-native-reanimated";
 
 import { useIOColors } from "../../context";
-import { IOModuleStyles } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useScaleAnimation } from "../../hooks";
 import { WithTestID } from "../../utils/types";
+import { IOModuleStyles } from "./styles";
 
 export type PressableModuleBaseProps = WithTestID<
   Pick<

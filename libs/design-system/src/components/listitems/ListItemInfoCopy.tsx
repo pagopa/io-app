@@ -3,13 +3,14 @@ import { GestureResponderEvent, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
 import { useIOColors } from "../../context";
-import { IODimensions, IOListItemStyles } from "../../core";
+import { IODimensions } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Icon, IOIcons } from "../icons";
 import { BodySmall, H6 } from "../typography";
+import { IOListItemStyles } from "./styles";
 
 export type ListItemInfoCopy = Pick<
   ComponentProps<typeof Pressable>,

@@ -10,7 +10,7 @@ import {
 import Animated, { AnimatedStyle } from "react-native-reanimated";
 
 import { useIOColors } from "../../context";
-import { footerBoxShadow, IODimensions } from "../../core";
+import { IODimensions } from "../../core";
 import { WithTestID } from "../../utils/types";
 import {
   IOButton,
@@ -19,6 +19,7 @@ import {
 } from "../buttons";
 import { useBottomMargins } from "./hooks/useBottomMargins";
 import { VSpacer } from "./Spacer";
+import { footerBoxShadow } from "./styles";
 
 export type FooterActionsMeasurements = {
   // Height of the "Actions" block

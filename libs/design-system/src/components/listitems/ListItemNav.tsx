@@ -3,7 +3,7 @@ import { GestureResponderEvent, Image, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
 import { useIOColors } from "../../context";
-import { IODimensions, IOListItemStyles, IORoleColor } from "../../core";
+import { IODimensions, IORoleColor } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
@@ -14,6 +14,7 @@ import { Icon, IOIcons } from "../icons";
 import { HSpacer, VSpacer } from "../layout";
 import { LoadingSpinner } from "../loadingSpinner";
 import { BodySmall, Caption, H6 } from "../typography";
+import { IOListItemStyles } from "./styles";
 
 export type ListItemNav = ListItemNavGraphicProps & ListItemNavPartialProps;
 

@@ -6,10 +6,11 @@ import Animated, {
 } from "react-native-reanimated";
 
 import { useIOColors } from "../../../context";
-import { IOIconButtonStyles, IOOpacity } from "../../../core";
+import { IOOpacity } from "../../../core";
 import { useScaleAnimation } from "../../../hooks";
 import { WithTestID } from "../../../utils/types";
 import { AnimatedIcon, IOIcons } from "../../icons";
+import { iconButtonSolidStyles } from "./styles";
 
 export type IconButtonSolid = WithTestID<{
   accessibilityHint?: string;
@@ -60,8 +61,8 @@ export const IconButtonSolid = ({
       <Animated.View
         pointerEvents="none"
         style={[
-          IOIconButtonStyles.button,
-          IOIconButtonStyles.buttonSizeLarge,
+          iconButtonSolidStyles.button,
+          iconButtonSolidStyles.size,
           !disabled && !reducedMotion && scaleAnimatedStyle,
           !disabled && backgroundColorAnimationStyle,
           disabled

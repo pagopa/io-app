@@ -23,8 +23,9 @@ import Animated, {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useIOColors } from "../../context";
-import { footerBoxShadow, IODimensions, IODimensionScale } from "../../core";
+import { IODimensions, IODimensionScale } from "../../core";
 import { FooterActions, FooterActionsMeasurements } from "./FooterActions";
+import { footerBoxShadow } from "./styles";
 
 const shadowTransitionDistance: IODimensionScale = 24;
 const defaultScrollEventThrottle = 8;
