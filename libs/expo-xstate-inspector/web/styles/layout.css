@@ -2,7 +2,7 @@ body {
   margin: 0;
   height: 100vh;
   display: grid;
-  grid-template-columns: 240px 1fr 4px var(--panel-width, 360px);
+  grid-template-columns: 240px 1fr 4px var(--panel-width, 440px);
   font:
     13px system-ui,
     sans-serif;

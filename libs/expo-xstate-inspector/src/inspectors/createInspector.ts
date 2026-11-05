@@ -18,8 +18,8 @@ export const createInspector = (
   const dependencies = { registry, transport };
   // The web page asks to replay the running actors whenever it connects.
   transport.onConnected(() =>
-    registry.forEachRunning(actor =>
-      transport.send("actor", serializeActor(actor))
+    registry.forEachRunning((actor, startedAt) =>
+      transport.send("actor", serializeActor(actor, startedAt))
     )
   );
   return (event: InspectionEvent) => {
