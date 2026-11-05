@@ -1,4 +1,4 @@
-import { createEventListView } from "./eventListView.js";
+import { createEventTableView } from "./eventTableView.js";
 import { createJsonTreeView } from "./jsonTreeView.js";
 
 /** Shows the state, context and events of the selected machine. */
@@ -6,7 +6,7 @@ export const createDetailsView = ({ state, context, events }) => {
   const views = {
     state: createJsonTreeView(state),
     context: createJsonTreeView(context),
-    events: createEventListView(events)
+    events: createEventTableView(events)
   };
   return {
     render: actor => {
