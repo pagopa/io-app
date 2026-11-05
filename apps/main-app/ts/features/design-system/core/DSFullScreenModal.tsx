@@ -18,6 +18,7 @@ export const DSFullScreenModal = () => {
 
   return (
     <View
+      collapsable={false}
       style={{
         flex: 1,
         backgroundColor: colors.background.default

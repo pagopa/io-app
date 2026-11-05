@@ -1,4 +1,4 @@
-import { ItwJwtCredentialStatus } from "../../common/utils/itwTypesUtils";
+import { ItwEidStatus } from "../../common/utils/itwTypesUtils";
 import { IdentificationContext } from "../../machine/eid/context";
 import {
   ITW_ANALYTICS_CREDENTIALS,
@@ -27,9 +27,11 @@ export const toSurveyAuthMethod = (
 
 /** Maps an PID status to its corresponding Mixpanel tracking status. */
 export const mapPIDStatusToMixpanel = (
-  status: ItwJwtCredentialStatus | undefined
+  status: ItwEidStatus | undefined
 ): ItwPIDStatus => {
   switch (status) {
+    case "invalid":
+      return "not_valid";
     case "jwtExpired":
       return "expired";
     case "jwtExpiring":

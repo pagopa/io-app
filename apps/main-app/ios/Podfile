@@ -1,5 +1,4 @@
 ENV['RCT_NEW_ARCH_ENABLED'] = '1'
-ENV['NO_INTERNAL_MODULE'] = '1'
 
 require File.join(File.dirname(`node --print "require.resolve('expo/package.json')"`), "scripts/autolinking")
 

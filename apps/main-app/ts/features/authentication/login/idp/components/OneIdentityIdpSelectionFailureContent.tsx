@@ -9,7 +9,6 @@ import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { trackLoginReauthEngagementCieSelected } from "../../../activeSessionLogin/screens/analytics";
 import { trackCieLoginSelected } from "../../../common/analytics";
 import { useCieLoginMethodSelection } from "../../../common/hooks/useCieLoginMethodSelection";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { LOGIN_TYPES, LoginType } from "../../../common/utils";
 
 type OneIdentityIdpSelectionFailureContentProps = {
@@ -45,12 +44,6 @@ export const OneIdentityIdpSelectionFailureContent = ({
     handleCieLoginRequested();
   }, [flow, handleCieLoginRequested]);
 
-  const navigateToLandingScreen = useCallback(() => {
-    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.LANDING
-    });
-  }, [navigation]);
-
   return (
     <>
       <OperationResultScreenContent
@@ -61,13 +54,14 @@ export const OneIdentityIdpSelectionFailureContent = ({
           onPress: navigateToCiePinScreen,
           testID: "idp-loading-error-primary-action"
         }}
+        isHeaderVisible={true}
         pictogram="umbrella"
         ref={accessibilityFirstFocuseViewRef}
         secondaryAction={{
           label: I18n.t(
             "authentication.idp_selection.loadingError.secondaryAction"
           ),
-          onPress: navigateToLandingScreen,
+          onPress: navigation.popToTop,
           testID: "idp-loading-error-secondary-action"
         }}
         subtitle={I18n.t(
