@@ -6,6 +6,7 @@ import type { InspectorTransport } from "../types/transport";
 import {
   handleActor,
   handleEvent,
+  handleMicrostep,
   handleSnapshot
 } from "../handlers/inspectionHandlers";
 import { serializeActor } from "../serializers/actor";
@@ -28,6 +29,8 @@ export const createInspector = (
         return handleActor(event, dependencies);
       case "@xstate.event":
         return handleEvent(event, dependencies);
+      case "@xstate.microstep":
+        return handleMicrostep(event, dependencies);
       case "@xstate.snapshot":
         return handleSnapshot(event, dependencies);
     }

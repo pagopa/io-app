@@ -13,6 +13,11 @@ export type InspectorMessages = {
     systemId: string | undefined;
   };
   event: { event: unknown; sessionId: string; timestamp: number };
+  microstep: {
+    sessionId: string;
+    transitions: Array<SerializedTransition>;
+    value: unknown;
+  };
   snapshot: {
     sessionId: string;
     snapshot: SerializedSnapshot | undefined;
@@ -28,4 +33,11 @@ export type SerializedSnapshot = {
   output: unknown;
   status: unknown;
   value: unknown;
+};
+
+/** A transition taken, with state node paths from the machine root. */
+export type SerializedTransition = {
+  eventType: string;
+  source: Array<string>;
+  targets: Array<Array<string>>;
 };
