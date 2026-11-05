@@ -25,7 +25,7 @@ export const AsyncCredentialsCatalogue = ({ children }: PropsWithChildren) => {
   ));
 
   const content = () => {
-    if (isCatalogueLoading && isCatalogueUnavailable) {
+    if (isCatalogueLoading) {
       return loadingContent;
     }
 
