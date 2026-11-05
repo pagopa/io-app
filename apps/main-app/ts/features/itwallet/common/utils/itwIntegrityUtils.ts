@@ -69,6 +69,27 @@ type HardwareSignatureWithAuthData = {
   signature: string;
 };
 
+// CBOR.decode returns CBOR byte strings as base64url, the backend expects base64
+const Base64UrlToBase64 = z.string().transform(addPadding);
+
+/**
+ * IOS App Attest assertion: a CBOR map with the `signature` and
+ * `authenticatorData` byte strings.
+ */
+const DecodedAssertion = z.object({
+  signature: Base64UrlToBase64,
+  authenticatorData: Base64UrlToBase64
+});
+
+/**
+ * Decodes a base64 CBOR iOS assertion into base64 encoded `signature` and
+ * `authenticatorData`.
+ */
+const decodeAssertion = async (
+  assertion: string
+): Promise<HardwareSignatureWithAuthData> =>
+  DecodedAssertion.parseAsync(await CBOR.decode(assertion));
+
 /**
  * Checks whether the device can produce the fresh hardware key attestation
  * which the Wallet Provider accepts in place of the Play Integrity token. It
