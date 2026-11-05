@@ -18,7 +18,7 @@
     />
     <link
       rel="stylesheet"
-      href="/_expo/plugins/@io-app/expo-xstate-inspector/styles/eventTable.css"
+      href="/_expo/plugins/@io-app/expo-xstate-inspector/styles/table.css"
     />
     <script
       type="module"
@@ -48,6 +48,13 @@
         <button role="tab" aria-controls="events-tab" aria-selected="false">
           Events
         </button>
+        <button
+          role="tab"
+          aria-controls="child-actors-tab"
+          aria-selected="false"
+        >
+          Actors
+        </button>
       </nav>
       <div id="state-tab" role="tabpanel">
         <div id="state"></div>
@@ -55,8 +62,8 @@
       <div id="context-tab" role="tabpanel" hidden>
         <div id="context"></div>
       </div>
-      <div id="events-tab" role="tabpanel" hidden>
-        <table>
+      <div id="events-tab" class="table-panel" role="tabpanel" hidden>
+        <table class="data-table">
           <thead>
             <tr>
               <th>Time</th>
@@ -65,6 +72,18 @@
             </tr>
           </thead>
           <tbody id="events"></tbody>
+        </table>
+      </div>
+      <div id="child-actors-tab" class="table-panel" role="tabpanel" hidden>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Started</th>
+              <th>Actor</th>
+              <th>Data</th>
+            </tr>
+          </thead>
+          <tbody id="child-actors"></tbody>
         </table>
       </div>
     </section>

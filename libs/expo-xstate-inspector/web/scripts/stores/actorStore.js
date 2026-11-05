@@ -2,20 +2,22 @@ import { MAX_EVENTS_PER_ACTOR } from "../constants/limits.js";
 
 const isMachine = actor => Boolean(actor?.definition?.states);
 
+const isSettled = snapshot =>
+  snapshot !== undefined && snapshot.status !== "active";
+
 const reducers = {
-  actor: (actor, { name, definition, snapshot }) => ({
+  actor: (actor, { sessionId, ...details }) => ({ ...actor, ...details }),
+  snapshot: (actor, { snapshot, timestamp }) => ({
     ...actor,
-    name,
-    definition,
-    snapshot
+    snapshot,
+    endedAt: actor.endedAt ?? (isSettled(snapshot) ? timestamp : undefined)
   }),
-  snapshot: (actor, { snapshot }) => ({ ...actor, snapshot }),
-  event: (actor, { event }) => ({
+  event: (actor, { event, timestamp }) => ({
     ...actor,
-    events: [
-      { time: new Date().toLocaleTimeString(), event },
-      ...actor.events
-    ].slice(0, MAX_EVENTS_PER_ACTOR)
+    events: [{ timestamp, event }, ...actor.events].slice(
+      0,
+      MAX_EVENTS_PER_ACTOR
+    )
   })
 };
 
@@ -34,6 +36,11 @@ export const createActorStore = () => {
       return true;
     },
     get: sessionId => actors.get(sessionId),
+    /** Actors invoked or spawned by `parentId`, newest first. */
+    childrenOf: parentId =>
+      [...actors.entries()]
+        .filter(([, actor]) => actor.parentId === parentId)
+        .sort(([, a], [, b]) => b.startedAt - a.startedAt),
     isMachine: sessionId => isMachine(actors.get(sessionId)),
     machines: () =>
       [...actors.entries()].filter(([, actor]) => isMachine(actor))

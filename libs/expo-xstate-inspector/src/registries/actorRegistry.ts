@@ -6,21 +6,21 @@ import { isStopped } from "../utils/snapshot";
 
 /** Tracks running actors so they can be replayed to a newly connected page. */
 export const createActorRegistry = (): ActorRegistry => {
-  const actors = new Set<AnyActor>();
+  const startTimes = new Map<AnyActor, number>();
   const pruneStopped = () =>
-    actors.forEach(actor => {
+    startTimes.forEach((_, actor) => {
       if (isStopped(actor)) {
-        actors.delete(actor);
+        startTimes.delete(actor);
       }
     });
   return {
     forEachRunning: callback => {
       pruneStopped();
-      actors.forEach(callback);
+      startTimes.forEach((startedAt, actor) => callback(actor, startedAt));
     },
-    register: actor => {
+    register: (actor, startedAt) => {
       pruneStopped();
-      actors.add(actor);
+      startTimes.set(actor, startedAt);
     }
   };
 };

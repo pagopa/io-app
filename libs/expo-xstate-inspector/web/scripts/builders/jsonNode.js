@@ -1,15 +1,10 @@
+import { createSpan } from "../utils/dom.js";
+
 const typeOf = value =>
   value === null ? "null" : Array.isArray(value) ? "array" : typeof value;
 
-const span = (className, text) => {
-  const element = document.createElement("span");
-  element.className = className;
-  element.textContent = text;
-  return element;
-};
-
 const keyLabel = key =>
-  key === undefined ? [] : [span("json-key", `${key}: `)];
+  key === undefined ? [] : [createSpan("json-key", `${key}: `)];
 
 const formatLeaf = value =>
   value === undefined ? "undefined" : JSON.stringify(value);
@@ -27,7 +22,7 @@ export const buildJsonNode = (key, value, path, expanded) => {
     type === "object" || type === "array" ? Object.entries(value) : [];
   if (!entries.length) {
     const row = document.createElement("div");
-    row.append(...keyLabel(key), span(`json-${type}`, formatLeaf(value)));
+    row.append(...keyLabel(key), createSpan(`json-${type}`, formatLeaf(value)));
     return row;
   }
   const id = JSON.stringify(path);
@@ -35,7 +30,7 @@ export const buildJsonNode = (key, value, path, expanded) => {
   const summary = document.createElement("summary");
   summary.append(
     ...keyLabel(key),
-    span("json-preview", formatPreview(type, entries.length))
+    createSpan("json-preview", formatPreview(type, entries.length))
   );
   node.open = expanded.has(id);
   node.ontoggle = () => (node.open ? expanded.add(id) : expanded.delete(id));
@@ -46,4 +41,12 @@ export const buildJsonNode = (key, value, path, expanded) => {
     )
   );
   return node;
+};
+
+/** Builds a standalone JSON tree for `value`. */
+export const buildJsonTree = (value, expanded) => {
+  const tree = document.createElement("div");
+  tree.className = "json-tree";
+  tree.append(buildJsonNode(undefined, value, [], expanded));
+  return tree;
 };
