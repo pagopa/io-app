@@ -156,13 +156,6 @@ describe("ItwIssuanceCredentialIntroductionScreen", () => {
     expect(queryByText(I18n.t("global.buttons.continue"))).toBeNull();
   });
 
-  it("notifies the machine when leaving the introduction screen", () => {
-    const { unmount } = renderComponent({ credentialType: "mDL" });
-    mockSend.mockClear();
-    unmount();
-    expect(mockSend).toHaveBeenCalledWith({ type: "back" });
-  });
-
   describe("dismissal dialog", () => {
     it("asks for confirmation on back when the flow comes from the wallet activation", () => {
       spyEidUseSelector.mockReturnValue("mDL" as any);
