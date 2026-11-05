@@ -12,12 +12,20 @@
       rel="stylesheet"
       href="/_expo/plugins/@io-app/expo-xstate-inspector/styles/components.css"
     />
+    <link
+      rel="stylesheet"
+      href="/_expo/plugins/@io-app/expo-xstate-inspector/styles/jsonTree.css"
+    />
     <script
       type="module"
       src="/_expo/plugins/@io-app/expo-xstate-inspector/scripts/main.js"
     ></script>
   </head>
   <body>
+    <aside>
+      <h3>Machines</h3>
+      <nav id="actors"></nav>
+    </aside>
     <main id="diagram">Waiting for the app…</main>
     <div
       id="resizer"
@@ -30,25 +38,21 @@
         <button role="tab" aria-controls="state-tab" aria-selected="true">
           State
         </button>
+        <button role="tab" aria-controls="context-tab" aria-selected="false">
+          Context
+        </button>
         <button role="tab" aria-controls="events-tab" aria-selected="false">
           Events
         </button>
-        <button role="tab" aria-controls="actors-tab" aria-selected="false">
-          Actors
-        </button>
       </nav>
       <div id="state-tab" role="tabpanel">
-        <pre id="state"></pre>
-        <details>
-          <summary>Context</summary>
-          <pre id="context"></pre>
-        </details>
+        <div id="state"></div>
+      </div>
+      <div id="context-tab" role="tabpanel" hidden>
+        <div id="context"></div>
       </div>
       <div id="events-tab" role="tabpanel" hidden>
         <ol id="events"></ol>
-      </div>
-      <div id="actors-tab" role="tabpanel" hidden>
-        <nav id="actors"></nav>
       </div>
     </section>
   </body>

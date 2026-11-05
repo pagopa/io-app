@@ -52,8 +52,3 @@ li {
   font-family: ui-monospace, monospace;
   overflow-wrap: anywhere;
 }
-
-pre {
-  white-space: pre-wrap;
-  word-break: break-all;
-}
