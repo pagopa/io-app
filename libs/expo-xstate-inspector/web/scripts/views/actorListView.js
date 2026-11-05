@@ -8,7 +8,7 @@ const createButton = ([sessionId, actor], selectedId, onSelect) => {
 };
 
 /** Lists the machines, letting the user pick one. */
-export const createSidebarView = (container, onSelect) => ({
+export const createActorListView = (container, onSelect) => ({
   render: (machines, selectedId) =>
     container.replaceChildren(
       ...machines.map(machine => createButton(machine, selectedId, onSelect))
