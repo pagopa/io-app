@@ -116,7 +116,6 @@ Essential core visual attributes of the design language. It includes:
 
 - [**`IOColors`**](./src/core/tokens/colors/README.md): Defines every color token (palette, semantic light/dark and component colors), read with `useIOColors()`
 - [**`IODimensions`**](./src/core/tokens/dimensions/README.md): Defines every dimension token (spacing, padding, radius, stroke, sizes): scales, system and component values
-- **`IOStyles`**: Defines common styles shared across components
 - **`IOTypography`**: Defines the visual attributes of each typographic style
 - **`IOAnimations`**: Defines common animation attributes used for interactive elements (used by the [`reanimated`](https://docs.swmansion.com/react-native-reanimated/) library)
 - **`IOTransitions`**: Defines reusable custom enter/exit transitions (used by the [`reanimated`](https://docs.swmansion.com/react-native-reanimated/) library)

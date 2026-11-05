@@ -7,7 +7,7 @@ import {
 } from "react-native";
 
 import { useIOColors } from "../../context";
-import { IODimensions, IOOpacity, IOSelectionListItemStyles } from "../../core";
+import { IODimensions, IOOpacity } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
@@ -17,6 +17,7 @@ import { LoadingSpinner } from "../loadingSpinner";
 import { IOLogoPaymentType, LogoPayment } from "../logos";
 import { Switch } from "../switch/Switch";
 import { BodySmall, H6, LabelMini } from "../typography";
+import { IOSelectionListItemStyles } from "./styles";
 
 export type ListItemSwitchGraphicProps =
   | { icon: IOIcons; paymentLogo?: never }

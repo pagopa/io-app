@@ -16,7 +16,6 @@ The visual attributes the whole library is built on.
 Not yet migrated to `tokens`:
 
 - [`IOTypography`](./IOTypography.ts): visual attributes of each typographic style
-- [`IOStyles`](./IOStyles.ts): common styles shared across components
 - [`IOAnimations`](./IOAnimations.ts): animation attributes of interactive elements
 - [`IOTransitions`](./IOTransitions.ts): custom enter/exit transitions
 
