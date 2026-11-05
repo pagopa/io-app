@@ -407,12 +407,6 @@ export function* computeAndTrackInAppBrowserOpening() {
   );
 }
 
-export function* handleInAppBrowserErrorIfNeeded(error: unknown) {
-  const debugMessage = `InApp Browser opening failed: ${JSON.stringify(error)}`;
-  yield* call(computeAndTrackAuthenticationError, debugMessage);
-  yield* call(IOToast.error, I18n.t("FIMS.consentsScreen.inAppBrowserError"));
-}
-
 export function* enrichFimsRedirectUrl(
   redirectUrl: string
 ): Generator<ReduxSagaEffect, string, any> {
@@ -429,4 +423,10 @@ export function* enrichFimsRedirectUrl(
     trackingEnrichedUrls,
     mixpanelDeviceId
   );
+}
+
+export function* handleInAppBrowserErrorIfNeeded(error: unknown) {
+  const debugMessage = `InApp Browser opening failed: ${JSON.stringify(error)}`;
+  yield* call(computeAndTrackAuthenticationError, debugMessage);
+  yield* call(IOToast.error, I18n.t("FIMS.consentsScreen.inAppBrowserError"));
 }
