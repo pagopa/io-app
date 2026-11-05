@@ -35,7 +35,7 @@ import {
 } from "../../icons";
 import { LoadingSpinner } from "../../loadingSpinner";
 import { AnimatedIOText } from "../../typography";
-import { useButtonAnimatedStyles } from "./styles";
+import { useButtonAnimatedStyles } from "./useButtonAnimatedStyles";
 
 export type IOButtonBlockSpecificProps = Omit<
   ComponentProps<typeof IOButton>,
