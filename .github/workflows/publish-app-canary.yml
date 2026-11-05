@@ -2,6 +2,7 @@
 # It's published to the Play Store internal track and TestFlight for internal testers.
 name: Publish app canary
 on:
+  pull_request:
   workflow_dispatch:
     inputs:
       description:
@@ -53,7 +54,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add .; git commit -m "Replace Matchfile for canary" --no-verify;
           LAST_CANARY=$(git ls-remote --tags --refs --sort=-v:refname origin "*canary.*" | head -n1 | sed 's|.*refs/tags/||')
-          pnpm nx run main-app:release-canary $LAST_CANARY
+          pnpm nx run main-app:release-canary -- LAST_CANARY
       # - id: push-tags
       #   run: |
       #     APP_VERSION=$(node -p -e "require('./apps/main-app/package.json').version")
