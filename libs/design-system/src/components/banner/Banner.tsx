@@ -169,16 +169,41 @@ export const Banner = ({
   const renderMainBlock = () => (
     <>
       <View
-        accessibilityHint={accessibilityHint}
+        accessibilityHint={action === undefined ? accessibilityHint : undefined}
         // A11y related props
-        accessibilityLabel={accessibilityLabel ?? fallbackAccessibilityLabel}
-        accessibilityRole={action !== undefined ? accessibilityRole : "text"}
-        accessible={true}
+        accessibilityLabel={
+          action === undefined
+            ? (accessibilityLabel ?? fallbackAccessibilityLabel)
+            : undefined
+        }
+        accessibilityRole={action === undefined ? "text" : undefined}
+        accessible={action === undefined}
         style={{ flex: 1, alignSelf: "center", gap: 4 }}
       >
-        {title && <H6 color={colorTitle}>{title}</H6>}
+        {title && (
+          <H6
+            accessibilityElementsHidden={
+              action !== undefined ? true : undefined
+            }
+            color={colorTitle}
+            importantForAccessibility={
+              action !== undefined ? "no-hide-descendants" : undefined
+            }
+          >
+            {title}
+          </H6>
+        )}
         {content && (
-          <BodySmall color={theme["textBody-tertiary"]} weight={"Regular"}>
+          <BodySmall
+            accessibilityElementsHidden={
+              action !== undefined ? true : undefined
+            }
+            color={theme["textBody-tertiary"]}
+            importantForAccessibility={
+              action !== undefined ? "no-hide-descendants" : undefined
+            }
+            weight={"Regular"}
+          >
             {content}
           </BodySmall>
         )}
@@ -186,11 +211,13 @@ export const Banner = ({
           /* Disable pointer events to avoid
              pressed state on the button */
           <Pressable
-            accessibilityElementsHidden
-            accessibilityLabel={action}
-            accessibilityRole="button"
+            accessibilityHint={accessibilityHint}
+            accessibilityLabel={
+              accessibilityLabel ?? fallbackAccessibilityLabel
+            }
+            accessibilityRole={accessibilityRole}
             accessible={true}
-            importantForAccessibility="no-hide-descendants"
+            focusable={true}
             onPress={onPress}
             pointerEvents="none"
           >
@@ -230,6 +257,8 @@ export const Banner = ({
   const PressableButton = () => (
     <Pressable
       accessible={false}
+      // Keep a single keyboard focus stop on the CTA.
+      focusable={false}
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}

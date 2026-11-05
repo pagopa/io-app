@@ -21,7 +21,7 @@ exports[`Test Banner Components - Experimental Enabled Banner Snapshot 1`] = `
   }
   accessible={false}
   collapsable={false}
-  focusable={true}
+  focusable={false}
   onBlur={[Function]}
   onClick={[Function]}
   onFocus={[Function]}
@@ -89,9 +89,7 @@ exports[`Test Banner Components - Experimental Enabled Banner Snapshot 1`] = `
     }
   >
     <View
-      accessibilityLabel="Action text"
-      accessibilityRole="button"
-      accessible={true}
+      accessible={false}
       style={
         {
           "alignSelf": "center",
@@ -101,8 +99,10 @@ exports[`Test Banner Components - Experimental Enabled Banner Snapshot 1`] = `
       }
     >
       <Text
+        accessibilityElementsHidden={true}
         allowFontScaling={true}
         dynamicTypeRamp="headline"
+        importantForAccessibility="no-hide-descendants"
         maxFontSizeMultiplier={1.5}
         style={
           [
@@ -121,7 +121,6 @@ exports[`Test Banner Components - Experimental Enabled Banner Snapshot 1`] = `
         Banner title
       </Text>
       <View
-        accessibilityElementsHidden={true}
         accessibilityLabel="Action text"
         accessibilityRole="button"
         accessibilityState={
@@ -144,7 +143,6 @@ exports[`Test Banner Components - Experimental Enabled Banner Snapshot 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
-        importantForAccessibility="no-hide-descendants"
         onBlur={[Function]}
         onClick={[Function]}
         onFocus={[Function]}
@@ -347,7 +345,7 @@ exports[`Test Banner Components Banner Snapshot 1`] = `
   }
   accessible={false}
   collapsable={false}
-  focusable={true}
+  focusable={false}
   onBlur={[Function]}
   onClick={[Function]}
   onFocus={[Function]}
@@ -415,9 +413,7 @@ exports[`Test Banner Components Banner Snapshot 1`] = `
     }
   >
     <View
-      accessibilityLabel="Action text"
-      accessibilityRole="button"
-      accessible={true}
+      accessible={false}
       style={
         {
           "alignSelf": "center",
@@ -427,8 +423,10 @@ exports[`Test Banner Components Banner Snapshot 1`] = `
       }
     >
       <Text
+        accessibilityElementsHidden={true}
         allowFontScaling={true}
         dynamicTypeRamp="headline"
+        importantForAccessibility="no-hide-descendants"
         maxFontSizeMultiplier={1.5}
         style={
           [
@@ -447,7 +445,6 @@ exports[`Test Banner Components Banner Snapshot 1`] = `
         Banner title
       </Text>
       <View
-        accessibilityElementsHidden={true}
         accessibilityLabel="Action text"
         accessibilityRole="button"
         accessibilityState={
@@ -470,7 +467,6 @@ exports[`Test Banner Components Banner Snapshot 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
-        importantForAccessibility="no-hide-descendants"
         onBlur={[Function]}
         onClick={[Function]}
         onFocus={[Function]}
