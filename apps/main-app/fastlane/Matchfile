@@ -1,4 +1,4 @@
-git_url "git@github.com:pagopa/IO-App-certs.git"
+git_url "git@github.com:pagopa/IO-App-canary-certs.git"
 
 type "development" # The default type, can be: appstore, adhoc, enterprise or development
 

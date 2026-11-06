@@ -1,6 +1,6 @@
 {
   "name": "@io-app/main-app",
-  "version": "3.43.0-rc.5",
+  "version": "3.43.0-canary.8240",
   "private": true,
   "scripts": {
     "start": "expo start",

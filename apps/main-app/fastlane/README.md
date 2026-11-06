@@ -39,7 +39,8 @@ Submit a new Canary Build to TestFlight (requires a prebuild with APP_VARIANT=ca
 
 Distribute previously uploaded beta to TestFlight, using GA
 
----
+----
+
 
 ## Android
 
@@ -107,7 +108,7 @@ Download universal APK file from Google Play
 
 Download universal APK file from Google Play (Canary)
 
----
+----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.
 
