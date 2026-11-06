@@ -1,0 +1,40 @@
+.json-toolbar {
+  margin-bottom: 8px;
+}
+
+.json-tree {
+  font-family: ui-monospace, monospace;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.json-tree summary {
+  cursor: pointer;
+}
+
+.json-tree details > :not(summary) {
+  margin-left: 16px;
+}
+
+.json-tree div {
+  padding-left: 14px;
+}
+
+.json-key {
+  color: var(--color-json-key);
+}
+
+.json-string {
+  color: var(--color-json-string);
+}
+
+.json-number,
+.json-boolean {
+  color: var(--color-json-number);
+}
+
+.json-null,
+.json-undefined,
+.json-preview {
+  color: var(--color-muted);
+}

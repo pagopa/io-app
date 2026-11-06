@@ -1,0 +1,70 @@
+.table-panel {
+  padding: 0;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table th {
+  position: sticky;
+  top: 0;
+  background: var(--color-surface);
+  text-align: left;
+  box-shadow: inset 0 -1px var(--color-border);
+}
+
+.data-table th,
+.data-table td {
+  padding: 4px 8px;
+  vertical-align: top;
+}
+
+.data-table td {
+  border-bottom: 1px solid var(--color-separator);
+  font-family: ui-monospace, monospace;
+  overflow-wrap: anywhere;
+}
+
+/* Shrinks the time column to its content. */
+.data-table th:first-child,
+.data-table td:first-child {
+  width: 1%;
+  white-space: nowrap;
+}
+
+.actor-src {
+  display: block;
+  font-weight: 600;
+}
+
+.actor-meta {
+  display: block;
+  color: var(--color-muted);
+}
+
+.status {
+  display: block;
+}
+
+#child-actors td:nth-child(2) {
+  width: 50%;
+}
+
+.status-active {
+  color: var(--color-status-active);
+}
+
+.status-done {
+  color: var(--color-success);
+}
+
+.status-error {
+  color: var(--color-error);
+  font-weight: 600;
+}
+
+.status-stopped {
+  color: var(--color-muted);
+}

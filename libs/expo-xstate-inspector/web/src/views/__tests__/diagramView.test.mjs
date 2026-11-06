@@ -1,0 +1,76 @@
+import assert from "node:assert/strict";
+import { mock, test } from "node:test";
+
+import { createDiagramView } from "../../../scripts/views/diagramView.js";
+
+const setup = (t, dark) => {
+  const colorScheme = Object.assign(new EventTarget(), { matches: dark });
+  globalThis.window = { matchMedia: () => colorScheme };
+  t.after(() => {
+    delete globalThis.window;
+  });
+  const container = { querySelector: () => null };
+  const renderDiagram = mock.fn(async (_code, isDark) =>
+    isDark ? "<svg>dark</svg>" : "<svg>light</svg>"
+  );
+  const viewport = { update: mock.fn() };
+  const view = createDiagramView(container, renderDiagram, viewport);
+  const actor = {
+    definition: { states: { idle: {}, running: {} } },
+    snapshot: { value: "idle" },
+    visited: new Set(),
+    taken: new Set()
+  };
+  return { actor, colorScheme, container, renderDiagram, view, viewport };
+};
+
+for (const dark of [false, true]) {
+  test(`uses the initial ${dark ? "dark" : "light"} preference and caches unchanged diagrams`, async t => {
+    const { actor, container, renderDiagram, view } = setup(t, dark);
+    await view.render(actor);
+    await view.render(actor);
+
+    assert.equal(container.innerHTML, `<svg>${dark ? "dark" : "light"}</svg>`);
+    assert.equal(renderDiagram.mock.callCount(), 1);
+    assert.equal(renderDiagram.mock.calls[0].arguments[1], dark);
+  });
+}
+
+test("redraws the latest actor on theme changes without resetting the viewport", async t => {
+  const { actor, colorScheme, container, renderDiagram, view, viewport } =
+    setup(t, false);
+  await view.render(actor);
+  const latest = { ...actor, snapshot: { value: "running" } };
+  await view.render(latest);
+
+  for (const dark of [true, false]) {
+    colorScheme.matches = dark;
+    colorScheme.dispatchEvent(new Event("change"));
+    await Promise.resolve();
+
+    const call = renderDiagram.mock.calls.at(-1);
+    assert.equal(call.arguments[1], dark);
+    assert.match(call.arguments[0], /class s_running active/);
+    assert.equal(container.innerHTML, `<svg>${dark ? "dark" : "light"}</svg>`);
+    assert.deepEqual(viewport.update.mock.calls.at(-1).arguments, [
+      { isNew: false }
+    ]);
+  }
+  assert.equal(renderDiagram.mock.callCount(), 4);
+});
+
+test("preserves messages when the system theme changes", async t => {
+  const { actor, colorScheme, container, renderDiagram, view } = setup(
+    t,
+    false
+  );
+  await view.render(actor);
+  view.showMessage("Disconnected.");
+
+  colorScheme.matches = true;
+  colorScheme.dispatchEvent(new Event("change"));
+  await Promise.resolve();
+
+  assert.equal(container.textContent, "Disconnected.");
+  assert.equal(renderDiagram.mock.callCount(), 1);
+});

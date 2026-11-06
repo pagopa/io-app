@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "types": ["react-native"]
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}

@@ -1,4 +1,5 @@
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/identity/PreferredLanguage";
+import { inspect } from "@io-app/expo-xstate-inspector";
 import { createActorContext } from "@xstate/react";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
@@ -110,7 +111,10 @@ export const IDPayConfigurationMachineProvider = ({ children }: Props) => {
   });
 
   return (
-    <IdPayConfigurationMachineContext.Provider logic={machine}>
+    <IdPayConfigurationMachineContext.Provider
+      logic={machine}
+      options={{ inspect }}
+    >
       {children}
     </IdPayConfigurationMachineContext.Provider>
   );

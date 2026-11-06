@@ -1,3 +1,4 @@
+import { inspect } from "@io-app/expo-xstate-inspector";
 import { createActorContext } from "@xstate/react";
 import { JSX } from "react";
 
@@ -26,6 +27,7 @@ export const ItwRemoteMachineProvider = (props: Props) => {
     <ItwRemoteMachineContext.Provider
       logic={itwRemoteMachine}
       options={{
+        inspect,
         input: { deps: { env, itwVersion, navigation, store } }
       }}
     >
