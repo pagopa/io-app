@@ -19,12 +19,14 @@ import {
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import * as connectivitySelectors from "../../../../../connectivity/store/selectors";
 import { OfflineAccessReasonEnum } from "../../../../../ingress/store/reducer";
 import * as ingressSelectors from "../../../../../ingress/store/selectors";
 import * as credentialsSelectors from "../../../../credentials/store/selectors";
 import * as lifecycleSelectors from "../../../../lifecycle/store/selectors";
 import * as proximityCredentialsSelectors from "../../../../presentation/proximity/store/selectors/credentials";
 import * as walletInstanceSelectors from "../../../../walletInstance/store/selectors";
+import { ItwEidStatus } from "../../../utils/itwTypesUtils";
 import { itwSetL2Fallback } from "../../actions/preferences";
 import * as bannersSelectors from "../banners";
 import * as preferencesSelectors from "../preferences";
@@ -695,15 +697,91 @@ describe("isItwProximityNfcEnabledSelector", () => {
 });
 
 describe("itwShouldHideEidLifecycleAlert", () => {
-  test.each(["jwtExpired", "invalid"] as const)(
-    "should never hide the alert when the eID is %s",
-    eidStatus => {
-      jest
-        .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
-        .mockReturnValue(eidStatus);
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  const mockState = ({
+    eidStatus,
+    isItWalletValid = false,
+    isL3Enabled = false,
+    isOffline = false,
+    areSomeCredentialsExpired = false
+  }: {
+    areSomeCredentialsExpired?: boolean;
+    eidStatus: ItwEidStatus;
+    isItWalletValid?: boolean;
+    isL3Enabled?: boolean;
+    isOffline?: boolean;
+  }) => {
+    jest
+      .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
+      .mockReturnValue(eidStatus);
+    jest
+      .spyOn(
+        credentialsSelectors,
+        "itwAreSomeDigitalCredentialsExpiredSelector"
+      )
+      .mockReturnValue(areSomeCredentialsExpired);
+    jest
+      .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+      .mockReturnValue(isItWalletValid);
+    jest
+      .spyOn(remoteConfigSelectors, "isItwEnabledSelector")
+      .mockReturnValue(true);
+    jest
+      .spyOn(remoteConfigSelectors, "isItwMinAppVersionSupportedSelector")
+      .mockReturnValue(isL3Enabled);
+    jest
+      .spyOn(preferencesSelectors, "itwIsFiscalCodeWhitelisted")
+      .mockReturnValue(false);
+    jest
+      .spyOn(ingressSelectors, "offlineAccessReasonSelector")
+      .mockReturnValue(
+        isOffline ? OfflineAccessReasonEnum.DEVICE_OFFLINE : undefined
+      );
+    jest
+      .spyOn(connectivitySelectors, "isConnectedSelector")
+      .mockReturnValue(!isOffline);
+  };
+
+  it.each`
+    eidStatus        | isItWalletValid | isL3Enabled | isOffline | areSomeCredentialsExpired | expected
+    ${"valid"}       | ${true}         | ${true}     | ${false}  | ${false}                  | ${true}
+    ${"invalid"}     | ${true}         | ${true}     | ${false}  | ${false}                  | ${false}
+    ${"jwtExpiring"} | ${true}         | ${true}     | ${false}  | ${false}                  | ${true}
+    ${"jwtExpired"}  | ${true}         | ${true}     | ${false}  | ${false}                  | ${false}
+    ${"jwtExpired"}  | ${true}         | ${true}     | ${false}  | ${true}                   | ${false}
+    ${"valid"}       | ${false}        | ${true}     | ${false}  | ${false}                  | ${true}
+    ${"jwtExpiring"} | ${false}        | ${true}     | ${false}  | ${false}                  | ${true}
+    ${"jwtExpired"}  | ${false}        | ${true}     | ${false}  | ${false}                  | ${true}
+    ${"jwtExpired"}  | ${false}        | ${true}     | ${false}  | ${true}                   | ${false}
+    ${"valid"}       | ${false}        | ${false}    | ${false}  | ${false}                  | ${false}
+    ${"jwtExpiring"} | ${false}        | ${false}    | ${false}  | ${false}                  | ${false}
+    ${"valid"}       | ${false}        | ${true}     | ${true}   | ${false}                  | ${false}
+    ${"jwtExpiring"} | ${false}        | ${true}     | ${true}   | ${false}                  | ${true}
+    ${"jwtExpiring"} | ${false}        | ${false}    | ${true}   | ${false}                  | ${true}
+    ${"jwtExpiring"} | ${true}         | ${true}     | ${true}   | ${false}                  | ${true}
+  `(
+    "should return $expected when the eID is $eidStatus, isItWalletValid=$isItWalletValid, isL3Enabled=$isL3Enabled, isOffline=$isOffline and areSomeCredentialsExpired=$areSomeCredentialsExpired",
+    ({
+      eidStatus,
+      isItWalletValid,
+      isL3Enabled,
+      isOffline,
+      areSomeCredentialsExpired,
+      expected
+    }) => {
+      mockState({
+        eidStatus,
+        isItWalletValid,
+        isL3Enabled,
+        isOffline,
+        areSomeCredentialsExpired
+      });
 
       expect(itwShouldHideEidLifecycleAlert({} as unknown as GlobalState)).toBe(
-        false
+        expected
       );
     }
   );

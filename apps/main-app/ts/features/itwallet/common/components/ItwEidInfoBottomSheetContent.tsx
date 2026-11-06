@@ -4,13 +4,13 @@ import {
   HStack,
   Icon,
   IOButton,
+  IOMarkdown,
   VStack
 } from "@io-app/design-system";
 import I18n from "i18next";
 import { Fragment, memo, useEffect } from "react";
 import { View } from "react-native";
 
-import IOMarkdown from "../../../../components/IOMarkdown";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { trackItwStartDeactivation } from "../../analytics";
@@ -24,6 +24,7 @@ import { ITW_ROUTES } from "../../navigation/routes";
 import { trackCredentialDetail } from "../../presentation/details/analytics";
 import { ITW_PRESENTATION_DETAILS_SCREENVIEW_EVENTS } from "../../presentation/details/analytics/enum";
 import { useItwStatusIconColor } from "../hooks/useItwStatusIconColor";
+import { itwShouldHideEidLifecycleAlert } from "../store/selectors";
 import { parseClaims, WellKnownClaim } from "../utils/itwClaimsUtils";
 import { CredentialMetadata } from "../utils/itwTypesUtils";
 import { ItwCredentialClaim } from "./ItwCredentialClaim";
@@ -57,6 +58,10 @@ type ItwEidInfoBottomSheetContentProps = {
   navigation: ReturnType<typeof useIONavigation>;
 };
 
+/**
+ * The bottom sheet content with the eID details, shown only for "Documenti su
+ * IO". The IT-Wallet ID details are shown in another dedicated screen.
+ */
 const ItwEidInfoBottomSheetContent = ({
   navigation,
   currentScreenName
@@ -64,6 +69,7 @@ const ItwEidInfoBottomSheetContent = ({
   const eid = useIOSelector(itwCredentialsEidSelector);
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const shouldHideEidAlert = useIOSelector(itwShouldHideEidLifecycleAlert);
 
   const Content = ({ credential }: { credential: CredentialMetadata }) => {
     const claims = parseClaims(credential.parsedCredential, {
@@ -97,11 +103,13 @@ const ItwEidInfoBottomSheetContent = ({
             "features.itWallet.presentation.bottomSheets.eidInfo.contentTop"
           )}
         />
-        <ItwEidLifecycleAlert
-          currentScreenName={currentScreenName}
-          navigation={navigation}
-          skipViewTracking={true}
-        />
+        {!shouldHideEidAlert && (
+          <ItwEidLifecycleAlert
+            currentScreenName={currentScreenName}
+            navigation={navigation}
+            skipViewTracking={true}
+          />
+        )}
         <View>
           {claims.map((claim, index) => (
             <Fragment key={index}>

@@ -312,6 +312,14 @@ export const itwCredentialsEidIssuedAtSelector = createSelector(
   eid => eid?.jwt.issuedAt
 );
 
+export const itwAreSomeDigitalCredentialsExpiredSelector = createSelector(
+  itwCredentialsSelector,
+  credentials =>
+    Object.values(credentials).some(
+      c => getCredentialStatus(c) === "jwtExpired"
+    )
+);
+
 /**
  * Returns all stored credential instances of the given type, in every format.
  * Unlike the representative-based selectors, this reads the raw store so it
