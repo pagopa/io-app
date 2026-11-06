@@ -66,7 +66,7 @@ The promise **always resolves** with an `HttpClientResponse`, whose `headers` ke
 
 `isSuccessResponse` and `isFailureResponse` narrow the response type.
 
-`nativeRequest`, `cancelRequestWithId`, `cancelAllRunningRequests` and `deallocate` are native async functions sharing the same serial queue, so they run in call order: a cancel issued right after a request always finds it registered. Their wrappers stay synchronous (`void`), as in the original library.
+All native functions are async and share the same serial queue, so they run in call order, as in the original TurboModule: a cancel issued right after a request always finds it registered, and a cookie set right after `deallocate` is sent by the next request. Apart from `nativeRequest`, the wrappers stay synchronous (`void`), as in the original library.
 
 ## Testing
 

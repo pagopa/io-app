@@ -15,7 +15,7 @@ public class ExpoHttpClientModule: Module {
       self.nativeRequest(config, promise: promise)
     }
 
-    Function("setCookieForDomain") { (domain: String, path: String, name: String, value: String) in
+    AsyncFunction("setCookieForDomain") { (domain: String, path: String, name: String, value: String) in
       let cookieProperties: [HTTPCookiePropertyKey: Any] = [
         .originURL: domain,
         .path: path,
@@ -27,7 +27,7 @@ public class ExpoHttpClientModule: Module {
       }
     }
 
-    Function("removeAllCookiesForDomain") { (domain: String) in
+    AsyncFunction("removeAllCookiesForDomain") { (domain: String) in
       guard let domainUrl = URL(string: domain),
             let cookieStorage = AF.session.configuration.httpCookieStorage else {
         return
@@ -35,8 +35,6 @@ public class ExpoHttpClientModule: Module {
       cookieStorage.cookies(for: domainUrl)?.forEach { cookieStorage.deleteCookie($0) }
     }
 
-    // Async like `nativeRequest`, so they share its serial queue and run in call order:
-    // a cancel issued right after a request always finds it registered.
     AsyncFunction("cancelRequestWithId") { (requestId: String) in
       self.removeRunningRequest(forKey: requestId)?.cancel()
     }

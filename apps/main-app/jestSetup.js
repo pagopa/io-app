@@ -152,8 +152,8 @@ jest.mock("@io-app/expo-http-client/src/ExpoHttpClientModule", () => ({
       body: "",
       headers: {}
     }),
-    removeAllCookiesForDomain: jest.fn(),
-    setCookieForDomain: jest.fn()
+    removeAllCookiesForDomain: jest.fn().mockResolvedValue(undefined),
+    setCookieForDomain: jest.fn().mockResolvedValue(undefined)
   }
 }));
 

@@ -24,11 +24,13 @@ export const nativeRequest = async (
   headers: {}
 });
 
-export const removeAllCookiesForDomain = (_domain: string): void => undefined;
+export const removeAllCookiesForDomain = async (
+  _domain: string
+): Promise<void> => undefined;
 
-export const setCookieForDomain = (
+export const setCookieForDomain = async (
   _domain: string,
   _path: string,
   _name: string,
   _value: string
-): void => undefined;
+): Promise<void> => undefined;

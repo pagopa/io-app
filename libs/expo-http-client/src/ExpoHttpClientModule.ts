@@ -11,13 +11,13 @@ declare class ExpoHttpClientModule extends NativeModule {
   cancelRequestWithId(requestId: string): Promise<void>;
   deallocate(): Promise<void>;
   nativeRequest(config: HttpCallConfig): Promise<HttpClientResponse>;
-  removeAllCookiesForDomain(domain: string): void;
+  removeAllCookiesForDomain(domain: string): Promise<void>;
   setCookieForDomain(
     domain: string,
     path: string,
     name: string,
     value: string
-  ): void;
+  ): Promise<void>;
 }
 
 export type { ExpoHttpClientModule };

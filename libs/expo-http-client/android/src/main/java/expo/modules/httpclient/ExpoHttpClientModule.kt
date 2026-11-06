@@ -62,7 +62,7 @@ class ExpoHttpClientModule : Module() {
       nativeRequest(config, promise)
     }
 
-    Function("setCookieForDomain") { domain: String, path: String, name: String, value: String ->
+    AsyncFunction("setCookieForDomain") { domain: String, path: String, name: String, value: String ->
       val cookieStorage = inMemoryCookieStorage
       coroutineScope.launch {
         try {
@@ -73,7 +73,7 @@ class ExpoHttpClientModule : Module() {
       }
     }
 
-    Function("removeAllCookiesForDomain") { domain: String ->
+    AsyncFunction("removeAllCookiesForDomain") { domain: String ->
       val cookieStorage = inMemoryCookieStorage
       coroutineScope.launch {
         try {
@@ -87,8 +87,6 @@ class ExpoHttpClientModule : Module() {
       }
     }
 
-    // Async like `nativeRequest`, so they share its serial queue and run in call order:
-    // a cancel issued right after a request always finds it registered.
     AsyncFunction("cancelRequestWithId") { requestId: String ->
       runningRequestJobs.remove(requestId)?.cancel()
     }

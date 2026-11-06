@@ -36,11 +36,11 @@ export const setCookie = (
   path: string,
   name: string,
   value: string
-): void => getNativeModule().setCookieForDomain(domain, path, name, value);
+): void => void getNativeModule().setCookieForDomain(domain, path, name, value);
 
 /** @throws If invoked on a platform other than iOS or Android. */
 export const removeAllCookiesForDomain = (domain: string): void =>
-  getNativeModule().removeAllCookiesForDomain(domain);
+  void getNativeModule().removeAllCookiesForDomain(domain);
 
 /**
  * Cancels the running request with the given `requestId`: its promise resolves
