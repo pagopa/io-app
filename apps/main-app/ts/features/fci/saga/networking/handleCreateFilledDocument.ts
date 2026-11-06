@@ -27,7 +27,7 @@ import { fciPollFilledDocumentSettledSelector } from "../../store/reducers/fciPo
 // Polling frequency timeout
 const POLLING_FREQ_TIMEOUT = 2000 as Millisecond;
 
-// Polling time threshold (10 seconds)
+// Polling time threshold (20 seconds)
 // If the polling time exceeds this threshold, the polling is stopped
 const POLLING_TIME_THRESHOLD = (10 * 2000) as Millisecond;
 
