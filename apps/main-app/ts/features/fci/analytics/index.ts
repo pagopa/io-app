@@ -315,6 +315,12 @@ export const trackFciStartSignature = (environment: string) =>
     buildEventProperties("UX", "action", { environment })
   );
 
+export const trackFciNoSignatureBottomsheetOpen = () =>
+  mixpanelTrack(
+    "FCI_SIGN_ALL_BOTTOMSHEET",
+    buildEventProperties("UX", "screen_view")
+  );
+
 export const trackFciBottomsheetMessagePermissionRequest = () =>
   mixpanelTrack(
     "FCI_MESSAGE_PERMISSION_REQUEST",

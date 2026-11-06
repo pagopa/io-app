@@ -29,6 +29,7 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
   trackFciDocOpeningSuccess,
   trackFciDocumentsView,
+  trackFciNoSignatureBottomsheetOpen,
   trackFciSigningDoc
 } from "../../analytics";
 import DocumentsNavigationBar from "../../components/DocumentsNavigationBar";
@@ -183,6 +184,7 @@ const FciDocumentsScreen = () => {
         })
       );
     } else {
+      trackFciNoSignatureBottomsheetOpen();
       showNoSignatureFieldsBs();
     }
   };
