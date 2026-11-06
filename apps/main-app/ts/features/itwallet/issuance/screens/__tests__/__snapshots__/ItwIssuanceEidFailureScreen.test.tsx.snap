@@ -1075,6 +1075,7 @@ exports[`ItwIssuanceEidFailureScreen renders the dedicated integrity error copy 
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -2685,6 +2686,7 @@ exports[`ItwIssuanceEidFailureScreen renders the dedicated integrity error copy 
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
