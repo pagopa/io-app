@@ -485,6 +485,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       ],
       ["react-native-vision-camera", { enableCodeScanner: true }],
       "expo-background-task",
+      "expo-web-browser",
       [
         "expo-font",
         {
