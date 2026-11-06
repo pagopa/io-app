@@ -1,3 +1,17 @@
+## 3.42.1-rc.0 (2026-11-06)
+
+### Bug Fixes
+
+- [[IEG-3321](https://pagopa.atlassian.net/browse/IEG-3321)] Omit CGN banner calls based on FF ([#8848](https://github.com/pagopa/io-app/pull/8848))
+
+### Chores
+
+- align Android versionCode for hotfix ([72c3de308](https://github.com/pagopa/io-app/commit/72c3de308))
+
+### ❤️ Thank You
+
+- Emanuele Dall'Ara @LeleDallas
+
 ## 3.42.0-rc.11 (2026-10-28)
 
 ### Features
