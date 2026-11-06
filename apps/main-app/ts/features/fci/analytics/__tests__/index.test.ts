@@ -14,7 +14,10 @@ import {
   fciStartRequest,
   fciUpdateDocumentSignaturesRequest
 } from "../../store/actions";
-import trackFciAction, { trackFciPollingFailureScreenView } from "../index";
+import trackFciAction, {
+  trackFciNoSignatureBottomsheetOpen,
+  trackFciPollingFailureScreenView
+} from "../index";
 
 describe("index", () => {
   describe("trackFciAction", () => {
@@ -378,5 +381,28 @@ describe("index", () => {
         );
       }
     );
+  });
+
+  describe("trackFciNoSignatureBottomsheetOpen", () => {
+    const mixpanelTrackSpy = jest
+      .spyOn(mixpanelModule, "mixpanelTrack")
+      .mockImplementation();
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it("should track the FCI_SIGN_ALL_BOTTOMSHEET screen view event", () => {
+      trackFciNoSignatureBottomsheetOpen();
+
+      expect(mixpanelTrackSpy).toHaveBeenCalledTimes(1);
+      expect(mixpanelTrackSpy).toHaveBeenCalledWith(
+        "FCI_SIGN_ALL_BOTTOMSHEET",
+        expect.objectContaining({
+          event_category: "UX",
+          event_type: "screen_view"
+        })
+      );
+    });
   });
 });
