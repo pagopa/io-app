@@ -5,18 +5,18 @@
 Fonts are handled differently than Android and iOS. To use the font, `Titillio-Semibold` example, you must apply the following properties for Android:
 
 ```js
-{
-  fontFamily: "Titillio-Semibold";
-}
+const androidStyle = {
+  fontFamily: "Titillio-Semibold"
+};
 ```
 
 while in iOS the code to be applied is:
 
 ```js
-{
-  fontFamily: 'Titillio',
-  fontWeight: '600',
-}
+const iosStyle = {
+  fontFamily: "Titillio",
+  fontWeight: "600"
+};
 ```
 
 The different font handling is managed by the `makeFontFamilyName` function. It's included in the [fonts.ts](../../utils/fonts.ts) file, which contains many other utility functions that simplify font management.
