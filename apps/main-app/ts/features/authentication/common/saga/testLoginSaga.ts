@@ -98,9 +98,11 @@ export function* handleTestLogin({
     yield* put(
       loginFailure({
         error: new Error(
-          (readableReport(testLoginResponse.left).match(/"status":\d{3}/) ?? [
-            "unknown error"
-          ])[0]
+          (
+            readableReport(testLoginResponse.left).match(/"status":\d{3}/) ?? [
+              "unknown error"
+            ]
+          )[0]
         ),
         idp: "test"
       })
