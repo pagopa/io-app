@@ -38,17 +38,37 @@ for (const [relativePath, updater] of versionUpdates) {
   fs.writeFileSync(filePath, updater.writeVersion(contents, version));
 }
 
-run("pnpm", [
-  "nx",
-  "release",
-  "changelog",
-  version,
-  `--from=${previousVersion}`,
-  "--group=main-app",
-  "--git-commit=false",
-  "--git-tag=false",
-  "--git-push=false"
-]);
+if (preid === "canary") {
+  const lastCanary = process.env.LAST_CANARY;
+  if (!lastCanary) {
+    throw new Error(
+      "Expected LAST_CANARY environment variable for canary release"
+    );
+  }
+  run("pnpm", [
+    "nx",
+    "release",
+    "changelog",
+    version,
+    `--from=${lastCanary}`,
+    "--group=main-app",
+    "--git-commit=false",
+    "--git-tag=false",
+    "--git-push=false"
+  ]);
+} else {
+  run("pnpm", [
+    "nx",
+    "release",
+    "changelog",
+    version,
+    `--from=${previousVersion}`,
+    "--group=main-app",
+    "--git-commit=false",
+    "--git-tag=false",
+    "--git-push=false"
+  ]);
+}
 run(process.execPath, ["scripts/changelog/add_jira_stories.js"]);
 
 run("git", [

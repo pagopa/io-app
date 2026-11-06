@@ -51,7 +51,7 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add .; git commit -m "Replace Matchfile for canary" --no-verify;
-          pnpm nx run main-app:release-canary
+          LAST_CANARY=$(git ls-remote --tags --refs --sort=-v:refname origin "*canary.*" | head -n1 | sed 's|.*refs/tags/||') pnpm nx run main-app:release-canary
       - id: push-tags
         run: |
           APP_VERSION=$(node -p -e "require('./apps/main-app/package.json').version")

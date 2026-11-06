@@ -1,3 +1,18 @@
+## 3.43.0-rc.5 (2026-11-05)
+
+### Bug Fixes
+
+- **IT-Wallet:** [[SIW-5130](https://pagopa.atlassian.net/browse/SIW-5130)] Fix intro credentials empty values ([#8688](https://github.com/pagopa/io-app/pull/8688))
+- [[IOPLT-2060](https://pagopa.atlassian.net/browse/IOPLT-2060)] Restore `topic` value based on guards in store review context ([#8560](https://github.com/pagopa/io-app/pull/8560))
+- **IT-Wallet:** [[SIW-5431](https://pagopa.atlassian.net/browse/SIW-5431),[SIW-5225](https://pagopa.atlassian.net/browse/SIW-5225)] fix mdoc remote presentation, proximity ios termination and bump deps ([#8834](https://github.com/pagopa/io-app/pull/8834))
+
+### ❤️ Thank You
+
+- Alessandro Mazzon
+- Cristiano Tofani
+- DavideOnano @DavideOnano
+- Emanuele Dall'Ara @LeleDallas
+
 ## 3.43.0-rc.4 (2026-11-04)
 
 ### Bug Fixes
