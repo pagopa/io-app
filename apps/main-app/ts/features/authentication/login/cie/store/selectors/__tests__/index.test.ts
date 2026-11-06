@@ -1,14 +1,14 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 
-import { AUTH_LEVELS } from "../../../../common/utils";
-import * as selectors from "../selectors";
+import * as selectors from "..";
+import { AUTH_LEVELS } from "../../../../../common/utils";
 
 describe("CIE selectors", () => {
   const baseState = {
     features: {
       loginFeatures: {
         cieLogin: {
-          useUat: true,
+          cieEnv: "preprod",
           isCieIDTourGuideEnabled: false,
           cieIDSelectedSecurityLevel: AUTH_LEVELS.L2
         }
@@ -20,9 +20,22 @@ describe("CIE selectors", () => {
     }
   } as any;
 
-  it("should return correct value for isCieLoginUatEnabledSelector", () => {
-    expect(selectors.isCieLoginUatEnabledSelector(baseState)).toBe(true);
+  it("should return correct value for cieEnvSelector", () => {
+    expect(selectors.cieEnvSelector(baseState)).toBe("preprod");
   });
+
+  it.each([
+    { cieEnv: "production", expected: true },
+    { cieEnv: "preprod", expected: false }
+  ])(
+    "isCieProdSelector should return $expected when cieEnv is $cieEnv",
+    ({ cieEnv, expected }) => {
+      const state = {
+        features: { loginFeatures: { cieLogin: { cieEnv } } }
+      } as any;
+      expect(selectors.isCieProdSelector(state)).toBe(expected);
+    }
+  );
 
   it("should return correct value for isCieIDTourGuideEnabledSelector", () => {
     expect(selectors.isCieIDTourGuideEnabledSelector(baseState)).toBe(false);

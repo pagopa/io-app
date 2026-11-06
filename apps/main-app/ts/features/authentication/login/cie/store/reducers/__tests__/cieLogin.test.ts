@@ -1,16 +1,13 @@
 import { PersistedState } from "redux-persist";
 
-import { AUTH_LEVELS } from "../../../../common/utils";
+import { AUTH_LEVELS } from "../../../../../common/utils";
+import { CIE_ENVS } from "../../../utils";
 import {
   cieIDDisableTourGuide,
   cieIDSetSelectedSecurityLevel,
-  cieLoginDisableUat,
-  cieLoginEnableUat
-} from "../actions";
-import {
-  cieLoginInitialState,
-  testableCieLoginReducer
-} from "../reducers/cieLogin";
+  setCieEnv
+} from "../../actions";
+import { cieLoginInitialState, testableCieLoginReducer } from "../cieLogin";
 
 describe("cieLoginReducer", () => {
   if (!testableCieLoginReducer) {
@@ -23,16 +20,20 @@ describe("cieLoginReducer", () => {
     expect(result).toEqual(cieLoginInitialState);
   });
 
-  it("should enable UAT mode", () => {
-    const result = cieLoginReducer(cieLoginInitialState, cieLoginEnableUat());
-    expect(result.useUat).toBe(true);
+  it("should default the CIE environment to production", () => {
+    expect(cieLoginInitialState.cieEnv).toBe(CIE_ENVS.PROD);
   });
 
-  it("should disable UAT mode", () => {
-    const initialState = { ...cieLoginInitialState, useUat: true };
-    const result = cieLoginReducer(initialState, cieLoginDisableUat());
-    expect(result.useUat).toBe(false);
-  });
+  it.each([CIE_ENVS.PREPROD, CIE_ENVS.PROD])(
+    "should set the CIE environment to $0",
+    env => {
+      const result = cieLoginReducer(
+        { ...cieLoginInitialState, cieEnv: CIE_ENVS.PROD },
+        setCieEnv(env)
+      );
+      expect(result.cieEnv).toBe(env);
+    }
+  );
 
   it("should disable CIEID tour guide", () => {
     const result = cieLoginReducer(

@@ -1,7 +1,11 @@
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { CIE_ENVS } from "../../utils";
 
-export const isCieLoginUatEnabledSelector = (state: GlobalState) =>
-  state.features.loginFeatures.cieLogin.useUat;
+export const cieEnvSelector = (state: GlobalState) =>
+  state.features.loginFeatures.cieLogin.cieEnv;
+
+export const isCieProdSelector = (state: GlobalState) =>
+  cieEnvSelector(state) === CIE_ENVS.PROD;
 
 // TODO: remove these selectors if not used anymore,
 // when we've decided to definetively remove the CIE Tooltip feature

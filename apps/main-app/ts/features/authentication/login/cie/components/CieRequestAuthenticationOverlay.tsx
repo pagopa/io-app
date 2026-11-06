@@ -38,8 +38,8 @@ import {
 } from "../../../activeSessionLogin/store/selectors";
 import { AUTH_LEVELS, getIdpLoginUri } from "../../../common/utils";
 import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
-import { isCieLoginUatEnabledSelector } from "../store/selectors";
-import { cieFlowForDevServerEnabled } from "../utils";
+import { cieEnvSelector } from "../store/selectors";
+import { cieFlowForDevServerEnabled, getCieEntityId } from "../utils";
 
 // to make sure the server recognizes the client as valid iPhone device (iOS only) we use a custom header
 // on Android it is not required
@@ -107,11 +107,6 @@ const generateRetryState: (state: InternalState) => InternalState = (
   key: state.key + 1
 });
 
-export enum CieEntityIds {
-  DEV = "xx_servizicie_coll",
-  PROD = "xx_servizicie"
-}
-
 type RequestInfo = RequestInfoAuthorizedState | RequestInfoLoadingState;
 
 type RequestInfoAuthorizedState = {
@@ -145,8 +140,7 @@ const CieWebView = (props: Props) => {
     nativeAttempts: 0
   });
 
-  const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
-  const CIE_IDP_ID = useCieUat ? CieEntityIds.DEV : CieEntityIds.PROD;
+  const CIE_IDP_ID = getCieEntityId(useIOSelector(cieEnvSelector));
   const remoteApiLoginUrlPrefix = useIOSelector(
     remoteApiLoginUrlPrefixSelector
   );
