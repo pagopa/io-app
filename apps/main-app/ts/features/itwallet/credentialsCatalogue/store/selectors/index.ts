@@ -326,3 +326,10 @@ export const itwAuthenticSourceContactsSelector =
     }
     return catalogue[credentialType].authentic_sources.at(0)?.contacts;
   };
+
+export const itwAuthenticSourceSelector =
+  (credentialType: string) => (state: GlobalState) => {
+    const catalogue = itwCredentialsCatalogueByTypesSelector(state);
+    const credential = catalogue?.[credentialType];
+    return credential?.authentic_sources.at(0);
+  };

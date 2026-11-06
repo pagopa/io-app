@@ -1,5 +1,6 @@
 import { ComponentProps, memo, useRef, useState } from "react";
 import { Image, ImageSourcePropType, StyleSheet, View } from "react-native";
+import { SvgCssUri } from "react-native-svg/css";
 
 import { Icon } from "../../components/icons";
 import { useIOTheme } from "../../context";
@@ -135,12 +136,20 @@ export const Avatar = ({ logoUri, size }: Avatar) => {
 
 export type AvatarSearchProps = Pick<
   ComponentProps<typeof Image>,
-  "defaultSource" | "onError" | "source"
->;
+  "defaultSource" | "source"
+> & {
+  onError?: () => void;
+};
 
 /**
- * AvatarSearch component is used to display the logo of an institution in the
- * search results. A placeholder is displayed if the logo is not available.
+ * Displays an institution logo in search results and informational list items,
+ * including credential issuance metadata. Despite its name, this component is
+ * not limited to search.
+ *
+ * Supports native image sources and inline SVG data URIs. A placeholder is
+ * displayed when no source is provided; callers can handle loading failures
+ * through `onError`.
+ *
  * Note: On Android, the default source prop is ignored on debug builds.
  *
  * @param AvatarSearchProps
@@ -154,6 +163,11 @@ export const AvatarSearch = memo(
     const internalSpace = dimensionsMap.small.internalSpace;
     const innerRadius = borderRadius - internalSpace;
     const defaultPlaceholder = defaultSource ?? avatarSearchPlaceholder;
+    const imageUri =
+      source === undefined ? undefined : Image.resolveAssetSource(source)?.uri;
+    const svgUri = imageUri?.startsWith("data:image/svg+xml;base64")
+      ? imageUri
+      : undefined;
 
     return (
       <View
@@ -172,7 +186,15 @@ export const AvatarSearch = memo(
         <View
           style={[styles.avatarInnerWrapper, { borderRadius: innerRadius }]}
         >
-          {source === undefined ? (
+          {svgUri ? (
+            <SvgCssUri
+              height="100%"
+              onError={onError}
+              preserveAspectRatio="xMidYMid meet"
+              uri={svgUri}
+              width="100%"
+            />
+          ) : source === undefined ? (
             <Image
               accessibilityIgnoresInvertColors
               source={defaultPlaceholder}
