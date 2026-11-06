@@ -7,8 +7,11 @@ import {
   itwCredentialNameResolverSelector,
   itwCredentialsCatalogueByTypesSelector,
   itwCredentialsCatalogueSelector,
-  itwCredentialTypeFromDocTypeSelector
+  itwCredentialTypeFromDocTypeSelector,
+  itwDiscoverMoreCEDSelector
 } from "..";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { appReducer } from "../../../../../../store/reducers";
 import { type GlobalState } from "../../../../../../store/reducers/types";
 import { pidScopes } from "../../../../common/utils/constants";
 import { type DigitalCredentialsCatalogue } from "../../../../common/utils/itwCredentialsCatalogueUtils";
@@ -418,5 +421,54 @@ describe("itwCredentialIntroContentSelector", () => {
     expect(itwCredentialIntroContentSelector("cred2")(state)).toEqual(
       undefined
     );
+  });
+});
+
+describe("CED opportunities feature flags", () => {
+  test.each([
+    {
+      name: "both absent",
+      local: undefined,
+      remote: undefined,
+      expected: false
+    },
+    { name: "both disabled", local: false, remote: false, expected: false },
+    { name: "local only", local: true, remote: false, expected: true },
+    { name: "remote only", local: false, remote: true, expected: true },
+    { name: "both enabled", local: true, remote: true, expected: true },
+    {
+      name: "local enabled and remote absent",
+      local: true,
+      remote: undefined,
+      expected: true
+    },
+    {
+      name: "remote enabled and local absent",
+      local: undefined,
+      remote: true,
+      expected: true
+    }
+  ])("returns $expected with $name", ({ local, remote, expected }) => {
+    const state = appReducer(undefined, applicationChangeState("active"));
+    const itWallet = state.features.itWallet;
+    const nextState = {
+      ...state,
+      features: {
+        ...state.features,
+        itWallet: {
+          ...itWallet,
+          preferences: {
+            ...itWallet.preferences,
+            isDiscoverMoreCEDEnabled: local
+          },
+          remoteConfig: {
+            ...itWallet.remoteConfig,
+            discover_more_ced_enabled: remote
+          }
+        }
+      }
+    };
+
+    expect(itwDiscoverMoreCEDSelector(nextState)).toBe(expected);
   });
 });

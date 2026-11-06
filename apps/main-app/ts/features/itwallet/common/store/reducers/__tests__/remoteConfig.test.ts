@@ -1,4 +1,7 @@
 import { ItwConfig } from "@io-app/api-types/generated/definitions/content/ItwConfig";
+import { createMigrate } from "redux-persist";
+
+import { migrations } from "../remoteConfig";
 
 type IoTsCodec = {
   readonly name: string;
@@ -25,5 +28,20 @@ const ioTsShape = (codec: IoTsCodec): unknown => {
 describe("ITW remote config persist shape", () => {
   it("should freeze ItwConfig [if this test fails, add a persist migration before updating the snapshot]", () => {
     expect(ioTsShape(ItwConfig)).toMatchSnapshot();
+  });
+});
+
+describe("ITW remote config migration", () => {
+  test("initializes the CED flag while preserving the previous remote configuration", async () => {
+    const previousState = {
+      enabled: true,
+      ipatente_cta_visible: true,
+      _persist: { version: -1, rehydrated: true }
+    };
+
+    await expect(createMigrate(migrations)(previousState, 0)).resolves.toEqual({
+      ...previousState,
+      discover_more_ced_enabled: false
+    });
   });
 });

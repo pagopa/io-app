@@ -15,6 +15,7 @@ import {
   itwIpzsItwalletPrivacyUrlSelector,
   itwIpzsPrivacyUrlSelector,
   itwIsActivationDisabledSelector,
+  itwIsDiscoverMoreCEDRemotelyEnabledSelector,
   itwIsIPatenteCtaEnabledSelector,
   itwNewCredentialsSelector,
   itwPinnedCredentialsSelector
@@ -193,6 +194,11 @@ describe.each(["ios", "android"] as const)(
 
 describe.each([
   [
+    "CED opportunities",
+    itwIsDiscoverMoreCEDRemotelyEnabledSelector,
+    { discover_more_ced_enabled: true }
+  ] as const,
+  [
     "feedback banner",
     isItwFeedbackBannerEnabledSelector,
     { feedback_banner_visible: true }
@@ -304,4 +310,12 @@ describe("itwIpzsItwalletPrivacyUrlSelector", () => {
       )
     ).toBe(url);
   });
+});
+
+test("CED opportunities are disabled when the remote flag is false", () => {
+  expect(
+    itwIsDiscoverMoreCEDRemotelyEnabledSelector(
+      makeState({ discover_more_ced_enabled: false })
+    )
+  ).toBe(false);
 });
