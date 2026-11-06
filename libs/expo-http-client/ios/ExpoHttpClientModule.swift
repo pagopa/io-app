@@ -36,7 +36,8 @@ public class ExpoHttpClientModule: Module {
     }
 
     AsyncFunction("cancelRequestWithId") { (requestId: String) in
-      self.removeRunningRequest(forKey: requestId)?.cancel()
+      // `cancel()` returns the request, which must not become the resolved JS value.
+      _ = self.removeRunningRequest(forKey: requestId)?.cancel()
     }
 
     AsyncFunction("cancelAllRunningRequests") {

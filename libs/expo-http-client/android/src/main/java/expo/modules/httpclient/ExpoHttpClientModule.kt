@@ -63,28 +63,11 @@ class ExpoHttpClientModule : Module() {
     }
 
     AsyncFunction("setCookieForDomain") { domain: String, path: String, name: String, value: String ->
-      val cookieStorage = inMemoryCookieStorage
-      coroutineScope.launch {
-        try {
-          val cookie = Cookie(name, value, path = path, domain = Url(domain).host)
-          cookieStorage.addCookie(domain, cookie)
-        } catch (_: Exception) {
-        }
-      }
+      setCookieForDomain(domain, path, name, value)
     }
 
     AsyncFunction("removeAllCookiesForDomain") { domain: String ->
-      val cookieStorage = inMemoryCookieStorage
-      coroutineScope.launch {
-        try {
-          cookieStorage.get(Url(domain)).forEach {
-            val expiredCookie =
-              Cookie(it.name, it.value, path = it.path, domain = it.domain, expires = GMTDate(0))
-            cookieStorage.addCookie(domain, expiredCookie)
-          }
-        } catch (_: Exception) {
-        }
-      }
+      removeAllCookiesForDomain(domain)
     }
 
     AsyncFunction("cancelRequestWithId") { requestId: String ->
@@ -105,6 +88,31 @@ class ExpoHttpClientModule : Module() {
       cancelAllRunningRequests()
       closeClients()
       coroutineScope.cancel()
+    }
+  }
+
+  private fun setCookieForDomain(domain: String, path: String, name: String, value: String) {
+    val cookieStorage = inMemoryCookieStorage
+    coroutineScope.launch {
+      try {
+        val cookie = Cookie(name, value, path = path, domain = Url(domain).host)
+        cookieStorage.addCookie(domain, cookie)
+      } catch (_: Exception) {
+      }
+    }
+  }
+
+  private fun removeAllCookiesForDomain(domain: String) {
+    val cookieStorage = inMemoryCookieStorage
+    coroutineScope.launch {
+      try {
+        cookieStorage.get(Url(domain)).forEach {
+          val expiredCookie =
+            Cookie(it.name, it.value, path = it.path, domain = it.domain, expires = GMTDate(0))
+          cookieStorage.addCookie(domain, expiredCookie)
+        }
+      } catch (_: Exception) {
+      }
     }
   }
 
