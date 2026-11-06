@@ -17,7 +17,11 @@ import {
   ScrollView,
   View
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { KeyboardStickyView } from "react-native-keyboard-controller";
+import {
+  SafeAreaView,
+  useSafeAreaInsets
+} from "react-native-safe-area-context";
 
 import {
   HeaderSecondLevelHookProps,
@@ -34,6 +38,7 @@ import { trackItWalletCiePinEnter } from "../../analytics";
 import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet";
 
 const CIE_PIN_LENGTH = 8;
+const FOOTER_VERTICAL_PADDING = 16;
 
 export const ItwCiePinScreen = () => {
   usePreventScreenCapture();
@@ -49,6 +54,7 @@ export const ItwCiePinScreen = () => {
   const pinPadViewRef = useRef<View>(null);
 
   const headerHeight = useHeaderHeight();
+  const { bottom: bottomInset } = useSafeAreaInsets();
   const isFocused = useIsFocused();
 
   const pinInfoBottomSheet = useCieInfoBottomSheet({
@@ -84,14 +90,15 @@ export const ItwCiePinScreen = () => {
 
   useHeaderSecondLevel(headerProps);
 
-  const onPinChanged = (value: string) => {
-    setPin(value);
+  const isPinComplete = pin.length === CIE_PIN_LENGTH;
 
-    if (value.length === CIE_PIN_LENGTH) {
-      Keyboard.dismiss();
-      machineRef.send({ type: "cie-pin-entered", pin: value });
-    }
+  // The user confirms the PIN explicitly instead of being moved to the next
+  // screen as soon as the last digit is typed (a11y: no change on input).
+  const onConfirmPress = () => {
+    Keyboard.dismiss();
+    machineRef.send({ type: "cie-pin-entered", pin });
   };
+
   return (
     <SafeAreaView edges={["bottom"]} style={{ flex: 1 }}>
       <KeyboardAvoidingView
@@ -139,7 +146,7 @@ export const ItwCiePinScreen = () => {
                 autoFocus={isFocused}
                 key={isFocused ? "focused" : "unfocused"}
                 length={CIE_PIN_LENGTH}
-                onValueChange={onPinChanged}
+                onValueChange={setPin}
                 ref={pinPadViewRef}
                 secret
                 value={pin}
@@ -148,6 +155,23 @@ export const ItwCiePinScreen = () => {
           </ContentWrapper>
         </ScrollView>
       </KeyboardAvoidingView>
+      {/*
+        With `KeyboardProvider` Android is edge-to-edge and the native resize
+        no longer lifts the footer. The opened offset removes the bottom
+        padding already applied by `SafeAreaView`.
+      */}
+      <KeyboardStickyView offset={{ opened: bottomInset }}>
+        <ContentWrapper style={{ paddingVertical: FOOTER_VERTICAL_PADDING }}>
+          <IOButton
+            disabled={!isPinComplete}
+            fullWidth
+            label={I18n.t("global.buttons.confirm")}
+            onPress={onConfirmPress}
+            testID="itwCiePinConfirmButtonTestID"
+            variant="solid"
+          />
+        </ContentWrapper>
+      </KeyboardStickyView>
       {pinInfoBottomSheet.bottomSheet}
     </SafeAreaView>
   );

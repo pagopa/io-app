@@ -2,6 +2,7 @@ import {
   Body,
   ContentWrapper,
   H2,
+  IOButton,
   OTPInput,
   VSpacer
 } from "@io-app/design-system";
@@ -17,7 +18,11 @@ import {
   ScrollView,
   View
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { KeyboardStickyView } from "react-native-keyboard-controller";
+import {
+  SafeAreaView,
+  useSafeAreaInsets
+} from "react-native-safe-area-context";
 
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../../store/hooks";
@@ -30,6 +35,7 @@ import { selectIdentification } from "../../../machine/eid/selectors";
 import { trackItwIdEnterCan } from "../../analytics";
 
 const CIE_CAN_LENGTH = 6;
+const FOOTER_VERTICAL_PADDING = 16;
 
 export const ItwCieCanScreen = () => {
   usePreventScreenCapture();
@@ -43,6 +49,7 @@ export const ItwCieCanScreen = () => {
   const canPadViewRef = useRef<View>(null);
 
   const headerHeight = useHeaderHeight();
+  const { bottom: bottomInset } = useSafeAreaInsets();
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -69,13 +76,13 @@ export const ItwCieCanScreen = () => {
     supportRequest: true
   });
 
-  const onCanChanged = (value: string) => {
-    setCan(value);
+  const isCanComplete = can.length === CIE_CAN_LENGTH;
 
-    if (value.length === CIE_CAN_LENGTH) {
-      Keyboard.dismiss();
-      machineRef.send({ type: "cie-can-entered", can: value });
-    }
+  // The user confirms the CAN explicitly instead of being moved to the next
+  // screen as soon as the last digit is typed (a11y: no change on input).
+  const onConfirmPress = () => {
+    Keyboard.dismiss();
+    machineRef.send({ type: "cie-can-entered", can });
   };
 
   return (
@@ -116,7 +123,7 @@ export const ItwCieCanScreen = () => {
                 autoFocus={isFocused}
                 key={isFocused ? "focused" : "unfocused"}
                 length={CIE_CAN_LENGTH}
-                onValueChange={onCanChanged}
+                onValueChange={setCan}
                 ref={canPadViewRef}
                 secret
                 value={can}
@@ -125,6 +132,23 @@ export const ItwCieCanScreen = () => {
           </ContentWrapper>
         </ScrollView>
       </KeyboardAvoidingView>
+      {/*
+        With `KeyboardProvider` Android is edge-to-edge and the native resize
+        no longer lifts the footer. The opened offset removes the bottom
+        padding already applied by `SafeAreaView`.
+      */}
+      <KeyboardStickyView offset={{ opened: bottomInset }}>
+        <ContentWrapper style={{ paddingVertical: FOOTER_VERTICAL_PADDING }}>
+          <IOButton
+            disabled={!isCanComplete}
+            fullWidth
+            label={I18n.t("global.buttons.confirm")}
+            onPress={onConfirmPress}
+            testID="itwCieCanConfirmButtonTestID"
+            variant="solid"
+          />
+        </ContentWrapper>
+      </KeyboardStickyView>
     </SafeAreaView>
   );
 };
