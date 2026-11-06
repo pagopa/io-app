@@ -41,20 +41,26 @@ export function* updateCredentialsStatusSaga({
       return [];
     }
 
-    const { status, rawStatus } = statusListApi.getStatus(
-      statusList.status_list,
-      credential.validity.statusList.idx
-    );
-    const nextValidity = {
-      ...credential.validity,
-      rawStatus,
-      status: status.toLowerCase()
-    };
+    try {
+      const { status, rawStatus } = statusListApi.getStatus(
+        statusList.status_list,
+        credential.validity.statusList.idx
+      );
+      const nextValidity = {
+        ...credential.validity,
+        rawStatus,
+        status: status.toLowerCase()
+      };
 
-    return nextValidity.status !== credential.validity.status ||
-      nextValidity.rawStatus !== credential.validity.rawStatus
-      ? [{ ...credential, validity: nextValidity }]
-      : [];
+      return nextValidity.status !== credential.validity.status ||
+        nextValidity.rawStatus !== credential.validity.rawStatus
+        ? [{ ...credential, validity: nextValidity }]
+        : [];
+    } catch {
+      // Ignore errors and keep the previous validity for this credential.
+      // TODO: [SIW-5366] consider tracking the error for debugging purposes.
+      return [];
+    }
   });
 
   if (updatedCredentials.length > 0) {

@@ -1,5 +1,5 @@
 import { IOPictograms } from "@io-app/design-system";
-import { Route, useRoute } from "@react-navigation/native";
+import { Route, StackActions, useRoute } from "@react-navigation/native";
 import { constNull } from "fp-ts/lib/function";
 import I18n from "i18next";
 /** A screen to alert the user about the number of attempts remains */
@@ -30,9 +30,9 @@ const CieWrongCiePinScreen = () => {
   const { navigateToAuthenticationScreen } = useActiveSessionLoginNavigation();
 
   const navigateToCiePinScreen = useCallback(() => {
-    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
-    });
+    navigation.dispatch(
+      StackActions.popTo(AUTHENTICATION_ROUTES.CIE_PIN_SCREEN)
+    );
   }, [navigation]);
 
   const didYouForgetPin = useCallback(() => {
