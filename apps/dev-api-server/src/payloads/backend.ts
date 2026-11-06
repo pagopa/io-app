@@ -58,7 +58,7 @@ export const backendStatus: BackendStatus = {
       show_cgn_engagement_banner: {
         min_app_version: {
           android: "1.0.0.0",
-          ios: "1.0.0.0"
+          ios: "11.0.0.0"
         },
         description: {
           "it-IT":
