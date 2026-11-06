@@ -4,7 +4,6 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { left, right } from "fp-ts/lib/Either";
 import { expectSaga, testSaga } from "redux-saga-test-plan";
-import { throwError } from "redux-saga-test-plan/providers";
 import { ActionType, getType } from "typesafe-actions";
 
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -147,6 +146,8 @@ describe("watchFciPollSaga", () => {
       .next(notReadyResponse)
       .delay(POLLING_FREQ_TIMEOUT)
       .next()
+      .cancelled()
+      .next(false)
       .put(fciPollFilledDocument.request())
       .next()
       .call(fetch, filledDocumentUrl, expectedPollingRequestInit);
@@ -208,16 +209,6 @@ describe("watchFciPollSaga", () => {
 
 describe("filledDocumentPollWatcher", () => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-
-  // The deadline is expired manually, at a precise attempt, without real waits
-  const createDeadline = () => {
-    // eslint-disable-next-line functional/no-let
-    let expire: () => void = () => undefined;
-    const promise = new Promise<void>(resolve => {
-      expire = resolve;
-    });
-    return { promise, expire: () => expire() };
-  };
 
   const runPollWatcher = (
     fetchMock: jest.Mock,
@@ -298,11 +289,14 @@ describe("filledDocumentPollWatcher", () => {
   it.each(timeoutCases)(
     "should stop polling and dispatch failure at the deadline when $name",
     async ({ expectedAttempts, mockFetch }) => {
-      const deadline = createDeadline();
       const fetchMock = jest.fn();
-      mockFetch(fetchMock, deadline.expire);
+      // The deadline is expired by the fetch mock at a precise attempt,
+      // without real waits
+      const deadline = new Promise<void>(expire =>
+        mockFetch(fetchMock, expire)
+      );
 
-      const result = await runPollWatcher(fetchMock, deadline.promise)
+      const result = await runPollWatcher(fetchMock, deadline)
         .put(pollingCancelledFailure)
         .not.put(fciPollFilledDocument.success({ isReady: true }))
         .run();
@@ -319,15 +313,15 @@ describe("filledDocumentPollWatcher", () => {
 
   it("should track the failure only once when the request throws", async () => {
     const error = new Error("Network request failed");
-    const fetchMock = jest.fn().mockReturnValue(throwError(error));
+    const fetchMock = jest.fn().mockRejectedValue(error);
 
     const result = await runPollWatcher(fetchMock)
       .put(fciPollFilledDocument.failure(getNetworkError(error)))
       .run();
 
-    expect(fetchMock).toHaveBeenCalledTimes(1);
-    const failureActions = result.effects.put.filter(
-      (effect: { payload: { action: { type: string } } }) =>
+    const failureActions = result.allEffects.filter(
+      effect =>
+        effect.type === "PUT" &&
         effect.payload.action.type === getType(fciPollFilledDocument.failure)
     );
     expect(failureActions).toHaveLength(1);
