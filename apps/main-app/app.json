@@ -3,10 +3,10 @@
   "displayName": "IO",
   "version": "3.43.0",
   "ios": {
-    "buildNumber": "5"
+    "buildNumber": "8241"
   },
   "android": {
-    "version": "3.43.0.5",
-    "versionCode": 200008240
+    "version": "3.43.0.8241",
+    "versionCode": 200008241
   }
 }

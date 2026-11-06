@@ -1,3 +1,73 @@
+## 3.43.0-canary.8241 (2026-11-06)
+
+### Features
+
+- [[IOPLT-1655](https://pagopa.atlassian.net/browse/IOPLT-1655)] Add native bottom sheet components via `react-native-screens` ([#7902](https://github.com/pagopa/io-app/pull/7902))
+- **IT-Wallet:** [[SIW-5383](https://pagopa.atlassian.net/browse/SIW-5383)] Add tracking to wallet ready banner ([#8814](https://github.com/pagopa/io-app/pull/8814))
+- **IT-Wallet:** [[SIW-5207](https://pagopa.atlassian.net/browse/SIW-5207)] CED opportunities ([#8707](https://github.com/pagopa/io-app/pull/8707))
+- [[SIW-5434](https://pagopa.atlassian.net/browse/SIW-5434)] Add local feature flag for proximity NFC ([#8799](https://github.com/pagopa/io-app/pull/8799))
+- **IT-Wallet:** [[SIW-5293](https://pagopa.atlassian.net/browse/SIW-5293)] Implement PID invalid status UI ([#8754](https://github.com/pagopa/io-app/pull/8754))
+- [[IOPID-4283](https://pagopa.atlassian.net/browse/IOPID-4283)] Put OI CIE cookies cleanup on Android behind a flag ([#8793](https://github.com/pagopa/io-app/pull/8793))
+- [[IOPLT-2207](https://pagopa.atlassian.net/browse/IOPLT-2207)] Make Expo CLI default tool to build and run the app ([#8782](https://github.com/pagopa/io-app/pull/8782))
+
+### Bug Fixes
+
+- **IT-Wallet:** [[SIW-5130](https://pagopa.atlassian.net/browse/SIW-5130)] Fix intro credentials empty values ([#8688](https://github.com/pagopa/io-app/pull/8688))
+- [[IOPLT-2060](https://pagopa.atlassian.net/browse/IOPLT-2060)] Restore `topic` value based on guards in store review context ([#8560](https://github.com/pagopa/io-app/pull/8560))
+- **IT-Wallet:** [[SIW-5431](https://pagopa.atlassian.net/browse/SIW-5431),[SIW-5225](https://pagopa.atlassian.net/browse/SIW-5225)] fix mdoc remote presentation, proximity ios termination and bump deps ([#8834](https://github.com/pagopa/io-app/pull/8834))
+- [[IOPLT-2222](https://pagopa.atlassian.net/browse/IOPLT-2222)] Avoid `IT-Wallet` text break across lines ([#8820](https://github.com/pagopa/io-app/pull/8820))
+- **IT-Wallet:** [[SIW-5430](https://pagopa.atlassian.net/browse/SIW-5430)] Show detail title in nested claims sheet ([#8831](https://github.com/pagopa/io-app/pull/8831))
+- [[IOPLT-2250](https://pagopa.atlassian.net/browse/IOPLT-2250)] Add dark mode support to ITW issuance intro card ([#8830](https://github.com/pagopa/io-app/pull/8830))
+- [[IOPLT-2115](https://pagopa.atlassian.net/browse/IOPLT-2115)] Skip PR title checks for Renovate PRs ([#8654](https://github.com/pagopa/io-app/pull/8654))
+- [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Solves configuration to install cie SDK on prod environment ([#8807](https://github.com/pagopa/io-app/pull/8807))
+- **IT-Wallet:** [[SIW-2632](https://pagopa.atlassian.net/browse/SIW-2632)] remove link rule from ITW settings ([#8803](https://github.com/pagopa/io-app/pull/8803))
+- **IT-Wallet:** [[SIW-5381](https://pagopa.atlassian.net/browse/SIW-5381)] recreate wallet instance after abandoned Documenti su IO ([#8770](https://github.com/pagopa/io-app/pull/8770))
+- **IT-Wallet:** [[SIW-5387](https://pagopa.atlassian.net/browse/SIW-5387)] Apply cached status lists validity offline ([#8755](https://github.com/pagopa/io-app/pull/8755))
+- [[IOCOM-3383](https://pagopa.atlassian.net/browse/IOCOM-3383)] app crash while showing SEND preconditions bottomSheet ([#8796](https://github.com/pagopa/io-app/pull/8796))
+- [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Expo `Android` script ([#8794](https://github.com/pagopa/io-app/pull/8794))
+- [[IOPID-4270](https://pagopa.atlassian.net/browse/IOPID-4270)] Open One Identity SPID/CieID login in incognito ([#8790](https://github.com/pagopa/io-app/pull/8790))
+- [[IOPLT-2209](https://pagopa.atlassian.net/browse/IOPLT-2209)] Adjust `Animated.View` interaction behavior ([#8786](https://github.com/pagopa/io-app/pull/8786))
+
+### Chores
+
+- release 3.43.0-rc.5 ([d852dec59](https://github.com/pagopa/io-app/commit/d852dec59))
+- release 3.43.0-rc.4 ([4bc91558b](https://github.com/pagopa/io-app/commit/4bc91558b))
+- [[IOPLT-2256](https://pagopa.atlassian.net/browse/IOPLT-2256)] Bump `@faker-js/faker` to `10.x` ([#8832](https://github.com/pagopa/io-app/pull/8832))
+- release 3.43.0-rc.3 ([3c24b9759](https://github.com/pagopa/io-app/commit/3c24b9759))
+- release 3.43.0-rc.2 ([9d687c287](https://github.com/pagopa/io-app/commit/9d687c287))
+- [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Remove unused postinstall scripts ([#8450](https://github.com/pagopa/io-app/pull/8450))
+- release 3.43.0-rc.1 ([e6a566904](https://github.com/pagopa/io-app/commit/e6a566904))
+- [[IEL-880](https://pagopa.atlassian.net/browse/IEL-880)] EMAIL_EDITING MP event now tracks FCI flow ([#8771](https://github.com/pagopa/io-app/pull/8771))
+- release 3.43.0-rc.0 ([8c2f22ff4](https://github.com/pagopa/io-app/commit/8c2f22ff4))
+- release 3.42.0-rc.11 ([b66533f40](https://github.com/pagopa/io-app/commit/b66533f40))
+- release 3.42.0-rc.10 ([92dcd1252](https://github.com/pagopa/io-app/commit/92dcd1252))
+- Update translations from Lokalise ([#8811](https://github.com/pagopa/io-app/pull/8811))
+- **IT-Wallet:** [[SIW-5438](https://pagopa.atlassian.net/browse/SIW-5438)] Bump `io-react-native-wallet` to 3.8.4 ([#8808](https://github.com/pagopa/io-app/pull/8808))
+- release 3.42.0-rc.9 ([b57446af7](https://github.com/pagopa/io-app/commit/b57446af7))
+- **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Replace discovery screen pictograms ([#8804](https://github.com/pagopa/io-app/pull/8804))
+- release 3.42.0-rc.8 ([7341e34fb](https://github.com/pagopa/io-app/commit/7341e34fb))
+- [[IEL-908](https://pagopa.atlassian.net/browse/IEL-908)] added FCI flow value to APP_UPDATE_REQUESTED MP event ([#8772](https://github.com/pagopa/io-app/pull/8772))
+- **release:** 3.42.0-rc.7 ([5e01b129a](https://github.com/pagopa/io-app/commit/5e01b129a))
+- [[SIW-3784](https://pagopa.atlassian.net/browse/SIW-3784)] Improve accessibility for BottomSheet component ([#8549](https://github.com/pagopa/io-app/pull/8549))
+- [[IOPLT-2194](https://pagopa.atlassian.net/browse/IOPLT-2194)] Add missing `a11y` role for pin components ([#8758](https://github.com/pagopa/io-app/pull/8758))
+
+### ❤️ Thank You
+
+- Alessandra Lerteri @Leerti
+- Alessandro Dell'Oste @adelloste
+- Alessandro Mazzon
+- Cristiano Tofani
+- Damiano Plebani
+- DavideOnano @DavideOnano
+- Emanuele Dall'Ara @LeleDallas
+- Emilio Di Mari
+- Federico Mastrini @mastro993
+- Gianluca Spada
+- LazyAfternoons @LazyAfternoons
+- Martino Cesari Tomba @forrest57
+- Pawel @soixdev91
+- Riccardo Sacco @riccardosacco99
+
 ## 3.43.0-rc.5 (2026-11-05)
 
 ### Bug Fixes
