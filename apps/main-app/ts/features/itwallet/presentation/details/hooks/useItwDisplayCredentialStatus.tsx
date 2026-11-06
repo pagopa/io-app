@@ -2,10 +2,7 @@ import { useIOSelector } from "../../../../../store/hooks";
 import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import { ItwCredentialStatus } from "../../../common/utils/itwTypesUtils";
-import {
-  itwCredentialsEidStatusSelector,
-  itwCredentialsSelector
-} from "../../../credentials/store/selectors";
+import { itwCredentialsEidStatusSelector } from "../../../credentials/store/selectors";
 import { getItwDisplayCredentialStatus } from "../utils";
 
 /**
@@ -30,13 +27,10 @@ export const useItwDisplayCredentialStatus = (
   const isOffline = offlineAccessReason !== undefined;
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
 
-  const credential = useIOSelector(itwCredentialsSelector)[credentialType];
-
   return getItwDisplayCredentialStatus(
     credentialStatus,
     eidStatus,
     isOffline,
-    credentialType === CredentialType.PID,
-    credential
+    credentialType === CredentialType.PID
   );
 };

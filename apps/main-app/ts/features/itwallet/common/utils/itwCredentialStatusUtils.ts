@@ -3,6 +3,7 @@ import { differenceInCalendarDays } from "date-fns";
 
 import { getClaimsFullLocale, getCredentialExpireDate } from "./itwClaimsUtils";
 import { DigitalCredentialMetadata } from "./itwCredentialsCatalogueUtils";
+import { CredentialType } from "./itwMocksUtils";
 import {
   CredentialFormat,
   CredentialMetadata,
@@ -10,12 +11,12 @@ import {
   ItwCredentialStatus
 } from "./itwTypesUtils";
 
-export const DEFAULT_EXPIRING_DAYS = 30;
+const DEFAULT_EXPIRING_DAYS = 30;
 
 type GetCredentialStatusOptions = {
   /**
-   * Number of days before expiration required to mark a credential as
-   * "EXPIRING".
+   * Number of days before physical document or PID digital expiration required
+   * to mark a credential as "EXPIRING".
    *
    * @default 30
    */
@@ -76,8 +77,13 @@ export const getCredentialStatus = (
   const isSameDayExpiring =
     documentExpireDays === jwtExpireDays && documentExpireDays <= expiringDays;
 
-  // When both credentials are expiring the digital one wins unless they expire the same day
-  if (jwtExpireDays <= expiringDays && !isSameDayExpiring) {
+  // When both credentials are expiring the digital one wins unless they expire the same day.
+  // Only the IT-Wallet ID warns in advance: renewing it also renews the other credentials.
+  if (
+    credential.credentialType === CredentialType.PID &&
+    jwtExpireDays <= expiringDays &&
+    !isSameDayExpiring
+  ) {
     return "jwtExpiring";
   }
 
