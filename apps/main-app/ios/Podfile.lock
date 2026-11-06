@@ -1,5 +1,4 @@
 PODS:
-  - Alamofire (5.11.2)
   - boost (1.84.0)
   - CieSDK (0.1.21)
   - DoubleConversion (1.1.6)
@@ -66,6 +65,8 @@ PODS:
   - ExpoFileSystem (55.0.22):
     - ExpoModulesCore
   - ExpoFont (55.0.8):
+    - ExpoModulesCore
+  - ExpoHttpClient (1.0.0):
     - ExpoModulesCore
   - ExpoImagePicker (55.0.22):
     - ExpoModulesCore
@@ -143,35 +144,6 @@ PODS:
   - IoReactNativeCie (1.3.6):
     - boost
     - CieSDK (~> 0.1.21)
-    - DoubleConversion
-    - fast_float
-    - fmt
-    - glog
-    - hermes-engine
-    - RCT-Folly
-    - RCT-Folly/Fabric
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-jsi
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-renderercss
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - SocketRocket
-    - Yoga
-  - IoReactNativeHttpClient (1.2.0):
-    - Alamofire (~> 5.11)
-    - boost
     - DoubleConversion
     - fast_float
     - fmt
@@ -3852,6 +3824,7 @@ DEPENDENCIES:
   - "ExpoDomWebView (from `../../../node_modules/@expo/dom-webview/ios`)"
   - ExpoFileSystem (from `../../../node_modules/expo-file-system/ios`)
   - ExpoFont (from `../../../node_modules/expo-font/ios`)
+  - ExpoHttpClient (from `../../../libs/expo-http-client/ios`)
   - ExpoImagePicker (from `../../../node_modules/expo-image-picker/ios`)
   - ExpoKeepAwake (from `../../../node_modules/expo-keep-awake/ios`)
   - ExpoLinearGradient (from `../../../node_modules/expo-linear-gradient/ios`)
@@ -3874,7 +3847,6 @@ DEPENDENCIES:
   - glog (from `../../../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (from `../../../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
   - "IoReactNativeCie (from `../../../node_modules/@pagopa/io-react-native-cie`)"
-  - "IoReactNativeHttpClient (from `../../../node_modules/@pagopa/io-react-native-http-client`)"
   - "IoReactNativeIso18013 (from `../../../node_modules/@pagopa/io-react-native-iso18013`)"
   - jail-monkey (from `../../../node_modules/jail-monkey`)
   - MixpanelReactNative (from `../../../node_modules/mixpanel-react-native`)
@@ -3991,7 +3963,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - Alamofire
     - CieSDK
     - JOSESwift
     - Mixpanel-swift
@@ -4048,6 +4019,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/expo-file-system/ios"
   ExpoFont:
     :path: "../../../node_modules/expo-font/ios"
+  ExpoHttpClient:
+    :path: "../../../libs/expo-http-client/ios"
   ExpoImagePicker:
     :path: "../../../node_modules/expo-image-picker/ios"
   ExpoKeepAwake:
@@ -4093,8 +4066,6 @@ EXTERNAL SOURCES:
     :tag: hermes-v0.14.1
   IoReactNativeCie:
     :path: "../../../node_modules/@pagopa/io-react-native-cie"
-  IoReactNativeHttpClient:
-    :path: "../../../node_modules/@pagopa/io-react-native-http-client"
   IoReactNativeIso18013:
     :path: "../../../node_modules/@pagopa/io-react-native-iso18013"
   jail-monkey:
@@ -4319,7 +4290,6 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  Alamofire: 400275dd1c6d87d95a041861d2a59da4b520a203
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
   CieSDK: 832ee98a89d0fc79c1a429c6ad8f31a056741d59
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
@@ -4338,6 +4308,7 @@ SPEC CHECKSUMS:
   ExpoDomWebView: b2e9d601f9cb77d3c97da73234e175b64be91928
   ExpoFileSystem: 61e663d0bbd1a973d324530d1d6ee559a5e5192c
   ExpoFont: a7e34a75bdfb703fa07a0e87807f836236608c76
+  ExpoHttpClient: 161805a3c409dbab03de9c4bfcae5ad87dff1d5a
   ExpoImagePicker: f82edc16bb8eeb6260c2759b0015afc0ab45a3d0
   ExpoKeepAwake: d0eb7a0719500d2a43fbf29b6f79e84d70c75ebf
   ExpoLinearGradient: caf2c659e6ea0c473ece8f6164eaeae05740664d
@@ -4360,7 +4331,6 @@ SPEC CHECKSUMS:
   glog: 0456694f3aaf09460b660ea327cfc11defbeea4c
   hermes-engine: a2a9fc7160af80292783f30b771f14a477f29712
   IoReactNativeCie: d30d9055f74cfc1fd00c8583316c6321abdb7794
-  IoReactNativeHttpClient: bc2f2838fe9f959375d4d7e0419b11ebf27af379
   IoReactNativeIso18013: 7f153ea0db4055d00c8de7a4d74a3d548697fd97
   jail-monkey: 9298d04aa09f8c9cdcf04e7bf597ea423b52b5bf
   JOSESwift: 7784b1b844194d0f534eb6ac4fba5af683bccc79

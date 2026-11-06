@@ -3,7 +3,7 @@ import {
   HttpClientFailureResponse,
   HttpClientSuccessResponse,
   nativeRequest
-} from "@pagopa/io-react-native-http-client";
+} from "@io-app/expo-http-client";
 import { testSaga } from "redux-saga-test-plan";
 
 import { oidcProviderDomainSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
