@@ -277,11 +277,8 @@ export const sendAuthorizationResponseActor = fromPromise<
   const remotePresentations =
     await ioWallet.RemotePresentation.prepareRemotePresentations(
       credentialsToPresent,
-      {
-        nonce: requestObject.nonce,
-        clientId: requestObject.client_id,
-        responseUri: requestObject.response_uri
-      }
+      requestObject,
+      rpConf
     );
 
   const authResponse =
