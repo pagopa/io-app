@@ -1,6 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { StyleSheet } from "react-native";
 import { ActionType } from "typesafe-actions";
 
 import { maximumItemsFromAPI, pageSize } from "../../../../../config";
@@ -31,18 +30,11 @@ import {
 import { UIMessage } from "../../../types";
 import { MessageListCategory } from "../../../types/messageListCategory";
 import {
-  ListItemMessageEnhancedHeight,
-  ListItemMessageStandardHeight
-} from "../DS/ListItemMessage";
-import { SkeletonHeight } from "../DS/ListItemMessageSkeleton";
-import {
   accessibilityLabelForMessageItem,
   archiveUnarchiveAccessibilityInstructions,
-  generateMessageListLayoutInfo,
   getInitialReloadAllMessagesActionIfNeeded,
   getLoadNextPageMessagesActionIfAllowed,
   getLoadPreviousPageMessagesActionIfAllowed,
-  getMessagesViewPagerInitialPageIndex,
   getReloadAllMessagesActionForRefreshIfAllowed,
   messageListCategoryToViewPageIndex,
   messageViewPageIndexToListCategory,
@@ -174,19 +166,6 @@ describe("getInitialReloadAllMessagesActionIfNeeded", () => {
       )
     )
   );
-});
-
-describe("getMessagesViewPagerInitialPageIndex", () => {
-  it("should return 1 when shownCategory is ARCHIVED", () => {
-    const globalState = createGlobalState(pot.none, pot.none, "ARCHIVE");
-    const pageIndex = getMessagesViewPagerInitialPageIndex(globalState);
-    expect(pageIndex).toBe(1);
-  });
-  it("should return 0 when shownCategory is INBOX", () => {
-    const globalState = createGlobalState(pot.none, pot.none, "INBOX");
-    const pageIndex = getMessagesViewPagerInitialPageIndex(globalState);
-    expect(pageIndex).toBe(0);
-  });
 });
 
 describe("messageListCategoryToViewPageIndex", () => {
@@ -837,154 +816,5 @@ describe("archiveUnarchiveAccessibilityInstructions", () => {
     expect(result).toBe(
       "Tieni premuto per selezionare e in seguito disarchiviare"
     );
-  });
-});
-
-describe("generateMessageListLayoutInfo", () => {
-  const rptId = "01234567890012345678901234567890";
-
-  const makeMessage = (tag: string, extra?: Record<string, string>) =>
-    ({
-      id: "msg-01",
-      category: { tag, ...extra },
-      createdAt: new Date(2023, 5, 15),
-      isRead: false,
-      isArchived: false,
-      serviceId: "service-01",
-      serviceName: "Service A",
-      organizationName: "Org A",
-      organizationFiscalCode: "00000000000",
-      title: "Test",
-      hasPrecondition: false
-    }) as UIMessage;
-
-  // For non-PAYMENT tags, isPaymentMessageWithPaidNoticeSelector returns false
-  // before accessing state, so an empty state is sufficient.
-  const anyState = {} as GlobalState;
-
-  const stateWithUnpaidNotice = {
-    entities: { paymentByRptId: {} }
-  } as GlobalState;
-
-  const stateWithPaidNotice = {
-    entities: { paymentByRptId: { [rptId]: { kind: "DUPLICATED" } } }
-  } as unknown as GlobalState;
-
-  describe("when messageList is undefined (loading state)", () => {
-    it("returns an empty array for an empty loadingList", () => {
-      const result = generateMessageListLayoutInfo([], undefined, anyState);
-      expect(result).toEqual([]);
-    });
-
-    it("returns one skeleton item for a single-element loadingList", () => {
-      const result = generateMessageListLayoutInfo([0], undefined, anyState);
-      expect(result).toEqual([{ index: 0, length: SkeletonHeight, offset: 0 }]);
-    });
-
-    it("returns skeleton items with offsets proportional to SkeletonHeight", () => {
-      const result = generateMessageListLayoutInfo(
-        [0, 1, 2],
-        undefined,
-        anyState
-      );
-      expect(result).toEqual([
-        { index: 0, length: SkeletonHeight, offset: 0 },
-        { index: 1, length: SkeletonHeight, offset: SkeletonHeight },
-        { index: 2, length: SkeletonHeight, offset: 2 * SkeletonHeight }
-      ]);
-    });
-  });
-
-  describe("when messageList is defined", () => {
-    it("returns an empty array for an empty messageList", () => {
-      const result = generateMessageListLayoutInfo([], [], anyState);
-      expect(result).toEqual([]);
-    });
-
-    test.each([
-      ["GENERIC", undefined],
-      ["EU_COVID_CERT", undefined],
-      ["LEGAL_MESSAGE", undefined]
-    ])("uses ListItemMessageStandardHeight for a %s message", (tag, extra) => {
-      const message = makeMessage(
-        tag,
-        extra as unknown as Record<string, string>
-      );
-      const result = generateMessageListLayoutInfo([], [message], anyState);
-      expect(result).toEqual([
-        { index: 0, length: ListItemMessageStandardHeight, offset: 0 }
-      ]);
-    });
-
-    it("uses ListItemMessageEnhancedHeight for a PN message", () => {
-      const message = makeMessage("PN");
-      const result = generateMessageListLayoutInfo([], [message], anyState);
-      expect(result).toEqual([
-        { index: 0, length: ListItemMessageEnhancedHeight, offset: 0 }
-      ]);
-    });
-
-    it("uses ListItemMessageStandardHeight for a PAYMENT message without a paid notice", () => {
-      const message = makeMessage("PAYMENT", { rptId });
-      const result = generateMessageListLayoutInfo(
-        [],
-        [message],
-        stateWithUnpaidNotice
-      );
-      expect(result).toEqual([
-        { index: 0, length: ListItemMessageStandardHeight, offset: 0 }
-      ]);
-    });
-
-    it("uses ListItemMessageEnhancedHeight for a PAYMENT message with a paid notice", () => {
-      const message = makeMessage("PAYMENT", { rptId });
-      const result = generateMessageListLayoutInfo(
-        [],
-        [message],
-        stateWithPaidNotice
-      );
-      expect(result).toEqual([
-        { index: 0, length: ListItemMessageEnhancedHeight, offset: 0 }
-      ]);
-    });
-
-    it("accumulates offsets adding StyleSheet.hairlineWidth between adjacent items", () => {
-      const messages = [makeMessage("GENERIC"), makeMessage("GENERIC")];
-      const result = generateMessageListLayoutInfo([], messages, anyState);
-      expect(result).toEqual([
-        { index: 0, length: ListItemMessageStandardHeight, offset: 0 },
-        {
-          index: 1,
-          length: ListItemMessageStandardHeight,
-          offset: ListItemMessageStandardHeight + StyleSheet.hairlineWidth
-        }
-      ]);
-    });
-
-    it("accumulates offsets correctly for mixed-height messages", () => {
-      const messages = [
-        makeMessage("PN"),
-        makeMessage("GENERIC"),
-        makeMessage("PN")
-      ];
-      const result = generateMessageListLayoutInfo([], messages, anyState);
-      expect(result).toEqual([
-        { index: 0, length: ListItemMessageEnhancedHeight, offset: 0 },
-        {
-          index: 1,
-          length: ListItemMessageStandardHeight,
-          offset: ListItemMessageEnhancedHeight + StyleSheet.hairlineWidth
-        },
-        {
-          index: 2,
-          length: ListItemMessageEnhancedHeight,
-          offset:
-            ListItemMessageEnhancedHeight +
-            StyleSheet.hairlineWidth +
-            ListItemMessageStandardHeight +
-            StyleSheet.hairlineWidth
-        }
-      ]);
-    });
   });
 });

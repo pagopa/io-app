@@ -1,8 +1,7 @@
 import { HeaderActionProps } from "@io-app/design-system";
 import I18n from "i18next";
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useMemo } from "react";
 import { View } from "react-native";
-import PagerView from "react-native-pager-view";
 
 import { useHeaderFirstLevel } from "../../../hooks/useHeaderFirstLevel";
 import {
@@ -12,10 +11,9 @@ import {
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOStore } from "../../../store/hooks";
 import { useEngagementScreen } from "../../pushNotifications/hooks/useEngagementScreen";
-import { PagerViewContainer } from "../components/Home/PagerViewContainer";
+import { MessagesListContainer } from "../components/Home/MessagesListContainer";
 import { Preconditions } from "../components/Home/Preconditions";
 import { SecuritySuggestions } from "../components/Home/SecuritySuggestions";
-import { TabNavigationContainer } from "../components/Home/TabNavigationContainer";
 import { Toasts } from "../components/Home/Toasts";
 import { MESSAGES_ROUTES } from "../navigation/routes";
 import { resetMessageArchivingAction } from "../store/actions/archiving";
@@ -29,7 +27,6 @@ export const MessagesHomeScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
 
-  const pagerViewRef = useRef<PagerView>(null);
   useEngagementScreen();
 
   /* CODE RELATED TO THE HEADER -- START */
@@ -100,8 +97,7 @@ export const MessagesHomeScreen = () => {
   return (
     <View style={{ flex: 1 }}>
       <Toasts />
-      <TabNavigationContainer pagerViewRef={pagerViewRef} />
-      <PagerViewContainer ref={pagerViewRef} />
+      <MessagesListContainer />
       <Preconditions />
       <SecuritySuggestions />
     </View>

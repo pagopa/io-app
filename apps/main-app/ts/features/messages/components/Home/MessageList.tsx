@@ -1,7 +1,8 @@
 import { Divider } from "@io-app/design-system";
+import { FlashList, FlashListRef, ListRenderItem } from "@shopify/flash-list";
 import I18n from "i18next";
-import { Ref, useCallback, useMemo } from "react";
-import { FlatList, RefreshControl, StyleSheet } from "react-native";
+import { forwardRef, useCallback, useMemo } from "react";
+import { RefreshControl, StyleSheet, View } from "react-native";
 import {
   useSafeAreaFrame,
   useSafeAreaInsets
@@ -27,10 +28,8 @@ import {
 import { EmptyList } from "./EmptyList";
 import { Footer } from "./Footer";
 import {
-  generateMessageListLayoutInfo,
   getLoadNextPageMessagesActionIfAllowed,
   getReloadAllMessagesActionForRefreshIfAllowed,
-  LayoutInfo,
   trackMessageListEndReachedIfAllowed
 } from "./homeUtils";
 import { WrappedListItemMessage } from "./WrappedListItemMessage";
@@ -40,28 +39,45 @@ const styles = StyleSheet.create({
     flexGrow: 1
   }
 });
-
 type MessageListProps = {
   category: MessageListCategory;
-  ref?: Ref<FlatList>;
+  NavigationBar: React.ReactNode;
 };
 
 const topBarHeight = 108;
 const bottomTabHeight = 54;
 
-export const MessageList = ({ ref, category }: MessageListProps) => {
+export type MessageListItem = number | UIMessage;
+
+/**
+ * Skeleton rows and message rows have different layouts, so they are kept in
+ * separate recycling pools to avoid reusing a cell of the wrong shape.
+ */
+const getItemType = (item: MessageListItem) =>
+  typeof item === "number" ? "skeleton" : "message";
+
+const keyExtractor = (item: MessageListItem) =>
+  typeof item === "number" ? `${item}` : item.id;
+
+const maintainVisibleContentPosition = { disabled: true };
+
+export const MessageList = forwardRef<
+  FlashListRef<MessageListItem>,
+  MessageListProps
+>(({ category, NavigationBar }, ref) => {
   const store = useIOStore();
   const dispatch = useIODispatch();
   const safeAreaFrame = useSafeAreaFrame();
   const safeAreaInsets = useSafeAreaInsets();
-
   const messageList = useIOSelector(state =>
     messageListForCategorySelector(state, category)
   );
   const isRefreshing = useIOSelector(state =>
     shouldShowRefreshControllOnListSelector(state, category)
   );
-  const loadingList = useMemo(() => {
+  const isLoading = messageList === undefined;
+
+  const loadingList: ReadonlyArray<number> = useMemo(() => {
     const listHeight =
       safeAreaFrame.height -
       safeAreaInsets.top -
@@ -72,15 +88,24 @@ export const MessageList = ({ ref, category }: MessageListProps) => {
     return [...Array(count).keys()];
   }, [safeAreaFrame.height, safeAreaInsets.top, safeAreaInsets.bottom]);
 
-  const layoutInfo: ReadonlyArray<LayoutInfo> = useMemo(
-    () =>
-      generateMessageListLayoutInfo(loadingList, messageList, store.getState()),
-    [loadingList, messageList, store]
-  );
-  const getItemLayoutCallback = useCallback(
-    (_: ArrayLike<number | UIMessage> | null | undefined, index: number) =>
-      layoutInfo[index],
-    [layoutInfo]
+  const data: ReadonlyArray<MessageListItem> = isLoading
+    ? loadingList
+    : messageList;
+
+  const renderItem: ListRenderItem<MessageListItem> = useCallback(
+    ({ item, index }) =>
+      typeof item === "number" ? (
+        <ListItemMessageSkeleton
+          accessibilityLabel={I18n.t("messages.loading")}
+        />
+      ) : (
+        <WrappedListItemMessage
+          index={index}
+          message={item}
+          source={category}
+        />
+      ),
+    [category]
   );
 
   const onRefreshCallback = useCallback(() => {
@@ -92,6 +117,7 @@ export const MessageList = ({ ref, category }: MessageListProps) => {
       dispatch(reloadAllMessagesAction);
     }
   }, [category, dispatch, store]);
+
   const onEndReachedCallback = useCallback(() => {
     const state = store.getState();
     const loadNextPageMessages = getLoadNextPageMessagesActionIfAllowed(
@@ -108,17 +134,32 @@ export const MessageList = ({ ref, category }: MessageListProps) => {
       dispatch(loadNextPageMessages);
     }
   }, [category, dispatch, store]);
+
+  const ListHeader = useMemo(() => {
+    const BannerPicker =
+      category === "INBOX" ? <LandingScreenBannerPicker /> : null;
+    return (
+      <View>
+        {NavigationBar}
+        {BannerPicker}
+      </View>
+    );
+  }, [NavigationBar, category]);
+
   return (
-    <FlatList
+    <FlashList
       contentContainerStyle={styles.contentContainer}
-      data={(messageList ?? loadingList) as Readonly<Array<number | UIMessage>>}
-      getItemLayout={getItemLayoutCallback}
-      ItemSeparatorComponent={messageList ? () => <Divider /> : undefined}
+      data={data}
+      getItemType={getItemType}
+      ItemSeparatorComponent={isLoading ? undefined : Divider}
+      keyExtractor={keyExtractor}
       ListEmptyComponent={<EmptyList category={category} />}
       ListFooterComponent={<Footer category={category} />}
-      ListHeaderComponent={
-        category === "INBOX" ? <LandingScreenBannerPicker /> : undefined
-      }
+      ListHeaderComponent={ListHeader}
+      // FlashList anchors the viewport by default, which would hide newly
+      // received or freshly archived messages above the fold instead of
+      // showing them at the top of the list
+      maintainVisibleContentPosition={maintainVisibleContentPosition}
       onEndReached={onEndReachedCallback}
       onEndReachedThreshold={0.1}
       ref={ref}
@@ -129,24 +170,8 @@ export const MessageList = ({ ref, category }: MessageListProps) => {
           testID={`custom_refresh_control_${category.toLowerCase()}`}
         />
       }
-      renderItem={({ index, item }) => {
-        if (typeof item === "number") {
-          return (
-            <ListItemMessageSkeleton
-              accessibilityLabel={I18n.t("messages.loading")}
-            />
-          );
-        } else {
-          return (
-            <WrappedListItemMessage
-              index={index}
-              message={item}
-              source={category}
-            />
-          );
-        }
-      }}
+      renderItem={renderItem}
       testID={`message_list_${category.toLowerCase()}`}
     />
   );
-};
+});
