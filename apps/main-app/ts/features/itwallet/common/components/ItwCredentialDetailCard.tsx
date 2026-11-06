@@ -4,6 +4,8 @@ import { memo, PropsWithChildren } from "react";
 import { Image, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { RotationSensor } from "../../../../components/RotationSensor";
+import { useRotationEffectEnabled } from "../../../../hooks/useRotationSensor";
 import { useLayoutSize } from "../hooks/useLayoutSize";
 import { borderVariantByStatus } from "../utils/itwCredentialUtils";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils";
@@ -95,6 +97,7 @@ export const ItwCredentialDetailCard = ({
 }: ItwCredentialDetailCardProps) => {
   const safeAreaInsets = useSafeAreaInsets();
   const { size, onLayout } = useLayoutSize();
+  const isRotationEffectEnabled = useRotationEffectEnabled();
 
   // Credential's header card is always in light mode
   const { color, background, overlay } = useCredentialCardConfig(
@@ -128,25 +131,31 @@ export const ItwCredentialDetailCard = ({
           overlay={overlay}
         />
       )}
-      {/* The border needs the card size, so the canvas waits for the layout */}
       {size.width > 0 && (
-        <Canvas
-          style={StyleSheet.absoluteFill}
-          testID="itwCredentialDetailCardCanvasTestID"
-        >
+        <>
           {skiaPattern !== undefined && (
-            <>
+            <Canvas style={StyleSheet.absoluteFill}>
               <Rect color={color} {...size} />
               <SkiaCardPatternOverlay src={skiaPattern} {...size} />
-            </>
+            </Canvas>
           )}
-          <ItwBrandedSkiaBorder
-            borderRadius={CARD_BORDER_RADIUS}
-            height={size.height}
-            variant={borderVariantByStatus[credentialStatus]}
-            width={size.width}
-          />
-        </Canvas>
+          <Canvas
+            style={StyleSheet.absoluteFill}
+            testID="itwCredentialDetailCardCanvasTestID"
+          >
+            <RotationSensor enabled={isRotationEffectEnabled}>
+              {roll => (
+                <ItwBrandedSkiaBorder
+                  borderRadius={CARD_BORDER_RADIUS}
+                  height={size.height}
+                  roll={roll}
+                  variant={borderVariantByStatus[credentialStatus]}
+                  width={size.width}
+                />
+              )}
+            </RotationSensor>
+          </Canvas>
+        </>
       )}
       <View style={styles.content}>{children}</View>
     </View>

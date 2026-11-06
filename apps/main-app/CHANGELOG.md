@@ -1,3 +1,44 @@
+## 3.43.0-rc.5 (2026-11-05)
+
+### Bug Fixes
+
+- **IT-Wallet:** [[SIW-5130](https://pagopa.atlassian.net/browse/SIW-5130)] Fix intro credentials empty values ([#8688](https://github.com/pagopa/io-app/pull/8688))
+- [[IOPLT-2060](https://pagopa.atlassian.net/browse/IOPLT-2060)] Restore `topic` value based on guards in store review context ([#8560](https://github.com/pagopa/io-app/pull/8560))
+- **IT-Wallet:** [[SIW-5431](https://pagopa.atlassian.net/browse/SIW-5431),[SIW-5225](https://pagopa.atlassian.net/browse/SIW-5225)] fix mdoc remote presentation, proximity ios termination and bump deps ([#8834](https://github.com/pagopa/io-app/pull/8834))
+
+### ❤️ Thank You
+
+- Alessandro Mazzon
+- Cristiano Tofani
+- DavideOnano @DavideOnano
+- Emanuele Dall'Ara @LeleDallas
+
+## 3.43.0-rc.4 (2026-11-04)
+
+### Bug Fixes
+
+- [[IOPLT-2222](https://pagopa.atlassian.net/browse/IOPLT-2222)] Avoid `IT-Wallet` text break across lines ([#8820](https://github.com/pagopa/io-app/pull/8820))
+
+### Chores
+
+- [[IOPLT-2256](https://pagopa.atlassian.net/browse/IOPLT-2256)] Bump `@faker-js/faker` to `10.x` ([#8832](https://github.com/pagopa/io-app/pull/8832))
+
+### ❤️ Thank You
+
+- Damiano Plebani
+
+## 3.43.0-rc.3 (2026-11-03)
+
+### Bug Fixes
+
+- **IT-Wallet:** [[SIW-5430](https://pagopa.atlassian.net/browse/SIW-5430)] Show detail title in nested claims sheet ([#8831](https://github.com/pagopa/io-app/pull/8831))
+- [[IOPLT-2250](https://pagopa.atlassian.net/browse/IOPLT-2250)] Add dark mode support to ITW issuance intro card ([#8830](https://github.com/pagopa/io-app/pull/8830))
+
+### ❤️ Thank You
+
+- Damiano Plebani
+- Federico Mastrini @mastro993
+
 ## 3.43.0-rc.2 (2026-11-02)
 
 ### Features
