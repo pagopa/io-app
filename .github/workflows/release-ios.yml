@@ -19,6 +19,11 @@ on:
         description: Label used for the IPA when attached to the GitHub release
         required: true
         type: string
+      app-variant:
+        description: App variant used to generate the native project with expo prebuild (production or canary)
+        required: false
+        default: production
+        type: string
 
 permissions:
   contents: write
@@ -48,11 +53,12 @@ jobs:
           bundler-cache: true
           working-directory: apps/main-app
       - id: prepare-ios-build
-        name: Prepare iOS build
+        name: Prepare iOS build and generate the native project
         run: |
           cd apps/main-app
           ./scripts/ios-release-build.sh
         env:
+          APP_VARIANT: ${{ inputs.app-variant }}
           APP_STORE_API_KEY_ID: ${{secrets.APP_STORE_API_KEY_ID}}
           APP_STORE_API_PRIVATE_KEY: ${{secrets.APP_STORE_API_PRIVATE_KEY}}
       - id: add-ssh-deploy-key
@@ -69,8 +75,8 @@ jobs:
       - id: build-upload-app-store
         name: Build & submit to App store
         run: |
-          cd apps/main-app/ios
-          bundle exec fastlane ${{ inputs.fastlane-lane }}
+          cd apps/main-app
+          bundle exec fastlane ios ${{ inputs.fastlane-lane }}
         env:
           LC_ALL: en_US.UTF-8
           LANG: en_US.UTF-8
