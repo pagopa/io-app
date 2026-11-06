@@ -95,7 +95,10 @@ const ANDROID_URL_SCHEMES = [
   "ioit",
   "iowalletcie",
   "openid-credential-offer",
-  "haip-vci"
+  "haip-vci",
+  "iologin",
+  "iossoapi",
+  "iowallet"
 ];
 
 const NFC_SELECT_IDENTIFIERS = [
