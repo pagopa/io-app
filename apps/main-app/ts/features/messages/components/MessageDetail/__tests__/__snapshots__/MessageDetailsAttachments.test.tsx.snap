@@ -18031,6 +18031,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -18486,6 +18493,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -18947,6 +18961,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -19402,6 +19423,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -19863,6 +19891,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -20318,6 +20353,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -20779,6 +20821,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -21234,6 +21283,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -21695,6 +21751,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -22150,6 +22213,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -22611,6 +22681,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -23066,6 +23143,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -23527,6 +23611,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -23982,6 +24073,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -24443,6 +24541,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -24898,6 +25003,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -25359,6 +25471,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -25814,6 +25933,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -26275,6 +26401,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -26730,6 +26863,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -27191,6 +27331,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -27646,6 +27793,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -28107,6 +28261,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -28562,6 +28723,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -29023,6 +29191,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -29478,6 +29653,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -29939,6 +30121,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -30397,6 +30586,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -30849,6 +31045,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -31307,6 +31510,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -31759,6 +31969,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -32217,6 +32434,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -32669,6 +32893,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -33127,6 +33358,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -33579,6 +33817,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -34037,6 +34282,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -34489,6 +34741,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -34947,6 +35206,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -35399,6 +35665,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -35857,6 +36130,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -36309,6 +36589,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -36767,6 +37054,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -37219,6 +37513,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -37677,6 +37978,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -38129,6 +38437,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -38587,6 +38902,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -39039,6 +39361,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -39497,6 +39826,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -39949,6 +40285,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -40407,6 +40750,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -40859,6 +41209,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -41317,6 +41674,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -41769,6 +42133,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -42227,6 +42598,13 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -42679,6 +43057,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -43284,6 +43669,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -43883,6 +44275,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -44488,6 +44887,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -45087,6 +45493,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -45692,6 +46105,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -46291,6 +46711,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -46968,6 +47395,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -47639,6 +48073,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -48316,6 +48757,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -48915,6 +49363,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -49520,6 +49975,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -50119,6 +50581,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -50724,6 +51193,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -51326,6 +51802,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -51925,6 +52408,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -52602,6 +53092,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -53273,6 +53770,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -53950,6 +54454,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -54549,6 +55060,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -55154,6 +55672,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -55753,6 +56278,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -56358,6 +56890,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -56960,6 +57499,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -57559,6 +58105,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -58236,6 +58789,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -58907,6 +59467,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -59584,6 +60151,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -60180,6 +60754,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -60782,6 +61363,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -61378,6 +61966,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -61980,6 +62575,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -62579,6 +63181,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -63175,6 +63784,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -63849,6 +64465,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -64517,6 +65140,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -65191,6 +65821,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -65787,6 +66424,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -66389,6 +67033,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -66985,6 +67636,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -67587,6 +68245,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -68186,6 +68851,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -68782,6 +69454,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -69456,6 +70135,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -70124,6 +70810,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -70798,6 +71491,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -71394,6 +72094,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -71996,6 +72703,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -72592,6 +73306,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -73194,6 +73915,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -73793,6 +74521,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -74389,6 +75124,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -75063,6 +75805,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -75731,6 +76480,13 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
