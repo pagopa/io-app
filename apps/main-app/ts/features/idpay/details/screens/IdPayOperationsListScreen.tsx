@@ -1,18 +1,16 @@
 import { OperationListDTO } from "@io-app/api-types/generated/definitions/idpay/OperationListDTO";
 import {
+  BannerErrorState,
   Body,
   Divider,
   HSpacer,
   IOSkeleton,
-  IOToast,
   IOVisualCostants,
   LoadingSpinner,
   VSpacer
 } from "@io-app/design-system";
 import { useRoute } from "@react-navigation/core";
 import { RouteProp } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useRef } from "react";
 import { View } from "react-native";
@@ -48,28 +46,29 @@ export const IdPayOperationsListScreen = () => {
   const route = useRoute<IdPayOperationsListScreenRouteProps>();
   const { initiativeId } = route.params;
 
-  const handleOnError = () => {
-    IOToast.error("Errore nel caricamento, riprova.");
-  };
-
   const {
     isLoading,
     isUpdating,
     isRefreshing,
+    isError,
     timeline,
     fetchNextPage,
     fetchPage,
     refresh,
+    retryFetchLastPage,
     lastUpdate
-  } = useInitiativeTimelineFetcher(initiativeId, 10, handleOnError);
+  } = useInitiativeTimelineFetcher(initiativeId, 10);
 
   // We need to know if this is the first rendering in order to show the loading spinner overlay
   const isFirstRenderDispatchedRef = useRef(false);
 
-  useOnFirstRender(() => {
-    fetchPage(0);
-    isFirstRenderDispatchedRef.current = true;
-  });
+  useOnFirstRender(
+    () => {
+      fetchPage(0);
+      isFirstRenderDispatchedRef.current = true;
+    },
+    () => !isLoading && !isUpdating
+  );
 
   const isFirstLoading = isFirstRenderDispatchedRef.current
     ? timeline.length === 0 && isLoading
@@ -80,63 +79,77 @@ export const IdPayOperationsListScreen = () => {
   const showOperationDetailsBottomSheet = (operation: OperationListDTO) =>
     detailsBottomSheet.present(operation);
 
-  const lastUpdateComponent = pipe(
-    lastUpdate,
-    O.fromNullable,
-    O.map(date =>
-      new Intl.DateTimeFormat("it", {
-        year: "numeric",
-        month: "long",
-        day: "2-digit"
-      }).format(date)
-    ),
-    O.fold(
-      () => <IOSkeleton height={18} radius={4} shape="rectangle" width={70} />,
-      dateString => <Body weight="Semibold">{dateString}</Body>
-    )
-  );
+  const lastUpdateComponent =
+    lastUpdate != null ? (
+      <Body weight="Semibold">
+        {new Intl.DateTimeFormat("it", {
+          year: "numeric",
+          month: "long",
+          day: "2-digit"
+        }).format(lastUpdate)}
+      </Body>
+    ) : (
+      <IOSkeleton height={18} radius={4} shape="rectangle" width={70} />
+    );
 
   return (
-    <IOListViewWithLargeHeader
-      contentContainerStyle={{
-        paddingBottom: 120,
-        paddingHorizontal: IOVisualCostants.appMarginDefault
-      }}
-      data={timeline}
-      ItemSeparatorComponent={() => <Divider />}
-      keyExtractor={item => item.operationId}
-      ListFooterComponent={isUpdating ? <TimelineLoader /> : null}
-      ListHeaderComponent={
-        <>
-          <Body>
-            {I18n.t(
-              "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.lastUpdated"
-            )}
-            <HSpacer size={4} />
-            {lastUpdateComponent}
-          </Body>
-          <VSpacer size={16} />
-        </>
-      }
-      loading={isFirstLoading}
-      onEndReached={fetchNextPage}
-      onEndReachedThreshold={0.5}
-      onRefresh={refresh}
-      refreshing={isRefreshing}
-      renderItem={({ item }) => (
-        <IdPayTimelineOperationListItem
-          onPress={() => showOperationDetailsBottomSheet(item)}
-          operation={item}
-        />
-      )}
-      skeleton={<IdPayTimelineOperationListItem isLoading />}
-      title={{
-        label: I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.title"
-        )
-      }}
-    >
+    <>
+      <IOListViewWithLargeHeader
+        contentContainerStyle={{
+          paddingBottom: 120,
+          paddingHorizontal: IOVisualCostants.appMarginDefault
+        }}
+        data={timeline}
+        ItemSeparatorComponent={() => <Divider />}
+        keyExtractor={item => item.operationId}
+        ListFooterComponent={
+          isError ? (
+            <BannerErrorState
+              actionText={I18n.t(
+                "features.payments.methods.error.banner.retryButton"
+              )}
+              icon="warningFilled"
+              label={I18n.t(
+                "features.wallet.home.otherMethods.error.banner.label"
+              )}
+              onPress={retryFetchLastPage}
+            />
+          ) : isUpdating ? (
+            <TimelineLoader />
+          ) : null
+        }
+        ListHeaderComponent={
+          !isError || lastUpdate ? (
+            <>
+              <Body>
+                {I18n.t(
+                  "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.lastUpdated"
+                )}
+                <HSpacer size={4} />
+                {lastUpdateComponent}
+              </Body>
+              <VSpacer size={16} />
+            </>
+          ) : undefined
+        }
+        loading={isFirstLoading}
+        onEndReached={fetchNextPage}
+        onEndReachedThreshold={0.5}
+        refreshControlProps={{ onRefresh: refresh, refreshing: isRefreshing }}
+        renderItem={({ item }) => (
+          <IdPayTimelineOperationListItem
+            onPress={() => showOperationDetailsBottomSheet(item)}
+            operation={item}
+          />
+        )}
+        skeleton={<IdPayTimelineOperationListItem isLoading />}
+        title={{
+          label: I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.title"
+          )
+        }}
+      />
       {detailsBottomSheet.bottomSheet}
-    </IOListViewWithLargeHeader>
+    </>
   );
 };
