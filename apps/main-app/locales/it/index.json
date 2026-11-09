@@ -664,6 +664,9 @@
       },
       "merchantsList": {
         "a11yTitle": "Categoria: {{categoryName}}",
+        "featuredOpportunities": {
+          "title": "In evidenza"
+        },
         "categoriesList": {
           "bottomSheet": {
             "content": "Per agevolare la ricerca e migliorare la tua esperienza, abbiamo organizzato le categorie in base alla frequenza di utilizzo. Questa informazione non è legata al tuo profilo, ma si basa su dati complessivi di tutti gli utenti che utilizzano Carta Giovani Nazionale e hanno acconsentito al trattamento dei dati.",

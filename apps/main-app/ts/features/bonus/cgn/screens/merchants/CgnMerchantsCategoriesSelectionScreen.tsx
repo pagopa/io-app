@@ -19,6 +19,10 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import CgnAnimatedHeader from "../../components/CgnAnimatedHeader";
+import {
+  CgnFeaturedOpportunities,
+  FeaturedOpportunity
+} from "../../components/merchants/CgnFeaturedOpportunities";
 import { useDisableRootNavigatorGesture } from "../../hooks/useDisableRootNavigatorGesture";
 import CGN_ROUTES from "../../navigation/routes";
 import {
@@ -38,6 +42,9 @@ type CgnMerchantsHomeTabParamsList = {
 };
 
 type CgnMerchantsListItem = CategoryRow | MerchantsAll;
+
+// Empty until the featured opportunities metadata is available from IO-services (IEG-3312)
+const featuredOpportunities: ReadonlyArray<FeaturedOpportunity> = [];
 
 type TabOption = {
   icon: IOIcons;
@@ -178,6 +185,12 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
           </TabNavigation>
         </View>
         <VSpacer size={16} />
+        {selectedTab === CgnMerchantsHomeTabRoutes.CGN_CATEGORIES && (
+          <>
+            <CgnFeaturedOpportunities opportunities={featuredOpportunities} />
+            <VSpacer size={16} />
+          </>
+        )}
       </>
     ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
