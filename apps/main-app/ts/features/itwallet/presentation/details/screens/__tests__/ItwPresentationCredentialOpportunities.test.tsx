@@ -138,89 +138,112 @@ describe("credential opportunities CTA", () => {
     jest.clearAllMocks();
   });
 
-  test.each(walletScenarios)(
-    "tracks the $name click before starting FIMS with the CDN configuration",
-    ({ credential, isL3, analyticsCredential }) => {
-      const { getByText } = renderComponent(credential, isL3);
-
-      fireEvent.press(getByText(opportunitiesLabel()));
-
-      expect(mockTrackOpportunities).toHaveBeenCalledTimes(1);
-      expect(mockTrackOpportunities).toHaveBeenCalledWith(analyticsCredential);
-      expect(mockNavigate).toHaveBeenCalledTimes(1);
-      expect(mockNavigate).toHaveBeenCalledWith(FIMS_ROUTES.MAIN, {
-        screen: FIMS_ROUTES.CONSENTS,
-        params: {
-          ctaText: opportunitiesLabel(),
-          ctaUrl: "https://api.ced.pagopa.it/api/ced-card/v1/fauth",
-          source: ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
-          serviceId,
-          serviceName: undefined,
-          organizationName: undefined,
-          organizationFiscalCode: undefined,
-          ephemeralSessionOniOS: true
-        }
-      });
-      expect(mockTrackOpportunities.mock.invocationCallOrder[0]).toBeLessThan(
-        mockNavigate.mock.invocationCallOrder[0]
-      );
-      expect(mockToastError).not.toHaveBeenCalled();
-    }
-  );
-
-  test.each(blockedScenarios)(
-    "tracks the click and shows a toast without starting FIMS when $name",
-    ({ isConnected, offlineReason }) => {
+  describe.each([
+    { name: "with primary CTA", isPresentable: true },
+    { name: "without primary CTA", isPresentable: false }
+  ])("$name", ({ isPresentable }) => {
+    beforeEach(() => {
       jest
-        .spyOn(connectivitySelectors, "isConnectedSelector")
-        .mockReturnValue(isConnected);
-      jest
-        .spyOn(ingressSelectors, "offlineAccessReasonSelector")
-        .mockReturnValue(offlineReason);
-      const { getByText } = renderComponent(ItwStoredCredentialsMocks.dc);
+        .spyOn(proximitySelectors, "isPresentableCredentialSelector")
+        .mockReturnValue(() => isPresentable);
+    });
 
-      fireEvent.press(getByText(opportunitiesLabel()));
+    test.each(walletScenarios)(
+      "tracks the $name click before starting FIMS with the CDN configuration",
+      ({ credential, isL3, analyticsCredential }) => {
+        const { getByText } = renderComponent(credential, isL3);
 
-      expect(mockTrackOpportunities).toHaveBeenCalledTimes(1);
-      expect(mockTrackOpportunities).toHaveBeenCalledWith("ITW_CED_V2");
-      expect(mockToastError).toHaveBeenCalledTimes(1);
-      expect(mockToastError).toHaveBeenCalledWith(
-        I18n.t("global.offline.toast")
-      );
-      expect(mockTrackOpportunities.mock.invocationCallOrder[0]).toBeLessThan(
-        mockToastError.mock.invocationCallOrder[0]
-      );
-      expect(mockNavigate).not.toHaveBeenCalled();
-    }
-  );
+        fireEvent.press(getByText(opportunitiesLabel()));
 
-  describe.each(walletScenarios)(
-    "$name feature flags",
-    ({ credential, isL3 }) => {
-      test.each([
-        { name: "both disabled", local: false, remote: false, expected: false },
-        { name: "local only", local: true, remote: false, expected: true },
-        { name: "remote only", local: false, remote: true, expected: true },
-        { name: "both enabled", local: true, remote: true, expected: true },
-        {
-          name: "both absent",
-          local: undefined,
-          remote: undefined,
-          expected: false
-        }
-      ])(
-        "CTA visibility is $expected with $name",
-        ({ local, remote, expected }) => {
-          const { queryByText } = renderComponent(credential, isL3, true, {
-            local,
-            remote
-          });
+        expect(mockTrackOpportunities).toHaveBeenCalledTimes(1);
+        expect(mockTrackOpportunities).toHaveBeenCalledWith(
+          analyticsCredential
+        );
+        expect(mockNavigate).toHaveBeenCalledTimes(1);
+        expect(mockNavigate).toHaveBeenCalledWith(FIMS_ROUTES.MAIN, {
+          screen: FIMS_ROUTES.CONSENTS,
+          params: {
+            ctaText: opportunitiesLabel(),
+            ctaUrl: "https://api.ced.pagopa.it/api/ced-card/v1/fauth",
+            source: ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
+            serviceId,
+            serviceName: undefined,
+            organizationName: undefined,
+            organizationFiscalCode: undefined,
+            ephemeralSessionOniOS: true
+          }
+        });
+        expect(mockTrackOpportunities.mock.invocationCallOrder[0]).toBeLessThan(
+          mockNavigate.mock.invocationCallOrder[0]
+        );
+        expect(mockToastError).not.toHaveBeenCalled();
+      }
+    );
 
-          expect(queryByText(opportunitiesLabel()) !== null).toBe(expected);
-        }
-      );
-    }
-  );
+    test.each(blockedScenarios)(
+      "tracks the click and shows a toast without starting FIMS when $name",
+      ({ isConnected, offlineReason }) => {
+        jest
+          .spyOn(connectivitySelectors, "isConnectedSelector")
+          .mockReturnValue(isConnected);
+        jest
+          .spyOn(ingressSelectors, "offlineAccessReasonSelector")
+          .mockReturnValue(offlineReason);
+        const { getByText } = renderComponent(ItwStoredCredentialsMocks.dc);
+
+        fireEvent.press(getByText(opportunitiesLabel()));
+
+        expect(mockTrackOpportunities).toHaveBeenCalledTimes(1);
+        expect(mockTrackOpportunities).toHaveBeenCalledWith("ITW_CED_V2");
+        expect(mockToastError).toHaveBeenCalledTimes(1);
+        expect(mockToastError).toHaveBeenCalledWith(
+          I18n.t("global.offline.toast")
+        );
+        expect(mockTrackOpportunities.mock.invocationCallOrder[0]).toBeLessThan(
+          mockToastError.mock.invocationCallOrder[0]
+        );
+        expect(mockNavigate).not.toHaveBeenCalled();
+      }
+    );
+
+    describe.each(walletScenarios)(
+      "$name feature flags",
+      ({ credential, isL3 }) => {
+        test.each([
+          {
+            name: "both disabled",
+            local: false,
+            remote: false,
+            expected: false
+          },
+          { name: "local only", local: true, remote: false, expected: true },
+          { name: "remote only", local: false, remote: true, expected: true },
+          { name: "both enabled", local: true, remote: true, expected: true },
+          {
+            name: "both absent",
+            local: undefined,
+            remote: undefined,
+            expected: false
+          }
+        ])(
+          "CTA visibility is $expected with $name",
+          ({ local, remote, expected }) => {
+            const { queryByText } = renderComponent(credential, isL3, true, {
+              local,
+              remote
+            });
+
+            expect(queryByText(opportunitiesLabel()) !== null).toBe(expected);
+            expect(
+              queryByText(
+                I18n.t("features.itWallet.presentation.ctas.present")
+              ) !== null
+            ).toBe(isPresentable);
+          }
+        );
+      }
+    );
+  });
 
   test("tracks the click without starting FIMS when the CDN configuration is missing", () => {
     const { getByText } = renderComponent(

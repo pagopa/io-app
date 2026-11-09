@@ -10,6 +10,7 @@ import { getType } from "typesafe-actions";
 import { backendStatusLoadSuccess } from "../../../../../store/actions/backendStatus";
 import { Action } from "../../../../../store/actions/types";
 import createSecureStorage from "../../../../../store/storages/secureStorage";
+import { isDevEnv } from "../../../../../utils/environment";
 
 export type ItwRemoteConfigState = Partial<ItwConfig>;
 
@@ -37,7 +38,7 @@ const itwCredentialsPersistConfig: PersistConfig = {
   key: "itWalletRemoteConfig",
   storage: createSecureStorage(),
   version: CURRENT_REDUX_ITW_REMOTE_CONFIG_STORE_VERSION,
-  migrate: createMigrate(migrations)
+  migrate: createMigrate(migrations, { debug: isDevEnv })
 };
 
 const persistedReducer = persistReducer(itwCredentialsPersistConfig, reducer);
