@@ -7,10 +7,16 @@ import {
 import { GlobalState } from "../../../../../store/reducers/types";
 import { profileSelector } from "../../../../settings/common/store/selectors";
 import { canAccessCgn } from "../../utils/dates";
+import { isCgnDiscoveryBannerClosedSelector } from "../reducers/banners";
 import { cgnDetailSelector, isCgnEnrolledSelector } from "../reducers/details";
 
 export const isCgnEligibleByAgeSelector = (state: GlobalState): boolean =>
   canAccessCgn(pot.toUndefined(profileSelector(state)));
+
+export const shouldFetchCgnDetailsSelector = (state: GlobalState): boolean =>
+  !isCgnDiscoveryBannerClosedSelector(state) &&
+  isCGNDiscoveryBannerEnabledSelector(state) &&
+  isCgnEligibleByAgeSelector(state);
 
 export const isCgnEngagementBannerRenderableSelector = (
   state: GlobalState
