@@ -15,6 +15,7 @@ import { pnAarQRCodeRegexSelector } from "../../../store/reducers/backendStatus/
 import { GlobalState } from "../../../store/reducers/types";
 import { decodePosteDataMatrix } from "../../../utils/payment";
 import { selectItwSpecsVersion } from "../../itwallet/common/store/selectors/environment";
+import { getIoWallet } from "../../itwallet/common/utils/itwIoWallet";
 import { parseCredentialOfferLink } from "../../itwallet/offer/utils";
 import { validateItwPresentationQrCodeParams } from "../../itwallet/presentation/remote/utils/itwRemotePresentationUtils";
 import { ItwRemoteRequestPayload } from "../../itwallet/presentation/remote/utils/itwRemoteTypeUtils";
@@ -170,12 +171,13 @@ const decodeItwRemoteBarcode: IOBarcodeRuntimeDecoderFn = (
   );
 
 const decodeItwCredentialOfferBarcode: IOBarcodeRuntimeDecoderFn = (
-  _state: GlobalState,
+  state: GlobalState,
   data: string
 ): O.Option<ItwCredentialOfferDecodedIOBarcode> => {
   const itwCredentialOfferUri = data.trim();
 
-  return parseCredentialOfferLink(itwCredentialOfferUri) !== undefined
+  return parseCredentialOfferLink(itwCredentialOfferUri) !== undefined &&
+    getIoWallet(selectItwSpecsVersion(state)).CredentialsOffer.isSupported
     ? O.some({
         type: "ITW_CREDENTIAL_OFFER",
         itwCredentialOfferUri
