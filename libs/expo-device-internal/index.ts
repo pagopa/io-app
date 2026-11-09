@@ -13,8 +13,10 @@ const DeviceInternalModule =
  * legacy iOS deviceUID stored in Keychain/UserDefaults (seeded from IDFV/UUID).
  * This is not a hardware identifier or an authentication credential.
  *
- * Never throws: if the identity cannot be read, iOS falls back to IDFV or a
- * generated UUID and Android returns null (like the legacy implementation).
+ * Never throws. If the identity cannot be read, iOS falls back to IDFV or a
+ * generated UUID, while Android falls back to a UUID saved in SharedPreferences
+ * (or a newly generated one).
+ *
  * Requires a native iOS/Android build containing this module; Expo Go is not
  * supported.
  */

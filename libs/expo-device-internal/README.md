@@ -22,9 +22,15 @@ or remove `react-native-device-info`.
 
 ## Identity compatibility
 
-- Android reads `Settings.Secure.ANDROID_ID`, just like the legacy implementation.
-  Its lifecycle depends on Android user, device, and app-signing key. If it or the
-  React context is unavailable, `null` is returned instead of throwing, like the legacy implementation.
+- Android resolves the ID in this order and never throws:
+  1. `Settings.Secure.ANDROID_ID`, just like the legacy implementation. Its
+     lifecycle depends on Android user, device, and app-signing key.
+  2. If it is missing or empty, the UUID previously saved in SharedPreferences.
+  3. Otherwise, a newly generated UUID, which is saved for later calls.
+
+  Without a React context nothing can be read or saved, so a UUID is generated
+  once per process.
+
 - iOS reads the legacy Keychain generic-password item with account/service
   `deviceUID`, then the standard UserDefaults `deviceUID` key, then IDFV, then a
   generated UUID. Missing stores receive the selected ID. A store whose value
