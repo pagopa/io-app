@@ -1,34 +1,35 @@
 import {
-  hexToRgba,
-  IOColorsLegacy,
+  IOColors,
   IODimensions,
-  useIOTheme,
+  IOTextColor,
   useIOThemeContext
 } from "@io-app/design-system";
 import { ColorValue, ViewStyle } from "react-native";
 
+import { servicesHomeColors } from "../colors";
+
+type ServiceCardStyle = {
+  card: ViewStyle;
+  foreground: {
+    primary: IOTextColor;
+    secondary: IOTextColor;
+  };
+};
+
 type ServiceCardStyleProps = {
-  default: {
-    card: ViewStyle;
-    foreground: {
-      primary: IOColorsLegacy;
-      secondary: IOColorsLegacy;
-    };
-  };
-  new: {
-    card: ViewStyle;
-    foreground: {
-      primary: IOColorsLegacy;
-      secondary: IOColorsLegacy;
-    };
-  };
+  default: ServiceCardStyle;
+  new: ServiceCardStyle;
   skeletonColor: ColorValue;
+};
+
+const colorsByMode = {
+  light: servicesHomeColors(IOColors.light, "light"),
+  dark: servicesHomeColors(IOColors.dark, "dark")
 };
 
 /** Returns the common style used for service cards */
 export const useServiceCardStyle = (): ServiceCardStyleProps => {
-  const theme = useIOTheme();
-  const { themeType } = useIOThemeContext();
+  const { featuredCard } = colorsByMode[useIOThemeContext().themeType];
 
   return {
     default: {
@@ -36,33 +37,24 @@ export const useServiceCardStyle = (): ServiceCardStyleProps => {
         borderRadius: IODimensions.radius.card,
         borderCurve: "continuous",
         borderWidth: IODimensions.stroke.default,
-        borderColor: IOColorsLegacy[theme["cardBorder-default"]],
-        backgroundColor: IOColorsLegacy[theme["appBackground-secondary"]]
+        borderColor: featuredCard.default.border,
+        backgroundColor: featuredCard.default.background
       },
       foreground: {
-        primary: theme["textHeading-secondary"],
-        secondary: theme["textBody-tertiary"]
+        primary: featuredCard.default.title,
+        secondary: featuredCard.default.subtitle
       }
     },
     new: {
       card: {
-        borderColor:
-          themeType === "light"
-            ? IOColorsLegacy["hanPurple-100"]
-            : hexToRgba(IOColorsLegacy["hanPurple-250"], 0.3),
-        backgroundColor:
-          themeType === "light"
-            ? IOColorsLegacy["hanPurple-50"]
-            : hexToRgba(IOColorsLegacy["hanPurple-250"], 0.2)
+        borderColor: featuredCard.new.border,
+        backgroundColor: featuredCard.new.background
       },
       foreground: {
-        primary: themeType === "light" ? "hanPurple-850" : "hanPurple-50",
-        secondary: themeType === "light" ? "grey-700" : "hanPurple-250"
+        primary: featuredCard.new.title,
+        secondary: featuredCard.new.subtitle
       }
     },
-    skeletonColor:
-      themeType === "light"
-        ? IOColorsLegacy["grey-200"]
-        : IOColorsLegacy["grey-850"]
+    skeletonColor: featuredCard.skeleton
   };
 };
