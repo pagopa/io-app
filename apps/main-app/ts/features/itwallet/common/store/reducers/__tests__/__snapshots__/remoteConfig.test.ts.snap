@@ -48,7 +48,22 @@ exports[`ITW remote config persist shape should freeze ItwConfig [if this test f
     "disabled_identification_methods": [
       "string",
     ],
-    "discover_more_ced_enabled": "boolean",
+    "discover_more_ced": [
+      {},
+      {
+        "min_app_version": [
+          {
+            "android": [
+              "string",
+            ],
+            "ios": [
+              "string",
+            ],
+          },
+          {},
+        ],
+      },
+    ],
     "hidden_credentials": [
       "string",
     ],

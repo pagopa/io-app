@@ -32,7 +32,7 @@ describe("ITW remote config persist shape", () => {
 });
 
 describe("ITW remote config migration", () => {
-  test("initializes the CED flag while preserving the previous remote configuration", async () => {
+  test("leaves CED opportunities disabled while preserving the previous remote configuration", async () => {
     const previousState = {
       enabled: true,
       ipatente_cta_visible: true,
@@ -41,7 +41,7 @@ describe("ITW remote config migration", () => {
 
     await expect(createMigrate(migrations)(previousState, 0)).resolves.toEqual({
       ...previousState,
-      discover_more_ced_enabled: false
+      discover_more_ced: undefined
     });
   });
 });

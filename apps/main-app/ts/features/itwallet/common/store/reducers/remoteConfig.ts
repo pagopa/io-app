@@ -31,7 +31,7 @@ const reducer = (
 const CURRENT_REDUX_ITW_REMOTE_CONFIG_STORE_VERSION = 0;
 
 export const migrations: MigrationManifest = {
-  "0": state => (state ? { ...state, discover_more_ced_enabled: false } : state)
+  "0": state => (state ? { ...state, discover_more_ced: undefined } : state)
 };
 
 const itwCredentialsPersistConfig: PersistConfig = {

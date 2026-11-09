@@ -7,6 +7,7 @@ import { backendStatusLoadSuccess } from "../../../../../../store/actions/backen
 import { appReducer } from "../../../../../../store/reducers";
 import { baseRawBackendStatus } from "../../../../../../store/reducers/__mock__/backendStatus";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import * as appVersion from "../../../../../../utils/appVersion";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import * as connectivitySelectors from "../../../../../connectivity/store/selectors";
 import { FIMS_ROUTES } from "../../../../../fims/common/navigation";
@@ -112,6 +113,7 @@ const opportunitiesLabel = () =>
 
 describe("credential opportunities CTA", () => {
   beforeEach(() => {
+    jest.spyOn(appVersion, "getAppVersion").mockReturnValue("2.0.0.0");
     mockGetState.mockReturnValue({
       index: 0,
       routes: [{ name: ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL }]
@@ -287,7 +289,15 @@ const renderComponent = (
         ...baseRawBackendStatus.config,
         itw: {
           ...baseRawBackendStatus.config.itw,
-          discover_more_ced_enabled: flags.remote
+          discover_more_ced:
+            flags.remote === undefined
+              ? undefined
+              : {
+                  min_app_version: {
+                    ios: flags.remote ? "1.0.0.0" : "0.0.0.0",
+                    android: flags.remote ? "1.0.0.0" : "0.0.0.0"
+                  }
+                }
         },
         fims: {
           ...baseRawBackendStatus.config.fims,

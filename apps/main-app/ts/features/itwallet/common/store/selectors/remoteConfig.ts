@@ -1,6 +1,8 @@
+import * as O from "fp-ts/lib/Option";
 import { Platform } from "react-native";
 import { createSelector } from "reselect";
 
+import { isMinAppVersionSupported } from "../../../../../store/reducers/featureFlagWithMinAppVersionStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   getAppVersion,
@@ -189,8 +191,12 @@ export const itwShowcaseUrlSelector = createSelector(
   ({ showcase_url }): string | undefined => showcase_url
 );
 
-/** Returns whether CED opportunities are remotely enabled. */
+/**
+ * Returns whether CED opportunities are remotely enabled. A `0.*`
+ * min_app_version disables the feature.
+ */
 export const itwIsDiscoverMoreCEDRemotelyEnabledSelector = createSelector(
   itwRemoteConfigSelector,
-  ({ discover_more_ced_enabled }) => discover_more_ced_enabled ?? false
+  ({ discover_more_ced }): boolean =>
+    isMinAppVersionSupported(O.fromNullable(discover_more_ced))
 );

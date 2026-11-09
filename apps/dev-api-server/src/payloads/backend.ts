@@ -408,7 +408,9 @@ export const backendStatus: BackendStatus = {
       },
       ipatente_cta_visible: true,
       feedback_banner_visible: true,
-      discover_more_ced_enabled: false
+      discover_more_ced: {
+        min_app_version: { ios: "0.0.0.0", android: "0.0.0.0" }
+      }
     },
     landing_banners: {
       priority_order: [

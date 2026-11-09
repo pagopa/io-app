@@ -13,6 +13,7 @@ import {
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { type GlobalState } from "../../../../../../store/reducers/types";
+import * as appVersion from "../../../../../../utils/appVersion";
 import { pidScopes } from "../../../../common/utils/constants";
 import { type DigitalCredentialsCatalogue } from "../../../../common/utils/itwCredentialsCatalogueUtils";
 import { getCredentialNameFromType } from "../../../../common/utils/itwCredentialUtils";
@@ -425,6 +426,11 @@ describe("itwCredentialIntroContentSelector", () => {
 });
 
 describe("CED opportunities feature flags", () => {
+  beforeEach(() => {
+    jest.spyOn(appVersion, "getAppVersion").mockReturnValue("2.0.0.0");
+  });
+
+  afterEach(() => jest.restoreAllMocks());
   test.each([
     {
       name: "both absent",
@@ -463,7 +469,15 @@ describe("CED opportunities feature flags", () => {
           },
           remoteConfig: {
             ...itWallet.remoteConfig,
-            discover_more_ced_enabled: remote
+            discover_more_ced:
+              remote === undefined
+                ? undefined
+                : {
+                    min_app_version: {
+                      ios: remote ? "1.0.0.0" : "0.0.0.0",
+                      android: remote ? "1.0.0.0" : "0.0.0.0"
+                    }
+                  }
           }
         }
       }
