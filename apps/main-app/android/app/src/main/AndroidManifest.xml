@@ -148,6 +148,17 @@
         <data android:scheme="haip-vci" />
       </intent-filter>
 
+      <!-- Intent filters coming from legacy io-react-native-login-utils -->
+      <intent-filter tools:ignore="IntentFilterUniqueDataAttributes">
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+
+        <data android:scheme="iologin" />
+        <data android:scheme="iossoapi" />
+        <data android:scheme="iowallet" />
+      </intent-filter>
+
     </activity>
 
     <!-- Trigger Google Play services to install the backported photo picker module. -->

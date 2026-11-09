@@ -1,5 +1,9 @@
 {
   "name": "IO",
   "displayName": "IO",
-  "plugins": ["expo-background-task", "react-native-bottom-tabs"]
+  "plugins": [
+    "expo-background-task",
+    "react-native-bottom-tabs",
+    "expo-web-browser"
+  ]
 }
