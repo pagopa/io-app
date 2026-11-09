@@ -9,10 +9,8 @@ import {
   Alert,
   ContentWrapper,
   H4,
-  hexToRgba,
-  IOColorsLegacy,
+  IOColors,
   IOToast,
-  useIOTheme,
   VSpacer,
   VStack
 } from "@io-app/design-system";
@@ -44,12 +42,14 @@ import { capitalizeTextName } from "../../../../utils/strings";
 import { openWebUrl } from "../../../../utils/url";
 import { profileSelector } from "../../../settings/common/store/selectors";
 import { loadAvailableBonuses } from "../../common/store/actions/availableBonusesTypes";
+import { cgnColors } from "../colors";
 import { CgnAnimatedBackground } from "../components/CgnAnimatedBackground";
 import { CgnCardStatus } from "../components/CgnCardStatus";
 import CgnOwnershipInformation from "../components/detail/CgnOwnershipInformation";
 import CgnStatusDetail from "../components/detail/CgnStatusDetail";
 import CgnUnsubscribe from "../components/detail/CgnUnsubscribe";
 import EycaDetailComponent from "../components/detail/eyca/EycaDetailComponent";
+import { useCgnColors } from "../hooks/useCgnColors";
 import { useCgnUnsubscribe } from "../hooks/useCgnUnsubscribe";
 import { CgnDetailsParamsList } from "../navigation/params";
 import CGN_ROUTES from "../navigation/routes";
@@ -78,19 +78,9 @@ function getLogoUris(card: Card | undefined, eycaDetails: EycaDetailsState) {
   ];
 }
 
-export const cgnCardColors: NonNullable<
-  BonusScreenComponentProps["cardColors"]
-> = {
-  light: {
-    background: "#f4f5f8",
-    foreground: "#c8c3dc",
-    text: "blueItalia-850"
-  },
-  dark: {
-    background: IOColorsLegacy["grey-850"],
-    foreground: hexToRgba("#A58DFF", 0.4),
-    text: "blueIO-50"
-  }
+const cgnCardColors: NonNullable<BonusScreenComponentProps["cardColors"]> = {
+  light: cgnColors(IOColors.light, "light").detailCard,
+  dark: cgnColors(IOColors.dark, "dark").detailCard
 };
 
 /** Screen to display all the information about the active CGN */
@@ -129,7 +119,7 @@ const CgnDetailScreen = (): ReactElement => {
 
   const logoUris = getLogoUris(cgnDetails, eycaDetails);
 
-  const theme = useIOTheme();
+  const colors = useCgnColors();
   const eycaDiscountPage = useIOSelector(getEYCADiscountUrl);
 
   const startCgnActivation = () => {
@@ -233,7 +223,7 @@ const CgnDetailScreen = (): ReactElement => {
       cardColors={cgnCardColors}
       cardFooter={
         <H4
-          color={theme["textHeading-default"]}
+          color={colors.detailFooter}
           style={{
             textAlign: "center",
             marginHorizontal: 16,

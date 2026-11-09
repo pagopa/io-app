@@ -4,10 +4,8 @@ import {
   ContentWrapper,
   Divider,
   H3,
-  hexToRgba,
   HSpacer,
   Icon,
-  IOColorsLegacy,
   IODimensions
 } from "@io-app/design-system";
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
@@ -24,6 +22,7 @@ import { IOStackNavigationProp } from "../../../../../navigation/params/AppParam
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { CgnMerchantListSkeleton } from "../../components/merchants/CgnMerchantListSkeleton";
 import { CgnMerchantListViewRenderItem } from "../../components/merchants/CgnMerchantsListView";
+import { useCgnColors } from "../../hooks/useCgnColors";
 import { CgnDetailsParamsList } from "../../navigation/params";
 import CGN_ROUTES from "../../navigation/routes";
 import {
@@ -42,6 +41,7 @@ export type CgnMerchantListByCategoryScreenNavigationParams = Readonly<{
 }>;
 
 const CgnMerchantsListByCategory = () => {
+  const colors = useCgnColors();
   const animatedFlatListRef = useAnimatedRef<Animated.FlatList<any>>();
 
   const dispatch = useIODispatch();
@@ -159,14 +159,14 @@ const CgnMerchantsListByCategory = () => {
               style={{
                 justifyContent: "center",
                 alignItems: "center",
-                backgroundColor: hexToRgba(IOColorsLegacy.white, 0.2),
+                backgroundColor: colors.category.iconBackground,
                 height: 66,
                 width: 66,
                 borderRadius: 8
               }}
             >
               <Icon
-                color={categorySpecs.textColor}
+                color={colors.category.content[categorySpecs.textColor]}
                 name={categorySpecs.icon}
                 size={32}
               />
@@ -180,7 +180,7 @@ const CgnMerchantsListByCategory = () => {
                     categoryName: getCategoryName(categorySpecs.type)
                   }
                 )}
-                color={categorySpecs.textColor}
+                color={colors.category.content[categorySpecs.textColor]}
               >
                 {getCategoryName(categorySpecs.type)}
               </H3>
@@ -198,7 +198,7 @@ const CgnMerchantsListByCategory = () => {
       }}
       refreshing={isListRefreshing}
       style={{ zIndex: 1 }}
-      tintColor={IOColorsLegacy[categorySpecs?.textColor ?? "black"]}
+      tintColor={colors.category.content[categorySpecs?.textColor ?? "black"]}
     />
   );
 

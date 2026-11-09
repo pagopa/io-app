@@ -3,9 +3,7 @@ import {
   ContentWrapper,
   H3,
   HStack,
-  IOColorsLegacy,
   IODimensions,
-  useIOThemeContext,
   VSpacer
 } from "@io-app/design-system";
 import I18n from "i18next";
@@ -19,6 +17,7 @@ import Animated, {
 
 import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
+import { useCgnColors } from "../hooks/useCgnColors";
 import { CgnAnimatedBackground } from "./CgnAnimatedBackground";
 
 type CgnAnimatedHeaderProps = {
@@ -39,11 +38,8 @@ const CgnAnimatedHeader = ({
   pullProgress,
   isRefreshingValue
 }: CgnAnimatedHeaderProps) => {
-  const { themeType } = useIOThemeContext();
-  const isDark = themeType === "dark";
-  const indicatorColor = isDark
-    ? IOColorsLegacy["blueIO-50"]
-    : IOColorsLegacy["blueItalia-850"];
+  const colors = useCgnColors();
+  const indicatorColor = colors.refreshIndicator;
 
   const titleRef = useRef<View>(null);
 

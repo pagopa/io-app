@@ -1,4 +1,3 @@
-import { useIOThemeContext } from "@io-app/design-system";
 import { Canvas, Path, Skia } from "@shopify/react-native-skia";
 import { useEffect } from "react";
 import { StyleSheet } from "react-native";
@@ -12,7 +11,7 @@ import {
   withTiming
 } from "react-native-reanimated";
 
-import { cgnCardColors } from "../screens/CgnDetailScreen";
+import { useCgnColors } from "../hooks/useCgnColors";
 
 // Blob configuration
 const NUM_BLOB_POINTS = 7;
@@ -188,16 +187,10 @@ const AnimatedBlob = ({ index, canvasSize, color }: AnimatedBlobProps) => {
 export const CgnAnimatedBackground = () => {
   // Canvas size is provided via onSize callback and updated on the UI thread
   const canvasSize = useSharedValue({ width: 0, height: 0 });
-  const { themeType } = useIOThemeContext();
+  const colors = useCgnColors();
 
-  const isDark = themeType === "dark";
-
-  const backgroundColor = isDark
-    ? cgnCardColors.dark.background
-    : cgnCardColors.light.background;
-  const foregroundColor = isDark
-    ? cgnCardColors.dark.foreground
-    : cgnCardColors.light.foreground;
+  const backgroundColor = colors.detailCard.background;
+  const foregroundColor = colors.detailCard.foreground;
 
   return (
     <Canvas

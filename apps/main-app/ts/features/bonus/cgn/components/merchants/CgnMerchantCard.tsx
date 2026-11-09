@@ -2,7 +2,6 @@ import {
   H6,
   Icon,
   IOCategoryIcons,
-  IOColorsLegacy,
   IODimensions,
   IODimensionScale,
   IOText
@@ -12,6 +11,7 @@ import { StyleSheet, View } from "react-native";
 
 import { WithTestID } from "../../../../../types/WithTestID";
 import { CardPressableBase } from "../../../../services/common/components/CardPressableBase";
+import { useCgnColors } from "../../hooks/useCgnColors";
 
 type CgnMerchantCardProps = WithTestID<{
   accessibilityLabel?: string;
@@ -57,7 +57,6 @@ const styles = StyleSheet.create({
   // TODO: replace with `<Badge forceLightMode variant="cgn" />` once `Badge` supports `forceLightMode`, like `Tag`
   newsBadge: {
     alignItems: "center",
-    backgroundColor: IOColorsLegacy["hanPurple-100"],
     borderRadius: IODimensions.radius.badge,
     borderCurve: "continuous",
     flexDirection: "row",
@@ -81,46 +80,56 @@ const CgnMerchantCard = ({
   icon,
   name,
   textColor
-}: CgnMerchantCardProps) => (
-  <CardPressableBase
-    accessibilityLabel={accessibilityLabel}
-    onPress={onPress}
-    testID={testID ? `${testID}-pressable` : undefined}
-  >
-    <View
-      style={[
-        styles.cardContainer,
-        {
-          backgroundColor,
-          borderColor: IOColorsLegacy["hanPurple-100"]
-        }
-      ]}
-      testID={testID}
+}: CgnMerchantCardProps) => {
+  const colors = useCgnColors();
+
+  return (
+    <CardPressableBase
+      accessibilityLabel={accessibilityLabel}
+      onPress={onPress}
+      testID={testID ? `${testID}-pressable` : undefined}
     >
-      <View style={styles.cardTitle}>
-        <H6 color={textColor} numberOfLines={3}>
-          {name}
-        </H6>
-      </View>
-      <View style={styles.cardFooter}>
-        {isNew && (
-          <View accessible={false} style={styles.newsBadge}>
-            <IOText
-              color="hanPurple-500"
-              lineHeight={badgeTextLineHeight}
-              numberOfLines={1}
-              size={badgeTextSize}
-              style={styles.newsBadgeText}
-              weight="Semibold"
+      <View
+        style={[
+          styles.cardContainer,
+          {
+            backgroundColor,
+            borderColor: colors.merchantCard.border
+          }
+        ]}
+        testID={testID}
+      >
+        <View style={styles.cardTitle}>
+          <H6 color={textColor} numberOfLines={3}>
+            {name}
+          </H6>
+        </View>
+        <View style={styles.cardFooter}>
+          {isNew && (
+            <View
+              accessible={false}
+              style={[
+                styles.newsBadge,
+                { backgroundColor: colors.merchantCard.newsBadge }
+              ]}
             >
-              {I18n.t("bonus.cgn.merchantsList.news")}
-            </IOText>
-          </View>
-        )}
-        <Icon color={textColor} name={icon} size={iconSize} />
+              <IOText
+                color="hanPurple-500"
+                lineHeight={badgeTextLineHeight}
+                numberOfLines={1}
+                size={badgeTextSize}
+                style={styles.newsBadgeText}
+                weight="Semibold"
+              >
+                {I18n.t("bonus.cgn.merchantsList.news")}
+              </IOText>
+            </View>
+          )}
+          <Icon color={textColor} name={icon} size={iconSize} />
+        </View>
       </View>
-    </View>
-  </CardPressableBase>
-);
+    </CardPressableBase>
+  );
+};
 
 export { CgnMerchantCard };

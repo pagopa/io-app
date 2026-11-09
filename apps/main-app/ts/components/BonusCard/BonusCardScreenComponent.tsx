@@ -2,6 +2,7 @@ import {
   HeaderActionProps,
   hexToRgba,
   IOColorsLegacy,
+  IOTextColor,
   useIOThemeContext
 } from "@io-app/design-system";
 import { ReactNode } from "react";
@@ -19,7 +20,7 @@ export type BonusCardColorSchemeValues = {
   background: string;
   // Skeleton or other visual elements
   foreground: string;
-  text: IOColorsLegacy;
+  text: IOTextColor;
 };
 
 export type BonusScreenComponentProps = BaseProps &

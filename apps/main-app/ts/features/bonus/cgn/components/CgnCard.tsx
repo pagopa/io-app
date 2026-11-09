@@ -1,7 +1,6 @@
 import {
   BodySmall,
   H6,
-  IOColorsLegacy,
   IODimensions,
   Tag,
   useIOThemeContext
@@ -14,6 +13,7 @@ import eycaLogo from "../../../../../img/bonus/cgn/eyca_logo.png";
 import CgnCardShapeDarkMode from "../../../../../img/features/cgn/cgn-card-dark.svg";
 import CgnCardShapeLightMode from "../../../../../img/features/cgn/cgn-card.svg";
 import { format } from "../../../../utils/dates";
+import { useCgnColors } from "../hooks/useCgnColors";
 
 export type CgnCardProps = {
   expireDate?: Date;
@@ -24,13 +24,21 @@ export const CgnCard = ({ expireDate, withEycaLogo }: CgnCardProps) => {
   const { themeType } = useIOThemeContext();
   const isDark = themeType === "dark";
 
-  const textColor: IOColorsLegacy = isDark ? "grey-50" : "blueItalia-850";
+  const colors = useCgnColors();
+  const textColor = colors.walletCard.text;
 
   const isExpired = expireDate === undefined;
 
   const eycaLogoComponent = (
     <View
-      style={[styles.logoContainer, { bottom: 12, right: 12 }]}
+      style={[
+        styles.logoContainer,
+        {
+          backgroundColor: colors.walletCard.logoBackground,
+          bottom: 12,
+          right: 12
+        }
+      ]}
       testID="cgnEycaLogoTestID"
     >
       <Image
@@ -43,7 +51,14 @@ export const CgnCard = ({ expireDate, withEycaLogo }: CgnCardProps) => {
 
   const cngLogoComponent = (
     <View
-      style={[styles.logoContainer, { top: 12, right: 12 }]}
+      style={[
+        styles.logoContainer,
+        {
+          backgroundColor: colors.walletCard.logoBackground,
+          top: 12,
+          right: 12
+        }
+      ]}
       testID="cgnLogoTestID"
     >
       <Image
@@ -125,7 +140,6 @@ const styles = StyleSheet.create({
   logoContainer: {
     position: "absolute",
     padding: 5,
-    backgroundColor: IOColorsLegacy.white,
     borderRadius: 8
   },
   logo: {

@@ -22,7 +22,7 @@ import { openWebUrl } from "../../../../../utils/url";
 import { profileSelector } from "../../../../settings/common/store/selectors";
 import { CgnDiscountContent } from "../../components/merchants/discount/CgnDiscountContent";
 import { CgnDiscountHeader } from "../../components/merchants/discount/CgnDiscountHeader";
-import { useCgnStyle } from "../../hooks/useCgnStyle";
+import { useCgnColors } from "../../hooks/useCgnColors";
 import { CgnDetailsParamsList } from "../../navigation/params";
 import CGN_ROUTES from "../../navigation/routes";
 import { cgnCodeFromBucket } from "../../store/actions/bucket";
@@ -170,13 +170,11 @@ const CgnDiscountDetailScreen = () => {
     }
   };
 
-  const {
-    header: { default: defaultHeaderStyle, new: newHeaderStyle }
-  } = useCgnStyle();
+  const colors = useCgnColors();
 
   const { backgroundColor } = discountDetails?.isNew
-    ? newHeaderStyle
-    : defaultHeaderStyle;
+    ? colors.discountHeader.new
+    : colors.discountHeader.default;
 
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
 
