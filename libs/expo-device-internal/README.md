@@ -23,11 +23,13 @@ or remove `react-native-device-info`.
 ## Identity compatibility
 
 - Android reads `Settings.Secure.ANDROID_ID`, just like the legacy implementation.
-  Its lifecycle depends on Android user, device, and app-signing key.
+  Its lifecycle depends on Android user, device, and app-signing key. If it or the
+  React context is unavailable, `null` is returned instead of throwing, like the legacy implementation.
 - iOS reads the legacy Keychain generic-password item with account/service
   `deviceUID`, then the standard UserDefaults `deviceUID` key, then IDFV, then a
-  generated UUID. Missing stores receive the selected ID; existing values are
-  not overwritten. Strings are not normalized.
+  generated UUID. Missing stores receive the selected ID. A store whose value
+  differs from the selected ID is overwritten with it (see the resolver bullet
+  below). Strings are not normalized.
 - The Keychain query preserves `AfterFirstUnlockThisDeviceOnly` and the default
   access group. App signing and Keychain entitlements must retain access to the
   original item. Keychain persistence across reinstall is not guaranteed.
