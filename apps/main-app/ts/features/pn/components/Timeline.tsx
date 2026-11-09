@@ -1,12 +1,8 @@
-import {
-  Caption,
-  H6,
-  IOColorsLegacy,
-  useIOColors,
-  VSpacer
-} from "@io-app/design-system";
+import { Caption, H6, VSpacer } from "@io-app/design-system";
 import { PropsWithChildren } from "react";
 import { StyleSheet, View } from "react-native";
+
+import { usePnColors } from "../hooks/usePnColors";
 
 export type TimelineItemProps = {
   accessibilityLabel: string;
@@ -28,10 +24,6 @@ export type TimelineStatus =
   | "effective"
   | "unreachable"
   | "viewed";
-
-type ColorStates = {
-  background: string;
-};
 
 type Position = {
   isFirst: boolean;
@@ -74,24 +66,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapColorStatus: Record<NonNullable<TimelineStatus>, ColorStates> = {
-  cancelled: {
-    background: IOColorsLegacy["warning-500"]
-  },
-  default: {
-    background: IOColorsLegacy["grey-300"]
-  },
-  effective: {
-    background: IOColorsLegacy["info-500"]
-  },
-  unreachable: {
-    background: IOColorsLegacy["error-500"]
-  },
-  viewed: {
-    background: IOColorsLegacy["success-500"]
-  }
-};
-
 const borderWidth = 1.5;
 
 const TimelineDot = ({
@@ -99,16 +73,15 @@ const TimelineDot = ({
   isLast,
   status
 }: Pick<TimelineItemProps, "status"> & Position) => {
-  const colors = useIOColors();
+  const colors = usePnColors();
 
   return (
     <View
       style={[
         styles.dot,
         {
-          backgroundColor: mapColorStatus[status].background,
-          // The ring separates the dot from the line, so it matches the sheet
-          borderColor: colors.background.default,
+          backgroundColor: colors.timeline.status[status],
+          borderColor: colors.timeline.dotRing,
           borderWidth: isFirst || isLast ? 0 : borderWidth
         }
       ]}
@@ -121,10 +94,10 @@ const TimelineSeparator = ({
   isFirst,
   isLast
 }: PropsWithChildren<Pick<TimelineItemProps, "status"> & Position>) => {
-  const colors = useIOColors();
+  const colors = usePnColors();
   const lineStyle = [
     styles.rectangle,
-    { backgroundColor: colors.stroke.divider }
+    { backgroundColor: colors.timeline.line }
   ];
 
   return (
@@ -140,12 +113,12 @@ const TimelineOppositeContent = ({
   day,
   month
 }: Pick<TimelineItemProps, "day" | "month">) => {
-  const colors = useIOColors();
+  const colors = usePnColors();
 
   return (
     <View style={styles.oppositeContent}>
-      <H6 color={colors.text.content.secondary}>{day}</H6>
-      <Caption color={colors.text.content.tertiary}>{month}</Caption>
+      <H6 color={colors.timeline.day}>{day}</H6>
+      <Caption color={colors.timeline.month}>{month}</Caption>
     </View>
   );
 };
@@ -154,13 +127,13 @@ const TimelineContent = ({
   description,
   time
 }: Pick<TimelineItemProps, "description" | "time">) => {
-  const colors = useIOColors();
+  const colors = usePnColors();
 
   return (
     <View style={styles.content}>
-      <H6 color={colors.text.heading.secondary}>{description}</H6>
+      <H6 color={colors.timeline.title}>{description}</H6>
       <VSpacer size={4} />
-      <Caption color={colors.text.content.tertiary}>{time}</Caption>
+      <Caption color={colors.timeline.time}>{time}</Caption>
     </View>
   );
 };
