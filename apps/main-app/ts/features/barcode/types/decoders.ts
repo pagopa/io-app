@@ -174,10 +174,17 @@ const decodeItwCredentialOfferBarcode: IOBarcodeRuntimeDecoderFn = (
   state: GlobalState,
   data: string
 ): O.Option<ItwCredentialOfferDecodedIOBarcode> => {
+  const credentialOfferApi = getIoWallet(
+    selectItwSpecsVersion(state)
+  ).CredentialsOffer;
+
+  if (!credentialOfferApi.isSupported) {
+    return O.none;
+  }
+
   const itwCredentialOfferUri = data.trim();
 
-  return parseCredentialOfferLink(itwCredentialOfferUri) !== undefined &&
-    getIoWallet(selectItwSpecsVersion(state)).CredentialsOffer.isSupported
+  return parseCredentialOfferLink(itwCredentialOfferUri) !== undefined
     ? O.some({
         type: "ITW_CREDENTIAL_OFFER",
         itwCredentialOfferUri

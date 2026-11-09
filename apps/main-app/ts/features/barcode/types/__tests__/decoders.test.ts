@@ -329,12 +329,13 @@ describe("test decodeIOBarcode function", () => {
       it("should return O.none when the selected ITW specs version does not support credential offers", () => {
         const specsVersionSpy = jest
           .spyOn(itWalletEnvSelectors, "selectItwSpecsVersion")
-          .mockReturnValueOnce("1.0.0");
+          .mockReturnValue("1.0.0");
         const value =
           "openid-credential-offer://?credential_offer=%7B%22credential_issuer%22%3A%22https%3A%2F%2Fissuer.example.com%22%7D";
         const output = decodeIOBarcode(fakeGlobalState, value);
         expect(specsVersionSpy).toHaveBeenCalledWith(fakeGlobalState);
         expect(output).toStrictEqual(O.none);
+        specsVersionSpy.mockReturnValue("1.4.6");
       });
 
       it("should return O.none with valid content and ITW_CREDENTIAL_OFFER type not supported", () => {
