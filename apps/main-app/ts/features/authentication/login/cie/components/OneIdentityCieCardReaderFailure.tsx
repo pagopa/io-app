@@ -1,4 +1,5 @@
-import { Event as CEvent } from "@pagopa/react-native-cie";
+import type { NfcError } from "@io-app/expo-cie";
+
 import { useMemo } from "react";
 
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
@@ -9,7 +10,7 @@ import CieWrongCardScreen from "../screens/CieWrongCardScreen";
 import { CieWrongPin } from "./CieWrongPin";
 
 export type OneIdentityCieCardReaderFailureProps = {
-  failure: CEvent;
+  failure: NfcError;
 };
 
 export const OneIdentityCieCardReaderFailure = ({
@@ -18,37 +19,28 @@ export const OneIdentityCieCardReaderFailure = ({
   const debugInfo = useMemo(() => ({ failure }), [failure]);
   useDebugInfo(debugInfo);
 
-  switch (failure.event) {
-    // "Function not supported" seems to be TAG_ERROR_NFC_NOT_SUPPORTED
-    // for the iOS SDK
-    case "Function not supported" as unknown:
-    case "ON_TAG_DISCOVERED_NOT_CIE":
-    case "TAG_ERROR_NFC_NOT_SUPPORTED": {
-      return <CieWrongCardScreen />;
+  switch (failure.name) {
+    case "APDU_ERROR": {
+      return <CieExtendedApduNotSupportedScreen />;
     }
     case "AUTHENTICATION_ERROR":
-    case "ON_NO_INTERNET_CONNECTION": {
+    case "GENERIC_ERROR":
+    case "NO_INTERNET_CONNECTION": {
       return <CieUnexpectedErrorScreen />;
     }
+    // The card is temporarily locked. Unlock is available by CieID app
+    case "CARD_BLOCKED":
+      return <CieWrongPin remainingCount={0} />;
     // CIE is Expired or Revoked
     case "CERTIFICATE_EXPIRED":
     case "CERTIFICATE_REVOKED": {
       return <CieExpiredOrInvalidScreen />;
     }
-    case "EXTENDED_APDU_NOT_SUPPORTED": {
-      return <CieExtendedApduNotSupportedScreen />;
+    case "NOT_A_CIE": {
+      return <CieWrongCardScreen />;
     }
-    // The card is temporarily locked. Unlock is available by CieID app
-    case "ON_CARD_PIN_LOCKED":
-    case "ON_PIN_ERROR":
-    case "PIN Locked":
-      return (
-        <CieWrongPin
-          remainingCount={
-            failure.event === "ON_CARD_PIN_LOCKED" ? 0 : failure.attemptsLeft
-          }
-        />
-      );
+    case "WRONG_PIN":
+      return <CieWrongPin remainingCount={failure.attemptsLeft} />;
     default:
       return null;
   }
