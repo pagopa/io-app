@@ -15,7 +15,8 @@ import I18n from "i18next";
 import { Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { useCgnColors } from "../../hooks/useCgnColors";
+import { useFeatureColors } from "../../../../../hooks/useFeatureColors";
+import { cgnColors } from "../../colors";
 import { getCategoryName, getCategorySpecs } from "../../utils/filters";
 import {
   isValidDiscount,
@@ -48,7 +49,7 @@ export const CategoryTag = ({ category }: CategoryTagProps) => {
 };
 
 export const ModuleCgnDiscount = ({ onPress, discount }: ModuleCgnDiscount) => {
-  const colors = useCgnColors();
+  const colors = useFeatureColors(cgnColors);
 
   const { onPressIn, onPressOut, scaleAnimatedStyle } =
     useScaleAnimation("medium");

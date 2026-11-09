@@ -6,7 +6,10 @@ import {
 
 import type { TimelineStatus } from "./components/Timeline";
 
-/** SEND colors of a mode. Read the current mode's with `usePnColors()` */
+/**
+ * SEND colors of a mode. Read the current mode's with
+ * `useFeatureColors(pnColors)`
+ */
 export const pnColors = (s: IOColorTheme) => ({
   /** Notification history */
   timeline: {

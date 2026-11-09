@@ -11,7 +11,8 @@ import {
   withTiming
 } from "react-native-reanimated";
 
-import { useCgnColors } from "../hooks/useCgnColors";
+import { useFeatureColors } from "../../../../hooks/useFeatureColors";
+import { cgnColors } from "../colors";
 
 // Blob configuration
 const NUM_BLOB_POINTS = 7;
@@ -187,7 +188,7 @@ const AnimatedBlob = ({ index, canvasSize, color }: AnimatedBlobProps) => {
 export const CgnAnimatedBackground = () => {
   // Canvas size is provided via onSize callback and updated on the UI thread
   const canvasSize = useSharedValue({ width: 0, height: 0 });
-  const colors = useCgnColors();
+  const colors = useFeatureColors(cgnColors);
 
   const backgroundColor = colors.detailCard.background;
   const foregroundColor = colors.detailCard.foreground;

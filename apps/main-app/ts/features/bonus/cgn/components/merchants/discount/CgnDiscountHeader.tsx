@@ -11,8 +11,9 @@ import I18n from "i18next";
 import { useEffect, useRef } from "react";
 import { View } from "react-native";
 
+import { useFeatureColors } from "../../../../../../hooks/useFeatureColors";
 import { setAccessibilityFocus } from "../../../../../../utils/accessibility";
-import { useCgnColors } from "../../../hooks/useCgnColors";
+import { cgnColors } from "../../../colors";
 import { CategoryTag } from "../ModuleCgnDiscount";
 import { isValidDiscount, normalizedDiscountPercentage } from "../utils";
 
@@ -31,7 +32,7 @@ export const CgnDiscountHeader = ({
     setAccessibilityFocus(ref, 400 as Millisecond);
   }, [ref]);
 
-  const colors = useCgnColors();
+  const colors = useFeatureColors(cgnColors);
 
   const { backgroundColor, foreground } = isNew
     ? colors.discountHeader.new

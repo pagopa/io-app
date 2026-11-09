@@ -5,7 +5,10 @@ import {
   withAlpha
 } from "@io-app/design-system";
 
-/** Payments colors of a mode. Read the current mode's with `usePaymentsColors()` */
+/**
+ * Payments colors of a mode. Read the current mode's with
+ * `useFeatureColors(paymentsColors)`
+ */
 export const paymentsColors = (s: IOColorTheme, mode: IOColorMode) => {
   const isDark = mode === "dark";
   return {

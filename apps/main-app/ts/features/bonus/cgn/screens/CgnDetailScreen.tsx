@@ -29,6 +29,7 @@ import {
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import SectionStatusComponent from "../../../../components/SectionStatus";
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
+import { useFeatureColors } from "../../../../hooks/useFeatureColors";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -49,7 +50,6 @@ import CgnOwnershipInformation from "../components/detail/CgnOwnershipInformatio
 import CgnStatusDetail from "../components/detail/CgnStatusDetail";
 import CgnUnsubscribe from "../components/detail/CgnUnsubscribe";
 import EycaDetailComponent from "../components/detail/eyca/EycaDetailComponent";
-import { useCgnColors } from "../hooks/useCgnColors";
 import { useCgnUnsubscribe } from "../hooks/useCgnUnsubscribe";
 import { CgnDetailsParamsList } from "../navigation/params";
 import CGN_ROUTES from "../navigation/routes";
@@ -119,7 +119,7 @@ const CgnDetailScreen = (): ReactElement => {
 
   const logoUris = getLogoUris(cgnDetails, eycaDetails);
 
-  const colors = useCgnColors();
+  const colors = useFeatureColors(cgnColors);
   const eycaDiscountPage = useIOSelector(getEYCADiscountUrl);
 
   const startCgnActivation = () => {

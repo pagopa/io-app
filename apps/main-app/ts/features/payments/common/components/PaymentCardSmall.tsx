@@ -9,9 +9,10 @@ import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 
 import { LogoPaymentWithFallback } from "../../../../components/ui/utils/components/LogoPaymentWithFallback";
+import { useFeatureColors } from "../../../../hooks/useFeatureColors";
 import { WithTestID } from "../../../../types/WithTestID";
 import { WalletCardPressableBase } from "../../../wallet/components/WalletCardPressableBase";
-import { usePaymentsColors } from "../hooks/usePaymentsColors";
+import { paymentsColors } from "../colors";
 import { PaymentCardProps } from "./PaymentCard";
 
 export type PaymentCardSmallProps = WithTestID<
@@ -23,7 +24,7 @@ export type PaymentCardSmallProps = WithTestID<
 >;
 
 const usePaymentCardStyles = () => {
-  const { card } = usePaymentsColors();
+  const { card } = useFeatureColors(paymentsColors);
 
   const textColorDefault = card.text;
   const textColorError = card.expired.text;

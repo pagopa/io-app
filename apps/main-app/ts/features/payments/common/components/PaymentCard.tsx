@@ -15,7 +15,8 @@ import { StyleSheet, View } from "react-native";
 import BPayLogo from "../../../../../img/wallet/payment-methods/bpay_logo_full.svg";
 import PayPalLogo from "../../../../../img/wallet/payment-methods/paypal/paypal_logo_ext.svg";
 import { LogoPaymentWithFallback } from "../../../../components/ui/utils/components/LogoPaymentWithFallback";
-import { usePaymentsColors } from "../hooks/usePaymentsColors";
+import { useFeatureColors } from "../../../../hooks/useFeatureColors";
+import { paymentsColors } from "../colors";
 
 export type PaymentCardComponentProps = WithTestID<
   | (PaymentCardProps & {
@@ -37,7 +38,7 @@ export type PaymentCardProps = {
 };
 
 const usePaymentCardStyles = () => {
-  const { card } = usePaymentsColors();
+  const { card } = useFeatureColors(paymentsColors);
 
   const textColor = card.text;
   const backgroundColor = card.background;

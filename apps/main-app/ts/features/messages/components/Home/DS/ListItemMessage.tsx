@@ -24,7 +24,8 @@ import {
 import Animated from "react-native-reanimated";
 import Svg, { Circle } from "react-native-svg";
 
-import { useMessagesColors } from "../../../hooks/useMessagesColors";
+import { useFeatureColors } from "../../../../../hooks/useFeatureColors";
+import { messagesColors } from "../../../colors";
 import { AvatarDouble } from "./AvatarDouble";
 
 export const ListItemMessageStandardHeight = 95;
@@ -111,7 +112,7 @@ export const ListItemMessage = ({
   serviceLogos,
   testID
 }: ListItemMessageProps) => {
-  const colors = useMessagesColors();
+  const colors = useFeatureColors(messagesColors);
 
   const { onPressIn, onPressOut, scaleAnimatedStyle, backgroundAnimatedStyle } =
     useListItemAnimation();

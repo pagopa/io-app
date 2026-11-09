@@ -5,7 +5,10 @@ import {
   withAlpha
 } from "@io-app/design-system";
 
-/** Messages colors of a mode. Read the current mode's with `useMessagesColors()` */
+/**
+ * Messages colors of a mode. Read the current mode's with
+ * `useFeatureColors(messagesColors)`
+ */
 export const messagesColors = (s: IOColorTheme, mode: IOColorMode) => {
   const isDark = mode === "dark";
   return {

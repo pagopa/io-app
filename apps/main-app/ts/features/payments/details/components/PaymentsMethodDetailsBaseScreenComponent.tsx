@@ -20,13 +20,14 @@ import Animated, {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
+import { useFeatureColors } from "../../../../hooks/useFeatureColors";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { paymentsColors } from "../../common/colors";
 import {
   PaymentCard,
   PaymentCardComponentProps
 } from "../../common/components/PaymentCard";
-import { usePaymentsColors } from "../../common/hooks/usePaymentsColors";
 
 type Props = {
   card: PaymentCardComponentProps;
@@ -43,7 +44,7 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
   const translationY = useSharedValue(0);
   const [titleHeight, setTitleHeight] = useState(0);
 
-  const { details } = usePaymentsColors();
+  const { details } = useFeatureColors(paymentsColors);
   const backgroundColor = details.background;
   const blueHeaderColor = details.header;
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();

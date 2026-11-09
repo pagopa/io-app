@@ -1,11 +1,7 @@
-import {
-  IOColors,
-  IODimensions,
-  IOTextColor,
-  useIOThemeContext
-} from "@io-app/design-system";
+import { IODimensions, IOTextColor } from "@io-app/design-system";
 import { ColorValue, ViewStyle } from "react-native";
 
+import { useFeatureColors } from "../../../../hooks/useFeatureColors";
 import { servicesHomeColors } from "../colors";
 
 type ServiceCardStyle = {
@@ -22,14 +18,9 @@ type ServiceCardStyleProps = {
   skeletonColor: ColorValue;
 };
 
-const colorsByMode = {
-  light: servicesHomeColors(IOColors.light, "light"),
-  dark: servicesHomeColors(IOColors.dark, "dark")
-};
-
 /** Returns the common style used for service cards */
 export const useServiceCardStyle = (): ServiceCardStyleProps => {
-  const { featuredCard } = colorsByMode[useIOThemeContext().themeType];
+  const { featuredCard } = useFeatureColors(servicesHomeColors);
 
   return {
     default: {

@@ -9,9 +9,10 @@ import {
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
 
+import { useFeatureColors } from "../../../../../hooks/useFeatureColors";
 import { WithTestID } from "../../../../../types/WithTestID";
 import { CardPressableBase } from "../../../../services/common/components/CardPressableBase";
-import { useCgnColors } from "../../hooks/useCgnColors";
+import { cgnColors } from "../../colors";
 
 type CgnMerchantCardProps = WithTestID<{
   accessibilityLabel?: string;
@@ -81,7 +82,7 @@ const CgnMerchantCard = ({
   name,
   textColor
 }: CgnMerchantCardProps) => {
-  const colors = useCgnColors();
+  const colors = useFeatureColors(cgnColors);
 
   return (
     <CardPressableBase

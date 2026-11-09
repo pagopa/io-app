@@ -11,7 +11,10 @@ const detailCardShapeDark = "#A58DFF";
 // hanPurple 250 at 20% over black, solid: `useHeaderSecondLevel` can't take `rgba`
 const discountHeaderNewDark = "#343141";
 
-/** CGN colors of a mode. Read the current mode's with `useCgnColors()` */
+/**
+ * CGN colors of a mode. Read the current mode's with
+ * `useFeatureColors(cgnColors)`
+ */
 export const cgnColors = (s: IOColorTheme, mode: IOColorMode) => {
   const isDark = mode === "dark";
   return {

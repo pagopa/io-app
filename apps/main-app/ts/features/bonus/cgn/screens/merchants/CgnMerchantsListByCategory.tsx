@@ -17,12 +17,13 @@ import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { isError, isLoading } from "../../../../../common/model/RemoteValue";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
+import { useFeatureColors } from "../../../../../hooks/useFeatureColors";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { cgnColors } from "../../colors";
 import { CgnMerchantListSkeleton } from "../../components/merchants/CgnMerchantListSkeleton";
 import { CgnMerchantListViewRenderItem } from "../../components/merchants/CgnMerchantsListView";
-import { useCgnColors } from "../../hooks/useCgnColors";
 import { CgnDetailsParamsList } from "../../navigation/params";
 import CGN_ROUTES from "../../navigation/routes";
 import {
@@ -41,7 +42,7 @@ export type CgnMerchantListByCategoryScreenNavigationParams = Readonly<{
 }>;
 
 const CgnMerchantsListByCategory = () => {
-  const colors = useCgnColors();
+  const colors = useFeatureColors(cgnColors);
   const animatedFlatListRef = useAnimatedRef<Animated.FlatList<any>>();
 
   const dispatch = useIODispatch();

@@ -12,8 +12,9 @@ import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
 import eycaLogo from "../../../../../img/bonus/cgn/eyca_logo.png";
 import CgnCardShapeDarkMode from "../../../../../img/features/cgn/cgn-card-dark.svg";
 import CgnCardShapeLightMode from "../../../../../img/features/cgn/cgn-card.svg";
+import { useFeatureColors } from "../../../../hooks/useFeatureColors";
 import { format } from "../../../../utils/dates";
-import { useCgnColors } from "../hooks/useCgnColors";
+import { cgnColors } from "../colors";
 
 export type CgnCardProps = {
   expireDate?: Date;
@@ -24,7 +25,7 @@ export const CgnCard = ({ expireDate, withEycaLogo }: CgnCardProps) => {
   const { themeType } = useIOThemeContext();
   const isDark = themeType === "dark";
 
-  const colors = useCgnColors();
+  const colors = useFeatureColors(cgnColors);
   const textColor = colors.walletCard.text;
 
   const isExpired = expireDate === undefined;

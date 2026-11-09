@@ -2,7 +2,8 @@ import { Caption, H6, VSpacer } from "@io-app/design-system";
 import { PropsWithChildren } from "react";
 import { StyleSheet, View } from "react-native";
 
-import { usePnColors } from "../hooks/usePnColors";
+import { useFeatureColors } from "../../../hooks/useFeatureColors";
+import { pnColors } from "../colors";
 
 export type TimelineItemProps = {
   accessibilityLabel: string;
@@ -73,7 +74,7 @@ const TimelineDot = ({
   isLast,
   status
 }: Pick<TimelineItemProps, "status"> & Position) => {
-  const colors = usePnColors();
+  const colors = useFeatureColors(pnColors);
 
   return (
     <View
@@ -94,7 +95,7 @@ const TimelineSeparator = ({
   isFirst,
   isLast
 }: PropsWithChildren<Pick<TimelineItemProps, "status"> & Position>) => {
-  const colors = usePnColors();
+  const colors = useFeatureColors(pnColors);
   const lineStyle = [
     styles.rectangle,
     { backgroundColor: colors.timeline.line }
@@ -113,7 +114,7 @@ const TimelineOppositeContent = ({
   day,
   month
 }: Pick<TimelineItemProps, "day" | "month">) => {
-  const colors = usePnColors();
+  const colors = useFeatureColors(pnColors);
 
   return (
     <View style={styles.oppositeContent}>
@@ -127,7 +128,7 @@ const TimelineContent = ({
   description,
   time
 }: Pick<TimelineItemProps, "description" | "time">) => {
-  const colors = usePnColors();
+  const colors = useFeatureColors(pnColors);
 
   return (
     <View style={styles.content}>
