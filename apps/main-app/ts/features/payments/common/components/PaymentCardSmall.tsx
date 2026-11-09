@@ -1,12 +1,8 @@
 import {
-  hexToRgba,
   Icon,
-  IOColorsLegacy,
   IODimensions,
   IOSkeleton,
   LabelMini,
-  useIOTheme,
-  useIOThemeContext,
   VSpacer
 } from "@io-app/design-system";
 import { useMemo } from "react";
@@ -15,6 +11,7 @@ import { StyleSheet, View } from "react-native";
 import { LogoPaymentWithFallback } from "../../../../components/ui/utils/components/LogoPaymentWithFallback";
 import { WithTestID } from "../../../../types/WithTestID";
 import { WalletCardPressableBase } from "../../../wallet/components/WalletCardPressableBase";
+import { usePaymentsColors } from "../hooks/usePaymentsColors";
 import { PaymentCardProps } from "./PaymentCard";
 
 export type PaymentCardSmallProps = WithTestID<
@@ -26,22 +23,13 @@ export type PaymentCardSmallProps = WithTestID<
 >;
 
 const usePaymentCardStyles = () => {
-  const theme = useIOTheme();
-  const { themeType } = useIOThemeContext();
+  const { card } = usePaymentsColors();
 
-  const isDarkMode = themeType === "dark";
-
-  const textColorDefault = theme["textHeading-default"];
-  const textColorError: IOColorsLegacy = isDarkMode ? "error-100" : "error-850";
-  const backgroundColorDefault =
-    IOColorsLegacy[theme["appBackground-tertiary"]];
-  const backgroundColorError = isDarkMode
-    ? hexToRgba(IOColorsLegacy["error-400"], 0.2)
-    : IOColorsLegacy["error-100"];
-
-  const skeletonColor = isDarkMode
-    ? hexToRgba(IOColorsLegacy["grey-450"], 0.5)
-    : IOColorsLegacy["grey-200"];
+  const textColorDefault = card.text;
+  const textColorError = card.expired.text;
+  const backgroundColorDefault = card.background;
+  const backgroundColorError = card.expired.background;
+  const skeletonColor = card.skeleton;
 
   return {
     textColorDefault,

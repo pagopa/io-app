@@ -1,16 +1,13 @@
 import {
   ContentWrapper,
-  IOColorsLegacy,
   IODimensions,
   IODimensionScale,
-  useIOTheme,
   VSpacer
 } from "@io-app/design-system";
 import I18n from "i18next";
 import { PropsWithChildren, useState } from "react";
 import {
   AccessibilityInfo,
-  ColorValue,
   LayoutChangeEvent,
   StyleSheet,
   View
@@ -29,6 +26,7 @@ import {
   PaymentCard,
   PaymentCardComponentProps
 } from "../../common/components/PaymentCard";
+import { usePaymentsColors } from "../../common/hooks/usePaymentsColors";
 
 type Props = {
   card: PaymentCardComponentProps;
@@ -45,9 +43,9 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
   const translationY = useSharedValue(0);
   const [titleHeight, setTitleHeight] = useState(0);
 
-  const theme = useIOTheme();
-  const backgroundColor = IOColorsLegacy[theme["appBackground-primary"]];
-  const blueHeaderColor: ColorValue = IOColorsLegacy["blueIO-600"];
+  const { details } = usePaymentsColors();
+  const backgroundColor = details.background;
+  const blueHeaderColor = details.header;
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
 
   useHeaderSecondLevel({
