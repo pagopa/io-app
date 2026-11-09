@@ -29,20 +29,24 @@ class DeviceInternalModule : Module() {
     val context = appContext.reactContext
       ?: return processUuid ?: UUID.randomUUID().toString().also { processUuid = it }
 
-    val androidId = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
+    val androidId = runCatching {
+      Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
+    }.getOrNull()
     if (!androidId.isNullOrEmpty()) {
       return androidId
     }
 
-    val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-    val savedId = prefs.getString(PREFS_KEY, null)
+    val prefs = runCatching {
+      context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    }.getOrNull()
+    val savedId = runCatching { prefs?.getString(PREFS_KEY, null) }.getOrNull()
     if (!savedId.isNullOrEmpty()) {
       return savedId
     }
 
     val generated = processUuid ?: UUID.randomUUID().toString()
-    prefs.edit().putString(PREFS_KEY, generated).apply()
     processUuid = generated
+    runCatching { prefs?.edit()?.putString(PREFS_KEY, generated)?.apply() }
     return generated
   }
 
