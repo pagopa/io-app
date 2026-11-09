@@ -25,15 +25,16 @@ export type FeaturedOpportunity = {
 export const CGN_FEATURED_OPPORTUNITIES_MAX_ITEMS = 3;
 
 const CARD_SPACING: IOSpacingScale = 8;
-const CARD_PADDING: IOSpacingScale = 16;
+const CARD_PADDING: IOSpacingScale = 12;
 const CARD_BORDER_RADIUS = 8;
-const LOGO_CONTAINER_SIZE = 48;
-const LOGO_SIZE = 40;
+const CARD_HEIGHT = 92;
+const LOGO_SIZE = 44;
 
 const styles = StyleSheet.create({
   card: {
     flexDirection: "row",
     alignItems: "center",
+    height: CARD_HEIGHT,
     padding: CARD_PADDING,
     borderRadius: CARD_BORDER_RADIUS,
     borderCurve: "continuous",
@@ -44,21 +45,10 @@ const styles = StyleSheet.create({
   cardTextContainer: {
     flex: 1
   },
-  logoContainer: {
-    width: LOGO_CONTAINER_SIZE,
-    height: LOGO_CONTAINER_SIZE,
-    marginLeft: CARD_SPACING,
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: CARD_BORDER_RADIUS,
-    borderCurve: "continuous",
-    borderWidth: 1,
-    borderColor: IOColors["grey-100"],
-    backgroundColor: IOColors.white
-  },
   logo: {
     width: LOGO_SIZE,
-    height: LOGO_SIZE
+    height: LOGO_SIZE,
+    marginLeft: CARD_SPACING
   }
 });
 
@@ -76,13 +66,12 @@ const FeaturedOpportunityCard = ({
       <IOText numberOfLines={1}>{opportunity.description}</IOText>
     </View>
     {opportunity.logoUri && (
-      <View style={styles.logoContainer}>
-        <Image
-          accessibilityIgnoresInvertColors
-          source={{ uri: opportunity.logoUri }}
-          style={styles.logo}
-        />
-      </View>
+      <Image
+        accessibilityIgnoresInvertColors
+        resizeMode="contain"
+        source={{ uri: opportunity.logoUri }}
+        style={styles.logo}
+      />
     )}
   </View>
 );

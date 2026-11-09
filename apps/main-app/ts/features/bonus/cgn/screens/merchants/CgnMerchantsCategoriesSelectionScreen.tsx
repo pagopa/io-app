@@ -48,12 +48,14 @@ const featuredOpportunities: ReadonlyArray<FeaturedOpportunity> = [
   {
     id: "sample-1",
     title: "IDCERT | Certificazione Informatica",
-    description: "Fino al 25% di sconto sui nostri Master in informatica"
+    description: "Fino al 25% di sconto sui nostri Master in informatica",
+    logoUri: "https://placehold.co/96x96/png"
   },
   {
     id: "sample-2",
     title: "Partner di prova 2",
-    description: "Sconto del 15% sui corsi di lingua per studenti"
+    description: "Sconto del 15% sui corsi di lingua per studenti",
+    logoUri: "https://placehold.co/96x96/png"
   },
   {
     id: "sample-3",
