@@ -1,3 +1,13 @@
+## 3.42.2-rc.0 (2026-11-09)
+
+### Chores
+
+- align Android versionCode for hotfix ([1ec851d80](https://github.com/pagopa/io-app/commit/1ec851d80))
+
+### ❤️ Thank You
+
+- Alessandro Dell'Oste @adelloste
+
 ## 3.42.1-rc.0 (2026-11-06)
 
 ### Bug Fixes
