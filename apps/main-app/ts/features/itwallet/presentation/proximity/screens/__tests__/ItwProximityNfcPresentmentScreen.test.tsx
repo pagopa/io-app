@@ -35,7 +35,7 @@ describe("ItwProximityNfcPresentmentScreen on Android", () => {
 
     expect(track.props.stroke).toEqual({
       type: 0,
-      payload: processColor(IOColors.dark.stroke.divider)
+      payload: processColor(IOColors.dark.stroke.default)
     });
     expect(progress.props.stroke).toEqual({
       type: 0,

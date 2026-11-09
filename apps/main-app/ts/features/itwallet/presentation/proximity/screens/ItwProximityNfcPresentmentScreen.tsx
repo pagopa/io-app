@@ -112,7 +112,7 @@ const AndroidContent = () => {
           progress={isSuccess ? 100 : 0}
           radius={120}
           size={240}
-          strokeBgColor={colors.stroke.divider}
+          strokeBgColor={colors.stroke.default}
           strokeColor={colors.foreground.accent}
           strokeWidth={4}
         >

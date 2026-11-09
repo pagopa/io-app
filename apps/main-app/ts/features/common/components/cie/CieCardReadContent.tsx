@@ -125,7 +125,7 @@ const LinearProgressBar = (
   const [width, setWidth] = useState(0);
   const colors = useIOColors();
 
-  const backgroundColor = colors.stroke.divider;
+  const backgroundColor = colors.stroke.default;
   const foregroundColor = IOColorsLegacy["turquoise-500"];
 
   // Convert progress to 0-100 scale and round to avoid floating-point precision issues
@@ -230,7 +230,7 @@ const ContentAndroid = (props: CieCardReadContentProps) => {
             progress={(props.progress || 0) * 100}
             radius={120}
             size={240}
-            strokeBgColor={colors.stroke.divider}
+            strokeBgColor={colors.stroke.default}
             strokeColor={colors.foreground.accent}
             strokeWidth={4}
           >

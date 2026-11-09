@@ -87,7 +87,7 @@ describe("CieCardReadContent in dark mode", () => {
     expect(
       findAllByStyle(toJSON(), {
         height: 4,
-        backgroundColor: IOColors.dark.stroke.divider
+        backgroundColor: IOColors.dark.stroke.default
       })
     ).toHaveLength(1);
   });
@@ -111,7 +111,7 @@ describe("CieCardReadContent in dark mode", () => {
 
     expect(track.props.stroke).toEqual({
       type: 0,
-      payload: processColor(IOColors.dark.stroke.divider)
+      payload: processColor(IOColors.dark.stroke.default)
     });
     expect(progress.props.stroke).toEqual({
       type: 0,
