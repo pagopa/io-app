@@ -1,3 +1,13 @@
+## 3.42.2-rc.0 (2026-11-09)
+
+### Chores
+
+- [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Avoid startup crash when device ID lookup fails ([#8854](https://github.com/pagopa/io-app/pull/8854))
+
+### ❤️ Thank You
+
+- Alessandro Dell'Oste @adelloste
+
 ## 3.43.0-rc.6 (2026-11-06)
 
 ### Bug Fixes
