@@ -164,7 +164,10 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   );
 
   return (
-    <View>
+    // Not flattened on Android: TalkBack would otherwise sort the section
+    // children together with the rest of the wallet, announcing the header
+    // after the cards
+    <View collapsable={false} testID="itwWalletCardsSectionTestID">
       {/* With IT-Wallet the lifecycle alert must be displayed above the header. */}
       {isNewItwRenderable ? (
         <>
