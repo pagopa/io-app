@@ -1,4 +1,4 @@
-import { IOColorsLegacy, Tag, useIOTheme } from "@io-app/design-system";
+import { Tag } from "@io-app/design-system";
 import { Mdoc, SdJwt } from "@pagopa/io-react-native-wallet";
 import { isBefore } from "date-fns";
 import I18n from "i18next";
@@ -133,23 +133,6 @@ export const getCredentialNameFromType = (
   }
   const name = type && getCredentialNameByType(isItwCredential)[type];
   return name || withDefault || type;
-};
-
-export const useBorderColorByStatus: () => {
-  [key in ItwCredentialStatus]: string;
-} = () => {
-  const theme = useIOTheme();
-
-  return {
-    valid: IOColorsLegacy[theme["appBackground-primary"]],
-    invalid: IOColorsLegacy["error-600"],
-    suspended: IOColorsLegacy["error-600"],
-    expired: IOColorsLegacy["error-600"],
-    expiring: IOColorsLegacy["warning-700"],
-    jwtExpired: IOColorsLegacy["error-600"],
-    jwtExpiring: IOColorsLegacy["warning-700"],
-    unknown: IOColorsLegacy["grey-300"]
-  };
 };
 
 export const borderVariantByStatus: {

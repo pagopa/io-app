@@ -2,7 +2,6 @@ import {
   BodySmall,
   H3,
   HeaderSecondLevel,
-  IOColorsLegacy,
   IODimensions
 } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
@@ -12,10 +11,12 @@ import { Dimensions, StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { useFeatureColors } from "../../../../../hooks/useFeatureColors";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { useMaxBrightness } from "../../../../../utils/brightness.ts";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
+import { itwColors } from "../../../colors";
 import {
   selectFiscalCodeFromEid,
   selectNameSurnameFromEid
@@ -71,6 +72,7 @@ const ItwPresentationCredentialFiscalCodeModal = () => {
 
   const nameSurname = useIOSelector(selectNameSurnameFromEid);
   const fiscalCode = useIOSelector(selectFiscalCodeFromEid);
+  const { fiscalCode: colors } = useFeatureColors(itwColors);
 
   usePreventScreenCapture();
   useMaxBrightness({ useSmoothTransition: true });
@@ -108,19 +110,26 @@ const ItwPresentationCredentialFiscalCodeModal = () => {
           }
         ]}
       >
-        <View style={styles.container}>
-          <BodySmall style={styles.text} weight="Semibold">
+        <View
+          style={[
+            styles.container,
+            { backgroundColor: colors.background, borderColor: colors.border }
+          ]}
+        >
+          <BodySmall color={colors.code} style={styles.text} weight="Semibold">
             {nameSurname}
           </BodySmall>
           <Barcode
-            background={IOColorsLegacy.white}
+            background={colors.background}
             format={"CODE39"} // CODE39 it's the encoding format used by the physical TS-CNS card
             height={barcodeWidth} // and the width as height
-            lineColor={IOColorsLegacy.black}
+            lineColor={colors.code}
             value={fiscalCode}
             width={barcodeHeigth} // Since it is rotated by 90 degrees, we use the height as width
           />
-          <H3 style={styles.text}>{fiscalCode}</H3>
+          <H3 color={colors.code} style={styles.text}>
+            {fiscalCode}
+          </H3>
         </View>
       </View>
     </View>
@@ -137,9 +146,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 32,
     rowGap: 4,
-    borderColor: IOColorsLegacy["grey-100"],
-    // Always white regardless of the theme
-    backgroundColor: IOColorsLegacy.white,
     borderWidth: 1,
     borderRadius: 8
   },
@@ -147,9 +153,7 @@ const styles = StyleSheet.create({
     transform: [{ rotate: "90deg" }]
   },
   text: {
-    alignSelf: "center",
-    // Always black regardless of the theme
-    color: IOColorsLegacy.black
+    alignSelf: "center"
   }
 });
 

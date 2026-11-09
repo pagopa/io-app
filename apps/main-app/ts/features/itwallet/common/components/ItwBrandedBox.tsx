@@ -19,8 +19,9 @@ import {
   useSharedValue
 } from "react-native-reanimated";
 
+import { useFeatureColors } from "../../../../hooks/useFeatureColors";
+import { itwColors } from "../../colors";
 import { useLayoutSize } from "../hooks/useLayoutSize";
-import { useItWalletTheme } from "../utils/theme";
 import { ItwBrandedSkiaBorder } from "./ItwBrandedSkiaBorder";
 import { ItwSkiaBrandedGradientVariant } from "./ItwBrandedSkiaGradient";
 
@@ -53,7 +54,7 @@ export const ItwBrandedBox = ({
   children,
   style: customStyle
 }: PropsWithChildren<ItwIridescentBorderProps>) => {
-  const theme = useItWalletTheme();
+  const colors = useFeatureColors(itwColors);
   const { themeType } = useIOThemeContext();
   const isLightMode = themeType === "light";
   const shouldUseGradientBackground =
@@ -156,7 +157,7 @@ export const ItwBrandedBox = ({
         customStyle,
         {
           borderRadius,
-          backgroundColor: theme["banner-background"]
+          backgroundColor: colors.brandedBox.background
         }
       ]}
     >
