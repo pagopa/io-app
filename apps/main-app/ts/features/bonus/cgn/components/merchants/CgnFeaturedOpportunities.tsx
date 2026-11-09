@@ -1,5 +1,4 @@
 import {
-  Body,
   H6,
   IOColors,
   IOSpacingScale,
@@ -25,10 +24,10 @@ export type FeaturedOpportunity = {
 
 export const CGN_FEATURED_OPPORTUNITIES_MAX_ITEMS = 3;
 
-const CARD_WIDTH_RATIO = 0.8;
 const CARD_SPACING: IOSpacingScale = 8;
 const CARD_PADDING: IOSpacingScale = 16;
 const CARD_BORDER_RADIUS = 8;
+const LOGO_CONTAINER_SIZE = 48;
 const LOGO_SIZE = 40;
 
 const styles = StyleSheet.create({
@@ -40,15 +39,26 @@ const styles = StyleSheet.create({
     borderCurve: "continuous",
     borderWidth: 1,
     borderColor: IOColors["grey-100"],
-    backgroundColor: IOColors.white
+    backgroundColor: IOColors["grey-50"]
   },
   cardTextContainer: {
     flex: 1
   },
+  logoContainer: {
+    width: LOGO_CONTAINER_SIZE,
+    height: LOGO_CONTAINER_SIZE,
+    marginLeft: CARD_SPACING,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: CARD_BORDER_RADIUS,
+    borderCurve: "continuous",
+    borderWidth: 1,
+    borderColor: IOColors["grey-100"],
+    backgroundColor: IOColors.white
+  },
   logo: {
     width: LOGO_SIZE,
-    height: LOGO_SIZE,
-    marginLeft: CARD_SPACING
+    height: LOGO_SIZE
   }
 });
 
@@ -62,14 +72,17 @@ const FeaturedOpportunityCard = ({
   <View style={[styles.card, { width: cardWidth }]}>
     <View style={styles.cardTextContainer}>
       <H6 numberOfLines={2}>{opportunity.title}</H6>
-      <IOText numberOfLines={2}>{opportunity.description}</IOText>
+      <VSpacer size={4} />
+      <IOText numberOfLines={1}>{opportunity.description}</IOText>
     </View>
     {opportunity.logoUri && (
-      <Image
-        accessibilityIgnoresInvertColors
-        source={{ uri: opportunity.logoUri }}
-        style={styles.logo}
-      />
+      <View style={styles.logoContainer}>
+        <Image
+          accessibilityIgnoresInvertColors
+          source={{ uri: opportunity.logoUri }}
+          style={styles.logo}
+        />
+      </View>
     )}
   </View>
 );
@@ -80,7 +93,7 @@ export const CgnFeaturedOpportunities = ({
   opportunities: ReadonlyArray<FeaturedOpportunity>;
 }) => {
   const { width } = useWindowDimensions();
-  const cardWidth = width * CARD_WIDTH_RATIO;
+  const cardWidth = width - IOVisualCostants.appMarginDefault * 2;
   const items = opportunities.slice(0, CGN_FEATURED_OPPORTUNITIES_MAX_ITEMS);
 
   if (items.length === 0) {
@@ -89,9 +102,9 @@ export const CgnFeaturedOpportunities = ({
 
   return (
     <View testID="CgnFeaturedOpportunities">
-      <Body color="grey-700" weight="Semibold">
-        {I18n.t("bonus.cgn.merchantsList.featuredOpportunities.title")}
-      </Body>
+      <View style={{ paddingHorizontal: IOVisualCostants.appMarginDefault }}>
+        <H6>{I18n.t("bonus.cgn.merchantsList.featuredOpportunities.title")}</H6>
+      </View>
       <VSpacer size={CARD_SPACING} />
       <FlatList
         contentContainerStyle={{

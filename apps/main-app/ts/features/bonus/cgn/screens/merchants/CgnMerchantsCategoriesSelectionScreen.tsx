@@ -43,8 +43,24 @@ type CgnMerchantsHomeTabParamsList = {
 
 type CgnMerchantsListItem = CategoryRow | MerchantsAll;
 
-// Empty until the featured opportunities metadata is available from IO-services (IEG-3312)
-const featuredOpportunities: ReadonlyArray<FeaturedOpportunity> = [];
+// TEMP: sample data for testing the banner. Replace with the featured opportunities from IO-services (IEG-3312).
+const featuredOpportunities: ReadonlyArray<FeaturedOpportunity> = [
+  {
+    id: "sample-1",
+    title: "IDCERT | Certificazione Informatica",
+    description: "Fino al 25% di sconto sui nostri Master in informatica"
+  },
+  {
+    id: "sample-2",
+    title: "Partner di prova 2",
+    description: "Sconto del 15% sui corsi di lingua per studenti"
+  },
+  {
+    id: "sample-3",
+    title: "Partner di prova 3",
+    description: "Biglietti scontati per musei e mostre in tutta Italia"
+  }
+];
 
 type TabOption = {
   icon: IOIcons;
