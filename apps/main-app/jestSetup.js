@@ -118,6 +118,12 @@ jest.mock("expo-store-review", () => ({
   requestReview: jest.fn().mockResolvedValue(undefined)
 }));
 
+jest.mock("expo-web-browser", () => ({
+  openAuthSessionAsync: jest
+    .fn()
+    .mockResolvedValue(Promise.resolve({ type: "opened" }))
+}));
+
 jest.mock("expo-linear-gradient", () => ({
   LinearGradient: "LinearGradient"
 }));
@@ -129,6 +135,10 @@ jest.mock("@io-app/expo-pdf-high-res-generator", () => ({
 jest.mock("@io-app/expo-nfc-antenna-info", () => ({
   getNfcAntennaInfo: jest.fn(),
   isHceSupported: jest.fn()
+}));
+
+jest.mock("@io-app/login-utils", () => ({
+  getRedirects: jest.fn()
 }));
 
 /* `@expo/ui` renders SwiftUI views, which cannot run under the Jest environment.
