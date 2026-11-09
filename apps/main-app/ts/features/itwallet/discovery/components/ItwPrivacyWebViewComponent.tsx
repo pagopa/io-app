@@ -1,15 +1,17 @@
-import { useState } from "react";
+import {
+  IOColors,
+  useIOFontDynamicScale,
+  useIOTheme
+} from "@io-app/design-system";
+import { useEffect, useRef, useState } from "react";
+import { Platform } from "react-native";
 import WebView from "react-native-webview";
 import {
   WebViewMessageEvent,
   WebViewSource
 } from "react-native-webview/lib/WebViewTypes";
 
-import {
-  AVOID_ZOOM_JS,
-  closeInjectedScript,
-  GET_CONTENT_HEIGHT_SCRIPT
-} from "../../../../utils/webview";
+import { getPrivacyWebViewScripts } from "../utils/privacyWebViewScripts";
 
 type Props = {
   onError: () => void;
@@ -19,6 +21,23 @@ type Props = {
 
 const ItwPrivacyWebViewComponent = ({ source, onLoadEnd, onError }: Props) => {
   const [contentHeight, setContentHeight] = useState<number>(0);
+  const webViewRef = useRef<WebView>(null);
+  const { dynamicFontScale } = useIOFontDynamicScale();
+  const theme = useIOTheme();
+  const backgroundColor = IOColors[theme["appBackground-primary"]];
+  const textColor = IOColors[theme["textBody-default"]];
+  const linkColor = IOColors[theme["interactiveElem-default"]];
+  const textZoom = Math.round(dynamicFontScale * 100);
+  const { styleScript, injectedJavaScript } = getPrivacyWebViewScripts({
+    backgroundColor,
+    linkColor,
+    textColor,
+    textSizeAdjust: Platform.OS === "ios" ? textZoom : 100
+  });
+
+  useEffect(() => {
+    webViewRef.current?.injectJavaScript(styleScript);
+  }, [styleScript]);
 
   const handleWebViewMessage = (event: WebViewMessageEvent) => {
     const height = parseInt(event.nativeEvent.data, 10);
@@ -29,17 +48,16 @@ const ItwPrivacyWebViewComponent = ({ source, onLoadEnd, onError }: Props) => {
     <WebView
       androidCameraAccessDisabled={true}
       androidMicrophoneAccessDisabled={true}
-      injectedJavaScript={closeInjectedScript(
-        `${AVOID_ZOOM_JS};${GET_CONTENT_HEIGHT_SCRIPT}`
-      )}
+      injectedJavaScript={injectedJavaScript}
       javaScriptEnabled={true}
       onError={onError}
       onLoadEnd={onLoadEnd}
       onMessage={handleWebViewMessage}
+      ref={webViewRef}
       scrollEnabled={false}
       source={source}
-      style={{ height: contentHeight }}
-      textZoom={100}
+      style={{ backgroundColor, height: contentHeight }}
+      textZoom={textZoom}
     />
   );
 };
