@@ -1204,7 +1204,7 @@ Inizia"
                                 Parte di
                               </Text>
                               <SvgMock
-                                accessibilityLabel="IT-Wallet"
+                                accessibilityLabel="IT-⁠Wallet"
                                 height={16}
                                 width={80}
                               />
@@ -2269,7 +2269,7 @@ Inizia"
                                 Parte di
                               </Text>
                               <SvgMock
-                                accessibilityLabel="IT-Wallet"
+                                accessibilityLabel="IT-⁠Wallet"
                                 height={16}
                                 width={80}
                               />
@@ -2830,7 +2830,7 @@ exports[`ItwDiscoveryBanner snapshots should match snapshot for default upgrade 
                       }
                     >
                       <View
-                        accessibilityLabel="IO dà il benvenuto a IT-Wallet
+                        accessibilityLabel="IO dà il benvenuto a IT-⁠Wallet
 Il tuo portafoglio digitale pubblico: semplice, sicuro, tuo. Scopri i nuovi documenti ora disponibili!
 Inizia"
                         accessibilityRole="button"
@@ -3111,7 +3111,7 @@ Inizia"
                                   ]
                                 }
                               >
-                                IO dà il benvenuto a IT-Wallet
+                                IO dà il benvenuto a IT-⁠Wallet
                               </Text>
                               <View
                                 accessibilityLabel="Chiudi"
@@ -3334,7 +3334,7 @@ Inizia"
                                 Parte di
                               </Text>
                               <SvgMock
-                                accessibilityLabel="IT-Wallet"
+                                accessibilityLabel="IT-⁠Wallet"
                                 height={16}
                                 width={80}
                               />
@@ -3895,7 +3895,7 @@ exports[`ItwDiscoveryBanner snapshots should match snapshot for empty wallet ban
                       }
                     >
                       <View
-                        accessibilityLabel="Il tuo Portafoglio è ora parte di IT-Wallet
+                        accessibilityLabel="Il tuo Portafoglio è ora parte di IT-⁠Wallet
 Scopri le funzionalità evolute dei documenti digitali su IO.
 Inizia"
                         accessibilityRole="button"
@@ -4176,7 +4176,7 @@ Inizia"
                                   ]
                                 }
                               >
-                                Il tuo Portafoglio è ora parte di IT-Wallet
+                                Il tuo Portafoglio è ora parte di IT-⁠Wallet
                               </Text>
                             </View>
                             <View
@@ -4240,7 +4240,7 @@ Inizia"
                                 Parte di
                               </Text>
                               <SvgMock
-                                accessibilityLabel="IT-Wallet"
+                                accessibilityLabel="IT-⁠Wallet"
                                 height={16}
                                 width={80}
                               />

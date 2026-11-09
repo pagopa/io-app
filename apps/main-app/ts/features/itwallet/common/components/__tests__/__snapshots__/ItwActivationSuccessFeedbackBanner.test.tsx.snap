@@ -412,7 +412,7 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=act
                             }
                           >
                             <View
-                              accessibilityLabel="Puoi dirci com’è andata? Raccontaci la tua esperienza con l’attivazione di IT-Wallet e aiutaci a migliorare. Inizia"
+                              accessibilityLabel="Puoi dirci com’è andata? Raccontaci la tua esperienza con l’attivazione di IT-⁠Wallet e aiutaci a migliorare. Inizia"
                               accessibilityRole="button"
                               accessible={true}
                               style={
@@ -470,7 +470,7 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=act
                                     ]
                                   }
                                 >
-                                  Raccontaci la tua esperienza con l’attivazione di IT-Wallet e aiutaci a migliorare.
+                                  Raccontaci la tua esperienza con l’attivazione di IT-⁠Wallet e aiutaci a migliorare.
                                 </Text>
                               </View>
                               <View
@@ -1293,7 +1293,7 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=not
                             }
                           >
                             <View
-                              accessibilityLabel="Puoi dirci com’è andata? Raccontaci la tua esperienza con l’attivazione di IT-Wallet e aiutaci a migliorare. Inizia"
+                              accessibilityLabel="Puoi dirci com’è andata? Raccontaci la tua esperienza con l’attivazione di IT-⁠Wallet e aiutaci a migliorare. Inizia"
                               accessibilityRole="button"
                               accessible={true}
                               style={
@@ -1351,7 +1351,7 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=not
                                     ]
                                   }
                                 >
-                                  Raccontaci la tua esperienza con l’attivazione di IT-Wallet e aiutaci a migliorare.
+                                  Raccontaci la tua esperienza con l’attivazione di IT-⁠Wallet e aiutaci a migliorare.
                                 </Text>
                               </View>
                               <View
@@ -2174,7 +2174,7 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=not
                             }
                           >
                             <View
-                              accessibilityLabel="Puoi dirci com’è andata? Raccontaci la tua esperienza con l’attivazione di IT-Wallet e aiutaci a migliorare. Inizia"
+                              accessibilityLabel="Puoi dirci com’è andata? Raccontaci la tua esperienza con l’attivazione di IT-⁠Wallet e aiutaci a migliorare. Inizia"
                               accessibilityRole="button"
                               accessible={true}
                               style={
@@ -2232,7 +2232,7 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=not
                                     ]
                                   }
                                 >
-                                  Raccontaci la tua esperienza con l’attivazione di IT-Wallet e aiutaci a migliorare.
+                                  Raccontaci la tua esperienza con l’attivazione di IT-⁠Wallet e aiutaci a migliorare.
                                 </Text>
                               </View>
                               <View

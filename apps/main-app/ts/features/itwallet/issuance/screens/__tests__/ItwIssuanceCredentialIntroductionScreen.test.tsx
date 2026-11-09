@@ -7,7 +7,13 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { DigitalCredentialsCatalogue } from "../../../common/utils/itwCredentialsCatalogueUtils";
+import { itwFetchCredentialsCatalogue } from "../../../credentialsCatalogue/store/actions";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
+import {
+  selectCredentialType,
+  selectIsLoading
+} from "../../../machine/credential/selectors";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwIssuanceCredentialIntroductionScreen } from "../ItwIssuanceCredentialIntroductionScreen";
@@ -36,7 +42,9 @@ describe("ItwIssuanceCredentialIntroductionScreen", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    spyUseActorRef.mockReturnValue({ send: mockSend } as any);
+    spyUseActorRef.mockReturnValue({
+      send: mockSend
+    } as any);
     spyEidUseActorRef.mockReturnValue({ send: mockEidSend } as any);
     // No credential type resolved yet in the machine context: renders the
     // generic error fallback, which is irrelevant to what these tests assert
@@ -46,20 +54,19 @@ describe("ItwIssuanceCredentialIntroductionScreen", () => {
     spyEidUseSelector.mockReturnValue(undefined as any);
   });
 
-  const renderComponent = (params?: {
-    credentialType?: string;
-    mode?: string;
-  }) => {
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
-
-    return renderScreenWithNavigationStoreContext<GlobalState>(
+  const renderComponent = (
+    params?: { credentialType?: string; mode?: string },
+    store = createStore(
+      appReducer,
+      appReducer(undefined, applicationChangeState("active")) as any
+    )
+  ) =>
+    renderScreenWithNavigationStoreContext<GlobalState>(
       ItwIssuanceCredentialIntroductionScreen,
       ITW_ROUTES.ISSUANCE.CREDENTIAL_INTRODUCTION,
       params ?? {},
       store
     );
-  };
 
   it("sends select-credential when reached directly with a credentialType param", () => {
     renderComponent({ credentialType: "mDL" });
@@ -85,6 +92,68 @@ describe("ItwIssuanceCredentialIntroductionScreen", () => {
     renderComponent();
 
     expect(mockSend).not.toHaveBeenCalled();
+  });
+
+  const catalogue: DigitalCredentialsCatalogue = {
+    taxonomy_uri: "",
+    exp: 1700000000,
+    iat: 1600000000,
+    credentials: [
+      {
+        credential_type: "mDL",
+        authentic_sources: [
+          {
+            id: "source",
+            organization_country: "IT",
+            organization_type: "public",
+            user_information: "Credential introduction"
+          }
+        ],
+        issuers: [],
+        legal_type: "public",
+        purposes: [],
+        validity_info: {
+          allowed_states: [],
+          max_validity_days: 365,
+          status_methods: []
+        },
+        version: "1"
+      }
+    ]
+  };
+
+  test.each([
+    { name: "loading", isLoading: true },
+    { name: "ready", isLoading: false }
+  ])(
+    "uses the machine loading tag when the catalogue is $name",
+    ({ isLoading }) => {
+      spyUseSelector.mockImplementation(selector =>
+        selector === selectCredentialType ? ("mDL" as any) : isLoading
+      );
+      const store = createStore(
+        appReducer,
+        appReducer(undefined, applicationChangeState("active")) as any
+      );
+      store.dispatch(itwFetchCredentialsCatalogue.success(catalogue));
+      const { queryByText } = renderComponent({ credentialType: "mDL" }, store);
+      expect(spyUseSelector).toHaveBeenCalledWith(selectIsLoading);
+      expect(Boolean(queryByText(I18n.t("global.genericWaiting")))).toBe(
+        isLoading
+      );
+      expect(Boolean(queryByText(I18n.t("global.buttons.continue")))).toBe(
+        !isLoading
+      );
+    }
+  );
+
+  it("shows a spinner while skipping an introduction absent from the catalogue", () => {
+    spyUseSelector.mockReturnValue("mDL" as any);
+    const { getByText, queryByText } = renderComponent({
+      credentialType: "mDL"
+    });
+    expect(getByText(I18n.t("global.genericWaiting"))).toBeTruthy();
+    expect(queryByText(I18n.t("global.buttons.continue"))).toBeNull();
   });
 
   describe("dismissal dialog", () => {
