@@ -2,14 +2,15 @@ import {
   IOColorMode,
   IOColorPalette,
   IOColorTheme,
+  IOCustomColor,
   withAlpha
 } from "@io-app/design-system";
 
 /* Hues outside the palette */
-const detailCardShapeLight = "#C8C3DC";
-const detailCardShapeDark = "#A58DFF";
+const detailCardShapeLight: IOCustomColor = "#C8C3DC";
+const detailCardShapeDark: IOCustomColor = "#A58DFF";
 // hanPurple 250 at 20% over black, solid: `useHeaderSecondLevel` can't take `rgba`
-const discountHeaderNewDark = "#343141";
+const discountHeaderNewDark: IOCustomColor = "#343141";
 
 /**
  * CGN colors of a mode. Read the current mode's with
@@ -24,7 +25,7 @@ export const cgnColors = (s: IOColorTheme, mode: IOColorMode) => {
         ? IOColorPalette.greyscale[850]
         : IOColorPalette.greyscale[50],
       foreground: isDark
-        ? withAlpha(detailCardShapeDark, 0.4)
+        ? withAlpha(detailCardShapeDark, 0.35)
         : detailCardShapeLight,
       text: isDark ? IOColorPalette.blueIO[50] : IOColorPalette.blueItalia[850]
     },

@@ -25,7 +25,7 @@ export const servicesHomeColors = (s: IOColorTheme, mode: IOColorMode) => {
           ? withAlpha(IOColorPalette.hanPurple[250], 0.2)
           : IOColorPalette.hanPurple[50],
         border: isDark
-          ? withAlpha(IOColorPalette.hanPurple[250], 0.3)
+          ? withAlpha(IOColorPalette.hanPurple[250], 0.35)
           : IOColorPalette.hanPurple[100],
         title: isDark
           ? IOColorPalette.hanPurple[50]
