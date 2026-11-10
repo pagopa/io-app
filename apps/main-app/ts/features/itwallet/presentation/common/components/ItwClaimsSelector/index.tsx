@@ -1,7 +1,7 @@
 import {
   Divider,
   Icon,
-  IOAccordionRadius,
+  IODimensions,
   useAccordionAnimation,
   useIOThemeContext
 } from "@io-app/design-system";
@@ -21,7 +21,7 @@ import { ClaimItem } from "./ClaimItem";
 const COLLAPSED_RADIUS_THRESHOLD = 0.001;
 
 // Border width offset to ensure gradient fits within the border curves
-const COLLAPSIBLE_BORDER = 1;
+const COLLAPSIBLE_BORDER = IODimensions.stroke.default;
 
 type Props = {
   /** Accessibilty */
@@ -99,10 +99,12 @@ export const ItwClaimsSelector = ({
      * ensure visual consistency with the outer container.
      */
     const bottomRadius =
-      progress.value < COLLAPSED_RADIUS_THRESHOLD ? IOAccordionRadius : 0;
+      progress.value < COLLAPSED_RADIUS_THRESHOLD
+        ? IODimensions.radius.accordion
+        : 0;
     return {
-      borderTopLeftRadius: IOAccordionRadius - COLLAPSIBLE_BORDER,
-      borderTopRightRadius: IOAccordionRadius - COLLAPSIBLE_BORDER,
+      borderTopLeftRadius: IODimensions.radius.accordion - COLLAPSIBLE_BORDER,
+      borderTopRightRadius: IODimensions.radius.accordion - COLLAPSIBLE_BORDER,
       borderBottomLeftRadius: bottomRadius - COLLAPSIBLE_BORDER,
       borderBottomRightRadius: bottomRadius - COLLAPSIBLE_BORDER,
       overflow: "hidden"

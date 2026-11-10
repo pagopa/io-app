@@ -4,15 +4,15 @@ import {
   HSpacer,
   Icon,
   IOColors,
-  IOSpacingScale,
+  IODimensionScale,
   useIOTheme
 } from "@io-app/design-system";
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
 
-const notificationMarginVertical: IOSpacingScale = 4;
-const notificationPaddingVertical: IOSpacingScale = 8;
-const notificationPaddingHorizontal: IOSpacingScale = 24;
+const notificationMarginVertical: IODimensionScale = 4;
+const notificationPaddingVertical: IODimensionScale = 8;
+const notificationPaddingHorizontal: IODimensionScale = 24;
 
 const styles = StyleSheet.create({
   notification: {

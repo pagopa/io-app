@@ -1,8 +1,4 @@
-import {
-  IOColors,
-  IOVisualCostants,
-  ListItemHeader
-} from "@io-app/design-system";
+import { IOColors, IODimensions, ListItemHeader } from "@io-app/design-system";
 import { PropsWithChildren } from "react";
 import { View } from "react-native";
 
@@ -29,7 +25,7 @@ export const DebugView = ({
         paddingBottom: 12,
         backgroundColor: IOColors["grey-100"],
         marginHorizontal: ignoreHorizontalMargins
-          ? -IOVisualCostants.appMarginDefault
+          ? -IODimensions.padding.screen.default
           : 0
       }}
       testID="DebugViewTestID"

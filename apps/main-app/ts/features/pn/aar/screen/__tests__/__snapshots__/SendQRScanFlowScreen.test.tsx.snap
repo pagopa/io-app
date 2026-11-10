@@ -280,7 +280,7 @@ exports[`SendQRScanFlowScreen should match snapshot when an app update is requir
                               <View
                                 style={
                                   {
-                                    "width": 32,
+                                    "width": 24,
                                   }
                                 }
                               />
@@ -554,7 +554,8 @@ exports[`SendQRScanFlowScreen should match snapshot when an app update is requir
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]

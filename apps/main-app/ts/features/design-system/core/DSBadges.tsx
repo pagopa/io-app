@@ -3,7 +3,7 @@ import {
   H4,
   HStack,
   IOColors,
-  IOTagRadius,
+  IODimensions,
   Tag,
   useIOTheme,
   VStack
@@ -98,7 +98,7 @@ const renderTag = () => (
           backgroundColor: IOColors["error-100"],
           padding: 8,
           width: "40%",
-          borderRadius: IOTagRadius + 8
+          borderRadius: IODimensions.radius.tag + 8
         }}
       >
         <Tag text={"Loooooooooooong string"} variant="error" />
