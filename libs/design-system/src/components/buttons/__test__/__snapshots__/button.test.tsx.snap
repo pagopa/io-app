@@ -754,7 +754,7 @@ exports[`Test Buttons Components - Experimental Enabled IconButton Snapshot 1`] 
       bbHeight={24}
       bbWidth={24}
       collapsable={false}
-      color="#0B3EE3"
+      color="rgba(11, 62, 227, 1)"
       focusable={false}
       height={24}
       importantForAccessibility="no-hide-descendants"
@@ -924,7 +924,7 @@ exports[`Test Buttons Components - Experimental Enabled IconButtonContained Snap
       bbHeight={24}
       bbWidth={24}
       collapsable={false}
-      color="#0B3EE3"
+      color="rgba(11, 62, 227, 1)"
       focusable={false}
       height={24}
       importantForAccessibility="no-hide-descendants"
