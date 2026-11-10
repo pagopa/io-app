@@ -16,9 +16,7 @@ export type LandingScreenBannerToRender =
   | { type: "loading" }
   | { type: "none" };
 
-type StructuredSelectorOutput = {
-  [key in LandingScreenBannerId]: boolean | undefined;
-};
+type StructuredSelectorOutput = Partial<Record<LandingScreenBannerId, boolean>>;
 
 const NO_BANNER: LandingScreenBannerToRender = { type: "none" };
 const LOADING_BANNER: LandingScreenBannerToRender = { type: "loading" };
