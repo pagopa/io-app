@@ -42,6 +42,9 @@ describe("LanguagesPreferencesScreen", () => {
     jest
       .spyOn(preferencesAnalytics, "trackUILanguageUpdate")
       .mockImplementation(() => undefined);
+    jest
+      .spyOn(preferencesAnalytics, "trackMessageLanguageUpdate")
+      .mockImplementation(() => undefined);
   });
 
   beforeEach(() => {
@@ -135,6 +138,9 @@ describe("LanguagesPreferencesScreen", () => {
       fireEvent.press(getByTestId("RadioItemTestID_en"));
 
       expect(preferencesAnalytics.trackUILanguageUpdate).not.toHaveBeenCalled();
+      expect(
+        preferencesAnalytics.trackMessageLanguageUpdate
+      ).not.toHaveBeenCalled();
     });
   });
 });
