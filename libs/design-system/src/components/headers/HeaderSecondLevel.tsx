@@ -43,7 +43,7 @@ import {
 import { WithTestID } from "../../utils/types";
 import { IconButton } from "../buttons/IconButton";
 import { HSpacer, HStack } from "../layout";
-import { IOText } from "../typography";
+import { AnimatedIOText } from "../typography";
 import { HeaderActionProps } from "./common";
 
 export type HeaderSecondLevel = BackProps &
@@ -172,8 +172,6 @@ export const HeaderSecondLevel = ({
   const insets = useSafeAreaInsets();
   const isTitleAccessible = useMemo(() => !!title.trim(), [title]);
   const paddingTop = useSharedValue(ignoreSafeAreaMargin ? 0 : insets.top);
-
-  const AnimatedIOText = Animated.createAnimatedComponent(IOText);
 
   // If the variant is not set, set a fallback color
   const defaultIconColor = variant ?? "neutral";

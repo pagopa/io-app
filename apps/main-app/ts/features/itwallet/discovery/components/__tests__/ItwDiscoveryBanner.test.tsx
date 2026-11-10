@@ -21,6 +21,10 @@ const mockToastError = jest.fn();
 const mockToastInfo = jest.fn();
 const mockToastSuccess = jest.fn();
 
+jest.mock("../../../../../hooks/useReduceMotionEnabled", () => ({
+  useReduceMotionEnabled: jest.fn(() => false)
+}));
+
 jest.mock("@react-navigation/native", () => {
   const actualNav = jest.requireActual("@react-navigation/native");
   return {

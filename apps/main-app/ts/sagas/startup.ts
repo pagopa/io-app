@@ -55,8 +55,7 @@ import { userFromSuccessLoginSelector } from "../features/authentication/loginIn
 import { watchCdcSaga } from "../features/bonus/cdc/common/saga";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
 import { cgnDetails } from "../features/bonus/cgn/store/actions/details";
-import { isCgnDiscoveryBannerClosedSelector } from "../features/bonus/cgn/store/reducers/banners";
-import { isCgnEligibleByAgeSelector } from "../features/bonus/cgn/store/selectors/banners";
+import { shouldFetchCgnDetailsSelector } from "../features/bonus/cgn/store/selectors/banners";
 import {
   navigateAfterFinishedFciActiveSessionLoginFlowSaga,
   watchFciSaga
@@ -652,12 +651,10 @@ export function* initializeApplicationSaga(
   yield* fork(watchBonusCgnSaga, sessionToken);
 
   // Fetch CGN status early so banner selectors have data
-  const isCgnBannerClosed: boolean = yield* select(
-    isCgnDiscoveryBannerClosedSelector
+  const shouldFetchCgnDetails: boolean = yield* select(
+    shouldFetchCgnDetailsSelector
   );
-  // over 35 should not see the banner
-  const isCgnEligibleByAge: boolean = yield* select(isCgnEligibleByAgeSelector);
-  if (!isCgnBannerClosed && isCgnEligibleByAge) {
+  if (shouldFetchCgnDetails) {
     yield* put(cgnDetails.request());
   }
 

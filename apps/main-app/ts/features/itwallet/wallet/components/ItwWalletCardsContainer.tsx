@@ -150,7 +150,10 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   ]);
 
   return (
-    <View>
+    // Not flattened on Android: TalkBack would otherwise sort the section
+    // children together with the rest of the wallet, announcing the header
+    // after the cards
+    <View collapsable={false} testID="itwWalletCardsSectionTestID">
       <VStack space={16}>
         {!shouldHideEidAlert && (
           <ItwEidLifecycleAlert
