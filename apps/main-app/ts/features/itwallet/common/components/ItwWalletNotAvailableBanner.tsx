@@ -1,9 +1,4 @@
-import {
-  BodySmall,
-  Icon,
-  IOAlertSpacing,
-  IOColors
-} from "@io-app/design-system";
+import { BodySmall, Icon, IOColors, IODimensions } from "@io-app/design-system";
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
 
@@ -14,7 +9,10 @@ import { itwIsWalletInstanceStatusFailureSelector } from "../../walletInstance/s
 /**
  * Component shown when it is not possible to retrieve the wallet instance
  * status from the backend, because of unexpected errors.
+ *
+ * @deprecated Replace with `BannerErrorState` (see the TODO below)
  */
+// TODO: replace with `BannerErrorState` once its label supports two paragraphs with a gap (here `message` and `cta`); that also fixes the background in dark mode
 export const ItwWalletNotAvailableBanner = withWalletCategoryFilter(
   "itw",
   () => {
@@ -45,12 +43,12 @@ export const ItwWalletNotAvailableBanner = withWalletCategoryFilter(
 
 const styles = StyleSheet.create({
   bannerContainer: {
-    padding: IOAlertSpacing[1],
+    padding: IODimensions.padding.banner,
     marginVertical: 8,
     backgroundColor: IOColors["grey-50"],
-    borderRadius: 8,
+    borderRadius: IODimensions.radius.banner,
     alignItems: "center",
-    gap: 8
+    gap: IODimensions.gap.banner.leading
   },
   textCenter: {
     textAlign: "center"

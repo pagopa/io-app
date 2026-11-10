@@ -1,8 +1,7 @@
 import {
   H6,
-  IOAccordionRadius,
   IOColors,
-  IOSpacingScale,
+  IODimensions,
   useIOThemeContext
 } from "@io-app/design-system";
 import { LinearGradient } from "expo-linear-gradient";
@@ -19,10 +18,8 @@ import Animated, { AnimatedStyle } from "react-native-reanimated";
 
 import { useItWalletTheme } from "../utils/theme";
 
-const cardSpacing: IOSpacingScale = 16;
-
 // Border width offset to ensure the header gradient fits within the border curves.
-const CARD_BORDER = 1;
+const CARD_BORDER = IODimensions.stroke.default;
 
 type ItwCredentialClaimsCardProps = PropsWithChildren<{
   /** The end color of the credential-specific header gradient. */
@@ -119,14 +116,14 @@ export const ItwCredentialClaimsCard = ({
 
 const styles = StyleSheet.create({
   card: {
-    borderWidth: 1,
-    borderRadius: IOAccordionRadius,
+    borderWidth: CARD_BORDER,
+    borderRadius: IODimensions.radius.accordion,
     borderCurve: "continuous"
   },
   header: {
-    padding: cardSpacing,
-    borderTopLeftRadius: IOAccordionRadius - CARD_BORDER,
-    borderTopRightRadius: IOAccordionRadius - CARD_BORDER,
+    padding: IODimensions.padding.card,
+    borderTopLeftRadius: IODimensions.radius.accordion - CARD_BORDER,
+    borderTopRightRadius: IODimensions.radius.accordion - CARD_BORDER,
     overflow: "hidden",
     flexDirection: "row",
     alignItems: "center"

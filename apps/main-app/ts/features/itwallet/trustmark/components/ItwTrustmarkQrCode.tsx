@@ -1,4 +1,4 @@
-import { IOVisualCostants } from "@io-app/design-system";
+import { IODimensions } from "@io-app/design-system";
 import I18n from "i18next";
 import { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
@@ -41,7 +41,7 @@ const ItwTrustmarkQrCode = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: -IOVisualCostants.appMarginDefault,
+    marginHorizontal: -IODimensions.padding.screen.default,
     alignItems: "center"
   }
 });

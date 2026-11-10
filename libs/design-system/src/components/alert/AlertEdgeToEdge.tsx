@@ -13,23 +13,20 @@ import {
   enterTransitionAlertEdgeToEdge,
   enterTransitionAlertEdgeToEdgeContent,
   exitTransitionAlertEdgeToEdge,
-  IOVisualCostants
+  IODimensions
 } from "../../core";
 import {
   IOColors,
   IOColorsStatusBackground,
   IOColorsStatusForeground
 } from "../../core/IOColors";
-import { IOAlertSpacing } from "../../core/IOSpacing";
 import { useScaleAnimation } from "../../hooks";
 import { makeFontStyleObject } from "../../utils/fonts";
 import { WithTestID } from "../../utils/types";
-import { Icon, IOIcons, IOIconSizeScale } from "../icons";
+import { Icon, IOIcons } from "../icons";
 import { Body } from "../typography";
 
-const iconSize: IOIconSizeScale = 24;
-
-const [spacingDefault] = IOAlertSpacing;
+const spacingDefault = IODimensions.padding.alert.default;
 
 const styles = StyleSheet.create({
   alert: {
@@ -115,14 +112,14 @@ export const AlertEdgeToEdge = ({
     <>
       <View
         style={{
-          marginRight: IOVisualCostants.iconMargin,
+          marginRight: IODimensions.gap.alert.leading,
           alignSelf: "center"
         }}
       >
         <Icon
           color={mapVariantStates[variant].foreground}
           name={mapVariantStates[variant].icon}
-          size={iconSize}
+          size={IODimensions.size.icon.alert}
         />
       </View>
       <View style={{ flex: 1 }}>
