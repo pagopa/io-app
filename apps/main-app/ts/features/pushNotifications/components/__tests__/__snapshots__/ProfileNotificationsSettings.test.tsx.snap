@@ -897,6 +897,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -2023,6 +2024,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -2999,6 +3001,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -4125,6 +4128,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -5279,6 +5283,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -6583,6 +6588,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -7737,6 +7743,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -9041,6 +9048,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -10017,6 +10025,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -11143,6 +11152,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -12119,6 +12129,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -13245,6 +13256,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -14399,6 +14411,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -15703,6 +15716,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -16857,6 +16871,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -18161,6 +18176,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -19137,6 +19153,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -20263,6 +20280,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -21239,6 +21257,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -22365,6 +22384,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -23519,6 +23539,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -24823,6 +24844,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -25977,6 +25999,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -27281,6 +27304,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -28257,6 +28281,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -29383,6 +29408,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -30359,6 +30385,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -31485,6 +31512,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -32639,6 +32667,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -33943,6 +33972,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -35097,6 +35127,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -36401,6 +36432,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -37555,6 +37587,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -38859,6 +38892,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -40013,6 +40047,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -41317,6 +41352,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -42649,6 +42685,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -44131,6 +44168,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -45463,6 +45501,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -46945,6 +46984,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -48099,6 +48139,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -49403,6 +49444,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -50557,6 +50599,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -51861,6 +51904,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -53193,6 +53237,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -54675,6 +54720,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -56007,6 +56053,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -57489,6 +57536,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -58643,6 +58691,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -59947,6 +59996,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -61101,6 +61151,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -62405,6 +62456,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -63737,6 +63789,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -65219,6 +65272,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -66551,6 +66605,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -68033,6 +68088,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -69187,6 +69243,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -70491,6 +70548,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -71645,6 +71703,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -72949,6 +73008,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -74281,6 +74341,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -75763,6 +75824,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -77095,6 +77157,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -78577,6 +78640,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -79553,6 +79617,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -80679,6 +80744,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -81655,6 +81721,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -82781,6 +82848,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -83935,6 +84003,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -85239,6 +85308,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -86393,6 +86463,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -87697,6 +87768,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -88673,6 +88745,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -89799,6 +89872,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -90775,6 +90849,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -91901,6 +91976,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -93055,6 +93131,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -94359,6 +94436,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -95513,6 +95591,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -96817,6 +96896,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -97793,6 +97873,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -98919,6 +99000,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -99895,6 +99977,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -101021,6 +101104,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -102175,6 +102259,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -103479,6 +103564,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -104633,6 +104719,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -105937,6 +106024,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -106913,6 +107001,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -108039,6 +108128,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -109015,6 +109105,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -110141,6 +110232,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -111295,6 +111387,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -112599,6 +112692,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -113753,6 +113847,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -115057,6 +115152,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -116211,6 +116307,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -117515,6 +117612,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -118669,6 +118767,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -119973,6 +120072,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -121305,6 +121405,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -122787,6 +122888,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -124119,6 +124221,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -125601,6 +125704,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -126755,6 +126859,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -128059,6 +128164,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -129213,6 +129319,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -130517,6 +130624,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -131849,6 +131957,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -133331,6 +133440,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -134663,6 +134773,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -136145,6 +136256,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -137299,6 +137411,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -138603,6 +138716,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -139757,6 +139871,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -141061,6 +141176,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -142393,6 +142509,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -143875,6 +143992,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -145207,6 +145325,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -146689,6 +146808,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -147843,6 +147963,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -149147,6 +149268,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -150301,6 +150423,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -151605,6 +151728,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -152937,6 +153061,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -154419,6 +154544,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -155751,6 +155877,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -157233,6 +157360,7 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
