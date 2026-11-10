@@ -211,7 +211,7 @@ export const getLoginHeaders = (
   ...(hashedFiscalCode && { "x-pagopa-current-user": hashedFiscalCode }),
   ...(isFastLogin && { "x-pagopa-login-type": "LV" }),
   // the below headers are used only in local/dev env (dev server)
-  "x-pagopa-idp-id": idpId,
+  ...(idpId && { "x-pagopa-idp-id": idpId }),
   ...(isLocalEnv && { "x-pagopa-app-version": getAppVersion() })
 });
 
