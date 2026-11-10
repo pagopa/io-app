@@ -26,12 +26,14 @@ type Props<T> = ComponentProps<typeof IOListView<T>> &
  * Special `IOListView` screen with a large title that is hidden by a transition
  * when the user scrolls. It also handles the contextual help and the FAQ. Use
  * of LargeHeader naming is due to similar behavior offered by the native iOS
- * API.
+ * API. Pagination callbacks are forwarded to the list; use
+ * `refreshControlProps` to configure pull-to-refresh.
  */
 export const IOListViewWithLargeHeader = <T,>({
   ref,
   renderItem,
   data,
+  contentContainerStyle,
   keyExtractor,
   title,
   description,
@@ -48,6 +50,8 @@ export const IOListViewWithLargeHeader = <T,>({
   ListHeaderComponent,
   ListFooterComponent,
   ListEmptyComponent,
+  onEndReached,
+  onEndReachedThreshold,
   testID,
   ignoreAccessibilityCheck = false,
   loading
@@ -90,6 +94,7 @@ export const IOListViewWithLargeHeader = <T,>({
   return (
     <IOListView<T>
       actions={actions}
+      contentContainerStyle={contentContainerStyle}
       data={data}
       excludeEndContentMargin={excludeEndContentMargin}
       headerConfig={headerProps}
@@ -138,6 +143,8 @@ export const IOListViewWithLargeHeader = <T,>({
         </>
       }
       loading={loading}
+      onEndReached={onEndReached}
+      onEndReachedThreshold={onEndReachedThreshold}
       refreshControlProps={refreshControlProps}
       renderItem={renderItem}
       skeleton={skeleton}
