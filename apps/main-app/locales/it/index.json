@@ -3767,7 +3767,7 @@
       },
       "beforeContinue": {
         "requestBonus": "Richiedi il bonus",
-        "text": "Premendo 'Richiedi il bonus' dichiari di aver letto, compreso e accettato l'[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni d'uso]({{tosUrl}})."
+        "text": "Premendo \"{{ctaText}}\" dichiari di aver letto, compreso e accettato l'[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni d'uso]({{tosUrl}})."
       },
       "boolPrerequisites": {
         "emptyValueError": "Seleziona un’opzione per continuare",
