@@ -4,9 +4,11 @@ import { ItwStoredCredentialsMocks } from "../../../utils/itwMocksUtils";
 import {
   itwClearCredentialUpgradeFailed,
   itwClearWalletActivationFeedbackBannerData,
+  itwResetEngagementScreenShown,
   itwSetAuthLevel,
   itwSetClaimValuesHidden,
   itwSetCredentialUpgradeFailed,
+  itwSetEngagementScreenShown,
   itwSetIdentificationMode,
   itwSetL2Fallback,
   itwSetProximityNfcLocallyEnabled,
@@ -55,6 +57,27 @@ describe("IT Wallet preferences reducer", () => {
       ...newState,
       authLevel: "L2"
     });
+  });
+
+  it("keeps engagement history for each user across wallet resets", () => {
+    const firstUserState = reducer(
+      INITIAL_STATE,
+      itwSetEngagementScreenShown("first-user")
+    );
+    const secondUserState = reducer(
+      firstUserState,
+      itwSetEngagementScreenShown("second-user")
+    );
+
+    expect(
+      reducer(secondUserState, itwLifecycleStoresReset())
+        .engagementScreenShownByUser
+    ).toEqual({ "first-user": true, "second-user": true });
+
+    expect(
+      reducer(secondUserState, itwResetEngagementScreenShown())
+        .engagementScreenShownByUser
+    ).toBeUndefined();
   });
 
   it("should handle itwSetIdentificationMode action", () => {
