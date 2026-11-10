@@ -12,7 +12,9 @@ import {
 } from "react-native";
 import Animated from "react-native-reanimated";
 
+import { RotationSensor } from "../../../../../components/RotationSensor";
 import { useFeatureColors } from "../../../../../hooks/useFeatureColors";
+import { useRotationEffectEnabled } from "../../../../../hooks/useRotationSensor";
 import { itwColors } from "../../../colors";
 import { useItwCredentialName } from "../../hooks/useItwCredentialName";
 import { useLayoutSize } from "../../hooks/useLayoutSize";
@@ -54,10 +56,15 @@ export const ItwSkeumorphicCard = ({
   const isItw = useMemo(() => isItwCredential(credential), [credential]);
 
   const credentialName = useItwCredentialName(credential.credentialType);
+  const isRotationEffectEnabled = useRotationEffectEnabled();
 
   const FrontSide = useMemo(
     () => (
-      <CardSideBase isItw={isItw} status={status}>
+      <CardSideBase
+        isAnimated={isRotationEffectEnabled && !isFlipped}
+        isItw={isItw}
+        status={status}
+      >
         <CardBackground
           credentialType={credential.credentialType}
           side="front"
@@ -69,12 +76,23 @@ export const ItwSkeumorphicCard = ({
         />
       </CardSideBase>
     ),
-    [credential, status, valuesHidden, isItw]
+    [
+      credential,
+      status,
+      valuesHidden,
+      isItw,
+      isRotationEffectEnabled,
+      isFlipped
+    ]
   );
 
   const BackSide = useMemo(
     () => (
-      <CardSideBase isItw={isItw} status={status}>
+      <CardSideBase
+        isAnimated={isRotationEffectEnabled && isFlipped}
+        isItw={isItw}
+        status={status}
+      >
         <CardBackground
           credentialType={credential.credentialType}
           side="back"
@@ -86,7 +104,14 @@ export const ItwSkeumorphicCard = ({
         />
       </CardSideBase>
     ),
-    [credential, status, valuesHidden, isItw]
+    [
+      credential,
+      status,
+      valuesHidden,
+      isItw,
+      isRotationEffectEnabled,
+      isFlipped
+    ]
   );
 
   const accessibilityProps = useMemo(() => {
@@ -162,11 +187,18 @@ const gradientVariantByStatus: Record<
 
 type CardSideBaseProps = {
   children: ReactNode;
+  /** Animates the border; the hidden face keeps it at rest. */
+  isAnimated: boolean;
   isItw: boolean;
   status: ItwCredentialStatus;
 };
 
-const CardSideBase = ({ status, children, isItw }: CardSideBaseProps) => {
+const CardSideBase = ({
+  status,
+  children,
+  isItw,
+  isAnimated
+}: CardSideBaseProps) => {
   const { credentialCard, skeumorphicCard } = useFeatureColors(itwColors);
   const tagPropsByStatus = useTagPropsByStatus();
 
@@ -215,13 +247,18 @@ const CardSideBase = ({ status, children, isItw }: CardSideBaseProps) => {
             testID="itWalletBrandBorderTestID"
           >
             {/* Animated gradient border */}
-            <ItwBrandedSkiaBorder
-              borderRadius={8}
-              height={size.height}
-              thickness={4}
-              variant={gradientVariantByStatus[status]}
-              width={size.width}
-            />
+            <RotationSensor enabled={isAnimated}>
+              {roll => (
+                <ItwBrandedSkiaBorder
+                  borderRadius={8}
+                  height={size.height}
+                  roll={roll}
+                  thickness={4}
+                  variant={gradientVariantByStatus[status]}
+                  width={size.width}
+                />
+              )}
+            </RotationSensor>
           </Canvas>
         )}
       </CardWidthContext.Provider>

@@ -7,7 +7,7 @@ import {
 } from "react-native";
 
 import { useIOColors } from "../../context";
-import { IODimensions } from "../../core";
+import { IODimensions, IOTypography } from "../../core";
 import { IOButton } from "../buttons";
 import { HStack, VStack } from "../layout";
 import { IOLogoPaymentType, LogoPayment } from "../logos";
@@ -97,7 +97,10 @@ export const ModuleCheckout = (props: ModuleCheckoutProps) => {
       }
       onPress={onPress}
     >
-      <HStack space={4} style={{ alignItems: "center" }}>
+      <HStack
+        space={IODimensions.gap.module.trailing}
+        style={{ alignItems: "center" }}
+      >
         <ModuleBaseContent
           image={image}
           paymentLogo={paymentLogo}
@@ -134,8 +137,8 @@ const ModuleCheckoutSkeleton = ({
     accessible={true}
     endBlock={
       <IOSkeleton
-        height={16}
-        radius={IODimensions.radius.default}
+        height={IOTypography.buttonText.size}
+        radius={IODimensions.radius.skeleton.text}
         shape="rectangle"
         width={64}
       />
@@ -143,25 +146,28 @@ const ModuleCheckoutSkeleton = ({
     startBlock={
       <HStack
         space={IODimensions.gap.module.leading}
-        style={{ alignItems: "center" }}
+        style={{ alignItems: "center", flexGrow: 1, flexShrink: 1 }}
       >
         <IOSkeleton
-          radius={IODimensions.radius.default}
+          radius={IODimensions.radius.skeleton.graphic}
           shape="square"
-          size={IODimensions.size.icon.module.leading}
+          size={IODimensions.size.icon.module.default}
         />
-        <VStack space={8}>
+        <VStack
+          space={IODimensions.gap.skeleton.items}
+          style={{ flexGrow: 1, flexShrink: 1 }}
+        >
           <IOSkeleton
-            height={20}
-            radius={IODimensions.radius.default}
+            height={IOTypography.h6.size}
+            radius={IODimensions.radius.skeleton.text}
             shape="rectangle"
-            width={170}
+            width="85%"
           />
           <IOSkeleton
-            height={16}
-            radius={IODimensions.radius.default}
+            height={IOTypography.bodySmall.size}
+            radius={IODimensions.radius.skeleton.text}
             shape="rectangle"
-            width={110}
+            width="55%"
           />
         </VStack>
       </HStack>
@@ -171,8 +177,8 @@ const ModuleCheckoutSkeleton = ({
 
 const styles = StyleSheet.create({
   image: {
-    width: IODimensions.size.icon.module.leading,
-    height: IODimensions.size.icon.module.leading,
+    width: IODimensions.size.icon.module.default,
+    height: IODimensions.size.icon.module.default,
     resizeMode: "contain"
   }
 });
