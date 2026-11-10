@@ -8,10 +8,12 @@ import {
   itwClearCredentialUpgradeFailed,
   itwClearWalletActivationFeedbackBannerData,
   itwDisableItwActivation,
+  itwResetEngagementScreenShown,
   itwSetAuthLevel,
   itwSetClaimValuesHidden,
   itwSetCredentialUpgradeFailed,
   itwSetDiscoverMoreCEDEnabled,
+  itwSetEngagementScreenShown,
   itwSetFiscalCodeWhitelisted,
   itwSetIdentificationMode,
   itwSetL2Fallback,
@@ -28,6 +30,7 @@ export type ItwPreferencesState = {
   claimValuesHidden?: boolean;
   // Credential that failed to upgrade by type
   credentialUpgradeFailed?: ReadonlyArray<CredentialMetadata["credentialType"]>;
+  engagementScreenShownByUser?: Readonly<Record<string, true>>;
   // Indicates the identification mode used for the user
   identificationMode?: IdentificationContext["mode"];
   // Indicates whether the CED discover more feature is enabled
@@ -66,7 +69,6 @@ const reducer = (
           type => type !== action.payload
         )
       };
-
     case getType(itwClearWalletActivationFeedbackBannerData): {
       const { walletActivationFeedbackBannerData: _, ...rest } = state;
       return rest;
@@ -88,6 +90,7 @@ const reducer = (
       // - isProximityNfcLocallyEnabled: local feature flag
       const {
         claimValuesHidden,
+        engagementScreenShownByUser,
         isFiscalCodeWhitelisted,
         isItwActivationDisabled,
         isL2Fallback,
@@ -96,11 +99,15 @@ const reducer = (
       return {
         ...itwPreferencesInitialState,
         claimValuesHidden,
+        engagementScreenShownByUser,
         isFiscalCodeWhitelisted,
         isItwActivationDisabled,
         isL2Fallback,
         isProximityNfcLocallyEnabled
       };
+
+    case getType(itwResetEngagementScreenShown):
+      return { ...state, engagementScreenShownByUser: undefined };
 
     case getType(itwSetAuthLevel): {
       return {
@@ -127,6 +134,15 @@ const reducer = (
         isDiscoverMoreCEDEnabled: action.payload
       };
     }
+
+    case getType(itwSetEngagementScreenShown):
+      return {
+        ...state,
+        engagementScreenShownByUser: {
+          ...state.engagementScreenShownByUser,
+          [action.payload]: true
+        }
+      };
 
     case getType(itwSetFiscalCodeWhitelisted): {
       return {
