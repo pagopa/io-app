@@ -1814,6 +1814,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         <Modal
                           accessible={false}
                           backdropComponent={[Function]}
+                          backgroundComponent={[Function]}
                           backgroundStyle={
                             {
                               "backgroundColor": "#FFFFFF",
@@ -4726,6 +4727,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         <Modal
                           accessible={false}
                           backdropComponent={[Function]}
+                          backgroundComponent={[Function]}
                           backgroundStyle={
                             {
                               "backgroundColor": "#FFFFFF",

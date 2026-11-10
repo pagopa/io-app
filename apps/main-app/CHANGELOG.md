@@ -1,3 +1,18 @@
+## 3.43.0-rc.7 (2026-11-09)
+
+### Bug Fixes
+
+- **IT-Wallet:** [[SIW-5353](https://pagopa.atlassian.net/browse/SIW-5353)] Announce wallet headers before cards ([#8843](https://github.com/pagopa/io-app/pull/8843))
+
+### Chores
+
+- **release:** 3.42.2-rc.0 ([#8858](https://github.com/pagopa/io-app/pull/8858))
+
+### ❤️ Thank You
+
+- Alessandro Dell'Oste @adelloste
+- MonicaRungi-EY
+
 ## 3.42.2-rc.0 (2026-11-09)
 
 ### Chores
