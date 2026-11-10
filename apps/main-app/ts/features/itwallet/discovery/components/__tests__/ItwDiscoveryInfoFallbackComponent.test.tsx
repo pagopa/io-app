@@ -43,7 +43,9 @@ describe("ItwDiscoveryInfoFallbackComponent", () => {
       .filter(([eventName]) => eventName === "hardwareBackPress")
       .map(([, handler]) => handler)
       .reverse()
-      .some(handler => handler() === true);
+      .some(
+        handler => handler({ type: "hardwareBackPress", timeStamp: 0 }) === true
+      );
 
   const pressHeaderBack = (component: ReturnType<typeof renderComponent>) =>
     component

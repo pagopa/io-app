@@ -1,8 +1,9 @@
 import { useFocusEffect } from "@react-navigation/native";
 import { Ref, useCallback, useRef } from "react";
-import { FlatList, NativeSyntheticEvent } from "react-native";
-import PagerView from "react-native-pager-view";
-import { OnPageSelectedEventData } from "react-native-pager-view/lib/typescript/PagerViewNativeComponent";
+import { FlatList } from "react-native";
+import PagerView, {
+  type PagerViewOnPageSelectedEvent
+} from "react-native-pager-view";
 
 import SectionStatusComponent from "../../../../components/SectionStatus";
 import { pageSize } from "../../../../config";
@@ -64,7 +65,7 @@ export const PagerViewContainer = ({ ref }: { ref?: Ref<PagerView> }) => {
     [dispatch]
   );
   const onPagerViewPageSelected = useCallback(
-    (selectionEvent: NativeSyntheticEvent<OnPageSelectedEventData>) => {
+    (selectionEvent: PagerViewOnPageSelectedEvent) => {
       // Be aware that this callback is triggered:
       // - upon first PagerView rendering;
       // - when the user completes a full horizontal swipe;
@@ -136,10 +137,15 @@ export const PagerViewContainer = ({ ref }: { ref?: Ref<PagerView> }) => {
       //   but the list keeps its blank view placeholder visible).
       setTimeout(() => {
         const state = store.getState();
+        dispatchReloadAllMessagesIfNeeded(state);
         trackMessagePageOnFocusEventIfAllowed(state);
         loadNewlyReceivedMessagesIfNeededCallback();
       }, 100);
-    }, [loadNewlyReceivedMessagesIfNeededCallback, store])
+    }, [
+      loadNewlyReceivedMessagesIfNeededCallback,
+      dispatchReloadAllMessagesIfNeeded,
+      store
+    ])
   );
 
   return (

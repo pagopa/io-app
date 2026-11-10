@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as Calendar from "expo-calendar";
+import * as ExpoCalendar from "expo-calendar";
 /** A reducer for persisted preferences. */
 import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
@@ -46,7 +46,7 @@ export type PersistedPreferencesState = Readonly<{
   isMixpanelEnabled: boolean | null;
   isPagoPATestEnabled: boolean;
   isPnTestEnabled: boolean;
-  preferredCalendar?: Calendar.Calendar;
+  preferredCalendar?: ExpoCalendar.ExpoCalendar;
   preferredLanguage?: Locales;
   themePreference: ColorModeChoice;
   wasServiceAlertDisplayedOnce?: boolean;

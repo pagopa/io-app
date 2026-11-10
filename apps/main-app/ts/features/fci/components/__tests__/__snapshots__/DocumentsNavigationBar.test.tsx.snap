@@ -124,7 +124,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
           bbHeight={36}
           bbWidth={36}
           collapsable={false}
-          color="#0B3EE3"
+          color="rgba(11, 62, 227, 1)"
           focusable={false}
           height={36}
           importantForAccessibility="no-hide-descendants"
@@ -303,7 +303,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
           bbHeight={36}
           bbWidth={36}
           collapsable={false}
-          color="#0B3EE3"
+          color="rgba(11, 62, 227, 1)"
           focusable={false}
           height={36}
           importantForAccessibility="no-hide-descendants"

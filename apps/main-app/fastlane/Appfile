@@ -1,0 +1,12 @@
+# Fastlane runs from apps/main-app (the parent of this folder), so every path
+# below and in the Fastfile is relative to apps/main-app.
+
+# iOS
+app_identifier "it.pagopa.app.io" # The bundle identifier of your app
+team_id "M2X5YQ4BJ7" # Developer Portal Team ID
+
+# Android
+json_key_file "/tmp/json-key.json" # Path to the json secret file - Follow https://github.com/fastlane/supply#setup to get one
+package_name "it.pagopa.io.app"
+
+# More information: https://docs.fastlane.tools/advanced/Appfile/

@@ -295,7 +295,10 @@ describe("AuthErrorScreen", () => {
         .filter(([eventName]) => eventName === "hardwareBackPress")
         .map(([, handler]) => handler)
         .reverse()
-        .some(handler => handler() === true);
+        .some(
+          handler =>
+            handler({ type: "hardwareBackPress", timeStamp: 0 }) === true
+        );
 
       expect(isBackPressConsumed).toBe(true);
       expect(mockPopTo).not.toHaveBeenCalled();

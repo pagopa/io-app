@@ -191,7 +191,9 @@ exports[`LoadingScreenContent should match the snapshot with title, a subtitle, 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -208,11 +210,13 @@ exports[`LoadingScreenContent should match the snapshot with title, a subtitle, 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -223,6 +227,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a subtitle, 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -818,7 +823,9 @@ exports[`LoadingScreenContent should match the snapshot with title, a subtitle, 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -835,11 +842,13 @@ exports[`LoadingScreenContent should match the snapshot with title, a subtitle, 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -850,6 +859,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a subtitle, 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -1445,7 +1455,9 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1462,11 +1474,13 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -1477,6 +1491,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -2069,7 +2084,9 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2086,11 +2103,13 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -2101,6 +2120,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}

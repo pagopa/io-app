@@ -48,8 +48,8 @@ corepack prepare --activate
 # Install dependencies
 pnpm install
 
-# Install iOS pods (macOS only)
-pnpm nx run main-app:dev-pod-install
+# Generate the native projects and install iOS pods (iOS requires macOS)
+pnpm nx run main-app:prebuild
 
 # iOS
 pnpm nx run main-app:run-ios

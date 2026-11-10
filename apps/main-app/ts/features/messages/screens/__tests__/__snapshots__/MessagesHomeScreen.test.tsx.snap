@@ -58,7 +58,9 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -75,11 +77,13 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -90,6 +94,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -373,7 +378,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                       bbHeight={36}
                                       bbWidth={36}
                                       collapsable={false}
-                                      color="#0B3EE3"
+                                      color="rgba(11, 62, 227, 1)"
                                       focusable={false}
                                       height={36}
                                       importantForAccessibility="no-hide-descendants"
@@ -531,7 +536,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                       bbHeight={36}
                                       bbWidth={36}
                                       collapsable={false}
-                                      color="#0B3EE3"
+                                      color="rgba(11, 62, 227, 1)"
                                       focusable={false}
                                       height={36}
                                       importantForAccessibility="no-hide-descendants"
@@ -689,7 +694,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                       bbHeight={36}
                                       bbWidth={36}
                                       collapsable={false}
-                                      color="#0B3EE3"
+                                      color="rgba(11, 62, 227, 1)"
                                       focusable={false}
                                       height={36}
                                       importantForAccessibility="no-hide-descendants"
@@ -790,18 +795,30 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                           onPageScroll={[Function]}
                           onPageScrollStateChanged={[Function]}
                           onPageSelected={[Function]}
+                          style={
+                            [
+                              undefined,
+                              null,
+                            ]
+                          }
                           testID="mock_pager_view_container"
                         >
                           <View
                             collapsable={false}
                             style={
-                              {
-                                "bottom": 0,
-                                "left": 0,
-                                "position": "absolute",
-                                "right": 0,
-                                "top": 0,
-                              }
+                              [
+                                {
+                                  "bottom": 0,
+                                  "left": 0,
+                                  "position": "absolute",
+                                  "right": 0,
+                                  "top": 0,
+                                },
+                                {
+                                  "marginLeft": 0,
+                                  "marginRight": 0,
+                                },
+                              ]
                             }
                           >
                             <View
@@ -824,13 +841,19 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                           <View
                             collapsable={false}
                             style={
-                              {
-                                "bottom": 0,
-                                "left": 0,
-                                "position": "absolute",
-                                "right": 0,
-                                "top": 0,
-                              }
+                              [
+                                {
+                                  "bottom": 0,
+                                  "left": 0,
+                                  "position": "absolute",
+                                  "right": 0,
+                                  "top": 0,
+                                },
+                                {
+                                  "marginLeft": 0,
+                                  "marginRight": 0,
+                                },
+                              ]
                             }
                           >
                             <View

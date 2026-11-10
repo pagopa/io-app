@@ -30,6 +30,21 @@ describe("WebviewComponent tests", () => {
     expect(component).toMatchSnapshot();
   });
 
+  it("disables Android camera and microphone access", () => {
+    const { getByTestId } = render(
+      <Provider store={store}>
+        <WebviewComponent source={{ uri: "https://google.com" }} />
+      </Provider>
+    );
+
+    expect(getByTestId("webview").props).toEqual(
+      expect.objectContaining({
+        androidCameraAccessDisabled: true,
+        androidMicrophoneAccessDisabled: true
+      })
+    );
+  });
+
   it("should display error screen on error", () => {
     const { getByText, getByTestId } = render(
       <Provider store={store}>

@@ -14,9 +14,9 @@ const messageId = "01HSG6GR1JT2E23AJ5RBTAMZZP";
 jest.mock("rn-qr-generator", () => ({}));
 jest.mock("expo-screen-capture", () => ({}));
 jest.mock("expo-calendar", () => ({
-  getCalendarPermissionsAsync: () =>
+  getCalendarPermissions: () =>
     new Promise(resolve => resolve({ status: "granted" })),
-  requestCalendarPermissionsAsync: () =>
+  requestCalendarPermissions: () =>
     new Promise(resolve => resolve({ status: "granted" }))
 }));
 

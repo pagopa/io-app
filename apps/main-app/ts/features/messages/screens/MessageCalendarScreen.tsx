@@ -1,7 +1,7 @@
 import { FooterActions, ModalBSHeader, VSpacer } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
-import * as Calendar from "expo-calendar";
+import * as ExpoCalendar from "expo-calendar";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
@@ -41,7 +41,7 @@ const MessageCalendarHeaderComponent = () => {
 };
 export const MessageCalendarScreen = () => {
   const [calendarsByAccount, setCalendarsByAccount] = useState<
-    pot.Pot<Array<Calendar.Calendar>, Error>
+    pot.Pot<Array<ExpoCalendar.ExpoCalendar>, Error>
   >(pot.noneLoading);
 
   const { params } = useRoute<MessageCalendarRouteProps>();
@@ -57,7 +57,7 @@ export const MessageCalendarScreen = () => {
     useMessageCalendar(messageId);
 
   const handleCalendarSelected = useCallback(
-    (calendar: Calendar.Calendar) => {
+    (calendar: ExpoCalendar.ExpoCalendar) => {
       pipe(
         messageDetails,
         pot.toOption,
@@ -119,7 +119,7 @@ export const MessageCalendarScreen = () => {
             calendars={pipe(
               calendarsByAccount,
               pot.toOption,
-              O.getOrElse<Array<Calendar.Calendar>>(() => [])
+              O.getOrElse<Array<ExpoCalendar.ExpoCalendar>>(() => [])
             )}
             isLoading={pot.isLoading(calendarsByAccount)}
             onCalendarSelected={handleCalendarSelected}

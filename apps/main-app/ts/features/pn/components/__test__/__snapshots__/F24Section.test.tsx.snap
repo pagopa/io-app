@@ -191,7 +191,9 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -208,11 +210,13 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -223,6 +227,7 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -519,7 +524,9 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -536,11 +543,13 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -551,6 +560,7 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -847,7 +857,9 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -864,11 +876,13 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -879,6 +893,7 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -1175,7 +1190,9 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1192,11 +1209,13 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -1207,6 +1226,7 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -1503,7 +1523,9 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1520,11 +1542,13 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -1535,6 +1559,7 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -1831,7 +1856,9 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1848,11 +1875,13 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -1863,6 +1892,7 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -2159,7 +2189,9 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2176,11 +2208,13 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -2191,6 +2225,7 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -2487,7 +2522,9 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2504,11 +2541,13 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -2519,6 +2558,7 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -2815,7 +2855,9 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2832,11 +2874,13 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -2847,6 +2891,7 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -3143,7 +3188,9 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3160,11 +3207,13 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -3175,6 +3224,7 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -3471,7 +3521,9 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3488,11 +3540,13 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -3503,6 +3557,7 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -3799,7 +3854,9 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3816,11 +3873,13 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -3831,6 +3890,7 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -4127,7 +4187,9 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4144,11 +4206,13 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -4159,6 +4223,7 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -4455,7 +4520,9 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4472,11 +4539,13 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -4487,6 +4556,7 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -4783,7 +4853,9 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4800,11 +4872,13 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -4815,6 +4889,7 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -5111,7 +5186,9 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5128,11 +5205,13 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -5143,6 +5222,7 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -5439,7 +5519,9 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5456,11 +5538,13 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -5471,6 +5555,7 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -5767,7 +5852,9 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5784,11 +5871,13 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -5799,6 +5888,7 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -6095,7 +6185,9 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6112,11 +6204,13 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -6127,6 +6221,7 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -6423,7 +6518,9 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6440,11 +6537,13 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -6455,6 +6554,7 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -6751,7 +6851,9 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6768,11 +6870,13 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -6783,6 +6887,7 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -7079,7 +7184,9 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -7096,11 +7203,13 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -7111,6 +7220,7 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -7407,7 +7517,9 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -7424,11 +7536,13 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -7439,6 +7553,7 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -7735,7 +7850,9 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -7752,11 +7869,13 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -7767,6 +7886,7 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -8063,7 +8183,9 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -8080,11 +8202,13 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -8095,6 +8219,7 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -8391,7 +8516,9 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -8408,11 +8535,13 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -8423,6 +8552,7 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -8719,7 +8849,9 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -8736,11 +8868,13 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -8751,6 +8885,7 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -9047,7 +9182,9 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9064,11 +9201,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -9079,6 +9218,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -9484,7 +9624,9 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9501,11 +9643,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -9516,6 +9660,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -9921,7 +10066,9 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9938,11 +10085,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -9953,6 +10102,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -10358,7 +10508,9 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -10375,11 +10527,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -10390,6 +10544,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -10795,7 +10950,9 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -10812,11 +10969,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -10827,6 +10986,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -11232,7 +11392,9 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -11249,11 +11411,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -11264,6 +11428,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -11669,7 +11834,9 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -11686,11 +11853,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -11701,6 +11870,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -12106,7 +12276,9 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -12123,11 +12295,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -12138,6 +12312,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -12543,7 +12718,9 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -12560,11 +12737,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -12575,6 +12754,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -12980,7 +13160,9 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -12997,11 +13179,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -13012,6 +13196,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -13308,7 +13493,9 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -13325,11 +13512,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -13340,6 +13529,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -13636,7 +13826,9 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -13653,11 +13845,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -13668,6 +13862,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -13964,7 +14159,9 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -13981,11 +14178,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -13996,6 +14195,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -14292,7 +14492,9 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -14309,11 +14511,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -14324,6 +14528,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -14620,7 +14825,9 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -14637,11 +14844,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -14652,6 +14861,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -14948,7 +15158,9 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -14965,11 +15177,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -14980,6 +15194,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -15276,7 +15491,9 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -15293,11 +15510,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -15308,6 +15527,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -15604,7 +15824,9 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -15621,11 +15843,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -15636,6 +15860,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -15932,7 +16157,9 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -15949,11 +16176,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -15964,6 +16193,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -16369,7 +16599,9 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -16386,11 +16618,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -16401,6 +16635,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -16806,7 +17041,9 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -16823,11 +17060,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -16838,6 +17077,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -17243,7 +17483,9 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -17260,11 +17502,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -17275,6 +17519,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -17680,7 +17925,9 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -17697,11 +17944,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -17712,6 +17961,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -18117,7 +18367,9 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -18134,11 +18386,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -18149,6 +18403,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -18554,7 +18809,9 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -18571,11 +18828,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -18586,6 +18845,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -18991,7 +19251,9 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -19008,11 +19270,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -19023,6 +19287,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -19428,7 +19693,9 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -19445,11 +19712,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -19460,6 +19729,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -19865,7 +20135,9 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -19882,11 +20154,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -19897,6 +20171,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -20302,7 +20577,9 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -20319,11 +20596,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -20334,6 +20613,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -20739,7 +21019,9 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -20756,11 +21038,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -20771,6 +21055,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -21176,7 +21461,9 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -21193,11 +21480,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -21208,6 +21497,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -21613,7 +21903,9 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -21630,11 +21922,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -21645,6 +21939,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -22050,7 +22345,9 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -22067,11 +22364,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -22082,6 +22381,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -22487,7 +22787,9 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -22504,11 +22806,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -22519,6 +22823,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -22924,7 +23229,9 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -22941,11 +23248,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -22956,6 +23265,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -23361,7 +23671,9 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -23378,11 +23690,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -23393,6 +23707,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -23798,7 +24113,9 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -23815,11 +24132,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -23830,6 +24149,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -24126,7 +24446,9 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -24143,11 +24465,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -24158,6 +24482,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -24454,7 +24779,9 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -24471,11 +24798,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -24486,6 +24815,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -24782,7 +25112,9 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -24799,11 +25131,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -24814,6 +25148,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -25110,7 +25445,9 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -25127,11 +25464,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -25142,6 +25481,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -25438,7 +25778,9 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -25455,11 +25797,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -25470,6 +25814,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -25766,7 +26111,9 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -25783,11 +26130,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -25798,6 +26147,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -26094,7 +26444,9 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -26111,11 +26463,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -26126,6 +26480,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -26422,7 +26777,9 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -26439,11 +26796,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -26454,6 +26813,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -26750,7 +27110,9 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -26767,11 +27129,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -26782,6 +27146,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -27187,7 +27552,9 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -27204,11 +27571,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -27219,6 +27588,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -27624,7 +27994,9 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -27641,11 +28013,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -27656,6 +28030,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -28061,7 +28436,9 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -28078,11 +28455,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -28093,6 +28472,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -28498,7 +28878,9 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -28515,11 +28897,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -28530,6 +28914,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -28935,7 +29320,9 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -28952,11 +29339,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -28967,6 +29356,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -29372,7 +29762,9 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -29389,11 +29781,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -29404,6 +29798,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -29809,7 +30204,9 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -29826,11 +30223,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -29841,6 +30240,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -30246,7 +30646,9 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -30263,11 +30665,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -30278,6 +30682,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -30683,7 +31088,9 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -30700,11 +31107,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -30715,6 +31124,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -31172,7 +31582,9 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -31189,11 +31601,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -31204,6 +31618,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -31661,7 +32076,9 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -31678,11 +32095,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -31693,6 +32112,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -32150,7 +32570,9 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -32167,11 +32589,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -32182,6 +32606,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -32639,7 +33064,9 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -32656,11 +33083,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -32671,6 +33100,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -33128,7 +33558,9 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -33145,11 +33577,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -33160,6 +33594,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -33617,7 +34052,9 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -33634,11 +34071,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -33649,6 +34088,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -34106,7 +34546,9 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -34123,11 +34565,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -34138,6 +34582,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -34595,7 +35040,9 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -34612,11 +35059,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -34627,6 +35076,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -35084,7 +35534,9 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -35101,11 +35553,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -35116,6 +35570,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -35412,7 +35867,9 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -35429,11 +35886,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -35444,6 +35903,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -35740,7 +36200,9 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -35757,11 +36219,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -35772,6 +36236,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -36068,7 +36533,9 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -36085,11 +36552,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -36100,6 +36569,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -36396,7 +36866,9 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -36413,11 +36885,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -36428,6 +36902,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -36724,7 +37199,9 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -36741,11 +37218,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -36756,6 +37235,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -37052,7 +37532,9 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -37069,11 +37551,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -37084,6 +37568,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -37380,7 +37865,9 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -37397,11 +37884,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -37412,6 +37901,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -37708,7 +38198,9 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -37725,11 +38217,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -37740,6 +38234,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -38036,7 +38531,9 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -38053,11 +38550,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -38068,6 +38567,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -38525,7 +39025,9 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -38542,11 +39044,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -38557,6 +39061,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -39014,7 +39519,9 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -39031,11 +39538,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -39046,6 +39555,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -39503,7 +40013,9 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -39520,11 +40032,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -39535,6 +40049,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -39992,7 +40507,9 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -40009,11 +40526,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -40024,6 +40543,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -40481,7 +41001,9 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -40498,11 +41020,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -40513,6 +41037,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -40970,7 +41495,9 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -40987,11 +41514,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -41002,6 +41531,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -41459,7 +41989,9 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -41476,11 +42008,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -41491,6 +42025,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -41948,7 +42483,9 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -41965,11 +42502,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -41980,6 +42519,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -42437,7 +42977,9 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -42454,11 +42996,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -42469,6 +43013,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -42926,7 +43471,9 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -42943,11 +43490,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -42958,6 +43507,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -43415,7 +43965,9 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -43432,11 +43984,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -43447,6 +44001,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -43904,7 +44459,9 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -43921,11 +44478,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -43936,6 +44495,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -44393,7 +44953,9 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -44410,11 +44972,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -44425,6 +44989,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -44882,7 +45447,9 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -44899,11 +45466,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -44914,6 +45483,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -45371,7 +45941,9 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -45388,11 +45960,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -45403,6 +45977,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -45860,7 +46435,9 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -45877,11 +46454,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -45892,6 +46471,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -46349,7 +46929,9 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -46366,11 +46948,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -46381,6 +46965,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -46838,7 +47423,9 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -46855,11 +47442,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -46870,6 +47459,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -47166,7 +47756,9 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -47183,11 +47775,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -47198,6 +47792,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -47494,7 +48089,9 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -47511,11 +48108,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -47526,6 +48125,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -47822,7 +48422,9 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -47839,11 +48441,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -47854,6 +48458,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -48150,7 +48755,9 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -48167,11 +48774,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -48182,6 +48791,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -48478,7 +49088,9 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -48495,11 +49107,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -48510,6 +49124,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -48806,7 +49421,9 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -48823,11 +49440,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -48838,6 +49457,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -49134,7 +49754,9 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -49151,11 +49773,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -49166,6 +49790,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -49462,7 +50087,9 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -49479,11 +50106,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -49494,6 +50123,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -49790,7 +50420,9 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -49807,11 +50439,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -49822,6 +50456,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -50279,7 +50914,9 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -50296,11 +50933,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -50311,6 +50950,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -50768,7 +51408,9 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -50785,11 +51427,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -50800,6 +51444,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -51257,7 +51902,9 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -51274,11 +51921,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -51289,6 +51938,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -51746,7 +52396,9 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -51763,11 +52415,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -51778,6 +52432,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -52235,7 +52890,9 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -52252,11 +52909,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -52267,6 +52926,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -52724,7 +53384,9 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -52741,11 +53403,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -52756,6 +53420,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -53213,7 +53878,9 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -53230,11 +53897,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -53245,6 +53914,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -53702,7 +54372,9 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -53719,11 +54391,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -53734,6 +54408,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -54191,7 +54866,9 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -54208,11 +54885,13 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -54223,6 +54902,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -54519,7 +55199,9 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -54536,11 +55218,13 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -54551,6 +55235,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -54847,7 +55532,9 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -54864,11 +55551,13 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -54879,6 +55568,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -55175,7 +55865,9 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -55192,11 +55884,13 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -55207,6 +55901,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -55503,7 +56198,9 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -55520,11 +56217,13 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -55535,6 +56234,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -55831,7 +56531,9 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -55848,11 +56550,13 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -55863,6 +56567,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -56159,7 +56864,9 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -56176,11 +56883,13 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -56191,6 +56900,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -56487,7 +57197,9 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -56504,11 +57216,13 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -56519,6 +57233,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -56815,7 +57530,9 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -56832,11 +57549,13 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -56847,6 +57566,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -57143,7 +57863,9 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -57160,11 +57882,13 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -57175,6 +57899,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -57471,7 +58196,9 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -57488,11 +58215,13 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -57503,6 +58232,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -57799,7 +58529,9 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -57816,11 +58548,13 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -57831,6 +58565,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -58127,7 +58862,9 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -58144,11 +58881,13 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -58159,6 +58898,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -58455,7 +59195,9 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -58472,11 +59214,13 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -58487,6 +59231,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -58783,7 +59528,9 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -58800,11 +59547,13 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -58815,6 +59564,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -59111,7 +59861,9 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -59128,11 +59880,13 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -59143,6 +59897,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -59439,7 +60194,9 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -59456,11 +60213,13 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -59471,6 +60230,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -59767,7 +60527,9 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -59784,11 +60546,13 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -59799,6 +60563,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -60095,7 +60860,9 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -60112,11 +60879,13 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -60127,6 +60896,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -60423,7 +61193,9 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -60440,11 +61212,13 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -60455,6 +61229,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -60751,7 +61526,9 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -60768,11 +61545,13 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -60783,6 +61562,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -61079,7 +61859,9 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -61096,11 +61878,13 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -61111,6 +61895,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -61407,7 +62192,9 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -61424,11 +62211,13 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -61439,6 +62228,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -61735,7 +62525,9 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -61752,11 +62544,13 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -61767,6 +62561,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -62063,7 +62858,9 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -62080,11 +62877,13 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -62095,6 +62894,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -62391,7 +63191,9 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -62408,11 +63210,13 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -62423,6 +63227,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -62719,7 +63524,9 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -62736,11 +63543,13 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -62751,6 +63560,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}

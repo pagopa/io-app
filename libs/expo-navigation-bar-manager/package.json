@@ -17,7 +17,7 @@
     "tsc-noemit": "tsc --noEmit"
   },
   "devDependencies": {
-    "expo-modules-core": "^55.0.25",
+    "expo-modules-core": "catalog:",
     "react-native": "catalog:",
     "typescript": "catalog:"
   }

@@ -1,5 +1,5 @@
 import { IOEasingCurves } from "@io-app/design-system";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, ViewStyle } from "react-native";
 import Animated, { AnimatedStyle, FadeIn } from "react-native-reanimated";
 
 import CameraMarkerCorner from "../../../../img/camera-marker-corner.svg";
@@ -33,7 +33,7 @@ const AnimatedCameraMarker = ({
     />
   );
 
-  const scanAnimation: AnimatedStyle = {
+  const scanAnimation: AnimatedStyle<ViewStyle> = {
     animationName: {
       from: { transform: [{ translateY: -lineSpan }] },
       to: { transform: [{ translateY: lineSpan }] }

@@ -1,5 +1,5 @@
 /** Action types and action creator related to persisted preferences */
-import * as Calendar from "expo-calendar";
+import * as ExpoCalendar from "expo-calendar";
 import { ActionType, createStandardAction } from "typesafe-actions";
 
 import { ColorModeChoice } from "../../hooks/useAppThemeConfiguration";
@@ -13,7 +13,7 @@ export const preferenceFingerprintIsEnabledSaveSuccess = createStandardAction(
 
 export const preferredCalendarSaveSuccess = createStandardAction(
   "PREFERENCES_CALENDAR_SAVE_SUCCESS"
-)<{ preferredCalendar: Calendar.Calendar }>();
+)<{ preferredCalendar: ExpoCalendar.ExpoCalendar }>();
 
 export const preferredCalendarRemoveSuccess = createStandardAction(
   "PREFERENCES_CALENDAR_REMOVE_SUCCESS"

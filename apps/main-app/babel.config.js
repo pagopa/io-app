@@ -25,7 +25,7 @@ module.exports = {
   ],
   overrides: [
     {
-      exclude: /node_modules/,
+      exclude: filename => filename != null && /node_modules/.test(filename),
       plugins: [
         ["@babel/plugin-transform-class-properties", { loose: true }],
         ["@babel/plugin-transform-private-methods", { loose: true }],

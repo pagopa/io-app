@@ -83,8 +83,8 @@ jest.mock("@react-native-cookies/cookies", () => jest.fn());
 jest.mock("expo-sharing", () => ({ shareAsync: jest.fn() }));
 jest.mock("expo-clipboard", () => mockClipboard);
 jest.mock("expo-calendar", () => ({
-  getCalendarsAsync: jest.fn().mockResolvedValue([]),
-  getEventsAsync: jest.fn().mockResolvedValue([])
+  getCalendars: jest.fn().mockResolvedValue([]),
+  listEvents: jest.fn().mockResolvedValue([])
 }));
 jest.mock("expo-brightness", () => ({
   getBrightnessAsync: jest.fn().mockResolvedValue(0),

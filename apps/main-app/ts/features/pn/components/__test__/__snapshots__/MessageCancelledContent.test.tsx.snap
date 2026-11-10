@@ -191,7 +191,9 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -208,11 +210,13 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -223,6 +227,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -653,7 +658,9 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -670,11 +677,13 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -685,6 +694,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -1115,7 +1125,9 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1132,11 +1144,13 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -1147,6 +1161,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -1577,7 +1592,9 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1594,11 +1611,13 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -1609,6 +1628,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -2039,7 +2059,9 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2056,11 +2078,13 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -2071,6 +2095,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -2501,7 +2526,9 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2518,11 +2545,13 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -2533,6 +2562,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -2963,7 +2993,9 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2980,11 +3012,13 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -2995,6 +3029,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -3425,7 +3460,9 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3442,11 +3479,13 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -3457,6 +3496,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -3887,7 +3927,9 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3904,11 +3946,13 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -3919,6 +3963,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -4349,7 +4394,9 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4366,11 +4413,13 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -4381,6 +4430,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -4677,7 +4727,9 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4694,11 +4746,13 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -4709,6 +4763,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -5005,7 +5060,9 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5022,11 +5079,13 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -5037,6 +5096,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, empty pai
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -5333,7 +5393,9 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5350,11 +5412,13 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -5365,6 +5429,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -5661,7 +5726,9 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5678,11 +5745,13 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -5693,6 +5762,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -5989,7 +6059,9 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6006,11 +6078,13 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -6021,6 +6095,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, non-empty
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -6317,7 +6392,9 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6334,11 +6411,13 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -6349,6 +6428,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -6645,7 +6725,9 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6662,11 +6744,13 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -6677,6 +6761,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -6973,7 +7058,9 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6990,11 +7077,13 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -7005,6 +7094,7 @@ exports[`MessageCancelledContent Should match snapshot, not cancelled, undefined
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -7301,7 +7391,9 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -7318,11 +7410,13 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -7333,6 +7427,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -7629,7 +7724,9 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -7646,11 +7743,13 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -7661,6 +7760,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -7957,7 +8057,9 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -7974,11 +8076,13 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -7989,6 +8093,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, emp
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -8285,7 +8390,9 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -8302,11 +8409,13 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -8317,6 +8426,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -8613,7 +8723,9 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -8630,11 +8742,13 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -8645,6 +8759,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -8941,7 +9056,9 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -8958,11 +9075,13 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -8973,6 +9092,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, non
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -9269,7 +9389,9 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9286,11 +9408,13 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -9301,6 +9425,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -9597,7 +9722,9 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9614,11 +9741,13 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -9629,6 +9758,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -9925,7 +10055,9 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9942,11 +10074,13 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -9957,6 +10091,7 @@ exports[`MessageCancelledContent Should match snapshot, undefined cancelled, und
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}

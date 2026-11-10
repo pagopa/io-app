@@ -191,7 +191,9 @@ exports[`error screens should display an error screen in case of missing_sid err
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -208,11 +210,13 @@ exports[`error screens should display an error screen in case of missing_sid err
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -223,6 +227,7 @@ exports[`error screens should display an error screen in case of missing_sid err
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -951,7 +956,9 @@ exports[`error screens should display an error screen in case of preferences err
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -968,11 +975,13 @@ exports[`error screens should display an error screen in case of preferences err
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -983,6 +992,7 @@ exports[`error screens should display an error screen in case of preferences err
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -1752,7 +1762,9 @@ exports[`loading screens + error interop should render the correct loading scree
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1769,11 +1781,13 @@ exports[`loading screens + error interop should render the correct loading scree
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -1784,6 +1798,7 @@ exports[`loading screens + error interop should render the correct loading scree
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -2594,7 +2609,9 @@ exports[`loading screens + error interop should render the correct loading scree
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2611,11 +2628,13 @@ exports[`loading screens + error interop should render the correct loading scree
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -2626,6 +2645,7 @@ exports[`loading screens + error interop should render the correct loading scree
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -3212,7 +3232,9 @@ exports[`loading screens + error interop should render the correct loading scree
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3229,11 +3251,13 @@ exports[`loading screens + error interop should render the correct loading scree
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -3244,6 +3268,7 @@ exports[`loading screens + error interop should render the correct loading scree
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -3830,7 +3855,9 @@ exports[`loading screens + error interop should render the correct loading scree
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3847,11 +3874,13 @@ exports[`loading screens + error interop should render the correct loading scree
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -3862,6 +3891,7 @@ exports[`loading screens + error interop should render the correct loading scree
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -4448,7 +4478,9 @@ exports[`loading screens + error interop should render the correct loading scree
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4465,11 +4497,13 @@ exports[`loading screens + error interop should render the correct loading scree
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -4480,6 +4514,7 @@ exports[`loading screens + error interop should render the correct loading scree
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -5066,7 +5101,9 @@ exports[`loading screens + error interop should render the correct loading scree
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5083,11 +5120,13 @@ exports[`loading screens + error interop should render the correct loading scree
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -5098,6 +5137,7 @@ exports[`loading screens + error interop should render the correct loading scree
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}

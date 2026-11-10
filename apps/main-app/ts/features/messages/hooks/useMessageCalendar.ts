@@ -1,5 +1,5 @@
 import { IOToast } from "@io-app/design-system";
-import * as Calendar from "expo-calendar";
+import * as ExpoCalendar from "expo-calendar";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as TE from "fp-ts/lib/TaskEither";
@@ -41,7 +41,7 @@ export const useMessageCalendar = (messageId: string) => {
   );
 
   const setPreferredCalendar = useCallback(
-    (calendar: Calendar.Calendar) =>
+    (calendar: ExpoCalendar.ExpoCalendar) =>
       dispatch(
         preferredCalendarSaveSuccess({
           preferredCalendar: calendar
@@ -51,13 +51,13 @@ export const useMessageCalendar = (messageId: string) => {
   );
 
   const onAddEventToCalendar = (
-    calendar: Calendar.Calendar,
+    calendar: ExpoCalendar.ExpoCalendar,
     dueDate: Date,
     title: string
   ) => {
     void pipe(
-      saveEventToDeviceCalendarTask(calendar.id, dueDate, title),
-      TE.map(eventId => {
+      saveEventToDeviceCalendarTask(calendar, dueDate, title),
+      TE.map(event => {
         IOToast.success(
           I18n.t("messages.cta.reminderAddSuccess", {
             title,
@@ -66,7 +66,7 @@ export const useMessageCalendar = (messageId: string) => {
         );
 
         // add event to the store
-        handleAddEventToCalendar({ messageId, eventId });
+        handleAddEventToCalendar({ messageId, eventId: event.id });
       }),
       TE.mapLeft(() => IOToast.error(I18n.t("messages.cta.reminderAddFailure")))
     )();
@@ -75,7 +75,7 @@ export const useMessageCalendar = (messageId: string) => {
   const handleConfirmAddEventToCalendar = (
     dueDate: Date,
     eventId: string,
-    calendar: Calendar.Calendar,
+    calendar: ExpoCalendar.ExpoCalendar,
     title: string
   ) => {
     Alert.alert(
@@ -110,7 +110,7 @@ export const useMessageCalendar = (messageId: string) => {
   const addEventToCalendar = (
     dueDate: Date,
     eventTitle: string,
-    calendar: Calendar.Calendar
+    calendar: ExpoCalendar.ExpoCalendar
   ) => {
     void pipe(
       TE.tryCatch(
@@ -128,19 +128,22 @@ export const useMessageCalendar = (messageId: string) => {
   const removeEventFromCalendar = (
     calendarEvent: CalendarEvent | undefined
   ) => {
-    void pipe(
-      calendarEvent?.eventId,
-      TE.fromNullable(Error("calendarEvent not defined")),
-      TE.chain(removeEventFromDeviceCalendarTask),
-      TE.map(eventId => {
-        IOToast.success(I18n.t("messages.cta.reminderRemoveSuccess"));
-
-        handleRemoveEventFromCalendar({ messageId, eventId });
-      }),
-      TE.mapLeft(() =>
-        IOToast.error(I18n.t("messages.cta.reminderRemoveFailure"))
-      )
-    )();
+    if (calendarEvent) {
+      ExpoCalendar.ExpoCalendarEvent.get(calendarEvent.eventId)
+        .then(event => removeEventFromDeviceCalendarTask(event))
+        .then(() => {
+          IOToast.success(I18n.t("messages.cta.reminderRemoveSuccess"));
+          handleRemoveEventFromCalendar({
+            messageId,
+            eventId: calendarEvent.eventId
+          });
+        })
+        .catch(() =>
+          IOToast.error(I18n.t("messages.cta.reminderRemoveFailure"))
+        );
+      return;
+    }
+    IOToast.error(I18n.t("messages.cta.reminderRemoveFailure"));
   };
 
   return {

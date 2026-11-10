@@ -58,7 +58,9 @@ exports[`MessageRouterScreen renders the error component when not loading 1`] = 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -75,11 +77,13 @@ exports[`MessageRouterScreen renders the error component when not loading 1`] = 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -90,6 +94,7 @@ exports[`MessageRouterScreen renders the error component when not loading 1`] = 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -702,7 +707,9 @@ exports[`MessageRouterScreen renders the loading component when isLoading is tru
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -719,11 +726,13 @@ exports[`MessageRouterScreen renders the loading component when isLoading is tru
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -734,6 +743,7 @@ exports[`MessageRouterScreen renders the loading component when isLoading is tru
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -1014,7 +1024,7 @@ exports[`MessageRouterScreen renders the loading component when isLoading is tru
                                     bbHeight={36}
                                     bbWidth={36}
                                     collapsable={false}
-                                    color="#0E0F13"
+                                    color="rgba(14, 15, 19, 1)"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -1246,7 +1256,7 @@ exports[`MessageRouterScreen renders the loading component when isLoading is tru
                                       bbHeight={36}
                                       bbWidth={36}
                                       collapsable={false}
-                                      color="#0E0F13"
+                                      color="rgba(14, 15, 19, 1)"
                                       focusable={false}
                                       height={36}
                                       importantForAccessibility="no-hide-descendants"

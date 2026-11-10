@@ -58,7 +58,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -75,11 +77,13 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -90,6 +94,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -452,7 +457,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       bbHeight={36}
                                       bbWidth={36}
                                       collapsable={false}
-                                      color="#0E0F13"
+                                      color="rgba(14, 15, 19, 1)"
                                       focusable={false}
                                       height={36}
                                       importantForAccessibility="no-hide-descendants"
@@ -705,7 +710,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -722,11 +729,13 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -737,6 +746,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -1099,7 +1109,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       bbHeight={36}
                                       bbWidth={36}
                                       collapsable={false}
-                                      color="#0E0F13"
+                                      color="rgba(14, 15, 19, 1)"
                                       focusable={false}
                                       height={36}
                                       importantForAccessibility="no-hide-descendants"
@@ -1352,7 +1362,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1369,11 +1381,13 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -1384,6 +1398,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -1746,7 +1761,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       bbHeight={36}
                                       bbWidth={36}
                                       collapsable={false}
-                                      color="#0E0F13"
+                                      color="rgba(14, 15, 19, 1)"
                                       focusable={false}
                                       height={36}
                                       importantForAccessibility="no-hide-descendants"
@@ -1999,7 +2014,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2016,11 +2033,13 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -2031,6 +2050,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -2311,7 +2331,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     bbHeight={36}
                                     bbWidth={36}
                                     collapsable={false}
-                                    color="#0E0F13"
+                                    color="rgba(14, 15, 19, 1)"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -2544,7 +2564,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       bbHeight={36}
                                       bbWidth={36}
                                       collapsable={false}
-                                      color="#0E0F13"
+                                      color="rgba(14, 15, 19, 1)"
                                       focusable={false}
                                       height={36}
                                       importantForAccessibility="no-hide-descendants"
@@ -2778,7 +2798,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2795,11 +2817,13 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -2810,6 +2834,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -3090,7 +3115,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     bbHeight={36}
                                     bbWidth={36}
                                     collapsable={false}
-                                    color="#0E0F13"
+                                    color="rgba(14, 15, 19, 1)"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -3323,7 +3348,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       bbHeight={36}
                                       bbWidth={36}
                                       collapsable={false}
-                                      color="#0E0F13"
+                                      color="rgba(14, 15, 19, 1)"
                                       focusable={false}
                                       height={36}
                                       importantForAccessibility="no-hide-descendants"
@@ -3557,7 +3582,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3574,11 +3601,13 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -3589,6 +3618,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -3869,7 +3899,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     bbHeight={36}
                                     bbWidth={36}
                                     collapsable={false}
-                                    color="#0E0F13"
+                                    color="rgba(14, 15, 19, 1)"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -4102,7 +4132,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       bbHeight={36}
                                       bbWidth={36}
                                       collapsable={false}
-                                      color="#0E0F13"
+                                      color="rgba(14, 15, 19, 1)"
                                       focusable={false}
                                       height={36}
                                       importantForAccessibility="no-hide-descendants"
@@ -4336,7 +4366,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4353,11 +4385,13 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -4368,6 +4402,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -4648,7 +4683,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     bbHeight={36}
                                     bbWidth={36}
                                     collapsable={false}
-                                    color="#0E0F13"
+                                    color="rgba(14, 15, 19, 1)"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -4881,7 +4916,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       bbHeight={36}
                                       bbWidth={36}
                                       collapsable={false}
-                                      color="#0E0F13"
+                                      color="rgba(14, 15, 19, 1)"
                                       focusable={false}
                                       height={36}
                                       importantForAccessibility="no-hide-descendants"
@@ -5115,7 +5150,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5132,11 +5169,13 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -5147,6 +5186,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -5427,7 +5467,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     bbHeight={36}
                                     bbWidth={36}
                                     collapsable={false}
-                                    color="#0E0F13"
+                                    color="rgba(14, 15, 19, 1)"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -5660,7 +5700,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       bbHeight={36}
                                       bbWidth={36}
                                       collapsable={false}
-                                      color="#0E0F13"
+                                      color="rgba(14, 15, 19, 1)"
                                       focusable={false}
                                       height={36}
                                       importantForAccessibility="no-hide-descendants"
@@ -5894,7 +5934,9 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5911,11 +5953,13 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -5926,6 +5970,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -6206,7 +6251,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     bbHeight={36}
                                     bbWidth={36}
                                     collapsable={false}
-                                    color="#0E0F13"
+                                    color="rgba(14, 15, 19, 1)"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -6439,7 +6484,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       bbHeight={36}
                                       bbWidth={36}
                                       collapsable={false}
-                                      color="#0E0F13"
+                                      color="rgba(14, 15, 19, 1)"
                                       focusable={false}
                                       height={36}
                                       importantForAccessibility="no-hide-descendants"
@@ -6673,7 +6718,9 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6690,11 +6737,13 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -6705,6 +6754,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -6985,7 +7035,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                     bbHeight={36}
                                     bbWidth={36}
                                     collapsable={false}
-                                    color="#0E0F13"
+                                    color="rgba(14, 15, 19, 1)"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -7218,7 +7268,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                       bbHeight={36}
                                       bbWidth={36}
                                       collapsable={false}
-                                      color="#0E0F13"
+                                      color="rgba(14, 15, 19, 1)"
                                       focusable={false}
                                       height={36}
                                       importantForAccessibility="no-hide-descendants"
@@ -7564,7 +7614,9 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -7581,11 +7633,13 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -7596,6 +7650,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -7876,7 +7931,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                     bbHeight={36}
                                     bbWidth={36}
                                     collapsable={false}
-                                    color="#0E0F13"
+                                    color="rgba(14, 15, 19, 1)"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -8109,7 +8164,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                       bbHeight={36}
                                       bbWidth={36}
                                       collapsable={false}
-                                      color="#0E0F13"
+                                      color="rgba(14, 15, 19, 1)"
                                       focusable={false}
                                       height={36}
                                       importantForAccessibility="no-hide-descendants"
@@ -8455,7 +8510,9 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -8472,11 +8529,13 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -8487,6 +8546,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -8767,7 +8827,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                     bbHeight={36}
                                     bbWidth={36}
                                     collapsable={false}
-                                    color="#0E0F13"
+                                    color="rgba(14, 15, 19, 1)"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -9000,7 +9060,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                       bbHeight={36}
                                       bbWidth={36}
                                       collapsable={false}
-                                      color="#0E0F13"
+                                      color="rgba(14, 15, 19, 1)"
                                       focusable={false}
                                       height={36}
                                       importantForAccessibility="no-hide-descendants"
@@ -9346,7 +9406,9 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9363,11 +9425,13 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -9378,6 +9442,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -9658,7 +9723,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                     bbHeight={36}
                                     bbWidth={36}
                                     collapsable={false}
-                                    color="#0E0F13"
+                                    color="rgba(14, 15, 19, 1)"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -9891,7 +9956,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                       bbHeight={36}
                                       bbWidth={36}
                                       collapsable={false}
-                                      color="#0E0F13"
+                                      color="rgba(14, 15, 19, 1)"
                                       focusable={false}
                                       height={36}
                                       importantForAccessibility="no-hide-descendants"
@@ -10237,7 +10302,9 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -10254,11 +10321,13 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -10269,6 +10338,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -10549,7 +10619,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                     bbHeight={36}
                                     bbWidth={36}
                                     collapsable={false}
-                                    color="#0E0F13"
+                                    color="rgba(14, 15, 19, 1)"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -10782,7 +10852,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                       bbHeight={36}
                                       bbWidth={36}
                                       collapsable={false}
-                                      color="#0E0F13"
+                                      color="rgba(14, 15, 19, 1)"
                                       focusable={false}
                                       height={36}
                                       importantForAccessibility="no-hide-descendants"
@@ -11128,7 +11198,9 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -11145,11 +11217,13 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -11160,6 +11234,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -11440,7 +11515,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                     bbHeight={36}
                                     bbWidth={36}
                                     collapsable={false}
-                                    color="#0E0F13"
+                                    color="rgba(14, 15, 19, 1)"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -11673,7 +11748,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                       bbHeight={36}
                                       bbWidth={36}
                                       collapsable={false}
-                                      color="#0E0F13"
+                                      color="rgba(14, 15, 19, 1)"
                                       focusable={false}
                                       height={36}
                                       importantForAccessibility="no-hide-descendants"
@@ -12019,7 +12094,9 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -12036,11 +12113,13 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -12051,6 +12130,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -12413,7 +12493,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                                       bbHeight={36}
                                       bbWidth={36}
                                       collapsable={false}
-                                      color="#0E0F13"
+                                      color="rgba(14, 15, 19, 1)"
                                       focusable={false}
                                       height={36}
                                       importantForAccessibility="no-hide-descendants"
@@ -12759,7 +12839,9 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -12776,11 +12858,13 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -12791,6 +12875,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -13153,7 +13238,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                                       bbHeight={36}
                                       bbWidth={36}
                                       collapsable={false}
-                                      color="#0E0F13"
+                                      color="rgba(14, 15, 19, 1)"
                                       focusable={false}
                                       height={36}
                                       importantForAccessibility="no-hide-descendants"
@@ -13499,7 +13584,9 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -13516,11 +13603,13 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -13531,6 +13620,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -13893,7 +13983,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                                       bbHeight={36}
                                       bbWidth={36}
                                       collapsable={false}
-                                      color="#0E0F13"
+                                      color="rgba(14, 15, 19, 1)"
                                       focusable={false}
                                       height={36}
                                       importantForAccessibility="no-hide-descendants"

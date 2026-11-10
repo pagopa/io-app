@@ -21,7 +21,7 @@
     "@nx/jest": "catalog:",
     "@nx/js": "catalog:",
     "@nx/oxlint": "catalog:",
-    "@react-native/metro-config": "0.83.10",
+    "@react-native/metro-config": "0.86.3",
     "@swc-node/register": "~1.11.1",
     "@swc/core": "~1.15.5",
     "@swc/helpers": "~0.5.18",

@@ -1,0 +1,15 @@
+{
+  "ios": {
+    "NSCameraUsageDescription": "You’ll be able to read QR codes and pay pagoPA notices.",
+    "NSCalendarsUsageDescription": "So that you’ll be able to add deadlines to your calendar and set a reminder.",
+    "NSContactsUsageDescription": "IO needs access to your contacts to let you add them in calendar events",
+    "NSFaceIDUsageDescription": "You'll be able to access the app more easily without having to enter the unlock code.",
+    "NSPhotoLibraryUsageDescription": "You’ll be able to save bonuses, certificates and upload screenshots or payment notices.",
+    "NSMicrophoneUsageDescription": "IO needs access to the microphone in case you want to leave a voice note",
+    "NSPhotoLibraryAddUsageDescription": "You will be able to save pictures from the app to your device.",
+    "Localizable.strings": {
+      "ALERT_DEVICE_ROOTED_TITLE": "Device jailbroken",
+      "ALERT_DEVICE_ROOTED_DESC": "This device is jailbroken, you can't use this app for security reasons"
+    }
+  }
+}
