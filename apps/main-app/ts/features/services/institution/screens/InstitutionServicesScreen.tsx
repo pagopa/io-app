@@ -3,8 +3,8 @@ import { ServiceMinified } from "@io-app/api-types/generated/definitions/service
 import {
   Divider,
   IOColors,
+  IODimensions,
   IOToast,
-  IOVisualCostants,
   ListItemNav,
   useIOTheme,
   VSpacer
@@ -197,7 +197,7 @@ export const InstitutionServicesScreen = ({
       contentContainerStyle={{
         flexGrow: 1,
         paddingBottom: insets.bottom,
-        paddingHorizontal: IOVisualCostants.appMarginDefault
+        paddingHorizontal: IODimensions.padding.screen.default
       }}
       data={data?.services}
       ItemSeparatorComponent={Divider}
@@ -206,7 +206,7 @@ export const InstitutionServicesScreen = ({
       ListHeaderComponent={ListHeaderComponent}
       ListHeaderComponentStyle={{
         marginBottom: 16,
-        marginHorizontal: -IOVisualCostants.appMarginDefault
+        marginHorizontal: -IODimensions.padding.screen.default
       }}
       onEndReached={handleEndReached}
       onEndReachedThreshold={0.1}

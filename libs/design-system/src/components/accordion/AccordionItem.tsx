@@ -4,10 +4,11 @@ import { StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import Animated from "react-native-reanimated";
 
 import { useIOTheme } from "../../context";
-import { IOAccordionRadius, type IOSpacingScale } from "../../core";
+import { IODimensions } from "../../core";
 import { hexToRgba, IOColors } from "../../core/IOColors";
 import { useAccordionAnimation } from "../../hooks/useAccordionAnimation";
-import { Icon, IOIcons, IOIconSizeScale } from "../icons/Icon";
+import { Icon, IOIcons } from "../icons/Icon";
+import { HStack } from "../layout";
 import { Body, H6 } from "../typography";
 
 export type AccordionItem = {
@@ -17,12 +18,7 @@ export type AccordionItem = {
   title: string;
 };
 
-const accordionBodySpacing: IOSpacingScale = 16;
-const accordionIconMargin: IOSpacingScale = 12;
-const accordionChevronMargin: IOSpacingScale = 8;
-
-// Icon size
-const iconSize: IOIconSizeScale = 24;
+const accordionPadding = IODimensions.padding.accordion;
 
 export const AccordionItem = ({
   title,
@@ -64,18 +60,16 @@ export const AccordionItem = ({
         onPress={toggleAccordion}
       >
         <View style={styles.textContainer}>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              flexShrink: 1,
-              marginRight: accordionChevronMargin
-            }}
+          <HStack
+            space={IODimensions.gap.accordion.leading}
+            style={{ alignItems: "center", flexShrink: 1 }}
           >
             {icon && (
-              <View style={{ marginRight: accordionIconMargin }}>
-                <Icon color={accordionIconColor} name={icon} size={iconSize} />
-              </View>
+              <Icon
+                color={accordionIconColor}
+                name={icon}
+                size={IODimensions.size.icon.accordion}
+              />
             )}
             <View
               accessibilityElementsHidden
@@ -84,11 +78,12 @@ export const AccordionItem = ({
             >
               <H6 color={theme["textBody-default"]}>{title}</H6>
             </View>
-          </View>
+          </HStack>
           <Animated.View style={iconAnimatedStyle}>
             <Icon
               color={theme["interactiveElem-default"]}
               name="chevronBottom"
+              size={IODimensions.size.icon.chevron}
             />
           </Animated.View>
         </View>
@@ -112,13 +107,13 @@ export const AccordionItem = ({
           IOColors[accordionBackground]
         ]}
         style={{
-          height: accordionBodySpacing,
+          height: accordionPadding,
           position: "absolute",
           // Place at the bottom
           bottom: 0,
           // Avoid gradient overlaps with border radius
-          left: accordionBodySpacing,
-          right: accordionBodySpacing
+          left: accordionPadding,
+          right: accordionPadding
         }}
       />
     </View>
@@ -127,12 +122,13 @@ export const AccordionItem = ({
 
 const styles = StyleSheet.create({
   accordionWrapper: {
-    borderWidth: 1,
-    borderRadius: IOAccordionRadius,
+    borderWidth: IODimensions.stroke.default,
+    borderRadius: IODimensions.radius.accordion,
     borderCurve: "continuous"
   },
   textContainer: {
-    padding: accordionBodySpacing,
+    padding: accordionPadding,
+    columnGap: IODimensions.gap.accordion.trailing,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between"

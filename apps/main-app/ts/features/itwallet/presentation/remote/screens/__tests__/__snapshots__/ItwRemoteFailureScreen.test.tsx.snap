@@ -346,7 +346,8 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -1024,6 +1025,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -1177,6 +1179,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -1882,7 +1885,8 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -2288,6 +2292,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -2441,6 +2446,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -3146,7 +3152,8 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -3593,6 +3600,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -3746,6 +3754,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -4451,7 +4460,8 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -5062,6 +5072,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -5215,6 +5226,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -5623,7 +5635,8 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -6422,6 +6435,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -7213,7 +7227,8 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -7978,6 +7993,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -8845,7 +8861,8 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_G
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -9653,6 +9670,7 @@ Genera un nuovo QR Code e riprova.
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -9806,6 +9824,7 @@ Genera un nuovo QR Code e riprova.
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -10214,7 +10233,8 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -10920,6 +10940,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -11073,6 +11094,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -11750,7 +11772,8 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -12456,6 +12479,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -12609,6 +12633,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -13017,7 +13042,8 @@ exports[`ItwRemoteFailureScreen should render failure screen for WALLET_INACTIVE
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -13733,6 +13759,7 @@ continuare
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -13886,6 +13913,7 @@ continuare
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",

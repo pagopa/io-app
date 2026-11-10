@@ -346,7 +346,8 @@ exports[`ItwIssuanceEidFailureScreen renders the dedicated integrity error copy 
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -1080,6 +1081,7 @@ exports[`ItwIssuanceEidFailureScreen renders the dedicated integrity error copy 
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -2053,7 +2055,8 @@ exports[`ItwIssuanceEidFailureScreen renders the dedicated integrity error copy 
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -2695,6 +2698,7 @@ exports[`ItwIssuanceEidFailureScreen renders the dedicated integrity error copy 
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",

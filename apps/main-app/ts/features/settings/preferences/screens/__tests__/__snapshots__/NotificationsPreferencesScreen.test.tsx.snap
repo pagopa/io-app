@@ -1368,6 +1368,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             <Modal
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundComponent={[Function]}
                               backgroundStyle={
                                 {
                                   "backgroundColor": "#FFFFFF",
@@ -2818,6 +2819,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             <Modal
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundComponent={[Function]}
                               backgroundStyle={
                                 {
                                   "backgroundColor": "#FFFFFF",
@@ -4268,6 +4270,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             <Modal
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundComponent={[Function]}
                               backgroundStyle={
                                 {
                                   "backgroundColor": "#FFFFFF",
@@ -5718,6 +5721,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             <Modal
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundComponent={[Function]}
                               backgroundStyle={
                                 {
                                   "backgroundColor": "#FFFFFF",
@@ -7168,6 +7172,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             <Modal
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundComponent={[Function]}
                               backgroundStyle={
                                 {
                                   "backgroundColor": "#FFFFFF",
@@ -8618,6 +8623,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             <Modal
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundComponent={[Function]}
                               backgroundStyle={
                                 {
                                   "backgroundColor": "#FFFFFF",
@@ -10068,6 +10074,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             <Modal
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundComponent={[Function]}
                               backgroundStyle={
                                 {
                                   "backgroundColor": "#FFFFFF",
@@ -11518,6 +11525,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             <Modal
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundComponent={[Function]}
                               backgroundStyle={
                                 {
                                   "backgroundColor": "#FFFFFF",
@@ -12968,6 +12976,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             <Modal
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundComponent={[Function]}
                               backgroundStyle={
                                 {
                                   "backgroundColor": "#FFFFFF",
@@ -14418,6 +14427,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             <Modal
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundComponent={[Function]}
                               backgroundStyle={
                                 {
                                   "backgroundColor": "#FFFFFF",
@@ -15868,6 +15878,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             <Modal
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundComponent={[Function]}
                               backgroundStyle={
                                 {
                                   "backgroundColor": "#FFFFFF",
@@ -17318,6 +17329,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             <Modal
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundComponent={[Function]}
                               backgroundStyle={
                                 {
                                   "backgroundColor": "#FFFFFF",
@@ -18768,6 +18780,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             <Modal
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundComponent={[Function]}
                               backgroundStyle={
                                 {
                                   "backgroundColor": "#FFFFFF",
@@ -20218,6 +20231,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             <Modal
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundComponent={[Function]}
                               backgroundStyle={
                                 {
                                   "backgroundColor": "#FFFFFF",
@@ -21668,6 +21682,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             <Modal
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundComponent={[Function]}
                               backgroundStyle={
                                 {
                                   "backgroundColor": "#FFFFFF",
@@ -23118,6 +23133,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             <Modal
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundComponent={[Function]}
                               backgroundStyle={
                                 {
                                   "backgroundColor": "#FFFFFF",
@@ -24568,6 +24584,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             <Modal
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundComponent={[Function]}
                               backgroundStyle={
                                 {
                                   "backgroundColor": "#FFFFFF",
@@ -26018,6 +26035,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             <Modal
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundComponent={[Function]}
                               backgroundStyle={
                                 {
                                   "backgroundColor": "#FFFFFF",

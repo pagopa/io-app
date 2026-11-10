@@ -285,7 +285,7 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                               <View
                                 style={
                                   {
-                                    "width": 32,
+                                    "width": 24,
                                   }
                                 }
                               />
@@ -2015,7 +2015,7 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                               <View
                                 style={
                                   {
-                                    "width": 32,
+                                    "width": 24,
                                   }
                                 }
                               />

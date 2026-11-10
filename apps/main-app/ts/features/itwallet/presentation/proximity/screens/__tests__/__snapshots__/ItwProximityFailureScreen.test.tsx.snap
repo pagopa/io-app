@@ -346,7 +346,8 @@ exports[`ItwProximityFailureScreen should render failure screen for RELYING_PART
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -752,6 +753,7 @@ exports[`ItwProximityFailureScreen should render failure screen for RELYING_PART
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -1187,7 +1189,8 @@ exports[`ItwProximityFailureScreen should render failure screen for TIMEOUT 1`] 
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -1634,6 +1637,7 @@ exports[`ItwProximityFailureScreen should render failure screen for TIMEOUT 1`] 
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -2069,7 +2073,8 @@ exports[`ItwProximityFailureScreen should render failure screen for UNTRUSTED_RP
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -2775,6 +2780,7 @@ exports[`ItwProximityFailureScreen should render failure screen for UNTRUSTED_RP
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",

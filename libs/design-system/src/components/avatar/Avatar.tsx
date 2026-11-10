@@ -3,12 +3,7 @@ import { Image, ImageSourcePropType, StyleSheet, View } from "react-native";
 
 import { Icon } from "../../components/icons";
 import { useIOTheme } from "../../context";
-import {
-  hexToRgba,
-  IOColors,
-  IOSpacingScale,
-  IOVisualCostants
-} from "../../core";
+import { hexToRgba, IOColors, IODimensions } from "../../core";
 import { addCacheTimestampToUri } from "../../utils/image";
 import avatarSearchPlaceholder from "./placeholder/avatar-placeholder.png";
 
@@ -17,32 +12,13 @@ type Avatar = {
   size: "medium" | "small";
 };
 
-const internalSpaceDefaultSize = 6;
-const internalSpaceLargeSize = 9;
-const internalSpacePlaceholderDefaultSize: IOSpacingScale = 12;
-const internalSpacePlaceholderLargeSize: IOSpacingScale = 16;
 const avatarBorderLightMode = hexToRgba(IOColors.black, 0.1);
-
-const dimensionsMap = {
-  small: {
-    size: IOVisualCostants.avatarSizeSmall,
-    internalSpace: internalSpaceDefaultSize,
-    internalSpacePlaceholder: internalSpacePlaceholderDefaultSize,
-    radius: IOVisualCostants.avatarRadiusSizeSmall
-  },
-  medium: {
-    size: IOVisualCostants.avatarSizeMedium,
-    internalSpace: internalSpaceLargeSize,
-    internalSpacePlaceholder: internalSpacePlaceholderLargeSize,
-    radius: IOVisualCostants.avatarRadiusSizeMedium
-  }
-};
 
 const styles = StyleSheet.create({
   avatarWrapper: {
     overflow: "hidden",
     borderColor: avatarBorderLightMode,
-    borderWidth: 1,
+    borderWidth: IODimensions.stroke.default,
     borderCurve: "continuous"
   },
   avatarInnerWrapper: {
@@ -87,21 +63,25 @@ export const Avatar = ({ logoUri, size }: Avatar) => {
     setImageSource(undefined);
   };
 
+  const avatarSize = IODimensions.size.avatar[size];
+  const avatarPadding = IODimensions.padding.avatar[size];
+  const avatarRadius = IODimensions.radius.avatar[size];
+
   return (
     <View
       accessibilityIgnoresInvertColors
       style={[
         styles.avatarWrapper,
         {
-          height: dimensionsMap[size].size,
-          width: dimensionsMap[size].size,
-          borderRadius: dimensionsMap[size].radius,
+          height: avatarSize,
+          width: avatarSize,
+          borderRadius: avatarRadius,
           backgroundColor:
             imageSource === undefined ? IOColors["grey-50"] : IOColors.white,
           padding:
             imageSource === undefined
-              ? dimensionsMap[size].internalSpacePlaceholder
-              : dimensionsMap[size].internalSpace
+              ? avatarPadding.placeholder
+              : avatarPadding.logo
         }
       ]}
     >
@@ -115,10 +95,7 @@ export const Avatar = ({ logoUri, size }: Avatar) => {
         <View
           style={[
             styles.avatarInnerWrapper,
-            {
-              borderRadius:
-                dimensionsMap[size].radius - dimensionsMap[size].internalSpace
-            }
+            { borderRadius: avatarRadius - avatarPadding.logo }
           ]}
         >
           <Image
@@ -149,9 +126,9 @@ export type AvatarSearchProps = Pick<
 export const AvatarSearch = memo(
   ({ defaultSource, source, onError }: AvatarSearchProps) => {
     // Visual attributes
-    const avatarSize = dimensionsMap.small.size;
-    const borderRadius = dimensionsMap.small.radius;
-    const internalSpace = dimensionsMap.small.internalSpace;
+    const avatarSize = IODimensions.size.avatar.small;
+    const borderRadius = IODimensions.radius.avatar.small;
+    const internalSpace = IODimensions.padding.avatar.small.logo;
     const innerRadius = borderRadius - internalSpace;
     const defaultPlaceholder = defaultSource ?? avatarSearchPlaceholder;
 
