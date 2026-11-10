@@ -92,7 +92,6 @@ export const ListItemNav = ({
 
   const defaultIconColor =
     iconColor ?? listItemColors.foreground.icon.decorative;
-  const interactiveColor = listItemColors.foreground.icon.action;
 
   const { dynamicFontScale, hugeFontEnabled } = useIOFontDynamicScale();
 
@@ -230,11 +229,13 @@ export const ListItemNav = ({
           <View style={{ flexGrow: 1, flexShrink: 1 }}>
             {listItemNavContent}
           </View>
-          {loading && <LoadingSpinner color={interactiveColor} />}
+          {loading && (
+            <LoadingSpinner color={listItemColors.foreground.action.primary} />
+          )}
           {!loading && !hideChevron && (
             <Icon
               allowFontScaling
-              color={interactiveColor}
+              color={listItemColors.foreground.action.primary}
               name="chevronRightListItem"
               size={IODimensions.size.icon.chevron}
             />
