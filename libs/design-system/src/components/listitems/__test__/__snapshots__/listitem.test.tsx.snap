@@ -1824,7 +1824,7 @@ exports[`Test List Item Components - Experimental Enabled ListItemTransaction Sn
           "display": "flex",
           "flexDirection": "column",
           "flexGrow": 1,
-          "gap": 4,
+          "gap": 8,
         }
       }
     >
@@ -1847,7 +1847,7 @@ exports[`Test List Item Components - Experimental Enabled ListItemTransaction Sn
               "borderCurve": "continuous",
               "borderRadius": 8,
               "height": 16,
-              "width": 62,
+              "width": "30%",
             },
             {
               "animationDuration": "1250ms",
@@ -1876,7 +1876,7 @@ exports[`Test List Item Components - Experimental Enabled ListItemTransaction Sn
               "borderCurve": "continuous",
               "borderRadius": 8,
               "height": 16,
-              "width": 62,
+              "width": "30%",
             },
             {},
           ]
@@ -1900,8 +1900,8 @@ exports[`Test List Item Components - Experimental Enabled ListItemTransaction Sn
               "backgroundColor": "#E8EBF1",
               "borderCurve": "continuous",
               "borderRadius": 8,
-              "height": 16,
-              "width": 107,
+              "height": 14,
+              "width": "50%",
             },
             {
               "animationDuration": "1250ms",
@@ -1929,8 +1929,8 @@ exports[`Test List Item Components - Experimental Enabled ListItemTransaction Sn
               "backgroundColor": "#E8EBF1",
               "borderCurve": "continuous",
               "borderRadius": 8,
-              "height": 16,
-              "width": 107,
+              "height": 14,
+              "width": "50%",
             },
             {},
           ]
@@ -3951,7 +3951,7 @@ exports[`Test List Item Components ListItemTransaction Snapshot 1`] = `
           "display": "flex",
           "flexDirection": "column",
           "flexGrow": 1,
-          "gap": 4,
+          "gap": 8,
         }
       }
     >
@@ -3974,7 +3974,7 @@ exports[`Test List Item Components ListItemTransaction Snapshot 1`] = `
               "borderCurve": "continuous",
               "borderRadius": 8,
               "height": 16,
-              "width": 62,
+              "width": "30%",
             },
             {
               "animationDuration": "1250ms",
@@ -4003,7 +4003,7 @@ exports[`Test List Item Components ListItemTransaction Snapshot 1`] = `
               "borderCurve": "continuous",
               "borderRadius": 8,
               "height": 16,
-              "width": 62,
+              "width": "30%",
             },
             {},
           ]
@@ -4027,8 +4027,8 @@ exports[`Test List Item Components ListItemTransaction Snapshot 1`] = `
               "backgroundColor": "#E8EBF1",
               "borderCurve": "continuous",
               "borderRadius": 8,
-              "height": 16,
-              "width": 107,
+              "height": 14,
+              "width": "50%",
             },
             {
               "animationDuration": "1250ms",
@@ -4056,8 +4056,8 @@ exports[`Test List Item Components ListItemTransaction Snapshot 1`] = `
               "backgroundColor": "#E8EBF1",
               "borderCurve": "continuous",
               "borderRadius": 8,
-              "height": 16,
-              "width": 107,
+              "height": 14,
+              "width": "50%",
             },
             {},
           ]

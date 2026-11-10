@@ -8,6 +8,10 @@ import { appReducer } from "../../../../../store/reducers";
 import { CredentialType } from "../../utils/itwMocksUtils";
 import { ItwCredentialDetailCard } from "../ItwCredentialDetailCard";
 
+jest.mock("../../../../../hooks/useReduceMotionEnabled", () => ({
+  useReduceMotionEnabled: jest.fn(() => false)
+}));
+
 jest.mock("react-native-safe-area-context", () => ({
   ...jest.requireActual("react-native-safe-area-context"),
   useSafeAreaInsets: () => ({ top: 0, right: 0, bottom: 0, left: 0 })

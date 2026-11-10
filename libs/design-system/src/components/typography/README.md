@@ -4,19 +4,19 @@
 
 Fonts are handled differently than Android and iOS. To use the font, `Titillio-Semibold` example, you must apply the following properties for Android:
 
-```css
-{
-  fontFamily: 'Titillio-Semibold'
-}
+```js
+const androidStyle = {
+  fontFamily: "Titillio-Semibold"
+};
 ```
 
 while in iOS the code to be applied is:
 
-```css
-{
-  fontFamily: 'Titillio',
-  fontWeight: '600',
-}
+```js
+const iosStyle = {
+  fontFamily: "Titillio",
+  fontWeight: "600"
+};
 ```
 
 The different font handling is managed by the `makeFontFamilyName` function. It's included in the [fonts.ts](../../utils/fonts.ts) file, which contains many other utility functions that simplify font management.
@@ -52,7 +52,7 @@ Reach for it when you have to reproduce a style outside the React Native text tr
 ```tsx
 <IOSkeleton
   height={IOTypography.h2.size}
-  radius={4}
+  radius={IODimensions.radius.skeleton.text}
   shape="rectangle"
   width="80%"
 />

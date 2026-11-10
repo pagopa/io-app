@@ -319,6 +319,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, no payments 1`] = `
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -696,6 +697,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",

@@ -21,7 +21,6 @@ type ItwNestedClaimsListItemProps = {
   hidden?: boolean;
   isPreview?: boolean;
   itemClaims: Array<ClaimDisplayFormat>;
-  itemTitle?: string;
   onLongPress?: ItwClaimLongPressHandler;
   summaryLabel?: string;
   summaryValue?: string;
@@ -31,7 +30,6 @@ type ItwNestedClaimsListItemProps = {
  * Component which renders a list item with nested claims.
  *
  * @class
- * @param itemTitle - The title of the item
  * @param summaryLabel - The label of the summary item
  * @param summaryValue - The value of the summary item
  * @param itemClaims - The claims to display in the bottom sheet
@@ -46,7 +44,6 @@ type ItwNestedClaimsListItemProps = {
  *   is long pressed
  */
 export const ItwNestedClaimsListItem = ({
-  itemTitle,
   summaryLabel,
   summaryValue,
   itemClaims,
@@ -58,7 +55,7 @@ export const ItwNestedClaimsListItem = ({
 }: ItwNestedClaimsListItemProps) => {
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const itemBottomSheet = useIOBottomSheetModal({
-    title: itemTitle,
+    title: I18n.t("features.itWallet.generic.nestedClaimsDetailsTitle"),
     component: (
       <>
         {itemClaims.map((claim, index) => (
