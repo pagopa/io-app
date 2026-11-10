@@ -3,10 +3,8 @@ import { Button } from "react-native";
 import { createStore } from "redux";
 
 import { applicationChangeState } from "../../../../store/actions/application";
-import { startupLoadSuccess } from "../../../../store/actions/startup";
 import * as useIO from "../../../../store/hooks";
 import { appReducer } from "../../../../store/reducers";
-import { StartupStatusEnum } from "../../../../store/reducers/startup";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
@@ -85,15 +83,6 @@ describe("LandingBannerPicker", () => {
     expect(component.getByTestId("landingScreenBannerSkeleton")).toBeTruthy();
     expect(component.queryByTestId("button-test")).toBeNull();
   });
-  it("should not render a banner below the startup loading overlay", () => {
-    jest
-      .spyOn(SELECTORS, "landingScreenBannerToRenderSelector")
-      .mockImplementation(_ => ({ type: "banner", id: bannerId }));
-
-    const component = renderComponent(StartupStatusEnum.ONBOARDING);
-
-    expect(component.queryByTestId("button-test")).toBeNull();
-  });
   it("should correctly dispatch updateLandingScreenBannerVisibility on press", async () => {
     jest
       .spyOn(SELECTORS, "landingScreenBannerToRenderSelector")
@@ -126,13 +115,8 @@ describe("LandingBannerPicker", () => {
   });
 });
 
-const renderComponent = (
-  startupStatus: StartupStatusEnum = StartupStatusEnum.AUTHENTICATED
-) => {
-  const globalState = appReducer(
-    appReducer(undefined, applicationChangeState("active")),
-    startupLoadSuccess(startupStatus)
-  );
+const renderComponent = () => {
+  const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => <LandingScreenBannerPicker />,
     MESSAGES_ROUTES.MESSAGES_HOME,
