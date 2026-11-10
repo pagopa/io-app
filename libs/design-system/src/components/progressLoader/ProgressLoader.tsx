@@ -55,16 +55,19 @@ export const ProgressLoader = ({
       style={{
         width: "100%",
         height: 16,
-        justifyContent: "center",
-        backgroundColor: progressLoaderColors.background
+        justifyContent: "center"
       }}
     >
-      <Animated.View
-        style={[
-          animatedStyle,
-          { height: 4, backgroundColor: progressLoaderColors.foreground }
-        ]}
-      />
+      <View
+        style={{ height: 4, backgroundColor: progressLoaderColors.background }}
+      >
+        <Animated.View
+          style={[
+            animatedStyle,
+            { height: 4, backgroundColor: progressLoaderColors.foreground }
+          ]}
+        />
+      </View>
     </View>
   );
 };
