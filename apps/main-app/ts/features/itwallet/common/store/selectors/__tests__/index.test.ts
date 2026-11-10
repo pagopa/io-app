@@ -718,11 +718,8 @@ describe("itwShouldHideEidLifecycleAlert", () => {
       .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
       .mockReturnValue(eidStatus);
     jest
-      .spyOn(
-        credentialsSelectors,
-        "itwAreSomeDigitalCredentialsExpiredSelector"
-      )
-      .mockReturnValue(areSomeCredentialsExpired);
+      .spyOn(credentialsSelectors, "itwAreEidAndAnyCredentialExpiredSelector")
+      .mockReturnValue(eidStatus === "jwtExpired" && areSomeCredentialsExpired);
     jest
       .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
       .mockReturnValue(isItWalletValid);

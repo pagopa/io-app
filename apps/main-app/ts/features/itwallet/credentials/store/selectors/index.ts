@@ -312,9 +312,18 @@ export const itwCredentialsEidIssuedAtSelector = createSelector(
   eid => eid?.jwt.issuedAt
 );
 
-export const itwAreSomeDigitalCredentialsExpiredSelector = createSelector(
+/**
+ * Returns whether the eID AND at least one other credential are digitally
+ * expired.
+ *
+ * @param state - The global state.
+ * @returns Whether the eID and one credential are digitally expired.
+ */
+export const itwAreEidAndAnyCredentialExpiredSelector = createSelector(
+  itwCredentialsEidStatusSelector,
   itwCredentialsSelector,
-  credentials =>
+  (eidStatus, credentials): boolean =>
+    eidStatus === "jwtExpired" &&
     Object.values(credentials).some(
       c => getCredentialStatus(c) === "jwtExpired"
     )

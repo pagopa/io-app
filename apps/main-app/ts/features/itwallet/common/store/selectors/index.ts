@@ -3,7 +3,7 @@ import { isConnectedSelector } from "../../../../connectivity/store/selectors";
 import { OfflineAccessReasonEnum } from "../../../../ingress/store/reducer";
 import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
 import {
-  itwAreSomeDigitalCredentialsExpiredSelector,
+  itwAreEidAndAnyCredentialExpiredSelector,
   itwCredentialsEidIssuedAtSelector,
   itwCredentialsEidStatusSelector,
   itwIsWalletEmptySelector
@@ -217,10 +217,7 @@ export const itwShouldHideEidLifecycleAlert = (state: GlobalState): boolean => {
   // Documenti su IO, can upgrade
   // Alert hidden unless eID AND some credentials are expired
   if (itwShouldRenderL3UpgradeBannerSelector(state)) {
-    return !(
-      eidStatus === "jwtExpired" &&
-      itwAreSomeDigitalCredentialsExpiredSelector(state)
-    );
+    return !itwAreEidAndAnyCredentialExpiredSelector(state);
   }
 
   // Offline
@@ -288,10 +285,7 @@ export const itwShouldRenderWalletDiscoveryBannerSelector = (
  */
 const itwIsUpgradeBannerEligibleSelector = (state: GlobalState) =>
   itwShouldRenderL3UpgradeBannerSelector(state) &&
-  !(
-    itwCredentialsEidStatusSelector(state) === "jwtExpired" &&
-    itwAreSomeDigitalCredentialsExpiredSelector(state)
-  ) &&
+  !itwAreEidAndAnyCredentialExpiredSelector(state) &&
   !itwIsActivationDisabledSelector(state) &&
   !itwIsL2FallbackSelector(state);
 
