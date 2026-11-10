@@ -1,4 +1,4 @@
-import * as Calendar from "expo-calendar";
+import * as ExpoCalendar from "expo-calendar";
 import I18n from "i18next";
 import { useCallback, useState } from "react";
 
@@ -17,7 +17,7 @@ const CalendarsPreferencesScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const preferredCalendarSaveSuccessDispatch = useCallback(
-    (calendar: Calendar.Calendar) =>
+    (calendar: ExpoCalendar.ExpoCalendar) =>
       dispatch(
         preferredCalendarSaveSuccess({
           preferredCalendar: calendar

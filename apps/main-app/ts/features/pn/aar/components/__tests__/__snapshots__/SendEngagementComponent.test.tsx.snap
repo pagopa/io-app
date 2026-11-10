@@ -58,7 +58,9 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -75,11 +77,13 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -90,6 +94,7 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -452,7 +457,7 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                                       bbHeight={36}
                                       bbWidth={36}
                                       collapsable={false}
-                                      color="#0E0F13"
+                                      color="rgba(14, 15, 19, 1)"
                                       focusable={false}
                                       height={36}
                                       importantForAccessibility="no-hide-descendants"
@@ -1783,7 +1788,9 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1800,11 +1807,13 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -1815,6 +1824,7 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -2177,7 +2187,7 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                                       bbHeight={36}
                                       bbWidth={36}
                                       collapsable={false}
-                                      color="#0E0F13"
+                                      color="rgba(14, 15, 19, 1)"
                                       focusable={false}
                                       height={36}
                                       importantForAccessibility="no-hide-descendants"

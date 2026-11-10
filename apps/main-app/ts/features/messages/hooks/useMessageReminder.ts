@@ -1,4 +1,4 @@
-import * as Calendar from "expo-calendar";
+import * as ExpoCalendar from "expo-calendar";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
@@ -44,7 +44,7 @@ export const useMessageReminder = (
   const upsertReminder = async (
     dueDate: Date,
     subject: string,
-    preferredCalendar: Calendar.Calendar | undefined
+    preferredCalendar: ExpoCalendar.ExpoCalendar | undefined
   ) => {
     const permissionGranted = await requestCalendarPermission();
 

@@ -1,5 +1,5 @@
 module.exports = {
-  preset: "react-native",
+  preset: "@react-native/jest-preset",
   // Cap concurrency and recycle workers to keep RAM bounded.
   maxWorkers: "50%",
   // Above the per-worker baseline so only bloated workers recycle.

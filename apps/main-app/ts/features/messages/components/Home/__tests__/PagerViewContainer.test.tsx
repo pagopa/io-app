@@ -1,8 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RefObject } from "react";
-import { NativeSyntheticEvent } from "react-native";
-import PagerView from "react-native-pager-view";
-import { OnPageSelectedEventData } from "react-native-pager-view/lib/typescript/PagerViewNativeComponent";
+import PagerView, {
+  type PagerViewOnPageSelectedEvent
+} from "react-native-pager-view";
 import { createStore } from "redux";
 
 import { pageSize } from "../../../../../config";
@@ -69,7 +69,7 @@ describe("PagerViewContainer", () => {
       nativeEvent: {
         position: 1
       }
-    } as NativeSyntheticEvent<OnPageSelectedEventData>);
+    } as PagerViewOnPageSelectedEvent);
 
     expect(mockDispatch.mock.calls.length).toBe(2);
     expect(mockDispatch.mock.calls[0][0]).toStrictEqual(
@@ -105,7 +105,7 @@ describe("PagerViewContainer", () => {
       nativeEvent: {
         position: 1
       }
-    } as NativeSyntheticEvent<OnPageSelectedEventData>);
+    } as PagerViewOnPageSelectedEvent);
 
     expect(mockDispatch.mock.calls.length).toBe(1);
     expect(mockDispatch.mock.calls[0][0]).toStrictEqual(
@@ -136,7 +136,7 @@ describe("PagerViewContainer", () => {
       nativeEvent: {
         position: 0
       }
-    } as NativeSyntheticEvent<OnPageSelectedEventData>);
+    } as PagerViewOnPageSelectedEvent);
 
     expect(mockDispatch.mock.calls.length).toBe(2);
     expect(mockDispatch.mock.calls[0][0]).toStrictEqual(
@@ -172,7 +172,7 @@ describe("PagerViewContainer", () => {
       nativeEvent: {
         position: 0
       }
-    } as NativeSyntheticEvent<OnPageSelectedEventData>);
+    } as PagerViewOnPageSelectedEvent);
 
     expect(mockDispatch.mock.calls.length).toBe(1);
     expect(mockDispatch.mock.calls[0][0]).toStrictEqual(

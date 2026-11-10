@@ -5,7 +5,7 @@ import {
   VSpacer
 } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as Calendar from "expo-calendar";
+import * as ExpoCalendar from "expo-calendar";
 import I18n from "i18next";
 import _ from "lodash";
 import { Fragment, memo, useCallback, useEffect, useState } from "react";
@@ -14,7 +14,7 @@ import { useIOSelector } from "../store/hooks";
 import { preferredCalendarSelector } from "../store/reducers/persistedPreferences";
 
 type CalendarByAccount = Readonly<{
-  data: ReadonlyArray<Calendar.Calendar>;
+  data: ReadonlyArray<ExpoCalendar.ExpoCalendar>;
   title: string;
 }>;
 
@@ -26,13 +26,15 @@ type FetchError = {
 
 type Props = {
   onCalendarRemove?: () => void;
-  onCalendarSelected: (calendar: Calendar.Calendar) => void;
+  onCalendarSelected: (calendar: ExpoCalendar.ExpoCalendar) => void;
   onCalendarsLoaded: () => void;
 };
 
 type ResourceError = FetchError;
 
-const getCalendarsByAccount = (calendars: ReadonlyArray<Calendar.Calendar>) => {
+const getCalendarsByAccount = (
+  calendars: ReadonlyArray<ExpoCalendar.ExpoCalendar>
+) => {
   const accounts: ReadonlyArray<string> = [
     ...new Set(calendars.map(cal => cal.source.name))
   ];
@@ -55,13 +57,13 @@ const CalendarsListContainer = ({
   const toast = useIOToast();
   const defaultCalendar = useIOSelector(preferredCalendarSelector, _.isEqual);
   const [selectedCalendar, setSelectedCalendar] = useState<
-    Calendar.Calendar | undefined
+    ExpoCalendar.ExpoCalendar | undefined
   >(defaultCalendar);
 
   const fetchCalendars = useCallback(async () => {
     setCalendarsByAccount(pot.noneLoading);
     // Fetch user calendars.
-    Calendar.getCalendarsAsync("event")
+    ExpoCalendar.getCalendars(ExpoCalendar.EntityTypes.EVENT)
       .then(calendars => {
         // Filter out only calendars that allow modifications
         const organizedCalendars = pot.some(
@@ -86,8 +88,8 @@ const CalendarsListContainer = ({
   }, [onCalendarsLoaded]);
 
   const mapData = useCallback(
-    (data: ReadonlyArray<Calendar.Calendar>) =>
-      data.map((item: Calendar.Calendar) => ({
+    (data: ReadonlyArray<ExpoCalendar.ExpoCalendar>) =>
+      data.map((item: ExpoCalendar.ExpoCalendar) => ({
         id: item.id,
         label: item.title,
         disabled: !item.allowsModifications

@@ -39,7 +39,7 @@ type VariantSettings = {
 };
 
 const APPLE_TEAM_ID = "M2X5YQ4BJ7";
-const IOS_DEPLOYMENT_TARGET = "15.1";
+const IOS_DEPLOYMENT_TARGET = "16.4";
 
 // Minification is disabled, the rules are kept for when it gets enabled
 const ANDROID_EXTRA_PROGUARD_RULES = `

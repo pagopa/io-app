@@ -1,6 +1,6 @@
 import { CreatedMessageWithContentAndAttachments } from "@io-app/api-types/generated/definitions/communication/CreatedMessageWithContentAndAttachments";
 import { IOToast } from "@io-app/design-system";
-import * as Calendar from "expo-calendar";
+import * as ExpoCalendar from "expo-calendar";
 import * as E from "fp-ts/lib/Either";
 import { identity, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -9,7 +9,6 @@ import I18n from "i18next";
 import { Platform } from "react-native";
 
 import { AddCalendarEventPayload } from "../store/actions/calendarEvents";
-import { CalendarEvent } from "../store/reducers/entities/calendarEvents/calendarEventsByMessageId";
 
 /** Utility functions to interact with the device calendars */
 
@@ -27,7 +26,7 @@ type CalendarAuthorization = { asked: boolean; authorized: boolean };
  */
 export async function checkAndRequestPermission(): Promise<CalendarAuthorization> {
   try {
-    const { status } = await Calendar.getCalendarPermissionsAsync();
+    const { status } = await ExpoCalendar.getCalendarPermissions();
     switch (status) {
       case "denied":
         // the user explicitly denied access to the service for the app
@@ -56,7 +55,7 @@ export async function checkAndRequestPermission(): Promise<CalendarAuthorization
 
     // if not returned yet, we can ask for the authorization
     const { status: calendarStatus } =
-      await Calendar.requestCalendarPermissionsAsync();
+      await ExpoCalendar.requestCalendarPermissions();
     return {
       authorized: calendarStatus === "granted",
       asked: true
@@ -98,7 +97,7 @@ export const legacyIsEventInCalendar = (
     message => new Error(String(message))
   );
   const findTask = TE.tryCatch(
-    () => Calendar.getEventAsync(eventId),
+    () => ExpoCalendar.ExpoCalendarEvent.get(eventId),
     E.toError
   );
   return pipe(
@@ -118,12 +117,12 @@ export const legacyIsEventInCalendar = (
  * Return the event id if it is found
  */
 export const searchEventInCalendar = async (
-  ids: Array<Calendar.Calendar["id"]>,
+  ids: Array<ExpoCalendar.ExpoCalendar["id"]>,
   endDate: Date,
   title: string
 ): Promise<O.Option<string>> => {
   const startDate = new Date(endDate.getTime());
-  return Calendar.getEventsAsync(
+  return ExpoCalendar.listEvents(
     ids,
     new Date(startDate.setDate(endDate.getDate() - 1)),
     endDate
@@ -151,21 +150,23 @@ export const searchEventInCalendar = async (
 };
 
 export const saveCalendarEvent = (
-  calendar: Calendar.Calendar,
+  calendar: ExpoCalendar.ExpoCalendar,
   message: CreatedMessageWithContentAndAttachments,
   dueDate: Date,
   title: string,
   onAddCalendarEvent?: (calendarEvent: AddCalendarEventPayload) => void
 ) => {
   const dueDateIsoString = dueDate.toISOString();
-  Calendar.createEventAsync(title, {
-    calendarId: calendar.id,
-    startDate: dueDateIsoString,
-    endDate: dueDateIsoString,
-    allDay: true,
-    alarms: []
-  })
-    .then(eventId => {
+  calendar
+    .createEvent({
+      title,
+      calendarId: calendar.id,
+      startDate: dueDateIsoString,
+      endDate: dueDateIsoString,
+      allDay: true,
+      alarms: []
+    })
+    .then(event => {
       IOToast.success(
         I18n.t("messages.cta.reminderAddSuccess", {
           title,
@@ -176,29 +177,11 @@ export const saveCalendarEvent = (
       if (onAddCalendarEvent) {
         onAddCalendarEvent({
           messageId,
-          eventId
+          eventId: event.id
         });
       }
     })
     .catch(_ => IOToast.error(I18n.t("messages.cta.reminderAddFailure")));
-};
-
-export const removeCalendarEventFromDeviceCalendar = (
-  calendarEvent: CalendarEvent | undefined,
-  onRemoveEvent?: (calendarEvent: CalendarEvent) => void
-) => {
-  if (calendarEvent) {
-    Calendar.deleteEventAsync(calendarEvent.eventId)
-      .then(_ => {
-        IOToast.success(I18n.t("messages.cta.reminderRemoveSuccess"));
-        if (onRemoveEvent) {
-          onRemoveEvent(calendarEvent);
-        }
-      })
-      .catch(_ => IOToast.error(I18n.t("messages.cta.reminderRemoveFailure")));
-  } else {
-    IOToast.error(I18n.t("messages.cta.reminderRemoveFailure"));
-  }
 };
 
 /**
@@ -208,14 +191,14 @@ export const removeCalendarEventFromDeviceCalendar = (
  */
 export const requestCalendarPermission = async (): Promise<boolean> => {
   const { status: calendarResult } =
-    await Calendar.getCalendarPermissionsAsync();
+    await ExpoCalendar.getCalendarPermissions();
 
   if (calendarResult === "granted") {
     return true;
   }
 
   const { status: requestCalendarStatus } =
-    await Calendar.requestCalendarPermissionsAsync();
+    await ExpoCalendar.requestCalendarPermissions();
   return requestCalendarStatus === "granted";
 };
 
@@ -225,21 +208,22 @@ export const isEventInCalendar = (eventId: string) =>
     TE.tryCatch(() => requestCalendarPermission(), E.toError),
     TE.chain(TE.fromPredicate(identity, () => Error("Permission not granted"))),
     TE.chain(() =>
-      TE.tryCatch(() => Calendar.getEventAsync(eventId), E.toError)
+      TE.tryCatch(() => ExpoCalendar.ExpoCalendarEvent.get(eventId), E.toError)
     ),
     TE.map(ev => ev !== null)
   );
 
 /** Add an event to the device calendar */
 export const saveEventToDeviceCalendarTask = (
-  calendarId: string,
+  calendar: ExpoCalendar.ExpoCalendar,
   dueDate: Date,
   title: string
 ) =>
   TE.tryCatch(
     () =>
-      Calendar.createEventAsync(title, {
-        calendarId,
+      calendar.createEvent({
+        title,
+        calendarId: calendar.id,
         startDate: dueDate.toISOString(),
         endDate: dueDate.toISOString(),
         allDay: true,
@@ -249,14 +233,16 @@ export const saveEventToDeviceCalendarTask = (
   );
 
 /** Remove an event from the device calendar */
-export const removeEventFromDeviceCalendarTask = (eventId: string) =>
+export const removeEventFromDeviceCalendarTask = (
+  event: ExpoCalendar.ExpoCalendarEvent
+) =>
   pipe(
-    TE.tryCatch(() => Calendar.deleteEventAsync(eventId), E.toError),
-    TE.map(_ => eventId)
+    TE.tryCatch(() => event.delete(), E.toError),
+    TE.map(_ => event.id)
   );
 
 /** Find the device calendars */
 export const findDeviceCalendarsTask = TE.tryCatch(
-  () => Calendar.getCalendarsAsync(),
+  () => ExpoCalendar.getCalendars(),
   E.toError
 );

@@ -1,5 +1,5 @@
 import { ContentWrapper, RadioGroup, RadioItem } from "@io-app/design-system";
-import * as Calendar from "expo-calendar";
+import * as ExpoCalendar from "expo-calendar";
 import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -9,13 +9,13 @@ import { preferredCalendarSelector } from "../store/reducers/persistedPreference
 import { convertLocalCalendarName } from "../utils/calendar";
 
 type CalendarListProps = {
-  calendars: Array<Calendar.Calendar>;
+  calendars: Array<ExpoCalendar.ExpoCalendar>;
   isLoading: boolean;
-  onCalendarSelected: (calendar: Calendar.Calendar) => void;
+  onCalendarSelected: (calendar: ExpoCalendar.ExpoCalendar) => void;
 };
 
 const getCalendarsByAccount = (
-  calendars: Array<Calendar.Calendar>
+  calendars: Array<ExpoCalendar.ExpoCalendar>
 ): Array<RadioItem<string>> =>
   calendars.reduce<Array<RadioItem<string>>>(
     (acc, calendar) =>

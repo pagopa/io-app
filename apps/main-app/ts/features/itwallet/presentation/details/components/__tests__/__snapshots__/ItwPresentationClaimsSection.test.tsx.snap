@@ -191,7 +191,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -208,11 +210,13 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -223,6 +227,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -439,7 +444,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 bbHeight={36}
                                 bbWidth={36}
                                 collapsable={false}
-                                color="#0B3EE3"
+                                color="rgba(11, 62, 227, 1)"
                                 focusable={false}
                                 height={36}
                                 importantForAccessibility="no-hide-descendants"
@@ -1743,7 +1748,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     bbHeight={36}
                                     bbWidth={36}
                                     collapsable={false}
-                                    color="#0B3EE3"
+                                    color="rgba(11, 62, 227, 1)"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -2109,7 +2114,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2126,11 +2133,13 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -2141,6 +2150,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={true}
         >
           <View
             aria-hidden={false}
@@ -2357,7 +2367,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 bbHeight={36}
                                 bbWidth={36}
                                 collapsable={false}
-                                color="#0B3EE3"
+                                color="rgba(11, 62, 227, 1)"
                                 focusable={false}
                                 height={36}
                                 importantForAccessibility="no-hide-descendants"
@@ -4655,7 +4665,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     bbHeight={36}
                                     bbWidth={36}
                                     collapsable={false}
-                                    color="#0B3EE3"
+                                    color="rgba(11, 62, 227, 1)"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"

@@ -9,7 +9,7 @@ const DEPLOYMENT_TARGET_OVERRIDE = `
     # Aligns every pod to the app deployment target
     installer.pods_project.targets.each do |target|
       target.build_configurations.each do |build_configuration|
-        build_configuration.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = podfile_properties['ios.deploymentTarget'] || '15.1'
+        build_configuration.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = podfile_properties['ios.deploymentTarget'] || '16.4'
       end
     end`;
 

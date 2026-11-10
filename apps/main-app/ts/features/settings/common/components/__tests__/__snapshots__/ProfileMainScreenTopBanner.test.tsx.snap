@@ -440,7 +440,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
               bbHeight={36}
               bbWidth={36}
               collapsable={false}
-              color="#0E0F13"
+              color="rgba(14, 15, 19, 1)"
               focusable={false}
               height={36}
               importantForAccessibility="no-hide-descendants"

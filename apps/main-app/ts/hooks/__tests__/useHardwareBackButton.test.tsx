@@ -63,7 +63,10 @@ describe("useHardwareBackButtonWhenFocused", () => {
     const listenerCallsBeforeReRender = spyOnBackHandlerListener.mock.calls;
     const registeredCallbackBeforeReRender =
       spyOnBackHandlerListener.mock.calls[0][1];
-    const result1 = registeredCallbackBeforeReRender();
+    const result1 = registeredCallbackBeforeReRender({
+      type: "hardwareBackPress",
+      timeStamp: 0
+    });
 
     expect(handler1).toHaveBeenCalledTimes(1);
     expect(handler2).not.toHaveBeenCalled();
@@ -78,7 +81,10 @@ describe("useHardwareBackButtonWhenFocused", () => {
 
     const registeredCallbackAfterReRender =
       spyOnBackHandlerListener.mock.calls[0][1];
-    const result2 = registeredCallbackAfterReRender();
+    const result2 = registeredCallbackAfterReRender({
+      type: "hardwareBackPress",
+      timeStamp: 0
+    });
 
     expect(listenerCallsBeforeReRender).toBe(listenerCallsAfterReRender);
     expect(handler1).not.toHaveBeenCalled();
