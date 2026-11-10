@@ -66,8 +66,6 @@ const SuccessComponent = (props: {
         expiresAt: expires_at_effect,
         totalDocCount: fciDocuments.length,
         environment: fciEnvironment,
-        // Read at tracking time without re-running the effect (and restarting
-        // the flow) when the security level changes, e.g. after an L3 login
         authSecurityLevel: authSecurityLevelHandler(store.getState())
       });
       dispatch(fciStartRequest());
