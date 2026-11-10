@@ -11,6 +11,7 @@ import {
   WebViewSource
 } from "react-native-webview/lib/WebViewTypes";
 
+import { originSchemasWhiteList } from "../../../authentication/common/utils";
 import { getPrivacyWebViewScripts } from "../utils/privacyWebViewScripts";
 
 type Props = {
@@ -53,6 +54,7 @@ const ItwPrivacyWebViewComponent = ({ source, onLoadEnd, onError }: Props) => {
       onError={onError}
       onLoadEnd={onLoadEnd}
       onMessage={handleWebViewMessage}
+      originWhitelist={originSchemasWhiteList}
       ref={webViewRef}
       scrollEnabled={false}
       source={source}
