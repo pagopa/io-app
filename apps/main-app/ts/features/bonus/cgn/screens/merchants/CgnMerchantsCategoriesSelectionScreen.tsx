@@ -18,11 +18,10 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { useIOSelector } from "../../../../../store/hooks";
+import { cgnFeaturedOpportunitiesSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import CgnAnimatedHeader from "../../components/CgnAnimatedHeader";
-import {
-  CgnFeaturedOpportunities,
-  FeaturedOpportunity
-} from "../../components/merchants/CgnFeaturedOpportunities";
+import { CgnFeaturedOpportunities } from "../../components/merchants/CgnFeaturedOpportunities";
 import { useDisableRootNavigatorGesture } from "../../hooks/useDisableRootNavigatorGesture";
 import CGN_ROUTES from "../../navigation/routes";
 import {
@@ -43,27 +42,6 @@ type CgnMerchantsHomeTabParamsList = {
 
 type CgnMerchantsListItem = CategoryRow | MerchantsAll;
 
-// TEMP: sample data for testing the banner. Replace with the featured opportunities from IO-services (IEG-3312).
-const featuredOpportunities: ReadonlyArray<FeaturedOpportunity> = [
-  {
-    id: "sample-1",
-    title: "IDCERT | Certificazione Informatica",
-    description: "Fino al 25% di sconto sui nostri Master in informatica",
-    logoUri: "https://placehold.co/96x96/png"
-  },
-  {
-    id: "sample-2",
-    title: "Partner di prova 2",
-    description: "Sconto del 15% sui corsi di lingua per studenti",
-    logoUri: "https://placehold.co/96x96/png"
-  },
-  {
-    id: "sample-3",
-    title: "Partner di prova 3",
-    description: "Biglietti scontati per musei e mostre in tutta Italia"
-  }
-];
-
 type TabOption = {
   icon: IOIcons;
   title: string;
@@ -74,6 +52,7 @@ const isCategoryRow = (item: CgnMerchantsListItem): item is CategoryRow =>
 
 const CgnMerchantsCategoriesSelectionScreen = () => {
   const { navigate } = useIONavigation();
+  const featuredOpportunities = useIOSelector(cgnFeaturedOpportunitiesSelector);
   useDisableRootNavigatorGesture();
   const { bottom } = useSafeAreaInsets();
   const [selectedTab, setSelectedTab] = useState<
@@ -212,7 +191,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
       </>
     ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [selectedTab]
+    [featuredOpportunities, selectedTab]
   );
 
   return (

@@ -4,12 +4,14 @@ import { BackendStatus } from "@io-app/api-types/generated/definitions/content/B
 import { BancomatPayConfig } from "@io-app/api-types/generated/definitions/content/BancomatPayConfig";
 import { Banner } from "@io-app/api-types/generated/definitions/content/Banner";
 import { BarcodesScannerConfig } from "@io-app/api-types/generated/definitions/content/BarcodesScannerConfig";
+import { CgnFeaturedOpportunity } from "@io-app/api-types/generated/definitions/content/CgnFeaturedOpportunity";
 import { FimsServiceConfiguration } from "@io-app/api-types/generated/definitions/content/FimsServiceConfiguration";
 import { OSPerPlatform } from "@io-app/api-types/generated/definitions/content/OSPerPlatform";
 import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
+import { err, ok, Result } from "neverthrow";
 import { Platform } from "react-native";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
@@ -35,6 +37,7 @@ export type RemoteConfigState = O.Option<BackendStatus["config"]>;
 
 const initialRemoteConfigState: RemoteConfigState = O.none;
 const emptyArray: ReadonlyArray<string> = []; // to avoid unnecessary rerenders
+const emptyCgnFeaturedOpportunities: ReadonlyArray<CgnFeaturedOpportunity> = [];
 
 export default function remoteConfigReducer(
   state: RemoteConfigState = initialRemoteConfigState,
@@ -77,6 +80,27 @@ export const cgnMerchantsModalSelector = createSelector(
       ),
       O.getOrElse(() => false)
     )
+);
+
+const getCgnFeaturedOpportunities = (
+  cgnConfig: BackendStatus["config"]["cgn"] | undefined
+): Result<ReadonlyArray<CgnFeaturedOpportunity>, string> => {
+  const featuredOpportunities = cgnConfig?.featured_opportunities;
+  if (!featuredOpportunities) {
+    return err("Featured opportunities not configured");
+  }
+  if (!isMinAppVersionSupported(O.some(featuredOpportunities))) {
+    return err("App version below featured opportunities minimum");
+  }
+  return ok(featuredOpportunities.opportunities);
+};
+
+export const cgnFeaturedOpportunitiesSelector = createSelector(
+  remoteConfigSelector,
+  remoteConfig =>
+    getCgnFeaturedOpportunities(
+      remoteConfig._tag === "Some" ? remoteConfig.value.cgn : undefined
+    ).unwrapOr(emptyCgnFeaturedOpportunities)
 );
 
 export const isCGNDiscoveryBannerEnabledSelector = (state: GlobalState) =>

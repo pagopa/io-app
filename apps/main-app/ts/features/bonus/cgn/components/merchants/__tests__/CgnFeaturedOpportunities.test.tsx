@@ -1,18 +1,18 @@
-import { render } from "@testing-library/react-native";
+import { CgnFeaturedOpportunity } from "@io-app/api-types/generated/definitions/content/CgnFeaturedOpportunity";
+import { fireEvent, render } from "@testing-library/react-native";
 import I18n from "i18next";
 
-import {
-  CgnFeaturedOpportunities,
-  FeaturedOpportunity
-} from "../CgnFeaturedOpportunities";
+import * as urlUtils from "../../../../../../utils/url";
+import { CgnFeaturedOpportunities } from "../CgnFeaturedOpportunities";
 
-const makeOpportunity = (index: number): FeaturedOpportunity => ({
-  id: `opportunity-${index}`,
-  title: `Partner ${index}`,
+const makeOpportunity = (index: number): CgnFeaturedOpportunity => ({
+  partnerName: `Partner ${index}`,
   description: `Description ${index}`
 });
 
 describe("CgnFeaturedOpportunities", () => {
+  afterEach(() => jest.restoreAllMocks());
+
   it("renders nothing when there are no opportunities", () => {
     const { queryByTestId } = render(
       <CgnFeaturedOpportunities opportunities={[]} />
@@ -46,5 +46,38 @@ describe("CgnFeaturedOpportunities", () => {
     expect(getByText("Partner 3")).toBeTruthy();
     expect(queryByText("Partner 4")).toBeNull();
     expect(queryByText("Partner 5")).toBeNull();
+  });
+
+  it("opens the configured opportunity URL", () => {
+    const openWebUrlSpy = jest
+      .spyOn(urlUtils, "openWebUrl")
+      .mockImplementation();
+    const opportunity = {
+      ...makeOpportunity(1),
+      ctaUrl: "https://example.com/opportunity"
+    };
+    const { getByLabelText } = render(
+      <CgnFeaturedOpportunities opportunities={[opportunity]} />
+    );
+
+    fireEvent.press(getByLabelText("Partner 1. Description 1"));
+
+    expect(openWebUrlSpy).toHaveBeenCalledWith(opportunity.ctaUrl);
+  });
+
+  it("disables the card when the opportunity has no CTA URL", () => {
+    const openWebUrlSpy = jest
+      .spyOn(urlUtils, "openWebUrl")
+      .mockImplementation();
+    const { getByLabelText } = render(
+      <CgnFeaturedOpportunities opportunities={[makeOpportunity(1)]} />
+    );
+
+    expect(
+      getByLabelText("Partner 1. Description 1").props.accessibilityState
+    ).toMatchObject({ disabled: true });
+    fireEvent.press(getByLabelText("Partner 1. Description 1"));
+
+    expect(openWebUrlSpy).not.toHaveBeenCalled();
   });
 });

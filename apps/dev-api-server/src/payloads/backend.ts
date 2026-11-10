@@ -55,6 +55,23 @@ export const backendStatus: BackendStatus = {
         android: "5.0.0.0",
         ios: "5.0.0.0"
       },
+      featured_opportunities: {
+        min_app_version: {
+          android: "1.0.0.0",
+          ios: "1.0.0.0"
+        },
+        opportunities: [
+          {
+            partnerName: "Partner Esempio",
+            description: "Sconto del 20% sul tuo prossimo acquisto",
+            ctaUrl: "https://io.italia.it"
+          },
+          {
+            partnerName: "Partner Senza Link",
+            description: "Offerta disponibile in negozio"
+          }
+        ]
+      },
       show_cgn_engagement_banner: {
         min_app_version: {
           android: "1.0.0.0",

@@ -8,6 +8,7 @@ import { GlobalState } from "../../types";
 import {
   absolutePortalLinksSelector,
   barcodesScannerConfigSelector,
+  cgnFeaturedOpportunitiesSelector,
   engagementCGNDiscoveryBannerSelector,
   fimsServiceConfiguration,
   fimsServiceIdInCookieDisabledListSelector,
@@ -1375,6 +1376,45 @@ describe("isCGNDiscoveryBannerEnabledSelector", () => {
     jest.spyOn(appVersion, "getAppVersion").mockImplementation(() => "2.0.0.0");
     expect(isCGNDiscoveryBannerEnabledSelector(state)).toBe(true);
     expect(isCGNDiscoveryBannerEnabledSelector(equalsVersionState)).toBe(true);
+  });
+});
+
+describe("cgnFeaturedOpportunitiesSelector", () => {
+  it("returns no opportunities when remote config is missing or the app is below the minimum version", () => {
+    const missingConfig = { remoteConfig: O.none } as GlobalState;
+    const belowMinimumVersion = {
+      remoteConfig: O.some({
+        cgn: {
+          featured_opportunities: {
+            min_app_version: { ios: "2.0.0.0", android: "2.0.0.0" },
+            opportunities: [{ partnerName: "Partner", description: "Offer" }]
+          }
+        }
+      })
+    } as GlobalState;
+
+    jest.spyOn(appVersion, "getAppVersion").mockImplementation(() => "1.0.0.0");
+
+    expect(cgnFeaturedOpportunitiesSelector(missingConfig)).toEqual([]);
+    expect(cgnFeaturedOpportunitiesSelector(belowMinimumVersion)).toEqual([]);
+  });
+
+  it("returns opportunities when the app meets the minimum version", () => {
+    const opportunities = [{ partnerName: "Partner", description: "Offer" }];
+    const state = {
+      remoteConfig: O.some({
+        cgn: {
+          featured_opportunities: {
+            min_app_version: { ios: "1.0.0.0", android: "1.0.0.0" },
+            opportunities
+          }
+        }
+      })
+    } as GlobalState;
+
+    jest.spyOn(appVersion, "getAppVersion").mockImplementation(() => "2.0.0.0");
+
+    expect(cgnFeaturedOpportunitiesSelector(state)).toEqual(opportunities);
   });
 });
 

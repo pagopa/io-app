@@ -1,3 +1,4 @@
+import { CgnFeaturedOpportunity } from "@io-app/api-types/generated/definitions/content/CgnFeaturedOpportunity";
 import {
   H6,
   IOColors,
@@ -10,17 +11,13 @@ import I18n from "i18next";
 import {
   FlatList,
   Image,
+  Pressable,
   StyleSheet,
   useWindowDimensions,
   View
 } from "react-native";
 
-export type FeaturedOpportunity = {
-  description: string;
-  id: string;
-  logoUri?: string;
-  title: string;
-};
+import { openWebUrl } from "../../../../../utils/url";
 
 export const CGN_FEATURED_OPPORTUNITIES_MAX_ITEMS = 3;
 
@@ -57,29 +54,39 @@ const FeaturedOpportunityCard = ({
   opportunity
 }: {
   cardWidth: number;
-  opportunity: FeaturedOpportunity;
-}) => (
-  <View style={[styles.card, { width: cardWidth }]}>
-    <View style={styles.cardTextContainer}>
-      <H6 numberOfLines={2}>{opportunity.title}</H6>
-      <VSpacer size={4} />
-      <IOText numberOfLines={1}>{opportunity.description}</IOText>
-    </View>
-    {opportunity.logoUri && (
-      <Image
-        accessibilityIgnoresInvertColors
-        resizeMode="contain"
-        source={{ uri: opportunity.logoUri }}
-        style={styles.logo}
-      />
-    )}
-  </View>
-);
+  opportunity: CgnFeaturedOpportunity;
+}) => {
+  const ctaUrl = opportunity.ctaUrl;
+  return (
+    <Pressable
+      accessibilityLabel={`${opportunity.partnerName}. ${opportunity.description}`}
+      accessibilityRole={ctaUrl ? "link" : undefined}
+      disabled={!ctaUrl}
+      onPress={ctaUrl ? () => openWebUrl(ctaUrl) : undefined}
+    >
+      <View style={[styles.card, { width: cardWidth }]}>
+        <View style={styles.cardTextContainer}>
+          <H6 numberOfLines={2}>{opportunity.partnerName}</H6>
+          <VSpacer size={4} />
+          <IOText numberOfLines={1}>{opportunity.description}</IOText>
+        </View>
+        {opportunity.partnerLogo && (
+          <Image
+            accessibilityIgnoresInvertColors
+            resizeMode="contain"
+            source={{ uri: opportunity.partnerLogo }}
+            style={styles.logo}
+          />
+        )}
+      </View>
+    </Pressable>
+  );
+};
 
 export const CgnFeaturedOpportunities = ({
   opportunities
 }: {
-  opportunities: ReadonlyArray<FeaturedOpportunity>;
+  opportunities: ReadonlyArray<CgnFeaturedOpportunity>;
 }) => {
   const { width } = useWindowDimensions();
   const cardWidth = width - IOVisualCostants.appMarginDefault * 2;
@@ -102,7 +109,7 @@ export const CgnFeaturedOpportunities = ({
         data={items}
         horizontal
         ItemSeparatorComponent={() => <View style={{ width: CARD_SPACING }} />}
-        keyExtractor={item => item.id}
+        keyExtractor={(item, index) => `${item.partnerName}-${index}`}
         renderItem={({ item }) => (
           <FeaturedOpportunityCard cardWidth={cardWidth} opportunity={item} />
         )}
