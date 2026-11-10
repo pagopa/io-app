@@ -11,6 +11,7 @@ import * as useOneIdentityLoginSourceModule from "../../../../../lollipop/hooks/
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import { loginFailure, loginSuccess } from "../../../../common/store/actions";
 import * as commonStoreSelector from "../../../../common/store/selectors";
+import { AUTH_LEVELS } from "../../../../common/utils";
 import { OneIdentityIdpLoginScreen } from "../OneIdentityIdpLoginScreen";
 
 jest.mock("react-native-webview", () => {
@@ -29,6 +30,7 @@ jest.mock("@react-navigation/native", () => {
   return {
     ...actualNav,
     useNavigation: () => ({
+      addListener: jest.fn(),
       replace: mockReplace
     })
   };
@@ -68,6 +70,7 @@ describe("OneIdentityIdpLoginScreen", () => {
           status: "one-identity-authorize",
           webviewSource: { uri: "https://example.com/authorize" }
         },
+        generateLoginSource: jest.fn(),
         shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(() => false)
       });
     jest
@@ -124,7 +127,11 @@ describe("OneIdentityIdpLoginScreen", () => {
     });
 
     expect(mockDispatch).toHaveBeenCalledWith(
-      loginSuccess({ token: "session-token", idp: mockIdp.id as keyof IdpData })
+      loginSuccess({
+        token: "session-token",
+        idp: mockIdp.id as keyof IdpData,
+        isOneIdentityLogin: true
+      })
     );
   });
 
@@ -143,14 +150,18 @@ describe("OneIdentityIdpLoginScreen", () => {
       })
     );
 
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: {
+    expect(mockReplace).toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      {
         errorCodeOrMessage: "err-code",
         authMethod: "SPID",
-        authLevel: "L2"
+        authLevel: AUTH_LEVELS.L2,
+        failureData: {
+          reason: expect.stringContaining("(err-code)"),
+          idp: mockIdp.id
+        }
       }
-    });
+    );
   });
 
   it("should navigate to AuthErrorScreen on a HTTP 403 error on the api URL prefix", () => {
@@ -164,14 +175,20 @@ describe("OneIdentityIdpLoginScreen", () => {
       }
     });
 
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: {
+    expect(mockReplace).toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
-        authLevel: "L2"
+        authLevel: AUTH_LEVELS.L2,
+        failureData: {
+          description: "Unexpected HTTP status 403",
+          code: 403,
+          url: `${apiUrlPrefix}/some-path`,
+          idp: mockIdp.id
+        }
       }
-    });
+    );
   });
 
   it("should not navigate to AuthErrorScreen on a HTTP 403 error outside the api URL prefix", () => {
@@ -199,14 +216,49 @@ describe("OneIdentityIdpLoginScreen", () => {
       }
     });
 
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: {
+    expect(mockReplace).toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
-        authLevel: "L2"
+        authLevel: AUTH_LEVELS.L2,
+        failureData: {
+          description: "Unexpected HTTP status 500",
+          code: 500,
+          url: `${apiUrlPrefix}/some-path`,
+          idp: mockIdp.id
+        }
       }
-    });
+    );
+  });
+
+  it("should track the reason and pass the failure data to AuthErrorScreen when the login source fails", () => {
+    renderComponent();
+    const { onFailure } = jest.mocked(
+      useOneIdentityLoginSourceModule.useOneIdentityLoginSource
+    ).mock.calls[0][0];
+    const failureData = {
+      reason: "Unexpected HTTP status 500",
+      url: "https://example.com/api/auth/v1/reserve"
+    };
+
+    onFailure(failureData);
+
+    expect(mockDispatch).toHaveBeenCalledWith(
+      loginFailure({
+        error: new Error("Unexpected HTTP status 500"),
+        idp: mockIdp.id as keyof IdpData
+      })
+    );
+    expect(mockReplace).toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      {
+        errorCodeOrMessage: undefined,
+        authMethod: "SPID",
+        authLevel: AUTH_LEVELS.L2,
+        failureData: { ...failureData, idp: mockIdp.id }
+      }
+    );
   });
 
   it("should navigate to AuthErrorScreen on a generic WebView error", () => {
@@ -214,17 +266,27 @@ describe("OneIdentityIdpLoginScreen", () => {
     const webview = getByTestId("webview-idp-login-screen");
 
     fireEvent(webview, "onError", {
-      nativeEvent: { url: "https://example.com/authorize" }
-    });
-
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: {
-        errorCodeOrMessage: undefined,
-        authMethod: "SPID",
-        authLevel: "L2"
+      nativeEvent: {
+        url: "https://example.com/authorize",
+        code: -2,
+        description: "net::ERR_INTERNET_DISCONNECTED"
       }
     });
+
+    expect(mockReplace).toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      {
+        errorCodeOrMessage: undefined,
+        authMethod: "SPID",
+        authLevel: AUTH_LEVELS.L2,
+        failureData: {
+          description: "net::ERR_INTERNET_DISCONNECTED",
+          code: -2,
+          url: "https://example.com/authorize",
+          idp: mockIdp.id
+        }
+      }
+    );
   });
 });
 

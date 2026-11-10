@@ -7,13 +7,7 @@ import {
 } from "react-native";
 
 import { useIOThemeContext } from "../../context";
-import {
-  hexToRgba,
-  IOBadgeHSpacing,
-  IOBadgeRadius,
-  IOBadgeVSpacing,
-  IOColors
-} from "../../core";
+import { hexToRgba, IOColors, IODimensions } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { IOText } from "../typography";
@@ -50,15 +44,13 @@ const styles = StyleSheet.create({
     })
   },
   badgeStaticStyle: {
-    borderRadius: IOBadgeRadius,
-    paddingHorizontal: IOBadgeHSpacing,
-    paddingVertical: IOBadgeVSpacing
+    borderRadius: IODimensions.radius.badge,
+    paddingHorizontal: IODimensions.padding.badge.horizontal,
+    paddingVertical: IODimensions.padding.badge.vertical
   }
 });
 
-/**
- * Official badge component
- */
+/** Official badge component */
 export const Badge = ({
   text,
   outline = false,
@@ -180,17 +172,21 @@ export const Badge = ({
     }
   };
 
-  // prettier-ignore
-  const variantMap = themeType === "light"
-    ? (outline ? mapOutlineVariantsLightMode : mapVariantsLightMode)
-    : (outline ? mapOutlineVariantsDarkMode : mapVariantsDarkMode);
+  const variantMap =
+    themeType === "light"
+      ? outline
+        ? mapOutlineVariantsLightMode
+        : mapVariantsLightMode
+      : outline
+        ? mapOutlineVariantsDarkMode
+        : mapVariantsDarkMode;
 
   const { background, foreground } = variantMap[variant];
 
   const dynamicStyle: ViewStyle = {
-    borderRadius: IOBadgeRadius * dynamicFontScale,
-    paddingHorizontal: IOBadgeHSpacing * dynamicFontScale,
-    paddingVertical: IOBadgeVSpacing * dynamicFontScale
+    borderRadius: IODimensions.radius.badge * dynamicFontScale,
+    paddingHorizontal: IODimensions.padding.badge.horizontal * dynamicFontScale,
+    paddingVertical: IODimensions.padding.badge.vertical * dynamicFontScale
   };
 
   return (
@@ -201,7 +197,7 @@ export const Badge = ({
         allowFontScaling ? dynamicStyle : styles.badgeStaticStyle,
         outline
           ? {
-              borderWidth: 1,
+              borderWidth: IODimensions.stroke.default,
               borderColor: IOColors[foreground]
             }
           : {

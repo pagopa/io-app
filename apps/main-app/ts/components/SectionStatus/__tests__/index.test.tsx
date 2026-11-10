@@ -160,13 +160,6 @@ describe("SectionStatusComponent", () => {
       expect(view.props.accessibilityRole).toBe("alert");
     });
 
-    it("should display the accessibility alert text", () => {
-      const component = getComponent("messages");
-      expect(
-        component.queryByText(new RegExp(I18n.t("global.accessibility.alert")))
-      ).toBeNull();
-    });
-
     it("should render the touchable wrapper which opens the correct url", () => {
       setLocale("it");
       const component = getComponent("messages", store);

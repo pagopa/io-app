@@ -1,4 +1,4 @@
-import i18n from "i18next";
+import I18n from "i18next";
 
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIOSelector } from "../../../../store/hooks";
@@ -19,23 +19,23 @@ export const SendAarTosComponent = () => {
   return (
     <OperationResultScreenContent
       action={{
-        label: i18n.t("features.pn.aar.flow.aarTos.primaryAction"),
+        label: I18n.t("features.pn.aar.flow.aarTos.primaryAction"),
         onPress: goToNextState,
         testID: "primary_button"
       }}
       onSubtitleLinkPress={openWebUrl}
       pictogram="doc"
       secondaryAction={{
-        label: i18n.t("features.pn.aar.flow.aarTos.secondaryAction"),
+        label: I18n.t("features.pn.aar.flow.aarTos.secondaryAction"),
         onPress: onSecondaryAction,
         testID: "secondary_button"
       }}
-      subtitle={i18n.t("features.pn.aar.flow.aarTos.body", {
+      subtitle={I18n.t("features.pn.aar.flow.aarTos.body", {
         privacyUrl: tosConfig.privacy,
         tosUrl: tosConfig.tos
       })}
       testID="AAR_TOS"
-      title={i18n.t("features.pn.aar.flow.aarTos.title")}
+      title={I18n.t("features.pn.aar.flow.aarTos.title")}
     />
   );
 };

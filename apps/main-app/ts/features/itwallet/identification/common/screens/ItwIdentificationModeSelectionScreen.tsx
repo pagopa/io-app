@@ -42,6 +42,11 @@ export type ItwIdentificationModeSelectionScreenProps =
 
 export type ItwIdentificationNavigationParams = {
   animationEnabled?: boolean;
+  /**
+   * Credential offer URI to resume after the eID reissuance, when the flow was
+   * started from a credential offer (deeplink/QR code).
+   */
+  credentialOfferUri?: string;
   credentialType?: string;
   eidReissuing?: boolean;
   level?: EidIssuanceLevel;
@@ -120,7 +125,8 @@ export const ItwIdentificationModeSelectionScreen = ({
           type: "start",
           mode: "reissuance",
           level: params.level || "l2",
-          credentialType: params.credentialType
+          credentialType: params.credentialType,
+          credentialOfferUri: params.credentialOfferUri
         });
       }
     }, [machineRef, params, mode])
@@ -135,12 +141,15 @@ export const ItwIdentificationModeSelectionScreen = ({
   const handleNoCiePress = useCallback(() => {
     trackItwUserWithoutCie();
 
-    if (!isL2Active && isL2Credential(credentialType)) {
+    if (!isL2Active) {
       machineRef.send({
         type: "restart",
         mode: "issuance",
         level: "l2-fallback",
-        credentialType
+        // Only resume credential issuance if Documenti su IO supports it.
+        credentialType: isL2Credential(credentialType)
+          ? credentialType
+          : undefined
       });
     } else {
       machineRef.send({
@@ -192,6 +201,7 @@ export const ItwIdentificationModeSelectionScreen = ({
                   label={I18n.t(
                     "features.itWallet.identification.modeSelection.noCieCta"
                   )}
+                  numberOfLines={0}
                   onPress={handleNoCiePress}
                   testID="noCieButtonTestID"
                   textAlign="center"

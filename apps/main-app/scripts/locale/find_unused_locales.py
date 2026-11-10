@@ -26,7 +26,7 @@ Usage:
     pnpm nx run main-app:unused-locales
 
 Afterwards, format and type-check to confirm nothing broke:
-    pnpm prettify && pnpm nx tsc-noemit main-app
+    pnpm format && pnpm nx tsc-noemit main-app
 
 No third-party dependencies — standard library only (Python 3.8+).
 """
@@ -185,10 +185,13 @@ def delete_path(tree: JsonTree, path: str) -> bool:
     return True
 
 
-def write_locale(path: Path, tree: JsonTree) -> None:
+def write_locale(path: Path, tree: JsonTree, escape_slashes: bool) -> None:
+    text = json.dumps(tree, ensure_ascii=False, indent=2)
+    # Lokalise exports "/" as "\/": keep that style so the diff only shows removed keys.
+    if escape_slashes:
+        text = text.replace("/", "\\/")
     with open(path, "w", encoding="utf-8") as f:
-        json.dump(tree, f, ensure_ascii=False, indent=2)
-        f.write("\n")
+        f.write(text + "\n")
 
 
 def main() -> None:
@@ -235,11 +238,13 @@ def main() -> None:
             continue
         tree = load_json(index)
         removed = sum(delete_path(tree, leaf) for leaf in unused_leaves)
-        write_locale(index, tree)
+        if removed:
+            escape_slashes = "\\/" in index.read_text(encoding="utf-8")
+            write_locale(index, tree, escape_slashes)
         print(f"  {locale_dir.name}: removed {removed} keys")
 
     print()
-    print("Done. Now run: pnpm prettify && pnpm nx tsc-noemit main-app")
+    print("Done. Now run: pnpm format && pnpm nx tsc-noemit main-app")
 
 
 if __name__ == "__main__":

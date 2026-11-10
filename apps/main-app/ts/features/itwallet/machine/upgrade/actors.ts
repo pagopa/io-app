@@ -142,12 +142,14 @@ export const requestAccessTokenActor = fromPromise<
 
 /**
  * Handles both upgrading and reissuing credentials depending on issuanceMode.
- * - upgrade → performs credential upgrade (skipMdocIssuance = false)
- * - reissuance → performs credential reissuing (skipMdocIssuance = true)
  *
- * To ensure a smooth experience when the session token expires, it is important to keep this actor
- * retriable: it must fail as early as possible when `generateKeysWithKeyAttestation` is
- * rejected for session expired, so it can be reentered and retried from where it failed.
+ * - Upgrade → performs credential upgrade (skipMdocIssuance = false)
+ * - Reissuance → performs credential reissuing (skipMdocIssuance = true)
+ *
+ * To ensure a smooth experience when the session token expires, it is important
+ * to keep this actor retriable: it must fail as early as possible when
+ * `generateKeysWithKeyAttestation` is rejected for session expired, so it can
+ * be reentered and retried from where it failed.
  */
 export const upgradeCredentialActor = fromPromise<
   UpgradeCredentialOutput,
@@ -213,8 +215,10 @@ export const upgradeCredentialActor = fromPromise<
 });
 
 /**
- * For each credential bundle fetch and validate its status list, then enrich it with the
- * extracted status in `metadata.validity` and the status list content for subsequent storage.
+ * For each credential bundle fetch and validate its status list, then enrich it
+ * with the extracted status in `metadata.validity` and the status list content
+ * for subsequent storage.
+ *
  * @param itwVersion The current IT-Wallet specs version
  * @param issuerConf The Issuer Configuration to get the keys for verification
  * @param bundles The credential bundles to enrich

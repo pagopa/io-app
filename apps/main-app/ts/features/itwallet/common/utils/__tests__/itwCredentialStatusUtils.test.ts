@@ -22,6 +22,85 @@ describe("getCredentialStatus", () => {
     MockDate.reset();
   });
 
+  describe.each([
+    {
+      name: "non IT-Wallet credential",
+      credential: ItwStoredCredentialsMocks.mdl,
+      statusBeforeExpiration: "valid"
+    },
+    {
+      name: "IT-Wallet credential",
+      credential: {
+        ...ItwStoredCredentialsMocks.L3.mdl,
+        spec_version: "1.3.3",
+        verification: { assurance_level: "high", trust_framework: "it_cie" }
+      },
+      statusBeforeExpiration: "valid"
+    },
+    ...Object.entries(ItwStoredCredentialsMocks.L3).map(
+      ([name, credential]) => ({
+        name: `IT-Wallet ${name} credential`,
+        credential,
+        statusBeforeExpiration: "valid"
+      })
+    ),
+    {
+      name: "PID credential",
+      credential: ItwStoredCredentialsMocks.eid,
+      statusBeforeExpiration: "jwtExpiring"
+    }
+  ])("$name digital expiration", ({ credential, statusBeforeExpiration }) => {
+    const expiration = new Date(2024, 0, 30, 12);
+    const mockCredential: CredentialMetadata = {
+      ...credential,
+      jwt: { expiration: expiration.toISOString() },
+      parsedCredential: {},
+      validity: undefined
+    };
+
+    it.each([
+      {
+        name: "outside the default digital expiration warning period",
+        now: new Date(2023, 11, 30, 12),
+        expectedStatus: "valid"
+      },
+      {
+        name: "within the digital expiration warning period",
+        now: new Date(2024, 0, 20, 12),
+        expectedStatus: statusBeforeExpiration
+      },
+      {
+        name: "at the end of the day before expiration",
+        now: new Date(2024, 0, 29, 23, 59, 59, 999),
+        expectedStatus: statusBeforeExpiration
+      },
+      {
+        name: "at the start of the expiration day before the timestamp",
+        now: new Date(2024, 0, 30),
+        expectedStatus: "jwtExpired"
+      },
+      {
+        name: "one millisecond before expiration",
+        now: new Date(expiration.getTime() - 1),
+        expectedStatus: "jwtExpired"
+      },
+      {
+        name: "at the expiration timestamp",
+        now: expiration,
+        expectedStatus: "jwtExpired"
+      },
+      {
+        name: "one millisecond after expiration",
+        now: new Date(expiration.getTime() + 1),
+        expectedStatus: "jwtExpired"
+      }
+    ])("should return $expectedStatus $name", ({ now, expectedStatus }) => {
+      MockDate.set(now);
+      expect(getCredentialStatus(mockCredential, options)).toBe(expectedStatus);
+      expect(getCredentialStatus(mockCredential)).toBe(expectedStatus);
+    });
+  });
+
   describe("expired", () => {
     it("should return the physical document expired status", () => {
       MockDate.set(new Date(2024, 0, 20));
@@ -157,7 +236,7 @@ describe("getCredentialStatus", () => {
       expect(getCredentialStatus(mockCredential, options)).toEqual("expiring");
     });
 
-    it("should return the digital document expiring status", () => {
+    it("should return valid before the digital document expires", () => {
       MockDate.set(new Date(2024, 0, 20));
 
       const mockCredential: CredentialMetadata = {
@@ -178,13 +257,10 @@ describe("getCredentialStatus", () => {
         }
       };
 
-      expect(getCredentialStatus(mockCredential, options)).toEqual(
-        "jwtExpiring"
-      );
+      expect(getCredentialStatus(mockCredential, options)).toEqual("valid");
     });
 
-    // Digital document wins
-    it("should return the digital document expiring status when both are expiring", () => {
+    it("should preserve the physical document expiring status before digital expiration", () => {
       MockDate.set(new Date(2024, 0, 20));
 
       const mockCredential: CredentialMetadata = {
@@ -205,9 +281,7 @@ describe("getCredentialStatus", () => {
         }
       };
 
-      expect(getCredentialStatus(mockCredential, options)).toEqual(
-        "jwtExpiring"
-      );
+      expect(getCredentialStatus(mockCredential, options)).toEqual("expiring");
     });
 
     // Physical document wins
@@ -471,6 +545,7 @@ describe("getCredentialStatusMessageFromCatalog", () => {
 
 describe("getCredentialStatusMessageFromIssuerConf", () => {
   const CREDENTIAL_ID = "dc_sd_jwt_mDL";
+  const CREDENTIAL_TYPE = "mDL";
   const ERROR_CODE = "credential_suspended";
 
   const italianMessage = {
@@ -487,7 +562,13 @@ describe("getCredentialStatusMessageFromIssuerConf", () => {
   ) =>
     ({
       credential_configurations_supported: {
+        mso_mdoc_mDL: {
+          format: "mso_mdoc",
+          scope: CREDENTIAL_TYPE
+        },
         [CREDENTIAL_ID]: {
+          format: "dc+sd-jwt",
+          scope: CREDENTIAL_TYPE,
           issuance_errors_supported: {
             [ERROR_CODE]: { display }
           }
@@ -512,10 +593,10 @@ describe("getCredentialStatusMessageFromIssuerConf", () => {
 
   it.each([
     {
-      name: "errorCode, credentialId and issuerConf are missing",
+      name: "errorCode and issuerConf are missing",
       params: {
+        credentialId: CREDENTIAL_ID,
         errorCode: undefined,
-        credentialId: undefined,
         issuerConf: undefined
       }
     },
@@ -545,5 +626,15 @@ describe("getCredentialStatusMessageFromIssuerConf", () => {
     }
   ])("should return undefined when $name", ({ params }) => {
     expect(getCredentialStatusMessageFromIssuerConf(params)).toBeUndefined();
+  });
+
+  it("should return the message of the sd-jwt configuration for mdoc credentials", () => {
+    expect(
+      getCredentialStatusMessageFromIssuerConf({
+        errorCode: ERROR_CODE,
+        credentialId: "mso_mdoc_mDL",
+        issuerConf
+      })
+    ).toEqual(italianMessage);
   });
 });

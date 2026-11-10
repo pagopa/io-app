@@ -13,7 +13,8 @@ import { handleTogglePagoPaCapability } from "./handleTogglePagoPaCapability";
 
 /**
  * Handle payment method onboarding requests
- * @param walletClient wallet client
+ *
+ * @param walletClient Wallet client
  */
 export function* watchPaymentsMethodDetailsSaga(
   walletClient: WalletClient

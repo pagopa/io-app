@@ -88,8 +88,8 @@ export const trackFciSignatureGenericFailure = (reason: string) =>
   );
 
 /**
- * Centralized analytics tracking for signature request status changes.
- * Handles all status-based tracking logic in one place.
+ * Centralized analytics tracking for signature request status changes. Handles
+ * all status-based tracking logic in one place.
  */
 export const trackFciSignatureRequestStatus = (
   params:
@@ -350,6 +350,12 @@ export const trackFciPollingFailureAction = (
   mixpanelTrack(
     "FCI_POLLING_FAILURE_ACTION",
     buildEventProperties("UX", "action", { cta_category, cta_id })
+  );
+
+export const trackFciAppUpdateRequested = () =>
+  mixpanelTrack(
+    "APP_UPDATE_REQUESTED",
+    buildEventProperties("UX", "screen_view", { flow: "firma con IO" })
   );
 
 const trackFciAction =

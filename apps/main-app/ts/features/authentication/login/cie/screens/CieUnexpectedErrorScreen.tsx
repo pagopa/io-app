@@ -1,6 +1,4 @@
-/**
- * A screen to alert the user about the number of attempts remains
- */
+import { StackActions } from "@react-navigation/native";
 import I18n from "i18next";
 
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
@@ -8,15 +6,16 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList"
 import useActiveSessionLoginNavigation from "../../../activeSessionLogin/utils/useActiveSessionLoginNavigation";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
+/** Screen to display an unexpected error during the CIE authentication process */
 const CieUnexpectedErrorScreen = () => {
   const navigation = useIONavigation();
 
   const { navigateToAuthenticationScreen } = useActiveSessionLoginNavigation();
 
   const navigateToCiePinScreen = () => {
-    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
-    });
+    navigation.dispatch(
+      StackActions.popTo(AUTHENTICATION_ROUTES.CIE_PIN_SCREEN)
+    );
   };
 
   const action = {

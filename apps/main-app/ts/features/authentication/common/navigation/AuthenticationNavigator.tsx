@@ -1,4 +1,4 @@
-import { IOVisualCostants } from "@io-app/design-system";
+import { IODimensions } from "@io-app/design-system";
 import {
   createStackNavigator,
   TransitionPresets
@@ -13,6 +13,7 @@ import { ActiveSessionLandingScreen } from "../../activeSessionLogin/screens/Act
 import ActiveSessionLoginCieCardReaderScreen from "../../activeSessionLogin/screens/cie/ActiveSessionLoginCieCardReaderScreen";
 import ActiveSessionLoginCieConsentDataUsageScreen from "../../activeSessionLogin/screens/cie/ActiveSessionLoginCieConsentDataUsageScreen";
 import ActiveSessionCieIdLoginScreen from "../../activeSessionLogin/screens/cieId/ActiveSessionCieIdLoginScreen";
+import { OneIdentityActiveSessionCieIdLoginScreen } from "../../activeSessionLogin/screens/cieId/OneIdentityActiveSessionCieIdLoginScreen";
 import ActiveSessionIdpLoginScreen from "../../activeSessionLogin/screens/spid/ActiveSessionIdpLoginScreen";
 import { OneIdentityActiveSessionIdpLoginScreen } from "../../activeSessionLogin/screens/spid/OneIdentityActiveSessionIdpLoginScreen";
 import AuthErrorScreen from "../../login/authError/screens/AuthErrorScreen";
@@ -21,7 +22,7 @@ import CieCardReaderScreen from "../../login/cie/screens/CieCardReaderScreen";
 import CieConsentDataUsageScreen from "../../login/cie/screens/CieConsentDataUsageScreen";
 import CieExpiredOrInvalidScreen from "../../login/cie/screens/CieExpiredOrInvalidScreen";
 import CieExtendedApduNotSupportedScreen from "../../login/cie/screens/CieExtendedApduNotSupportedScreen";
-import CieIdAuthUrlError from "../../login/cie/screens/CieIdAuthUrlError";
+import CieIdAuthUrlErrorScreen from "../../login/cie/screens/CieIdAuthUrlError";
 import CieIdErrorScreen from "../../login/cie/screens/CieIdErrorScreen";
 import CieIdLoginScreen from "../../login/cie/screens/CieIdLoginScreen";
 import CieIdNotInstalledScreen from "../../login/cie/screens/CieIdNotInstalledScreen";
@@ -29,6 +30,9 @@ import CiePinScreen from "../../login/cie/screens/CiePinScreen";
 import CieUnexpectedErrorScreen from "../../login/cie/screens/CieUnexpectedErrorScreen";
 import CieWrongCardScreen from "../../login/cie/screens/CieWrongCardScreen";
 import CieWrongCiePinScreen from "../../login/cie/screens/CieWrongCiePinScreen";
+import { OneIdentityCieAuthScreen } from "../../login/cie/screens/OneIdentityCieAuthScreen";
+import { OneIdentityCieIdLoginScreen } from "../../login/cie/screens/OneIdentityCieIdLoginScreen";
+import { OneIdentityCiePinScreen } from "../../login/cie/screens/OneIdentityCiePinScreen";
 import CieIdWizard from "../../login/cie/screens/wizards/CieIdWizard";
 import CiePinWizard from "../../login/cie/screens/wizards/CiePinWizard";
 import IDActivationWizard from "../../login/cie/screens/wizards/IDActivationWizard";
@@ -144,19 +148,35 @@ const AuthenticationStackNavigator = () => {
       />
 
       <Stack.Screen
-        component={CiePinScreen}
+        component={
+          oneIdentityLoginEnabled ? OneIdentityCiePinScreen : CiePinScreen
+        }
         name={AUTHENTICATION_ROUTES.CIE_PIN_SCREEN}
         options={{ headerShown: true }}
       />
 
       <Stack.Screen
-        component={CieIdLoginScreen}
+        component={OneIdentityCieAuthScreen}
+        name={AUTHENTICATION_ROUTES.CIE_AUTH_SCREEN}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        component={
+          oneIdentityLoginEnabled
+            ? OneIdentityCieIdLoginScreen
+            : CieIdLoginScreen
+        }
         name={AUTHENTICATION_ROUTES.CIE_ID_LOGIN}
         options={{ headerShown: false }}
       />
 
       <Stack.Screen
-        component={ActiveSessionCieIdLoginScreen}
+        component={
+          oneIdentityLoginEnabled
+            ? OneIdentityActiveSessionCieIdLoginScreen
+            : ActiveSessionCieIdLoginScreen
+        }
         name={AUTHENTICATION_ROUTES.CIE_ID_ACTIVE_SESSION_LOGIN}
         options={{ headerShown: false }}
       />
@@ -216,6 +236,7 @@ const AuthenticationStackNavigator = () => {
         <Stack.Screen
           component={AuthErrorScreen}
           name={AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN}
+          options={{ gestureEnabled: false }}
         />
 
         <Stack.Screen
@@ -227,7 +248,7 @@ const AuthenticationStackNavigator = () => {
           name={AUTHENTICATION_ROUTES.CIE_ID_ERROR}
         />
         <Stack.Screen
-          component={CieIdAuthUrlError}
+          component={CieIdAuthUrlErrorScreen}
           name={AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL}
         />
         <Stack.Screen
@@ -243,7 +264,7 @@ const AuthenticationStackNavigator = () => {
           headerTitle: () => null,
           headerRight: CloseButton,
           headerStyle: {
-            height: IOVisualCostants.headerHeight,
+            height: IODimensions.height.header,
             // shadowOpacity and elevation are set to 0 to hide the shadow under the header
             elevation: 0,
             shadowOpacity: 0

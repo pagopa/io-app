@@ -1,6 +1,4 @@
 import { IOPictograms } from "@io-app/design-system";
-import * as B from "fp-ts/lib/boolean";
-import { constUndefined, pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 
@@ -38,27 +36,18 @@ export const EmptyList = ({ category }: EmptyListProps) => {
   const emptyListReason = useIOSelector(state =>
     emptyListReasonSelector(state, category)
   );
-  const onRetryCallback = useCallback(
-    () =>
-      pipe(
-        store.getState(),
-        isArchivingInProcessingModeSelector,
-        B.fold(
-          () =>
-            pipe(
-              {
-                pageSize,
-                filter: { getArchived: category === "ARCHIVE" },
-                fromUserAction: true
-              },
-              reloadAllMessages.request,
-              dispatch
-            ),
-          constUndefined
-        )
-      ),
-    [category, dispatch, store]
-  );
+  const onRetryCallback = useCallback(() => {
+    if (isArchivingInProcessingModeSelector(store.getState())) {
+      return;
+    }
+    dispatch(
+      reloadAllMessages.request({
+        pageSize,
+        filter: { getArchived: category === "ARCHIVE" },
+        fromUserAction: true
+      })
+    );
+  }, [category, dispatch, store]);
 
   const screenData = useMemo((): ScreenDataType | undefined => {
     switch (emptyListReason) {
@@ -73,11 +62,15 @@ export const EmptyList = ({ category }: EmptyListProps) => {
           title: I18n.t("messages.loadingErrorTitle")
         };
       case "noData":
-        const categoryKey = category === "ARCHIVE" ? "archive" : "inbox";
+        const isArchive = category === "ARCHIVE";
         return {
           pictogram: "empty",
-          subtitle: I18n.t(`messages.${categoryKey}.emptyMessage.subtitle`),
-          title: I18n.t(`messages.${categoryKey}.emptyMessage.title`)
+          subtitle: isArchive
+            ? I18n.t("messages.archive.emptyMessage.subtitle")
+            : I18n.t("messages.inbox.emptyMessage.subtitle"),
+          title: isArchive
+            ? I18n.t("messages.archive.emptyMessage.title")
+            : I18n.t("messages.inbox.emptyMessage.title")
         };
       default:
         return undefined;

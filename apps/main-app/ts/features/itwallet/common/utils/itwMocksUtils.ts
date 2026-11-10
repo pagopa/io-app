@@ -12,14 +12,16 @@ import tsL3 from "../../__mocks__/L3/tsL3.json";
 import mdl from "../../__mocks__/mdl.json";
 import statusAssertion from "../../__mocks__/statusAssertion.json";
 import ts from "../../__mocks__/ts.json";
-import { DigitalCredentialMetadata } from "./itwCredentialsCatalogueUtils";
+import { WellKnownClaim } from "./itwClaimsUtils";
+import {
+  DigitalCredentialMetadata,
+  DigitalCredentialsCatalogue
+} from "./itwCredentialsCatalogueUtils";
 import { CredentialMetadata, ParsedStatusAssertion } from "./itwTypesUtils";
 
 export const ISSUER_MOCK_NAME = "Istituto Poligrafico e Zecca dello Stato";
 
-/**
- * Credential types mocks.
- */
+/** Credential types mocks. */
 export enum CredentialType {
   DRIVING_LICENSE = "mDL",
   EDUCATION_ATTENDANCE = "education_attendance",
@@ -28,6 +30,13 @@ export enum CredentialType {
   EDUCATION_ENROLLMENT = "education_enrollment",
   EUROPEAN_DISABILITY_CARD = "EuropeanDisabilityCard",
   EUROPEAN_HEALTH_INSURANCE_CARD = "EuropeanHealthInsuranceCard",
+  /**
+   * Internal type used to identify the Person Identification Data credential.
+   * It does not distinguish between legacy PID, PID and NPID in order to avoid
+   * significant refactoring; use the vct to differentiate between them, if
+   * needed. Depending on future use cases, we may create separate credential
+   * types for PID and NPID.
+   */
   PID = "pid",
   PROOF_OF_AGE = "proof_of_age",
   RESIDENCY = "residency"
@@ -52,6 +61,29 @@ export const ItwStoredCredentialsMocks = {
     edat: edatL3 as unknown as CredentialMetadata
   }
 };
+
+export const ITW_ISSUING_AUTHORITY_CLAIM_MOCK_LABEL = "Mock issuing authority";
+
+/**
+ * Adds the `issuing_authority` claim provided by IPZS to the given credential.
+ * The claim label is the same for every locale, so tests can query it
+ * regardless of the current language.
+ */
+export const withIssuingAuthorityClaimMock = (
+  credential: CredentialMetadata
+): CredentialMetadata => ({
+  ...credential,
+  parsedCredential: {
+    ...credential.parsedCredential,
+    [WellKnownClaim.issuing_authority]: {
+      value: "Istituto Poligrafico e Zecca dello Stato",
+      name: {
+        "it-IT": ITW_ISSUING_AUTHORITY_CLAIM_MOCK_LABEL,
+        "en-US": ITW_ISSUING_AUTHORITY_CLAIM_MOCK_LABEL
+      }
+    }
+  }
+});
 
 export const ItwStatusAssertionMocks = {
   mdl: statusAssertion as ParsedStatusAssertion
@@ -81,4 +113,28 @@ export const ItwCredentialFromCatalogueMocks: DigitalCredentialMetadata = {
     }
   ],
   formats: []
+};
+
+/**
+ * Digital Credentials Catalogue mock with all the credentials obtainable in the
+ * app, built from {@link ItwCredentialFromCatalogueMocks}.
+ */
+export const ItwCredentialsCatalogueMock: DigitalCredentialsCatalogue = {
+  taxonomy_uri: "https://example.com/taxonomy",
+  iat: 1700000000,
+  exp: 4102444800,
+  credentials: [
+    CredentialType.DRIVING_LICENSE,
+    CredentialType.EUROPEAN_DISABILITY_CARD,
+    CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
+    CredentialType.PROOF_OF_AGE,
+    CredentialType.EDUCATION_DEGREE,
+    CredentialType.EDUCATION_ENROLLMENT,
+    CredentialType.RESIDENCY,
+    CredentialType.EDUCATION_DIPLOMA,
+    CredentialType.EDUCATION_ATTENDANCE
+  ].map(credential_type => ({
+    ...ItwCredentialFromCatalogueMocks,
+    credential_type
+  }))
 };

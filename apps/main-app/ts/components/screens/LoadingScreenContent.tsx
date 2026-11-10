@@ -1,6 +1,4 @@
-/**
- * An ingress screen to choose the real first screen the user must navigate to.
- */
+/** An ingress screen to choose the real first screen the user must navigate to. */
 import {
   Banner,
   ContentWrapper,
@@ -8,6 +6,7 @@ import {
   IOButton,
   IOButtonProps,
   IOColors,
+  IODimensions,
   IOMarkdownLite,
   useIOTheme,
   VSpacer,
@@ -93,7 +92,7 @@ export const LoadingScreenContent = ({
               <AnimatedPictogram
                 loop={true}
                 name={animatedPictogramSource}
-                size={120}
+                size={IODimensions.size.pictogram.screen}
               />
             ) : (
               <LoadingIndicator />

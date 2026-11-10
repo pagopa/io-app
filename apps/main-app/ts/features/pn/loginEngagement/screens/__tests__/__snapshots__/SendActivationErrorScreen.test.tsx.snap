@@ -26,7 +26,8 @@ exports[`SendActivationErrorScreen should match the snapshot 1`] = `
           "alignItems": "stretch",
           "flexGrow": 1,
           "justifyContent": "center",
-          "padding": 24,
+          "paddingHorizontal": 32,
+          "paddingVertical": 24,
         },
         false,
       ]
@@ -513,7 +514,7 @@ exports[`SendActivationErrorScreen should match the snapshot 1`] = `
                   {
                     "backgroundColor": "transparent",
                     "borderColor": "#0B3EE3",
-                    "borderRadius": 8,
+                    "borderRadius": 0,
                     "borderWidth": 0,
                     "height": undefined,
                   },
@@ -544,7 +545,7 @@ exports[`SendActivationErrorScreen should match the snapshot 1`] = `
                   {
                     "backgroundColor": "transparent",
                     "borderColor": "#0B3EE3",
-                    "borderRadius": 8,
+                    "borderRadius": 0,
                     "borderWidth": 0,
                     "height": undefined,
                   },

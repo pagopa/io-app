@@ -1,15 +1,15 @@
 import { ReactNode, Ref } from "react";
 import { View, ViewProps, ViewStyle } from "react-native";
 
-import type { IOAppMargin } from "../../core";
+import type { IOScreenPadding } from "../../core";
 
-import { IOVisualCostants } from "../../core/IOStyles";
+import { IODimensions } from "../../core/tokens";
 import { WithTestID } from "../../utils/types";
 
 type IOContentWrapperProps = WithTestID<
   Omit<ViewProps, "style"> & {
     children: ReactNode;
-    margin?: IOAppMargin;
+    margin?: IOScreenPadding;
     ref?: Ref<View>;
     style?: Omit<
       ViewStyle,
@@ -19,12 +19,13 @@ type IOContentWrapperProps = WithTestID<
 >;
 
 /**
-`ContentWrapper` is the main wrapper of the application. It automatically sets side margins,
-depending on the size value
-@param {IOContentWrapper} margin
+ * `ContentWrapper` is the main wrapper of the application. It automatically
+ * sets side margins, depending on the size value
+ *
+ * @param {IOContentWrapper} margin
  */
 export const ContentWrapper = ({
-  margin = IOVisualCostants.appMarginDefault,
+  margin = IODimensions.padding.screen.default,
   style,
   children,
   testID,

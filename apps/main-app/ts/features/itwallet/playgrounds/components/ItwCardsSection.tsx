@@ -1,6 +1,6 @@
 import {
   HStack,
-  IOVisualCostants,
+  IODimensions,
   ListItemHeader,
   VStack
 } from "@io-app/design-system";
@@ -47,14 +47,15 @@ const ALL_CREDENTIAL_TYPES: ReadonlyArray<string> = [
 
 /**
  * Cards section for ITW Playground
- * @returns cards section displaying ID card components
+ *
+ * @returns Cards section displaying ID card components
  */
 export const ItwCardsSection = () => (
   <VStack space={8}>
     <View style={{ paddingBottom: 160 }}>
       <ListItemHeader label={"Stack"} />
       <View
-        style={{ marginHorizontal: -IOVisualCostants.appMarginDefault / 2 }}
+        style={{ marginHorizontal: -IODimensions.padding.screen.default / 2 }}
       >
         {ALL_CREDENTIAL_TYPES.map(credentialType => (
           <ItwCredentialWalletCard
@@ -73,7 +74,7 @@ export const ItwCardsSection = () => (
         <ListItemHeader label={getCredentialNameFromType(credentialType)} />
         <ScrollView
           contentContainerStyle={{
-            paddingHorizontal: IOVisualCostants.appMarginDefault / 2,
+            paddingHorizontal: IODimensions.padding.screen.default / 2,
             paddingTop: 8,
             paddingBottom: 24
           }}
@@ -81,7 +82,7 @@ export const ItwCardsSection = () => (
           showsHorizontalScrollIndicator={false}
           style={{
             aspectRatio: 15 / 9,
-            marginHorizontal: -IOVisualCostants.appMarginDefault
+            marginHorizontal: -IODimensions.padding.screen.default
           }}
         >
           <HStack space={8}>
@@ -113,7 +114,7 @@ export const ItwCardsSection = () => (
         <ListItemHeader label={getCredentialNameFromType(credentialType)} />
         <ScrollView
           contentContainerStyle={{
-            paddingHorizontal: IOVisualCostants.appMarginDefault,
+            paddingHorizontal: IODimensions.padding.screen.default,
             paddingTop: 8,
             paddingBottom: 24
           }}
@@ -121,7 +122,7 @@ export const ItwCardsSection = () => (
           showsHorizontalScrollIndicator={false}
           style={{
             aspectRatio: 15 / 9,
-            marginHorizontal: -IOVisualCostants.appMarginDefault
+            marginHorizontal: -IODimensions.padding.screen.default
           }}
         >
           <HStack space={8}>

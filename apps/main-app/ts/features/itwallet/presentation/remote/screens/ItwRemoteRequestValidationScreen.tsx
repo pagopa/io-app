@@ -1,6 +1,6 @@
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
-import { useCallback, useLayoutEffect, useState } from "react";
+import { useCallback, useLayoutEffect, useRef, useState } from "react";
 
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
@@ -38,18 +38,25 @@ const ItwRemoteRequestValidationScreen = ({ route }: ScreenProps) => {
   const itwVersion = useIOSelector(selectItwSpecsVersion);
 
   /**
-   * Using useLayoutEffect here ensures that trackItwRemoteStart() runs
-   * as soon as the component is mounted, before any effect of its children.
+   * Using useLayoutEffect here ensures that trackItwRemoteStart() runs as soon
+   * as the component is mounted, before any effect of its children. The ref
+   * guard prevents a second event when `freezeOnBlur` re-runs layout effects on
+   * unfreeze.
    */
+  const hasTrackedStart = useRef(false);
   useLayoutEffect(() => {
-    trackItwRemoteStart();
+    if (!hasTrackedStart.current) {
+      hasTrackedStart.current = true;
+      trackItwRemoteStart();
+    }
   }, []);
 
   /**
-   * There may be scenarios where the app is not running when the user opens the link,
-   * so the app is started and the user goes through the identification or the full authentication process.
-   * Here we wait for the startup status to be authenticated to avoid inconsistencies
-   * between the machine and the navigation.
+   * There may be scenarios where the app is not running when the user opens the
+   * link, so the app is started and the user goes through the identification or
+   * the full authentication process. Here we wait for the startup status to be
+   * authenticated to avoid inconsistencies between the machine and the
+   * navigation.
    */
   if (startupStatus !== StartupStatusEnum.AUTHENTICATED) {
     return (

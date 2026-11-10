@@ -67,7 +67,7 @@ const IDActivationWizard = () => {
         </H6>
         <VSpacer size={12} />
         <ListItemAction
-          icon="cieLetter"
+          icon="cie"
           label={I18n.t(
             "authentication.wizards.id_activation_wizard.list_items.request_cie.label"
           )}
@@ -76,7 +76,7 @@ const IDActivationWizard = () => {
           variant="primary"
         />
         <ListItemAction
-          icon="cie"
+          icon="cieID"
           label={I18n.t(
             "authentication.wizards.id_activation_wizard.list_items.activate_cie.title"
           )}

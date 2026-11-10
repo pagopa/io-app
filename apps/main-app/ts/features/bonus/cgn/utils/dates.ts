@@ -37,6 +37,17 @@ const getStatusLabel = (status: CGNBadgeStatus) => {
   }
 };
 
+const getBadgeLabel = (status: CGNBadgeStatus) => {
+  switch (status) {
+    case "active":
+      return I18n.t("bonus.cgn.detail.status.badge.active");
+    case "expired":
+      return I18n.t("bonus.cgn.detail.status.badge.expired");
+    case "revoked":
+      return I18n.t("bonus.cgn.detail.status.badge.revoked");
+  }
+};
+
 export const getAccessibleExpirationDate = (
   expirationDate: Date,
   status: CGNBadgeStatus
@@ -44,7 +55,7 @@ export const getAccessibleExpirationDate = (
   `${getStatusLabel(status)}: ${formatDateAsShortFormat(
     expirationDate
   )}. ${I18n.t("bonus.cgn.detail.status.a11y.cardStatus", {
-    status: I18n.t(`bonus.cgn.detail.status.badge.${status}`)
+    status: getBadgeLabel(status)
   })}`;
 
 const MONTH_CODES: Record<string, number> = {

@@ -1,8 +1,4 @@
-import {
-  ActionType,
-  createAsyncAction,
-  createStandardAction
-} from "typesafe-actions";
+import { ActionType, createAsyncAction } from "typesafe-actions";
 
 import { NetworkError } from "../../../../../utils/errors";
 import {
@@ -10,9 +6,7 @@ import {
   DigitalCredentialsCatalogue
 } from "../../../common/utils/itwCredentialsCatalogueUtils";
 
-/**
- * This action handles the Digital Credentials Catalogue fetch
- */
+/** This action handles the Digital Credentials Catalogue fetch */
 export const itwFetchCredentialsCatalogue = createAsyncAction(
   "ITW_CREDENTIALS_CATALOGUE_REQUEST",
   "ITW_CREDENTIALS_CATALOGUE_SUCCESS",
@@ -20,8 +14,8 @@ export const itwFetchCredentialsCatalogue = createAsyncAction(
 )<void, DigitalCredentialsCatalogue, NetworkError>();
 
 /**
- * This action handles the fetch of catalogue locale translations.
- * Only dispatched for IT-Wallet spec v1.3.3.
+ * This action handles the fetch of catalogue locale translations. Only
+ * dispatched for IT-Wallet spec v1.3.3.
  */
 export const itwFetchCatalogueTranslations = createAsyncAction(
   "ITW_CATALOGUE_TRANSLATIONS_REQUEST",
@@ -29,11 +23,6 @@ export const itwFetchCatalogueTranslations = createAsyncAction(
   "ITW_CATALOGUE_TRANSLATIONS_FAILURE"
 )<void, CatalogueTranslations, NetworkError>();
 
-export const itwSetCatalogueEnabledForCredentialsList = createStandardAction(
-  "ITW_SET_CATALOGUE_ENABLED_FOR_CREDENTIALS_LIST"
-)<boolean>();
-
 export type ItwCredentialsCatalogueActions =
   | ActionType<typeof itwFetchCatalogueTranslations>
-  | ActionType<typeof itwFetchCredentialsCatalogue>
-  | ActionType<typeof itwSetCatalogueEnabledForCredentialsList>;
+  | ActionType<typeof itwFetchCredentialsCatalogue>;

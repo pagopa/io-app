@@ -8,7 +8,7 @@ import {
   HSpacer,
   Icon,
   IOColors,
-  IOVisualCostants
+  IODimensions
 } from "@io-app/design-system";
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
@@ -34,7 +34,7 @@ import {
   cgnOfflineMerchantsSelector,
   cgnOnlineMerchantsSelector
 } from "../../store/reducers/merchants";
-import { getCategorySpecs } from "../../utils/filters";
+import { getCategoryName, getCategorySpecs } from "../../utils/filters";
 import { useMixedSortedMerchants } from "../../utils/merchants";
 
 export type CgnMerchantListByCategoryScreenNavigationParams = Readonly<{
@@ -100,9 +100,9 @@ const CgnMerchantsListByCategory = () => {
   );
 
   useHeaderSecondLevel({
-    title: I18n.t(
-      categorySpecs?.nameKey ?? "bonus.cgn.merchantsList.navigationTitle"
-    ),
+    title: categorySpecs
+      ? getCategoryName(categorySpecs.type)
+      : I18n.t("bonus.cgn.merchantsList.navigationTitle"),
     enableDiscreteTransition: true,
     animatedRef: animatedFlatListRef,
     backgroundColor: categorySpecs?.colors,
@@ -177,12 +177,12 @@ const CgnMerchantsListByCategory = () => {
                 accessibilityLabel={I18n.t(
                   "bonus.cgn.merchantsList.a11yTitle",
                   {
-                    categoryName: I18n.t(categorySpecs.nameKey)
+                    categoryName: getCategoryName(categorySpecs.type)
                   }
                 )}
                 color={categorySpecs.textColor}
               >
-                {I18n.t(categorySpecs.nameKey)}
+                {getCategoryName(categorySpecs.type)}
               </H3>
             </View>
           </View>
@@ -224,7 +224,7 @@ const CgnMerchantsListByCategory = () => {
         <Animated.FlatList
           contentContainerStyle={{
             flexGrow: 1,
-            paddingBottom: IOVisualCostants.appMarginDefault
+            paddingBottom: IODimensions.padding.screen.default
           }}
           data={merchantsAll}
           ItemSeparatorComponent={() => <Divider />}

@@ -4,7 +4,10 @@ import { Fragment } from "react";
 import { HIDDEN_CLAIM_TEXT } from "../utils/constants.ts";
 import { ClaimDisplayFormat } from "../utils/itwClaimsUtils.ts";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils.ts";
-import { ItwCredentialClaim } from "./ItwCredentialClaim.tsx";
+import {
+  ItwClaimLongPressHandler,
+  ItwCredentialClaim
+} from "./ItwCredentialClaim.tsx";
 import { ItwNestedClaimsListItem } from "./ItwNestedClaimsListItem.tsx";
 
 interface ItwCredentialMultiClaimProps {
@@ -14,22 +17,20 @@ interface ItwCredentialMultiClaimProps {
   hidden?: boolean;
   isPreview?: boolean;
   nestedClaims: Array<Array<ClaimDisplayFormat>>;
+  onLongPress?: ItwClaimLongPressHandler;
 }
 
-/**
- * Type for the configuration of nested credential summaries.
- */
+/** Type for the configuration of nested credential summaries. */
 type NestedCredentialSummaryConfig = {
   summaryLabelId: string;
   summaryValueId: string;
 };
 
 /**
- * Map of nested credential summary configurations.
- * This is used to define how to summarize nested credentials in the UI.
- * Each key is the type of the nested credential, and the value is an object
- * containing the IDs of the label and value to be displayed in the summary.
- * Map more types here as needed.
+ * Map of nested credential summary configurations. This is used to define how
+ * to summarize nested credentials in the UI. Each key is the type of the nested
+ * credential, and the value is an object containing the IDs of the label and
+ * value to be displayed in the summary. Map more types here as needed.
  */
 const itwNestedCredentialSummaryMap: Record<
   string,
@@ -47,9 +48,9 @@ const itwNestedCredentialSummaryMap: Record<
 
 /**
  * Given a set of claims for a single nested item and its parent's claim ID,
- * this function looks up the correct configuration and returns the
- * appropriate summary fields. If no configuration is found, it falls back
- * to searching for claims with the IDs "label" and "value".
+ * this function looks up the correct configuration and returns the appropriate
+ * summary fields. If no configuration is found, it falls back to searching for
+ * claims with the IDs "label" and "value".
  *
  * @param claimId The ID of the parent claim (e.g., "education_degrees").
  * @param singleItemClaims The array of claims for the one nested item.
@@ -84,12 +85,15 @@ export const getNestedItemSummary = (
 
 /**
  * Component to render multiple claims that are nested within a parent claim.
- * @param nestedClaims An array of arrays, where each inner array contains claims for a single nested item.
+ *
+ * @param nestedClaims An array of arrays, where each inner array contains
+ *   claims for a single nested item.
  * @param claim The parent claim that contains the nested claims.
  * @param hidden Indicates if the claim values should be hidden.
  * @param isPreview Indicates if the claims are being rendered in preview mode.
  * @param credentialType Indicates the type of the credential
  * @param credentialStatus Indicates the status of the credential
+ * @param onLongPress Callback invoked when a nested claim value is long pressed
  */
 export const ItwCredentialMultiClaim = ({
   nestedClaims,
@@ -97,7 +101,8 @@ export const ItwCredentialMultiClaim = ({
   hidden,
   isPreview,
   credentialType,
-  credentialStatus
+  credentialStatus,
+  onLongPress
 }: ItwCredentialMultiClaimProps) => {
   // We render the nested claims as a list if there are multiple items
   const shouldRenderAsList = nestedClaims.length > 1;
@@ -121,7 +126,7 @@ export const ItwCredentialMultiClaim = ({
                 hidden={hidden}
                 isPreview={isPreview}
                 itemClaims={singleItemClaims}
-                itemTitle={displaySummaryValue}
+                onLongPress={onLongPress}
                 summaryLabel={summaryLabel}
                 summaryValue={displaySummaryValue}
               />
@@ -144,6 +149,7 @@ export const ItwCredentialMultiClaim = ({
               hidden={hidden}
               isPreview={isPreview}
               key={nestedClaim.id}
+              onLongPress={onLongPress}
             />
           </Fragment>
         ))}

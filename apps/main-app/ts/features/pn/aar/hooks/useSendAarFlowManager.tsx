@@ -26,7 +26,9 @@ export const useSendAarFlowManager = (): SendAarFlowManager => {
 
   const handleTerminateFlow = useCallback(() => {
     dispatch(
-      terminateAarFlow({ messageId: maybeIunFromAarFlowState(currentFlowData) })
+      terminateAarFlow({
+        messageId: maybeIunFromAarFlowState(currentFlowData)
+      })
     );
     navigation.popToTop();
   }, [dispatch, navigation, currentFlowData]);

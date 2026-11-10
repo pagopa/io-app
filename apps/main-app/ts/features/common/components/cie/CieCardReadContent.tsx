@@ -8,6 +8,7 @@ import {
   IOButtonBlockSpecificProps,
   IOButtonLinkSpecificProps,
   IOColors,
+  IODimensions,
   IOPictograms,
   IOSpringValues,
   Pictogram,
@@ -29,9 +30,7 @@ import { isDevEnv } from "../../../../utils/environment";
 import { platformSelect } from "../../utils";
 
 export type CieCardReadContentProps = {
-  /**
-   * @platform iOS
-   */
+  /** @platform iOS */
   hiddenProgressBar?: boolean;
   pictogram: IOPictograms;
   primaryAction?: Omit<IOButtonBlockSpecificProps, "variant">;
@@ -41,9 +40,7 @@ export type CieCardReadContentProps = {
   title: string;
 };
 
-/**
- * Renders the title component title based on the platform
- */
+/** Renders the title component title based on the platform */
 const Title = ({ title }: Pick<CieCardReadContentProps, "title">) => (
   <View>
     {/* A11y live node */}
@@ -61,9 +58,7 @@ const Title = ({ title }: Pick<CieCardReadContentProps, "title">) => (
   </View>
 );
 
-/**
- * Renders the component subtitle based on the platform and progress
- */
+/** Renders the component subtitle based on the platform and progress */
 const Subtitle = ({ subtitle }: Pick<CieCardReadContentProps, "subtitle">) => {
   if (subtitle === undefined) {
     return null;
@@ -78,9 +73,7 @@ const Subtitle = ({ subtitle }: Pick<CieCardReadContentProps, "subtitle">) => {
   });
 };
 
-/**
- * Renders the content actions (Android) or footer actions (iOS)
- */
+/** Renders the content actions (Android) or footer actions (iOS) */
 const Actions = (
   props: Pick<CieCardReadContentProps, "primaryAction" | "secondaryAction">
 ) =>
@@ -119,7 +112,9 @@ const Actions = (
 
 /**
  * Custom progress bar for read progress visualization on iOS
+ *
  * TODO: use ProgressLoader from the DS
+ *
  * @param props.progress - Progress value from 0 to 1
  */
 const LinearProgressBar = (
@@ -195,7 +190,10 @@ const ContentIos = (props: CieCardReadContentProps) => (
           <Title title={props.title} />
           <Subtitle subtitle={props.subtitle} />
         </View>
-        <Pictogram name={props.pictogram} size={120} />
+        <Pictogram
+          name={props.pictogram}
+          size={IODimensions.size.pictogram.screen}
+        />
       </HStack>
     </VStack>
     <Actions
@@ -250,8 +248,8 @@ const ContentAndroid = (props: CieCardReadContentProps) => {
 };
 
 /**
- * Renders the read progress screen content based on the platform.
- * It is fully customizable via props and it is used as base component to display the
+ * Renders the read progress screen content based on the platform. It is fully
+ * customizable via props and it is used as base component to display the
  * reading, failure and success states for the CIE manager flow.
  */
 export const CieCardReadContent = platformSelect({

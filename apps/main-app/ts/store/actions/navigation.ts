@@ -5,9 +5,7 @@ import { SETTINGS_ROUTES } from "../../features/settings/common/navigation/route
 import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
 
-/**
- * @deprecated
- */
+/** @deprecated */
 export const navigateToMainNavigatorAction = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.reset({
@@ -16,13 +14,9 @@ export const navigateToMainNavigatorAction = () =>
     })
   );
 
-/**
- * Authentication
- */
+/** Authentication */
 
-/**
- * @deprecated
- */
+/** @deprecated */
 export const navigateToOnboardingPinScreenAction = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(ROUTES.ONBOARDING, {
@@ -30,9 +24,7 @@ export const navigateToOnboardingPinScreenAction = () =>
     })
   );
 
-/**
- * @deprecated
- */
+/** @deprecated */
 export const navigateToTosScreen = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(ROUTES.ONBOARDING, {
@@ -40,9 +32,7 @@ export const navigateToTosScreen = () =>
     })
   );
 
-/**
- * @deprecated
- */
+/** @deprecated */
 export const navigateToServicesPreferenceModeSelectionScreen = (
   params: OnboardingServicesPreferenceScreenNavigationParams
 ) =>
@@ -53,13 +43,9 @@ export const navigateToServicesPreferenceModeSelectionScreen = (
     })
   );
 
-/**
- * Profile
- */
+/** Profile */
 
-/**
- * @deprecated
- */
+/** @deprecated */
 export const navigateToRemoveAccountSuccess = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
@@ -67,9 +53,7 @@ export const navigateToRemoveAccountSuccess = () =>
     })
   );
 
-/**
- * @deprecated
- */
+/** @deprecated */
 export const navigateToPrivacyScreen = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
@@ -80,13 +64,9 @@ export const navigateToPrivacyScreen = () =>
     })
   );
 
-/**
- * CIE
- */
+/** CIE */
 
-/**
- * @deprecated
- */
+/** @deprecated */
 export const navigateToWorkunitGenericFailureScreen = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(ROUTES.WORKUNIT_GENERIC_FAILURE)

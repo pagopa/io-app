@@ -22,9 +22,9 @@ import { ITW_PROXIMITY_ROUTES } from "../features/itwallet/presentation/proximit
 import { trackItwOfflineBottomSheet } from "../features/itwallet/wallet/analytics";
 import { useAppRestartAction } from "../features/itwallet/wallet/hooks/useAppRestartAction";
 import { mixpanelTrack } from "../mixpanel";
+import { useCurrentRouteName } from "../navigation/NavigationService";
 import { useIOSelector } from "../store/hooks";
 import { statusMessageByRouteSelector } from "../store/reducers/backendStatus/statusMessages";
-import { currentRouteSelector } from "../store/reducers/navigation";
 import { isStartupLoaded, StartupStatusEnum } from "../store/reducers/startup";
 import { buildEventProperties } from "../utils/analytics";
 import { useIOBottomSheetModal } from "../utils/hooks/bottomSheet";
@@ -67,10 +67,11 @@ type AlertProps = {
 
 /**
  * Helper to build the event properties for Mixpanel events related to banners.
- * @param eventType the type of the event, either "action" or "screen_view"
- * @param banner_page the current route where the banner is shown
- * @param banner_landing the URL of the banner, if any
- * @returns the event properties object
+ *
+ * @param eventType The type of the event, either "action" or "screen_view"
+ * @param banner_page The current route where the banner is shown
+ * @param banner_landing The URL of the banner, if any
+ * @returns The event properties object
  */
 const buildMPEventProperties = (
   eventType: "action" | "screen_view",
@@ -83,14 +84,15 @@ const buildMPEventProperties = (
   });
 
 /**
- * Helper hook to derive the connectivity state based on the current connectivity status,
- * the offline access reason, the current route and the startup status, which helps to reduce
- * the complexity of the main hook.
+ * Helper hook to derive the connectivity state based on the current
+ * connectivity status, the offline access reason, the current route and the
+ * startup status, which helps to reduce the complexity of the main hook.
  *
- * @returns the derived connectivity state based on the current connectivity status,
+ * @returns The derived connectivity state based on the current connectivity
+ *   status,
  */
 export const useDerivedConnectivityState = () => {
-  const currentRoute = useIOSelector(currentRouteSelector);
+  const currentRoute = useCurrentRouteName();
   const isConnected = useIOSelector(isConnectedSelector);
   const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
   const startupStatus = useIOSelector(isStartupLoaded);
@@ -150,8 +152,10 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
   const derivedConnectivityState = useDerivedConnectivityState();
   const prevDerivedConnectivityState = usePrevious(derivedConnectivityState);
 
-  const currentStatusMessage = useIOSelector(statusMessageByRouteSelector);
-  const currentRoute = useIOSelector(currentRouteSelector);
+  const currentRoute = useCurrentRouteName();
+  const currentStatusMessage = useIOSelector(
+    statusMessageByRouteSelector(currentRoute)
+  );
   const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
 
   const locale = getFullLocale();
@@ -200,7 +204,8 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
   const handleAppRestart = useAppRestartAction("banner");
 
   /**
-   * Effect to handle the connectivity state changes and update the alert and bottom sheet accordingly.
+   * Effect to handle the connectivity state changes and update the alert and
+   * bottom sheet accordingly.
    */
   useEffect(() => {
     if (derivedConnectivityState === prevDerivedConnectivityState) {
@@ -224,8 +229,8 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
         );
 
         /**
-         * Removes the "back online" alert after 3 seconds only if the app is not
-         * in the offline mode
+         * Removes the "back online" alert after 3 seconds only if the app is
+         * not in the offline mode
          */
         setTimeout(() => {
           setAlertVisible(false);

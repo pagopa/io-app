@@ -1,7 +1,7 @@
 import {
   Divider,
   Icon,
-  IOAccordionRadius,
+  IODimensions,
   useAccordionAnimation,
   useIOThemeContext
 } from "@io-app/design-system";
@@ -12,8 +12,8 @@ import Animated, { useAnimatedStyle } from "react-native-reanimated";
 
 import { getCredentialCardConfig } from "../../../../common/components/ItwCredentialCard/config";
 import { ItwCredentialClaimsCard } from "../../../../common/components/ItwCredentialClaimsCard";
+import { useItwCredentialName } from "../../../../common/hooks/useItwCredentialName";
 import { ClaimDisplayFormat } from "../../../../common/utils/itwClaimsUtils";
-import { getCredentialNameFromType } from "../../../../common/utils/itwCredentialUtils";
 import { useClaimsDetailsBottomSheet } from "../../hooks/useClaimsDetailsBottomSheet";
 import { ClaimItem } from "./ClaimItem";
 
@@ -21,40 +21,33 @@ import { ClaimItem } from "./ClaimItem";
 const COLLAPSED_RADIUS_THRESHOLD = 0.001;
 
 // Border width offset to ensure gradient fits within the border curves
-const COLLAPSIBLE_BORDER = 1;
+const COLLAPSIBLE_BORDER = IODimensions.stroke.default;
 
 type Props = {
-  /**
-   * Accessibilty
-   */
+  /** Accessibilty */
   accessibilityLabel?: string;
-  /**
-   * Credential type to display as title of the accordion
-   */
+  /** Credential type to display as title of the accordion */
   credentialType: string;
   /**
    * Whether the accordion starts expanded.
+   *
    * @default false
    */
   defaultExpanded?: boolean;
-  /**
-   * The list of items to display within the accordion.
-   */
+  /** The list of items to display within the accordion. */
   items: Array<ClaimDisplayFormat>;
-  /**
-   * Function called when a item is selected.
-   */
+  /** Function called when a item is selected. */
   onItemSelected?: (item: ClaimDisplayFormat, selected: boolean) => void;
   /**
-   * Function called when the accordion is toggled to collapsed or expanded state.
+   * Function called when the accordion is toggled to collapsed or expanded
+   * state.
    */
   onToggle?: (expanded: boolean) => void;
-  /**
-   * The IDs of the selected items, when the component is controlled.
-   */
+  /** The IDs of the selected items, when the component is controlled. */
   selectedItemIds?: Array<string>;
   /**
    * Enable the selection of items with a checkbox.
+   *
    * @default false
    */
   selectionEnabled?: boolean;
@@ -84,7 +77,7 @@ export const ItwClaimsSelector = ({
     defaultExpanded
   });
 
-  const title = getCredentialNameFromType(credentialType);
+  const title = useItwCredentialName(credentialType);
   const { background } = getCredentialCardConfig(credentialType, themeType);
 
   const onItemPress = () => {
@@ -106,10 +99,12 @@ export const ItwClaimsSelector = ({
      * ensure visual consistency with the outer container.
      */
     const bottomRadius =
-      progress.value < COLLAPSED_RADIUS_THRESHOLD ? IOAccordionRadius : 0;
+      progress.value < COLLAPSED_RADIUS_THRESHOLD
+        ? IODimensions.radius.accordion
+        : 0;
     return {
-      borderTopLeftRadius: IOAccordionRadius - COLLAPSIBLE_BORDER,
-      borderTopRightRadius: IOAccordionRadius - COLLAPSIBLE_BORDER,
+      borderTopLeftRadius: IODimensions.radius.accordion - COLLAPSIBLE_BORDER,
+      borderTopRightRadius: IODimensions.radius.accordion - COLLAPSIBLE_BORDER,
       borderBottomLeftRadius: bottomRadius - COLLAPSIBLE_BORDER,
       borderBottomRightRadius: bottomRadius - COLLAPSIBLE_BORDER,
       overflow: "hidden"

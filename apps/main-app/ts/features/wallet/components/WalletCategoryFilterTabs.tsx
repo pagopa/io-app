@@ -1,8 +1,4 @@
-import {
-  IOVisualCostants,
-  TabItem,
-  TabNavigation
-} from "@io-app/design-system";
+import { IODimensions, TabItem, TabNavigation } from "@io-app/design-system";
 import I18n from "i18next";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
@@ -18,9 +14,10 @@ import {
 import { walletCardCategoryFilters } from "../types";
 
 /**
- * Renders filter tabs to categorize cards on the wallet home screen.
- * The tabs allow users to filter between different wallet categories like ITW, payments and bonus cards.
- * Automatically hides when only one category is available to avoid unnecessary UI clutter.
+ * Renders filter tabs to categorize cards on the wallet home screen. The tabs
+ * allow users to filter between different wallet categories like ITW, payments
+ * and bonus cards. Automatically hides when only one category is available to
+ * avoid unnecessary UI clutter.
  */
 const WalletCategoryFilterTabs = () => {
   const dispatch = useIODispatch();
@@ -94,8 +91,8 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: 8,
     paddingBottom: 8,
-    marginHorizontal: -IOVisualCostants.appMarginDefault * 2,
-    paddingHorizontal: IOVisualCostants.appMarginDefault
+    marginHorizontal: -IODimensions.padding.screen.default * 2,
+    paddingHorizontal: IODimensions.padding.screen.default
   }
 });
 

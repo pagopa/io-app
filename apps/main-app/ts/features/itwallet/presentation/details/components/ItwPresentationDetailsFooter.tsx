@@ -7,7 +7,6 @@ import { useOfflineToastGuard } from "../../../../../hooks/useOfflineToastGuard.
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks";
-import { getMixPanelCredential } from "../../../analytics/utils";
 import { useNotAvailableToastGuard } from "../../../common/hooks/useNotAvailableToastGuard.ts";
 import { itwIPatenteCtaConfigSelector } from "../../../common/store/selectors/remoteConfig.ts";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
@@ -66,12 +65,7 @@ const ItwPresentationDetailsFooter = ({
             "features.itWallet.presentation.proximity.consentManagement.cta"
           )}
           onPress={() => {
-            trackItwCredentialManageConsent({
-              credential: getMixPanelCredential(
-                credential.credentialType,
-                isItwL3
-              )
-            });
+            trackItwCredentialManageConsent();
             navigation.navigate(ITW_ROUTES.MAIN, {
               screen: ITW_ROUTES.PRESENTATION.CONSENT_MANAGEMENT,
               params: { credentialType: credential.credentialType }
@@ -111,9 +105,7 @@ const ItwPresentationDetailsFooter = ({
   );
 };
 
-/**
- * Returns custom CTAs for a credential
- */
+/** Returns custom CTAs for a credential */
 const getCredentialActions = (credential: CredentialMetadata): ReactNode => {
   const { credentialType, parsedCredential } = credential;
   const docNumber = getCredentialDocumentNumber(parsedCredential);
@@ -127,9 +119,7 @@ const getCredentialActions = (credential: CredentialMetadata): ReactNode => {
   }[credentialType];
 };
 
-/**
- * Renders the IPatente service action item
- */
+/** Renders the IPatente service action item */
 const IPatenteListItemAction = ({ docNumber }: IPatenteListItemActionProps) => {
   const { startFIMSAuthenticationFlow } =
     useFIMSRemoteServiceConfiguration("iPatente");

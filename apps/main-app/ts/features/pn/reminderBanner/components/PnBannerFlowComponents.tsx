@@ -15,6 +15,7 @@ import { pnPrivacyUrlsSelector } from "../../../../store/reducers/backendStatus/
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { openWebUrl } from "../../../../utils/url";
 import LoadingComponent from "../../../fci/components/LoadingComponent";
+import { SendFailureReason } from "../../../messages/utils";
 import { sendBannerMixpanelEvents } from "../../analytics/activationReminderBanner";
 import {
   pnBannerFlowStateEnum,
@@ -23,7 +24,7 @@ import {
 
 // ---------------------------- COMPONENT TYPES ---------------------------
 
-type ErrorFlowStateKeys =
+export type ErrorFlowStateKeys =
   | "MISSING-SID"
   | Extract<
       PnBannerFlowStateKey,
@@ -31,24 +32,97 @@ type ErrorFlowStateKeys =
     >;
 type ErrorFlowStateProps = {
   flowState: ErrorFlowStateKeys;
+  reason?: SendFailureReason;
 };
 
 type LoadingStateProps = {
   loadingState: "LOADING-ACTIVATION" | "LOADING-DATA";
 };
+type ResultCopy = { body: string; title: string };
 type SuccessFlowStateKeys = Extract<
   PnBannerFlowStateKey,
   "ALREADY_ACTIVE" | "SUCCESS_ACTIVATION"
 >;
+
 type SuccessFlowStateProps = { flowState: SuccessFlowStateKeys };
+
+// ---------------------------- COPY ---------------------------
+
+const getLoadingTitle = (
+  loadingState: LoadingStateProps["loadingState"]
+): string => {
+  switch (loadingState) {
+    case "LOADING-ACTIVATION":
+      return I18n.t(
+        "features.pn.reminderBanner.activationFlow.LOADING-ACTIVATION.title"
+      );
+    case "LOADING-DATA":
+      return I18n.t(
+        "features.pn.reminderBanner.activationFlow.LOADING-DATA.title"
+      );
+  }
+};
+
+const getSuccessCopy = (flowState: SuccessFlowStateKeys): ResultCopy => {
+  switch (flowState) {
+    case "ALREADY_ACTIVE":
+      return {
+        title: I18n.t(
+          "features.pn.reminderBanner.activationFlow.ALREADY_ACTIVE.title"
+        ),
+        body: I18n.t(
+          "features.pn.reminderBanner.activationFlow.ALREADY_ACTIVE.body"
+        )
+      };
+    case "SUCCESS_ACTIVATION":
+      return {
+        title: I18n.t(
+          "features.pn.reminderBanner.activationFlow.SUCCESS_ACTIVATION.title"
+        ),
+        body: I18n.t(
+          "features.pn.reminderBanner.activationFlow.SUCCESS_ACTIVATION.body"
+        )
+      };
+  }
+};
+
+const getErrorCopy = (flowState: ErrorFlowStateKeys): ResultCopy => {
+  switch (flowState) {
+    case "FAILURE_ACTIVATION":
+      return {
+        title: I18n.t(
+          "features.pn.reminderBanner.activationFlow.FAILURE_ACTIVATION.title"
+        ),
+        body: I18n.t(
+          "features.pn.reminderBanner.activationFlow.FAILURE_ACTIVATION.body"
+        )
+      };
+    case "FAILURE_DETAILS_FETCH":
+      return {
+        title: I18n.t(
+          "features.pn.reminderBanner.activationFlow.FAILURE_DETAILS_FETCH.title"
+        ),
+        body: I18n.t(
+          "features.pn.reminderBanner.activationFlow.FAILURE_DETAILS_FETCH.body"
+        )
+      };
+    case "MISSING-SID":
+      return {
+        title: I18n.t(
+          "features.pn.reminderBanner.activationFlow.MISSING-SID.title"
+        ),
+        body: I18n.t(
+          "features.pn.reminderBanner.activationFlow.MISSING-SID.body"
+        )
+      };
+  }
+};
 
 // ---------------------------- COMPONENTS ---------------------------
 
 const LoadingScreen = ({ loadingState }: LoadingStateProps) => (
   <LoadingComponent
-    captionTitle={I18n.t(
-      `features.pn.reminderBanner.activationFlow.${loadingState}.title`
-    )}
+    captionTitle={getLoadingTitle(loadingState)}
     testID={`loading-${loadingState}`}
   />
 );
@@ -63,6 +137,7 @@ const SuccessScreen = ({ flowState }: SuccessFlowStateProps) => {
       sendBannerMixpanelEvents.activationSuccess();
     }
   });
+  const { title, body } = getSuccessCopy(flowState);
 
   return (
     <OperationResultScreenContent
@@ -72,22 +147,20 @@ const SuccessScreen = ({ flowState }: SuccessFlowStateProps) => {
         onPress: () => navigation.navigate(...navigateHomeParams)
       }}
       pictogram="success"
-      subtitle={I18n.t(
-        `features.pn.reminderBanner.activationFlow.${flowState}.body`
-      )}
+      subtitle={body}
       testID={`success-${flowState}`}
-      title={I18n.t(
-        `features.pn.reminderBanner.activationFlow.${flowState}.title`
-      )}
+      title={title}
     />
   );
 };
 
-const ErrorScreen = ({ flowState }: ErrorFlowStateProps) => {
+const ErrorScreen = ({ flowState, reason }: ErrorFlowStateProps) => {
   const navigation = useIONavigation();
   useOnFirstRender(() => {
-    sendBannerMixpanelEvents.bannerKO(flowState);
+    sendBannerMixpanelEvents.bannerKO(flowState, reason);
   });
+  const { title, body } = getErrorCopy(flowState);
+
   return (
     <OperationResultScreenContent
       action={{
@@ -96,13 +169,9 @@ const ErrorScreen = ({ flowState }: ErrorFlowStateProps) => {
         onPress: () => navigation.navigate(...navigateHomeParams)
       }}
       pictogram="umbrella"
-      subtitle={I18n.t(
-        `features.pn.reminderBanner.activationFlow.${flowState}.body`
-      )}
+      subtitle={body}
       testID={`error-${flowState}`}
-      title={I18n.t(
-        `features.pn.reminderBanner.activationFlow.${flowState}.title`
-      )}
+      title={title}
     />
   );
 };

@@ -1,8 +1,8 @@
 import {
   hexToRgba,
   IOColors,
-  IOSpacingScale,
-  IOVisualCostants,
+  IODimensions,
+  IODimensionScale,
   useIOTheme
 } from "@io-app/design-system";
 import { LinearGradient } from "expo-linear-gradient";
@@ -33,12 +33,7 @@ type IOListView<T> = ComponentProps<typeof Animated.FlatList<T>> &
   };
 
 /* Extended gradient area above the actions */
-const gradientSafeAreaHeight: IOSpacingScale = 96;
-/* End content margin before the actions */
-const contentEndMargin: IOSpacingScale = 32;
-/* Extra bottom margin for iPhone bottom handle because
-  Link variant doesn't have a fixed height */
-const extraSafeAreaMargin: IOSpacingScale = 8;
+const gradientSafeAreaHeight: IODimensionScale = 96;
 
 const styles = StyleSheet.create({
   gradientBottomActions: {
@@ -51,7 +46,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFill
   },
   buttonContainer: {
-    paddingHorizontal: IOVisualCostants.appMarginDefault,
+    paddingHorizontal: IODimensions.padding.screen.default,
     width: "100%",
     flexShrink: 0
   },
@@ -64,20 +59,30 @@ const styles = StyleSheet.create({
 });
 
 /**
- * The main scrollable container component.
- * It includes full support for custom headers and actions.
+ * The main scrollable container component. It includes full support for custom
+ * headers and actions.
  *
- * @param [headerConfig] Configuration for the header component. Use this only if you need to configure a custom header from scratch.
- * If you need the predefined configuration with default `Back (<)` and `Help (?)` buttons, use `useHeaderSecondLevel`
- * @param {IOListViewActions} [actions] Actions to be rendered at the bottom of the `FlatList`
- * @param [animatedRef] Ref generated through `useAnimatedRef` (used by `useFlatListOffset` to get the scroll position)
+ * @param [headerConfig] Configuration for the header component. Use this only
+ *   if you need to configure a custom header from scratch. If you need the
+ *   predefined configuration with default `Back (<)` and `Help (?)` buttons,
+ *   use `useHeaderSecondLevel`
+ * @param {IOListViewActions} [actions] Actions to be rendered at the bottom of
+ *   the `FlatList`
+ * @param [animatedRef] Ref generated through `useAnimatedRef` (used by
+ *   `useFlatListOffset` to get the scroll position)
  * @param {number} [snapOffset] Offset when you need to add a snap point
- * @param {boolean} [excludeSafeAreaMargins=false] Exclude safe area margins at the bottom of the `FlatList`
- * This is useful if you have a screen with a tab bar at the bottom, or if the bottom margin is already being managed
- * @param {boolean} [excludeEndContentMargin=false] Exclude the end content margin
- * @param {boolean} [includeContentMargins=true] Include horizontal screen margins
- * @param {boolean} [debugMode=false] Enable debug mode. Only for testing purposes
+ * @param {boolean} [excludeSafeAreaMargins=false] Exclude safe area margins at
+ *   the bottom of the `FlatList` This is useful if you have a screen with a tab
+ *   bar at the bottom, or if the bottom margin is already being managed.
+ *   Default is `false`
+ * @param {boolean} [excludeEndContentMargin=false] Exclude the end content
+ *   margin. Default is `false`
+ * @param {boolean} [includeContentMargins=true] Include horizontal screen
+ *   margins. Default is `true`
+ * @param {boolean} [debugMode=false] Enable debug mode. Only for testing
+ *   purposes. Default is `false`
  */
+// oxlint-disable-next-line complexity
 export const IOListView = <T,>({
   headerConfig,
   data,
@@ -123,7 +128,9 @@ export const IOListView = <T,>({
   /* When the secondary action is visible, add extra margin
        to avoid little space from iPhone bottom handle */
   const extraBottomMargin =
-    actions?.secondary && needSafeAreaMargin ? extraSafeAreaMargin : 0;
+    actions?.secondary && needSafeAreaMargin
+      ? IODimensions.padding.footer.homeIndicator
+      : 0;
 
   /* Safe background block. Cover at least 85% of the space
        to avoid glitchy elements underneath */
@@ -136,7 +143,7 @@ export const IOListView = <T,>({
   /* Height of the safe bottom area, applied to the ScrollView:
        Actions + Content end margin */
   const safeBottomAreaHeight =
-    bottomMargin + actionBlockHeight + contentEndMargin;
+    bottomMargin + actionBlockHeight + IODimensions.padding.screen.end;
 
   const { colors, handleScroll, locations, opacityTransition } =
     useScrollHeaderAnimation({ snapOffset, headerConfig });
@@ -154,9 +161,9 @@ export const IOListView = <T,>({
             ? 0
             : actions
               ? safeBottomAreaHeight
-              : bottomMargin + contentEndMargin,
+              : bottomMargin + IODimensions.padding.screen.end,
           paddingHorizontal: includeContentMargins
-            ? IOVisualCostants.appMarginDefault
+            ? IODimensions.padding.screen.default
             : 0,
           ...(contentContainerStyle || {})
         },
@@ -254,7 +261,9 @@ export const IOListView = <T,>({
       snapToOffsets={
         // If there is a refresh control, don't snap to offsets
         // This is a react-native bug: https://github.com/facebook/react-native/issues/27324
-        RefreshControlComponent ? undefined : [0, snapOffset ?? 0]
+        RefreshControlComponent || snapOffset === undefined || snapOffset === 0
+          ? undefined
+          : [0, snapOffset]
       }
       testID={testID}
     />

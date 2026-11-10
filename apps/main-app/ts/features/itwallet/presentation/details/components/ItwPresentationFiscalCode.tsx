@@ -1,7 +1,7 @@
 import {
   H3,
-  IOAppMargin,
   IOColors,
+  IODimensions,
   useScaleAnimation
 } from "@io-app/design-system";
 import I18n from "i18next";
@@ -16,28 +16,33 @@ import { selectFiscalCodeFromEid } from "../../../credentials/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 
 /**
- * This magic number is the lenght of the encoded fiscal code in a CODE39 barcode.
- * It should be always the same as long as the fiscal code is always 16 characters long.
- * This is used to calculate the width of the barcode since the barcode library doesn't support
- * a max width parameter.
+ * This magic number is the lenght of the encoded fiscal code in a CODE39
+ * barcode. It should be always the same as long as the fiscal code is always 16
+ * characters long. This is used to calculate the width of the barcode since the
+ * barcode library doesn't support a max width parameter.
  */
 const ENCODED_FISCAL_CODE_LENGTH_CODE39 = 288;
 
 /**
- * For the barcode width, we start from the window width and subtract the horizontal padding.
+ * For the barcode width, we start from the window width and subtract the
+ * horizontal padding.
  */
 const windowWidth = Dimensions.get("window").width;
 
+const buttonPaddingHorizontal = IODimensions.padding.card;
+
 /**
- * The total width is the window width minus the horizontal screen padding and the fiscal code button padding.
+ * The total width is the window width minus the horizontal screen padding and
+ * the fiscal code button padding, on both sides.
  */
 const barcodeTotalWidth =
   windowWidth -
-  IOAppMargin[4] - // Subtracting the horizontal screen padding
-  IOAppMargin[3]; // Subtracting the fiscal code button padding
+  IODimensions.padding.screen.default * 2 - // Screen padding, both sides
+  buttonPaddingHorizontal * 2; // Fiscal code button padding, both sides
 
 /**
- * The barcode width is the total width divided by the encoded fiscal code length.
+ * The barcode width is the total width divided by the encoded fiscal code
+ * length.
  */
 const barcodeWidth = barcodeTotalWidth / ENCODED_FISCAL_CODE_LENGTH_CODE39;
 
@@ -86,13 +91,13 @@ const styles = StyleSheet.create({
   button: {
     paddingTop: 8,
     paddingBottom: 16,
-    paddingHorizontal: 16,
+    paddingHorizontal: buttonPaddingHorizontal,
     rowGap: 0,
     borderColor: IOColors["grey-100"],
     // Always white regardless of the theme
     backgroundColor: IOColors.white,
-    borderWidth: 1,
-    borderRadius: 8,
+    borderWidth: IODimensions.stroke.default,
+    borderRadius: IODimensions.radius.card,
     borderCurve: "continuous"
   },
   text: {

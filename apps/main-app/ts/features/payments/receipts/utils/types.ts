@@ -1,9 +1,8 @@
 import * as t from "io-ts";
 
 /**
- * Receipts headers
- * This is the type of the headers returned by the BizEvents API
- * due to resolve wrong type error in the auto-generated client
+ * Receipts headers This is the type of the headers returned by the BizEvents
+ * API due to resolve wrong type error in the auto-generated client
  */
 export const ReceiptsHeaders = t.type({
   map: t.type({

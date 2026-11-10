@@ -9,6 +9,7 @@ import {
   ContentWrapper,
   H6,
   IOButton,
+  IODimensions,
   IOToast,
   Pictogram,
   VSpacer
@@ -330,7 +331,10 @@ const IdPayInitiativeDetailsScreenComponent = () => {
                       flexGrow: 1
                     }}
                   >
-                    <Pictogram name="empty" size={72} />
+                    <Pictogram
+                      name="empty"
+                      size={IODimensions.size.pictogram.inline}
+                    />
                     <VSpacer size={16} />
                     <H6>
                       {I18n.t(
@@ -465,7 +469,7 @@ const IdPayInitiativeDetailsScreenComponent = () => {
       headerAction={{
         icon: "info",
         onPress: navigateToBeneficiaryDetails,
-        accessibilityLabel: "info"
+        accessibilityLabel: I18n.t("global.buttons.info")
       }}
       logoUris={[{ uri: logoURL }]}
       name={initiativeName || ""}

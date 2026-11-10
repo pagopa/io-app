@@ -3,12 +3,7 @@ import I18n from "i18next";
 import { Fragment, useMemo } from "react";
 import { Image } from "react-native";
 
-import { useIOSelector } from "../../../../store/hooks";
-import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-import { trackCopyListItem } from "../../analytics";
-import { getMixPanelCredential } from "../../analytics/utils/index.ts";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { HIDDEN_CLAIM_TEXT } from "../utils/constants.ts";
 import {
   ClaimDisplayFormat,
@@ -25,17 +20,25 @@ import { ItwCredentialStatus } from "../utils/itwTypesUtils";
 import { ItwCredentialMultiClaim } from "./ItwCredentialMultiClaim.tsx";
 
 /**
+ * Callback invoked when a claim value is long pressed. It receives the claim
+ * label and its full (unhidden and untruncated) value.
+ */
+export type ItwClaimLongPressHandler = (label: string, value: string) => void;
+
+/**
  * Helper function to get the accessibility text for hidden claims.
- * @returns the localized accessibility text for hidden claims
+ *
+ * @returns The localized accessibility text for hidden claims
  */
 const getHiddenClaimAccessibilityText = () =>
   I18n.t("features.itWallet.presentation.credentialDetails.hiddenClaim");
 
 /**
  * Component which renders a place of birth type claim.
- * @param label - the label of the claim
- * @param claim - the claim value
- * @param hidden - a flag to hide the claim value
+ *
+ * @param label - The label of the claim
+ * @param claim - The claim value
+ * @param hidden - A flag to hide the claim value
  */
 const PlaceOfBirthClaimItem = ({
   label,
@@ -63,9 +66,10 @@ const PlaceOfBirthClaimItem = ({
 
 /**
  * Component which renders a yes/no claim.
- * @param label - the label of the claim
- * @param claim - the claim value
- * @param hidden - a flag to hide the claim value
+ *
+ * @param label - The label of the claim
+ * @param claim - The claim value
+ * @param hidden - A flag to hide the claim value
  */
 const BoolClaimItem = ({
   label,
@@ -97,69 +101,65 @@ const BoolClaimItem = ({
 
 /**
  * Component which renders a generic text type claim.
- * @param label - the label of the claim
- * @param claim - the claim value
- * @param isCopyable - a flag to enable the copy of the claim value
- * @param credentialType - the type of the credential, used for analytics tracking
- * @param hidden - a flag to hide the claim value
+ *
+ * @param label - The label of the claim
+ * @param claim - The claim value
+ * @param hidden - A flag to hide the claim value. Long press is disabled when
+ *   hidden
+ * @param onLongPress - Callback invoked when the claim value is long pressed
  */
 const PlainTextClaimItem = ({
   label,
   claim,
-  isCopyable,
-  credentialType,
-  hidden
+  hidden,
+  onLongPress
 }: {
   claim: string;
-  credentialType?: string;
   hidden?: boolean;
-  isCopyable?: boolean;
   label: string;
+  onLongPress?: ItwClaimLongPressHandler;
 }) => {
   const safeValue = getSafeText(claim);
-  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const displayValue = hidden ? HIDDEN_CLAIM_TEXT : safeValue;
   const accessibilityStateText = hidden
     ? getHiddenClaimAccessibilityText()
     : safeValue;
-
-  const handleLongPress = () => {
-    clipboardSetStringWithFeedback(safeValue);
-    if (credentialType) {
-      trackCopyListItem({
-        credential: getMixPanelCredential(credentialType, isItwL3),
-        item_copied: label
-      });
-    }
-  };
 
   return (
     <ListItemInfo
       accessibilityLabel={`${label} ${accessibilityStateText}`}
       label={label}
       numberOfLines={4}
-      onLongPress={isCopyable && !hidden ? handleLongPress : undefined}
+      onLongPress={
+        onLongPress && !hidden ? () => onLongPress(label, claim) : undefined
+      }
       value={displayValue}
     />
   );
 };
 
 /**
- * Component which renders a date type claim with an optional icon and expiration badge.
- * @param label - the label of the claim
- * @param claim - the value of the claim
- * @param status - the status of the claim, used to show an expiration badge
- * @param hidden - a flag to hide the claim value
+ * Component which renders a date type claim with an optional icon and
+ * expiration badge.
+ *
+ * @param label - The label of the claim
+ * @param claim - The value of the claim
+ * @param status - The status of the claim, used to show an expiration badge
+ * @param hidden - A flag to hide the claim value. Long press is disabled when
+ *   hidden
+ * @param onLongPress - Callback invoked when the claim value is long pressed
  */
 const DateClaimItem = ({
   label,
   claim,
   status,
-  hidden
+  hidden,
+  onLongPress
 }: {
   claim: SimpleDate;
   hidden?: boolean;
   label: string;
+  onLongPress?: ItwClaimLongPressHandler;
   status?: ItwCredentialStatus;
 }) => {
   // Remove the timezone offset to display the date in its original format
@@ -234,6 +234,9 @@ const DateClaimItem = ({
       endElement={endElement}
       key={`${label}-${displayValue}`}
       label={label}
+      onLongPress={
+        onLongPress && !hidden ? () => onLongPress(label, realValue) : undefined
+      }
       value={displayValue}
     />
   );
@@ -241,8 +244,10 @@ const DateClaimItem = ({
 
 /**
  * Component which renders a claim of unknown type with a placeholder.
- * @param label - the label of the claim
- * @param _claim - the claim value of unknown type. We are not interested in its value but it's needed for the exaustive type checking.
+ *
+ * @param label - The label of the claim
+ * @param _claim - The claim value of unknown type. We are not interested in its
+ *   value but it's needed for the exaustive type checking.
  */
 const UnknownClaimItem = ({ label }: { _claim?: unknown; label: string }) => (
   <PlainTextClaimItem
@@ -253,9 +258,10 @@ const UnknownClaimItem = ({ label }: { _claim?: unknown; label: string }) => (
 
 /**
  * Component which renders a image type claim in a square container.
- * @param label - the label of the claim
- * @param claim - the claim value
- * @param hidden - a flag to hide the claim value
+ *
+ * @param label - The label of the claim
+ * @param claim - The claim value
+ * @param hidden - A flag to hide the claim value
  */
 const ImageClaimItem = ({
   label,
@@ -289,8 +295,9 @@ const ImageClaimItem = ({
 
 /**
  * Component which renders an attachment claim
- * @param name - name of the file
- * @param hidden - a flag to hide the claim value
+ *
+ * @param name - Name of the file
+ * @param hidden - A flag to hide the claim value
  */
 const AttachmentsClaimItem = ({
   name,
@@ -316,7 +323,7 @@ const AttachmentsClaimItem = ({
         type: "badge",
         componentProps: {
           variant: "default",
-          text: "PDF"
+          text: I18n.t("global.badges.pdf")
         }
       }}
       label={I18n.t(
@@ -327,13 +334,14 @@ const AttachmentsClaimItem = ({
   );
 
 /**
- * Component which renders a driving privileges type claim.
- * It features a bottom sheet with information about the issued and expiration date of the claim.
- * @param label the label of the claim
- * @param claim the claim value
- * @param detailsButtonVisible a flag to show or hide the details button
- * @param hidden a flag to hide the claim value
- * @returns a list item component with the driving privileges claim
+ * Component which renders a driving privileges type claim. It features a bottom
+ * sheet with information about the issued and expiration date of the claim.
+ *
+ * @param label The label of the claim
+ * @param claim The claim value
+ * @param detailsButtonVisible A flag to show or hide the details button
+ * @param hidden A flag to hide the claim value
+ * @returns A list item component with the driving privileges claim
  */
 const DrivingPrivilegesClaimItem = ({
   label,
@@ -424,26 +432,34 @@ const DrivingPrivilegesClaimItem = ({
 };
 
 /**
- * Component which renders a claim.
- * It renders a different component based on the type of the claim.
- * @param claim - the claim to render
- * @param hidden - a flag to hide the claim value
- * @param isPreview - a flag to indicate if the claim is being rendered in preview mode
- * @param credentialStatus - the status of the credential, used for expiration date claims
- * @param credentialType - the type of the credential, used for analytics tracking
+ * Component which renders a claim. It renders a different component based on
+ * the type of the claim.
+ *
+ * @param claim - The claim to render
+ * @param hidden - A flag to hide the claim value
+ * @param isPreview - A flag to indicate if the claim is being rendered in
+ *   preview mode
+ * @param credentialStatus - The status of the credential, used for expiration
+ *   date claims
+ * @param credentialType - The type of the credential, forwarded to nested
+ *   claims for analytics tracking
+ * @param onLongPress - Callback invoked when a text or date claim value is long
+ *   pressed. It is never invoked for hidden claims
  */
 export const ItwCredentialClaim = ({
   claim,
   hidden,
   isPreview,
   credentialStatus,
-  credentialType
+  credentialType,
+  onLongPress
 }: {
   claim: ClaimDisplayFormat;
   credentialStatus?: ItwCredentialStatus;
   credentialType?: string;
   hidden?: boolean;
   isPreview?: boolean;
+  onLongPress?: ItwClaimLongPressHandler;
 }) =>
   parseClaimValue(claim.value).match(
     parsed => {
@@ -462,6 +478,7 @@ export const ItwCredentialClaim = ({
               claim={parsed.value}
               hidden={hidden}
               label={claim.label}
+              onLongPress={onLongPress}
               status={
                 !isPreview && isExpirationDateClaim(claim)
                   ? credentialStatus
@@ -490,6 +507,7 @@ export const ItwCredentialClaim = ({
               claim={extractFiscalCode(parsed.value) ?? parsed.value}
               hidden={hidden}
               label={claim.label}
+              onLongPress={onLongPress}
             />
           );
         case "image":
@@ -506,6 +524,7 @@ export const ItwCredentialClaim = ({
               claim={parsed.value.join(", ")}
               hidden={hidden}
               label={claim.label}
+              onLongPress={onLongPress}
             />
           );
         case "nestedArray":
@@ -517,6 +536,7 @@ export const ItwCredentialClaim = ({
               hidden={hidden}
               isPreview={isPreview}
               nestedClaims={parsed.value.map(item => parseClaims(item))}
+              onLongPress={onLongPress}
             />
           );
         case "nestedObject":
@@ -531,6 +551,7 @@ export const ItwCredentialClaim = ({
                     credentialType={credentialType}
                     hidden={hidden}
                     isPreview={isPreview}
+                    onLongPress={onLongPress}
                   />
                 </Fragment>
               ))}
@@ -551,10 +572,9 @@ export const ItwCredentialClaim = ({
           return (
             <PlainTextClaimItem
               claim={parsed.value}
-              credentialType={credentialType}
               hidden={hidden}
-              isCopyable={!isPreview}
               label={claim.label}
+              onLongPress={onLongPress}
             />
           );
       }

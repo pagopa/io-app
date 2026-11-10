@@ -1,4 +1,6 @@
+import { getRedirects } from "@io-app/login-utils";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
+import { err } from "neverthrow";
 
 import { AppDispatch } from "../../../../App";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../login";
@@ -20,20 +22,36 @@ jest.mock("../..", () => {
       .mockResolvedValue(jwkPublicKey as PublicKey)
   };
 });
-jest.mock("@pagopa/io-react-native-login-utils", () => ({
+jest.mock("@io-app/login-utils", () => ({
   getRedirects: jest.fn().mockResolvedValue([undefined])
 }));
 
 describe("Lollipop regenerate key, get redirects and verification", () => {
-  it("should reject because SAMLRequest is missing", async () => {
-    await expect(
-      regenerateKeyGetRedirectsAndVerifySaml(
-        "loginUri",
-        "keyTag",
-        false,
-        false,
-        dispatch
-      )
-    ).rejects.toEqual(new Error("Missing SAMLRequest"));
+  it.each([
+    {
+      name: "no redirects are returned",
+      redirects: [],
+      expectedError: { reason: "Missing Redirects" }
+    },
+    {
+      name: "the last redirect has no SAMLRequest",
+      redirects: ["https://idp.example.com/sso"],
+      expectedError: {
+        reason: "Missing SAMLRequest parameter in URL",
+        url: "https://idp.example.com/sso"
+      }
+    }
+  ])("should fail when $name", async ({ redirects, expectedError }) => {
+    jest.mocked(getRedirects).mockResolvedValue(redirects);
+
+    const result = await regenerateKeyGetRedirectsAndVerifySaml(
+      "loginUri",
+      "keyTag",
+      false,
+      false,
+      dispatch
+    );
+
+    expect(result).toEqual(err(expectedError));
   });
 });

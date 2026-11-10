@@ -7,12 +7,7 @@ import {
 } from "react-native";
 
 import { useIOTheme } from "../../context";
-import {
-  IOListItemVisualParams,
-  IOSelectionListItemVisualParams,
-  IOSpacer,
-  IOVisualCostants
-} from "../../core";
+import { IODimensions, IOTypography } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
@@ -62,9 +57,9 @@ export const ModuleNavigation = (props: WithTestID<ModuleNavigationProps>) => {
 
   const iconComponent = icon && !hugeFontEnabled && (
     <Icon
-      color="grey-300"
+      color={theme["icon-decorative"]}
       name={icon}
-      size={IOSelectionListItemVisualParams.iconSize}
+      size={IODimensions.size.icon.module.default}
     />
   );
 
@@ -78,9 +73,12 @@ export const ModuleNavigation = (props: WithTestID<ModuleNavigationProps>) => {
 
   return (
     <PressableModuleBase {...pressableProps} onPress={onPress}>
-      <HStack space={8} style={{ alignItems: "center" }}>
+      <HStack
+        space={IODimensions.gap.module.trailing}
+        style={{ alignItems: "center" }}
+      >
         <HStack
-          space={IOVisualCostants.iconMargin as IOSpacer}
+          space={IODimensions.gap.module.leading}
           style={{ alignItems: "center", flexGrow: 1, flexShrink: 1 }}
         >
           {iconComponent ?? imageComponent}
@@ -107,7 +105,7 @@ export const ModuleNavigation = (props: WithTestID<ModuleNavigationProps>) => {
           <Icon
             color={theme["interactiveElem-default"]}
             name="chevronRightListItem"
-            size={IOListItemVisualParams.chevronSize}
+            size={IODimensions.size.icon.chevron}
           />
         ) : null}
       </HStack>
@@ -123,17 +121,39 @@ const ModuleNavigationSkeleton = ({
     accessibilityState={{ busy: true }}
     accessible={true}
     endBlock={
-      <IOSkeleton height={24} radius={16} shape="rectangle" width={64} />
+      <IOSkeleton
+        height={IODimensions.height.badge}
+        radius={IODimensions.radius.badge}
+        shape="rectangle"
+        width={64}
+      />
     }
     startBlock={
       <HStack
-        space={IOVisualCostants.iconMargin as IOSpacer}
-        style={{ alignItems: "center" }}
+        space={IODimensions.gap.module.leading}
+        style={{ alignItems: "center", flexGrow: 1, flexShrink: 1 }}
       >
-        <IOSkeleton radius={8} shape="square" size={24} />
-        <VStack space={4}>
-          <IOSkeleton height={16} radius={8} shape="rectangle" width={96} />
-          <IOSkeleton height={12} radius={8} shape="rectangle" width={160} />
+        <IOSkeleton
+          radius={IODimensions.radius.skeleton.graphic}
+          shape="square"
+          size={IODimensions.size.icon.module.default}
+        />
+        <VStack
+          space={IODimensions.gap.skeleton.items}
+          style={{ flexGrow: 1, flexShrink: 1 }}
+        >
+          <IOSkeleton
+            height={IOTypography.bodySmall.size}
+            radius={IODimensions.radius.skeleton.text}
+            shape="rectangle"
+            width="50%"
+          />
+          <IOSkeleton
+            height={IOTypography.labelMini.size}
+            radius={IODimensions.radius.skeleton.text}
+            shape="rectangle"
+            width="80%"
+          />
         </VStack>
       </HStack>
     }
@@ -142,8 +162,8 @@ const ModuleNavigationSkeleton = ({
 
 const styles = StyleSheet.create({
   image: {
-    width: IOSelectionListItemVisualParams.iconSize,
-    height: IOSelectionListItemVisualParams.iconSize,
+    width: IODimensions.size.icon.module.default,
+    height: IODimensions.size.icon.module.default,
     resizeMode: "contain"
   }
 });

@@ -3,7 +3,13 @@ import { OperationListDTO } from "@io-app/api-types/generated/definitions/idpay/
 import { OperationTypeEnum as RefundOperationTypeEnum } from "@io-app/api-types/generated/definitions/idpay/RefundOperationDTO";
 import { OperationTypeEnum as TransactionOperationTypeEnum } from "@io-app/api-types/generated/definitions/idpay/TransactionDetailDTO";
 import { ChannelEnum } from "@io-app/api-types/generated/definitions/idpay/TransactionOperationDTO";
-import { H6, IOSkeleton, Pictogram, VSpacer } from "@io-app/design-system";
+import {
+  H6,
+  IODimensions,
+  IOSkeleton,
+  Pictogram,
+  VSpacer
+} from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { enumType } from "@pagopa/ts-commons/lib/types";
 import * as E from "fp-ts/lib/Either";
@@ -34,6 +40,19 @@ const OperationWithDetailsType = enumType<
   "OperationWithDetails"
 );
 
+const getOperationDetailsTitle = (type: OperationWithDetailsType): string => {
+  switch (type) {
+    case RefundOperationTypeEnum.PAID_REFUND:
+      return I18n.t("idpay.initiative.operationDetails.title.PAID_REFUND");
+    case RefundOperationTypeEnum.REJECTED_REFUND:
+      return I18n.t("idpay.initiative.operationDetails.title.REJECTED_REFUND");
+    case TransactionOperationTypeEnum.REVERSAL:
+      return I18n.t("idpay.initiative.operationDetails.title.REVERSAL");
+    case TransactionOperationTypeEnum.TRANSACTION:
+      return I18n.t("idpay.initiative.operationDetails.title.TRANSACTION");
+  }
+};
+
 type IdPayTimelineDetailsBottomSheetModal = Omit<
   IOBottomSheetModal,
   "present"
@@ -42,7 +61,9 @@ type IdPayTimelineDetailsBottomSheetModal = Omit<
 };
 
 /**
- * This hook is used to show the bottom sheet with the details of a timeline operation
+ * This hook is used to show the bottom sheet with the details of a timeline
+ * operation
+ *
  * @param initiativeId ID of the initiative associated to the operation details
  */
 const useIdPayTimelineDetailsBottomSheet = (
@@ -78,6 +99,7 @@ const useIdPayTimelineDetailsBottomSheet = (
     return pipe(
       detailsPot,
       pot.toOption,
+      // oxlint-disable-next-line react/jsx-key -- O.map is fp-ts Option map, not Array.map; key prop is not needed
       O.map(details => {
         switch (details.operationType) {
           case RefundOperationTypeEnum.PAID_REFUND:
@@ -118,7 +140,7 @@ const useIdPayTimelineDetailsBottomSheet = (
     pipe(
       OperationWithDetailsType.decode(operation.operationType),
       E.map(type => {
-        setTitle(I18n.t(`idpay.initiative.operationDetails.title.${type}`));
+        setTitle(getOperationDetailsTitle(type));
         dispatch(
           idpayTimelineDetailsGet.request({
             initiativeId,
@@ -153,7 +175,7 @@ const ErrorComponent = () => (
   <View
     style={{ paddingTop: 16, justifyContent: "center", alignItems: "center" }}
   >
-    <Pictogram name="attention" size={72} />
+    <Pictogram name="attention" size={IODimensions.size.pictogram.inline} />
     <VSpacer size={16} />
     <H6>{I18n.t("idpay.initiative.operationDetails.errorBody")}</H6>
   </View>

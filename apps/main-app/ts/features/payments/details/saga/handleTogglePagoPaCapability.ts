@@ -15,9 +15,7 @@ import {
 } from "../store/actions";
 import { selectPaymentMethodDetails } from "../store/selectors";
 
-/**
- * Handle the remote call to toggle the Wallet pagopa capability
- */
+/** Handle the remote call to toggle the Wallet pagopa capability */
 export function* handleTogglePagoPaCapability(
   updateWalletApplicationsById: WalletClient["updateIOPaymentWalletApplicationsById"],
   action: ActionType<(typeof paymentsTogglePagoPaCapabilityAction)["request"]>

@@ -6,6 +6,7 @@ import {
 } from "../../../../../components/screens/OperationResultScreenContent";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../../../store/hooks";
+import { zendeskItWalletCategory } from "../../../../../utils/supportAssistance";
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton";
 import { trackItwKoStateAction } from "../../../analytics";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation";
@@ -16,8 +17,13 @@ import { itwIsL3EnabledSelector } from "../../../common/store/selectors/index";
 import { serializeFailureReason } from "../../../common/utils/itwStoreUtils";
 import { itwCredentialNameResolverSelector } from "../../../credentialsCatalogue/store/selectors";
 import { ItwPresentationMissingCredentialsFailureContent } from "../../common/components/ItwPresentationMissingCredentialsFailureContent";
-import { trackItwRemoteInvalidAuthResponseBottomSheet } from "../analytics";
+import {
+  trackItwRemoteInvalidAuthResponseBottomSheet,
+  trackItwUpgradeL3MandatoryCancel,
+  trackItwUpgradeL3MandatoryConfirm
+} from "../analytics";
 import { getDismissalContextFromFailure } from "../analytics/utils";
+import { ItwL3UpgradeTrigger } from "../analytics/utils/types";
 import { useItwRemoteEventsTracking } from "../hooks/useItwRemoteEventsTracking";
 import { useItwRemoteUntrustedRPBottomSheet } from "../hooks/useItwRemoteUntrustedRPBottomSheet";
 import { useItwSendAuthorizationErrorResponse } from "../hooks/useItwSendAuthorizationErrorResponse";
@@ -69,6 +75,8 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const failureSupportModal = useItwFailureSupportModal({
     failure,
     supportChatEnabled: zendeskAssistanceErrors.includes(failure.type),
+    // Remote presentation is an IT-Wallet feature, regardless of the wallet status
+    zendeskCategory: zendeskItWalletCategory,
     zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_PRESENTAZIONE_REMOTA
   });
 
@@ -240,6 +248,9 @@ const ContentView = ({ failure }: ContentViewProps) => {
                           "features.itWallet.presentation.remote.walletInactiveScreen.primaryAction"
                         )
                       });
+                      trackItwUpgradeL3MandatoryConfirm(
+                        ItwL3UpgradeTrigger.REMOTE_QR_CODE
+                      );
                       machineRef.send({ type: "go-to-wallet-activation" });
                     }
                   }
@@ -256,6 +267,9 @@ const ContentView = ({ failure }: ContentViewProps) => {
                     "features.itWallet.presentation.remote.walletInactiveScreen.secondaryAction"
                   )
                 });
+                trackItwUpgradeL3MandatoryCancel(
+                  ItwL3UpgradeTrigger.REMOTE_QR_CODE
+                );
                 dismissalDialog.show();
               }
             }

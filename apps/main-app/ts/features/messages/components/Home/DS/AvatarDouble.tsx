@@ -2,8 +2,7 @@ import {
   hexToRgba,
   Icon,
   IOColors,
-  IOSpacingScale,
-  IOVisualCostants,
+  IODimensions,
   useIOTheme
 } from "@io-app/design-system";
 import { useEffect, useMemo, useState } from "react";
@@ -15,21 +14,20 @@ type AvatarDoubleProps = {
   backgroundLogoUri?: ImageSourcePropType;
 };
 
-const avatarContainerSize = 30;
-const avatarDoubleRadiusSizeSmall = 6;
-const internalSpaceDefaultSize = 3;
-const internalSpacePlaceholderDefaultSize: IOSpacingScale = 6;
+const avatarSize = IODimensions.size.avatar.xsmall;
+const avatarRadius = IODimensions.radius.avatar.xsmall;
+const avatarPadding = IODimensions.padding.avatar.xsmall;
 const avatarBorderLightMode = hexToRgba(IOColors.black, 0.1);
 
 const styles = StyleSheet.create({
   topContainer: {
-    height: IOVisualCostants.avatarSizeSmall,
-    width: IOVisualCostants.avatarSizeSmall
+    height: IODimensions.size.avatar.small,
+    width: IODimensions.size.avatar.small
   },
   avatarWrapper: {
     overflow: "hidden",
     borderColor: avatarBorderLightMode,
-    borderWidth: 1,
+    borderWidth: IODimensions.stroke.default,
     borderCurve: "continuous",
     position: "absolute"
   },
@@ -46,8 +44,14 @@ const styles = StyleSheet.create({
 });
 
 /**
- * `AvatarDouble` component is used to display the background logo of an organization, with a fixed pagoPA icon on top. It accepts the following props:
- * - `backgroundLogoUri`: the uri of the image to display. If not provided, a placeholder icon will be displayed. It can be a single uri or an array of uris, in which case the first one that is available will be used.
+ * `AvatarDouble` component is used to display the background logo of an
+ * organization, with a fixed pagoPA icon on top. It accepts the following
+ * props:
+ *
+ * - `backgroundLogoUri`: the uri of the image to display. If not provided, a
+ *   placeholder icon will be displayed. It can be a single uri or an array of
+ *   uris, in which case the first one that is available will be used.
+ *
  * @param AvatarDoubleProps
  * @returns
  */
@@ -91,15 +95,15 @@ export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
         style={[
           styles.avatarWrapper,
           {
-            height: avatarContainerSize,
-            width: avatarContainerSize,
-            borderRadius: avatarDoubleRadiusSizeSmall,
+            height: avatarSize,
+            width: avatarSize,
+            borderRadius: avatarRadius,
             backgroundColor:
               imageSource === undefined ? IOColors["grey-50"] : IOColors.white,
             padding:
               imageSource === undefined
-                ? internalSpacePlaceholderDefaultSize
-                : internalSpaceDefaultSize,
+                ? avatarPadding.placeholder
+                : avatarPadding.logo,
             bottom: 0,
             right: 0
           }
@@ -116,8 +120,7 @@ export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
             style={[
               styles.avatarInnerWrapper,
               {
-                borderRadius:
-                  avatarDoubleRadiusSizeSmall - internalSpaceDefaultSize
+                borderRadius: avatarRadius - avatarPadding.logo
               }
             ]}
           >
@@ -136,9 +139,9 @@ export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
         style={[
           styles.avatarWrapper,
           {
-            height: avatarContainerSize,
-            width: avatarContainerSize,
-            borderRadius: avatarDoubleRadiusSizeSmall,
+            height: avatarSize,
+            width: avatarSize,
+            borderRadius: avatarRadius,
             backgroundColor:
               imageSource === undefined ? IOColors["grey-50"] : IOColors.white,
             padding: 0,
@@ -151,8 +154,7 @@ export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
           style={[
             styles.avatarInnerWrapper,
             {
-              borderRadius:
-                avatarDoubleRadiusSizeSmall - internalSpaceDefaultSize
+              borderRadius: avatarRadius - avatarPadding.logo
             }
           ]}
         >

@@ -5,6 +5,7 @@ import {
   H6,
   HStack,
   Icon,
+  IODimensions,
   IOModuleStyles,
   Tag,
   useIOTheme,
@@ -16,7 +17,7 @@ import { Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
 import { useCgnStyle } from "../../hooks/useCgnStyle";
-import { getCategorySpecs } from "../../utils/filters";
+import { getCategoryName, getCategorySpecs } from "../../utils/filters";
 import {
   isValidDiscount,
   moduleCGNaccessibilityLabel,
@@ -41,7 +42,7 @@ export const CategoryTag = ({ category }: CategoryTagProps) => {
         name: categorySpecs.icon,
         color: "lightGrey"
       }}
-      text={I18n.t(categorySpecs.nameKey)}
+      text={getCategoryName(category)}
       variant="custom"
     />
   ) : null;
@@ -68,7 +69,6 @@ export const ModuleCgnDiscount = ({ onPress, discount }: ModuleCgnDiscount) => {
     >
       <Animated.View
         style={[
-          { borderWidth: 1 },
           IOModuleStyles.button,
           discount.isNew ? moduleStyle.new : moduleStyle.default,
           scaleAnimatedStyle
@@ -115,7 +115,7 @@ export const ModuleCgnDiscount = ({ onPress, discount }: ModuleCgnDiscount) => {
           <Icon
             color={theme["interactiveElem-default"]}
             name="chevronRightListItem"
-            size={24}
+            size={IODimensions.size.icon.chevron}
           />
         </View>
       </Animated.View>

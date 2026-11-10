@@ -75,18 +75,19 @@ const BarcodeScanScreen = () => {
     format => (format === "DATA_MATRIX" ? dataMatrixPosteEnabled : true)
   );
 
-  const barcodeTypes: Array<IOBarcodeType> = IO_BARCODE_ALL_TYPES.filter(
-    type =>
-      type === "IDPAY"
-        ? isIdPayEnabledInScanScreen
-        : type === "SEND"
-          ? isSendEnabled
-          : true
+  const barcodeTypes: Array<IOBarcodeType> = IO_BARCODE_ALL_TYPES.filter(type =>
+    type === "IDPAY"
+      ? isIdPayEnabledInScanScreen
+      : type === "SEND"
+        ? isSendEnabled
+        : true
   );
 
   /**
-   * Handles the case with multiple barcodes.It gives priority to pagoPA barcodes.
-   * If barcode type does not support multiple barcode, it shows an alert.
+   * Handles the case with multiple barcodes.It gives priority to pagoPA
+   * barcodes. If barcode type does not support multiple barcode, it shows an
+   * alert.
+   *
    * @param barcodes Array of scanned barcodes
    */
   const handleMultipleBarcodes = (
@@ -134,6 +135,7 @@ const BarcodeScanScreen = () => {
 
   /**
    * Handles a single barcode and navigates to the correct screen.
+   *
    * @param barcode Scanned barcode
    */
   const handleSingleBarcode = (barcode: IOBarcode, origin: IOBarcodeOrigin) => {
@@ -155,9 +157,9 @@ const BarcodeScanScreen = () => {
         break;
       case "ITW_CREDENTIAL_OFFER":
         /**
-         * Use replace so BARCODE_SCAN is removed from the parent stack.
-         * This lets the offer flow close with goBack and return directly
-         * to the screen shown before the scanner.
+         * Use replace so BARCODE_SCAN is removed from the parent stack. This
+         * lets the offer flow close with goBack and return directly to the
+         * screen shown before the scanner.
          */
         navigation.replace(ITW_ROUTES.MAIN, {
           screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER_INTRO,
@@ -168,9 +170,9 @@ const BarcodeScanScreen = () => {
         break;
       case "ITW_REMOTE":
         /**
-         * Use replace so BARCODE_SCAN is removed from the parent stack.
-         * This lets the remote flow close with goBack and return directly
-         * to the screen shown before the scanner.
+         * Use replace so BARCODE_SCAN is removed from the parent stack. This
+         * lets the remote flow close with goBack and return directly to the
+         * screen shown before the scanner.
          */
         navigation.replace(ITW_REMOTE_ROUTES.MAIN, {
           screen: ITW_REMOTE_ROUTES.REQUEST_VALIDATION,
@@ -245,15 +247,15 @@ const BarcodeScanScreen = () => {
         accessibilityLabel={I18n.t("barcodeScan.manual.notice")}
         icon="productPagoPA"
         iconColor="blueItalia-500"
+        label={I18n.t("barcodeScan.manual.notice")}
         onPress={handlePagoPACodeInput}
-        value={I18n.t("barcodeScan.manual.notice")}
       />
       <Divider />
       <ListItemNav
         accessibilityLabel={I18n.t("barcodeScan.manual.authorize")}
         icon="gallery"
+        label={I18n.t("barcodeScan.manual.authorize")}
         onPress={handleIdPayPaymentCodeInput}
-        value={I18n.t("barcodeScan.manual.authorize")}
       />
       <VSpacer size={16} />
     </View>

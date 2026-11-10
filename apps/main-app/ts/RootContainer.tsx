@@ -27,11 +27,13 @@ import {
 
 /**
  * The main container of the application with:
- * - the Navigator
- * - the IdentificationModal, for authenticating user after login by CIE/SPID
- * - the SystemOffModal, shown if backend is unavailable
- * - the UpdateAppModal, if the backend is not compatible with the installed app version
- * - the root for displaying light modals
+ *
+ * - The Navigator
+ * - The IdentificationModal, for authenticating user after login by CIE/SPID
+ * - The SystemOffModal, shown if backend is unavailable
+ * - The UpdateAppModal, if the backend is not compatible with the installed app
+ *   version
+ * - The root for displaying light modals
  */
 const RootContainerInner = ({ store }: { store: Store }) => {
   const dispatch = useIODispatch();

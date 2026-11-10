@@ -13,17 +13,26 @@ type ItwCredentialClaimsListProps = {
 };
 
 /**
- * This component renders the list of claims for a credential.
- * It dinamically renders the list of claims passed as claims prop in the order they are passed.
- * @param data - the {@link CredentialMetadata} of the credential.
- * @param releaserVisible - if true, the releaser metadata is shown at the end of the list (default: true).
+ * This component renders the list of claims for a credential. It dinamically
+ * renders the list of claims passed as claims prop in the order they are
+ * passed.
+ *
+ * @param data - The {@link CredentialMetadata} of the credential.
+ * @param releaserVisible - If true, the releaser metadata is shown at the end
+ *   of the list (default: true).
  */
 const ItwCredentialPreviewClaimsList = ({
   data,
   releaserVisible = true
 }: ItwCredentialClaimsListProps) => {
   const claims = parseClaims(data.parsedCredential, {
-    exclude: [WellKnownClaim.unique_id, WellKnownClaim.link_qr_code]
+    exclude: [
+      WellKnownClaim.unique_id,
+      WellKnownClaim.link_qr_code,
+      // Keep the claim when the releaser metadata is hidden, otherwise it
+      // would not be displayed at all
+      ...(releaserVisible ? [WellKnownClaim.issuing_authority] : [])
+    ]
   });
   const { credentialType } = data;
 

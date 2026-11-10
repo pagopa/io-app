@@ -1,28 +1,23 @@
 # Layout
 
 Different layout components are available to help with screen composition:
-* **`ContentWrapper`**: a basic `View` component with horizontal spacing applied to all screens by default. It is used to wrap the main content.
-* **Stack**: `VStack` and `HStack` are used to add **uniform** vertical and horizontal spacing between components, respectively. They take advantage of the `flex` properties combined with the new `gap` property.
-* **Spacer**: `VSpacer` and `HSpacer` are used to add **not-uniform** vertical and horizontal spacing between components, respectively. They are defined as `View` components with a fixed height or width.
-* **`Divider`**: used to add a divider between screen blocks.
+
+- **`ContentWrapper`**: a basic `View` component with horizontal spacing applied to all screens by default. It is used to wrap the main content.
+- **Stack**: `VStack` and `HStack` are used to add **uniform** vertical and horizontal spacing between components, respectively. They take advantage of the `flex` properties combined with the new `gap` property.
+- **Spacer**: `VSpacer` and `HSpacer` are used to add **not-uniform** vertical and horizontal spacing between components, respectively. They are defined as `View` components with a fixed height or width.
+- **`Divider`**: used to add a divider between screen blocks.
 
 ## Usage
 
 ### `ContentWrapper`
 
 ```jsx
-import { ContentWrapper } from '@pagopa/io-app-design-system';
+import { ContentWrapper } from "@pagopa/io-app-design-system";
 
-const Component = () => (
-  <ContentWrapper>
-   {/* […] */}
-  </ContentWrapper>
-);
+const Component = () => <ContentWrapper>{/* […] */}</ContentWrapper>;
 
 const ComponentWithLargerMargin = () => (
-  <ContentWrapper margin={24}>
-   {/* […] */}
-  </ContentWrapper>
+  <ContentWrapper margin={24}>{/* […] */}</ContentWrapper>
 );
 ```
 
@@ -31,19 +26,15 @@ const ComponentWithLargerMargin = () => (
 In the example below, the inner components are arranged with an equal uniform vertical space of 16 between them.
 
 ```jsx
-import { VStack } from '@pagopa/io-app-design-system';
+import { VStack } from "@pagopa/io-app-design-system";
 
-const ComponentWithInnerSpacing = () => (
-  <VStack space={16}>
-   {/* […] */}
-  </VStack>
-);
+const ComponentWithInnerSpacing = () => <VStack space={16}>{/* […] */}</VStack>;
 ```
 
 ### `VSpacer` and `HSpacer`
 
 ```jsx
-import { VSpacer, HSpacer } from '@pagopa/io-app-design-system';
+import { VSpacer, HSpacer } from "@pagopa/io-app-design-system";
 
 const Component = () => (
   <View>
@@ -56,20 +47,22 @@ const Component = () => (
 );
 
 const ComponentWithHSpacer = () => (
-  <View style={{
-    flexDirection: 'row'
-  }}>
+  <View
+    style={{
+      flexDirection: "row"
+    }}
+  >
     {/* […] */}
     <HSpacer />
     {/* […] */}
-  </ View>
+  </View>
 );
 ```
 
 ### `Divider`
 
 ```jsx
-import { Divider } from '@pagopa/io-app-design-system';
+import { Divider } from "@pagopa/io-app-design-system";
 
 const Component = () => (
   <Screen>
@@ -85,6 +78,7 @@ const Component = () => (
 ### I need to add space between the components. Should I use `Stack` or `Spacer` components?
 
 The `gap` property, on which the `Stack` components are based, is handled directly by React Native's layout engine. This means that:
+
 - Native-level spacing calculation
 - Better memory efficiency
 - Faster layout computation

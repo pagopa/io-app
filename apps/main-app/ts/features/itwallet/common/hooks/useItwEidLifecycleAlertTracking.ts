@@ -3,19 +3,19 @@ import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { trackItwBannerTap, trackItwBannerVisualized } from "../../analytics";
 import { ITW_IDENTIFICATION_SCREENVIEW_EVENTS } from "../../identification/analytics/enum";
-import { ItwJwtCredentialStatus } from "../utils/itwTypesUtils";
+import { ItwEidStatus } from "../utils/itwTypesUtils";
 
 type Props = {
   currentScreenName?: string;
   isItwCredential: boolean;
   isOffline?: boolean;
-  maybeEidStatus: ItwJwtCredentialStatus | undefined;
+  maybeEidStatus: ItwEidStatus | undefined;
   navigation: ReturnType<typeof useIONavigation>;
   skipViewTracking?: boolean;
 };
 
 const getLifecycleBannerId = (
-  status: ItwJwtCredentialStatus | undefined,
+  status: ItwEidStatus | undefined,
   isItwCredential: boolean
 ) => {
   if (isItwCredential) {
@@ -33,12 +33,14 @@ const getLifecycleBannerId = (
  * Hook for tracking eID and PID lifecycle alerts.
  *
  * This hook handles two types of analytics events:
+ *
  * 1. Banner visualized event: triggered the first time the alert becomes visible
- *    when the screen is focused. If the screen loses focus and regains it,
- *    the event can be retracked depending on the focus behavior.
+ *    when the screen is focused. If the screen loses focus and regains it, the
+ *    event can be retracked depending on the focus behavior.
  * 2. Banner tap event: triggered when the user tap the alert.
  *
  * Tracking rules:
+ *
  * - If `skipViewTracking` is true, only the visualized event is skipped.
  * - If the credential status is valid, no visualized event is sent.
  *
@@ -48,7 +50,7 @@ const getLifecycleBannerId = (
  * @param skipViewTracking Flag to disable only the view tracking (visualized)
  * @param currentScreenName Optional screen name to include in tracking
  * @param isOffline Whether the app is in offline mode
- * @returns trackAlertTap callback to track tap interactions on the alert
+ * @returns TrackAlertTap callback to track tap interactions on the alert
  */
 export const useItwEidLifecycleAlertTracking = ({
   isItwCredential,
@@ -60,7 +62,9 @@ export const useItwEidLifecycleAlertTracking = ({
 }: Props) => {
   const hasTrackedRef = useRef(false);
   const isEidInvalid =
-    maybeEidStatus === "jwtExpiring" || maybeEidStatus === "jwtExpired";
+    maybeEidStatus === "jwtExpiring" ||
+    maybeEidStatus === "jwtExpired" ||
+    (maybeEidStatus === "invalid" && isItwCredential);
 
   const shouldTrackVisualization = !skipViewTracking && isEidInvalid;
 

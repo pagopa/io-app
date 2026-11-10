@@ -21,8 +21,9 @@ import { getBooleanSelfDeclarationListFromContext } from "./selectors";
 
 /**
  * Checks if the error is a 429 Too Many Requests error that exhausted retries.
- * The defaultRetryingFetch converts 429 responses to TransientError and retries,
- * but after max retries it returns either TransientError or "max-retries" string.
+ * The defaultRetryingFetch converts 429 responses to TransientError and
+ * retries, but after max retries it returns either TransientError or
+ * "max-retries" string.
  */
 const isTooManyRequestsError = (error: unknown): boolean =>
   error === "max-retries" ||
@@ -31,8 +32,9 @@ const isTooManyRequestsError = (error: unknown): boolean =>
   (error as Error)?.message === "TransientError";
 
 /**
- * Handles errors from API calls, specifically checking for 429 Too Many Requests
- * errors that have exhausted retries and should be treated as TOO_MANY_REQUESTS failures.
+ * Handles errors from API calls, specifically checking for 429 Too Many
+ * Requests errors that have exhausted retries and should be treated as
+ * TOO_MANY_REQUESTS failures.
  */
 const handleApiError = (error: unknown): Promise<never> => {
   if (isTooManyRequestsError(error)) {
@@ -248,6 +250,7 @@ export const createActorsImplementation = (
 
 /**
  * Maps the status of the initiative to a possibile UI failure state
+ *
  * @param status The status of the initiative
  * @returns A failure state enum, if any
  */
@@ -273,6 +276,7 @@ const mapOnboardingStatusToFailure = (
 
 /**
  * Maps the backed error codes to UI failure states
+ *
  * @param code Error code from backend
  * @returns The associated failure state
  */
@@ -298,6 +302,8 @@ const mapErrorCodeToFailure = (
       return OnboardingFailureEnum.ONBOARDING_TOO_MANY_REQUESTS;
     case OnboardingErrorCodeEnum.ONBOARDING_UNSATISFIED_REQUIREMENTS:
       return OnboardingFailureEnum.ONBOARDING_UNSATISFIED_REQUIREMENTS;
+    case OnboardingErrorCodeEnum.ONBOARDING_USER_BONUS_ALREADY_USED:
+      return OnboardingFailureEnum.ONBOARDING_USER_BONUS_ALREADY_USED;
     case OnboardingErrorCodeEnum.ONBOARDING_USER_NOT_IN_WHITELIST:
       return OnboardingFailureEnum.ONBOARDING_USER_NOT_IN_WHITELIST;
     case OnboardingErrorCodeEnum.ONBOARDING_USER_UNSUBSCRIBED:

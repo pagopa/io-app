@@ -45,7 +45,7 @@ describe("ShowMoreListItem", () => {
         items: [
           {
             accessibilityLabel: "accessibiliy label 1",
-            icon: "docPaymentCode",
+            icon: "docCode",
             label: "label 1",
             value: "value 1"
           }
@@ -83,13 +83,13 @@ describe("ShowMoreListItem", () => {
         items: [
           {
             accessibilityLabel: "accessibiliy label 1",
-            icon: "docPaymentCode",
+            icon: "docCode",
             label: "label 1",
             value: "value 1"
           },
           {
             accessibilityLabel: "accessibiliy label 2",
-            icon: "docPaymentCode",
+            icon: "docCode",
             label: "label 2",
             value: "value 2"
           }
@@ -121,7 +121,7 @@ describe("ShowMoreListItem", () => {
           },
           {
             accessibilityLabel: "accessibiliy label 3",
-            icon: "docPaymentCode",
+            icon: "docCode",
             label: "label 3",
             value: "value 3"
           }
@@ -153,7 +153,7 @@ describe("ShowMoreListItem", () => {
           },
           {
             accessibilityLabel: "accessibiliy label 3",
-            icon: "docPaymentCode",
+            icon: "docCode",
             label: "label 3",
             value: "value 3"
           }
@@ -169,7 +169,7 @@ describe("ShowMoreListItem", () => {
           },
           {
             accessibilityLabel: "accessibiliy label 5",
-            icon: "docPaymentCode",
+            icon: "docCode",
             label: "label 5",
             value: "value 5"
           },

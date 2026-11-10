@@ -1,5 +1,5 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import { LoginUtilsError } from "@pagopa/io-react-native-login-utils";
+import { err } from "neverthrow";
 
 import { AppDispatch } from "../../../../App";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../login";
@@ -21,30 +21,44 @@ jest.mock("../..", () => {
       .mockResolvedValue(jwkPublicKey as PublicKey)
   };
 });
-jest.mock("@pagopa/io-react-native-login-utils", () => ({
+jest.mock("@io-app/login-utils", () => ({
   getRedirects: jest.fn().mockRejectedValue({
-    userInfo: {
-      Error: "fake network error",
-      URL: "fake url",
-      StatusCode: 409,
-      Parameter: undefined
-    },
-    code: "409"
-  }),
-  isLoginUtilsError: (e: unknown) =>
-    (e as LoginUtilsError).userInfo !== undefined
+    message: JSON.stringify({
+      userInfo: {
+        Error: "fake network error",
+        URL: "fake url",
+        StatusCode: 409,
+        Parameter: undefined
+      }
+    }),
+    code: "NativeRedirectError"
+  })
 }));
 
 describe("Lollipop regenerate key, get redirects and verification", () => {
-  it('should reject with code "409"', async () => {
-    await expect(
-      regenerateKeyGetRedirectsAndVerifySaml(
-        "loginUri",
-        "keyTag",
-        false,
-        false,
-        dispatch
-      )
-    ).rejects.toEqual(expect.objectContaining({ code: "409" }));
+  it('should fail with the native error code "409"', async () => {
+    const result = await regenerateKeyGetRedirectsAndVerifySaml(
+      "loginUri",
+      "keyTag",
+      false,
+      false,
+      dispatch
+    );
+
+    expect(result).toEqual(
+      err({
+        reason: JSON.stringify({
+          message: JSON.stringify({
+            userInfo: {
+              Error: "fake network error",
+              URL: "fake url",
+              StatusCode: 409,
+              Parameter: undefined
+            }
+          }),
+          code: "NativeRedirectError"
+        })
+      })
+    );
   });
 });

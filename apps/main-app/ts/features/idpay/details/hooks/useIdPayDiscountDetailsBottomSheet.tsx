@@ -61,6 +61,9 @@ export const useIdPayDiscountDetailsBottomSheet = (initiativeId: string) => {
               "idpay.initiative.discountDetails.bottomSheetOptions.scanQr"
             )}
             icon="qrCode"
+            label={I18n.t(
+              "idpay.initiative.discountDetails.bottomSheetOptions.scanQr"
+            )}
             onPress={() => {
               bottomSheet.dismiss();
               navigateToPaymentAuthorization();
@@ -69,9 +72,6 @@ export const useIdPayDiscountDetailsBottomSheet = (initiativeId: string) => {
                 initiativeName
               });
             }}
-            value={I18n.t(
-              "idpay.initiative.discountDetails.bottomSheetOptions.scanQr"
-            )}
           />
           <Divider />
         </>
@@ -81,6 +81,9 @@ export const useIdPayDiscountDetailsBottomSheet = (initiativeId: string) => {
           "idpay.initiative.discountDetails.bottomSheetOptions.generateBarcode"
         )}
         icon="barcode"
+        label={I18n.t(
+          "idpay.initiative.discountDetails.bottomSheetOptions.generateBarcode"
+        )}
         onPress={() => {
           barcodePressHandler();
           trackIDPayDetailCodeGeneration({
@@ -88,9 +91,6 @@ export const useIdPayDiscountDetailsBottomSheet = (initiativeId: string) => {
             initiativeName
           });
         }}
-        value={I18n.t(
-          "idpay.initiative.discountDetails.bottomSheetOptions.generateBarcode"
-        )}
       />
       <VSpacer size={24} />
     </>

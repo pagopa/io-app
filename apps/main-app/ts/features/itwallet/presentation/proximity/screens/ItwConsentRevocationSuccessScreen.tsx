@@ -1,10 +1,7 @@
 import I18n from "i18next";
 
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
-import {
-  IOStackNavigationRouteProps,
-  useIONavigation
-} from "../../../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton";
 import { useItwCredentialName } from "../../../common/hooks/useItwCredentialName";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation";
@@ -21,10 +18,12 @@ type Props = IOStackNavigationRouteProps<
 >;
 
 /** Confirms the last or bulk revocation and closes the consent-management flow. */
-export const ItwConsentRevocationSuccessScreen = ({ route }: Props) => {
+export const ItwConsentRevocationSuccessScreen = ({
+  navigation,
+  route
+}: Props) => {
   const { credentialType } = route.params;
   const credentialName = useItwCredentialName(credentialType);
-  const navigation = useIONavigation();
 
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
@@ -34,9 +33,8 @@ export const ItwConsentRevocationSuccessScreen = ({ route }: Props) => {
       action={{
         label: I18n.t("global.buttons.close"),
         onPress: () =>
-          navigation.navigate(ITW_ROUTES.MAIN, {
-            screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
-            params: { credentialType }
+          navigation.popTo(ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL, {
+            credentialType
           })
       }}
       pictogram="success"

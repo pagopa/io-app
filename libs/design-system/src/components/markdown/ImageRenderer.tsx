@@ -3,16 +3,16 @@ import { Dimensions, Image } from "react-native";
 
 import type { MarkdownNode } from "./types";
 
-import { IOVisualCostants } from "../../core";
+import { IODimensions } from "../../core";
 
 type ImageRendererProps = {
   node: MarkdownNode;
 };
 
 /**
- * Stateful component that renders a remote image with auto-sizing.
- * Uses `Image.getSize()` to determine intrinsic dimensions, then
- * constrains width to the available screen width.
+ * Stateful component that renders a remote image with auto-sizing. Uses
+ * `Image.getSize()` to determine intrinsic dimensions, then constrains width to
+ * the available screen width.
  */
 export const ImageRenderer = ({ node }: ImageRendererProps) => {
   const src = node.attributes?.src ?? "";
@@ -24,7 +24,7 @@ export const ImageRenderer = ({ node }: ImageRendererProps) => {
   });
 
   const screenWidth =
-    Dimensions.get("window").width - IOVisualCostants.appMarginDefault * 2;
+    Dimensions.get("window").width - IODimensions.padding.screen.default * 2;
 
   useLayoutEffect(() => {
     if (!src) {

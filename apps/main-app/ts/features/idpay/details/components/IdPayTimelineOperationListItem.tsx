@@ -76,9 +76,9 @@ export const IdPayTimelineOperationListItem = (
   if (isLoading) {
     return (
       <ListItemTransaction
+        description=""
         isLoading={true}
-        subtitle=""
-        title=""
+        label=""
         transaction={{
           badge: { text: "", variant: "highlight" }
         }}
@@ -151,15 +151,17 @@ const getTransactionOperationProps = (
     <Icon color="grey-300" name={iconName} testID="genericLogoTestID" />
   );
 
-  const title: string =
+  const label: string =
     businessName ||
-    I18n.t(
-      `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.${
-        isQRCode ? "TRANSACTION_ONLINE" : "TRANSACTION"
-      }`
-    );
+    (isQRCode
+      ? I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.TRANSACTION_ONLINE"
+        )
+      : I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.TRANSACTION"
+        ));
 
-  const subtitle = getOperationSubtitleWithAmount(
+  const description = getOperationSubtitleWithAmount(
     operationDate,
     amountCents,
     isReversal
@@ -177,8 +179,8 @@ const getTransactionOperationProps = (
   if (isReversal) {
     return {
       paymentLogoIcon,
-      title,
-      subtitle,
+      label,
+      description,
       transaction: {
         badge: getBadgePropsByTransactionStatus("reversal")
       }
@@ -188,8 +190,8 @@ const getTransactionOperationProps = (
   if (isCancelled) {
     return {
       paymentLogoIcon,
-      title,
-      subtitle,
+      label,
+      description,
       transaction: {
         badge: getBadgePropsByTransactionStatus("cancelled")
       }
@@ -198,8 +200,8 @@ const getTransactionOperationProps = (
 
   return {
     paymentLogoIcon,
-    title,
-    subtitle,
+    label,
+    description,
     transaction: {
       amount: getAccruedString(),
       amountAccessibilityLabel:
@@ -220,22 +222,42 @@ const getInstrumentOperationProps = (
     operationType ===
       RejectedInstrumentOperationTypeEnum.REJECTED_DELETE_INSTRUMENT;
 
-  const getTitle = () => {
+  const getTitle = (): string => {
     if (instrumentType === InstrumentTypeEnum.IDPAYCODE) {
       return I18n.t(
         `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.CIE`
       );
     }
 
-    return I18n.t(
-      `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.${operationType}`,
-      {
-        maskedPan: maskedPan !== undefined ? `···· ${maskedPan}` : ""
-      }
-    );
+    const options = {
+      maskedPan: maskedPan !== undefined ? `···· ${maskedPan}` : ""
+    };
+
+    switch (operationType) {
+      case InstrumentOperationTypeEnum.ADD_INSTRUMENT:
+        return I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.ADD_INSTRUMENT",
+          options
+        );
+      case InstrumentOperationTypeEnum.DELETE_INSTRUMENT:
+        return I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.DELETE_INSTRUMENT",
+          options
+        );
+      case RejectedInstrumentOperationTypeEnum.REJECTED_ADD_INSTRUMENT:
+        return I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.REJECTED_ADD_INSTRUMENT",
+          options
+        );
+      case RejectedInstrumentOperationTypeEnum.REJECTED_DELETE_INSTRUMENT:
+        return I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.REJECTED_DELETE_INSTRUMENT",
+          options
+        );
+    }
   };
 
-  const subtitle = getOperationSubtitle(operationDate);
+  const description = getOperationSubtitle(operationDate);
 
   const getLogo = () => {
     if (instrumentType === InstrumentTypeEnum.IDPAYCODE) {
@@ -261,8 +283,8 @@ const getInstrumentOperationProps = (
   if (isRejected) {
     return {
       paymentLogoIcon: getLogo(),
-      title: getTitle(),
-      subtitle,
+      label: getTitle(),
+      description,
       transaction: {
         badge: getBadgePropsByTransactionStatus("failure")
       }
@@ -271,8 +293,8 @@ const getInstrumentOperationProps = (
 
   return {
     paymentLogoIcon: getLogo(),
-    title: getTitle(),
-    subtitle,
+    label: getTitle(),
+    description,
     transaction: emptyAmountTransaction
   };
 };
@@ -283,10 +305,10 @@ const getIbanOperationProps = (
   paymentLogoIcon: (
     <Icon color="grey-300" name={"institution"} testID="ibanLogoTestID" />
   ),
-  title: I18n.t(
+  label: I18n.t(
     `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.ADD_IBAN`
   ),
-  subtitle: getOperationSubtitle(operation.operationDate),
+  description: getOperationSubtitle(operation.operationDate),
   transaction: emptyAmountTransaction
 });
 
@@ -296,10 +318,10 @@ const getOnboardingOperationProps = (
   paymentLogoIcon: (
     <Icon color="grey-300" name={"checkTick"} testID="onboardingLogoTestID" />
   ),
-  title: I18n.t(
+  label: I18n.t(
     `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.ONBOARDING`
   ),
-  subtitle: getOperationSubtitle(operation.operationDate),
+  description: getOperationSubtitle(operation.operationDate),
   transaction: emptyAmountTransaction
 });
 
@@ -312,15 +334,15 @@ const getRefundOperationProps = (
   const paymentLogoIcon = (
     <Icon color="grey-300" name={"refund"} testID="refundLogoTestID" />
   );
-  const title = I18n.t(
+  const label = I18n.t(
     `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.REFUND`
   );
-  const subtitle = getOperationSubtitle(operationDate);
+  const description = getOperationSubtitle(operationDate);
 
   if (isRejected) {
     return {
-      title,
-      subtitle,
+      label,
+      description,
       paymentLogoIcon,
       transaction: {
         badge: getBadgePropsByTransactionStatus("failure")
@@ -329,8 +351,8 @@ const getRefundOperationProps = (
   }
 
   return {
-    title,
-    subtitle,
+    label,
+    description,
     paymentLogoIcon,
     transaction: {
       amount: `${formatAbsNumberAmountCentsOrDefault(amountCents)} €`,
@@ -348,10 +370,10 @@ const getSuspendOperationProps = (
   paymentLogoIcon: (
     <Icon color="grey-300" name={"notice"} testID="creditCardLogoTestID" />
   ),
-  title: I18n.t(
+  label: I18n.t(
     `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.SUSPENDED`
   ),
-  subtitle: getOperationSubtitle(operation.operationDate),
+  description: getOperationSubtitle(operation.operationDate),
   transaction: emptyAmountTransaction
 });
 
@@ -365,10 +387,10 @@ const getReadmittedOperationProps = (
       testID="creditCardLogoTestID"
     />
   ),
-  title: I18n.t(
+  label: I18n.t(
     `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.READMITTED`
   ),
-  subtitle: getOperationSubtitle(operation.operationDate),
+  description: getOperationSubtitle(operation.operationDate),
   transaction: emptyAmountTransaction
 });
 const getUnsubscribedOperationProps = (
@@ -377,10 +399,10 @@ const getUnsubscribedOperationProps = (
   paymentLogoIcon: (
     <Icon color="grey-300" name={"closeSmall"} testID="creditCardLogoTestID" />
   ),
-  title: I18n.t(
+  label: I18n.t(
     `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.UNSUBSCRIBED`
   ),
-  subtitle: getOperationSubtitle(operation.operationDate),
+  description: getOperationSubtitle(operation.operationDate),
   transaction: emptyAmountTransaction
 });
 

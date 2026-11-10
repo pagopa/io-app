@@ -1,11 +1,12 @@
 /**
  * A component that show a Grid with every Identity Provider passed in the idps
- * array property. When an Identity Provider is selected a callback function is called.
+ * array property. When an Identity Provider is selected a callback function is
+ * called.
  */
 
 import {
-  IOSpacingScale,
-  IOVisualCostants,
+  IODimensions,
+  IODimensionScale,
   ModuleIDP,
   VSpacer,
   VStack
@@ -35,11 +36,11 @@ type IdpsGridProps = {
   testID?: string;
 };
 
-const GRID_GUTTER: IOSpacingScale = 8;
+const GRID_GUTTER: IODimensionScale = 8;
 
 const styles = StyleSheet.create({
   contentContainer: {
-    paddingHorizontal: IOVisualCostants.appMarginDefault
+    paddingHorizontal: IODimensions.padding.screen.default
   }
 });
 

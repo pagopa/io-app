@@ -5,8 +5,9 @@ type MigrationState = PersistedState & Record<string, any>;
 export const CURRENT_REDUX_ITW_ISSUANCE_STORE_VERSION = 0;
 
 /**
- * Discriminant of an `fp-ts` Option once it has been serialized by redux-persist.
- * The leading underscore comes from the `fp-ts` wire format, it is not our naming.
+ * Discriminant of an `fp-ts` Option once it has been serialized by
+ * redux-persist. The leading underscore comes from the `fp-ts` wire format, it
+ * is not our naming.
  */
 const OPTION_TAG = "_tag";
 
@@ -25,8 +26,9 @@ const isSerializedOption = (value: unknown): value is SerializedOption => {
 /**
  * Unwraps a persisted `fp-ts` Option into a plain optional value.
  *
- * Anything that is not a serialized Option is returned as is, so that a state persisted after
- * this migration (a plain string) survives a downgrade/upgrade cycle unchanged.
+ * Anything that is not a serialized Option is returned as is, so that a state
+ * persisted after this migration (a plain string) survives a downgrade/upgrade
+ * cycle unchanged.
  */
 const unwrapPersistedOption = (value: unknown): unknown => {
   if (!isSerializedOption(value)) {

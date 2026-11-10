@@ -1,4 +1,4 @@
-import { ItwJwtCredentialStatus } from "../../common/utils/itwTypesUtils";
+import { ItwEidStatus } from "../../common/utils/itwTypesUtils";
 import { IdentificationContext } from "../../machine/eid/context";
 import {
   ITW_ANALYTICS_CREDENTIALS,
@@ -6,7 +6,10 @@ import {
 } from "../properties/propertyTypes";
 import { CREDENTIALS_MAP, ItwPIDStatus, MixPanelCredential } from "./types";
 
-/** Maps the machine identification context to the Qualtrics `auth_method` UTM parameter. */
+/**
+ * Maps the machine identification context to the Qualtrics `auth_method` UTM
+ * parameter.
+ */
 export const toSurveyAuthMethod = (
   identification: IdentificationContext | undefined
 ): string => {
@@ -22,13 +25,13 @@ export const toSurveyAuthMethod = (
   return "spid";
 };
 
-/**
- * Maps an PID status to its corresponding Mixpanel tracking status.
- */
+/** Maps an PID status to its corresponding Mixpanel tracking status. */
 export const mapPIDStatusToMixpanel = (
-  status: ItwJwtCredentialStatus | undefined
+  status: ItwEidStatus | undefined
 ): ItwPIDStatus => {
   switch (status) {
+    case "invalid":
+      return "not_valid";
     case "jwtExpired":
       return "expired";
     case "jwtExpiring":
@@ -42,9 +45,11 @@ export const mapPIDStatusToMixpanel = (
 
 /**
  * Returns the appropriate Mixpanel credential key based on the credential type.
+ *
  * - If the IT Wallet is active, returns the V3 key.
  * - Otherwise, returns the V2 key.
- * - If the credential type does not exist in CREDENTIALS_MAP, returns "UNKNOWN" as a fallback value.
+ * - If the credential type does not exist in CREDENTIALS_MAP, returns "UNKNOWN"
+ *   as a fallback value.
  */
 export function getMixPanelCredential(
   credentialType: string,

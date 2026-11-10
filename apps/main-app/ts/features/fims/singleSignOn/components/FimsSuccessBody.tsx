@@ -11,8 +11,8 @@ import {
   Icon,
   IOButton,
   IOColors,
+  IODimensions,
   IOMarkdownLite,
-  IOVisualCostants,
   ListItemHeader,
   VSpacer
 } from "@io-app/design-system";
@@ -109,10 +109,9 @@ export const FimsFlowSuccessBody = ({
               const state = store.getState();
               computeAndTrackDataShareAccepted(serviceId, state);
               dispatch(
-                fimsAcceptConsentsAction(
-                  // eslint-disable-next-line no-underscore-dangle
-                  { acceptUrl: consents._links.consent.href }
-                )
+                fimsAcceptConsentsAction({
+                  acceptUrl: consents._links.consent.href
+                })
               );
             }
           },
@@ -150,13 +149,16 @@ export const FimsFlowSuccessBody = ({
           variant="link"
         />
         <VSpacer size={24} />
-        <ListItemHeader iconName="security" label="Dati richiesti" />
+        <ListItemHeader
+          iconName="security"
+          label={I18n.t("FIMS.consentsScreen.requiredData")}
+        />
         <FimsClaimsList claims={consents.user_metadata} />
         <VSpacer size={24} />
 
         <FimsPrivacyInfo privacyUrl={privacyUrl} />
 
-        <VSpacer size={32} />
+        <VSpacer size={IODimensions.padding.screen.end} />
       </ContentWrapper>
       {BottomSheet.bottomSheet}
     </ForceScrollDownView>
@@ -179,15 +181,15 @@ const generateBottomSheetProps = (privacyUrl: string): BSPropType => ({
 
 const styles = StyleSheet.create({
   outlineContainer: {
-    borderWidth: 1,
+    borderWidth: IODimensions.stroke.default,
     padding: 8,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 8,
+    borderRadius: IODimensions.radius.avatar.small,
     borderColor: hexToRgba(IOColors.black, 0.1),
     borderCurve: "continuous",
     backgroundColor: IOColors.white,
-    width: IOVisualCostants.avatarSizeSmall,
-    height: IOVisualCostants.avatarSizeSmall
+    width: IODimensions.size.avatar.small,
+    height: IODimensions.size.avatar.small
   }
 });

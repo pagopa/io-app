@@ -6,13 +6,12 @@ import {
   HStack,
   Icon,
   IOIcons,
-  IOIconSizeScale,
-  IOPictogramSizeScale,
   IOPictogramsProps,
   Pictogram,
   VStack
 } from "../../components";
 import { useIOTheme } from "../../context";
+import { IODimensions } from "../../core";
 import { IOColors } from "../../core/IOColors";
 
 type FeatureInfoActionProps =
@@ -43,9 +42,6 @@ type PartialFeatureInfo = {
   body?: ReactNode | string;
   variant?: "contrast" | "neutral";
 };
-
-const DEFAULT_ICON_SIZE: IOIconSizeScale = 24;
-const DEFAULT_PICTOGRAM_SIZE: IOPictogramSizeScale = 48;
 
 export const FeatureInfo = ({
   action,
@@ -89,23 +85,30 @@ export const FeatureInfo = ({
   };
 
   return (
-    <HStack space={24} style={{ alignItems: "center" }}>
+    <HStack
+      space={IODimensions.gap.featureInfo.leading}
+      style={{ alignItems: "center" }}
+    >
       {iconName && (
         <Icon
           allowFontScaling
           color={theme["icon-decorative"]}
           name={iconName}
-          size={DEFAULT_ICON_SIZE}
+          size={IODimensions.size.icon.featureInfo}
         />
       )}
       {pictogramProps && (
         <Pictogram
           {...pictogramProps}
           allowFontScaling
-          size={DEFAULT_PICTOGRAM_SIZE}
+          size={IODimensions.size.pictogram.featureInfo}
         />
       )}
-      <VStack allowScaleSpacing space={4} style={{ flexShrink: 1 }}>
+      <VStack
+        allowScaleSpacing
+        space={IODimensions.gap.featureInfo.action}
+        style={{ flexShrink: 1 }}
+      >
         <FeatureInfoContent />
         {action && (
           <Body

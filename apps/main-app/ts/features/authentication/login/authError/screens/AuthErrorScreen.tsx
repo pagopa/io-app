@@ -1,15 +1,11 @@
-import {
-  NavigatorScreenParams,
-  Route,
-  useRoute
-} from "@react-navigation/native";
 import { useCallback, useMemo } from "react";
 
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
+import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
-import { SETTINGS_ROUTES } from "../../../../settings/common/navigation/routes";
 import {
   setFinishedActiveSessionLoginFlow,
   setRetryActiveSessionLogin
@@ -18,113 +14,96 @@ import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/
 import AuthErrorComponent from "../../../common/components/AuthErrorComponent";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { CieIdLoginProps } from "../../cie/shared/utils";
+import { AuthLevel } from "../../../common/utils";
+import { FailureData } from "../../../common/utils/loginErrorDebugInfo";
 import {
   resetSpidLoginState,
   setSpidLoginInLoadingState
 } from "../../idp/store/actions";
-import { UnlockAccessProps } from "../../unlockAccess/components/UnlockAccessComponent";
 
-export type AuthErrorScreenProps = (CieIdProps | CieProps | SpidProps) &
-  CommonAuthErrorScreenProps;
-
-type CieIdProps = {
-  authMethod: "CIE_ID";
-  params: CieIdLoginProps;
-};
-
-type CieProps = {
-  authMethod: "CIE";
-};
-
-type CommonAuthErrorScreenProps = UnlockAccessProps & {
+export type AuthErrorScreenParams = {
+  authLevel: AuthLevel;
+  authMethod: AuthMethod;
   errorCodeOrMessage?: string;
+  /** What went wrong, shown only in debug mode. */
+  failureData?: FailureData;
 };
 
-type SpidProps = {
-  authMethod: "SPID";
-};
+export type AuthMethod = "CIE" | "CIE_ID" | "SPID";
 
-const AuthErrorScreen = () => {
+type AuthErrorScreenProps = IOStackNavigationRouteProps<
+  AuthenticationParamsList,
+  typeof AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN
+>;
+
+const AuthErrorScreen = ({ navigation, route }: AuthErrorScreenProps) => {
+  useAvoidHardwareBackButton();
+
+  const { errorCodeOrMessage, authMethod, authLevel, failureData } =
+    route.params;
+
   const dispatch = useIODispatch();
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
 
-  const authScreenByAuthMethod = useMemo(
-    () => ({
-      CIE: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN,
-      SPID: AUTHENTICATION_ROUTES.IDP_SELECTION,
-      CIE_ID: isActiveSessionLogin
-        ? AUTHENTICATION_ROUTES.CIE_ID_ACTIVE_SESSION_LOGIN
-        : AUTHENTICATION_ROUTES.CIE_ID_LOGIN
-    }),
-    [isActiveSessionLogin]
+  const screenDebugInfo = useMemo(
+    () => ({ errorCodeOrMessage, authMethod, authLevel, ...failureData }),
+    [errorCodeOrMessage, authMethod, authLevel, failureData]
   );
+  useDebugInfo(screenDebugInfo);
 
-  const route =
-    useRoute<
-      Route<
-        typeof AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-        AuthErrorScreenProps
-      >
-    >();
-  const { errorCodeOrMessage, authMethod, authLevel } = route.params;
-
-  const navigation = useIONavigation();
-
-  const getNavigationParams =
-    useCallback((): NavigatorScreenParams<AuthenticationParamsList> => {
-      if (authMethod === "CIE_ID") {
-        return {
-          screen: authScreenByAuthMethod[authMethod],
-          params: route.params.params
-        };
-      }
-
-      return {
-        screen: authScreenByAuthMethod[authMethod]
-      };
-    }, [authMethod, authScreenByAuthMethod, route.params]);
-
-  const onRetry = useCallback(() => {
-    if (authMethod === "SPID") {
-      dispatch(setSpidLoginInLoadingState());
-    }
-
+  const handleRetry = useCallback(() => {
     if (isActiveSessionLogin) {
       dispatch(setRetryActiveSessionLogin());
-      navigation.replace(SETTINGS_ROUTES.AUTHENTICATION, getNavigationParams());
-    } else {
-      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, getNavigationParams());
     }
-  }, [
-    authMethod,
-    isActiveSessionLogin,
-    dispatch,
-    navigation,
-    getNavigationParams
-  ]);
 
-  const onCancel = useCallback(() => {
+    switch (authMethod) {
+      case "CIE":
+        // CIE_PIN_SCREEN is still in the stack, below the card reader:
+        // `popTo` pops back to it instead of pushing a new instance.
+        navigation.popTo(AUTHENTICATION_ROUTES.CIE_PIN_SCREEN);
+        break;
+      case "CIE_ID":
+        // CIE_ID_LOGIN reaches this screen via `replace`, so it's no
+        // longer in the stack: it has to be recreated to retry, which also
+        // re-triggers the Lollipop key generation on mount.
+        navigation.replace(
+          isActiveSessionLogin
+            ? AUTHENTICATION_ROUTES.CIE_ID_ACTIVE_SESSION_LOGIN
+            : AUTHENTICATION_ROUTES.CIE_ID_LOGIN
+        );
+        break;
+      case "SPID":
+        dispatch(setSpidLoginInLoadingState());
+        // Lets the user pick an IdP again from IDP_SELECTION: `popTo`
+        // pops back to it.
+        navigation.popTo(AUTHENTICATION_ROUTES.IDP_SELECTION);
+        break;
+    }
+  }, [authMethod, isActiveSessionLogin, dispatch, navigation]);
+
+  const handleCancel = useCallback(() => {
     if (isActiveSessionLogin) {
       dispatch(setFinishedActiveSessionLoginFlow());
-      navigation.navigate(ROUTES.MAIN, {
+      // Navigating back to the main route of the app,
+      // specifically to the Messages home.
+      navigation.popTo(ROUTES.MAIN, {
         screen: MESSAGES_ROUTES.MESSAGES_HOME
       });
       return;
     }
 
     dispatch(resetSpidLoginState());
-    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.LANDING
-    });
+    // LANDING is the initial route of this stack in the first-login flow:
+    // `popTo` pops back to it without remounting it.
+    navigation.popTo(AUTHENTICATION_ROUTES.LANDING);
   }, [dispatch, isActiveSessionLogin, navigation]);
 
   return (
     <AuthErrorComponent
       authLevel={authLevel}
       errorCodeOrMessage={errorCodeOrMessage}
-      onCancel={onCancel}
-      onRetry={onRetry}
+      onCancel={handleCancel}
+      onRetry={handleRetry}
     />
   );
 };

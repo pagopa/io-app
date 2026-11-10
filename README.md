@@ -72,13 +72,13 @@ Each project contains its own `README.md` with project-specific instructions:
 
 ## Prerequisites
 
-| Tool | Notes |
-|------|-------|
-| **Node.js** | Version pinned in [`.node-version`](.node-version); use [nodenv](https://github.com/nodenv/nodenv) or [nvm](https://github.com/nvm-sh/nvm) |
-| **pnpm** | Managed via [Corepack](https://nodejs.org/api/corepack.html); version pinned in `package.json` |
-| **Ruby** | Version pinned in `apps/main-app/.ruby-version`; use [rbenv](https://github.com/rbenv/rbenv) |
-| **Xcode** | Required for iOS builds (macOS only) |
-| **Android Studio** | Required for Android builds |
+| Tool               | Notes                                                                                                                                      |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Node.js**        | Version pinned in [`.node-version`](.node-version); use [nodenv](https://github.com/nodenv/nodenv) or [nvm](https://github.com/nvm-sh/nvm) |
+| **pnpm**           | Managed via [Corepack](https://nodejs.org/api/corepack.html); version pinned in `package.json`                                             |
+| **Ruby**           | Version pinned in `apps/main-app/.ruby-version`; use [rbenv](https://github.com/rbenv/rbenv)                                               |
+| **Xcode**          | Required for iOS builds (macOS only)                                                                                                       |
+| **Android Studio** | Required for Android builds                                                                                                                |
 
 Follow the [React Native environment setup guide](https://reactnative.dev/docs/environment-setup?guide=native) for your OS before proceeding.
 
@@ -141,10 +141,13 @@ pnpm nx run main-app:dev-run-android
 
 > [!IMPORTANT]
 > The Android emulator does not support hardware-backed keystore. Disable the check before running:
+>
 > ```bash
 > pnpm nx run main-app:lollipop_checks-comment
 > ```
+>
 > Re-enable it before committing:
+>
 > ```bash
 > pnpm nx run main-app:lollipop_checks-uncomment
 > ```
@@ -177,20 +180,20 @@ pnpm nx run main-app:test-dev
 pnpm nx affected --target=lint,tsc-noemit
 
 # Format code
-pnpm prettify
+pnpm format
 ```
 
 ---
 
 ## Architecture
 
-| Layer | Technology |
-|-------|-----------|
-| Mobile app framework | React Native + Expo modules |
-| Language | TypeScript |
-| State management | Redux + Redux-Saga + XState v5 |
-| UI components | `@io-app/design-system` (local workspace package) |
-| Monorepo tooling | [Nx](https://nx.dev) + [pnpm workspaces](https://pnpm.io/workspaces) |
+| Layer                | Technology                                                           |
+| -------------------- | -------------------------------------------------------------------- |
+| Mobile app framework | React Native + Expo modules                                          |
+| Language             | TypeScript                                                           |
+| State management     | Redux + Redux-Saga + XState v5                                       |
+| UI components        | `@io-app/design-system` (local workspace package)                    |
+| Monorepo tooling     | [Nx](https://nx.dev) + [pnpm workspaces](https://pnpm.io/workspaces) |
 
 For a deeper dive into the app architecture and feature structure, see [apps/main-app/README.md](apps/main-app/README.md).
 

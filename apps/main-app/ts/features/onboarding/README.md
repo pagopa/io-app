@@ -16,21 +16,21 @@ As part of a codebase refactoring initiative, these files were grouped together 
 
 This feature module typically includes:
 
-* Onboarding-related UI screens.
-* State management logic specific to user onboarding (actions, reducers, selectors).
-* Utility functions and components used exclusively within the onboarding flows.
-* Sagas for handling asynchronous onboarding-related logic.
+- Onboarding-related UI screens.
+- State management logic specific to user onboarding (actions, reducers, selectors).
+- Utility functions and components used exclusively within the onboarding flows.
+- Sagas for handling asynchronous onboarding-related logic.
 
 ## Guideline
 
-* All **new** code **strictly** concerning user onboarding functionality (new screens, onboarding-specific logic, state management for onboarding, etc.) should reside directly within this `onboarding` feature module.
-* Avoid creating unnecessary subdirectories unless the codebase grows significantly and requires further organization.
+- All **new** code **strictly** concerning user onboarding functionality (new screens, onboarding-specific logic, state management for onboarding, etc.) should reside directly within this `onboarding` feature module.
+- Avoid creating unnecessary subdirectories unless the codebase grows significantly and requires further organization.
 
 ## Folder structure
 
 The current folder structure is as follows:
 
-``` bash
+```bash
 onboarding/
 ├── components/ # UI components specific to onboarding
 ├── screens/    # Screens for onboarding flows

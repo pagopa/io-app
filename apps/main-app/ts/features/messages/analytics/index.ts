@@ -1,4 +1,5 @@
 import { MessageCategory } from "@io-app/api-types/generated/definitions/communication/MessageCategory";
+import { TagEnum } from "@io-app/api-types/generated/definitions/communication/MessageCategoryPN";
 import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import * as S from "fp-ts/lib/string";
 import * as t from "io-ts";
@@ -29,6 +30,7 @@ import {
 } from "../store/reducers/allPaginated";
 import { MessageGetStatusFailurePhaseType } from "../store/reducers/messageGetStatus";
 import { MessageListCategory } from "../types/messageListCategory";
+import { SendFailureReason } from "../utils";
 
 export const trackMessagesActionsPostDispatch = (
   action: Action,
@@ -226,9 +228,16 @@ export const trackUxConversion = (tag: MessageCategory["tag"]) => {
   void mixpanelTrack(eventName, props);
 };
 
-export const trackDisclaimerLoadError = (tag: MessageCategory["tag"]) => {
+export const trackDisclaimerLoadError = (
+  tag: MessageCategory["tag"],
+  reason: "MARKDOWN_RENDER_ERROR" | SendFailureReason
+) => {
   const eventName = `${S.toUpperCase(tag)}_DISCLAIMER_LOAD_ERROR`;
-  const props = buildEventProperties("TECH", undefined);
+  const props = buildEventProperties(
+    "TECH",
+    undefined,
+    tag === TagEnum.PN ? { reason } : undefined
+  );
   void mixpanelTrack(eventName, props);
 };
 

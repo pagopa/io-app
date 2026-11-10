@@ -14,7 +14,6 @@ import FocusAwareStatusBar from "../components/ui/FocusAwareStatusBar";
 import { cgnLinkingOptions } from "../features/bonus/cgn/navigation/navigator";
 import { fciLinkingOptions } from "../features/fci/navigation/FciStackNavigator";
 import { idPayLinkingOptions } from "../features/idpay/common/navigation/linking";
-import { IngressScreen } from "../features/ingress/screens/IngressScreen";
 import { itwLinkingOptions } from "../features/itwallet/navigation/linking";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
 import { ITW_CREDENTIAL_OFFER_LINKING_PREFIXES } from "../features/itwallet/offer/utils";
@@ -25,7 +24,6 @@ import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { SETTINGS_ROUTES } from "../features/settings/common/navigation/routes";
 import { processUtmLink } from "../features/utmLink";
 import { startApplicationInitialization } from "../store/actions/application";
-import { setDebugCurrentRouteName } from "../store/actions/debug";
 import { useIODispatch, useIOSelector, useIOStore } from "../store/hooks";
 import { trackScreen } from "../store/middlewares/navigation";
 import { isCGNEnabledAfterLoadSelector } from "../store/reducers/backendStatus/remoteConfig";
@@ -38,9 +36,11 @@ import {
   IO_UNIVERSAL_LINK_PREFIX
 } from "../utils/navigation";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
+import IngressStackNavigator from "./IngressStackNavigator";
 import { linkingSubscription } from "./linkingSubscription";
 import NavigationService, {
   navigationRef,
+  notifyCurrentRouteChanged,
   setMainNavigatorReady
 } from "./NavigationService";
 import NotAuthenticatedStackNavigator from "./NotAuthenticatedStackNavigator";
@@ -81,7 +81,7 @@ export const AppStackNavigator = (): ReactElement => {
   }
 
   if (startupStatus === StartupStatusEnum.INITIAL) {
-    return <IngressScreen />;
+    return <IngressStackNavigator />;
   }
 
   return <AuthenticatedStackNavigator />;
@@ -150,11 +150,11 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
   };
 
   /**
-   * If the app is swiped closed and it's opened with a deep link,
-   * the linking event in the NavigationContainer is not triggered.
-   * `Linking` has the option to get the initial URL when the app is opened.
-   * We can use this to check if the app was opened with a deep link and
-   * check if it has a `utm_medium` and `utm_source` parameters
+   * If the app is swiped closed and it's opened with a deep link, the linking
+   * event in the NavigationContainer is not triggered. `Linking` has the option
+   * to get the initial URL when the app is opened. We can use this to check if
+   * the app was opened with a deep link and check if it has a `utm_medium` and
+   * `utm_source` parameters
    */
   useOnFirstRender(() => {
     void Linking.getInitialURL().then(initialUrl => {
@@ -167,14 +167,14 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
         trackIOOpenedFromUniversalAppLink(initialUrl, mixpanelEnabled);
         processUtmLink(initialUrl, dispatch);
         /**
-         *  We store the initialUrl in the redux store so that
-         *  it can be processed in case we need any kind of data
-         *  that would be accessible after the app's startup for that.
+         * We store the initialUrl in the redux store so that it can be
+         * processed in case we need any kind of data that would be accessible
+         * after the app's startup for that.
          *
-         *  while in `linkingSubscription` we avoid storing certain
-         *  blacklisted deep links, here it is not necessary since
-         *  this handler is called on app wake and thus there
-         *  is no risk of overwriting any previously stored deep link
+         * While in `linkingSubscription` we avoid storing certain blacklisted
+         * deep links, here it is not necessary since this handler is called on
+         * app wake and thus there is no risk of overwriting any previously
+         * stored deep link
          */
         dispatch(storeLinkingUrl(initialUrl));
       }
@@ -195,8 +195,8 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
         }
         const previousRouteName = routeNameRef.current;
         const currentRouteName = navigationRef.current?.getCurrentRoute()?.name;
+        notifyCurrentRouteChanged();
         if (currentRouteName !== undefined) {
-          dispatch(setDebugCurrentRouteName(currentRouteName));
           trackScreen(previousRouteName, currentRouteName);
         }
         routeNameRef.current = currentRouteName;
@@ -217,8 +217,10 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
 };
 
 /**
- * Wraps the NavigationContainer with the AppStackNavigator (Root navigator of the app)
- * @constructor
+ * Wraps the NavigationContainer with the AppStackNavigator (Root navigator of
+ * the app)
+ *
+ * @class
  */
 export const IONavigationContainer = () => (
   <InnerNavigationContainer>

@@ -1,5 +1,7 @@
 import { waitFor } from "@testing-library/react-native";
 import _ from "lodash";
+import { applyMiddleware, createStore } from "redux";
+import createSagaMiddleware from "redux-saga";
 import {
   assign,
   createActor,
@@ -9,17 +11,33 @@ import {
   waitFor as waitForActor
 } from "xstate";
 
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { getNetworkError } from "../../../../../utils/errors";
+import { itwSetFiscalCodeWhitelisted } from "../../../common/store/actions/preferences";
+import * as envSelectors from "../../../common/store/selectors/environment";
+import { getEnv } from "../../../common/utils/environment";
+import * as catalogueUtils from "../../../common/utils/itwCredentialsCatalogueUtils";
+import { DigitalCredentialsCatalogue } from "../../../common/utils/itwCredentialsCatalogueUtils";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import {
   CredentialAccessToken,
   CredentialBundle,
   CredentialMetadata,
+  CredentialOfferResolved,
   EvaluatedDcqlQueryResult,
   IssuerConfiguration,
   RequestObject
 } from "../../../common/utils/itwTypesUtils";
+import { itwCredentialsStore } from "../../../credentials/store/actions";
+import { watchItwCredentialsCatalogueSaga } from "../../../credentialsCatalogue/saga";
+import {
+  itwFetchCatalogueTranslations,
+  itwFetchCredentialsCatalogue
+} from "../../../credentialsCatalogue/store/actions";
 import { ItwTags } from "../../tags";
 import { testCredentialIssuanceDeps } from "../../utils/testDeps";
+import { onInitAction } from "../actions";
 import {
   GetWalletAttestationActorInput,
   GetWalletAttestationActorOutput,
@@ -35,6 +53,7 @@ import {
 } from "../actors";
 import { Context, InitialContext } from "../context";
 import { CredentialIssuanceFailureType } from "../failure";
+import { hasCredentialIntroContentGuard } from "../guards";
 import {
   ItwCredentialIssuanceMachine,
   itwCredentialIssuanceMachine
@@ -92,14 +111,41 @@ const T_VALIDITY: CredentialMetadata["validity"] = {
 const T_OFFER_URI =
   "openid-credential-offer://?credential_offer_uri=https://eaa.wallet.ipzs.it/offers/123";
 const T_CREDENTIAL_TYPE = "education_degree";
+const T_CATALOGUE: DigitalCredentialsCatalogue = {
+  taxonomy_uri: "",
+  exp: 1700000000,
+  iat: 1600000000,
+  credentials: [
+    {
+      credential_type: T_CREDENTIAL_TYPE,
+      authentic_sources: [
+        {
+          id: "source",
+          organization_country: "IT",
+          organization_type: "public",
+          user_information_l10n_id: "source.intro"
+        }
+      ],
+      issuers: [],
+      legal_type: "public",
+      purposes: [],
+      validity_info: {
+        allowed_states: [],
+        max_validity_days: 365,
+        status_methods: []
+      },
+      version: "1"
+    }
+  ]
+};
+const T_TRANSLATIONS = { it: { "source.intro": "Credential introduction" } };
 const T_TRUST_ISSUER_BASE_URL = "https://eaa.wallet.ipzs.it";
-const T_RESOLVED_CREDENTIAL_OFFER = {
+const T_RESOLVED_CREDENTIAL_OFFER: CredentialOfferResolved = {
   offer: {
     credential_issuer: T_TRUST_ISSUER_BASE_URL,
     credential_configuration_ids: ["EducationDegreeCredential"],
     grants: {
       authorization_code: {
-        scope: T_CREDENTIAL_TYPE,
         authorization_server: T_TRUST_ISSUER_BASE_URL,
         issuer_state: "issuer-state"
       }
@@ -108,7 +154,6 @@ const T_RESOLVED_CREDENTIAL_OFFER = {
   grantDetails: {
     grantType: "authorization_code",
     authorizationCodeGrant: {
-      scope: T_CREDENTIAL_TYPE,
       authorizationServer: T_TRUST_ISSUER_BASE_URL,
       issuerState: "issuer-state"
     }
@@ -217,6 +262,355 @@ describe("itwCredentialIssuanceMachine", () => {
     jest.resetAllMocks();
   });
 
+  test.each([
+    { name: "credential selection", offer: false },
+    { name: "confirmed credential offer", offer: true }
+  ])(
+    "waits for the ongoing catalogue request and its translations on $name",
+    async ({ offer }) => {
+      const store = createStore(appReducer);
+      store.dispatch(applicationChangeState("active"));
+      store.dispatch(itwFetchCredentialsCatalogue.request());
+      const dispatch = jest.spyOn(store, "dispatch");
+      const machine = mockedMachine.provide({
+        guards: { hasCredentialIntroContent: hasCredentialIntroContentGuard }
+      });
+      const actor = createActor(machine, {
+        input: { deps: testCredentialIssuanceDeps({ store }) },
+        ...(offer
+          ? {
+              snapshot: machine.resolveState({
+                value: "CredentialOfferResolved",
+                context: {
+                  ...InitialContext,
+                  deps: testCredentialIssuanceDeps({ store }),
+                  resolvedCredentialOffer: T_RESOLVED_CREDENTIAL_OFFER
+                }
+              })
+            }
+          : {})
+      });
+      actor.start();
+      actor.send(
+        offer
+          ? { type: "confirm-credential-offer" }
+          : {
+              type: "select-credential",
+              credentialType: T_CREDENTIAL_TYPE,
+              mode: "issuance"
+            }
+      );
+      expect(
+        actor.getSnapshot().matches("WaitingForCredentialsCatalogue")
+      ).toBe(true);
+      expect(actor.getSnapshot().hasTag(ItwTags.Loading)).toBe(true);
+      expect(dispatch).not.toHaveBeenCalled();
+      expect(hasCredentialIntroContent).not.toHaveBeenCalled();
+
+      store.dispatch(itwFetchCatalogueTranslations.request());
+      store.dispatch(itwFetchCredentialsCatalogue.success(T_CATALOGUE));
+      expect(
+        actor.getSnapshot().matches("WaitingForCredentialsCatalogue")
+      ).toBe(true);
+      store.dispatch(itwFetchCatalogueTranslations.success(T_TRANSLATIONS));
+      await waitForActor(actor, snapshot =>
+        snapshot.matches(
+          offer ? "TrustFederationVerification" : "CredentialIntroduction"
+        )
+      );
+      actor.stop();
+    }
+  );
+
+  it("reuses the cached catalogue and translations across credential issuances", () => {
+    const store = createStore(appReducer);
+    store.dispatch(applicationChangeState("active"));
+    store.dispatch(itwFetchCredentialsCatalogue.success(T_CATALOGUE));
+    store.dispatch(itwFetchCatalogueTranslations.success(T_TRANSLATIONS));
+    const dispatch = jest.spyOn(store, "dispatch");
+    const machine = mockedMachine.provide({
+      guards: { hasCredentialIntroContent: hasCredentialIntroContentGuard }
+    });
+    const actor = createActor(machine, {
+      input: { deps: testCredentialIssuanceDeps({ store }) }
+    }).start();
+
+    actor.send({
+      type: "select-credential",
+      credentialType: T_CREDENTIAL_TYPE,
+      mode: "issuance"
+    });
+    expect(actor.getSnapshot().matches("CredentialIntroduction")).toBe(true);
+    actor.send({ type: "back" });
+    actor.send({
+      type: "select-credential",
+      credentialType: T_CREDENTIAL_TYPE,
+      mode: "issuance"
+    });
+    expect(actor.getSnapshot().matches("CredentialIntroduction")).toBe(true);
+    expect(dispatch).not.toHaveBeenCalled();
+    actor.stop();
+  });
+
+  test.each([
+    {
+      name: "waiting for the catalogue",
+      settled: false,
+      hasIntro: true,
+      continued: false,
+      expectedState: "Idle"
+    },
+    {
+      name: "displaying the introduction",
+      settled: true,
+      hasIntro: true,
+      continued: false,
+      expectedState: "Idle"
+    },
+    {
+      name: "issuance has moved on",
+      settled: true,
+      hasIntro: false,
+      continued: false,
+      expectedState: "TrustFederationVerification"
+    },
+    {
+      name: "continuing from the introduction",
+      settled: true,
+      hasIntro: true,
+      continued: true,
+      expectedState: "TrustFederationVerification"
+    }
+  ])(
+    "handles leaving the introduction when $name",
+    async ({ settled, hasIntro, continued, expectedState }) => {
+      verifyTrustFederation.mockImplementation(
+        () => new Promise<void>(() => undefined)
+      );
+      const store = createStore(appReducer);
+      store.dispatch(applicationChangeState("active"));
+      store.dispatch(itwFetchCredentialsCatalogue.request());
+      hasCredentialIntroContent.mockReturnValue(hasIntro);
+      const actor = createActor(mockedMachine, {
+        input: { deps: testCredentialIssuanceDeps({ store }) }
+      }).start();
+      actor.send({
+        type: "select-credential",
+        credentialType: T_CREDENTIAL_TYPE,
+        mode: "issuance"
+      });
+      const finishRefresh = () => {
+        store.dispatch(itwFetchCatalogueTranslations.request());
+        store.dispatch(itwFetchCredentialsCatalogue.success(T_CATALOGUE));
+        store.dispatch(itwFetchCatalogueTranslations.success(T_TRANSLATIONS));
+      };
+      if (settled) {
+        finishRefresh();
+        await waitForActor(actor, snapshot =>
+          snapshot.matches(
+            hasIntro ? "CredentialIntroduction" : "TrustFederationVerification"
+          )
+        );
+      }
+      if (continued) {
+        actor.send({ type: "continue" });
+      }
+      actor.send({ type: "back" });
+      if (!settled) {
+        finishRefresh();
+      }
+      expect(actor.getSnapshot().value).toBe(expectedState);
+      expect(actor.getSnapshot().context.credentialType).toBe(
+        expectedState === "Idle" ? undefined : T_CREDENTIAL_TYPE
+      );
+      expect(navigateToCredentialIntroductionScreen).toHaveBeenCalledTimes(
+        settled && hasIntro ? 1 : 0
+      );
+      actor.stop();
+    }
+  );
+
+  test.each([
+    {
+      name: "catalogue failure without cache",
+      translations: false,
+      cached: false
+    },
+    { name: "catalogue failure with cache", translations: false, cached: true },
+    { name: "translation failure", translations: true, cached: true }
+  ])(
+    "continues with the existing fallback after $name",
+    async ({ translations, cached }) => {
+      const store = createStore(appReducer);
+      store.dispatch(applicationChangeState("active"));
+      if (cached) {
+        store.dispatch(itwFetchCredentialsCatalogue.success(T_CATALOGUE));
+        store.dispatch(itwFetchCatalogueTranslations.success(T_TRANSLATIONS));
+      }
+      store.dispatch(
+        translations
+          ? itwFetchCatalogueTranslations.request()
+          : itwFetchCredentialsCatalogue.request()
+      );
+      const machine = mockedMachine.provide({
+        guards: { hasCredentialIntroContent: hasCredentialIntroContentGuard }
+      });
+      const actor = createActor(machine, {
+        input: { deps: testCredentialIssuanceDeps({ store }) }
+      });
+      actor.start();
+      actor.send({
+        type: "select-credential",
+        credentialType: T_CREDENTIAL_TYPE,
+        mode: "issuance"
+      });
+      expect(
+        actor.getSnapshot().matches("WaitingForCredentialsCatalogue")
+      ).toBe(true);
+      if (translations) {
+        store.dispatch(itwFetchCredentialsCatalogue.success(T_CATALOGUE));
+      }
+      const error = getNetworkError(new Error("Unavailable"));
+      store.dispatch(
+        translations
+          ? itwFetchCatalogueTranslations.failure(error)
+          : itwFetchCredentialsCatalogue.failure(error)
+      );
+      await waitForActor(actor, snapshot =>
+        snapshot.matches(
+          cached ? "CredentialIntroduction" : "TrustFederationVerification"
+        )
+      );
+      expect(navigateToFailureScreen).not.toHaveBeenCalled();
+      actor.stop();
+    }
+  );
+
+  it.each([
+    { name: "no introduction", content: {}, showsIntroduction: false },
+    {
+      name: "inline introduction",
+      content: { user_information: "Credential introduction" },
+      showsIntroduction: true
+    },
+    {
+      name: "translated introduction",
+      content: { user_information_l10n_id: "source.intro" },
+      showsIntroduction: true
+    }
+  ])(
+    "uses the L2 catalogue with $name after CieID fallback",
+    async ({ content, showsIntroduction }) => {
+      const sagaMiddleware = createSagaMiddleware();
+      const store = createStore(appReducer, applyMiddleware(sagaMiddleware));
+      store.dispatch(applicationChangeState("active"));
+      store.dispatch(itwSetFiscalCodeWhitelisted(true));
+      store.dispatch(
+        itwCredentialsStore([
+          { ...ItwStoredCredentialsMocks.eid, spec_version: "1.0.0" }
+        ])
+      );
+      const catalogue = {
+        ...T_CATALOGUE,
+        credentials: T_CATALOGUE.credentials.map(credential => ({
+          ...credential,
+          credential_type: "mDL",
+          authentic_sources: [
+            {
+              id: "source",
+              organization_country: "IT",
+              organization_type: "public" as const,
+              ...content
+            }
+          ]
+        }))
+      };
+      // A stale introduction must not survive a refresh that provides none.
+      store.dispatch(
+        itwFetchCredentialsCatalogue.success({
+          ...catalogue,
+          credentials: catalogue.credentials.map(credential => ({
+            ...credential,
+            authentic_sources: T_CATALOGUE.credentials[0].authentic_sources
+          }))
+        })
+      );
+      store.dispatch(itwFetchCatalogueTranslations.success(T_TRANSLATIONS));
+      const fetchCatalogue = jest
+        .spyOn(catalogueUtils, "fetchCredentialsCatalogue")
+        .mockResolvedValue(catalogue);
+      const fetchTranslations = jest
+        .spyOn(catalogueUtils, "fetchCatalogueTranslations")
+        .mockResolvedValue(T_TRANSLATIONS);
+      const task = sagaMiddleware.run(watchItwCredentialsCatalogueSaga);
+      const machine = mockedMachine.provide({
+        actions: { onInit: onInitAction },
+        guards: { hasCredentialIntroContent: hasCredentialIntroContentGuard }
+      });
+      const actor = createActor(machine, {
+        input: { deps: testCredentialIssuanceDeps({ store }) }
+      });
+      try {
+        // eID completion refreshes the catalogue after the wallet version changes.
+        store.dispatch(itwFetchCredentialsCatalogue.request());
+        actor.start();
+        actor.send({
+          type: "select-credential",
+          credentialType: "mDL",
+          mode: "issuance"
+        });
+        await waitForActor(actor, snapshot =>
+          snapshot.matches(
+            showsIntroduction
+              ? "CredentialIntroduction"
+              : "TrustFederationVerification"
+          )
+        );
+        expect(fetchCatalogue).toHaveBeenCalledWith(getEnv("prod"), "1.0.0");
+        expect(fetchCatalogue).toHaveBeenCalledTimes(1);
+        expect(fetchTranslations).toHaveBeenCalledWith("1.0.0", catalogue, [
+          "it"
+        ]);
+        expect(actor.getSnapshot().context.deps.itwVersion).toBe("1.0.0");
+        expect(navigateToCredentialIntroductionScreen).toHaveBeenCalledTimes(
+          showsIntroduction ? 1 : 0
+        );
+        expect(verifyTrustFederation).toHaveBeenCalledTimes(
+          showsIntroduction ? 0 : 1
+        );
+      } finally {
+        actor.stop();
+        task.cancel();
+        fetchCatalogue.mockRestore();
+        fetchTranslations.mockRestore();
+      }
+    }
+  );
+
+  // The machine may be idle with a stale itwVersion from its input.
+  // When the issuance flow actually starts, we must ensure the itwVersion is updated.
+  // This test uses the real `onInit` implementation to catch regressions.
+  it("initializes dependencies from the store when leaving the idle state", () => {
+    jest
+      .spyOn(envSelectors, "selectItwSpecsVersion")
+      .mockReturnValueOnce("1.0.0");
+
+    const deps = testCredentialIssuanceDeps({ itwVersion: "1.4.6" });
+    const machineWithRealOnInit = mockedMachine.provide({
+      actions: { onInit: onInitAction }
+    });
+    const actor = createActor(machineWithRealOnInit, { input: { deps } });
+
+    actor.start();
+    actor.send({
+      type: "select-credential",
+      credentialType: T_CREDENTIAL_TYPE,
+      mode: "issuance"
+    });
+
+    expect(actor.getSnapshot().context.deps.itwVersion).toBe("1.0.0");
+  });
+
   it("Should obtain a credential with a valid status assertion", async () => {
     hasValidWalletInstanceAttestation.mockImplementation(() => false);
     getWalletAttestation.mockImplementation(() =>
@@ -232,9 +626,7 @@ describe("itwCredentialIssuanceMachine", () => {
       })
     );
 
-    /**
-     * Start
-     */
+    /** Start */
 
     const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
     actor.start();
@@ -257,9 +649,7 @@ describe("itwCredentialIssuanceMachine", () => {
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
       credentialType: "MDL"
     });
-    /**
-     * Obtaint a new WIA if not present or expired
-     */
+    /** Obtaint a new WIA if not present or expired */
 
     await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(1));
     await waitFor(() =>
@@ -284,15 +674,11 @@ describe("itwCredentialIssuanceMachine", () => {
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([]));
 
-    /**
-     * Start credential issuance
-     */
+    /** Start credential issuance */
 
     expect(navigateToTrustIssuerScreen).toHaveBeenCalledTimes(1);
 
-    /**
-     * Obtain credential
-     */
+    /** Obtain credential */
 
     obtainCredential.mockImplementation(() =>
       Promise.resolve({
@@ -368,9 +754,7 @@ describe("itwCredentialIssuanceMachine", () => {
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([]));
     expect(navigateToCredentialPreviewScreen).toHaveBeenCalledTimes(1);
 
-    /**
-     * Store the credential
-     */
+    /** Store the credential */
 
     actor.send({
       type: "add-to-wallet"
@@ -399,9 +783,7 @@ describe("itwCredentialIssuanceMachine", () => {
       })
     );
 
-    /**
-     * Start
-     */
+    /** Start */
 
     const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
     actor.start();
@@ -425,9 +807,7 @@ describe("itwCredentialIssuanceMachine", () => {
       credentialType: "MDL",
       walletInstanceAttestation: { jwt: T_WIA }
     });
-    /**
-     * Obtaint a new WIA if not present or expired
-     */
+    /** Obtaint a new WIA if not present or expired */
 
     await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(0));
     await waitFor(() =>
@@ -444,7 +824,10 @@ describe("itwCredentialIssuanceMachine", () => {
   });
 
   it("Should not store the credential if the user closes the issuance", () => {
-    /** Initial part is the same as the previous test, we can start from the preview */
+    /**
+     * Initial part is the same as the previous test, we can start from the
+     * preview
+     */
 
     const initialSnapshot: MachineSnapshot = createActor(mockedMachine, {
       input: { deps: T_DEPS }
@@ -565,9 +948,7 @@ describe("itwCredentialIssuanceMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
-    /**
-     * Initialize wallet and start credential issuance
-     */
+    /** Initialize wallet and start credential issuance */
 
     verifyTrustFederation.mockImplementation(() => Promise.resolve());
 
@@ -620,7 +1001,10 @@ describe("itwCredentialIssuanceMachine", () => {
   });
 
   it("Should close the issuance if the user does not confirm trust issuer data", () => {
-    /** Initial part is the same as the previous test, we can start from the preview */
+    /**
+     * Initial part is the same as the previous test, we can start from the
+     * preview
+     */
 
     const initialSnapshot: MachineSnapshot = createActor(mockedMachine, {
       input: { deps: T_DEPS }
@@ -648,7 +1032,10 @@ describe("itwCredentialIssuanceMachine", () => {
   });
 
   it("Should go to failure if credential issaunce fails", async () => {
-    /** Initial part is the same as the previous test, we can start from the preview */
+    /**
+     * Initial part is the same as the previous test, we can start from the
+     * preview
+     */
 
     const initialSnapshot: MachineSnapshot = createActor(mockedMachine, {
       input: { deps: T_DEPS }
@@ -768,8 +1155,8 @@ describe("itwCredentialIssuanceMachine", () => {
       mode: "issuance"
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual(
-      "TrustFederationVerification"
+    await waitForActor(actor, snapshot =>
+      snapshot.matches("TrustFederationVerification")
     );
 
     jest.advanceTimersByTime(4000);
@@ -807,8 +1194,8 @@ describe("itwCredentialIssuanceMachine", () => {
       mode: "issuance"
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual(
-      "TrustFederationVerification"
+    await waitForActor(actor, snapshot =>
+      snapshot.matches("TrustFederationVerification")
     );
 
     jest.advanceTimersByTime(5000);
@@ -864,9 +1251,11 @@ describe("itwCredentialIssuanceMachine", () => {
 
   describe("Credential Offer flow", () => {
     it("Should process a credential offer and populate the resolved offer in context", async () => {
-      processCredentialOffer.mockImplementation(() =>
-        Promise.resolve(T_RESOLVED_CREDENTIAL_OFFER)
-      );
+      processCredentialOffer.mockResolvedValue({
+        ...T_RESOLVED_CREDENTIAL_OFFER,
+        credentialType: T_CREDENTIAL_TYPE,
+        issuerConf: T_ISSUER_CONFIG
+      });
       hasValidWalletInstanceAttestation.mockImplementation(() => true);
       hasCredentialIntroContent.mockImplementation(() => false);
 
@@ -896,7 +1285,8 @@ describe("itwCredentialIssuanceMachine", () => {
 
       expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
         credentialType: T_CREDENTIAL_TYPE,
-        credentialOfferUri: T_OFFER_URI
+        credentialOfferUri: T_OFFER_URI,
+        issuerConf: T_ISSUER_CONFIG
       });
       expect(actor.getSnapshot().context.resolvedCredentialOffer).toBeDefined();
     });
@@ -907,9 +1297,11 @@ describe("itwCredentialIssuanceMachine", () => {
         isItWalletValid: false,
         walletInstanceAttestation: undefined
       }));
-      processCredentialOffer.mockImplementation(() =>
-        Promise.resolve(T_RESOLVED_CREDENTIAL_OFFER)
-      );
+      processCredentialOffer.mockResolvedValue({
+        ...T_RESOLVED_CREDENTIAL_OFFER,
+        credentialType: T_CREDENTIAL_TYPE,
+        issuerConf: T_ISSUER_CONFIG
+      });
 
       const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
       actor.start();
@@ -931,9 +1323,11 @@ describe("itwCredentialIssuanceMachine", () => {
     });
 
     it("Should pass the resolved credential offer to the credential request", async () => {
-      processCredentialOffer.mockImplementation(() =>
-        Promise.resolve(T_RESOLVED_CREDENTIAL_OFFER)
-      );
+      processCredentialOffer.mockResolvedValue({
+        ...T_RESOLVED_CREDENTIAL_OFFER,
+        credentialType: T_CREDENTIAL_TYPE,
+        issuerConf: T_ISSUER_CONFIG
+      });
       hasValidWalletInstanceAttestation.mockImplementation(() => true);
       hasCredentialIntroContent.mockImplementation(() => true);
       verifyTrustFederation.mockImplementation(() => Promise.resolve());
@@ -965,7 +1359,8 @@ describe("itwCredentialIssuanceMachine", () => {
         expect.objectContaining({
           input: expect.objectContaining({
             credentialType: T_CREDENTIAL_TYPE,
-            resolvedCredentialOffer: T_RESOLVED_CREDENTIAL_OFFER
+            resolvedCredentialOffer: T_RESOLVED_CREDENTIAL_OFFER,
+            issuerConf: T_ISSUER_CONFIG
           })
         })
       );
@@ -984,9 +1379,11 @@ describe("itwCredentialIssuanceMachine", () => {
           isItWalletValid: true,
           walletInstanceAttestation: { jwt: T_WIA }
         }));
-      processCredentialOffer.mockImplementation(() =>
-        Promise.resolve(T_RESOLVED_CREDENTIAL_OFFER)
-      );
+      processCredentialOffer.mockResolvedValue({
+        ...T_RESOLVED_CREDENTIAL_OFFER,
+        credentialType: T_CREDENTIAL_TYPE,
+        issuerConf: T_ISSUER_CONFIG
+      });
       hasValidWalletInstanceAttestation.mockImplementation(() => true);
       hasCredentialIntroContent.mockImplementation(() => true);
       verifyTrustFederation.mockImplementation(() => Promise.resolve());
@@ -1021,7 +1418,8 @@ describe("itwCredentialIssuanceMachine", () => {
             credentialType: T_CREDENTIAL_TYPE,
             walletInstanceAttestation: T_WIA,
             resolvedCredentialOffer: T_RESOLVED_CREDENTIAL_OFFER,
-            skipMdocIssuance: false
+            skipMdocIssuance: false,
+            issuerConf: T_ISSUER_CONFIG
           })
         })
       );
@@ -1029,9 +1427,11 @@ describe("itwCredentialIssuanceMachine", () => {
     });
 
     it("Should keep the resolved credential offer when eID renewal is needed", async () => {
-      processCredentialOffer.mockImplementation(() =>
-        Promise.resolve(T_RESOLVED_CREDENTIAL_OFFER)
-      );
+      processCredentialOffer.mockResolvedValue({
+        ...T_RESOLVED_CREDENTIAL_OFFER,
+        credentialType: T_CREDENTIAL_TYPE,
+        issuerConf: T_ISSUER_CONFIG
+      });
       isEidExpired.mockImplementation(() => true);
 
       const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });

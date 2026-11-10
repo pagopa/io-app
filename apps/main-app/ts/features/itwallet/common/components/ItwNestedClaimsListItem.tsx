@@ -10,7 +10,10 @@ import { CREDENTIALS_MAP } from "../../analytics/utils/types.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ClaimDisplayFormat } from "../utils/itwClaimsUtils";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils.ts";
-import { ItwCredentialClaim } from "./ItwCredentialClaim.tsx";
+import {
+  ItwClaimLongPressHandler,
+  ItwCredentialClaim
+} from "./ItwCredentialClaim.tsx";
 
 type ItwNestedClaimsListItemProps = {
   credentialStatus?: ItwCredentialStatus;
@@ -18,36 +21,41 @@ type ItwNestedClaimsListItemProps = {
   hidden?: boolean;
   isPreview?: boolean;
   itemClaims: Array<ClaimDisplayFormat>;
-  itemTitle?: string;
+  onLongPress?: ItwClaimLongPressHandler;
   summaryLabel?: string;
   summaryValue?: string;
 };
 
 /**
  * Component which renders a list item with nested claims.
- * @param itemTitle - the title of the item
- * @param summaryLabel - the label of the summary item
- * @param summaryValue - the value of the summary item
- * @param itemClaims - the claims to display in the bottom sheet
- * @param hidden - a flag to hide the claim values
- * @param isPreview - a flag to indicate if the claims are being rendered in preview mode
- * @param credentialStatus - the status of the credential, used for expiration date claims
- * @param credentialType - the type of the credential, used for analytics tracking
- * @constructor
+ *
+ * @class
+ * @param summaryLabel - The label of the summary item
+ * @param summaryValue - The value of the summary item
+ * @param itemClaims - The claims to display in the bottom sheet
+ * @param hidden - A flag to hide the claim values
+ * @param isPreview - A flag to indicate if the claims are being rendered in
+ *   preview mode
+ * @param credentialStatus - The status of the credential, used for expiration
+ *   date claims
+ * @param credentialType - The type of the credential, used for analytics
+ *   tracking
+ * @param onLongPress - Callback invoked when a claim value in the bottom sheet
+ *   is long pressed
  */
 export const ItwNestedClaimsListItem = ({
-  itemTitle,
   summaryLabel,
   summaryValue,
   itemClaims,
   hidden,
   isPreview,
   credentialStatus,
-  credentialType
+  credentialType,
+  onLongPress
 }: ItwNestedClaimsListItemProps) => {
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const itemBottomSheet = useIOBottomSheetModal({
-    title: itemTitle,
+    title: I18n.t("features.itWallet.generic.nestedClaimsDetailsTitle"),
     component: (
       <>
         {itemClaims.map((claim, index) => (
@@ -59,6 +67,7 @@ export const ItwNestedClaimsListItem = ({
               credentialType={credentialType}
               hidden={hidden}
               isPreview={isPreview}
+              onLongPress={onLongPress}
             />
           </Fragment>
         ))}

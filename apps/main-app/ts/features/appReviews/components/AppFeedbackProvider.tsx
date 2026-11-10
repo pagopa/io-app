@@ -4,7 +4,7 @@ import {
   useIOToast,
   VSpacer
 } from "@io-app/design-system";
-import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
+import { openAuthSessionAsync } from "expo-web-browser";
 import I18n from "i18next";
 import {
   createContext,
@@ -42,7 +42,7 @@ export const AppFeedbackContext = createContext<AppFeedbackContextType>({
 export const AppFeedbackProvider = ({ children }: PropsWithChildren) => {
   const [topic, setTopic] = useState<TopicKeys | undefined>();
   const dispatch = useIODispatch();
-  const { show } = useIOToast();
+  const { info } = useIOToast();
   const surveyUrl = useIOSelector(appFeedbackUriConfigSelector(topic));
   const appFeedbackEnabled = useIOSelector(appFeedbackEnabledSelector);
   const canAskFeedback = useIOSelector(canAskFeedbackSelector(topic));
@@ -64,7 +64,7 @@ export const AppFeedbackProvider = ({ children }: PropsWithChildren) => {
             label: I18n.t("appFeedback.bottomSheet.continue"),
             onPress: () => {
               if (surveyUrl) {
-                void openAuthenticationSession(surveyUrl, "");
+                void openAuthSessionAsync(surveyUrl);
               }
               setTopic(undefined);
               dismiss();
@@ -73,7 +73,7 @@ export const AppFeedbackProvider = ({ children }: PropsWithChildren) => {
           secondary: {
             label: I18n.t("appFeedback.bottomSheet.discard"),
             onPress: () => {
-              show(I18n.t("appFeedback.toast.negativeFeedback"));
+              info(I18n.t("appFeedback.toast.negativeFeedback"));
               setTopic(undefined);
               dismiss();
             }
@@ -84,7 +84,11 @@ export const AppFeedbackProvider = ({ children }: PropsWithChildren) => {
   });
 
   useEffect(() => {
-    if (topic === undefined || !canAskFeedback) {
+    if (topic === undefined) {
+      return;
+    }
+    if (!canAskFeedback) {
+      setTopic(undefined);
       return;
     }
     if (appFeedbackEnabled) {
@@ -103,7 +107,7 @@ export const AppFeedbackProvider = ({ children }: PropsWithChildren) => {
             text: I18n.t("appFeedback.alert.continue"),
             style: "default",
             onPress: () => {
-              requestAppReview();
+              void requestAppReview();
               setTopic(undefined);
               dispatch(appReviewPositiveFeedback());
             }
@@ -111,7 +115,8 @@ export const AppFeedbackProvider = ({ children }: PropsWithChildren) => {
         ]
       );
     } else {
-      requestAppReview();
+      void requestAppReview();
+      setTopic(undefined);
     }
   }, [appFeedbackEnabled, canAskFeedback, dispatch, present, topic]);
 

@@ -23,13 +23,6 @@ export const DSToastNotifications = () => {
           <H4 color={theme["textHeading-default"]}>Events</H4>
           <VStack space={componentMargin}>
             <IOButton
-              accessibilityLabel="Neutral"
-              fullWidth
-              label="Neutral"
-              onPress={() => IOToast.show("Hello!")}
-              variant="outline"
-            />
-            <IOButton
               accessibilityLabel="Error"
               fullWidth
               label="Error"
@@ -70,7 +63,6 @@ export const DSToastNotifications = () => {
         <VStack space={sectionTitleMargin}>
           <H4 color={theme["textHeading-default"]}>Component</H4>
           <VStack space={componentMargin}>
-            <ToastNotification icon="checkTickBig" message="Neutral" />
             <ToastNotification
               icon="errorFilled"
               message="Error"

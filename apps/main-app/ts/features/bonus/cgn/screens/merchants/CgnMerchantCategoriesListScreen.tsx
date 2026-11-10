@@ -4,8 +4,8 @@ import {
   ContentWrapper,
   Divider,
   HSpacer,
+  IODimensionScale,
   IOSkeleton,
-  IOSpacingScale,
   IOToast,
   ListItemAction,
   VSpacer
@@ -28,7 +28,7 @@ import { CgnDetailsParamsList } from "../../navigation/params";
 import CGN_ROUTES from "../../navigation/routes";
 import { cgnCategories } from "../../store/actions/categories";
 import { cgnCategoriesListSelector } from "../../store/reducers/categories";
-import { getCategorySpecs } from "../../utils/filters";
+import { getCategoryName, getCategorySpecs } from "../../utils/filters";
 
 export type CategoryRow = {
   categories: ReadonlyArray<RenderableCategory>;
@@ -43,8 +43,8 @@ type RenderableCategory = {
 };
 
 const CATEGORY_CARDS_PER_ROW = 2;
-const CATEGORY_CARD_SPACING: IOSpacingScale = 8;
-const CATEGORY_LIST_BOTTOM_SPACING: IOSpacingScale = 32;
+const CATEGORY_CARD_SPACING: IODimensionScale = 8;
+const CATEGORY_LIST_BOTTOM_SPACING: IODimensionScale = 32;
 const CATEGORY_CARD_SKELETON_ROWS = 3;
 const CATEGORY_CARD_SKELETON_HEIGHT = 116;
 const CATEGORY_CARD_SKELETON_RADIUS = 8;
@@ -182,8 +182,8 @@ export const CgnMerchantCategoriesListScreen = () => {
 
     const accessibilityLabel =
       (countAvailable
-        ? `${I18n.t(specs.nameKey)} ${I18n.t("bonus.cgn.merchantsList.news")}`
-        : `${I18n.t(specs.nameKey)}`) +
+        ? `${getCategoryName(specs.type)} ${I18n.t("bonus.cgn.merchantsList.news")}`
+        : `${getCategoryName(specs.type)}`) +
       getListItemAccessibilityLabelCount(totalCategories, index);
 
     return (
@@ -192,7 +192,7 @@ export const CgnMerchantCategoriesListScreen = () => {
         backgroundColor={specs.colors}
         icon={specs.icon}
         isNew={countAvailable}
-        name={I18n.t(specs.nameKey)}
+        name={getCategoryName(specs.type)}
         onPress={() => {
           navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY, {
             category: specs.type

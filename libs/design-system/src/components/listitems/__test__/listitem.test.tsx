@@ -16,6 +16,32 @@ const onButtonPress = () => {
 };
 
 describe("Test List Item Components", () => {
+  it("keeps informational content out of keyboard focus", () => {
+    const { getByLabelText } = render(
+      <ListItemInfo accessibilityLabel="Information" value="Value" />
+    );
+
+    const information = getByLabelText("Information");
+    expect(information).toHaveProp("accessible", false);
+    expect(information).toHaveProp("screenReaderFocusable", true);
+  });
+
+  it("keeps end actions separate from informational content", () => {
+    const { getByLabelText } = render(
+      <ListItemInfo
+        accessibilityLabel="Information"
+        endElement={{
+          type: "buttonLink",
+          componentProps: { label: "Action", onPress: onButtonPress }
+        }}
+        value="Value"
+      />
+    );
+
+    expect(getByLabelText("Information")).toHaveProp("accessible", false);
+    expect(getByLabelText("Action")).toHaveProp("accessibilityRole", "button");
+  });
+
   it("ListItemInfo Snapshot", () => {
     const { toJSON } = render(
       <ListItemInfo
@@ -41,8 +67,8 @@ describe("Test List Item Components", () => {
     const { toJSON } = render(
       <ListItemNav
         accessibilityLabel={"accessibilityLabel"}
+        label={"testValue"}
         onPress={onButtonPress}
-        value={"testValue"}
       />
     );
     expect(toJSON()).toMatchSnapshot();
@@ -51,8 +77,8 @@ describe("Test List Item Components", () => {
     const { toJSON } = render(
       <ListItemNavAlert
         accessibilityLabel={"accessibilityLabel"}
+        label={"testValue"}
         onPress={onButtonPress}
-        value={"testValue"}
       />
     );
     expect(toJSON()).toMatchSnapshot();
@@ -71,10 +97,10 @@ describe("Test List Item Components", () => {
   it("ListItemTransaction Snapshot", () => {
     const { toJSON } = render(
       <ListItemTransaction
+        description="subtitle"
         isLoading={true}
+        label="TITLE"
         onPress={onButtonPress}
-        subtitle="subtitle"
-        title="TITLE"
         transaction={{
           amount: "€ 1.000,00",
           amountAccessibilityLabel: "€ 1.000,00"
@@ -135,8 +161,8 @@ describe("Test List Item Components - Experimental Enabled", () => {
     const { toJSON } = renderWithExperimentalEnabledContextProvider(
       <ListItemNav
         accessibilityLabel={"accessibilityLabel"}
+        label={"testValue"}
         onPress={onButtonPress}
-        value={"testValue"}
       />
     );
     expect(toJSON()).toMatchSnapshot();
@@ -145,8 +171,8 @@ describe("Test List Item Components - Experimental Enabled", () => {
     const { toJSON } = renderWithExperimentalEnabledContextProvider(
       <ListItemNavAlert
         accessibilityLabel={"accessibilityLabel"}
+        label={"testValue"}
         onPress={onButtonPress}
-        value={"testValue"}
       />
     );
     expect(toJSON()).toMatchSnapshot();
@@ -165,10 +191,10 @@ describe("Test List Item Components - Experimental Enabled", () => {
   it("ListItemTransaction Snapshot", () => {
     const { toJSON } = renderWithExperimentalEnabledContextProvider(
       <ListItemTransaction
+        description="subtitle"
         isLoading={true}
+        label="TITLE"
         onPress={onButtonPress}
-        subtitle="subtitle"
-        title="TITLE"
         transaction={{
           amount: "€ 1.000,00",
           amountAccessibilityLabel: "€ 1.000,00"

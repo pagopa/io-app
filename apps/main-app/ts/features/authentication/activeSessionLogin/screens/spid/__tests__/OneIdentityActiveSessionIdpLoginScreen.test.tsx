@@ -1,14 +1,15 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 
+import { apiUrlPrefix } from "../../../../../../config";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import * as IOHooks from "../../../../../../store/hooks";
 import { appReducer } from "../../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import * as useOneIdentityLoginSourceModule from "../../../../../lollipop/hooks/useOneIdentityLoginSource";
-import { AUTH_ERRORS } from "../../../../common/components/AuthErrorComponent";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
-import { CALLBACK_PATH } from "../../../../common/utils";
+import { AUTH_LEVELS, AuthLevel } from "../../../../common/utils";
+import { AUTH_ERRORS } from "../../../../common/utils/authError";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess
@@ -33,6 +34,7 @@ jest.mock("@react-navigation/native", () => {
   return {
     ...actualNav,
     useNavigation: () => ({
+      addListener: jest.fn(),
       replace: mockReplace
     })
   };
@@ -59,8 +61,8 @@ const mockIdp = {
   profileUrl: ""
 };
 
-const remoteApiLoginUrlPrefix = "https://api-app.io.pagopa.it";
-const callbackUrl = `${remoteApiLoginUrlPrefix}${CALLBACK_PATH}`;
+const MOCK_AUTH_LEVEL_L2: AuthLevel = AUTH_LEVELS.L2;
+const MOCK_VALID_CALLBACK_URL = `${apiUrlPrefix}/api/auth/v1/callback`;
 
 const mockForceLogoutAndNavigateToLanding = jest.fn();
 
@@ -79,6 +81,7 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
           status: "one-identity-authorize",
           webviewSource: { uri: "https://example.com/authorize" }
         },
+        generateLoginSource: jest.fn(),
         shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(() => false)
       });
 
@@ -89,10 +92,6 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
     jest
       .spyOn(activeSessionSelectors, "activeSessionUserLoggedSelector")
       .mockReturnValue(false);
-
-    jest
-      .spyOn(activeSessionSelectors, "remoteApiLoginUrlPrefixSelector")
-      .mockReturnValue(remoteApiLoginUrlPrefix);
 
     jest
       .spyOn(useActiveSessionLoginNavigationModule, "default")
@@ -143,14 +142,18 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
 
     expect(mockDispatch).toHaveBeenCalledWith(activeSessionLoginFailure());
 
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: {
+    expect(mockReplace).toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      {
         errorCodeOrMessage: "err-code",
         authMethod: "SPID",
-        authLevel: "L2"
+        authLevel: MOCK_AUTH_LEVEL_L2,
+        failureData: {
+          reason: expect.stringContaining("(err-code)"),
+          idp: mockIdp.id
+        }
       }
-    });
+    );
   });
 
   it("should not dispatch activeSessionLoginFailure but still navigate to AuthErrorScreen when the failed login URL is the ERROR_1004 case", () => {
@@ -163,14 +166,18 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
 
     expect(mockDispatch).not.toHaveBeenCalledWith(activeSessionLoginFailure());
 
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: {
+    expect(mockReplace).toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      {
         errorCodeOrMessage: AUTH_ERRORS.ERROR_1004,
         authMethod: "SPID",
-        authLevel: "L2"
+        authLevel: MOCK_AUTH_LEVEL_L2,
+        failureData: {
+          reason: expect.stringContaining(AUTH_ERRORS.ERROR_1004),
+          idp: mockIdp.id
+        }
       }
-    });
+    );
   });
 
   it("should force logout and navigate to landing on a HTTP error on the callback URL", () => {
@@ -178,11 +185,39 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
     const webview = getByTestId("webview-idp-login-screen");
 
     fireEvent(webview, "onHttpError", {
-      nativeEvent: { url: callbackUrl, statusCode: 500 }
+      nativeEvent: { url: MOCK_VALID_CALLBACK_URL, statusCode: 500 }
     });
 
     expect(mockForceLogoutAndNavigateToLanding).toHaveBeenCalled();
     expect(mockReplace).not.toHaveBeenCalled();
+  });
+
+  it("should navigate to AuthErrorScreen (not force logout) on a HTTP error on a URL that only contains the callback path as a substring", () => {
+    const { getByTestId } = renderComponent();
+    const webview = getByTestId("webview-idp-login-screen");
+
+    fireEvent(webview, "onHttpError", {
+      nativeEvent: {
+        url: `${MOCK_VALID_CALLBACK_URL}/extra-path`,
+        statusCode: 500
+      }
+    });
+
+    expect(mockForceLogoutAndNavigateToLanding).not.toHaveBeenCalled();
+    expect(mockReplace).toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      {
+        errorCodeOrMessage: undefined,
+        authMethod: "SPID",
+        authLevel: MOCK_AUTH_LEVEL_L2,
+        failureData: {
+          description: "Unexpected HTTP status 500",
+          code: 500,
+          url: `${MOCK_VALID_CALLBACK_URL}/extra-path`,
+          idp: mockIdp.id
+        }
+      }
+    );
   });
 
   it("should not navigate to AuthErrorScreen on a HTTP 403 error on a non-callback URL", () => {
@@ -205,14 +240,20 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
       nativeEvent: { url: "https://example.com/some-path", statusCode: 500 }
     });
 
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: {
+    expect(mockReplace).toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      {
         errorCodeOrMessage: undefined,
         authMethod: "SPID",
-        authLevel: "L2"
+        authLevel: MOCK_AUTH_LEVEL_L2,
+        failureData: {
+          description: "Unexpected HTTP status 500",
+          code: 500,
+          url: "https://example.com/some-path",
+          idp: mockIdp.id
+        }
       }
-    });
+    );
     expect(mockForceLogoutAndNavigateToLanding).not.toHaveBeenCalled();
   });
 
@@ -221,17 +262,27 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
     const webview = getByTestId("webview-idp-login-screen");
 
     fireEvent(webview, "onError", {
-      nativeEvent: { url: "https://example.com/authorize" }
-    });
-
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: {
-        errorCodeOrMessage: undefined,
-        authMethod: "SPID",
-        authLevel: "L2"
+      nativeEvent: {
+        url: "https://example.com/authorize",
+        code: -2,
+        description: "net::ERR_INTERNET_DISCONNECTED"
       }
     });
+
+    expect(mockReplace).toHaveBeenCalledWith(
+      AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+      {
+        errorCodeOrMessage: undefined,
+        authMethod: "SPID",
+        authLevel: MOCK_AUTH_LEVEL_L2,
+        failureData: {
+          description: "net::ERR_INTERNET_DISCONNECTED",
+          code: -2,
+          url: "https://example.com/authorize",
+          idp: mockIdp.id
+        }
+      }
+    );
   });
 });
 

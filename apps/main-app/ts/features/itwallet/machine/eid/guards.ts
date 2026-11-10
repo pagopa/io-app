@@ -1,6 +1,9 @@
 import { profileFiscalCodeSelector } from "../../../settings/common/store/selectors";
 import { ItwSessionExpiredError } from "../../api/client";
-import { isWalletInstanceAttestationValid } from "../../common/utils/itwAttestationUtils";
+import {
+  isWalletInstanceAttestationForSpecs,
+  isWalletInstanceAttestationValid
+} from "../../common/utils/itwAttestationUtils";
 import { getFiscalCodeFromCredential } from "../../common/utils/itwClaimsUtils";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { Context } from "./context";
@@ -12,8 +15,8 @@ type GuardArgs = {
 };
 
 /**
- * Guard to check whether the user for whom the eID was issued
- * is the same that is currently authenticated in app.
+ * Guard to check whether the user for whom the eID was issued is the same that
+ * is currently authenticated in app.
  */
 export const issuedEidMatchesAuthenticatedUserGuard = ({
   context
@@ -41,6 +44,14 @@ export const hasValidWalletInstanceAttestationGuard = ({
   return (
     attestation !== undefined &&
     isWalletInstanceAttestationValid(context.itwVersion, attestation)
+  );
+};
+
+export const hasWalletInstanceForSpecsGuard = ({ context }: GuardArgs) => {
+  const attestation = context.walletInstanceAttestation?.jwt;
+  return (
+    attestation !== undefined &&
+    isWalletInstanceAttestationForSpecs(context.itwVersion, attestation)
   );
 };
 

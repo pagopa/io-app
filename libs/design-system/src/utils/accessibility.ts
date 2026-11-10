@@ -4,8 +4,8 @@ import { AccessibilityInfo, Platform, useWindowDimensions } from "react-native";
 import { IOMaxFontSizeMultiplier } from "./fonts";
 
 /**
- * Query whether a bold text is currently enabled. The result is true
- * when bold text is enabled and false otherwise.
+ * Query whether a bold text is currently enabled. The result is true when bold
+ * text is enabled and false otherwise.
  */
 export const useBoldTextEnabled = () => {
   const [boldTextEnabled, setBoldTextEnabled] = useState(false);
@@ -36,9 +36,10 @@ export const useBoldTextEnabled = () => {
 };
 
 /**
- * Returns a font size multiplier based on the font scale of the device,
- * but limited to the `IOMaxFontSizeMultiplier` value.
- * @returns number
+ * Returns a font size multiplier based on the font scale of the device, but
+ * limited to the `IOMaxFontSizeMultiplier` value.
+ *
+ * @returns Number
  */
 export const useIOFontDynamicScale = (): {
   dynamicFontScale: number;

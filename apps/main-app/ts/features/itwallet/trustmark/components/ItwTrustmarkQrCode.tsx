@@ -1,4 +1,4 @@
-import { IOVisualCostants } from "@io-app/design-system";
+import { IODimensions } from "@io-app/design-system";
 import I18n from "i18next";
 import { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
@@ -8,9 +8,7 @@ import { ItwRetryableQRCode } from "../../common/components/ItwRetryableQRCode";
 import { ItwTrustmarkMachineContext } from "../machine/provider";
 import { selectFailure, selectTrustmarkUrl } from "../machine/selectors";
 
-/**
- * Component that renders the QR code of the trustmark
- */
+/** Component that renders the QR code of the trustmark */
 const ItwTrustmarkQrCode = () => {
   const machineRef = ItwTrustmarkMachineContext.useActorRef();
   const trustmarkUrl =
@@ -43,7 +41,7 @@ const ItwTrustmarkQrCode = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: -IOVisualCostants.appMarginDefault,
+    marginHorizontal: -IODimensions.padding.screen.default,
     alignItems: "center"
   }
 });

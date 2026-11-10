@@ -1,6 +1,9 @@
+import type { ErrorFlowStateKeys } from "../reminderBanner/components/PnBannerFlowComponents";
+
 import { mixpanelTrack } from "../../../mixpanel";
 import { buildEventProperties } from "../../../utils/analytics";
 import { MESSAGES_ROUTES } from "../../messages/navigation/routes";
+import { SendFailureReason } from "../../messages/utils";
 import PN_ROUTES from "../navigation/routes";
 
 const bannerShown = () => {
@@ -34,11 +37,15 @@ const bannerClose = () => {
   );
 };
 
-const bannerKO = (reason: string) => {
+const bannerKO = (
+  reason: "aar" | ErrorFlowStateKeys,
+  reasonType?: SendFailureReason
+) => {
   void mixpanelTrack(
     "SEND_ACTIVATION_FAILURE",
     buildEventProperties("KO", "error", {
-      reason
+      reason,
+      reason_type: reasonType
     })
   );
 };

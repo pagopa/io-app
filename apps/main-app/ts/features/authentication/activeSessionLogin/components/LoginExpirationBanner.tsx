@@ -1,4 +1,4 @@
-import { Banner, IOVisualCostants, useIOToast } from "@io-app/design-system";
+import { Banner, IODimensions, useIOToast } from "@io-app/design-system";
 import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useEffect } from "react";
@@ -28,8 +28,8 @@ type Props = {
   handleOnClose: () => void;
 };
 /**
- * to use in case the banner's visibility has to be handled externally
- * (see MultiBanner feature for the landing screen)
+ * To use in case the banner's visibility has to be handled externally (see
+ * MultiBanner feature for the landing screen)
  */
 export const LoginExpirationBanner = ({ handleOnClose }: Props) => {
   const { name: routeName } = useRoute();
@@ -114,7 +114,7 @@ export const LoginExpirationBanner = ({ handleOnClose }: Props) => {
 
 const styles = StyleSheet.create({
   margins: {
-    marginHorizontal: IOVisualCostants.appMarginDefault,
+    marginHorizontal: IODimensions.padding.screen.default,
     marginVertical: 16
   }
 });

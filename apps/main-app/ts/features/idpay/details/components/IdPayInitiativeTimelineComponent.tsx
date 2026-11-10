@@ -11,7 +11,7 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
-import { ComponentProps, Fragment } from "react";
+import { ComponentProps, Fragment, useEffect } from "react";
 import { View } from "react-native";
 
 import {
@@ -20,6 +20,7 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useIdPayTimelineDetailsBottomSheet } from "../../timeline/components/IdPayTimelineDetailsBottomSheet";
+import { trackIDPayDetailTimelineError } from "../analytics";
 import { IDPayDetailsRoutes } from "../navigation";
 import {
   idpayInitiativeDetailsSelector,
@@ -48,6 +49,19 @@ const IdPayInitiativeTimelineComponent = ({
   const isError = pot.isError(paginatedTimelinePot);
   const initiativeDataPot = useIOSelector(idpayInitiativeDetailsSelector);
   const initiative = pot.toUndefined(initiativeDataPot);
+
+  const timelineError = pot.isError(paginatedTimelinePot)
+    ? paginatedTimelinePot.error
+    : undefined;
+
+  useEffect(() => {
+    if (timelineError !== undefined) {
+      trackIDPayDetailTimelineError({
+        initiative_id: initiativeId,
+        error: timelineError
+      });
+    }
+  }, [timelineError, initiativeId]);
 
   const navigateToOperationsList = () => {
     navigation.push(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {

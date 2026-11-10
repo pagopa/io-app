@@ -11,8 +11,8 @@ type Props = {
 
 /**
  * Formats the date on which a consent was saved. Legacy consents do not have
- * this information and intentionally omit the description instead of showing
- * an inferred date.
+ * this information and intentionally omit the description instead of showing an
+ * inferred date.
  */
 export const getConsentSavedAtDescription = (
   savedAt: string | undefined
@@ -43,7 +43,7 @@ export const ItwConsentManagementListItem = ({ consent, onPress }: Props) => (
     )}
     description={getConsentSavedAtDescription(consent.savedAt)}
     icon="institution"
+    label={consent.rpDisplayName ?? consent.rpId}
     onPress={onPress}
-    value={consent.rpDisplayName ?? consent.rpId}
   />
 );

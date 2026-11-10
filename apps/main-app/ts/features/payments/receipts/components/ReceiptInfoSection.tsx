@@ -5,10 +5,9 @@ import {
   ContentWrapper,
   Divider,
   IOColors,
+  IODimensions,
   IOLogoPaymentType,
-  IORadiusScale,
   IOSkeleton,
-  IOVisualCostants,
   ListItemHeader,
   ListItemInfo,
   ListItemInfoCopy,
@@ -32,9 +31,8 @@ type Props = {
   transaction?: NoticeDetailResponse;
 };
 
-/**
- * Component that shows the biz-events transaction info
- */
+/** Component that shows the biz-events transaction info */
+// oxlint-disable-next-line complexity
 const ReceiptInfoSection = ({
   transaction,
   loading,
@@ -51,8 +49,8 @@ const ReceiptInfoSection = ({
       <ContentWrapper style={{ flexGrow: 1 }}>
         <ContentWrapper
           style={{
-            borderRadius: IORadiusScale["1"],
-            marginVertical: IOVisualCostants.appMarginDefault,
+            borderRadius: IODimensions.radius.default,
+            marginVertical: IODimensions.padding.screen.default,
             backgroundColor
           }}
         >
@@ -215,7 +213,7 @@ const renderPaymentMethod = (walletInfo: WalletInfo) => {
       <ListItemInfo
         label={I18n.t("transaction.details.info.paymentMethod")}
         paymentLogoIcon={"payPal"}
-        value="PayPal"
+        value={I18n.t("wallet.onboarding.paypal.name")}
       />
     );
   }

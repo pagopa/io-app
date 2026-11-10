@@ -2,7 +2,7 @@ import { Body, OTPInput, VSpacer, VStack } from "@io-app/design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
-import i18n from "i18next";
+import I18n from "i18next";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   Image,
@@ -126,7 +126,7 @@ export const SendAarCieCanInsertionScreen = ({
   const CanLocationBottomSheetContent = () => (
     <VStack space={24}>
       <Body>
-        {i18n.t("features.pn.aar.flow.cieCanInsertion.bottomSheet.info", {
+        {I18n.t("features.pn.aar.flow.cieCanInsertion.bottomSheet.info", {
           denomination
         })}
       </Body>
@@ -144,7 +144,7 @@ export const SendAarCieCanInsertionScreen = ({
 
   const { bottomSheet, present: presentCanLocationBottomSheet } =
     useIOBottomSheetModal({
-      title: i18n.t("features.pn.aar.flow.cieCanInsertion.bottomSheet.title"),
+      title: I18n.t("features.pn.aar.flow.cieCanInsertion.bottomSheet.title"),
       component: <CanLocationBottomSheetContent />
     });
 
@@ -169,7 +169,7 @@ export const SendAarCieCanInsertionScreen = ({
       >
         <IOScrollViewWithLargeHeader
           alwaysBounceVertical={false}
-          description={i18n.t(
+          description={I18n.t(
             "features.pn.aar.flow.cieCanInsertion.description"
           )}
           goBack={handleGoBack}
@@ -177,19 +177,19 @@ export const SendAarCieCanInsertionScreen = ({
           includeContentMargins
           onDescriptionLinkPress={handleDescriptionLinkPress}
           title={{
-            label: i18n.t("features.pn.aar.flow.cieCanInsertion.title")
+            label: I18n.t("features.pn.aar.flow.cieCanInsertion.title")
           }}
         >
           <VSpacer size={8} />
           <OTPInput
-            accessibilityHint={i18n.t(
+            accessibilityHint={I18n.t(
               "authentication.cie.pin.accessibility.hint"
             )}
-            accessibilityLabel={i18n.t(
+            accessibilityLabel={I18n.t(
               "authentication.cie.pin.accessibility.label"
             )}
             accessibilityValueText={({ valueLength, length }) =>
-              i18n.t("global.accessibility.otpInput.valueText", {
+              I18n.t("global.accessibility.otpInput.valueText", {
                 valueLength,
                 length
               })

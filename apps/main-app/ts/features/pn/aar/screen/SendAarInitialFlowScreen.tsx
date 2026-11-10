@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import i18n from "i18next";
+import I18n from "i18next";
 import { useEffect } from "react";
 
 import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
@@ -79,7 +79,7 @@ export const SendAarInitialFlowScreen = ({
       return (
         <LoadingScreenContent
           testID="LoadingScreenContent"
-          title={i18n.t("features.pn.aar.flow.fetchingQrData.loadingText")}
+          title={I18n.t("features.pn.aar.flow.fetchingQrData.loadingText")}
         />
       );
   }

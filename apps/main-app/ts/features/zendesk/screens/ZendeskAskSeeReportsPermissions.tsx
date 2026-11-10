@@ -2,8 +2,8 @@ import {
   ContentWrapper,
   Divider,
   IOButton,
+  IODimensions,
   IOToast,
-  IOVisualCostants,
   ListItemHeader,
   ListItemInfo,
   VSpacer
@@ -43,8 +43,10 @@ type Props = IOStackNavigationRouteProps<
 >;
 
 /**
- * this screen shows the kinds of data the app could collect when a user is looking at the previous ticket only for the authenticated users
- * @constructor
+ * This screen shows the kinds of data the app could collect when a user is
+ * looking at the previous ticket only for the authenticated users
+ *
+ * @class
  */
 const ZendeskAskSeeReportsPermissions = (props: Props) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -128,6 +130,7 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
     >
       <ContentWrapper>
         <IOButton
+          accessibilityRole="link"
           label={I18n.t("support.askPermissions.privacyLink")}
           onPress={() => {
             openWebUrl(zendeskPrivacyUrl, () =>
@@ -142,7 +145,7 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
 
       <FlatList
         contentContainerStyle={{
-          paddingHorizontal: IOVisualCostants.appMarginDefault
+          paddingHorizontal: IODimensions.padding.screen.default
         }}
         data={items}
         ItemSeparatorComponent={() => <Divider />}

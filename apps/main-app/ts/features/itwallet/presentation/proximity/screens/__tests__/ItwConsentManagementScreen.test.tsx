@@ -14,14 +14,7 @@ import { ItwConsentManagementScreen } from "../ItwConsentManagementScreen";
 
 const mockNavigate = jest.fn();
 const mockNavigationDispatch = jest.fn();
-
-jest.mock("../../../../../../navigation/params/AppParamsList", () => ({
-  ...jest.requireActual("../../../../../../navigation/params/AppParamsList"),
-  useIONavigation: () => ({
-    navigate: mockNavigate,
-    dispatch: mockNavigationDispatch
-  })
-}));
+const mockPopTo = jest.fn();
 
 jest.mock("../../../../common/hooks/useItwCredentialName", () => ({
   useItwCredentialName: () => "Patente di guida"
@@ -42,16 +35,26 @@ describe("ItwConsentManagementScreen", () => {
     jest
       .spyOn(analytics, "trackItwConsentManagement")
       .mockImplementation(jest.fn());
+    jest
+      .spyOn(analytics, "trackItwRevokeConsent")
+      .mockImplementation(jest.fn());
+    jest
+      .spyOn(analytics, "trackItwRevokeConsentOperationBlock")
+      .mockImplementation(jest.fn());
+    jest
+      .spyOn(analytics, "trackItwRevokeConsentOperationBlockAction")
+      .mockImplementation(jest.fn());
   });
 
   it("returns to the document without showing an empty state when no consents exist", async () => {
     const { component } = await renderComponent({});
 
     expect(component.queryByTestId("consent-list")).toBeNull();
-    expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
-      params: { credentialType: "mDL" }
-    });
+    expect(mockPopTo).toHaveBeenCalledWith(
+      ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
+      { credentialType: "mDL" }
+    );
+    expect(mockNavigate).not.toHaveBeenCalled();
     expect(mockNavigationDispatch).not.toHaveBeenCalled();
     expect(analytics.trackItwConsentManagement).not.toHaveBeenCalled();
   });
@@ -59,9 +62,7 @@ describe("ItwConsentManagementScreen", () => {
   it("opens the selected consent detail", async () => {
     const { component } = await renderComponent({ [consentKey]: consent });
 
-    expect(analytics.trackItwConsentManagement).toHaveBeenCalledWith({
-      credential: "ITW_PG_V2"
-    });
+    expect(analytics.trackItwConsentManagement).toHaveBeenCalledWith();
 
     await fireEventAsync.press(
       component.getByLabelText(
@@ -109,11 +110,20 @@ describe("ItwConsentManagementScreen", () => {
       await fireEventAsync.press(
         component.getByTestId("revoke-all-consents-action")
       );
+
+      expect(analytics.trackItwRevokeConsent).toHaveBeenCalledTimes(1);
+      expect(
+        analytics.trackItwRevokeConsentOperationBlock
+      ).toHaveBeenCalledTimes(1);
+
       const alertButtons = (Alert.alert as jest.Mock).mock.calls[0][2];
       await act(async () => {
         alertButtons[0].onPress();
       });
 
+      expect(
+        analytics.trackItwRevokeConsentOperationBlockAction
+      ).toHaveBeenCalledWith("confirm");
       expect(store.getState().features.itWallet.proximity.consents).toEqual({
         unrelated
       });
@@ -142,6 +152,9 @@ describe("ItwConsentManagementScreen", () => {
     await act(async () => {
       cancelButton.onPress?.();
     });
+    expect(
+      analytics.trackItwRevokeConsentOperationBlockAction
+    ).toHaveBeenCalledWith("cancel");
     expect(store.getState().features.itWallet.proximity.consents).toEqual(
       consents
     );
@@ -172,7 +185,13 @@ const renderComponent = async (consents: Record<string, StoredConsentData>) => {
     await renderScreenWithNavigationStoreContextAsync<GlobalState>(
       () => (
         <ItwConsentManagementScreen
-          navigation={{} as any}
+          navigation={
+            {
+              dispatch: mockNavigationDispatch,
+              navigate: mockNavigate,
+              popTo: mockPopTo
+            } as any
+          }
           route={{
             key: ITW_ROUTES.PRESENTATION.CONSENT_MANAGEMENT,
             name: ITW_ROUTES.PRESENTATION.CONSENT_MANAGEMENT,

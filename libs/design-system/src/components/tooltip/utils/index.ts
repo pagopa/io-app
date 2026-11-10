@@ -1,6 +1,6 @@
 import { ScaledSize } from "react-native";
 
-import { IOVisualCostants } from "../../../core";
+import { IODimensions } from "../../../core";
 import { ChildrenCoords, DisplayInsets, Placement } from "./types";
 
 export const ARROW_HEIGHT = 14;
@@ -10,12 +10,12 @@ const ARROW_WIDTH = 24;
 const DEFAULT_INSETS: DisplayInsets = {
   top: 0,
   bottom: 0,
-  left: IOVisualCostants.appMarginDefault,
-  right: IOVisualCostants.appMarginDefault
+  left: IODimensions.padding.screen.default,
+  right: IODimensions.padding.screen.default
 };
 
 /**
- * @param displayInsets custom display insets
+ * @param displayInsets Custom display insets
  * @returns An `object` based on `DEFAULT_INSETS` and `displayInsets`
  */
 export const getDisplayInsets = (
@@ -23,7 +23,6 @@ export const getDisplayInsets = (
 ): DisplayInsets => ({ ...DEFAULT_INSETS, ...displayInsets });
 
 /**
- *
  * @param placement The `Tooltip` placement
  * @returns The `Arrow` box `width` and `height` based on `placement` value
  */
@@ -45,6 +44,7 @@ export const getArrowBoxByPlacement = (placement: Placement) => {
 
 /**
  * A utility function to calculate the `Tooltip` coordinates and dimensions
+ *
  * @param placement The `Tooltip` placement in relation of its children
  * @param childrenCoords The measures in screen of the `Tooltip` children
  * @param displayInsets The active display insets
@@ -101,6 +101,7 @@ export const getTooltipCoords = (
 
 /**
  * A utility function to calculate the `Tooltip`'s `Arrow` coordinates
+ *
  * @param placement The `Arrow` placement in relation of the `Tooltip` children
  * @param childrenCoords The measures in screen of the `Tooltip` children
  * @param screenDimensions The active display insets
@@ -147,11 +148,13 @@ export const getArrowCoords = (
 
 /**
  * A utility function to calculate the `Tooltip` vertical alignment
+ *
  * @param placement The `Tooltip` placement in relation of its children
  * @param childrenHeight The `Tooltip`'s children height
  * @param tooltipHeight The `Tooltip`'s height
- * @returns If placement is `left` or `right` it returns the vertical translation to align the `Tooltip` center with its `children` center,
- * otherwise `null` is returned
+ * @returns If placement is `left` or `right` it returns the vertical
+ *   translation to align the `Tooltip` center with its `children` center,
+ *   otherwise `null` is returned
  */
 export const getTooltipVerticalAlignment = (
   placement: Placement,
@@ -176,6 +179,7 @@ export const getTooltipVerticalAlignment = (
 
 /**
  * A utility function to calculate the `Arrow` vertical alignment
+ *
  * @param placement The `Tooltip` placement in relation of its children
  * @param childrenHeight The `Tooltip`'s children height
  */

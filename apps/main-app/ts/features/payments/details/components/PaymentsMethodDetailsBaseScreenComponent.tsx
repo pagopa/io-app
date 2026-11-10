@@ -1,8 +1,8 @@
 import {
   ContentWrapper,
   IOColors,
-  IOSpacingScale,
-  IOVisualCostants,
+  IODimensions,
+  IODimensionScale,
   useIOTheme,
   VSpacer
 } from "@io-app/design-system";
@@ -35,9 +35,7 @@ type Props = {
   headerTitle?: string;
 };
 
-/**
- * Base layout for payment methods screen & legacy delete handling
- */
+/** Base layout for payment methods screen & legacy delete handling */
 const PaymentsMethodDetailsBaseScreenComponent = ({
   card,
   headerTitle = "",
@@ -73,7 +71,7 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
   const getTitleHeight = (event: LayoutChangeEvent) => {
     const { height } = event.nativeEvent.layout;
     if (titleHeight === 0) {
-      setTitleHeight(height - insets.top - IOVisualCostants.headerHeight);
+      setTitleHeight(height - insets.top - IODimensions.height.header);
     }
   };
 
@@ -115,7 +113,7 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
   );
 };
 
-const cardContainerHorizontalSpacing: IOSpacingScale = 16;
+const cardContainerHorizontalSpacing: IODimensionScale = 16;
 
 const styles = StyleSheet.create({
   cardContainer: {

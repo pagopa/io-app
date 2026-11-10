@@ -3,12 +3,12 @@ import { GestureResponderEvent, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
 import { useIOTheme } from "../../context";
-import { IOListItemStyles, IOListItemVisualParams } from "../../core";
+import { IODimensions, IOListItemStyles } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
-import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Icon } from "../icons";
+import { HSpacer } from "../layout";
 import { BodySmall, H6 } from "../typography";
 
 export type ListItemNavAlert = Pick<
@@ -17,13 +17,13 @@ export type ListItemNavAlert = Pick<
 > &
   WithTestID<{
     description?: ReactNode | string;
+    label: ReactNode | string;
     onPress: (event: GestureResponderEvent) => void;
-    value: ReactNode | string;
     withoutIcon?: boolean;
   }>;
 
 export const ListItemNavAlert = ({
-  value,
+  label,
   description,
   withoutIcon = false,
   onPress,
@@ -42,24 +42,22 @@ export const ListItemNavAlert = ({
     },
     [onPress]
   );
-  const { dynamicFontScale, spacingScaleMultiplier } = useIOFontDynamicScale();
 
-  const componentValueToAccessibility = typeof value === "string" ? value : "";
+  const componentLabelToAccessibility = typeof label === "string" ? label : "";
   const componentDescriptionToAccessibility =
     typeof description === "string" ? description : "";
 
   const listItemAccessibilityLabel =
     accessibilityLabel ??
-    `${componentValueToAccessibility}; ${componentDescriptionToAccessibility}`;
+    `${componentLabelToAccessibility}; ${componentDescriptionToAccessibility}`;
 
-  // TODO: Remove this when legacy look is deprecated https://pagopa.atlassian.net/browse/IOPLT-153
   const listItemNavAlertContent = (
     <>
       {/* Let developer using a custom component (e.g: skeleton) */}
-      {typeof value === "string" ? (
-        <H6 color={theme["textBody-default"]}>{value}</H6>
+      {typeof label === "string" ? (
+        <H6 color={theme["textBody-default"]}>{label}</H6>
       ) : (
-        value
+        label
       )}
       {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions -- ReactNode: "" and false mean nothing to render */}
       {description && (
@@ -96,31 +94,29 @@ export const ListItemNavAlert = ({
         style={[IOListItemStyles.listItem, backgroundAnimatedStyle]}
       >
         <Animated.View
-          style={[
-            IOListItemStyles.listItemInner,
-            {
-              columnGap:
-                IOListItemVisualParams.iconMargin *
-                dynamicFontScale *
-                spacingScaleMultiplier
-            },
-            scaleAnimatedStyle
-          ]}
+          style={[IOListItemStyles.listItemInner, scaleAnimatedStyle]}
         >
           {!withoutIcon && (
-            <Icon
-              allowFontScaling
-              color={theme.errorIcon}
-              name="errorFilled"
-              size={IOListItemVisualParams.iconSize}
-            />
+            <>
+              <Icon
+                allowFontScaling
+                color={theme.errorIcon}
+                name="errorFilled"
+                size={IODimensions.size.icon.listItem}
+              />
+              <HSpacer
+                allowScaleSpacing
+                size={IODimensions.gap.listItem.default.leading}
+              />
+            </>
           )}
           <View style={{ flex: 1 }}>{listItemNavAlertContent}</View>
+          {/* No gap: the chevron glyph is drawn against the right edge of its box */}
           <Icon
             allowFontScaling
             color={iconColor}
             name="chevronRightListItem"
-            size={IOListItemVisualParams.chevronSize}
+            size={IODimensions.size.icon.chevron}
           />
         </Animated.View>
       </Animated.View>

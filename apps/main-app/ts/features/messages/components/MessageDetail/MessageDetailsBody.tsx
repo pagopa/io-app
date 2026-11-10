@@ -30,11 +30,11 @@ export const MessageDetailsBody = ({
     return (
       <>
         <Alert
-          action={I18n.t(
-            `messageDetails.markdown.${
-              showRawContent ? "decodingErrorHide" : "decodingErrorShow"
-            }`
-          )}
+          action={
+            showRawContent
+              ? I18n.t("messageDetails.markdown.decodingErrorHide")
+              : I18n.t("messageDetails.markdown.decodingErrorShow")
+          }
           content={I18n.t("messageDetails.markdown.decodingErrorContent")}
           onPress={() =>
             setShowRawContent(innerShowRawContent => !innerShowRawContent)

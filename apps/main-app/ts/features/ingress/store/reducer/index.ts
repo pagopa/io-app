@@ -55,7 +55,7 @@ export const ingressScreenReducer = (
     case getType(setIsBlockingScreen):
       return {
         ...state,
-        isBlockingScreen: true
+        isBlockingScreen: action.payload
       };
     case getType(setOfflineAccessReason):
       return {

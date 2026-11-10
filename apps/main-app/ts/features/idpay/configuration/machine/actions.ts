@@ -8,8 +8,37 @@ import { useIODispatch } from "../../../../store/hooks";
 import { refreshSessionToken } from "../../../authentication/fastLogin/store/actions/tokenRefreshActions";
 import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IdPayConfigurationRoutes } from "../navigation/routes";
-import { InitiativeFailure } from "../types/failure";
+import { InitiativeFailure, InitiativeFailureType } from "../types/failure";
 import * as Context from "./context";
+
+const getFailureMessage = (failure: InitiativeFailure): string => {
+  switch (failure) {
+    case InitiativeFailureType.GENERIC:
+      return I18n.t("idpay.configuration.failureStates.GENERIC");
+    case InitiativeFailureType.IBAN_ENROLL_FAILURE:
+      return I18n.t("idpay.configuration.failureStates.IBAN_ENROLL_FAILURE");
+    case InitiativeFailureType.IBAN_LIST_LOAD_FAILURE:
+      return I18n.t("idpay.configuration.failureStates.IBAN_LIST_LOAD_FAILURE");
+    case InitiativeFailureType.INITIATIVE_ERROR:
+      return I18n.t("idpay.configuration.failureStates.INITIATIVE_ERROR");
+    case InitiativeFailureType.INSTRUMENT_DELETE_FAILURE:
+      return I18n.t(
+        "idpay.configuration.failureStates.INSTRUMENT_DELETE_FAILURE"
+      );
+    case InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE:
+      return I18n.t(
+        "idpay.configuration.failureStates.INSTRUMENT_ENROLL_FAILURE"
+      );
+    case InitiativeFailureType.INSTRUMENTS_LIST_LOAD_FAILURE:
+      return I18n.t(
+        "idpay.configuration.failureStates.INSTRUMENTS_LIST_LOAD_FAILURE"
+      );
+    case InitiativeFailureType.SESSION_EXPIRED:
+      return I18n.t("idpay.configuration.failureStates.SESSION_EXPIRED");
+    case InitiativeFailureType.TOO_MANY_REQUESTS:
+      return I18n.t("idpay.configuration.failureStates.TOO_MANY_REQUESTS");
+  }
+};
 
 const createActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>,
@@ -20,7 +49,8 @@ const createActionsImplementation = (
       IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
       {
         screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO,
-        params: {}
+        params: {},
+        pop: true
       }
     );
   };
@@ -29,21 +59,24 @@ const createActionsImplementation = (
       IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
       {
         screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT,
-        params: {}
+        params: {},
+        pop: true
       }
     );
   const navigateToIbanOnboardingScreen = () =>
     navigation.navigate(
       IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
       {
-        screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_LANDING
+        screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_LANDING,
+        pop: true
       }
     );
   const navigateToIbanOnboardingFormScreen = () =>
     navigation.navigate(
       IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
       {
-        screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ONBOARDING
+        screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ONBOARDING,
+        pop: true
       }
     );
   const navigateToInstrumentsEnrollmentScreen = () =>
@@ -52,14 +85,16 @@ const createActionsImplementation = (
       {
         screen:
           IdPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT,
-        params: {}
+        params: {},
+        pop: true
       }
     );
   const navigateToConfigurationSuccessScreen = () => {
     navigation.navigate(
       IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR,
       {
-        screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_SUCCESS
+        screen: IdPayConfigurationRoutes.IDPAY_CONFIGURATION_SUCCESS,
+        pop: true
       }
     );
   };
@@ -70,7 +105,8 @@ const createActionsImplementation = (
     const initiativeId = args.context.initiativeId;
     navigation.navigate(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
       screen: IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING,
-      params: { initiativeId }
+      params: { initiativeId },
+      pop: true
     });
   };
 
@@ -83,7 +119,7 @@ const createActionsImplementation = (
       args.context.failure,
       InitiativeFailure.decode,
       O.fromEither,
-      O.map(failure => I18n.t(`idpay.configuration.failureStates.${failure}`)),
+      O.map(getFailureMessage),
       O.map(IOToast.error)
     );
   };

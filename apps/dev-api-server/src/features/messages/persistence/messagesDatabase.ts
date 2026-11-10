@@ -16,8 +16,8 @@ const addNewMessage = (message: CreatedMessageWithContentAndAttachments) =>
   });
 
 /**
- * Move the message with ID to the archived collection.
- * Return false if message ID is not in the Inbox.
+ * Move the message with ID to the archived collection. Return false if message
+ * ID is not in the Inbox.
  */
 function archive(id: string): boolean {
   return pipe(
@@ -85,8 +85,8 @@ function replaceMessages(
 }
 
 /**
- * Move the message with ID to the inbox collection.
- * Return false if message ID is not in the Archive.
+ * Move the message with ID to the inbox collection. Return false if message ID
+ * is not in the Archive.
  */
 function unarchive(id: string): boolean {
   return pipe(
@@ -112,9 +112,7 @@ function unarchive(id: string): boolean {
     )
   );
 }
-/**
- * Find one message given its ID, whether it is in the inbox or archived.
- */
+/** Find one message given its ID, whether it is in the inbox or archived. */
 const getMessageById = (
   id: string
 ): CreatedMessageWithContentAndAttachments | undefined =>

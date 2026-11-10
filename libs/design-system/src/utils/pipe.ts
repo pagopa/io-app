@@ -1,20 +1,21 @@
 /**
- * Chains functions together, passing the result of each function as input to the next.
- * The first argument is the initial value, followed by any number of transformation functions.
+ * Chains functions together, passing the result of each function as input to
+ * the next. The first argument is the initial value, followed by any number of
+ * transformation functions.
  *
  * @example
- * ```typescript
- * const addOne = (x: number) => x + 1;
- * const double = (x: number) => x * 2;
- * const stringify = (x: number) => `Result: ${x}`;
+ *   ```typescript
+ *   const addOne = (x: number) => x + 1;
+ *   const double = (x: number) => x * 2;
+ *   const stringify = (x: number) => `Result: ${x}`;
  *
- * const result = pipe(
+ *   const result = pipe(
  *   10,
- *   addOne,    // 11
- *   double,    // 22
- *   stringify  // "Result: 22"
- * );
- * ```
+ *   addOne, // 11
+ *   double, // 22
+ *   stringify // "Result: 22"
+ *   );
+ *   ```
  */
 export function pipe<T>(value: T): T;
 export function pipe<T, R1>(value: T, fn1: (arg: T) => R1): R1;

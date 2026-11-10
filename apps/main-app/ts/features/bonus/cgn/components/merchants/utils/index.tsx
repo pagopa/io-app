@@ -2,7 +2,7 @@ import { Discount } from "@io-app/api-types/generated/definitions/cgn/merchants/
 import { WithinRangeInteger } from "@pagopa/ts-commons/lib/numbers";
 import I18n from "i18next";
 
-import { getCategorySpecs } from "../../../utils/filters";
+import { getCategoryName, getCategorySpecs } from "../../../utils/filters";
 
 export const normalizedDiscountPercentage = (discount?: number) => {
   const decodedDiscount = WithinRangeInteger(1, 100).decode(discount);
@@ -30,7 +30,7 @@ export const moduleCGNaccessibilityLabel = (discountData: Discount) => {
     ${productCategories
       .map(categoryKey => {
         const category = getCategorySpecs(categoryKey);
-        return category ? I18n.t(category.nameKey) : "";
+        return category ? getCategoryName(categoryKey) : "";
       })
       .join(", ")}
       `;

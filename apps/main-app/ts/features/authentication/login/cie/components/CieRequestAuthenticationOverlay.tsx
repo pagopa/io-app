@@ -1,8 +1,4 @@
 import { IOColors, useIOTheme } from "@io-app/design-system";
-import {
-  isLoginUtilsError,
-  LoginUtilsError
-} from "@pagopa/io-react-native-login-utils";
 import CookieManager from "@react-native-cookies/cookies";
 import I18n from "i18next";
 import {
@@ -33,7 +29,7 @@ import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButto
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { hashedProfileFiscalCodeSelector } from "../../../../../store/reducers/crossSessions";
 import { isMixpanelEnabled } from "../../../../../store/reducers/persistedPreferences";
-import { trackSpidLoginError } from "../../../../../utils/analytics";
+import { trackLoginError } from "../../../../../utils/analytics";
 import { closeInjectedScript } from "../../../../../utils/webview";
 import {
   isActiveSessionFastLoginEnabledSelector,
@@ -55,10 +51,11 @@ const defaultUserAgent = Platform.select({
 });
 
 /**
- * This JS is injection on every page load. It tries to decrease to 0 the sleeping time of a script.
- * That sleeping is used to allow user to read page content until the content changes to an automatic redirect.
- * This script also tries also to call apriIosUL.
- * If it is defined it starts the authentication process (iOS only).
+ * This JS is injection on every page load. It tries to decrease to 0 the
+ * sleeping time of a script. That sleeping is used to allow user to read page
+ * content until the content changes to an automatic redirect. This script also
+ * tries also to call apriIosUL. If it is defined it starts the authentication
+ * process (iOS only).
  */
 const injectJs =
   Platform.OS === "ios"
@@ -175,10 +172,8 @@ const CieWebView = (props: Props) => {
   const { onSuccess } = props;
 
   const handleOnError = useCallback(
-    (
-      e: Error | LoginUtilsError | WebViewErrorEvent | WebViewHttpErrorEvent
-    ) => {
-      trackSpidLoginError("cie", e);
+    (e: Error | WebViewErrorEvent | WebViewHttpErrorEvent) => {
+      trackLoginError("cie", e);
       setInternalState(state => generateErrorState(state));
     },
     []
@@ -254,7 +249,8 @@ const CieWebView = (props: Props) => {
           throw new Error("Error clearing cookies");
         });
       }
-      const url = await regenerateKeyGetRedirectsAndVerifySaml(
+
+      const redirectResult = await regenerateKeyGetRedirectsAndVerifySaml(
         loginUri,
         ephemeralKeyTag,
         mixpanelEnabled,
@@ -263,13 +259,19 @@ const CieWebView = (props: Props) => {
         idp?.id,
         isActiveSessionLogin ? hashedFiscalCode : undefined
       );
+
+      if (redirectResult.isErr()) {
+        handleOnError(new Error(redirectResult.error.reason));
+        return;
+      }
+
       setRequestInfo({
         requestState: "AUTHORIZED",
         nativeAttempts: requestInfo.nativeAttempts,
-        url
+        url: redirectResult.value
       });
     } catch (error) {
-      if (error instanceof Error || isLoginUtilsError(error)) {
+      if (error instanceof Error) {
         handleOnError(error);
       }
     }
@@ -365,12 +367,16 @@ const ErrorComponent = (
   );
 };
 /**
- * A screen to manage the request of authentication once the pin of the user's CIE has been inserted
- * 1) Start the first request with the getIdpLoginUri(CIE_IDP_ID) uri
- * 2) Accepts all the redirects until the uri with the right path is found and stop the loading
- * 3) Dispatch the found uri using the `onSuccess` callback
+ * A screen to manage the request of authentication once the pin of the user's
+ * CIE has been inserted
+ *
+ * 1. Start the first request with the getIdpLoginUri(CIE_IDP_ID) uri
+ * 2. Accepts all the redirects until the uri with the right path is found and stop
+ *    the loading
+ * 3. Dispatch the found uri using the `onSuccess` callback
+ *
+ * @class
  * @param props
- * @constructor
  */
 export const CieRequestAuthenticationOverlay = (props: Props): ReactElement => {
   // Disable android back button

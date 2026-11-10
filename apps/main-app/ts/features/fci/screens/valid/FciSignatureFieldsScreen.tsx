@@ -9,7 +9,7 @@ import {
   Divider,
   FooterActions,
   H2,
-  IOVisualCostants,
+  IODimensions,
   ListItemHeader,
   useFooterActionsMeasurements,
   VSpacer
@@ -183,9 +183,7 @@ const FciSignatureFieldsScreen = () => {
     );
   };
 
-  /**
-   * Callback which sets the isError state to true and hides the modal.
-   */
+  /** Callback which sets the isError state to true and hides the modal. */
   const onError = () => {
     setIsError(true);
     dismissModal();
@@ -241,7 +239,7 @@ const FciSignatureFieldsScreen = () => {
   const renderSignatureFields = () => (
     <SectionList
       contentContainerStyle={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault
+        paddingHorizontal: IODimensions.padding.screen.default
       }}
       ItemSeparatorComponent={() => <Divider />}
       keyExtractor={(item, index) => `${item.clause.title}${index}`}

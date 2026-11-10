@@ -16,6 +16,19 @@ import { itwCloseBanner } from "../../../../common/store/actions/banners";
 import { ITW_ROUTES } from "../../../../navigation/routes";
 import { ItwDiscoveryInfoBanner } from "../ItwDiscoveryInfoBanner";
 
+const cacUrl =
+  "https://assistenza.ioapp.it/hc/it/articles/50661930290449-Cos-é-l-IT-Wallet-ID";
+const mockToastError = jest.fn();
+
+jest.mock("@io-app/design-system", () => ({
+  ...jest.requireActual<typeof import("@io-app/design-system")>(
+    "@io-app/design-system"
+  ),
+  useIOToast: () => ({
+    error: mockToastError
+  })
+}));
+
 jest.mock("../../../../../../utils/url", () => ({
   ...jest.requireActual("../../../../../../utils/url"),
   openWebUrl: jest.fn()
@@ -55,12 +68,12 @@ describe("ItwDiscoveryInfoBanner", () => {
       expect.objectContaining({
         banner_id: "itwWalletID",
         banner_page: "ITW_PRESENTATION_PID_DETAIL",
-        banner_landing: expect.stringContaining("assistenza.ioapp.it")
+        banner_landing: cacUrl
       })
     );
   });
 
-  it("tracks tap and opens the Help Center article", () => {
+  it("tracks tap and opens the CAC article URL", () => {
     const { getByTestId } = renderComponent();
 
     fireEvent.press(getByTestId("itwDiscoveryInfoBannerTestID"));
@@ -69,13 +82,10 @@ describe("ItwDiscoveryInfoBanner", () => {
       expect.objectContaining({
         banner_id: "itwWalletID",
         banner_page: "ITW_PRESENTATION_PID_DETAIL",
-        banner_landing: expect.stringContaining("assistenza.ioapp.it")
+        banner_landing: cacUrl
       })
     );
-    expect(openWebUrl).toHaveBeenCalledWith(
-      expect.stringContaining("assistenza.ioapp.it"),
-      expect.any(Function)
-    );
+    expect(openWebUrl).toHaveBeenCalledWith(cacUrl, expect.any(Function));
   });
 
   it("tracks close and persists the dismissal", () => {
@@ -87,10 +97,21 @@ describe("ItwDiscoveryInfoBanner", () => {
       expect.objectContaining({
         banner_id: "itwWalletID",
         banner_page: "ITW_PRESENTATION_PID_DETAIL",
-        banner_landing: expect.stringContaining("assistenza.ioapp.it")
+        banner_landing: cacUrl
       })
     );
     expect(store.getActions()).toContainEqual(itwCloseBanner("itw_pid_info"));
+  });
+
+  it("shows an error toast when opening the CAC article URL fails", () => {
+    const { getByTestId } = renderComponent();
+
+    fireEvent.press(getByTestId("itwDiscoveryInfoBannerTestID"));
+
+    const [, onError] = jest.mocked(openWebUrl).mock.calls[0];
+    onError?.();
+
+    expect(mockToastError).toHaveBeenCalledWith(I18n.t("global.jserror.title"));
   });
 });
 

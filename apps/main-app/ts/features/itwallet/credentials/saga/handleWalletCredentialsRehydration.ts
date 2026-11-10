@@ -9,8 +9,8 @@ import {
 } from "../store/selectors";
 
 /**
- * This saga adds stored credentials to the wallet screen as cards.
- * It should be invoked as soon as possible to properly sync credentials to the wallet.
+ * This saga adds stored credentials to the wallet screen as cards. It should be
+ * invoked as soon as possible to properly sync credentials to the wallet.
  */
 export function* handleWalletCredentialsRehydration() {
   const isItWalletValid = yield* select(itwLifecycleIsValidSelector);

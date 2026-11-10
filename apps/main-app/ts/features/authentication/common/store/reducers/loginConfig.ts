@@ -9,12 +9,11 @@ import {
 } from "../actions/loginConfig";
 
 export type LoginConfigState = {
-  /**
-   * The target environment for the OneIdentity login flow.
-   */
+  /** The target environment for the OneIdentity login flow. */
   oneIdentityEnv: OneIdentityEnv;
   /**
    * The local feature flag for the OneIdentity login flow.
+   *
    * - `true` / `false`: Forces the feature on or off locally.
    * - `undefined`: Indicates no local setting, deferring to the remote rollout.
    */
@@ -29,7 +28,7 @@ export const ONE_IDENTITY_ENVS = {
 export type OneIdentityEnv =
   (typeof ONE_IDENTITY_ENVS)[keyof typeof ONE_IDENTITY_ENVS];
 
-export const loginConfigInitialState: LoginConfigState = {
+const loginConfigInitialState: LoginConfigState = {
   oneIdentityLocalFeatureFlag: undefined,
   oneIdentityEnv: ONE_IDENTITY_ENVS.PROD
 };

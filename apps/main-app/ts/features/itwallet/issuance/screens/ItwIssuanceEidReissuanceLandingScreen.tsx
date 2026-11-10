@@ -1,12 +1,7 @@
-import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback } from "react";
 
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import {
-  IOStackNavigationProp,
-  useIONavigation
-} from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIOSelector } from "../../../../store/hooks";
 import {
@@ -20,16 +15,16 @@ import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsValidSelector
 } from "../../lifecycle/store/selectors";
-import { ItwParamsList } from "../../navigation/ItwParamsList";
+import { useItwNavigation } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 
 /**
- * Landing screen for the eID reissuing flow started from a message.
- * Since this flow is started from outside the Wallet screen,
- * it it necessary to make some preliminary checks before proceeding.
+ * Landing screen for the eID reissuing flow started from a message. Since this
+ * flow is started from outside the Wallet screen, it it necessary to make some
+ * preliminary checks before proceeding.
  */
 export const ItwIssuanceEidReissuanceLandingScreen = () => {
-  const navigation = useIONavigation();
+  const navigation = useItwNavigation();
 
   const isAnyWalletValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
@@ -47,7 +42,7 @@ export const ItwIssuanceEidReissuanceLandingScreen = () => {
             "features.itWallet.reissuanceLandingScreen.notNecessary.primaryAction"
           ),
           onPress: () =>
-            navigation.navigate(ROUTES.MAIN, {
+            navigation.popTo(ROUTES.MAIN, {
               screen: ROUTES.WALLET_HOME,
               params: { newMethodAdded: false }
             })
@@ -79,10 +74,7 @@ export const ItwIssuanceEidReissuanceLandingScreen = () => {
             "features.itWallet.reissuanceLandingScreen.itWalletActivation.primaryAction"
           ),
           onPress: () =>
-            navigation.replace(ITW_ROUTES.MAIN, {
-              screen: ITW_ROUTES.DISCOVERY.INFO,
-              params: { level: "l3" }
-            })
+            navigation.replace(ITW_ROUTES.DISCOVERY.INFO, { level: "l3" })
         }}
         pictogram="itWallet"
         secondaryAction={{
@@ -110,12 +102,12 @@ type Props = {
 };
 
 /**
- * Navigate to the issuance machine. The entry point depends on
- * whether the user has a valid Wallet and only needs to reissue the eID/PID
- * or does not have an active Wallet and needs to activate it first.
+ * Navigate to the issuance machine. The entry point depends on whether the user
+ * has a valid Wallet and only needs to reissue the eID/PID or does not have an
+ * active Wallet and needs to activate it first.
  */
 const NavigateToEidIssuanceMachine = ({ eidReissuing }: Props) => {
-  const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
+  const navigation = useItwNavigation();
   const startupStatus = useIOSelector(isStartupLoaded);
 
   const handleNavigation = useCallback(() => {

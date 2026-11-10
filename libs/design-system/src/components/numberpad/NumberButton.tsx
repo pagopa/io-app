@@ -19,19 +19,16 @@ type ColorMapVariant = {
 };
 
 type NumberButtonProps = {
-  /**
-   * The button value.
-   */
+  /** The button value. */
   number: number;
   /**
    * The action to be executed when the button is pressed.
+   *
    * @param number
-   * @returns void
+   * @returns Void
    */
   onPress: (number: number) => void;
-  /**
-   * Used to choose the component color variant between `neutral` and `primary`.
-   */
+  /** Used to choose the component color variant between `neutral` and `primary`. */
   variant: NumberButtonVariantType;
 };
 
@@ -40,7 +37,8 @@ type NumberButtonVariantType = "neutral" | "primary";
 const numberPadBtnSize = 56;
 
 /**
- * Based on a `Pressable` element, it displays a number button with animations on press In and Out.
+ * Based on a `Pressable` element, it displays a number button with animations
+ * on press In and Out.
  *
  * @returns {JSX.Element} The rendered `NumberButton`
  */

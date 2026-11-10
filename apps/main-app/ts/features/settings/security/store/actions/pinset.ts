@@ -1,5 +1,6 @@
 /**
- * Action types and action creator related to setting and resetting the unlock code.
+ * Action types and action creator related to setting and resetting the unlock
+ * code.
  */
 
 import { ActionType, createStandardAction } from "typesafe-actions";

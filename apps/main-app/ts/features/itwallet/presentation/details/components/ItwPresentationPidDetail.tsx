@@ -39,7 +39,11 @@ export const ItwPresentationPidDetail = ({ credential }: Props) => {
   const claims = useMemo(
     () =>
       parseClaims(credential.parsedCredential, {
-        exclude: [WellKnownClaim.unique_id, WellKnownClaim.content]
+        exclude: [
+          WellKnownClaim.unique_id,
+          WellKnownClaim.content,
+          WellKnownClaim.issuing_authority
+        ]
       }),
     [credential.parsedCredential]
   );
@@ -61,7 +65,7 @@ export const ItwPresentationPidDetail = ({ credential }: Props) => {
     <View>
       <ItwEidLifecycleAlert
         currentScreenName={currentScreenName}
-        lifecycleStatus={["jwtExpiring", "jwtExpired"]}
+        lifecycleStatus={["jwtExpiring", "jwtExpired", "invalid"]}
         navigation={navigation}
         skipViewTracking={false}
       />

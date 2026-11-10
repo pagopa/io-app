@@ -1,5 +1,6 @@
 /**
  * Get the progress emojis based on the reading progress.
+ *
  * @param progress The reading progress value from 0 to 1.
  * @returns A string representing the progress bar with emojis,
  */

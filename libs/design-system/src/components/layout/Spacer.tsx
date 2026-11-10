@@ -1,30 +1,31 @@
 import { useMemo } from "react";
 import { View } from "react-native";
 
-import { hexToRgba, IOColors, IOSpacer } from "../../core";
+import { hexToRgba, IOColors, IOSpace } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 
 type BaseSpacerProps = {
   allowScaleSpacing?: boolean;
   orientation: "horizontal" | "vertical";
-  size: IOSpacer;
+  size: IOSpace;
 };
 
 type SpacerProps = {
   allowScaleSpacing?: boolean;
-  size?: IOSpacer;
+  size?: IOSpace;
 };
 
-const DEFAULT_SIZE: IOSpacer = 16;
+const DEFAULT_SIZE: IOSpace = 16;
 
 /* Debug Mode */
 const debugMode = false;
 const debugBg = hexToRgba(IOColors["error-600"], 0.2);
 
 /**
-Native `Spacer` component
-@param  {string} orientation
-@param {IOSpacer} size
+ * Native `Spacer` component
+ *
+ * @param {string} orientation
+ * @param {IOSpace} size
  */
 const Spacer = ({ allowScaleSpacing, orientation, size }: BaseSpacerProps) => {
   const { dynamicFontScale, spacingScaleMultiplier } = useIOFontDynamicScale();
@@ -58,15 +59,17 @@ const Spacer = ({ allowScaleSpacing, orientation, size }: BaseSpacerProps) => {
 };
 
 /**
-Horizontal spacer component
-@param {IOSpacer} size
+ * Horizontal spacer component
+ *
+ * @param {IOSpace} size
  */
 export const HSpacer = ({ size = DEFAULT_SIZE }: SpacerProps) => (
   <Spacer orientation={"horizontal"} size={size} />
 );
 /**
-Vertical spacer component
-@param {IOSpacer} size
+ * Vertical spacer component
+ *
+ * @param {IOSpace} size
  */
 export const VSpacer = ({ size = DEFAULT_SIZE }: SpacerProps) => (
   <Spacer orientation={"vertical"} size={size} />

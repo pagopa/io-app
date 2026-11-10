@@ -1,14 +1,14 @@
 /**
- * A screen where user after login (with CIE) can set email address if it is
- * not present in the profile.
+ * A screen where user after login (with CIE) can set email address if it is not
+ * present in the profile.
  */
 import {
   Body,
   ContentWrapper,
   H1,
   IOButton,
+  IODimensions,
   IOToast,
-  IOVisualCostants,
   TextInputValidation,
   VSpacer
 } from "@io-app/design-system";
@@ -95,14 +95,13 @@ export type EmailInsertScreenNavigationParams = Readonly<{
 const EMPTY_EMAIL = "";
 
 /**
- * Since we have some iOS users with a very large font size, that can't enter or use
- * this screen, we use this information to disable autofocus on the input field.
+ * Since we have some iOS users with a very large font size, that can't enter or
+ * use this screen, we use this information to disable autofocus on the input
+ * field.
  */
-const isScreenZoomed = isDisplayZoomed();
+const isScreenZoomed: boolean = isDisplayZoomed();
 
-/**
- * A screen to allow user to insert an email address.
- */
+/** A screen to allow user to insert an email address. */
 const EmailInsertScreen = () => {
   const {
     isOnboarding,
@@ -122,8 +121,8 @@ const EmailInsertScreen = () => {
   const { isDeviceScreenSmall } = useDetectSmallScreen();
 
   /**
-   * Since we have some iOS users with a very large font size, that can't enter or use
-   * this screen, we need to set a maximum font size multiplier.
+   * Since we have some iOS users with a very large font size, that can't enter
+   * or use this screen, we need to set a maximum font size multiplier.
    */
   const MAX_FONT_SIZE_MULTIPLIER = Platform.select({
     ios: isDeviceScreenSmall ? 1.2 : undefined,
@@ -139,6 +138,7 @@ const EmailInsertScreen = () => {
   );
 
   const flow = getFlowType(isOnboarding, isFirstOnboarding);
+  const editingFlow = isFciEditEmailFlow ? "firma con IO" : flow;
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
   // This reference is used to prevent the refresh visual glitch
   // caused by the polling stop in the email validation screen.
@@ -153,7 +153,7 @@ const EmailInsertScreen = () => {
 
   useOnFirstRender(() => {
     if (isProfileEmailAlreadyTaken) {
-      trackEmailEditing(flow);
+      trackEmailEditing(editingFlow);
       if (isFirstOnboarding) {
         IOToast.info(
           I18n.t("email.newinsert.alert.title", {
@@ -165,7 +165,7 @@ const EmailInsertScreen = () => {
         );
       }
     } else {
-      trackEmailDuplicateEditing(flow);
+      trackEmailDuplicateEditing(editingFlow);
     }
   });
 
@@ -227,9 +227,10 @@ const EmailInsertScreen = () => {
   const invalidEmailA11Y = I18n.t("email.newinsert.alert.invalidemaila11y");
   const validEmailLabel = I18n.t("email.newinsert.alert.validemaila11y");
 
-  /** Returns the accessibility error label to be announced when the email is not valid.
-   * If the email is valid, it returns undefined.
-   * If the email is not valid, it returns a string with the error message.
+  /**
+   * Returns the accessibility error label to be announced when the email is not
+   * valid. If the email is valid, it returns undefined. If the email is not
+   * valid, it returns a string with the error message.
    */
   const getAccessibilityErrorLabel = (): string | undefined =>
     pipe(
@@ -248,10 +249,12 @@ const EmailInsertScreen = () => {
       )
     );
 
-  /** validate email returning two possible values:
-   * - _true_,      if email is valid.
-   * - _false_,     if email has been already changed from the user and it is not
-   * valid.
+  /**
+   * Validate email returning two possible values:
+   *
+   * - _true_, if email is valid.
+   * - _false_, if email has been already changed from the user and it is not
+   *   valid.
    */
   const isValidEmail = useCallback(
     () =>
@@ -318,13 +321,14 @@ const EmailInsertScreen = () => {
   const handleOnChangeEmailText = (value: string) => {
     /**
      * SCENARIOS:
-     * 1. first onboarding and email already taken => if the CIT writes
-     *    the same email as the one he has to modify, he is blocked.
-     * 2. first onboarding and NOT email already taken => in this case,
-     *    the CIT does not need his email to be compared with another one,
-     *    so the areSameEmails will always be false.
-     * 3. Not first onboarding => if the CIT write the same email as the one
-     *    he already has, he is blocked.
+     *
+     * 1. First onboarding and email already taken => if the CIT writes the same
+     *    email as the one he has to modify, he is blocked.
+     * 2. First onboarding and NOT email already taken => in this case, the CIT
+     *    does not need his email to be compared with another one, so the
+     *    areSameEmails will always be false.
+     * 3. Not first onboarding => if the CIT write the same email as the one he
+     *    already has, he is blocked.
      */
     // If we are editing the email previously inserted
     // we don't want to show the error message.
@@ -538,6 +542,7 @@ const EmailInsertScreen = () => {
             <TextInputValidation
               accessibilityErrorLabel={getAccessibilityErrorLabel()}
               accessibilityLabel={I18n.t("email.newinsert.label")}
+              accessibilityValidLabel={validEmailLabel}
               errorMessage={invalidEmailLabel}
               onChangeText={handleOnChangeEmailText}
               onValidate={isValidEmail}
@@ -564,7 +569,7 @@ const EmailInsertScreen = () => {
             behavior={Platform.OS === "android" ? undefined : "padding"}
             keyboardVerticalOffset={Platform.select({
               ios: 110 + 16,
-              android: IOVisualCostants.appMarginDefault
+              android: IODimensions.padding.screen.default
             })}
           >
             <ContinueButton onContinue={continueOnPress} />

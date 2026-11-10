@@ -43,9 +43,7 @@ const getCalendarsByAccount = (calendars: ReadonlyArray<Calendar.Calendar>) => {
   }));
 };
 
-/**
- * Allows the user to select one of the device available Calendars
- */
+/** Allows the user to select one of the device available Calendars */
 const CalendarsListContainer = ({
   onCalendarSelected,
   onCalendarsLoaded,
@@ -91,7 +89,7 @@ const CalendarsListContainer = ({
     (data: ReadonlyArray<Calendar.Calendar>) =>
       data.map((item: Calendar.Calendar) => ({
         id: item.id,
-        value: item.title,
+        label: item.title,
         disabled: !item.allowsModifications
       })),
     []

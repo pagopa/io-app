@@ -1,5 +1,5 @@
+import { Paths } from "expo-file-system";
 import ReactNativeBlobUtil from "react-native-blob-util";
-import RNFS from "react-native-fs";
 import { call, cancelled, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
@@ -9,17 +9,13 @@ import { getFileNameFromUrl } from "../../components/DocumentViewer";
 import { fciDownloadPreview } from "../../store/actions";
 
 export const FciDownloadPreviewDirectoryPath =
-  RNFS.CachesDirectoryPath + "/fci";
+  Paths.cache.uri.replace(/^file:\/\//, "").replace(/\/$/, "") + "/fci";
 
-/**
- * Builds the save path for the given attachment
- */
+/** Builds the save path for the given attachment */
 export const savePath = (url: string) =>
   FciDownloadPreviewDirectoryPath + "/" + getFileNameFromUrl(url);
 
-/**
- * Handles the download of an Fci document preview
- */
+/** Handles the download of an Fci document preview */
 export function* handleDownloadDocument(
   action: ActionType<typeof fciDownloadPreview.request>
 ) {

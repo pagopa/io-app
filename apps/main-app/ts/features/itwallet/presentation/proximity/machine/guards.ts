@@ -1,3 +1,4 @@
+import { isItwProximityNfcEnabledSelector } from "../../../common/store/selectors";
 import { itwProximityConsentExistsSelector } from "../store/selectors/consents";
 import {
   generateConsentKey,
@@ -8,6 +9,10 @@ import { Context } from "./context";
 type GuardArgs = {
   context: Context;
 };
+
+/** Gates contactless engagement against the remote config or the local flag. */
+export const isNfcPresentmentSupportedGuard = ({ context }: GuardArgs) =>
+  isItwProximityNfcEnabledSelector(context.deps.store.getState());
 
 export const hasGrantedConsentGuard = ({ context }: GuardArgs) => {
   if (!context.proximityDetails) {

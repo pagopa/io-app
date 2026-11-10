@@ -18,11 +18,9 @@ import {
   tokenRefreshSelector
 } from "../selectors";
 
-jest.mock("react-native-device-info", () => ({
-  getReadableVersion: jest.fn().mockReturnValue("1.2.3.4"),
-  getVersion: jest.fn().mockReturnValue("1.2.3.4")
-}));
-
+jest
+  .spyOn(require("../../../../../utils/device"), "getDeviceAppVersion")
+  .mockReturnValue("1.2.3.4");
 jest.mock("../../../../../config", () => ({
   fastLoginEnabled: true
 }));

@@ -2,11 +2,11 @@ import { useState } from "react";
 import { View } from "react-native";
 
 import { useIOTheme } from "../../context";
-import { IOColors, IOSelectionTickVisualParams } from "../../core";
+import { IOColors, IODimensions } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { Icon } from "../icons";
 import { HStack } from "../layout";
-import { AnimatedRadio } from "../radio/AnimatedRadio";
+import { Radio } from "../radio/Radio";
 import { BodySmall, H6 } from "../typography";
 import { PressableListItemBase } from "./PressableListItemBase";
 
@@ -46,7 +46,7 @@ export const ListItemRadioWithAmount = ({
   };
   const theme = useIOTheme();
 
-  const suggestColor: IOColors = "hanPurple-500";
+  const suggestColor: IOColors = theme["featured-default"];
 
   const defaultAccessibilityLabel = `${label} ${formattedAmountString} ${
     suggestReason ?? ""
@@ -66,8 +66,15 @@ export const ListItemRadioWithAmount = ({
           {label}
         </H6>
         {isSuggested && (
-          <HStack space={4} style={{ alignItems: "center" }}>
-            <Icon color={suggestColor} name="sparkles" size={16} />
+          <HStack
+            space={IODimensions.gap.selection.caption}
+            style={{ alignItems: "center" }}
+          >
+            <Icon
+              color={suggestColor}
+              name="sparkles"
+              size={IODimensions.size.icon.caption}
+            />
             <BodySmall color={suggestColor} weight="Regular">
               {suggestReason}
             </BodySmall>
@@ -78,14 +85,14 @@ export const ListItemRadioWithAmount = ({
         accessibilityElementsHidden
         importantForAccessibility="no-hide-descendants"
         pointerEvents="none"
-        space={8}
+        space={IODimensions.gap.selection.control}
       >
         <H6 color={theme["interactiveElem-default"]}>
           {formattedAmountString}
         </H6>
-        <AnimatedRadio
+        <Radio
           checked={selected ?? toggleValue}
-          size={IOSelectionTickVisualParams.size * dynamicFontScale}
+          size={IODimensions.size.selection.control * dynamicFontScale}
         />
       </HStack>
     </PressableListItemBase>

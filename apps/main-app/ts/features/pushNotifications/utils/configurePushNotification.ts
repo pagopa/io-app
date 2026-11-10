@@ -13,11 +13,13 @@ import { handleMessageNotificationInteraction } from "./pushNotificationHandlers
 
 const unhandledForegroundNotificationIds = new Set<string>();
 /**
- * Registers listeners for push notifications and push token updates,
- * handles any pending notification response from a cold start,
- * and fetches the device push token.
- * @param store the redux store, needed to dispatch actions from the notification listeners
- * @returns a function to remove the registered listeners
+ * Registers listeners for push notifications and push token updates, handles
+ * any pending notification response from a cold start, and fetches the device
+ * push token.
+ *
+ * @param store The redux store, needed to dispatch actions from the
+ *   notification listeners
+ * @returns A function to remove the registered listeners
  */
 export const configurePushNotificationListeners = (store: Store) => {
   // check if the app was woken up by a notification interaction,

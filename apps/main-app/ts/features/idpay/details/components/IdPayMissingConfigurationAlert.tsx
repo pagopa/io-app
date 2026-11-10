@@ -21,6 +21,40 @@ type StatusWithAlert = Exclude<
   | InitiativeStatusEnum.UNSUBSCRIBED
 >;
 
+const getAlertCopy = (
+  status: StatusWithAlert
+): { action: string; content: string } => {
+  switch (status) {
+    case InitiativeStatusEnum.NOT_REFUNDABLE:
+      return {
+        action: I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.NOT_REFUNDABLE.action"
+        ),
+        content: I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.NOT_REFUNDABLE.content"
+        )
+      };
+    case InitiativeStatusEnum.NOT_REFUNDABLE_ONLY_IBAN:
+      return {
+        action: I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.NOT_REFUNDABLE_ONLY_IBAN.action"
+        ),
+        content: I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.NOT_REFUNDABLE_ONLY_IBAN.content"
+        )
+      };
+    case InitiativeStatusEnum.NOT_REFUNDABLE_ONLY_INSTRUMENT:
+      return {
+        action: I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.NOT_REFUNDABLE_ONLY_INSTRUMENT.action"
+        ),
+        content: I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.NOT_REFUNDABLE_ONLY_INSTRUMENT.content"
+        )
+      };
+  }
+};
+
 const IdPayMissingConfigurationAlert = (props: Props) => {
   const navigation = useIONavigation();
 
@@ -56,15 +90,13 @@ const IdPayMissingConfigurationAlert = (props: Props) => {
     );
   };
 
+  const { action, content } = getAlertCopy(status);
+
   return (
     <>
       <Alert
-        action={I18n.t(
-          `idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.${status}.action`
-        )}
-        content={I18n.t(
-          `idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.${status}.content`
-        )}
+        action={action}
+        content={content}
         onPress={handleNavigation}
         ref={viewRef}
         testID="missing-configuration-alert"

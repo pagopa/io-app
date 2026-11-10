@@ -31,8 +31,8 @@ const buildEnqueuedEventId = (
 
 /**
  * Migration/coherence events can run during boot, before Mixpanel has been
- * initialized. In that case we enqueue them unless tracking has been
- * explicitly disabled by the user.
+ * initialized. In that case we enqueue them unless tracking has been explicitly
+ * disabled by the user.
  */
 const trackBootTimeVaultEvent = (
   eventName: string,

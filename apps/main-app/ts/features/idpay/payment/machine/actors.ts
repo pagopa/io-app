@@ -149,6 +149,7 @@ export const createActorsImplementation = (
 
 /**
  * Maps the backed error codes to UI failure states
+ *
  * @param code Error code from backend
  * @returns The associated failure state
  */
@@ -182,8 +183,8 @@ const mapErrorCodeToFailure = (
 };
 
 /**
- * This function maps errors from the fetch to the PaymentFailure type
- * This helps to know if the error comes from a 429 status code
+ * This function maps errors from the fetch to the PaymentFailure type This
+ * helps to know if the error comes from a 429 status code
  */
 const mapFetchError = (error: unknown): PaymentFailure => {
   if (error === "max-retries") {

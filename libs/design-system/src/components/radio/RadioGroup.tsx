@@ -8,9 +8,9 @@ export type RadioItem<T> = {
   description?: ReactNode | string;
   disabled?: boolean;
   id: T;
+  label: string;
   loadingProps?: ComponentProps<typeof ListItemRadio>["loadingProps"];
   startImage?: ComponentProps<typeof ListItemRadio>["startImage"];
-  value: string;
 };
 
 export type RadioItemWithAmount<T> = {
@@ -44,9 +44,9 @@ type RadioListItemWithAmountProps<T> = CommonProps<T> & {
 };
 
 /**
- * A list of radio buttons.
- * The management of the selection is demanded and derived by the `selectedItem` prop.
- * The item with the `id` equal to the `selectedItem` is the active one.
+ * A list of radio buttons. The management of the selection is demanded and
+ * derived by the `selectedItem` prop. The item with the `id` equal to the
+ * `selectedItem` is the active one.
  */
 
 const RadioListItem = <T,>(props: RadioListItemProps<T>) => (
@@ -57,12 +57,12 @@ const RadioListItem = <T,>(props: RadioListItemProps<T>) => (
           accessibilityLabel={item.accessibilityLabel}
           description={item.description}
           disabled={item.disabled}
+          label={item.label}
           loadingProps={item.loadingProps}
           onValueChange={() => props.onPress(item.id)}
           selected={props.selectedItem === item.id}
           startImage={item.startImage}
           testID={`RadioItemTestID_${item.id}`}
-          value={item.value}
         />
         {index < props.items.length - 1 && <Divider />}
       </Fragment>

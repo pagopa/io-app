@@ -11,6 +11,7 @@ export type CredentialIssuanceEvents =
   | ConfirmCredentialOffer
   | ConfirmTrustData
   | Continue
+  | CredentialsCatalogueReady
   | ErrorActorEvent
   | Retry
   | SelectCredential
@@ -27,7 +28,10 @@ type Back = {
 
 type Close = {
   surveyCredential?: MixPanelCredential;
-  /** Step and credential at which the user exited, used to show the Qualtrics survey in WALLET_HOME. */
+  /**
+   * Step and credential at which the user exited, used to show the Qualtrics
+   * survey in WALLET_HOME.
+   */
   surveyStep?: CredentialExitStep;
   type: "close";
 };
@@ -42,6 +46,10 @@ type ConfirmTrustData = {
 
 type Continue = {
   type: "continue";
+};
+
+type CredentialsCatalogueReady = {
+  type: "credentials-catalogue-ready";
 };
 
 type Retry = {

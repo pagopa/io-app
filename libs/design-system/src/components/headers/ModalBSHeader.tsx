@@ -6,7 +6,7 @@ import {
   View
 } from "react-native";
 
-import { IOColors, IOVisualCostants } from "../../core";
+import { IOColors, IODimensions } from "../../core";
 import { IconButton } from "../buttons";
 import { H4 } from "../typography";
 
@@ -15,9 +15,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: IOVisualCostants.appMarginDefault,
-    paddingTop: IOVisualCostants.appMarginDefault,
-    paddingBottom: IOVisualCostants.appMarginDefault,
+    paddingHorizontal: IODimensions.padding.screen.default,
+    paddingTop: IODimensions.padding.screen.default,
+    paddingBottom: IODimensions.padding.screen.default,
     backgroundColor: IOColors.white
   }
 });
@@ -30,10 +30,11 @@ type Props = {
 
 /**
  * A header for a modals and bottom sheet.
+ *
  * @param title - The title of the modal.
  * @param onClose - The function to call when the close button is pressed.
- * @param closeAccessibilityLabel - The accessibility label for the close button.
- *
+ * @param closeAccessibilityLabel - The accessibility label for the close
+ *   button.
  */
 export const ModalBSHeader = ({
   title,

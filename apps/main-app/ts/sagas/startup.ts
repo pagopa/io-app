@@ -55,8 +55,7 @@ import { userFromSuccessLoginSelector } from "../features/authentication/loginIn
 import { watchCdcSaga } from "../features/bonus/cdc/common/saga";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
 import { cgnDetails } from "../features/bonus/cgn/store/actions/details";
-import { isCgnDiscoveryBannerClosedSelector } from "../features/bonus/cgn/store/reducers/banners";
-import { isCgnEligibleByAgeSelector } from "../features/bonus/cgn/store/selectors/banners";
+import { shouldFetchCgnDetailsSelector } from "../features/bonus/cgn/store/selectors/banners";
 import {
   navigateAfterFinishedFciActiveSessionLoginFlowSaga,
   watchFciSaga
@@ -167,17 +166,17 @@ import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
 
 export const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 
-/**
- * Handles the application startup and the main application logic loop
- */
+/** Handles the application startup and the main application logic loop */
 /**
  * The startup saga is triggered in the following scenarios:
+ *
  * - During the root saga initialization
  * - On logout or expired session
  * - On FL session refresh
  * - When accessing the Wallet mini app in offline mode
  */
 
+// oxlint-disable-next-line complexity
 export function* initializeApplicationSaga(
   startupAction?: ActionType<typeof startApplicationInitialization>
 ): Generator<ReduxSagaEffect, void, any> {
@@ -259,11 +258,11 @@ export function* initializeApplicationSaga(
    *   is updated due to a session refresh failure.
    * - If the session refresh process fails while offline, this saga will handle
    *   transitioning the app to offline mode accordingly.
-   * - Forking (`yield* fork(...)`) allows this watcher to run in parallel
-   *   without blocking the rest of the execution.
+   * - Forking (`yield* fork(...)`) allows this watcher to run in parallel without
+   *   blocking the rest of the execution.
    *
-   * This ensures that if the device is online but session refresh fails,
-   * the app correctly transitions to offline mode when necessary.
+   * This ensures that if the device is online but session refresh fails, the
+   * app correctly transitions to offline mode when necessary.
    */
   yield* fork(watchSessionRefreshInOfflineSaga);
 
@@ -600,10 +599,10 @@ export function* initializeApplicationSaga(
   }
 
   /**
-   * if the checks fail (email already taken or email not validated) then the user
-   * is sent back to the page that communicates the problem and from there if starts
-   * the validation flow. If the user wants to validate the email the flow
-   * that triggers polling begins (watchEmailValidationSaga)
+   * If the checks fail (email already taken or email not validated) then the
+   * user is sent back to the page that communicates the problem and from there
+   * if starts the validation flow. If the user wants to validate the email the
+   * flow that triggers polling begins (watchEmailValidationSaga)
    */
   userProfile = (yield* call(checkEmailSaga)) ?? userProfile;
 
@@ -652,12 +651,10 @@ export function* initializeApplicationSaga(
   yield* fork(watchBonusCgnSaga, sessionToken);
 
   // Fetch CGN status early so banner selectors have data
-  const isCgnBannerClosed: boolean = yield* select(
-    isCgnDiscoveryBannerClosedSelector
+  const shouldFetchCgnDetails: boolean = yield* select(
+    shouldFetchCgnDetailsSelector
   );
-  // over 35 should not see the banner
-  const isCgnEligibleByAge: boolean = yield* select(isCgnEligibleByAgeSelector);
-  if (!isCgnBannerClosed && isCgnEligibleByAge) {
+  if (shouldFetchCgnDetails) {
     yield* put(cgnDetails.request());
   }
 

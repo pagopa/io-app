@@ -16,9 +16,7 @@ type Props = {
   onPress: (cartItem: CartItem) => void;
 };
 
-/**
- * This component renders a list of transaction cart details
- */
+/** This component renders a list of transaction cart details */
 export const ReceiptCartList = ({ carts, loading, onPress }: Props) => {
   if (loading) {
     return <SkeletonTransactionDetailsList />;
@@ -31,11 +29,11 @@ export const ReceiptCartList = ({ carts, loading, onPress }: Props) => {
     <>
       {carts.map((cartItem, index) => (
         <ListItemTransaction
+          description={cartItem.payee?.name ?? ""}
           key={`${cartItem.refNumberValue}${index}`}
+          label={cartItem.subject ?? ""}
           onPress={() => onPress(cartItem)}
           showChevron
-          subtitle={cartItem.payee?.name ?? ""}
-          title={cartItem.subject ?? ""}
           transaction={{
             amount: formatAmountText(cartItem.amount),
             amountAccessibilityLabel:

@@ -35,8 +35,9 @@ type PaymentCompletedSuccessPayload = {
 };
 
 /**
- * Action to initialize the state of a payment, optionally you can specify the route to go back to
- * after the payment is completed or cancelled (default is the popToTop route)
+ * Action to initialize the state of a payment, optionally you can specify the
+ * route to go back to after the payment is completed or cancelled (default is
+ * the popToTop route)
  */
 export const initPaymentStateAction = createStandardAction(
   "PAYMENTS_INIT_PAYMENT_STATE"

@@ -1,5 +1,6 @@
 import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useNavigation } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
@@ -19,10 +20,9 @@ import {
   HeaderSecondLevelHookProps,
   useHeaderSecondLevel
 } from "../../../../../hooks/useHeaderSecondLevel";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
-// import { trackSpidLoginError } from "../../../../../utils/analytics";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
@@ -30,7 +30,7 @@ import {
 import { getUrlBasepath } from "../../../../../utils/url";
 import { useLollipopLoginSource } from "../../../../lollipop/hooks/useLollipopLoginSource";
 import { trackLoginFailure } from "../../../common/analytics";
-import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
+import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { idpLoginUrlChanged } from "../../../common/store/actions";
 import {
@@ -40,6 +40,7 @@ import {
   onLoginUriChanged,
   originSchemasWhiteList
 } from "../../../common/utils";
+import { AUTH_ERRORS } from "../../../common/utils/authError";
 import { usePosteIDApp2AppEducational } from "../../../login/idp/hooks/usePosteIDApp2AppEducational";
 import { ErrorType as SpidLoginErrorType } from "../../../login/idp/store/types";
 import { getSpidErrorCodeDescription } from "../../../login/idp/utils/spidErrorCode";
@@ -73,14 +74,13 @@ const styles = StyleSheet.create({
 });
 
 /**
- * A screen that allows the user to login with an IDP.
- * The IDP page is opened in a WebView
+ * A screen that allows the user to login with an IDP. The IDP page is opened in
+ * a WebView
  */
 const ActiveSessionIdpLoginScreen = () => {
   const dispatch = useIODispatch();
-  // The choice was made to use `replace` instead of `navigate` because the former unmounts the current screen,
-  // ensuring the re-execution of the `useLollipopLoginSource` hook.
-  const { replace } = useIONavigation();
+  const { replace } =
+    useNavigation<IOStackNavigationProp<AuthenticationParamsList>>();
 
   const selectedIdp = useIOSelector(idpSelectedActiveSessionLoginSelector);
 
@@ -139,7 +139,6 @@ const ActiveSessionIdpLoginScreen = () => {
 
   const handleLoadingError = useCallback(
     (error: WebViewErrorEvent | WebViewHttpErrorEvent): void => {
-      // trackSpidLoginError(selectedIdp?.id, error);
       const webViewHttpError = error as WebViewHttpErrorEvent;
       if (webViewHttpError.nativeEvent.statusCode) {
         const { statusCode, url } = webViewHttpError.nativeEvent;
@@ -280,15 +279,12 @@ const ActiveSessionIdpLoginScreen = () => {
   };
 
   const navigateToAuthErrorScreen = useCallback(() => {
-    // The choice was made to use `replace` instead of `navigate` because the former unmounts the current screen,
-    // ensuring the re-execution of the `useLollipopLoginSource` hook.
-    replace(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: {
-        errorCodeOrMessage,
-        authMethod: "SPID",
-        authLevel: AUTH_LEVELS.L2
-      }
+    // `replace` drops the failed login webview, so it doesn't stay
+    // mounted behind the error screen.
+    replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
+      errorCodeOrMessage,
+      authMethod: "SPID",
+      authLevel: AUTH_LEVELS.L2
     });
   }, [errorCodeOrMessage, replace]);
 

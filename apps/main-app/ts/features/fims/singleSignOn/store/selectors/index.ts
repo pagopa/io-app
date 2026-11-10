@@ -39,7 +39,6 @@ export const abortUrlFromConsentsPot = (
   pipe(
     consentsPot,
     pot.toOption,
-    // eslint-disable-next-line no-underscore-dangle
     O.map(consents => consents._links.abort.href)
   );
 

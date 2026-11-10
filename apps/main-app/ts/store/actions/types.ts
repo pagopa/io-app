@@ -1,6 +1,4 @@
-/**
- * Defines types for the available actions and store related stuff.
- */
+/** Defines types for the available actions and store related stuff. */
 import {
   Dispatch as DispatchAPI,
   MiddlewareAPI as ReduxMiddlewareAPI,
@@ -132,8 +130,5 @@ export type Dispatch = DispatchAPI<Action>;
 export type MiddlewareAPI = ReduxMiddlewareAPI<Dispatch, GlobalState>;
 
 // Props injected by react-redux connect() function
-export type ReduxProps = Readonly<{
-  dispatch: Dispatch;
-}>;
 
 export type Store = ReduxStore<GlobalState, Action>;

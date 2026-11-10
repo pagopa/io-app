@@ -52,7 +52,7 @@ describe("profileProperties", () => {
     jest.clearAllMocks();
   });
   describe("updateMixpanelProfileProperties", () => {
-    /** === === === === === === === === ===
+    /* === === === === === === === === ===
      * NOTIFICATION_CONFIGURATION
      * NOTIFICATION_PERMISSION
      * NOTIFICATION_TOKEN
@@ -131,7 +131,7 @@ describe("profileProperties", () => {
         )
       )
     );
-    /** === === === === === === === === ===
+    /* === === === === === === === === ===
      * SEND_STATUS
      * === === === === === === === === === */
     const generatePNServicePreferences = (
@@ -265,7 +265,7 @@ describe("profileProperties", () => {
         });
       });
     });
-    /** === === === === === === === === ===
+    /* === === === === === === === === ===
      * AUTH_SECURITY_LEVEL / LOGIN_METHOD
      * === === === === === === === === === */
     const generateIdp = (id: string, name: string): SpidIdp => ({

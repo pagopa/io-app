@@ -1,5 +1,9 @@
 // gets the current screen from navigation state
-import { NavigationState, PartialState } from "@react-navigation/native";
+import {
+  NavigationAction,
+  NavigationState,
+  PartialState
+} from "@react-navigation/native";
 import { Platform } from "react-native";
 
 // Prefix to match deeplink uri like `ioit://PROFILE_MAIN`
@@ -9,11 +13,20 @@ export const IO_INTERNAL_LINK_PREFIX = IO_INTERNAL_LINK_PROTOCOL + "//";
 export const IO_UNIVERSAL_LINK_PREFIX = "https://continua.io.pagopa.it";
 
 /**
- * This variable should be used on every `gestureEnabled` setting
- * in the navigator. This prevents the gestures to be enabled on Android
- * creating glitches with the scroll on old Android versions (version 9 and below).
+ * This variable should be used on every `gestureEnabled` setting in the
+ * navigator. This prevents the gestures to be enabled on Android creating
+ * glitches with the scroll on old Android versions (version 9 and below).
  */
 export const isGestureEnabled = Platform.OS !== "android";
+
+/**
+ * Whether a `beforeRemove` action comes from a back navigation: hardware back
+ * and `goBack()` dispatch `GO_BACK`, header back button and swipe gesture
+ * dispatch `POP`. Programmatic removals (`popTo`, `reset`, `replace`,
+ * `navigate` with `pop: true`, ...) are excluded.
+ */
+export const isBackNavigationAction = ({ type }: NavigationAction) =>
+  type === "GO_BACK" || type === "POP";
 
 type NavigationStateLike =
   | NavigationState
@@ -24,6 +37,7 @@ type NavigationStateLike =
  * Checks whether a route is present in the user's active navigation path.
  *
  * Only traverses routes that are part of the current navigation path:
+ *
  * - Tab/drawer navigators: only the active tab is considered in-path; inactive
  *   tabs are excluded even if they were visited previously.
  * - Stack navigators: all routes up to and including the active index are

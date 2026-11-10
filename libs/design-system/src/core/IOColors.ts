@@ -204,7 +204,6 @@ export type IOColorsExtra = keyof typeof IOColorsExtra;
 ░░░ THEME COLORS ░░░
 */
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars -- used as type
 const themeKeys = [
   // General
   "appBackground-primary",
@@ -237,6 +236,7 @@ const themeKeys = [
   "stepper-default",
   "icon-default",
   "icon-decorative",
+  "featured-default",
   // Inputs
   "textInputBorder-default",
   "textInputLabel-default",
@@ -311,6 +311,7 @@ export const IOThemeLight: IOTheme = {
   "icon-default": "grey-650",
   "stepper-default": "grey-200",
   "icon-decorative": "grey-300",
+  "featured-default": "hanPurple-500",
   // Inputs
   "textInputBorder-default": "grey-200",
   "textInputLabel-default": "grey-700",
@@ -379,6 +380,7 @@ export const IOThemeDark: IOTheme = {
   "cardBorder-default": "grey-850",
   "icon-default": "grey-450",
   "icon-decorative": "grey-650",
+  "featured-default": "hanPurple-250",
   "stepper-default": "grey-700",
   // Inputs
   "textInputBorder-default": "grey-850",
@@ -468,9 +470,11 @@ UTILS
 */
 
 /**
-Return the color value with RGBA format (RGB + Alpha transparency), starting from the hexadecimal color value only.
-@param hexCode Color value in hexadecimal format. No short version accepted.
-@param opacity Opacity value that range from 0 to 1. Default value = 1.
+ * Return the color value with RGBA format (RGB + Alpha transparency), starting
+ * from the hexadecimal color value only.
+ *
+ * @param hexCode Color value in hexadecimal format. No short version accepted.
+ * @param opacity Opacity value that range from 0 to 1. Default value = 1.
  */
 /* Taken from this Gist: https://gist.github.com/danieliser/b4b24c9f772066bcf0a6 */
 export const hexToRgba = (hexCode: ColorValue, opacity = 1) => {
@@ -487,7 +491,7 @@ export const hexToRgba = (hexCode: ColorValue, opacity = 1) => {
 REFACTORING REFERENCES
 Alias tokens:
 */
-/* 
+/*
 itemSeparator → grey-200
 textColor → grey-700
 footerShadowColor → black

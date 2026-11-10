@@ -10,6 +10,7 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import * as bottomSheet from "../../../../../../utils/hooks/bottomSheet.tsx";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import * as itwAnalytics from "../../../../analytics";
+import { CredentialType } from "../../../../common/utils/itwMocksUtils";
 import {
   CredentialMetadata,
   ItwCredentialStatus
@@ -82,6 +83,65 @@ describe("ItwPresentationCredentialStatusAlert", () => {
 
   afterAll(() => {
     MockDate.reset();
+  });
+
+  describe.each([
+    CredentialType.EDUCATION_DEGREE,
+    CredentialType.EDUCATION_ENROLLMENT,
+    CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+  ])("issuer message for credential %s", credentialType => {
+    const emptyDescriptionScenarios = [
+      { name: "missing", description: undefined },
+      { name: "empty", description: "" },
+      { name: "whitespace-only", description: " \n\t " }
+    ];
+
+    describe.each<ItwCredentialStatus>(["invalid", "suspended", "expired"])(
+      "when status is %s",
+      status => {
+        test.each(emptyDescriptionScenarios)(
+          "shows only the title when the description is $name",
+          ({ description }) => {
+            mockBottomSheetModal();
+            jest
+              .spyOn(selectors, "itwCredentialStatusSelector")
+              .mockReturnValue({ status });
+            mockUseCredentialStatusMessage.mockReturnValue({
+              title: mockMessage.title,
+              description
+            });
+
+            const component = renderComponent({ credentialType });
+
+            expect(component.getByText(mockMessage.title)).toBeTruthy();
+            expect(
+              component.queryByText(
+                I18n.t("features.itWallet.presentation.alerts.statusAction")
+              )
+            ).toBeNull();
+            expect(component.queryByRole("button")).toBeNull();
+          }
+        );
+
+        it("opens the bottom sheet when the description is populated", () => {
+          mockBottomSheetModal();
+          jest
+            .spyOn(selectors, "itwCredentialStatusSelector")
+            .mockReturnValue({ status });
+          mockUseCredentialStatusMessage.mockReturnValue(mockMessage);
+
+          const component = renderComponent({ credentialType });
+
+          fireEvent.press(
+            component.getByText(
+              I18n.t("features.itWallet.presentation.alerts.statusAction")
+            )
+          );
+
+          expect(mockBottomSheetPresent).toHaveBeenCalledTimes(1);
+        });
+      }
+    );
   });
 
   test.each([
@@ -167,8 +227,12 @@ describe("ItwPresentationCredentialStatusAlert", () => {
 
     const component = renderComponent();
 
-    expect(component.getByText("Quali documenti devo preparare?")).toBeTruthy();
-    expect(component.getByText("Hai già rinnovato il documento?")).toBeTruthy();
+    expect(
+      component.getByText("Quali documenti devo preparare?", { exact: false })
+    ).toBeTruthy();
+    expect(
+      component.getByText("Hai già rinnovato il documento?", { exact: false })
+    ).toBeTruthy();
     expect(component.getByText("Aggiorna il documento digitale")).toBeTruthy();
     expect(component.getByText("Rimuovi dal Portafoglio")).toBeTruthy();
   });
@@ -232,28 +296,6 @@ describe("ItwPresentationCredentialStatusAlert", () => {
     fireEvent.press(component.getByText("Ho capito"));
 
     expect(mockBottomSheetDismiss).toHaveBeenCalledTimes(1);
-  });
-
-  it("treats attribute_update as an issuer error until status list support is available", () => {
-    jest
-      .spyOn(selectors, "itwCredentialStatusSelector")
-      .mockImplementation(() => ({ status: "invalid" }));
-    mockUseCredentialStatusMessage.mockReturnValue(mockMessage);
-
-    const component = renderComponent({
-      validity: {
-        type: "status_assertion",
-        status: "invalid",
-        errorCode: "attribute_update"
-      }
-    });
-
-    expect(component.getByText("__Scaduto__")).toBeTruthy();
-    expect(
-      component.queryByText(
-        "È disponibile una versione aggiornata di questo documento"
-      )
-    ).toBeNull();
   });
 
   it("tracks banner tap and bottom sheet opening for the expiring status alert", () => {

@@ -20,9 +20,7 @@ const FCI_QTSP_ERROR_KIND = {
 export type FciQtspErrorKind =
   (typeof FCI_QTSP_ERROR_KIND)[keyof typeof FCI_QTSP_ERROR_KIND];
 
-/**
- * Returns which of the three qtsp preparation steps failed if any.
- */
+/** Returns which of the three qtsp preparation steps failed if any. */
 export const fciQtspErrorKindSelector = createSelector(
   fciQtspClausesMetadataSelector,
   fciQtspFilledDocumentSelector,

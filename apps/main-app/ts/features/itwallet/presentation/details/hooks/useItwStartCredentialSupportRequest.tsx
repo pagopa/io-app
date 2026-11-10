@@ -27,10 +27,10 @@ const getErrorCodeFromCredential = (
 };
 
 /**
- *
  * @param {CredentialMetadata} credential A valid wallet credential
- * @returns A utility function which tracks and starts the IT Wallet support request with the
- *          correct Zendesk metadata (category, subcategory, error code when available).
+ * @returns A utility function which tracks and starts the IT Wallet support
+ *   request with the correct Zendesk metadata (category, subcategory, error
+ *   code when available).
  */
 export const useItwStartCredentialSupportRequest = (
   credential: CredentialMetadata

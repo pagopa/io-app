@@ -120,7 +120,9 @@ describe("guards utils", () => {
     it("should return false if mode is not LEGACY", () => {
       const profile: InitializedProfile = {
         ...baseProfile,
-        service_preferences_settings: { mode: ServicesPreferencesModeEnum.AUTO }
+        service_preferences_settings: {
+          mode: ServicesPreferencesModeEnum.AUTO
+        }
       };
       expect(isProfileFirstOnBoarding(profile)).toBe(false);
     });

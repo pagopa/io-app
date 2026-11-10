@@ -144,7 +144,7 @@ describe("ItwCieIdLoginScreen", () => {
 
         const failure = getFailure();
         expect(failure?.reason).toBeInstanceOf(Error);
-        expect((failure?.reason as Error).message).toBe(expectedMessage);
+        expect(failure?.reason).toHaveProperty("message", expectedMessage);
       }
     );
   });

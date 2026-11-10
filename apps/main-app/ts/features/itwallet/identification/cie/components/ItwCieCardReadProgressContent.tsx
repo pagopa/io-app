@@ -21,7 +21,8 @@ type ItwCieCardReadProgressContentProps = Exclude<
 >;
 
 /**
- * Renders the CIE read progress content based on the current progress and platform
+ * Renders the CIE read progress content based on the current progress and
+ * platform
  */
 export const ItwCieCardReadProgressContent = (
   props: ItwCieCardReadProgressContentProps

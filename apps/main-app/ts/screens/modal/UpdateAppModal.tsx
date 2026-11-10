@@ -1,12 +1,12 @@
 /**
- * A screen to invite the user to update the app because current version is not supported yet
- *
+ * A screen to invite the user to update the app because current version is not
+ * supported yet
  */
 
 import {
   Dismissable,
   IOColors,
-  IOVisualCostants,
+  IODimensions,
   ToastNotification,
   useIOTheme
 } from "@io-app/design-system";
@@ -102,8 +102,8 @@ const UpdateAppModal: FC = () => {
 const styles = StyleSheet.create({
   alertContainer: {
     position: "absolute",
-    right: IOVisualCostants.appMarginDefault,
-    left: IOVisualCostants.appMarginDefault,
+    right: IODimensions.padding.screen.default,
+    left: IODimensions.padding.screen.default,
     zIndex: 1000
   }
 });

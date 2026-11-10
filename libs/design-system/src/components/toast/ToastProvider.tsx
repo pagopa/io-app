@@ -8,7 +8,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { IOVisualCostants } from "../../core";
+import { IODimensions } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { throttle } from "../../utils/throttle";
 import { Dismissable } from "../templates";
@@ -18,20 +18,18 @@ import { Toast } from "./types";
 import { IOToastRef, useIOToast } from "./useIOToast";
 
 /**
- * The maximum number of toasts that can be displayed at the same time
- * If the number of the toasts exceeds this number, the oldest one will be removed
+ * The maximum number of toasts that can be displayed at the same time If the
+ * number of the toasts exceeds this number, the oldest one will be removed
  */
 export const MAX_TOAST_STACK_SIZE = 3;
 
-/**
- * The time in milliseconds that a toast notification will be displayed
- */
+/** The time in milliseconds that a toast notification will be displayed */
 export const TOAST_DURATION_TIME = 5000;
 
 /**
- * This is the time in milliseconds between two toast notifications.
- * This will throttle the toast notifications to avoid displaying too many of them at the same time
- * and causing visual glitches.
+ * This is the time in milliseconds between two toast notifications. This will
+ * throttle the toast notifications to avoid displaying too many of them at the
+ * same time and causing visual glitches.
  */
 export const TOAST_THROTTLE_TIME = 500;
 
@@ -40,7 +38,8 @@ type ToastNotificationStackItemProps = Pick<Dismissable, "onDismiss"> &
   ToastNotificationStackItem;
 
 /**
- * A toast notification item that can be swiped to the right to dismiss it, with enter and exit animations
+ * A toast notification item that can be swiped to the right to dismiss it, with
+ * enter and exit animations
  */
 const ToastNotificationStackItem = ({
   onDismiss,
@@ -50,7 +49,7 @@ const ToastNotificationStackItem = ({
     entering={SlideInUp.springify().damping(16).mass(0.9).stiffness(90)}
     exiting={SlideOutUp.duration(700).easing(Easing.inOut(Easing.exp))}
     layout={SequencedTransition.duration(500).delay(50)}
-    style={{ paddingBottom: 8 }}
+    style={{ paddingBottom: IODimensions.gap.toast.items }}
   >
     <Dismissable onDismiss={onDismiss}>
       <ToastNotification {...toast} />
@@ -118,7 +117,7 @@ export const ToastProvider = ({ children }: ToastProviderProps) => {
       <SafeAreaView pointerEvents="box-none" style={styles.container}>
         <View
           pointerEvents="box-none"
-          style={{ padding: IOVisualCostants.appMarginDefault }}
+          style={{ padding: IODimensions.padding.screen.default }}
         >
           {toasts.map(toast => (
             <ToastNotificationStackItem

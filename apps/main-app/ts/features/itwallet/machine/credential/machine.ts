@@ -26,7 +26,7 @@ export const itwCredentialIssuanceMachine = itwCredentialSetup.createMachine({
           ]
         },
         "select-credential": {
-          target: "EvaluateFlow",
+          target: "WaitingForCredentialsCatalogue",
           actions: [
             "onInit",
             assign(({ event }) => ({
@@ -52,8 +52,8 @@ export const itwCredentialIssuanceMachine = itwCredentialSetup.createMachine({
               offer: event.output.offer,
               grantDetails: event.output.grantDetails
             },
-            credentialType:
-              event.output.grantDetails.authorizationCodeGrant.scope
+            credentialType: event.output.credentialType,
+            issuerConf: event.output.issuerConf
           }))
         },
         onError: {
@@ -67,7 +67,8 @@ export const itwCredentialIssuanceMachine = itwCredentialSetup.createMachine({
           actions: assign({
             credentialOfferUri: undefined,
             resolvedCredentialOffer: undefined,
-            credentialType: undefined
+            credentialType: undefined,
+            issuerConf: undefined
           })
         }
       }
@@ -75,7 +76,7 @@ export const itwCredentialIssuanceMachine = itwCredentialSetup.createMachine({
     CredentialOfferResolved: {
       on: {
         "confirm-credential-offer": {
-          target: "EvaluateFlow",
+          target: "WaitingForCredentialsCatalogue",
           actions: ["onInit", assign({ mode: "issuance" })]
         },
         close: {
@@ -83,9 +84,26 @@ export const itwCredentialIssuanceMachine = itwCredentialSetup.createMachine({
           actions: assign({
             credentialOfferUri: undefined,
             resolvedCredentialOffer: undefined,
-            credentialType: undefined
+            credentialType: undefined,
+            issuerConf: undefined
           })
         }
+      }
+    },
+    WaitingForCredentialsCatalogue: {
+      tags: [ItwTags.Loading],
+      invoke: {
+        src: "waitForCredentialsCatalogue",
+        input: ({ context }) => ({ deps: context.deps }),
+        onError: { target: "EvaluateFlow" }
+      },
+      on: {
+        "credentials-catalogue-ready": { target: "EvaluateFlow" },
+        back: {
+          target: "Idle",
+          actions: assign({ credentialType: undefined })
+        },
+        close: { target: "Completed", actions: "closeIssuance" }
       }
     },
     EvaluateFlow: {
@@ -213,7 +231,8 @@ export const itwCredentialIssuanceMachine = itwCredentialSetup.createMachine({
           walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
           resolvedCredentialOffer: context.resolvedCredentialOffer,
           skipMdocIssuance: !context.isItWalletValid, // Do not request mDoc credentials for non IT-Wallet instances
-          deps: context.deps
+          deps: context.deps,
+          issuerConf: context.issuerConf
         }),
         onDone: {
           target: "DisplayingTrustIssuer",

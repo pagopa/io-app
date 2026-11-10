@@ -65,7 +65,8 @@ const ErrorComponent = () => {
   );
 };
 /**
- * Screen which is displayed when a user requested a CGN activation and we are waiting for the result from the backend
+ * Screen which is displayed when a user requested a CGN activation and we are
+ * waiting for the result from the backend
  */
 const CgnActivationLoadingScreen = () => {
   const isLoading = useIOSelector(isCgnActivationLoading);

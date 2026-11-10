@@ -48,7 +48,10 @@ const makeResponse = ({
     }
   }) as unknown as Notifications.NotificationResponse;
 
-/** Build a minimal GlobalState slice with only the fields consumed by handleMessageNotificationInteraction. */
+/**
+ * Build a minimal GlobalState slice with only the fields consumed by
+ * handleMessageNotificationInteraction.
+ */
 const makeState = ({
   inboxData = messagePagePotNone,
   archiveData = messagePagePotNone,
@@ -234,7 +237,11 @@ describe("handleForegroundMessageReload", () => {
     handleForegroundMessageReload(store);
 
     expect(dispatch).toHaveBeenCalledWith(
-      reloadAllMessages.request({ pageSize, filter: {}, fromUserAction: false })
+      reloadAllMessages.request({
+        pageSize,
+        filter: {},
+        fromUserAction: false
+      })
     );
   });
 

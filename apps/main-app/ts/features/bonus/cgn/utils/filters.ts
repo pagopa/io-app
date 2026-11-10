@@ -7,23 +7,19 @@ import { HeaderSecondLevel, IOCategoryIcons } from "@io-app/design-system";
 import I18n from "i18next";
 import { StatusBarProps } from "react-native";
 
-import { TranslationKeys } from "../../../../i18n";
-
 type Category = {
   colors: string;
   headerVariant: HeaderSecondLevel["variant"];
   icon: IOCategoryIcons;
-  nameKey: TranslationKeys;
   statusBarStyle: StatusBarProps["barStyle"];
   textColor: "black" | "white";
   type: ProductCategory;
 };
 
-export const categories: Record<ProductCategory, Category> = {
+const categories: Record<ProductCategory, Category> = {
   [ProductCategoryEnum.cultureAndEntertainment]: {
     type: ProductCategoryEnum.cultureAndEntertainment,
     icon: "categCulture",
-    nameKey: "bonus.cgn.merchantDetail.categories.cultureAndEntertainment",
     colors: "#AA338B",
     textColor: "white",
     statusBarStyle: "light-content",
@@ -32,7 +28,6 @@ export const categories: Record<ProductCategory, Category> = {
   [ProductCategoryEnum.health]: {
     type: ProductCategoryEnum.health,
     icon: "categWellness",
-    nameKey: "bonus.cgn.merchantDetail.categories.health",
     colors: "#B5D666",
     textColor: "black",
     statusBarStyle: "dark-content",
@@ -41,7 +36,6 @@ export const categories: Record<ProductCategory, Category> = {
   [ProductCategoryEnum.learning]: {
     type: ProductCategoryEnum.learning,
     icon: "categLearning",
-    nameKey: "bonus.cgn.merchantDetail.categories.learning",
     colors: "#2A61AE",
     textColor: "white",
     statusBarStyle: "light-content",
@@ -50,7 +44,6 @@ export const categories: Record<ProductCategory, Category> = {
   [ProductCategoryEnum.sports]: {
     type: ProductCategoryEnum.sports,
     icon: "categSport",
-    nameKey: "bonus.cgn.merchantDetail.categories.sport",
     colors: "#65BE72",
     textColor: "black",
     statusBarStyle: "dark-content",
@@ -59,7 +52,6 @@ export const categories: Record<ProductCategory, Category> = {
   [ProductCategoryEnum.home]: {
     type: ProductCategoryEnum.home,
     icon: "categHome",
-    nameKey: "bonus.cgn.merchantDetail.categories.home",
     colors: "#F8D547",
     textColor: "black",
     statusBarStyle: "dark-content",
@@ -68,7 +60,6 @@ export const categories: Record<ProductCategory, Category> = {
   [ProductCategoryEnum.telephonyAndInternet]: {
     type: ProductCategoryEnum.telephonyAndInternet,
     icon: "categTelco",
-    nameKey: "bonus.cgn.merchantDetail.categories.telco",
     colors: "#0089C7",
     textColor: "white",
     statusBarStyle: "light-content",
@@ -77,7 +68,6 @@ export const categories: Record<ProductCategory, Category> = {
   [ProductCategoryEnum.bankingServices]: {
     type: ProductCategoryEnum.bankingServices,
     icon: "categFinance",
-    nameKey: "bonus.cgn.merchantDetail.categories.finance",
     colors: "#4F51A3",
     textColor: "white",
     statusBarStyle: "light-content",
@@ -86,7 +76,6 @@ export const categories: Record<ProductCategory, Category> = {
   [ProductCategoryEnum.travelling]: {
     type: ProductCategoryEnum.travelling,
     icon: "categTravel",
-    nameKey: "bonus.cgn.merchantDetail.categories.travel",
     colors: "#E02F6E",
     textColor: "white",
     statusBarStyle: "light-content",
@@ -95,7 +84,6 @@ export const categories: Record<ProductCategory, Category> = {
   [ProductCategoryEnum.sustainableMobility]: {
     type: ProductCategoryEnum.sustainableMobility,
     icon: "categMobility",
-    nameKey: "bonus.cgn.merchantDetail.categories.mobility",
     colors: "#00AEB1",
     textColor: "black",
     statusBarStyle: "dark-content",
@@ -104,7 +92,6 @@ export const categories: Record<ProductCategory, Category> = {
   [ProductCategoryEnum.jobOffers]: {
     type: ProductCategoryEnum.jobOffers,
     icon: "categJobOffers",
-    nameKey: "bonus.cgn.merchantDetail.categories.job",
     colors: "#FAAE56",
     textColor: "black",
     statusBarStyle: "dark-content",
@@ -115,6 +102,37 @@ export const categories: Record<ProductCategory, Category> = {
 export const getCategorySpecs = (
   category: ProductCategory
 ): Category | undefined => categories[category];
+
+/**
+ * Returns the category name in the current app language, translated at call
+ * time so it reflects language changes.
+ */
+export const getCategoryName = (category: ProductCategory): string => {
+  switch (category) {
+    case ProductCategoryEnum.bankingServices:
+      return I18n.t("bonus.cgn.merchantDetail.categories.finance");
+    case ProductCategoryEnum.cultureAndEntertainment:
+      return I18n.t(
+        "bonus.cgn.merchantDetail.categories.cultureAndEntertainment"
+      );
+    case ProductCategoryEnum.health:
+      return I18n.t("bonus.cgn.merchantDetail.categories.health");
+    case ProductCategoryEnum.home:
+      return I18n.t("bonus.cgn.merchantDetail.categories.home");
+    case ProductCategoryEnum.jobOffers:
+      return I18n.t("bonus.cgn.merchantDetail.categories.job");
+    case ProductCategoryEnum.learning:
+      return I18n.t("bonus.cgn.merchantDetail.categories.learning");
+    case ProductCategoryEnum.sports:
+      return I18n.t("bonus.cgn.merchantDetail.categories.sport");
+    case ProductCategoryEnum.sustainableMobility:
+      return I18n.t("bonus.cgn.merchantDetail.categories.mobility");
+    case ProductCategoryEnum.telephonyAndInternet:
+      return I18n.t("bonus.cgn.merchantDetail.categories.telco");
+    case ProductCategoryEnum.travelling:
+      return I18n.t("bonus.cgn.merchantDetail.categories.travel");
+  }
+};
 
 export const orderCategoriesByNameKey = (
   categoriesList: ReadonlyArray<ProductCategoryWithNewDiscountsCount>
@@ -132,9 +150,9 @@ export const orderCategoriesByNameKey = (
     }
 
     if (c1Specs && c2Specs) {
-      return I18n.t(c1Specs.nameKey)
+      return getCategoryName(c1Specs.type)
         .toLocaleLowerCase()
-        .localeCompare(I18n.t(c2Specs.nameKey).toLocaleLowerCase());
+        .localeCompare(getCategoryName(c2Specs.type).toLocaleLowerCase());
     }
 
     return 0;

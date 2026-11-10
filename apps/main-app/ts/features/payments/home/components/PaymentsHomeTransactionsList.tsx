@@ -128,7 +128,7 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
               "features.payments.transactions.error.banner.retryButton"
             )}
             icon="warningFilled"
-            label="Il caricamento delle ricevute è fallito."
+            label={I18n.t("features.payments.transactions.error.banner.label")}
             onPress={handleOnRetry}
             testID="PaymentsHomeTransactionsListTestID-error"
           />
@@ -140,10 +140,10 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
       <ContentWrapper testID="PaymentsHomeTransactionsListTestID-loading">
         {Array.from({ length: 10 }).map((_, index) => (
           <ListItemTransaction
+            description=""
             isLoading={true}
             key={index}
-            subtitle=""
-            title=""
+            label=""
             transaction={{
               amount: "",
               amountAccessibilityLabel: ""

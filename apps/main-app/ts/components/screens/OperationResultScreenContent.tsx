@@ -2,9 +2,9 @@ import {
   H3,
   IOButton,
   IOButtonProps,
+  IODimensions,
   IOMarkdownLite,
   IOPictograms,
-  IOVisualCostants,
   Pictogram,
   VSpacer,
   WithTestID
@@ -49,9 +49,7 @@ type OperationResultScreenContentProps = WithTestID<{
   topElement?: ReactNode;
 }>;
 
-/**
- * Check if a pictogram has an animated version or not
- */
+/** Check if a pictogram has an animated version or not */
 const hasAnimatedVersion = (
   pictogram: IOAnimatedPictograms | IOPictograms
 ): pictogram is IOAnimatedPictograms => pictogram in IOAnimatedPictogramsAssets;
@@ -92,9 +90,15 @@ const OperationResultScreenContent = ({
         {pictogram && (
           <View style={{ alignItems: "center" }}>
             {isAnimatedPictogram ? (
-              <AnimatedPictogram name={pictogram} size={120} />
+              <AnimatedPictogram
+                name={pictogram}
+                size={IODimensions.size.pictogram.screen}
+              />
             ) : (
-              <Pictogram name={pictogram as IOPictograms} size={120} />
+              <Pictogram
+                name={pictogram as IOPictograms}
+                size={IODimensions.size.pictogram.screen}
+              />
             )}
             <VSpacer size={24} />
           </View>
@@ -142,7 +146,8 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
     justifyContent: "center",
     alignContent: "center",
-    padding: IOVisualCostants.appMarginDefault
+    paddingHorizontal: IODimensions.padding.screen.centred,
+    paddingVertical: IODimensions.padding.screen.default
   },
   wrapperAndroid: {
     flexGrow: 1,

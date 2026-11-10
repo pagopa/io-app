@@ -17,9 +17,12 @@ import {
 } from "../../machine/credential/failure";
 
 /**
- * Hook to map a status failure obtained during the issuance flow to the dedicated Credential Issuer's message.
- * The message can be extracted from two sources:
- * - The Digital Credentials Catalog and its translations, for newer credentials that use status lists;
+ * Hook to map a status failure obtained during the issuance flow to the
+ * dedicated Credential Issuer's message. The message can be extracted from two
+ * sources:
+ *
+ * - The Digital Credentials Catalog and its translations, for newer credentials
+ *   that use status lists;
  * - The Entity Configuration, for legacy credentials that use status assertions.
  *
  * @param failure The issuance failure to get the error message for
@@ -56,7 +59,7 @@ export const useCredentialIssuanceStatusMessage = (
   if (
     failure.type === CredentialIssuanceFailureType.INVALID_STATUS_BY_ASSERTION
   ) {
-    const { credentialId } = failure.reason?.metadata ?? {};
+    const { credentialId = "" } = failure.reason?.metadata ?? {};
 
     const parsed = statusAssertionFailure.safeParse(failure.reason?.reason);
     const errorCode = parsed.success ? parsed.data.error : undefined;

@@ -123,9 +123,7 @@ const idPayInitiativeInstrumentsStatusSelector = createSelector(
   inititative => inititative.instrumentStatus
 );
 
-/**
- * Selector that returns the list of retrieved instruments
- */
+/** Selector that returns the list of retrieved instruments */
 export const idpayDiscountInitiativeInstrumentsSelector = createSelector(
   idpayInitiativePaymentMethodsSelector,
   instruments =>
@@ -137,17 +135,13 @@ export const idpayDiscountInitiativeInstrumentsSelector = createSelector(
     )
 );
 
-/**
- * Selector that returns true if the instrument list is loading
- */
+/** Selector that returns true if the instrument list is loading */
 export const isLoadingDiscountInitiativeInstrumentsSelector = createSelector(
   idpayInitiativePaymentMethodsSelector,
   paymentMethods => pot.isLoading(paymentMethods)
 );
 
-/**
- * Selector used to know if a specific initiativeId is loading or not
- */
+/** Selector used to know if a specific initiativeId is loading or not */
 export const idPayIsLoadingInitiativeInstrumentSelector = createSelector(
   idPayInitiativeInstrumentsStatusSelector,
   (_: GlobalState, instrumentId: string) => instrumentId,

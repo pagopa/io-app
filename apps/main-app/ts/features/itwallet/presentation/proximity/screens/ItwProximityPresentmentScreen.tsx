@@ -6,7 +6,7 @@ import {
   hexToRgba,
   IOButton,
   IOColors,
-  IOVisualCostants,
+  IODimensions,
   VSpacer,
   VStack
 } from "@io-app/design-system";
@@ -28,6 +28,7 @@ import {
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { useMaxBrightness } from "../../../../../utils/brightness.ts";
 import { ItwBrandedBox } from "../../../common/components/ItwBrandedBox.tsx";
+import { isItwProximityNfcEnabledSelector } from "../../../common/store/selectors";
 import { itwIsBannerVisibleSelector } from "../../../common/store/selectors/banners.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import {
@@ -70,6 +71,9 @@ export const ItwProximityPresentmentScreen = ({
   );
   const isQrCodeInfoBannerVisible = useIOSelector(
     itwIsBannerVisibleSelector("proximity_qr_code_info")
+  );
+  const isNfcPresentmentSupported = useIOSelector(
+    isItwProximityNfcEnabledSelector
   );
 
   const isFailure = !!failure;
@@ -133,7 +137,7 @@ export const ItwProximityPresentmentScreen = ({
     <IOScrollView
       animatedRef={animatedScrollViewRef}
       contentContainerStyle={{
-        marginTop: safeAreaInsets.top + IOVisualCostants.headerHeight
+        marginTop: safeAreaInsets.top + IODimensions.height.header
       }}
     >
       {shouldShowExpiredCredentialsBanner && (
@@ -180,22 +184,24 @@ export const ItwProximityPresentmentScreen = ({
         </VStack>
       </ItwBrandedBox>
 
-      <View
-        style={{ alignSelf: "center", marginTop: 32, marginBottom: 24, gap: 8 }}
-      >
-        <BodySmall style={{ textAlign: "center" }}>
-          {I18n.t("features.itWallet.presentation.proximity.engagement.nfc.or")}
-        </BodySmall>
-        <IOButton
-          icon="contactless"
-          iconPosition="end"
-          label={I18n.t(
-            "features.itWallet.presentation.proximity.engagement.nfc.action"
-          )}
-          onPress={handleContactlessPress}
-          variant="link"
-        />
-      </View>
+      {isNfcPresentmentSupported && (
+        <View style={styles.nfcSection} testID="itwNfcSectionTestID">
+          <BodySmall style={{ textAlign: "center" }}>
+            {I18n.t(
+              "features.itWallet.presentation.proximity.engagement.nfc.or"
+            )}
+          </BodySmall>
+          <IOButton
+            icon="contactless"
+            iconPosition="end"
+            label={I18n.t(
+              "features.itWallet.presentation.proximity.engagement.nfc.action"
+            )}
+            onPress={handleContactlessPress}
+            variant="link"
+          />
+        </View>
+      )}
 
       {isQrCodeInfoBannerVisible && (
         <Animated.View layout={LinearTransition.duration(200)}>
@@ -213,5 +219,11 @@ const styles = StyleSheet.create({
   },
   qrCodeShadow: {
     boxShadow: `0px 4px 32px ${hexToRgba(IOColors.black, 0.1)}`
+  },
+  nfcSection: {
+    alignSelf: "center",
+    marginTop: 32,
+    marginBottom: 24,
+    gap: 8
   }
 });

@@ -15,6 +15,7 @@ import { Context, InitialContext } from "./context";
 import { IdPayOnboardingEvents } from "./events";
 import {
   getBooleanSelfDeclarationListFromContext,
+  getInformativeSelfDeclarationListFromContext,
   getInputFormSelfDeclarationFromContext,
   getMultiSelfDeclarationListFromContext
 } from "./selectors";
@@ -68,19 +69,22 @@ export const idPayOnboardingMachine = setup({
       pipe(
         context.requiredCriteria,
         O.map(
-          ({ beneficiaryRule, general }) =>
+          ({ beneficiaryRule }) =>
             (beneficiaryRule?.automatedCriteria?.length || 0) > 0 ||
-            // since familyUnitComposition can also display Family Unit criteria if it's ANPR
-            general?.familyUnitComposition !== undefined
+            getInformativeSelfDeclarationListFromContext(context).length > 0
         ),
         O.getOrElse(() => false)
       ),
+    // "informative" self-declarations are excluded: they are rendered directly
+    // on the PDND prerequisites screen, not by DisplayingSelfDeclarationList.
     hasSelfDecalrationList: ({ context }) =>
       pipe(
         context.requiredCriteria,
         O.map(
           ({ beneficiaryRule }) =>
-            (beneficiaryRule?.selfDeclarationCriteria?.length || 0) > 0
+            (beneficiaryRule?.selfDeclarationCriteria?.length || 0) -
+              getInformativeSelfDeclarationListFromContext(context).length >
+            0
         ),
         O.getOrElse(() => false)
       ),

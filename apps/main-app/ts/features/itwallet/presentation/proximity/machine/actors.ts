@@ -7,7 +7,8 @@ import { assert } from "../../../../../utils/assert";
 import { CredentialsVault } from "../../../credentials/utils/vault";
 import {
   checkBluetoothActivation as checkBluetoothActivationUtil,
-  checkBluetoothPermissions as checkBluetoothPermissionsUtil
+  checkBluetoothPermissions as checkBluetoothPermissionsUtil,
+  subscribeBluetoothState
 } from "../utils/ble";
 import { checkNfcActivation as checkNfcActivationUtil } from "../utils/nfc";
 import {
@@ -175,7 +176,12 @@ export const proximityCommunicationLogicActor = fromCallback<
     ISO18013_5.addListener("onError", handleError)
   ];
 
+  const bluetoothSubscription = subscribeBluetoothState(state => {
+    sendBack({ type: "bluetooth-state-changed", state });
+  });
+
   return () => {
+    bluetoothSubscription.remove();
     // Remove event listeners
     listeners.forEach(listener => listener.remove());
     // Close connection and clear all resources

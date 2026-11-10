@@ -20,8 +20,8 @@ type Props = {
 };
 
 /**
- * Builds the optional endElement info button that opens a bottom sheet
- * with claim details when pressed.
+ * Builds the optional endElement info button that opens a bottom sheet with
+ * claim details when pressed.
  */
 const buildInfoEndElement = (
   present: Props["present"],
@@ -43,10 +43,10 @@ const buildInfoEndElement = (
 };
 
 /**
- * Renders a single claim item based on its display format.
- * Handles text, image, list, driving privileges, nested objects and
- * nested object arrays following the same rendering logic as the
- * old `mapClaimsToClaimsSelectorItems` utility.
+ * Renders a single claim item based on its display format. Handles text, image,
+ * list, driving privileges, nested objects and nested object arrays following
+ * the same rendering logic as the old `mapClaimsToClaimsSelectorItems`
+ * utility.
  */
 export const ClaimItem = ({
   item,
@@ -74,13 +74,13 @@ export const ClaimItem = ({
                 {selectionEnabled ? (
                   <ListItemCheckbox
                     description={description}
+                    label={privilege.driving_privilege}
                     onValueChange={
                       onItemSelected
                         ? selected => onItemSelected(item, selected)
                         : undefined
                     }
                     selected={isSelected}
-                    value={privilege.driving_privilege}
                   />
                 ) : (
                   <ListItemInfo
@@ -121,13 +121,13 @@ export const ClaimItem = ({
       return selectionEnabled ? (
         <ListItemCheckbox
           description={description}
+          label={value.map(getSafeText).join(", ")}
           onValueChange={
             onItemSelected
               ? selected => onItemSelected(item, selected)
               : undefined
           }
           selected={isSelected}
-          value={value.map(getSafeText).join(", ")}
         />
       ) : (
         <ListItemInfo
@@ -197,13 +197,13 @@ export const ClaimItem = ({
                 {selectionEnabled ? (
                   <ListItemCheckbox
                     description={summaryDesc}
+                    label={summaryVal}
                     onValueChange={
                       onItemSelected
                         ? selected => onItemSelected(item, selected)
                         : undefined
                     }
                     selected={isSelected}
-                    value={summaryVal}
                   />
                 ) : (
                   <ListItemInfo
@@ -225,13 +225,13 @@ export const ClaimItem = ({
       return selectionEnabled ? (
         <ListItemCheckbox
           description={description}
+          label={getSafeText(value)}
           onValueChange={
             onItemSelected
               ? selected => onItemSelected(item, selected)
               : undefined
           }
           selected={isSelected}
-          value={getSafeText(value)}
         />
       ) : (
         <ListItemInfo label={description} reversed value={getSafeText(value)} />

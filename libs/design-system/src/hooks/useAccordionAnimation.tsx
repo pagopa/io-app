@@ -7,9 +7,7 @@ import {
   withSpring
 } from "react-native-reanimated";
 
-import { IOSpacingScale, IOSpringValues } from "../core";
-
-const accordionBodySpacing: IOSpacingScale = 16;
+import { IODimensions, IOSpringValues } from "../core";
 
 type Params = {
   defaultExpanded?: boolean;
@@ -80,28 +78,22 @@ export const useAccordionAnimation = ({
 
   return {
     expanded,
-    /**
-     * Toggle the accordion expanded/collapsed state.
-     */
+    /** Toggle the accordion expanded/collapsed state. */
     toggleAccordion,
-    /**
-     * The style to apply to the accordion icon.
-     */
+    /** The style to apply to the accordion icon. */
     iconAnimatedStyle,
-    /**
-     * Callback to execute on the body's inner container layout.
-     */
+    /** Callback to execute on the body's inner container layout. */
     onBodyLayout,
     /**
-     * The animated style to apply to the collapsible body container – it must be an `Animated.View`.
+     * The animated style to apply to the collapsible body container – it must
+     * be an `Animated.View`.
      */
     bodyAnimatedStyle,
-    /**
-     * The style to apply to the inner body container.
-     */
+    /** The style to apply to the inner body container. */
     bodyInnerStyle,
     /**
-     * The progress of the accordion animation, from 0 (collapsed) to 1 (expanded).
+     * The progress of the accordion animation, from 0 (collapsed) to 1
+     * (expanded).
      */
     progress
   };
@@ -113,7 +105,7 @@ const styles = StyleSheet.create({
   },
   accordionBodyContainer: {
     position: "absolute",
-    padding: accordionBodySpacing,
+    padding: IODimensions.padding.accordion,
     width: "100%",
     paddingTop: 0
   }

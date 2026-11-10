@@ -14,10 +14,10 @@ import { CredentialMetadata } from "../utils/itwTypesUtils";
  * Custom hook to retrieve the display name of the authentication source for a
  * given credential type.
  *
- * @param credentialType - the credential type to resolve the auth source for
- * @param credential - optional credential metadata used to resolve the auth source
- * from the issuer configuration when the credential is not part of the catalogue
- * (legacy "Documenti su IO" credentials).
+ * @param credentialType - The credential type to resolve the auth source for
+ * @param credential - Optional credential metadata used to resolve the auth
+ *   source from the issuer configuration when the credential is not part of the
+ *   catalogue (legacy "Documenti su IO" credentials).
  */
 export const useItwAuthSourceName = (
   credentialType: string,

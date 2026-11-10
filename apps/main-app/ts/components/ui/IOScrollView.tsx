@@ -4,9 +4,8 @@ import {
   IOButton,
   IOButtonLinkSpecificProps,
   IOColors,
-  IOSpacer,
-  IOSpacingScale,
-  IOVisualCostants,
+  IODimensions,
+  IODimensionScale,
   useIOTheme,
   VSpacer
 } from "@io-app/design-system";
@@ -103,16 +102,7 @@ type IOSCrollViewHeaderScrollValues = ComponentProps<
    the gradient opaciy transition */
 const gradientOpacityScrollTrigger = 0.85;
 /* Extended gradient area above the actions */
-const gradientSafeAreaHeight: IOSpacingScale = 96;
-/* End content margin before the actions */
-const contentEndMargin: IOSpacingScale = 32;
-/* Margin between solid variant and outline variant */
-const spaceBetweenActions: IOSpacer = 16;
-/* Margin between solid variant and link variant */
-const spaceBetweenActionAndLink: IOSpacer = 16;
-/* Extra bottom margin for iPhone bottom handle because
-   Link variant doesn't have a fixed height */
-const extraSafeAreaMargin: IOSpacingScale = 8;
+const gradientSafeAreaHeight: IODimensionScale = 96;
 
 const styles = StyleSheet.create({
   gradientBottomActions: {
@@ -125,7 +115,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFill
   },
   buttonContainer: {
-    paddingHorizontal: IOVisualCostants.appMarginDefault,
+    paddingHorizontal: IODimensions.padding.screen.default,
     width: "100%",
     flexShrink: 0
   },
@@ -138,20 +128,30 @@ const styles = StyleSheet.create({
 });
 
 /**
- * The main scrollable container component.
- * It includes full support for custom headers and actions.
+ * The main scrollable container component. It includes full support for custom
+ * headers and actions.
  *
- * @param [headerConfig] Configuration for the header component. Use this only if you need to configure a custom header from scratch.
- * If you need the predefined configuration with default `Back (<)` and `Help (?)` buttons, use `useHeaderSecondLevel`
- * @param {IOScrollViewActions} [actions] Actions to be rendered at the bottom of the `ScrollView`
- * @param [animatedRef] Ref generated through `useAnimatedRef` (used by `useScrollViewOffset` to get the scroll position)
+ * @param [headerConfig] Configuration for the header component. Use this only
+ *   if you need to configure a custom header from scratch. If you need the
+ *   predefined configuration with default `Back (<)` and `Help (?)` buttons,
+ *   use `useHeaderSecondLevel`
+ * @param {IOScrollViewActions} [actions] Actions to be rendered at the bottom
+ *   of the `ScrollView`
+ * @param [animatedRef] Ref generated through `useAnimatedRef` (used by
+ *   `useScrollViewOffset` to get the scroll position)
  * @param {number} [snapOffset] Offset when you need to add a snap point
- * @param {boolean} [excludeSafeAreaMargins=false] Exclude safe area margins at the bottom of the `ScrollView`
- * This is useful if you have a screen with a tab bar at the bottom, or if the bottom margin is already being managed
- * @param {boolean} [excludeEndContentMargin=false] Exclude the end content margin
- * @param {boolean} [includeContentMargins=true] Include horizontal screen margins
- * @param {boolean} [debugMode=false] Enable debug mode. Only for testing purposes
+ * @param {boolean} [excludeSafeAreaMargins=false] Exclude safe area margins at
+ *   the bottom of the `ScrollView` This is useful if you have a screen with a
+ *   tab bar at the bottom, or if the bottom margin is already being managed.
+ *   Default is `false`
+ * @param {boolean} [excludeEndContentMargin=false] Exclude the end content
+ *   margin. Default is `false`
+ * @param {boolean} [includeContentMargins=true] Include horizontal screen
+ *   margins. Default is `true`
+ * @param {boolean} [debugMode=false] Enable debug mode. Only for testing
+ *   purposes. Default is `false`
  */
+// oxlint-disable-next-line complexity
 export const IOScrollView = ({
   headerConfig,
   children,
@@ -211,7 +211,9 @@ export const IOScrollView = ({
   /* When the secondary action is visible, add extra margin
      to avoid little space from iPhone bottom handle */
   const extraBottomMargin =
-    actions?.secondary && needSafeAreaMargin ? extraSafeAreaMargin : 0;
+    actions?.secondary && needSafeAreaMargin
+      ? IODimensions.padding.footer.homeIndicator
+      : 0;
 
   /* Safe background block. Cover at least 85% of the space
      to avoid glitchy elements underneath */
@@ -224,7 +226,7 @@ export const IOScrollView = ({
   /* Height of the safe bottom area, applied to the ScrollView:
      Actions + Content end margin */
   const safeBottomAreaHeight =
-    bottomMargin + actionBlockHeight + contentEndMargin;
+    bottomMargin + actionBlockHeight + IODimensions.padding.screen.end;
 
   const handleScroll = useAnimatedScrollHandler(
     ({ contentOffset, layoutMeasurement, contentSize }) => {
@@ -299,9 +301,9 @@ export const IOScrollView = ({
               ? 0
               : actions
                 ? safeBottomAreaHeight
-                : bottomMargin + contentEndMargin,
+                : bottomMargin + IODimensions.padding.screen.end,
             paddingHorizontal: includeContentMargins
-              ? IOVisualCostants.appMarginDefault
+              ? IODimensions.padding.screen.default
               : 0,
             ...contentContainerStyle
           },
@@ -324,7 +326,11 @@ export const IOScrollView = ({
         snapToOffsets={
           // If there is a refresh control, don't snap to offsets
           // This is a react-native bug: https://github.com/facebook/react-native/issues/27324
-          RefreshControlComponent ? undefined : [0, snapOffset || 0]
+          RefreshControlComponent ||
+          snapOffset === undefined ||
+          snapOffset === 0
+            ? undefined
+            : [0, snapOffset]
         }
         testID={testID}
       >
@@ -426,14 +432,14 @@ export const renderActionButtons = (
             marginBottom: extraBottomMargin
           }}
         >
-          <VSpacer size={spaceBetweenActionAndLink} />
+          <VSpacer size={IODimensions.gap.footer.link} />
           <IOButton color="primary" variant="link" {...secondaryAction} />
         </View>
       )}
 
       {type === "ThreeButtons" && (
         <Fragment>
-          <VSpacer size={spaceBetweenActions} />
+          <VSpacer size={IODimensions.gap.footer.actions} />
           <IOButton color="primary" variant="outline" {...secondaryAction} />
 
           <View
@@ -442,7 +448,7 @@ export const renderActionButtons = (
               marginBottom: extraBottomMargin
             }}
           >
-            <VSpacer size={spaceBetweenActionAndLink} />
+            <VSpacer size={IODimensions.gap.footer.link} />
             <IOButton color="primary" variant="link" {...tertiaryAction} />
           </View>
         </Fragment>

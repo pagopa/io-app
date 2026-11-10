@@ -11,7 +11,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
 import { CreditCardType, Wallet } from "../../../../types/pagopa";
-import { instrumentStatusLabels } from "../../common/labels";
+import { getInstrumentStatusLabel } from "../../common/labels";
 import { IdPayConfigurationMachineContext } from "../machine/provider";
 import { instrumentStatusByIdWalletSelector } from "../machine/selectors";
 
@@ -21,17 +21,13 @@ type InstrumentEnrollmentSwitchProps = {
   wallet: Wallet;
 };
 
-/**
- * See @ListItemSwitch
- */
+/** See @ListItemSwitch */
 type ListItemSwitchIconProps =
   | { icon: IOIcons; paymentLogo?: never }
   | { icon?: never; paymentLogo: IOLogoPaymentType }
   | { icon?: never; paymentLogo?: never };
 
-/**
- * A component to enable/disable the enrollment of an instrument
- */
+/** A component to enable/disable the enrollment of an instrument */
 const IdPayInstrumentEnrollmentSwitch = (
   props: InstrumentEnrollmentSwitchProps
 ) => {
@@ -56,7 +52,7 @@ const IdPayInstrumentEnrollmentSwitch = (
       () => undefined,
       status =>
         ({
-          text: instrumentStatusLabels[status],
+          text: getInstrumentStatusLabel(status),
           variant: "default"
         }) as Badge
     )

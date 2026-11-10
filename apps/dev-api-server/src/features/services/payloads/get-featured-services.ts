@@ -24,7 +24,8 @@ export const getFeaturedServicesResponsePayload = (): FeaturedServices => {
   );
 
   /**
-   * Map national services to FeaturedService[] (add organization_name for layout testing purpose)
+   * Map national services to FeaturedService[] (add organization_name for
+   * layout testing purpose)
    */
   const featuredNationalServices: Array<FeaturedService> = pipe(
     selectedNationalServices,
@@ -36,9 +37,7 @@ export const getFeaturedServicesResponsePayload = (): FeaturedServices => {
     }))
   );
 
-  /**
-   * Map special services to FeaturedService[]
-   */
+  /** Map special services to FeaturedService[] */
   const featuredSpecialServices: Array<FeaturedService> = pipe(
     selectedSpecialServices,
     A.map(service => ({

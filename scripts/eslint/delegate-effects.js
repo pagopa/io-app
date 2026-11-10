@@ -1,9 +1,9 @@
 /**
  * Custom ESLint rule: delegate-effects
  *
- * Enforces `yield*` (delegation) over `yield` when calling effects
- * imported from "typed-redux-saga/macro". Using plain `yield` returns `any`,
- * losing type safety, while `yield*` preserves the return type.
+ * Enforces `yield*` (delegation) over `yield` when calling effects imported
+ * from "typed-redux-saga/macro". Using plain `yield` returns `any`, losing type
+ * safety, while `yield*` preserves the return type.
  *
  * Replaces @jambit/eslint-plugin-typed-redux-saga/delegate-effects.
  */
@@ -15,15 +15,14 @@ module.exports = {
   meta: {
     type: "problem",
     docs: {
-      description:
-        'Enforce `yield*` over `yield` for typed-redux-saga effects',
+      description: "Enforce `yield*` over `yield` for typed-redux-saga effects"
     },
     fixable: "code",
     messages: {
       useYieldStar:
-        'Use `yield*` instead of `yield` when calling typed-redux-saga effects to preserve type safety.',
+        "Use `yield*` instead of `yield` when calling typed-redux-saga effects to preserve type safety."
     },
-    schema: [],
+    schema: []
   },
 
   create(context) {
@@ -77,10 +76,10 @@ module.exports = {
               const yieldToken = sourceCode.getFirstToken(node);
               // Replace "yield" with "yield*"
               return fixer.replaceText(yieldToken, "yield*");
-            },
+            }
           });
         }
-      },
+      }
     };
-  },
+  }
 };

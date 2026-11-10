@@ -1,6 +1,4 @@
-/**
- * Action types and action creator related to persisted preferences
- */
+/** Action types and action creator related to persisted preferences */
 import * as Calendar from "expo-calendar";
 import { ActionType, createStandardAction } from "typesafe-actions";
 

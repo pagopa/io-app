@@ -27,7 +27,8 @@ import {
   obtainCredentialStatusActor,
   processCredentialOfferActor,
   requestCredentialActor,
-  verifyTrustFederationActor
+  verifyTrustFederationActor,
+  waitForCredentialsCatalogueActor
 } from "./actors";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
@@ -40,7 +41,10 @@ import {
 } from "./guards";
 import { Input } from "./input";
 
-/** Keeps provider-injected side effects and credential actors fully typed across modules. */
+/**
+ * Keeps provider-injected side effects and credential actors fully typed across
+ * modules.
+ */
 export const itwCredentialSetup = setup({
   types: {
     context: {} as Context,
@@ -51,15 +55,11 @@ export const itwCredentialSetup = setup({
     onInit: onInitAction,
     handleSessionExpired: handleSessionExpiredAction,
 
-    /**
-     * Context manipulation actions
-     */
+    /** Context manipulation actions */
 
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
 
-    /**
-     * Navigation actions
-     */
+    /** Navigation actions */
 
     navigateToCredentialIntroductionScreen:
       navigateToCredentialIntroductionScreenAction,
@@ -72,16 +72,12 @@ export const itwCredentialSetup = setup({
     closeIssuance: closeIssuanceAction,
     navigateToCardOnboardingScreen: navigateToCardOnboardingScreenAction,
 
-    /**
-     * Store actions
-     */
+    /** Store actions */
 
     storeWalletInstanceAttestation: storeWalletInstanceAttestationAction,
     storeCredential: storeCredentialAction,
 
-    /**
-     * Analytics actions
-     */
+    /** Analytics actions */
 
     trackStartAddCredential: trackStartAddCredentialAction,
     trackStartCredentialReissuing: trackStartCredentialReissuingAction,
@@ -91,6 +87,7 @@ export const itwCredentialSetup = setup({
       trackCredentialIssuingDataShareAcceptedAction
   },
   actors: {
+    waitForCredentialsCatalogue: waitForCredentialsCatalogueActor,
     verifyTrustFederation: verifyTrustFederationActor,
     getWalletAttestation: getWalletAttestationActor,
     requestCredential: requestCredentialActor,

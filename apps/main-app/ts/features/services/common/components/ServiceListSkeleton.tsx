@@ -1,9 +1,8 @@
 import {
   Divider,
+  IODimensions,
   IOListItemStyles,
-  IOListItemVisualParams,
   IOSkeleton,
-  IOVisualCostants,
   VSpacer
 } from "@io-app/design-system";
 import { Fragment } from "react";
@@ -11,8 +10,8 @@ import { View } from "react-native";
 
 type ServiceListSkeletonProps = {
   /**
-   * Whether to show the avatar. The avatar is shown by default.
-   * Setting this to `false` hides the avatar.
+   * Whether to show the avatar. The avatar is shown by default. Setting this to
+   * `false` hides the avatar.
    */
   avatarShown?: boolean;
   /**
@@ -20,9 +19,7 @@ type ServiceListSkeletonProps = {
    * Setting this to `true` shows the section title.
    */
   sectionTitleShown?: boolean;
-  /**
-   * The number of items in the list. The default value is `3`.
-   */
+  /** The number of items in the list. The default value is `3`. */
   size?: number;
 };
 
@@ -54,11 +51,13 @@ const ServiceListItemSkeleton = ({
   <View style={IOListItemStyles.listItem}>
     <View style={IOListItemStyles.listItemInner}>
       {avatarShown && (
-        <View style={{ marginRight: IOListItemVisualParams.iconMargin }}>
+        <View
+          style={{ marginRight: IODimensions.gap.listItem.default.leading }}
+        >
           <IOSkeleton
-            radius={IOVisualCostants.avatarRadiusSizeSmall}
+            radius={IODimensions.radius.avatar.small}
             shape="square"
-            size={IOVisualCostants.avatarSizeSmall}
+            size={IODimensions.size.avatar.small}
           />
         </View>
       )}

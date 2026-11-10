@@ -30,6 +30,7 @@ import { RequiresConnectivity } from "../../common/components/RequiresConnectivi
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
+import { itwIpzsItwalletPrivacyUrlSelector } from "../../common/store/selectors/remoteConfig";
 import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import { ISSUER_MOCK_NAME } from "../../common/utils/itwMocksUtils";
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
@@ -121,9 +122,7 @@ type ContentViewProps = {
   requiredClaimNames: ReadonlyArray<string>;
 };
 
-/**
- * Renders the content of the screen
- */
+/** Renders the content of the screen */
 const ContentView = ({
   credentialType,
   requiredClaimNames,
@@ -131,10 +130,16 @@ const ContentView = ({
 }: ContentViewProps) => {
   const route = useRoute();
   const hasScrolledToBottom = useRef(false);
-  const privacyUrl = useIOSelector(state =>
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const ipzsDocumentsPrivacyUrl = useIOSelector(state =>
     generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
   );
-  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const ipzsItwalletPrivacyUrl = useIOSelector(
+    itwIpzsItwalletPrivacyUrlSelector
+  );
+  const ipzsPrivacyUrl = isItwL3
+    ? ipzsItwalletPrivacyUrl
+    : ipzsDocumentsPrivacyUrl;
 
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isIssuing =
@@ -235,6 +240,9 @@ const ContentView = ({
         />
         <VSpacer size={24} />
         <ListItemHeader
+          accessibilityLabel={`${I18n.t(
+            "features.itWallet.issuance.credentialAuth.requiredClaims"
+          )}, ${I18n.t("features.itWallet.issuance.credentialAuth.verified")}`}
           iconColor={theme["icon-default"]}
           iconName="security"
           label={I18n.t(
@@ -245,7 +253,7 @@ const ContentView = ({
         <VSpacer size={32} />
         <IOMarkdown
           content={I18n.t("features.itWallet.issuance.credentialAuth.tos", {
-            privacyUrl
+            privacyUrl: ipzsPrivacyUrl
           })}
           rules={generateItwIOMarkdownRules({
             linkCallback: trackOpenItwTos

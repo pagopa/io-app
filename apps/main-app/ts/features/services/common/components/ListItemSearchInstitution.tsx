@@ -3,9 +3,10 @@ import {
   AvatarSearchProps,
   BodySmall,
   H6,
+  HStack,
   Icon,
+  IODimensions,
   IOListItemStyles,
-  IOListItemVisualParams,
   useIOTheme,
   useListItemAnimation,
   WithTestID
@@ -21,9 +22,7 @@ export type ListItemSearchInstitution = WithTestID<
   > & {
     avatarProps: AvatarSearchProps;
     description?: ReactNode | string;
-    /**
-     * The maximum number of lines to display for the value.
-     */
+    /** The maximum number of lines to display for the value. */
     numberOfLines?: number;
     onPress: (event: GestureResponderEvent) => void;
     value: ReactNode | string;
@@ -97,14 +96,20 @@ export const ListItemSearchInstitution = memo(
           <Animated.View
             style={[IOListItemStyles.listItemInner, scaleAnimatedStyle]}
           >
-            <View style={{ marginRight: IOListItemVisualParams.iconMargin }}>
+            <HStack
+              allowScaleSpacing
+              space={IODimensions.gap.listItem.default.leading}
+              style={{ flex: 1, alignItems: "center" }}
+            >
               <AvatarSearch {...avatar} />
-            </View>
-            <View style={{ flex: 1 }}>{listItemSearchInstitutionContent}</View>
+              <View style={{ flex: 1 }}>
+                {listItemSearchInstitutionContent}
+              </View>
+            </HStack>
             <Icon
               color={theme["interactiveElem-default"]}
               name="chevronRightListItem"
-              size={IOListItemVisualParams.chevronSize}
+              size={IODimensions.size.icon.chevron}
             />
           </Animated.View>
         </Animated.View>

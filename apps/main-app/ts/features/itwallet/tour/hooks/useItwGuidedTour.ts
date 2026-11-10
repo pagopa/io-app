@@ -16,6 +16,9 @@ import {
   ITW_TOUR_STEP_ADD_BUTTON
 } from "../utils/constants";
 
+// A new object on every render would re-register the tour step on every render
+const HEADER_CUTOUT_STYLE = { cornerRadius: 0 };
+
 export const useItwGuidedTour = () => {
   const dispatch = useIODispatch();
   const headerHeight = useHeaderHeight();
@@ -45,14 +48,15 @@ export const useItwGuidedTour = () => {
     title: I18n.t("features.itWallet.tour.addCredential.title"),
     description: I18n.t("features.itWallet.tour.addCredential.description"),
     region: headerRegion,
-    cutoutStyle: { cornerRadius: 0 }
+    cutoutStyle: HEADER_CUTOUT_STYLE
   });
 
   /**
    * Starts the tour guide for the ITW on screen focus when:
+   *
    * - ITW is active and valid
-   * - tour guide was not completed yet
-   * - it is not in offline mode (no offline access reason set)
+   * - Tour guide was not completed yet
+   * - It is not in offline mode (no offline access reason set)
    */
   useFocusEffect(
     useCallback(() => {

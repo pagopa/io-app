@@ -30,10 +30,16 @@ import {
 import { Context } from "./context";
 import { ProximityEvents } from "./events";
 import { mapEventToFailure } from "./failure";
-import { hasGrantedConsentGuard } from "./guards";
+import {
+  hasGrantedConsentGuard,
+  isNfcPresentmentSupportedGuard
+} from "./guards";
 import { Input } from "./input";
 
-/** Keeps transport actors and provider-injected side effects typed across presentation states. */
+/**
+ * Keeps transport actors and provider-injected side effects typed across
+ * presentation states.
+ */
 export const itwProximityMachineSetup = setup({
   types: {
     context: {} as Context,
@@ -42,17 +48,13 @@ export const itwProximityMachineSetup = setup({
   },
   actions: {
     onInit: onInitAction,
-    /**
-     * Context manipulation
-     */
+    /** Context manipulation */
 
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     markSessionTerminated: assign(() => ({ sessionTerminated: true })),
     resetSessionTerminated: assign(() => ({ sessionTerminated: false })),
 
-    /**
-     * Navigation
-     */
+    /** Navigation */
 
     navigateToBluetoothPermissionsScreen:
       navigateToBluetoothPermissionsScreenAction,
@@ -67,16 +69,12 @@ export const itwProximityMachineSetup = setup({
     navigateToSuccessScreen: navigateToSuccessScreenAction,
     closeProximity: closeProximityAction,
 
-    /**
-     * Consents
-     */
+    /** Consents */
 
     grantConsent: grantConsentAction,
     storeConsent: storeConsentAction,
 
-    /**
-     * Analytics
-     */
+    /** Analytics */
 
     trackProximityStart: trackProximityStartAction,
     trackProximitySuccess: trackProximitySuccessAction,
@@ -95,6 +93,7 @@ export const itwProximityMachineSetup = setup({
     hasFailure: ({ context }) => !!context.failure,
     isNfcRetrieval: ({ context }) => context.retrievalMethod === "nfc",
     isNfcEngagement: ({ context }) => context.engagementMode === "nfc",
+    isNfcPresentmentSupported: isNfcPresentmentSupportedGuard,
     hasTerminatedSession: ({ context }) => context.sessionTerminated,
     hasGrantedConsent: hasGrantedConsentGuard
   }

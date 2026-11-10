@@ -16,6 +16,7 @@ jest.mock("@react-navigation/native", () => ({
     "@react-navigation/native"
   ),
   useNavigation: () => ({
+    addListener: jest.fn(),
     navigate: mockNavigate
   })
 }));
@@ -32,7 +33,8 @@ jest.mock("@io-app/design-system", () => ({
 }));
 
 /**
- * Helper function to render a component that uses the hook and executes a function
+ * Helper function to render a component that uses the hook and executes a
+ * function
  */
 const renderWithConnectivityGuard = (
   fn: (...args: Array<any>) => any,

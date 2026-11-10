@@ -6,6 +6,7 @@ import {
   trackItwProximityQrCodeLoadingFailure,
   trackItwProximityStart
 } from "../analytics";
+import { getProximityFlow } from "../analytics/utils";
 import { ITW_PROXIMITY_ROUTES } from "../navigation/routes";
 import { itwGrantProximityConsent } from "../store/actions";
 import { itwPresentableCredentialsByDocTypeSelector } from "../store/selectors/credentials";
@@ -17,9 +18,7 @@ import { Context } from "./context";
 import { ProximityEvents } from "./events";
 import { mapEventToFailure } from "./failure";
 
-/**
- * Initializes the proximity machine from the Redux store.
- */
+/** Initializes the proximity machine from the Redux store. */
 export const onInitAction = assign<
   Context,
   ProximityEvents,
@@ -70,7 +69,9 @@ export const navigateToPresentmentScreenAction = ({
 }: ActionArgs<Context, ProximityEvents, ProximityEvents>) => {
   context.deps.navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
     screen: ITW_PROXIMITY_ROUTES.PRESENTMENT,
-    params: {}
+    params: {},
+    pop: true,
+    merge: true
   });
 };
 
@@ -150,7 +151,7 @@ export const trackProximityStartAction = ({
   context
 }: ActionArgs<Context, ProximityEvents, ProximityEvents>) => {
   trackItwProximityStart({
-    proximity_flow: context.engagementMode === "nfc" ? "nfc" : "qr_code"
+    proximity_flow: getProximityFlow(context)
   });
 };
 
@@ -158,7 +159,7 @@ export const trackProximitySuccessAction = ({
   context
 }: ActionArgs<Context, ProximityEvents, ProximityEvents>) => {
   trackItwProximityPresentationCompleted({
-    proximity_flow: context.engagementMode === "nfc" ? "nfc" : "qr_code"
+    proximity_flow: getProximityFlow(context)
   });
 };
 

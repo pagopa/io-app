@@ -1,11 +1,11 @@
 import { PaymentMethodResponse } from "@io-app/api-types/generated/definitions/pagopa/walletv3/PaymentMethodResponse";
 /**
- * This component will display the payment methods that can be registered
- * on the app
+ * This component will display the payment methods that can be registered on the
+ * app
  */
 import {
   Divider,
-  IOVisualCostants,
+  IODimensions,
   ListItemNav,
   VSpacer
 } from "@io-app/design-system";
@@ -39,7 +39,7 @@ const PaymentMethodItem = ({
     accessibilityLabel: paymentMethod.description,
     onPress,
     loading: isLoading,
-    value: paymentMethod.description
+    label: paymentMethod.description
   };
 
   return pipe(
@@ -55,7 +55,8 @@ const PaymentMethodItem = ({
 };
 
 /**
- * This component shows a list of available payment methods that can be onboarded
+ * This component shows a list of available payment methods that can be
+ * onboarded
  */
 const WalletOnboardingPaymentMethodsList = ({
   paymentMethods,
@@ -73,7 +74,7 @@ const WalletOnboardingPaymentMethodsList = ({
   return (
     <FlatList
       contentContainerStyle={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault
+        paddingHorizontal: IODimensions.padding.screen.default
       }}
       data={paymentMethods}
       ItemSeparatorComponent={() => <Divider />}

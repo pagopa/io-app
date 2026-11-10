@@ -3,28 +3,29 @@ import { RemotePresentation } from "@pagopa/io-react-native-wallet";
 import { ClaimDisplayFormat } from "../../../common/utils/itwClaimsUtils";
 
 /**
- * Type that defines the structure of the body expected by the `sendAuthorizationErrorResponse`
+ * Type that defines the structure of the body expected by the
+ * `sendAuthorizationErrorResponse`
  */
 export type AuthErrorResponseBody = Parameters<
   RemotePresentationApi["sendAuthorizationErrorResponse"]
 >[1];
 
 /**
- * Type that defines a query conforming to the Digital Credentials Query Language
+ * Type that defines a query conforming to the Digital Credentials Query
+ * Language
  */
 export type DcqlQuery = Parameters<
   RemotePresentationApi["evaluateDcqlQuery"]
 >[0];
 
-/**
- * Type representing the presentation details with localized claims
- */
+/** Type representing the presentation details with localized claims */
 export type EnrichedPresentationDetails = Array<
   PresentationDetails[number] & { claimsToDisplay: Array<ClaimDisplayFormat> }
 >;
 
 /**
- * Type that defines the possible flows for the remote presentation, which can be either "same-device" or "cross-device".
+ * Type that defines the possible flows for the remote presentation, which can
+ * be either "same-device" or "cross-device".
  */
 export type ItwRemoteFlowType = "cross-device" | "same-device";
 
@@ -36,21 +37,15 @@ export type ItwRemoteQrRawPayload = Parameters<
   RemotePresentationApi["startFlowFromQR"]
 >[number];
 
-/**
- * Type for the parameters requested to start the presentation flow
- */
+/** Type for the parameters requested to start the presentation flow */
 export type ItwRemoteRequestPayload = RemotePresentation.PresentationParams;
 
-/**
- * Type representing the parsed DCQL query with the presentation details
- */
+/** Type representing the parsed DCQL query with the presentation details */
 export type PresentationDetails = Awaited<
   ReturnType<RemotePresentationApi["evaluateDcqlQuery"]>
 >;
 
-/**
- * Alias for the Relying Party's Entity Configuration type
- */
+/** Alias for the Relying Party's Entity Configuration type */
 export type RelyingPartyConfiguration = RemotePresentation.RelyingPartyConfig;
 
 type RemotePresentationApi = RemotePresentation.RemotePresentationApi;

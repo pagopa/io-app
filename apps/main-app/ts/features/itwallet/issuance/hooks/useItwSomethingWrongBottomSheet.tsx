@@ -1,9 +1,12 @@
-import { Body, FooterActions, VSpacer, VStack } from "@io-app/design-system";
+import { FooterActions, IOMarkdown, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
 
+import { useIOSelector } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { useItwAuthSourceName } from "../../common/hooks/useItwAuthSourceName";
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
+import { itwAuthenticSourceContactsSelector } from "../../credentialsCatalogue/store/selectors";
+import { getAuthSourceContactsMarkdown } from "../utils/authSourceContacts";
 
 type Props = {
   credential: CredentialMetadata;
@@ -19,6 +22,22 @@ export const useItwSomethingWrongBottomSheet = ({ credential }: Props) => {
     credential.credentialType,
     credential
   );
+  const authSourceContacts = useIOSelector(
+    itwAuthenticSourceContactsSelector(credential.credentialType)
+  );
+
+  const markdownContent = I18n.t(
+    "features.itWallet.issuance.credentialPreview.bottomSheet.somethingWrong.bodyMarkdown",
+    {
+      contacts: getAuthSourceContactsMarkdown({
+        authSource,
+        contacts: authSourceContacts,
+        websiteLabel: I18n.t(
+          "features.itWallet.issuance.credentialPreview.bottomSheet.somethingWrong.contactUrl"
+        )
+      })
+    }
+  );
 
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
     title: I18n.t(
@@ -26,27 +45,8 @@ export const useItwSomethingWrongBottomSheet = ({ credential }: Props) => {
     ),
     component: (
       <>
-        <VStack space={16}>
-          <Body>
-            {I18n.t(
-              "features.itWallet.issuance.credentialPreview.bottomSheet.somethingWrong.body"
-            )}
-          </Body>
-          {authSource && (
-            <Body>
-              {I18n.t(
-                "features.itWallet.issuance.credentialPreview.bottomSheet.somethingWrong.bodyAuthSource",
-                { authSource }
-              )}
-            </Body>
-          )}
-          <Body>
-            {I18n.t(
-              "features.itWallet.issuance.credentialPreview.bottomSheet.somethingWrong.bodyFooter"
-            )}
-          </Body>
-        </VStack>
-        <VSpacer size={48} />
+        <IOMarkdown content={markdownContent} />
+        <VSpacer size={32} />
       </>
     ),
     footer: (

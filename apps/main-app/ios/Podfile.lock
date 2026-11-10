@@ -3,7 +3,7 @@ PODS:
   - boost (1.84.0)
   - CieSDK (0.1.21)
   - DoubleConversion (1.1.6)
-  - EXApplication (55.0.15):
+  - EXApplication (55.0.17):
     - ExpoModulesCore
   - EXConstants (55.0.16):
     - ExpoModulesCore
@@ -38,6 +38,12 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
+  - expo-zendesk (1.0.0):
+    - ExpoModulesCore
+    - ZendeskAnswerBotSDK
+    - ZendeskChatSDK
+    - ZendeskMessagingAPISDK
+    - ZendeskSupportSDK
   - ExpoAsset (55.0.17):
     - ExpoModulesCore
   - ExpoBackgroundTask (55.0.18):
@@ -49,7 +55,9 @@ PODS:
     - ExpoModulesCore
   - ExpoClipboard (55.0.15):
     - ExpoModulesCore
-  - ExpoDevice (55.0.17):
+  - ExpoDevice (55.0.19):
+    - ExpoModulesCore
+  - ExpoDeviceInternal (1.0.0):
     - ExpoModulesCore
   - ExpoDocumentPicker (55.0.15):
     - ExpoModulesCore
@@ -69,6 +77,8 @@ PODS:
     - ExpoModulesCore
   - ExpoLogBox (55.0.12):
     - React-Core
+  - ExpoLoginUtils (1.0.0):
+    - ExpoModulesCore
   - ExpoModulesCore (55.0.25):
     - boost
     - DoubleConversion
@@ -107,9 +117,13 @@ PODS:
     - ReactCommon
   - ExpoNotifications (55.0.23):
     - ExpoModulesCore
+  - ExpoPdfHighResGenerator (1.0.0):
+    - ExpoModulesCore
   - ExpoScreenCapture (55.0.14):
     - ExpoModulesCore
   - ExpoSharing (55.0.22):
+    - ExpoModulesCore
+  - ExpoStoreReview (55.0.18):
     - ExpoModulesCore
   - ExpoTaskManager (55.0.16):
     - ExpoModulesCore
@@ -117,6 +131,8 @@ PODS:
   - ExpoUI (55.0.17):
     - ExpoModulesCore
     - React-RCTFabric
+  - ExpoWebBrowser (55.0.20):
+    - ExpoModulesCore
   - fast_float (8.0.0)
   - FBLazyVector (0.83.10)
   - fmt (12.1.0)
@@ -182,15 +198,13 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - IoReactNativeIso18013 (0.8.4):
+  - IoReactNativeIso18013 (0.9.0):
     - boost
     - DoubleConversion
     - fast_float
     - fmt
     - glog
     - hermes-engine
-    - IOWalletCBOR (= 0.2.1)
-    - IOWalletProximity (= 1.5.0)
     - RCT-Folly
     - RCT-Folly/Fabric
     - RCTRequired
@@ -212,8 +226,6 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - IOWalletCBOR (0.2.1)
-  - IOWalletProximity (1.5.0)
   - jail-monkey (2.8.3):
     - React-Core
   - JOSESwift (3.0.0)
@@ -282,7 +294,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - pagopa-io-react-native-integrity (0.3.2):
+  - pagopa-io-react-native-integrity (1.0.0):
     - boost
     - DoubleConversion
     - fast_float
@@ -309,9 +321,8 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - SocketRocket
-    - SwiftCBOR
     - Yoga
-  - pagopa-io-react-native-jwt (2.2.0):
+  - pagopa-io-react-native-jwt (2.2.5):
     - boost
     - DoubleConversion
     - fast_float
@@ -319,34 +330,6 @@ PODS:
     - glog
     - hermes-engine
     - JOSESwift (~> 3.0)
-    - RCT-Folly
-    - RCT-Folly/Fabric
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-jsi
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-renderercss
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - SocketRocket
-    - Yoga
-  - pagopa-io-react-native-login-utils (1.2.0):
-    - boost
-    - DoubleConversion
-    - fast_float
-    - fmt
-    - glog
-    - hermes-engine
     - RCT-Folly
     - RCT-Folly/Fabric
     - RCTRequired
@@ -396,38 +379,6 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - pagopa-react-native-zendesk (0.3.30):
-    - boost
-    - DoubleConversion
-    - fast_float
-    - fmt
-    - glog
-    - hermes-engine
-    - RCT-Folly
-    - RCT-Folly/Fabric
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-jsi
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-renderercss
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - SocketRocket
-    - Yoga
-    - ZendeskAnswerBotSDK
-    - ZendeskChatSDK
-    - ZendeskMessagingAPISDK
-    - ZendeskSupportSDK
   - Pulsar (1.7.0):
     - boost
     - DoubleConversion
@@ -3402,8 +3353,8 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - ReactNativeExceptionHandler (2.10.8):
-    - React
+  - ReactNativeExceptionHandler (2.10.10):
+    - React-Core
   - RNCAsyncStorage (2.0.0):
     - boost
     - DoubleConversion
@@ -3432,10 +3383,6 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - RNDeviceInfo (14.0.4):
-    - React-Core
-  - RNFS (2.18.0):
-    - React
   - RNGestureHandler (2.31.0):
     - boost
     - DoubleConversion
@@ -3847,7 +3794,6 @@ PODS:
     - SocketRocket
     - Yoga
   - SocketRocket (0.7.1)
-  - SwiftCBOR (0.6.0)
   - UMAppLoader (55.0.5)
   - VisionCamera (4.7.3):
     - VisionCamera/Core (= 4.7.3)
@@ -3894,12 +3840,14 @@ DEPENDENCIES:
   - EXApplication (from `../../../node_modules/expo-application/ios`)
   - EXConstants (from `../../../node_modules/expo-constants/ios`)
   - Expo (from `../../../node_modules/expo`)
+  - expo-zendesk (from `../../../libs/expo-zendesk`)
   - ExpoAsset (from `../../../node_modules/expo-asset/ios`)
   - ExpoBackgroundTask (from `../../../node_modules/expo-background-task/ios`)
   - ExpoBrightness (from `../../../node_modules/expo-brightness/ios`)
   - ExpoCalendar (from `../../../node_modules/expo-calendar/ios`)
   - ExpoClipboard (from `../../../node_modules/expo-clipboard/ios`)
   - ExpoDevice (from `../../../node_modules/expo-device/ios`)
+  - ExpoDeviceInternal (from `../../../libs/expo-device-internal/ios`)
   - ExpoDocumentPicker (from `../../../node_modules/expo-document-picker/ios`)
   - "ExpoDomWebView (from `../../../node_modules/@expo/dom-webview/ios`)"
   - ExpoFileSystem (from `../../../node_modules/expo-file-system/ios`)
@@ -3909,13 +3857,17 @@ DEPENDENCIES:
   - ExpoLinearGradient (from `../../../node_modules/expo-linear-gradient/ios`)
   - ExpoLocalAuthentication (from `../../../node_modules/expo-local-authentication/ios`)
   - "ExpoLogBox (from `../../../node_modules/@expo/log-box`)"
+  - ExpoLoginUtils (from `../../../libs/login-utils/ios`)
   - ExpoModulesCore (from `../../../node_modules/expo-modules-core`)
   - ExpoModulesJSI (from `../../../node_modules/expo-modules-core`)
   - ExpoNotifications (from `../../../node_modules/expo-notifications/ios`)
+  - ExpoPdfHighResGenerator (from `../../../libs/expo-pdf-high-res-generator/ios`)
   - ExpoScreenCapture (from `../../../node_modules/expo-screen-capture/ios`)
   - ExpoSharing (from `../../../node_modules/expo-sharing/ios`)
+  - ExpoStoreReview (from `../../../node_modules/expo-store-review/ios`)
   - ExpoTaskManager (from `../../../node_modules/expo-task-manager/ios`)
   - "ExpoUI (from `../../../node_modules/@expo/ui/ios`)"
+  - ExpoWebBrowser (from `../../../node_modules/expo-web-browser/ios`)
   - fast_float (from `../../../node_modules/react-native/third-party-podspecs/fast_float.podspec`)
   - FBLazyVector (from `../../../node_modules/react-native/Libraries/FBLazyVector`)
   - fmt (from `../../../node_modules/react-native/third-party-podspecs/fmt.podspec`)
@@ -3930,9 +3882,7 @@ DEPENDENCIES:
   - "pagopa-io-react-native-crypto (from `../../../node_modules/@pagopa/io-react-native-crypto`)"
   - "pagopa-io-react-native-integrity (from `../../../node_modules/@pagopa/io-react-native-integrity`)"
   - "pagopa-io-react-native-jwt (from `../../../node_modules/@pagopa/io-react-native-jwt`)"
-  - "pagopa-io-react-native-login-utils (from `../../../node_modules/@pagopa/io-react-native-login-utils`)"
   - "pagopa-io-react-native-secure-storage (from `../../../node_modules/@pagopa/io-react-native-secure-storage`)"
-  - "pagopa-react-native-zendesk (from `../../../node_modules/@pagopa/io-react-native-zendesk`)"
   - Pulsar (from `../../../node_modules/react-native-pulsar`)
   - RCT-Folly (from `../../../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTDeprecation (from `../../../node_modules/react-native/ReactApple/Libraries/RCTFoundation/RCTDeprecation`)
@@ -4026,8 +3976,6 @@ DEPENDENCIES:
   - "ReactNativeBottomSheet (from `../../../node_modules/@swmansion/react-native-bottom-sheet`)"
   - ReactNativeExceptionHandler (from `../../../node_modules/react-native-exception-handler`)
   - "RNCAsyncStorage (from `../../../node_modules/@react-native-async-storage/async-storage`)"
-  - RNDeviceInfo (from `../../../node_modules/react-native-device-info`)
-  - RNFS (from `../../../node_modules/react-native-fs`)
   - RNGestureHandler (from `../../../node_modules/react-native-gesture-handler`)
   - RNKeychain (from `../../../node_modules/react-native-keychain`)
   - RNPermissions (from `../../../node_modules/react-native-permissions`)
@@ -4045,8 +3993,6 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - CieSDK
-    - IOWalletCBOR
-    - IOWalletProximity
     - JOSESwift
     - Mixpanel-swift
     - MultiplatformBleAdapter
@@ -4054,7 +4000,6 @@ SPEC REPOS:
     - PulsarHaptics
     - React-Codegen
     - SocketRocket
-    - SwiftCBOR
     - ZendeskAnswerBotProvidersSDK
     - ZendeskAnswerBotSDK
     - ZendeskChatProvidersSDK
@@ -4079,6 +4024,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/expo-constants/ios"
   Expo:
     :path: "../../../node_modules/expo"
+  expo-zendesk:
+    :path: "../../../libs/expo-zendesk"
   ExpoAsset:
     :path: "../../../node_modules/expo-asset/ios"
   ExpoBackgroundTask:
@@ -4091,6 +4038,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/expo-clipboard/ios"
   ExpoDevice:
     :path: "../../../node_modules/expo-device/ios"
+  ExpoDeviceInternal:
+    :path: "../../../libs/expo-device-internal/ios"
   ExpoDocumentPicker:
     :path: "../../../node_modules/expo-document-picker/ios"
   ExpoDomWebView:
@@ -4109,20 +4058,28 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/expo-local-authentication/ios"
   ExpoLogBox:
     :path: "../../../node_modules/@expo/log-box"
+  ExpoLoginUtils:
+    :path: "../../../libs/login-utils/ios"
   ExpoModulesCore:
     :path: "../../../node_modules/expo-modules-core"
   ExpoModulesJSI:
     :path: "../../../node_modules/expo-modules-core"
   ExpoNotifications:
     :path: "../../../node_modules/expo-notifications/ios"
+  ExpoPdfHighResGenerator:
+    :path: "../../../libs/expo-pdf-high-res-generator/ios"
   ExpoScreenCapture:
     :path: "../../../node_modules/expo-screen-capture/ios"
   ExpoSharing:
     :path: "../../../node_modules/expo-sharing/ios"
+  ExpoStoreReview:
+    :path: "../../../node_modules/expo-store-review/ios"
   ExpoTaskManager:
     :path: "../../../node_modules/expo-task-manager/ios"
   ExpoUI:
     :path: "../../../node_modules/@expo/ui/ios"
+  ExpoWebBrowser:
+    :path: "../../../node_modules/expo-web-browser/ios"
   fast_float:
     :podspec: "../../../node_modules/react-native/third-party-podspecs/fast_float.podspec"
   FBLazyVector:
@@ -4152,12 +4109,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/@pagopa/io-react-native-integrity"
   pagopa-io-react-native-jwt:
     :path: "../../../node_modules/@pagopa/io-react-native-jwt"
-  pagopa-io-react-native-login-utils:
-    :path: "../../../node_modules/@pagopa/io-react-native-login-utils"
   pagopa-io-react-native-secure-storage:
     :path: "../../../node_modules/@pagopa/io-react-native-secure-storage"
-  pagopa-react-native-zendesk:
-    :path: "../../../node_modules/@pagopa/io-react-native-zendesk"
   Pulsar:
     :path: "../../../node_modules/react-native-pulsar"
   RCT-Folly:
@@ -4342,10 +4295,6 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native-exception-handler"
   RNCAsyncStorage:
     :path: "../../../node_modules/@react-native-async-storage/async-storage"
-  RNDeviceInfo:
-    :path: "../../../node_modules/react-native-device-info"
-  RNFS:
-    :path: "../../../node_modules/react-native-fs"
   RNGestureHandler:
     :path: "../../../node_modules/react-native-gesture-handler"
   RNKeychain:
@@ -4374,15 +4323,17 @@ SPEC CHECKSUMS:
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
   CieSDK: 832ee98a89d0fc79c1a429c6ad8f31a056741d59
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
-  EXApplication: 82a44fa8236bb644a805ee21e64054eeb01d22ea
+  EXApplication: 62f11f3b27bbeb132b4fceaa4e7275dd0fd39cb7
   EXConstants: dadbeba983acc30f855a919658a2b34fbd86615d
   Expo: fb8cded217862a2c6fc046a6cc68aa83a2ed15f0
+  expo-zendesk: dd85f84c25df532458ed360a44bc5d3994ee99d5
   ExpoAsset: 7721c5c4ae2a7c3c8147a046727ac6c020b05648
   ExpoBackgroundTask: 2c988fa88705c72b07f0e60d5661d566df611980
   ExpoBrightness: 6080760e05eb3dcd9765024472d4c78a50f3b201
   ExpoCalendar: a3a1a208327305361637b6127390e7b61c62bba5
   ExpoClipboard: 0e4b587fc6b5c5996b4ad4e5804d509e90aa6c75
-  ExpoDevice: b8a65afe42c3c5934eb6983870672fe785b39dea
+  ExpoDevice: a574891cc954723e53062a2d69ec55f6d8196641
+  ExpoDeviceInternal: 66b86e1d388629845cbecc30e0faeb9b837f44c4
   ExpoDocumentPicker: 8f1356ab2ac5b67aeaafc4c14b3719ceb480c099
   ExpoDomWebView: b2e9d601f9cb77d3c97da73234e175b64be91928
   ExpoFileSystem: 61e663d0bbd1a973d324530d1d6ee559a5e5192c
@@ -4392,23 +4343,25 @@ SPEC CHECKSUMS:
   ExpoLinearGradient: caf2c659e6ea0c473ece8f6164eaeae05740664d
   ExpoLocalAuthentication: c4abaae8709b8b15727f2e8dd6d74c5ad38acb0c
   ExpoLogBox: a678d36477ab9544fe63e0b5328a0716539b6774
+  ExpoLoginUtils: 854c7e65baa0647ac8baa33625f0124538cea048
   ExpoModulesCore: cc07ebf5b947a239f1669cb5856d905cb2b093f7
   ExpoModulesJSI: 964334271fc77832736f66ee1785761cdc778dbe
   ExpoNotifications: 61c46aa5df088ff0ad41de0504a86a92333aec55
+  ExpoPdfHighResGenerator: 5ada09b2f144ceebbd9b9ed1766596ec462cc41c
   ExpoScreenCapture: aefcd749919380ee0b4d59bb60c1a150aac201c6
   ExpoSharing: 40cd8fd65209bc35adc710ff7e42dd35913d2a0f
+  ExpoStoreReview: 660b3f001bc09d41a3f3c277b1e0f10337bf9ea8
   ExpoTaskManager: a288a5a5eab33009b1fb7a413ba47ef7eac23fba
   ExpoUI: 3d10642147c44f94a4557f1defe2efd3244349af
+  ExpoWebBrowser: 93992534927ba810f67e3171f6acf862c7098674
   fast_float: b32c788ed9c6a8c584d114d0047beda9664e7cc6
   FBLazyVector: 07433c4ab85da44d0b5ceac374ff4e1d57c7aa23
   fmt: 530618a01105dae0fa3a2f27c81ae11fa8f67eac
-  glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
-  hermes-engine: 037eacbb56098bf69c62cf905ec96fb01eab8248
+  glog: 0456694f3aaf09460b660ea327cfc11defbeea4c
+  hermes-engine: a2a9fc7160af80292783f30b771f14a477f29712
   IoReactNativeCie: d30d9055f74cfc1fd00c8583316c6321abdb7794
   IoReactNativeHttpClient: bc2f2838fe9f959375d4d7e0419b11ebf27af379
-  IoReactNativeIso18013: 730061a6443f611f163c38ec49b6dc5a4aae3f81
-  IOWalletCBOR: 92742ef1cbd1b627ba153d0c7c11b81ad22f45cc
-  IOWalletProximity: c55c362307fcfd757044d930e49bc3a1cc562aa2
+  IoReactNativeIso18013: 7f153ea0db4055d00c8de7a4d74a3d548697fd97
   jail-monkey: 9298d04aa09f8c9cdcf04e7bf597ea423b52b5bf
   JOSESwift: 7784b1b844194d0f534eb6ac4fba5af683bccc79
   Mixpanel-swift: de454db5987bf6f601106520a44663fc556e8cfa
@@ -4417,11 +4370,9 @@ SPEC CHECKSUMS:
   OpenSSL-Universal: ecee7b138fa75a74ecf00d7ffd248fb584739b9e
   pagopa-io-react-native-cieid: 3969ed1784e0b9041baf892b461be3640315acd1
   pagopa-io-react-native-crypto: afc8ee2585a7944dc115687eb2938009608f062a
-  pagopa-io-react-native-integrity: 3e84754db0333a531db86f83f786f60a6da22337
-  pagopa-io-react-native-jwt: d268a7aa7a0c63e809386209e589224e0c0c04c0
-  pagopa-io-react-native-login-utils: 4d4e00aeb67ffbb36dc6f5fcfc17e088ef5b9f34
+  pagopa-io-react-native-integrity: c96d85212859750bcc3901501ef27d05475f8476
+  pagopa-io-react-native-jwt: a5231b3f09cb69b54abd76dac34e1bddff596fe2
   pagopa-io-react-native-secure-storage: 64dcc5dff82ec5ce136d7904bc076d70db157dec
-  pagopa-react-native-zendesk: 9436edab6731dd9b64b72f1f2e039c166f0161b9
   Pulsar: b74a2333a1f655d04a8bc144a7273cb7ffdf7122
   PulsarHaptics: 62d13e9ef63535263f110a925e587d5d027dc683
   RCT-Folly: b29feb752b08042c62badaef7d453f3bb5e6ae23
@@ -4514,10 +4465,8 @@ SPEC CHECKSUMS:
   ReactCodegen: f74348d34edd01ba2ed662c40e1beb94fca9aff3
   ReactCommon: d71e3b6d0134b09c1ec8e656f81daefae6902a97
   ReactNativeBottomSheet: 03b2317ce62b9f686e6caad94fe5124534791831
-  ReactNativeExceptionHandler: 6a2aace92f300a745c8b04461b9a99edd1d26cd6
+  ReactNativeExceptionHandler: a23922ca00122b050ae9412f960061791c232c47
   RNCAsyncStorage: a38d050067936ce8617a322dd4c63fce66429e5e
-  RNDeviceInfo: d863506092aef7e7af3a1c350c913d867d795047
-  RNFS: 4f02bbb5c95d71bade3d36a1b6514305ccefc4c9
   RNGestureHandler: 884f03ad24511911552480eb2058266db0b177ce
   RNKeychain: a2c134ab796272c3d605e035ab727591000b30f3
   RNPermissions: 17e12d62da7494e48c47ccb800a6214d036cfc19
@@ -4527,7 +4476,6 @@ SPEC CHECKSUMS:
   RNSVG: 3405336c4507ee0bafb02b08058d57216daa2c50
   RNWorklets: b89b501d37972e6419d6f87effe41d6d76157648
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
-  SwiftCBOR: b873af28a9cc66003852fdc79a41852a7e54009a
   UMAppLoader: 045699ef1cc6afda399a5c78bde728f23bcce213
   VisionCamera: 0044a94f7489f19e19d5938e97dfc36f4784af3c
   Yoga: d2ed98551adb569fc38be0148666854e1ff60692
@@ -4544,6 +4492,6 @@ SPEC CHECKSUMS:
   ZendeskSupportSDK: ae9d470360e00f2e0694cad4b118a80af018e8ef
   ZXingObjC: 8898711ab495761b2dbbdec76d90164a6d7e14c5
 
-PODFILE CHECKSUM: bfb19df6bab57164b05375f79cf7d9ecff7d1605
+PODFILE CHECKSUM: 73ed5be548709a6701157d889c9fd9063afa8bd7
 
 COCOAPODS: 1.15.2

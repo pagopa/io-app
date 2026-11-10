@@ -4,17 +4,16 @@ import { ImageURISource, View } from "react-native";
 import { useIOTheme } from "../../context";
 import {
   IOColors,
-  IOListItemLogoMargin,
+  IODimensions,
   IOListItemStyles,
-  IOListItemVisualParams,
-  IOVisualCostants
+  IOTypography
 } from "../../core";
 import { WithTestID } from "../../utils/types";
 import { isImageUri } from "../../utils/url";
 import { Avatar } from "../avatar/Avatar";
 import { Badge } from "../badge/Badge";
 import { LogoPaymentWithFallback } from "../common/LogoPaymentWithFallback";
-import { Icon, IOIconSizeScale } from "../icons";
+import { Icon } from "../icons";
 import { HStack, VStack } from "../layout";
 import { IOLogoPaymentType } from "../logos";
 import { IOSkeleton } from "../skeleton";
@@ -27,22 +26,24 @@ import {
 export type ListItemTransaction = WithTestID<
   PressableListItemBaseProps & {
     accessible?: boolean;
+    description: string;
     isLoading?: boolean;
+    label: string;
     loadingAccessibilityLabel?: string;
     /**
-     * The maximum number of lines to display for the title.
+     * The maximum number of lines to display for the label.
+     *
      * @default 2
      */
     numberOfLines?: number;
     /**
      * A logo that will be displayed on the left of the list item.
      *
-     * Must be a {@link IOLogoPaymentType} or an {@link ImageURISource} or an {@link Icon}.
+     * Must be a {@link IOLogoPaymentType} or an {@link ImageURISource} or an
+     * {@link Icon}.
      */
     paymentLogoIcon?: ListItemTransactionLogo;
     showChevron?: boolean;
-    subtitle: string;
-    title: string;
   } & (
       | {
           transaction: {
@@ -73,17 +74,11 @@ export type ListItemTransactionLogo =
   | IOLogoPaymentType
   | ReactNode;
 
-const CARD_LOGO_SIZE: IOIconSizeScale = 24;
-const MUNICIPALITY_LOGO_SIZE = 44;
-// this is the <Avatar/>'s "small" size,
-// since it is bigger than the card logos, we use
-// it as a base size for homogeneous sizing via container size.
-
 const ListItemTransactionContent = ({
   paymentLogoIcon,
   numberOfLines,
-  title,
-  subtitle,
+  label,
+  description,
   badge,
   amountAccessibilityLabel,
   showChevron,
@@ -91,7 +86,7 @@ const ListItemTransactionContent = ({
   refund
 }: Pick<
   ListItemTransaction,
-  "numberOfLines" | "paymentLogoIcon" | "showChevron" | "subtitle" | "title"
+  "description" | "label" | "numberOfLines" | "paymentLogoIcon" | "showChevron"
 > & {
   amount: string | undefined;
   amountAccessibilityLabel: string | undefined;
@@ -108,14 +103,15 @@ const ListItemTransactionContent = ({
     <>
       <HStack
         allowScaleSpacing
-        space={IOListItemLogoMargin}
+        space={IODimensions.gap.listItem.default.leading}
         style={{ alignItems: "center", flexShrink: 1 }}
       >
         {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions -- ReactNode: "" and false mean nothing to render */}
         {paymentLogoIcon && (
           <View
             style={{
-              width: MUNICIPALITY_LOGO_SIZE,
+              // Avatar size, the largest graphic: keeps every logo aligned
+              width: IODimensions.size.avatar.small,
               alignItems: "center"
             }}
           >
@@ -124,14 +120,17 @@ const ListItemTransactionContent = ({
         )}
         <View style={{ flexShrink: 1 }}>
           <H6 color={theme["textBody-default"]} numberOfLines={numberOfLines}>
-            {title}
+            {label}
           </H6>
           <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
-            {subtitle}
+            {description}
           </BodySmall>
         </View>
       </HStack>
-      <HStack space={4} style={{ alignItems: "center" }}>
+      <HStack
+        space={IODimensions.gap.listItem.transaction.chevron}
+        style={{ alignItems: "center" }}
+      >
         {badge ? (
           <Badge text={badge?.text} variant={badge?.variant} />
         ) : (
@@ -148,7 +147,7 @@ const ListItemTransactionContent = ({
             allowFontScaling
             color={interactiveColor}
             name="chevronRightListItem"
-            size={IOListItemVisualParams.chevronSize}
+            size={IODimensions.size.icon.chevron}
           />
         )}
       </HStack>
@@ -170,7 +169,7 @@ const StartComponent = ({
   return (
     <LogoPaymentWithFallback
       brand={logoIcon as IOLogoPaymentType}
-      size={CARD_LOGO_SIZE}
+      size={IODimensions.size.icon.listItem}
     />
   );
 };
@@ -182,9 +181,9 @@ export const ListItemTransaction = ({
   isLoading = false,
   paymentLogoIcon,
   onPress,
-  subtitle,
+  description,
   testID,
-  title,
+  label,
   transaction: { amount, amountAccessibilityLabel, badge, refund },
   numberOfLines = 2,
   accessible
@@ -200,8 +199,8 @@ export const ListItemTransaction = ({
   const contentProps = {
     paymentLogoIcon,
     numberOfLines,
-    title,
-    subtitle,
+    label,
+    description,
     badge,
     amountAccessibilityLabel,
     showChevron,
@@ -230,7 +229,7 @@ export const ListItemTransaction = ({
         <View
           style={[
             IOListItemStyles.listItemInner,
-            { columnGap: IOListItemVisualParams.iconMargin }
+            { columnGap: IODimensions.gap.listItem.default.leading }
           ]}
         >
           <ListItemTransactionContent {...contentProps} />
@@ -250,19 +249,35 @@ const ListItemTransactionSkeleton = ({
     style={IOListItemStyles.listItem}
   >
     <View style={IOListItemStyles.listItemInner}>
-      <View style={{ marginRight: IOListItemVisualParams.iconMargin }}>
+      <View style={{ marginRight: IODimensions.gap.listItem.default.leading }}>
         <IOSkeleton
-          radius={IOVisualCostants.avatarRadiusSizeSmall}
+          radius={IODimensions.radius.avatar.small}
           shape="square"
-          size={IOVisualCostants.avatarSizeSmall}
+          size={IODimensions.size.avatar.small}
         />
       </View>
-      <VStack space={4} style={{ flexGrow: 1 }}>
-        <IOSkeleton height={16} radius={8} shape="rectangle" width={62} />
-        <IOSkeleton height={16} radius={8} shape="rectangle" width={107} />
+      <VStack space={IODimensions.gap.skeleton.items} style={{ flexGrow: 1 }}>
+        <IOSkeleton
+          height={IOTypography.h6.size}
+          radius={IODimensions.radius.skeleton.text}
+          shape="rectangle"
+          width="30%"
+        />
+        <IOSkeleton
+          height={IOTypography.bodySmall.size}
+          radius={IODimensions.radius.skeleton.text}
+          shape="rectangle"
+          width="50%"
+        />
       </VStack>
-      <View style={{ marginLeft: IOListItemVisualParams.iconMargin }}>
-        <IOSkeleton height={24} radius={8} shape="rectangle" width={70} />
+      <View style={{ marginLeft: IODimensions.gap.listItem.default.leading }}>
+        <IOSkeleton
+          height={IOTypography.h6.lineHeight}
+          radius={IODimensions.radius.skeleton.text}
+          shape="rectangle"
+          // About a typical amount + Chevron
+          width={70}
+        />
       </View>
     </View>
   </View>

@@ -1,4 +1,4 @@
-import { Banner, IOVisualCostants } from "@io-app/design-system";
+import { Banner, IODimensions } from "@io-app/design-system";
 import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { createRef, useMemo } from "react";
@@ -25,8 +25,9 @@ export type ItwDiscoveryBannerProps = {
 };
 
 /**
- * Discovery banner used in flows where we want to handle the banner's visibility logic externally
- *  (see MultiBanner feature for the landing screen)
+ * Discovery banner used in flows where we want to handle the banner's
+ * visibility logic externally (see MultiBanner feature for the landing screen)
+ *
  * @deprecated this banners is for the legacy Documenti su IO flow.
  */
 export const ItwDiscoveryBannerLegacy = ({
@@ -110,7 +111,7 @@ export const ItwDiscoveryBannerLegacy = ({
 
 const styles = StyleSheet.create({
   margins: {
-    marginHorizontal: IOVisualCostants.appMarginDefault,
+    marginHorizontal: IODimensions.padding.screen.default,
     marginVertical: 16
   }
 });

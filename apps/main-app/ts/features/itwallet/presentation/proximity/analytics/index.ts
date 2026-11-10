@@ -1,6 +1,5 @@
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { buildEventProperties } from "../../../../../utils/analytics";
-import { MixPanelCredential } from "../../../analytics/utils/types";
 import {
   ITW_PROXIMITY_ACTIONS_EVENTS,
   ITW_PROXIMITY_ERRORS_EVENTS,
@@ -9,10 +8,10 @@ import {
 } from "./enum";
 import {
   ItwProximityFailure,
+  ItwProximityFlowFailure,
   ItwProximityFlowProperties,
   ItwProximityGenericFailure,
   ItwProximityHttpFailure,
-  ItwProximityMandatoryCredentialMissing,
   ItwProximityQrCode,
   ItwProximityShowQrCode,
   ItwRevokeConsentUserAction,
@@ -57,14 +56,10 @@ export const trackItwProximityBluetoothNotActivated = () => {
 };
 
 /** Tracks the consent-management list screen for a credential. */
-export const trackItwConsentManagement = ({
-  credential
-}: {
-  credential: MixPanelCredential;
-}) => {
+export const trackItwConsentManagement = () => {
   void mixpanelTrack(
     ITW_PROXIMITY_SCREENVIEW_EVENTS.ITW_CONSENT_MANAGEMENT,
-    buildEventProperties("UX", "screen_view", { credential })
+    buildEventProperties("UX", "screen_view")
   );
 };
 
@@ -153,14 +148,10 @@ export const trackItwProximityShowQrCode = ({
 };
 
 /** Tracks access to consent management from credential details. */
-export const trackItwCredentialManageConsent = ({
-  credential
-}: {
-  credential: MixPanelCredential;
-}) => {
+export const trackItwCredentialManageConsent = () => {
   void mixpanelTrack(
     ITW_PROXIMITY_ACTIONS_EVENTS.ITW_CREDENTIAL_MANAGE_CONSENT,
-    buildEventProperties("UX", "action", { credential })
+    buildEventProperties("UX", "action")
   );
 };
 
@@ -310,6 +301,7 @@ export const trackItwProximityQrCodeLoadingFailure = ({
 };
 
 export const trackItwProximityRPGenericFailure = ({
+  proximity_flow,
   proximity_sharing_status,
   reason,
   type
@@ -317,6 +309,7 @@ export const trackItwProximityRPGenericFailure = ({
   void mixpanelTrack(
     ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_GENERIC_ERROR,
     buildEventProperties("KO", "screen_view", {
+      proximity_flow,
       proximity_sharing_status,
       reason,
       type
@@ -325,33 +318,41 @@ export const trackItwProximityRPGenericFailure = ({
 };
 
 export const trackItwProximityTimeout = ({
+  proximity_flow,
   reason,
   type
-}: ItwProximityFailure) => {
+}: ItwProximityFlowFailure) => {
   void mixpanelTrack(
     ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_TIMEOUT,
-    buildEventProperties("KO", "screen_view", { reason, type })
+    buildEventProperties("KO", "screen_view", { proximity_flow, reason, type })
   );
 };
 
 export const trackItwProximityUnexpectedFailure = ({
   origin,
+  proximity_flow,
   reason,
   type
-}: ItwProximityFailure) => {
+}: ItwProximityFlowFailure) => {
   void mixpanelTrack(
     ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_UNEXPECTED_FAILURE,
-    buildEventProperties("KO", "screen_view", { origin, reason, type })
+    buildEventProperties("KO", "screen_view", {
+      origin,
+      proximity_flow,
+      reason,
+      type
+    })
   );
 };
 
 export const trackItwProximityRpNotTrusted = ({
+  proximity_flow,
   reason,
   type
-}: ItwProximityFailure) => {
+}: ItwProximityFlowFailure) => {
   void mixpanelTrack(
     ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_RP_NOT_TRUSTED,
-    buildEventProperties("KO", "screen_view", { reason, type })
+    buildEventProperties("KO", "screen_view", { proximity_flow, reason, type })
   );
 };
 
@@ -365,15 +366,11 @@ export const trackItwProximityRequestObjectFailure = ({
 };
 
 export const trackItwProximityMandatoryCredentialMissing = ({
-  missing_credential,
-  missing_credential_number
-}: ItwProximityMandatoryCredentialMissing) => {
+  proximity_flow
+}: ItwProximityFlowProperties) => {
   void mixpanelTrack(
     ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_MANDATORY_CREDENTIAL_MISSING,
-    buildEventProperties("KO", "screen_view", {
-      missing_credential,
-      missing_credential_number
-    })
+    buildEventProperties("KO", "screen_view", { proximity_flow })
   );
 };
 

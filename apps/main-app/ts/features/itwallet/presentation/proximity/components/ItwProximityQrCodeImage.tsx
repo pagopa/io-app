@@ -3,8 +3,8 @@ import {
   Icon,
   IOButton,
   IOColors,
+  IODimensions,
   IOSkeleton,
-  IOVisualCostants,
   useIOTheme
 } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
@@ -30,16 +30,18 @@ import { shouldShowExpiredProximityCredentialsBannerSelector } from "../store/se
 const QR_CODE_LOGO_SIZE = 52;
 
 /**
- * For the QR Code size, we start from the window width and subtract the horizontal padding.
+ * For the QR Code size, we start from the window width and subtract the
+ * horizontal padding.
  */
 const WINDOW_WIDTH = Dimensions.get("window").width;
 
 /**
- * The total size is the window width minus the horizontal screen padding and the branded box padding.
+ * The total size is the window width minus the horizontal screen padding and
+ * the branded box padding.
  */
 const QR_CODE_SIZE =
   WINDOW_WIDTH -
-  IOVisualCostants.appMarginDefault * 2 - // Subtracting the horizontal screen padding (both sides)
+  IODimensions.padding.screen.default * 2 - // Subtracting the horizontal screen padding (both sides)
   ITW_BRANDED_BOX_PADDING * 2; // Subtracting the branded box padding (both sides)
 
 type Props = {

@@ -1,3 +1,4 @@
+import { fireEvent, waitFor } from "@testing-library/react-native";
 import I18n from "i18next";
 import configureMockStore from "redux-mock-store";
 import { createActor } from "xstate";
@@ -7,6 +8,9 @@ import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import * as remoteConfigSelectors from "../../../../common/store/selectors/remoteConfig";
+import { CredentialType } from "../../../../common/utils/itwMocksUtils";
+import * as lifecycleSelectors from "../../../../lifecycle/store/selectors";
+import { navigateToTosScreenAction } from "../../../../machine/eid/actions";
 import {
   EidIssuanceLevel,
   EidIssuanceMode
@@ -25,6 +29,9 @@ jest.mock("../../../../../../config", () => ({
   itwEnabled: true
 }));
 
+const mockNavigate = jest.fn();
+const mockNavigateToTos = jest.fn(navigateToTosScreenAction);
+
 const every12Months = () =>
   I18n.t(
     "features.itWallet.identification.modeSelection.frequency.every12Months"
@@ -34,8 +41,14 @@ const every90Days = () =>
     "features.itWallet.identification.modeSelection.frequency.every90Days"
   );
 
+const T_CREDENTIAL_OFFER_URI =
+  "openid-credential-offer://?credential_offer_uri=https://issuer.example/offer";
+
 describe("ItwIdentificationModeSelectionScreen", () => {
   beforeEach(() => {
+    jest
+      .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
+      .mockReturnValue(false);
     jest
       .spyOn(remoteConfigSelectors, "itwDisabledIdentificationMethodsSelector")
       .mockReturnValue([]);
@@ -106,6 +119,112 @@ describe("ItwIdentificationModeSelectionScreen", () => {
     expect(queryByTestId("noCieButtonTestID")).toBeNull();
   });
 
+  it.each([
+    { name: "banner", credentialType: undefined },
+    { name: "L3 credential", credentialType: CredentialType.EDUCATION_DEGREE },
+    { name: "unknown credential", credentialType: "unsupported-credential" },
+    { name: "driving licence", credentialType: CredentialType.DRIVING_LICENSE },
+    {
+      name: "disability card",
+      credentialType: CredentialType.EUROPEAN_DISABILITY_CARD
+    },
+    {
+      name: "health insurance card",
+      credentialType: CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+    }
+  ])(
+    "opens fallback discovery from $name when the user has no CIE",
+    async ({ credentialType }) => {
+      const { getByTestId } = renderComponent("issuance", "l3", credentialType);
+
+      fireEvent.press(getByTestId("noCieButtonTestID"));
+
+      const supportedTypes: ReadonlyArray<string> = [
+        CredentialType.DRIVING_LICENSE,
+        CredentialType.EUROPEAN_DISABILITY_CARD,
+        CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+      ];
+      expect(mockNavigateToTos).toHaveBeenCalledWith(
+        expect.objectContaining({
+          context: expect.objectContaining({
+            credentialType:
+              credentialType && supportedTypes.includes(credentialType)
+                ? credentialType
+                : undefined
+          })
+        }),
+        undefined
+      );
+
+      await waitFor(() =>
+        expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
+          screen: ITW_ROUTES.DISCOVERY.INFO,
+          params: { level: "l2-fallback" },
+          pop: true
+        })
+      );
+    }
+  );
+
+  it.each([
+    { name: "L3 credential", credentialType: CredentialType.EDUCATION_DEGREE },
+    { name: "unknown credential", credentialType: "unsupported-credential" },
+    {
+      name: "Doc su IO credential",
+      credentialType: CredentialType.DRIVING_LICENSE
+    }
+  ])(
+    "shows the CIE warning for $name when Doc su IO is already active",
+    async ({ credentialType }) => {
+      jest
+        .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
+        .mockReturnValue(true);
+      const { getByTestId } = renderComponent("issuance", "l3", credentialType);
+
+      fireEvent.press(getByTestId("noCieButtonTestID"));
+
+      await waitFor(() =>
+        expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
+          screen: ITW_ROUTES.IDENTIFICATION.CIE_WARNING,
+          params: {
+            type: "card",
+            routeName: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION
+          },
+          pop: true
+        })
+      );
+    }
+  );
+
+  it.each([
+    {
+      name: "Doc su IO credential",
+      credentialType: CredentialType.DRIVING_LICENSE
+    },
+    { name: "L3 credential", credentialType: CredentialType.EDUCATION_DEGREE }
+  ])(
+    "does not forward the credential offer of a $name to the fallback issuance",
+    ({ credentialType }) => {
+      const { getByTestId } = renderComponent(
+        "issuance",
+        "l3",
+        credentialType,
+        T_CREDENTIAL_OFFER_URI
+      );
+
+      fireEvent.press(getByTestId("noCieButtonTestID"));
+
+      expect(mockNavigateToTos).toHaveBeenCalledWith(
+        expect.objectContaining({
+          context: expect.objectContaining({
+            credentialOfferUri: undefined
+          })
+        }),
+        undefined
+      );
+    }
+  );
+
   describe("disabled identification methods", () => {
     it("hides CiePin when disabled", () => {
       jest
@@ -151,7 +270,12 @@ describe("ItwIdentificationModeSelectionScreen", () => {
   });
 });
 
-const renderComponent = (mode: EidIssuanceMode, level: EidIssuanceLevel) => {
+const renderComponent = (
+  mode: EidIssuanceMode,
+  level: EidIssuanceLevel,
+  credentialType?: string,
+  credentialOfferUri?: string
+) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const mockStore = configureMockStore<GlobalState>();
@@ -163,12 +287,21 @@ const renderComponent = (mode: EidIssuanceMode, level: EidIssuanceLevel) => {
     const logic = itwEidIssuanceMachine.provide({
       actions: {
         onInit: jest.fn(),
+        navigateToTosScreen: mockNavigateToTos,
         navigateToIdentificationScreen: () => undefined
       }
     });
 
     const initialSnapshot = createActor(logic, {
-      input: { deps: testEidIssuanceDeps() }
+      input: {
+        deps: {
+          ...testEidIssuanceDeps(),
+          navigation: {
+            ...testEidIssuanceDeps().navigation,
+            navigate: mockNavigate
+          }
+        }
+      }
     }).getSnapshot();
     const snapshot: typeof initialSnapshot = {
       ...initialSnapshot,
@@ -177,6 +310,8 @@ const renderComponent = (mode: EidIssuanceMode, level: EidIssuanceLevel) => {
         ...initialSnapshot.context,
         mode,
         level,
+        credentialType,
+        credentialOfferUri,
         cieContext: {
           isNFCEnabled: true,
           isCIEAuthenticationSupported: true

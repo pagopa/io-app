@@ -22,7 +22,7 @@ const createRandomInitiativeDataDTO = (): InitiativeDataDTO => ({
     width: 850,
     height: 480
   }),
-  logoURL: faker.image.urlLoremFlickr({ width: 480, height: 480 })
+  logoURL: faker.image.url({ width: 480, height: 480 })
 });
 
 const initiativeData: {
@@ -65,6 +65,12 @@ const initiativeData: {
       IDPayInitiativeID.OK_BONUS_ELETTRODOMESTICI
     ),
     initiativeName: "Bonus Elettrodomestici"
+  },
+
+  [IDPayServiceID.OK_BONUS_DECODER]: {
+    ...createRandomInitiativeDataDTO(),
+    initiativeId: initiativeIdToString(IDPayInitiativeID.OK_BONUS_DECODER),
+    initiativeName: "Bonus Decoder"
   },
 
   [IDPayServiceID.KO_STATUS_NOT_ELIGIBLE]: {
@@ -133,6 +139,13 @@ const initiativeData: {
     ...createRandomInitiativeDataDTO(),
     initiativeId: initiativeIdToString(IDPayInitiativeID.KO_TOO_MANY_REQUESTS),
     initiativeName: "Iniziativa - Troppe richieste"
+  },
+  [IDPayServiceID.KO_USER_BONUS_ALREADY_USED]: {
+    ...createRandomInitiativeDataDTO(),
+    initiativeId: initiativeIdToString(
+      IDPayInitiativeID.KO_USER_BONUS_ALREADY_USED
+    ),
+    initiativeName: "Iniziativa - Bonus già utilizzato"
   }
 };
 

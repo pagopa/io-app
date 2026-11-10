@@ -1,3 +1,4 @@
+import I18n from "i18next";
 import configureMockStore from "redux-mock-store";
 
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -8,13 +9,23 @@ import * as itwCommonSelectors from "../../../common/store/selectors";
 import * as envSelectors from "../../../common/store/selectors/environment";
 import * as itwRemoteConfigSelectors from "../../../common/store/selectors/remoteConfig";
 import { EnvType } from "../../../common/utils/environment";
-import { CredentialType } from "../../../common/utils/itwMocksUtils";
+import {
+  CredentialType,
+  ItwCredentialsCatalogueMock
+} from "../../../common/utils/itwMocksUtils";
+import { itwFetchCredentialsCatalogue } from "../../../credentialsCatalogue/store/actions";
 import * as itwLifecycleSelectors from "../../../lifecycle/store/selectors";
 import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import { testCredentialIssuanceDeps } from "../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { WalletCardOnboardingScreen } from "../WalletCardOnboardingScreen";
+
+// The list of obtainable credentials is built from the catalogue
+const initialState = appReducer(
+  appReducer(undefined, applicationChangeState("active")),
+  itwFetchCredentialsCatalogue.success(ItwCredentialsCatalogueMock)
+);
 
 describe("WalletCardOnboardingScreen", () => {
   it("should render the screen correctly", () => {
@@ -78,6 +89,27 @@ describe("WalletCardOnboardingScreen", () => {
 
     const { queryByTestId } = renderComponent();
     expect(queryByTestId("itwDiscoveryBannerTestID")).toBeNull();
+  });
+
+  it("should render the retry banner instead of the modules when the catalogue is unavailable", () => {
+    jest
+      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
+      .mockReturnValue(true);
+
+    jest
+      .spyOn(itwRemoteConfigSelectors, "isItwEnabledSelector")
+      .mockReturnValue(true);
+
+    const { getByText, queryByTestId } = renderComponent(
+      appReducer(undefined, applicationChangeState("active"))
+    );
+
+    expect(
+      getByText(I18n.t("features.itWallet.credentialsCatalogue.failure.action"))
+    ).toBeTruthy();
+    expect(
+      queryByTestId(`${CredentialType.DRIVING_LICENSE}ModuleTestID`)
+    ).toBeNull();
   });
 
   test.each([
@@ -163,9 +195,7 @@ describe("WalletCardOnboardingScreen", () => {
   );
 });
 
-const renderComponent = () => {
-  const globalState = appReducer(undefined, applicationChangeState("active"));
-
+const renderComponent = (globalState = initialState) => {
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(globalState);
 

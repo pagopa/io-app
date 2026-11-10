@@ -15,7 +15,7 @@ const mockReplace = jest.fn();
 
 jest.mock("@react-navigation/native", () => ({
   ...jest.requireActual("@react-navigation/native"),
-  useNavigation: () => ({ replace: mockReplace })
+  useNavigation: () => ({ addListener: jest.fn(), replace: mockReplace })
 }));
 
 describe("ItwDiscoveryLandingScreen", () => {

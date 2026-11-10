@@ -2,8 +2,8 @@ import { UserDataProcessingChoiceEnum } from "@io-app/api-types/generated/defini
 import { UserDataProcessingStatusEnum } from "@io-app/api-types/generated/definitions/identity/UserDataProcessingStatus";
 import {
   Divider,
+  IODimensions,
   IOToast,
-  IOVisualCostants,
   ListItemNav
 } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -54,11 +54,11 @@ type PrivacyNavListItem = Pick<
 };
 
 /**
- * A screen to show the main screen of the Privacy section.
- * Here the user can:
- * - display the accepted privacy policy (or Term of Service)
- * - send a request to delete his profile
- * - send a request to export all his data
+ * A screen to show the main screen of the Privacy section. Here the user can:
+ *
+ * - Display the accepted privacy policy (or Term of Service)
+ * - Send a request to delete his profile
+ * - Send a request to export all his data
  */
 
 const PrivacyMainScreen = ({ navigation }: Props) => {
@@ -297,10 +297,10 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
             : ""
         }`}
         description={description}
+        label={value}
         onPress={onPress}
         testID={testID}
         topElement={topElement}
-        value={value}
       />
     ),
     []
@@ -326,7 +326,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
       >
         <FlatList
           contentContainerStyle={{
-            paddingHorizontal: IOVisualCostants.appMarginDefault
+            paddingHorizontal: IODimensions.padding.screen.default
           }}
           data={privacyNavListItems}
           ItemSeparatorComponent={Divider}

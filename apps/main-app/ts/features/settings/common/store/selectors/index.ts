@@ -27,12 +27,10 @@ export const isEmailEnabledSelector = createSelector(profileSelector, profile =>
   )
 );
 
-export const isInboxEnabledSelector = createSelector(
-  profileSelector,
-  profile =>
-    pot.isSome(profile) && InitializedProfile.is(profile.value)
-      ? profile.value.is_inbox_enabled
-      : false
+export const isInboxEnabledSelector = createSelector(profileSelector, profile =>
+  pot.isSome(profile) && InitializedProfile.is(profile.value)
+    ? profile.value.is_inbox_enabled
+    : false
 );
 
 // return the email address (as a string) if the profile pot is some and its value is of kind InitializedProfile and it has an email
@@ -45,9 +43,7 @@ export const profileEmailSelector = createSelector(
       O.none
     )
 );
-/**
- * Return the name of the profile if some, else undefined
- */
+/** Return the name of the profile if some, else undefined */
 
 export const profileNameSelector = createSelector(
   profileSelector,
@@ -57,9 +53,7 @@ export const profileNameSelector = createSelector(
       undefined
     )
 );
-/**
- * Return the fiscal code of the profile if some, else undefined
- */
+/** Return the fiscal code of the profile if some, else undefined */
 
 export const profileFiscalCodeSelector = createSelector(
   profileSelector,
@@ -69,9 +63,7 @@ export const profileFiscalCodeSelector = createSelector(
       undefined
     )
 );
-/**
- * The complete name + surname
- */
+/** The complete name + surname */
 
 export const profileNameSurnameSelector = createSelector(
   profileSelector,

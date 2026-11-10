@@ -1,8 +1,4 @@
-import {
-  IOColors,
-  IOVisualCostants,
-  ListItemHeader
-} from "@io-app/design-system";
+import { IOColors, IODimensions, ListItemHeader } from "@io-app/design-system";
 import { PropsWithChildren } from "react";
 import { View } from "react-native";
 
@@ -14,7 +10,8 @@ export type DebugViewProps = {
 };
 
 /**
- * This component renders its content only if the debug mode is enabled, otherwise return null (nothing)
+ * This component renders its content only if the debug mode is enabled,
+ * otherwise return null (nothing)
  */
 export const DebugView = ({
   children,
@@ -28,7 +25,7 @@ export const DebugView = ({
         paddingBottom: 12,
         backgroundColor: IOColors["grey-100"],
         marginHorizontal: ignoreHorizontalMargins
-          ? -IOVisualCostants.appMarginDefault
+          ? -IODimensions.padding.screen.default
           : 0
       }}
       testID="DebugViewTestID"

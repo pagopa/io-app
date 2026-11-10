@@ -23,6 +23,11 @@ jest.mock("../../hooks/useGetIdps", () => ({
   useGetIdps: () => mockUseGetIdps()
 }));
 
+const mockUseDebugInfo = jest.fn();
+jest.mock("../../../../../../hooks/useDebugInfo", () => ({
+  useDebugInfo: (data: unknown) => mockUseDebugInfo(data)
+}));
+
 jest.mock("../../components/OneIdentityIdpSelectionFailureContent");
 const mockedOneIdentityIdpSelectionFailureContent =
   OneIdentityIdpSelectionFailureContent as jest.Mock;
@@ -79,6 +84,33 @@ describe("OneIdentityIdpSelectionScreen", () => {
     expect(
       getByTestId("one-identity-idp-selection-failure-content")
     ).toBeTruthy();
+  });
+
+  it("should forward the failure reason and URL to useDebugInfo when the fetch fails", () => {
+    mockUseGetIdps.mockReturnValue({
+      state: {
+        status: "failure",
+        error: "IDP_LIST_FETCH_ERROR",
+        url: "https://example.com/idps.json"
+      }
+    });
+
+    renderComponent();
+
+    expect(mockUseDebugInfo).toHaveBeenCalledWith({
+      reason: "IDP_LIST_FETCH_ERROR",
+      url: "https://example.com/idps.json"
+    });
+  });
+
+  it("should forward no debug data to useDebugInfo when the fetch is not failing", () => {
+    mockUseGetIdps.mockReturnValue({
+      state: { status: "success", data: mockIdps }
+    });
+
+    renderComponent();
+
+    expect(mockUseDebugInfo).toHaveBeenCalledWith({});
   });
 
   it("should render the fetched IDPs on success", () => {

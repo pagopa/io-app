@@ -122,9 +122,7 @@ const handlePrivative = (req: Request, res: Response) => {
   res.status(200).json(validResponse.right);
 };
 
-/**
- * return the cobadge list owned by the citizen
- */
+/** Return the cobadge list owned by the citizen */
 addHandler(
   bancomatRouter,
   "get",
@@ -139,7 +137,8 @@ addHandler(
 );
 
 /**
- * return the cobadge list owned by the citizen (when pans can't return a response)
+ * Return the cobadge list owned by the citizen (when pans can't return a
+ * response)
  */
 addHandler(
   bancomatRouter,
@@ -179,7 +178,8 @@ addHandler(
 );
 
 /**
- * return the cobadge list owned by the citizen (when pans can't return a response)
+ * Return the cobadge list owned by the citizen (when pans can't return a
+ * response)
  */
 addHandler(
   bancomatRouter,

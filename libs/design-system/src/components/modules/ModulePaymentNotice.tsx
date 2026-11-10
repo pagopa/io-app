@@ -1,7 +1,7 @@
 import { GestureResponderEvent, StyleSheet, View } from "react-native";
 
 import { useIOTheme } from "../../context";
-import { IOListItemVisualParams, IOSpacer } from "../../core";
+import { IODimensions, IOTypography } from "../../core";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
 import { Icon } from "../icons";
@@ -101,7 +101,7 @@ const ModulePaymentNoticeContent = ({
   const theme = useIOTheme();
 
   return (
-    <HStack space={IOListItemVisualParams.iconMargin as IOSpacer}>
+    <HStack space={IODimensions.gap.module.trailing}>
       <View style={{ flexGrow: 1, flexShrink: 1 }}>
         {title && (
           <BodySmall
@@ -132,7 +132,7 @@ const ModulePaymentNoticeContent = ({
         <Icon
           color={theme["interactiveElem-default"]}
           name="chevronRightListItem"
-          size={IOListItemVisualParams.chevronSize}
+          size={IODimensions.size.icon.chevron}
         />
       </View>
     </HStack>
@@ -140,11 +140,12 @@ const ModulePaymentNoticeContent = ({
 };
 
 /**
- * The `ModulePaymentNotice` component is a custom button component with an extended outline style.
- * It provides an animated scaling effect when pressed.
+ * The `ModulePaymentNotice` component is a custom button component with an
+ * extended outline style. It provides an animated scaling effect when pressed.
  *
  * @param {boolean} isLoading - If true, displays a skeleton loading component.
- * @param {function} onPress - The function to be executed when the item is pressed.
+ * @param {function} onPress - The function to be executed when the item is
+ *   pressed.
  * @param {string} title - The title text to display.
  * @param {string} subtitle - The subtitle text to display.
  * @param {string} testID - The test ID for testing purposes.
@@ -186,12 +187,30 @@ const ModulePaymentNoticeSkeleton = ({
     accessibilityState={{ busy: true }}
     accessible={true}
     endBlock={
-      <IOSkeleton height={24} radius={16} shape="rectangle" width={64} />
+      <IOSkeleton
+        height={IODimensions.height.badge}
+        radius={IODimensions.radius.badge}
+        shape="rectangle"
+        width={64}
+      />
     }
     startBlock={
-      <VStack space={4}>
-        <IOSkeleton height={12} radius={8} shape="rectangle" width={120} />
-        <IOSkeleton height={16} radius={8} shape="rectangle" width={180} />
+      <VStack
+        space={IODimensions.gap.skeleton.items}
+        style={{ flexGrow: 1, flexShrink: 1 }}
+      >
+        <IOSkeleton
+          height={IOTypography.bodySmall.size}
+          radius={IODimensions.radius.skeleton.text}
+          shape="rectangle"
+          width="50%"
+        />
+        <IOSkeleton
+          height={IOTypography.body.size}
+          radius={IODimensions.radius.skeleton.text}
+          shape="rectangle"
+          width="75%"
+        />
       </VStack>
     }
   />

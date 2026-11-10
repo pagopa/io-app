@@ -118,21 +118,15 @@ const useNavigateToLoginMethod = () => {
         isCieIdAvailable(getCieIdEnvironment(isCieUatEnabled)) ||
         cieFlowForDevServerEnabled
       ) {
-        const params = {
-          spidLevel,
-          isUat: isCieUatEnabled
-        };
-
         withIsFastLoginOptInCheck(
           () => {
             navigate(AUTHENTICATION_ROUTES.MAIN, {
               screen: isActiveSessionLogin
                 ? AUTHENTICATION_ROUTES.CIE_ID_ACTIVE_SESSION_LOGIN
-                : AUTHENTICATION_ROUTES.CIE_ID_LOGIN,
-              params
+                : AUTHENTICATION_ROUTES.CIE_ID_LOGIN
             });
           },
-          { identifier: Identifier.CIE_ID, params }
+          { identifier: Identifier.CIE_ID }
         );
       } else {
         navigate(AUTHENTICATION_ROUTES.MAIN, {

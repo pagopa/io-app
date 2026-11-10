@@ -1,5 +1,5 @@
 import {
-  IOVisualCostants,
+  IODimensions,
   TabItem,
   TabNavigation,
   VSpacer
@@ -12,6 +12,17 @@ import { ReceiptsCategoryFilter, receiptsCategoryFilters } from "../types";
 type Props = {
   onCategorySelected?: (category: ReceiptsCategoryFilter) => void;
   selectedCategory: ReceiptsCategoryFilter;
+};
+
+const getCategoryLabel = (category: ReceiptsCategoryFilter): string => {
+  switch (category) {
+    case "all":
+      return I18n.t("features.payments.transactions.filters.tabs.all");
+    case "debtor":
+      return I18n.t("features.payments.transactions.filters.tabs.debtor");
+    case "payer":
+      return I18n.t("features.payments.transactions.filters.tabs.payer");
+  }
 };
 
 const ReceiptFilterTabs = ({ selectedCategory, onCategorySelected }: Props) => {
@@ -32,21 +43,23 @@ const ReceiptFilterTabs = ({ selectedCategory, onCategorySelected }: Props) => {
         selectedIndex={selectedIndexOfCategory}
         tabAlignment="start"
       >
-        {receiptsCategoryFilters.map((category, index) => (
-          <TabItem
-            accessibilityLabel={`${I18n.t(
-              `features.payments.transactions.filters.tabs.${category}`
-            )}, ${I18n.t("global.accessibility.progressTracker", {
-              index: index + 1,
-              total: receiptsCategoryFilters.length
-            })}`}
-            key={category}
-            label={I18n.t(
-              `features.payments.transactions.filters.tabs.${category}`
-            )}
-            testID={`CategoryTabTestID-${category}`}
-          />
-        ))}
+        {receiptsCategoryFilters.map((category, index) => {
+          const label = getCategoryLabel(category);
+          return (
+            <TabItem
+              accessibilityLabel={`${label}, ${I18n.t(
+                "global.accessibility.progressTracker",
+                {
+                  index: index + 1,
+                  total: receiptsCategoryFilters.length
+                }
+              )}`}
+              key={category}
+              label={label}
+              testID={`CategoryTabTestID-${category}`}
+            />
+          );
+        })}
       </TabNavigation>
       <VSpacer size={16} />
     </View>
@@ -55,8 +68,8 @@ const ReceiptFilterTabs = ({ selectedCategory, onCategorySelected }: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: -IOVisualCostants.appMarginDefault * 2,
-    paddingHorizontal: IOVisualCostants.appMarginDefault
+    marginHorizontal: -IODimensions.padding.screen.default * 2,
+    paddingHorizontal: IODimensions.padding.screen.default
   }
 });
 
