@@ -66,11 +66,18 @@ describe("unifiedRenderabilitySelectors", () => {
 });
 
 describe("landingScreenBannerToRenderSelector", () => {
-  const testCases = [
+  type TestCase = {
+    backendStatus: Array<string>;
+    bannerMapVisibility: Record<string, boolean | undefined>;
+    expected: { id?: string; type: string };
+    reduxVisibility: Record<string, boolean>;
+    title: string;
+  };
+  const testCases: Array<TestCase> = [
     {
       // selector should correctly match the three selector's values
       title: " with a single one enabled, it should be returned",
-      expected: "correct_id",
+      expected: { type: "banner", id: "correct_id" },
       backendStatus: ["correct_id"],
       reduxVisibility: {
         correct_id: true
@@ -82,7 +89,7 @@ describe("landingScreenBannerToRenderSelector", () => {
     {
       // backendStatus should behave as "master" for the banner order
       title: " with multiple banners enabled, the first one should be returned",
-      expected: "correct_id",
+      expected: { type: "banner", id: "correct_id" },
       backendStatus: ["correct_id", "another_id"],
       reduxVisibility: {
         correct_id: true,
@@ -97,7 +104,7 @@ describe("landingScreenBannerToRenderSelector", () => {
       // while keeping its "master" role, backendStatus' return value should be filtered with local values
       title:
         " non locally enabled banners should be ignored from backendStatus ",
-      expected: "correct_id",
+      expected: { type: "banner", id: "correct_id" },
       backendStatus: ["wrong_id", "correct_id"],
       reduxVisibility: {
         wrong_id: false,
@@ -111,7 +118,7 @@ describe("landingScreenBannerToRenderSelector", () => {
     {
       title:
         " non locally defined banners should be ignored from backendStatus ",
-      expected: "correct_id",
+      expected: { type: "banner", id: "correct_id" },
       backendStatus: ["wrong_id", "correct_id"],
       reduxVisibility: {
         correct_id: true
@@ -122,7 +129,7 @@ describe("landingScreenBannerToRenderSelector", () => {
     },
     {
       title: " a disabled redux visibility should filter out the banner ",
-      expected: "another_id",
+      expected: { type: "banner", id: "another_id" },
       backendStatus: ["correct_id", "another_id"],
       reduxVisibility: {
         correct_id: false,
@@ -136,7 +143,7 @@ describe("landingScreenBannerToRenderSelector", () => {
     {
       title:
         " a false return on the banner's specific selector should filter out the banner ",
-      expected: "another_id",
+      expected: { type: "banner", id: "another_id" },
       backendStatus: ["wrong_id", "correct_id", "another_id"],
       reduxVisibility: {
         correct_id: true,
@@ -149,8 +156,8 @@ describe("landingScreenBannerToRenderSelector", () => {
     },
     {
       title:
-        " in case of no enabled banner, undefined should be returned (both false) ",
-      expected: undefined,
+        " in case of no enabled banner, none should be returned (both false) ",
+      expected: { type: "none" },
       backendStatus: [
         "wrong_id",
         "correct_id",
@@ -168,9 +175,8 @@ describe("landingScreenBannerToRenderSelector", () => {
     },
     {
       // same should happen in case of a mismatch
-      title:
-        " in case of no enabled banner, undefined should be returned (1F 1T) ",
-      expected: undefined,
+      title: " in case of no enabled banner, none should be returned (1F 1T) ",
+      expected: { type: "none" },
       backendStatus: [
         "wrong_id",
         "correct_id",
@@ -188,8 +194,8 @@ describe("landingScreenBannerToRenderSelector", () => {
     },
     {
       title:
-        " in case of no enabled banner, undefined should be returned (undefined on bannerMap)",
-      expected: undefined,
+        " in case of no enabled banner, none should be returned (undefined on bannerMap)",
+      expected: { type: "none" },
       backendStatus: [
         "wrong_id",
         "correct_id",
@@ -205,8 +211,8 @@ describe("landingScreenBannerToRenderSelector", () => {
     },
     {
       title:
-        " in case of no enabled banner, undefined should be returned (undefined on reduxVis)",
-      expected: undefined,
+        " in case of no enabled banner, none should be returned (undefined on reduxVis)",
+      expected: { type: "none" },
       backendStatus: [
         "wrong_id",
         "correct_id",
@@ -223,8 +229,8 @@ describe("landingScreenBannerToRenderSelector", () => {
 
     {
       title:
-        " in case of no enabled banner, undefined should be returned (undefined on backendStatus)",
-      expected: undefined,
+        " in case of no enabled banner, none should be returned (undefined on backendStatus)",
+      expected: { type: "none" },
       backendStatus: [],
       reduxVisibility: {
         correct_id: true
@@ -232,20 +238,56 @@ describe("landingScreenBannerToRenderSelector", () => {
       bannerMapVisibility: {
         correct_id: true
       }
+    },
+    {
+      title:
+        " a higher priority banner still loading should show the loading state if a lower one is renderable",
+      expected: { type: "loading" },
+      backendStatus: ["async_id", "correct_id"],
+      reduxVisibility: { async_id: true, correct_id: true },
+      bannerMapVisibility: { async_id: undefined, correct_id: true }
+    },
+    {
+      title:
+        " a loading banner should not show the loading state if no lower one is renderable",
+      expected: { type: "none" },
+      backendStatus: ["async_id", "correct_id"],
+      reduxVisibility: { async_id: true, correct_id: true },
+      bannerMapVisibility: { async_id: undefined, correct_id: false }
+    },
+    {
+      title:
+        " a lower priority banner still loading should not delay a higher one",
+      expected: { type: "banner", id: "correct_id" },
+      backendStatus: ["correct_id", "async_id"],
+      reduxVisibility: { correct_id: true, async_id: true },
+      bannerMapVisibility: { correct_id: true, async_id: undefined }
+    },
+    {
+      title: " a loading banner that is locally disabled should be ignored",
+      expected: { type: "banner", id: "correct_id" },
+      backendStatus: ["async_id", "correct_id"],
+      reduxVisibility: { async_id: false, correct_id: true },
+      bannerMapVisibility: { async_id: undefined, correct_id: true }
+    },
+    {
+      title:
+        " a locally enabled banner unknown to the banner map should not show the loading state",
+      expected: { type: "banner", id: "correct_id" },
+      backendStatus: ["removed_id", "correct_id"],
+      reduxVisibility: { removed_id: true, correct_id: true },
+      bannerMapVisibility: { correct_id: true }
     }
   ];
 
-  testCases.forEach(item => {
-    it(item.title, () => {
-      const resultFunc =
-        SELECTORS.landingScreenBannerToRenderSelector.resultFunc;
-      const result = resultFunc(
-        item.backendStatus,
-        item.reduxVisibility as LandingScreenBannerState,
-        item.bannerMapVisibility as LandingScreenBannerState
-      );
-      expect(result).toEqual(item.expected);
-    });
+  test.each<TestCase>(testCases)("$title", item => {
+    const resultFunc = SELECTORS.landingScreenBannerToRenderSelector.resultFunc;
+    const result = resultFunc(
+      item.backendStatus,
+      item.reduxVisibility as LandingScreenBannerState,
+      item.bannerMapVisibility as LandingScreenBannerState
+    );
+    expect(result).toEqual(item.expected);
   });
 });
 
