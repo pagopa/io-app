@@ -106,7 +106,7 @@ pnpm nx run main-app:sync
 ```
 
 > [!NOTE]
-> `main-app:sync` runs `pnpm install`, gem setup, iOS pod install, and code generation from OpenAPI specs and localisation files. Re-run it after pulling changes that affect any of those layers.
+> `main-app:sync` runs `pnpm install`, gem setup, native project generation (`expo prebuild`) with iOS pod install, and code generation from OpenAPI specs and localisation files. Re-run it after pulling changes that affect any of those layers.
 
 ### Environment variables
 
@@ -135,8 +135,11 @@ pnpm nx run main-app:start
 # iOS simulator
 pnpm nx run main-app:run-ios
 
-# Android emulator (productionDebug, active architecture only)
+# Android emulator (debug, active architecture only)
 pnpm nx run main-app:dev-run-android
+
+# Regenerate the native projects after changing the app config, plugins or native dependencies
+pnpm nx run main-app:prebuild
 ```
 
 > [!IMPORTANT]

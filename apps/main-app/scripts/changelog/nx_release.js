@@ -28,9 +28,7 @@ const version = JSON.parse(
   fs.readFileSync(path.join(projectRoot, "package.json"), "utf8")
 ).version;
 const versionUpdates = [
-  ["ios/IO/Info.plist", require("./plist_updater.js")],
-  ["ios/IO.xcodeproj/project.pbxproj", require("./pbxproj_updater.js")],
-  ["android/app/build.gradle", require("./gradle_updater.js")],
+  ["app.json", require("./app_json_updater.js")],
   ["../../publiccode.yml", require("./publiccode_updater.js")]
 ];
 
@@ -78,9 +76,7 @@ run("git", [
   "--",
   "package.json",
   "CHANGELOG.md",
-  "ios/IO/Info.plist",
-  "ios/IO.xcodeproj/project.pbxproj",
-  "android/app/build.gradle",
+  "app.json",
   "../../publiccode.yml",
   "../../pnpm-lock.yaml"
 ]);

@@ -36,8 +36,7 @@ jobs:
         run: |
           cd apps/main-app
           echo $ENCODED_IOAPP_JSON_KEY_FILE | base64 --decode > /tmp/json-key.json
-          cd android
-          bundle exec fastlane current_canary_version_code
+          bundle exec fastlane android current_canary_version_code
         env:
           ENCODED_IOAPP_JSON_KEY_FILE: ${{ secrets.ENCODED_IOAPP_JSON_KEY_FILE }}
       - id: replace-version-with-canary
@@ -45,8 +44,8 @@ jobs:
           UPDATED_BUILD_CODE=${{ steps.resolve-canary-version-code.outputs.CURRENT_CANARY_VERSION_CODE }}
           cd apps/main-app
           node scripts/canary/replaceCanaryVersion.js $UPDATED_BUILD_CODE
-          mv ios/fastlane/Matchfile ios/fastlane/Matchfile_prod
-          mv ios/fastlane/Matchfile_canary ios/fastlane/Matchfile
+          mv fastlane/Matchfile fastlane/Matchfile_prod
+          mv fastlane/Matchfile_canary fastlane/Matchfile
       - id: bump-version
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
@@ -75,9 +74,10 @@ jobs:
       fastlane-build-lane: alpha_canary
       fastlane-download-lane: download_canary_apk
       universal-apk-filename: io-app-canary-universal.apk
-      bundle-output-path: apps/main-app/android/app/build/outputs/bundle/canaryRelease/app-canary-release.aab
+      bundle-output-path: apps/main-app/android/app/build/outputs/bundle/release/app-release.aab
       bundle-artifact-name: app-canary-release.aab
       release-aab-label: android-app-canary-release.aab
+      app-variant: canary
   release-ios:
     name: Release iOS app on App Store
     needs: prepare-canary-release
@@ -88,6 +88,7 @@ jobs:
       environment: canary
       fastlane-lane: canary_testflight
       release-ipa-label: IO-canary-iOS.ipa
+      app-variant: canary
   notify-new-version:
     name: Notifiy new version on Slack
     runs-on: ubuntu-24.04
