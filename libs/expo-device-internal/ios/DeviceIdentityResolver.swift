@@ -25,7 +25,7 @@ final class DeviceIdentityResolver {
     self.generateIdentifier = generateIdentifier
   }
 
-  func getUniqueIdSync() throws -> String {
+  func getUniqueIdSync() -> String {
     lock.lock()
     defer { lock.unlock() }
 
@@ -33,15 +33,15 @@ final class DeviceIdentityResolver {
       return cachedIdentifier
     }
 
-    let keychainIdentifier = try storage.readKeychain()
-    let defaultsIdentifier = try storage.readUserDefaults()
+    let keychainIdentifier = try? storage.readKeychain()
+    let defaultsIdentifier = try? storage.readUserDefaults()
     let identifier = keychainIdentifier ?? defaultsIdentifier
       ?? vendorIdentifier() ?? generateIdentifier()
 
-    if keychainIdentifier == nil {
-      try storage.writeKeychain(identifier)
+    if keychainIdentifier != identifier {
+      try? storage.writeKeychain(identifier)
     }
-    if defaultsIdentifier == nil {
+    if defaultsIdentifier != identifier {
       storage.writeUserDefaults(identifier)
     }
 

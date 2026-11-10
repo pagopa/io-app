@@ -1,6 +1,7 @@
 import {
   hexToRgba,
   IOColors,
+  IODimensions,
   useIOTheme,
   useIOThemeContext
 } from "@io-app/design-system";
@@ -32,6 +33,9 @@ export const useServiceCardStyle = (): ServiceCardStyleProps => {
   return {
     default: {
       card: {
+        borderRadius: IODimensions.radius.card,
+        borderCurve: "continuous",
+        borderWidth: IODimensions.stroke.default,
         borderColor: IOColors[theme["cardBorder-default"]],
         backgroundColor: IOColors[theme["appBackground-secondary"]]
       },

@@ -18,7 +18,7 @@ import Animated, {
 import { useIOTheme } from "../../context";
 import { IOSpringValues } from "../../core/IOAnimations";
 import { IOColors } from "../../core/IOColors";
-import { IOSelectionTickVisualParams } from "../../core/IOStyles";
+import { IODimensions } from "../../core/tokens";
 import { AnimatedTick } from "../common/AnimatedTick";
 
 type OwnProps = Pick<PressableProps, "disabled" | "onPress"> & Props;
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 0,
     top: 0,
-    borderWidth: IOSelectionTickVisualParams.borderWidth
+    borderWidth: IODimensions.stroke.selection.control
   },
   radioCircle: {
     position: "absolute",

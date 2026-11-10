@@ -1,7 +1,7 @@
 import {
   H3,
-  IOAppMargin,
   IOColors,
+  IODimensions,
   useScaleAnimation
 } from "@io-app/design-system";
 import I18n from "i18next";
@@ -29,14 +29,16 @@ const ENCODED_FISCAL_CODE_LENGTH_CODE39 = 288;
  */
 const windowWidth = Dimensions.get("window").width;
 
+const buttonPaddingHorizontal = IODimensions.padding.card;
+
 /**
  * The total width is the window width minus the horizontal screen padding and
- * the fiscal code button padding.
+ * the fiscal code button padding, on both sides.
  */
 const barcodeTotalWidth =
   windowWidth -
-  IOAppMargin[4] - // Subtracting the horizontal screen padding
-  IOAppMargin[3]; // Subtracting the fiscal code button padding
+  IODimensions.padding.screen.default * 2 - // Screen padding, both sides
+  buttonPaddingHorizontal * 2; // Fiscal code button padding, both sides
 
 /**
  * The barcode width is the total width divided by the encoded fiscal code
@@ -89,13 +91,13 @@ const styles = StyleSheet.create({
   button: {
     paddingTop: 8,
     paddingBottom: 16,
-    paddingHorizontal: 16,
+    paddingHorizontal: buttonPaddingHorizontal,
     rowGap: 0,
     borderColor: IOColors["grey-100"],
     // Always white regardless of the theme
     backgroundColor: IOColors.white,
-    borderWidth: 1,
-    borderRadius: 8,
+    borderWidth: IODimensions.stroke.default,
+    borderRadius: IODimensions.radius.card,
     borderCurve: "continuous"
   },
   text: {
