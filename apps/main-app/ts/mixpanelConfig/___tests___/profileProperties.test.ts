@@ -12,6 +12,7 @@ import { GlobalState } from "../../store/reducers/types";
 import * as analytics from "../../utils/analytics";
 import * as BIOMETRICS from "../../utils/biometrics";
 import { SpidIdp } from "../../utils/idps";
+import { fromLocaleToPreferredLanguage } from "../../utils/locale";
 import { updateMixpanelProfileProperties } from "../profileProperties";
 
 // eslint-disable-next-line functional/no-let
@@ -43,7 +44,8 @@ const generateBaseProfileProperties = () => ({
   SERVICE_CONFIGURATION: "AUTO",
   TOS_ACCEPTED_VERSION: 1,
   TRACKING: "accepted",
-  UI_LANGUAGE: "it",
+  PROFILE_LANGUAGE_UI: "it",
+  PROFILE_LANGUAGE_MESSAGE: "it",
   WELFARE_STATUS: []
 });
 
@@ -53,29 +55,53 @@ describe("profileProperties", () => {
     jest.clearAllMocks();
   });
   describe("updateMixpanelProfileProperties", () => {
-    it.each(["en", "de"] as const)(
-      "sets the persisted UI language %s on the Mixpanel profile",
-      async language => {
-        const state = generateMockedGlobalState(
-          undefined,
-          undefined,
-          undefined,
-          language
-        );
-        jest
-          .spyOn(BIOMETRICS, "getBiometricsType")
-          .mockImplementation(() => Promise.resolve("FACE_ID"));
-        jest
-          .spyOn(PUSHUTILS, "checkNotificationPermissions")
-          .mockImplementation(() => Promise.resolve(false));
+    it("sets UI and message languages independently on the Mixpanel profile", async () => {
+      const state = generateMockedGlobalState(
+        undefined,
+        undefined,
+        undefined,
+        "en",
+        "de"
+      );
+      jest
+        .spyOn(BIOMETRICS, "getBiometricsType")
+        .mockImplementation(() => Promise.resolve("FACE_ID"));
+      jest
+        .spyOn(PUSHUTILS, "checkNotificationPermissions")
+        .mockImplementation(() => Promise.resolve(false));
 
-        await updateMixpanelProfileProperties(state);
+      await updateMixpanelProfileProperties(state);
 
-        expect(mockedSet).toHaveBeenCalledWith(
-          expect.objectContaining({ UI_LANGUAGE: language })
-        );
-      }
-    );
+      expect(mockedSet).toHaveBeenCalledWith(
+        expect.objectContaining({
+          PROFILE_LANGUAGE_UI: "en",
+          PROFILE_LANGUAGE_MESSAGE: "de"
+        })
+      );
+    });
+
+    it("sets Italian on the Mixpanel profile when no UI language is persisted", async () => {
+      const state = generateMockedGlobalState(undefined, undefined, undefined);
+      const stateWithoutPreferredLanguage = {
+        ...state,
+        persistedPreferences: {
+          ...state.persistedPreferences,
+          preferredLanguage: undefined
+        }
+      };
+      jest
+        .spyOn(BIOMETRICS, "getBiometricsType")
+        .mockImplementation(() => Promise.resolve("FACE_ID"));
+      jest
+        .spyOn(PUSHUTILS, "checkNotificationPermissions")
+        .mockImplementation(() => Promise.resolve(false));
+
+      await updateMixpanelProfileProperties(stateWithoutPreferredLanguage);
+
+      expect(mockedSet).toHaveBeenCalledWith(
+        expect.objectContaining({ PROFILE_LANGUAGE_UI: "it" })
+      );
+    });
 
     /* === === === === === === === === ===
      * NOTIFICATION_CONFIGURATION
@@ -400,7 +426,8 @@ const generateMockedGlobalState = (
   notificationToken: string | undefined,
   pushContent: PushNotificationsContentTypeEnum | undefined,
   pushReminder: ReminderStatusEnum | undefined,
-  preferredLanguage: "de" | "en" | "it" = "it"
+  preferredLanguage: "de" | "en" | "it" = "it",
+  messageLanguage: "de" | "en" | "it" = "it"
 ): GlobalState =>
   ({
     authentication: {
@@ -451,6 +478,7 @@ const generateMockedGlobalState = (
     },
     profile: pot.some({
       accepted_tos_version: 1,
+      preferred_languages: [fromLocaleToPreferredLanguage(messageLanguage)],
       push_notifications_content_type: pushContent,
       reminder_status: pushReminder,
       service_preferences_settings: {
@@ -462,4 +490,4 @@ const generateMockedGlobalState = (
         notificationServiceId: pnServiceId
       }
     })
-  }) as GlobalState;
+  }) as unknown as GlobalState;

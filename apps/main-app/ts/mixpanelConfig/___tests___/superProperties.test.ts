@@ -13,6 +13,7 @@ import * as APPVERSION from "../../utils/appVersion";
 import * as BIOMETRICS from "../../utils/biometrics";
 import * as DEVICE from "../../utils/device";
 import { SpidIdp } from "../../utils/idps";
+import { fromLocaleToPreferredLanguage } from "../../utils/locale";
 import { updateMixpanelSuperProperties } from "../superProperties";
 
 const mockColorScheme = "light";
@@ -127,41 +128,75 @@ describe("superProperties", () => {
             NOTIFICATION_PERMISSION: notificationPermissionTuple[1],
             SAVED_PAYMENT_METHOD: 0,
             SERVICE_CONFIGURATION: "AUTO",
-            UI_LANGUAGE: "it",
+            LANGUAGE_UI: "it",
+            LANGUAGE_MESSAGE: "it",
             WELFARE_STATUS: []
           });
         });
       })
     );
 
-    it.each(["en", "de"] as const)(
-      "registers the persisted UI language %s",
-      async language => {
-        const state = generateMockedGlobalState(undefined, undefined, language);
-        jest
-          .spyOn(APPVERSION, "getAppVersion")
-          .mockImplementation(() => "1.0.0.0");
-        jest
-          .spyOn(BIOMETRICS, "getBiometricsType")
-          .mockImplementation(() => Promise.resolve("FACE_ID"));
-        jest
-          .spyOn(PUSHUTILS, "checkNotificationPermissions")
-          .mockImplementation(() => Promise.resolve(false));
-        jest.spyOn(DEVICE, "getFontScale").mockImplementation(() => 2.0);
-        jest
-          .spyOn(DEVICE, "isScreenLockSet")
-          .mockImplementation(() => Promise.resolve(true));
-        jest
-          .spyOn(ACCESSIBILITY, "isScreenReaderEnabled")
-          .mockImplementation(() => Promise.resolve(true));
+    it("registers UI and message languages independently", async () => {
+      const state = generateMockedGlobalState(undefined, undefined, "en", "de");
+      jest
+        .spyOn(APPVERSION, "getAppVersion")
+        .mockImplementation(() => "1.0.0.0");
+      jest
+        .spyOn(BIOMETRICS, "getBiometricsType")
+        .mockImplementation(() => Promise.resolve("FACE_ID"));
+      jest
+        .spyOn(PUSHUTILS, "checkNotificationPermissions")
+        .mockImplementation(() => Promise.resolve(false));
+      jest.spyOn(DEVICE, "getFontScale").mockImplementation(() => 2.0);
+      jest
+        .spyOn(DEVICE, "isScreenLockSet")
+        .mockImplementation(() => Promise.resolve(true));
+      jest
+        .spyOn(ACCESSIBILITY, "isScreenReaderEnabled")
+        .mockImplementation(() => Promise.resolve(true));
 
-        await updateMixpanelSuperProperties(state);
+      await updateMixpanelSuperProperties(state);
 
-        expect(mockedRegisterSuperProperties).toHaveBeenCalledWith(
-          expect.objectContaining({ UI_LANGUAGE: language })
-        );
-      }
-    );
+      expect(mockedRegisterSuperProperties).toHaveBeenCalledWith(
+        expect.objectContaining({
+          LANGUAGE_UI: "en",
+          LANGUAGE_MESSAGE: "de"
+        })
+      );
+    });
+
+    it("registers Italian when no UI language is persisted", async () => {
+      const state = generateMockedGlobalState(undefined, undefined);
+      const stateWithoutPreferredLanguage = {
+        ...state,
+        persistedPreferences: {
+          ...state.persistedPreferences,
+          preferredLanguage: undefined
+        }
+      };
+      jest
+        .spyOn(APPVERSION, "getAppVersion")
+        .mockImplementation(() => "1.0.0.0");
+      jest
+        .spyOn(BIOMETRICS, "getBiometricsType")
+        .mockImplementation(() => Promise.resolve("FACE_ID"));
+      jest
+        .spyOn(PUSHUTILS, "checkNotificationPermissions")
+        .mockImplementation(() => Promise.resolve(false));
+      jest.spyOn(DEVICE, "getFontScale").mockImplementation(() => 2.0);
+      jest
+        .spyOn(DEVICE, "isScreenLockSet")
+        .mockImplementation(() => Promise.resolve(true));
+      jest
+        .spyOn(ACCESSIBILITY, "isScreenReaderEnabled")
+        .mockImplementation(() => Promise.resolve(true));
+
+      await updateMixpanelSuperProperties(stateWithoutPreferredLanguage);
+
+      expect(mockedRegisterSuperProperties).toHaveBeenCalledWith(
+        expect.objectContaining({ LANGUAGE_UI: "it" })
+      );
+    });
   });
   /* === === === === === === === === ===
    * AUTH_SECURITY_LEVEL / LOGIN_METHOD
@@ -405,7 +440,8 @@ describe("superProperties", () => {
 const generateMockedGlobalState = (
   pushContent: PushNotificationsContentTypeEnum | undefined,
   pushReminder: ReminderStatusEnum | undefined,
-  preferredLanguage: "de" | "en" | "it" = "it"
+  preferredLanguage: "de" | "en" | "it" = "it",
+  messageLanguage: "de" | "en" | "it" = "it"
 ): GlobalState =>
   ({
     authentication: {
@@ -445,10 +481,11 @@ const generateMockedGlobalState = (
     },
     profile: pot.some({
       accepted_tos_version: 1,
+      preferred_languages: [fromLocaleToPreferredLanguage(messageLanguage)],
       push_notifications_content_type: pushContent,
       reminder_status: pushReminder,
       service_preferences_settings: {
         mode: "AUTO"
       }
     })
-  }) as GlobalState;
+  }) as unknown as GlobalState;

@@ -1,4 +1,7 @@
-import { updateMixpanelUILanguage } from "../uiLanguage";
+import {
+  updateMixpanelMessageLanguage,
+  updateMixpanelUILanguage
+} from "../uiLanguage";
 
 const mockIsMixpanelInitialized = jest.fn(() => true);
 const mockRegisterSuperProperties = jest.fn();
@@ -21,15 +24,35 @@ describe("updateMixpanelUILanguage", () => {
     expect(updateMixpanelUILanguage("de")).toBe(true);
 
     expect(mockRegisterSuperProperties).toHaveBeenCalledWith({
-      UI_LANGUAGE: "de"
+      LANGUAGE_UI: "de"
     });
-    expect(mockPeopleSet).toHaveBeenCalledWith({ UI_LANGUAGE: "de" });
+    expect(mockPeopleSet).toHaveBeenCalledWith({ PROFILE_LANGUAGE_UI: "de" });
+  });
+
+  it("updates the message language properties", () => {
+    expect(updateMixpanelMessageLanguage("en")).toBe(true);
+
+    expect(mockRegisterSuperProperties).toHaveBeenCalledWith({
+      LANGUAGE_MESSAGE: "en"
+    });
+    expect(mockPeopleSet).toHaveBeenCalledWith({
+      PROFILE_LANGUAGE_MESSAGE: "en"
+    });
   });
 
   it("does not update properties when Mixpanel is not initialized", () => {
     mockIsMixpanelInitialized.mockReturnValue(false);
 
     expect(updateMixpanelUILanguage("de")).toBe(false);
+
+    expect(mockRegisterSuperProperties).not.toHaveBeenCalled();
+    expect(mockPeopleSet).not.toHaveBeenCalled();
+  });
+
+  it("does not update the message language when Mixpanel is not initialized", () => {
+    mockIsMixpanelInitialized.mockReturnValue(false);
+
+    expect(updateMixpanelMessageLanguage("en")).toBe(false);
 
     expect(mockRegisterSuperProperties).not.toHaveBeenCalled();
     expect(mockPeopleSet).not.toHaveBeenCalled();
