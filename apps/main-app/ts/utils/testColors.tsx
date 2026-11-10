@@ -1,7 +1,8 @@
+import type { RenderResult } from "@testing-library/react-native";
+
 import { IOThemeContextProvider } from "@io-app/design-system";
 import { ComponentType } from "react";
 import { StyleSheet } from "react-native";
-import { ReactTestRendererJSON } from "react-test-renderer";
 
 /**
  * Renders `Component` in dark mode, overriding the light theme of
@@ -18,13 +19,14 @@ export const withDarkTheme = <P extends object>(
   return DarkThemed;
 };
 
-type RenderedTree = Array<ReactTestRendererJSON> | null | ReactTestRendererJSON;
+type RenderedNode = Exclude<RenderedTree, Array<unknown> | null>;
+type RenderedTree = ReturnType<RenderResult["toJSON"]>;
 
 /** Host nodes of a rendered tree (`toJSON()`) that match `predicate` */
 export const findAllNodes = (
   tree: RenderedTree,
-  predicate: (node: ReactTestRendererJSON) => boolean
-): ReadonlyArray<ReactTestRendererJSON> => {
+  predicate: (node: RenderedNode) => boolean
+): ReadonlyArray<RenderedNode> => {
   if (tree === null) {
     return [];
   }
@@ -32,7 +34,7 @@ export const findAllNodes = (
     return tree.flatMap(node => findAllNodes(node, predicate));
   }
   const children = (tree.children ?? []).filter(
-    (child): child is ReactTestRendererJSON => typeof child !== "string"
+    (child): child is RenderedNode => typeof child !== "string"
   );
   return [
     ...(predicate(tree) ? [tree] : []),
