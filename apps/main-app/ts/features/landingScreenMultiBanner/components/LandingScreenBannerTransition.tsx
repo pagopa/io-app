@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactElement } from "react";
 import Animated, {
   FadeIn,
   FadeOut,
@@ -20,7 +20,7 @@ const bannerEntering = FadeIn.duration(BANNER_TRANSITION_DURATION);
 const bannerExiting = FadeOut.duration(BANNER_TRANSITION_DURATION / 2);
 
 type Props = {
-  children: ReactNode;
+  children: null | ReactElement;
   /** Changing it cross-fades the previous content into the new one */
   contentKey: string;
 };
