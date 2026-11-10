@@ -2,13 +2,18 @@ import { isValidElement, ReactNode } from "react";
 import { ImageURISource, View } from "react-native";
 
 import { useIOTheme } from "../../context";
-import { IOColors, IODimensions, IOListItemStyles } from "../../core";
+import {
+  IOColors,
+  IODimensions,
+  IOListItemStyles,
+  IOTypography
+} from "../../core";
 import { WithTestID } from "../../utils/types";
 import { isImageUri } from "../../utils/url";
 import { Avatar } from "../avatar/Avatar";
 import { Badge } from "../badge/Badge";
 import { LogoPaymentWithFallback } from "../common/LogoPaymentWithFallback";
-import { Icon, IOIconSizeScale } from "../icons";
+import { Icon } from "../icons";
 import { HStack, VStack } from "../layout";
 import { IOLogoPaymentType } from "../logos";
 import { IOSkeleton } from "../skeleton";
@@ -69,12 +74,6 @@ export type ListItemTransactionLogo =
   | IOLogoPaymentType
   | ReactNode;
 
-const CARD_LOGO_SIZE: IOIconSizeScale = 24;
-const MUNICIPALITY_LOGO_SIZE = 44;
-// this is the <Avatar/>'s "small" size,
-// since it is bigger than the card logos, we use
-// it as a base size for homogeneous sizing via container size.
-
 const ListItemTransactionContent = ({
   paymentLogoIcon,
   numberOfLines,
@@ -111,7 +110,8 @@ const ListItemTransactionContent = ({
         {paymentLogoIcon && (
           <View
             style={{
-              width: MUNICIPALITY_LOGO_SIZE,
+              // Avatar size, the largest graphic: keeps every logo aligned
+              width: IODimensions.size.avatar.small,
               alignItems: "center"
             }}
           >
@@ -127,7 +127,10 @@ const ListItemTransactionContent = ({
           </BodySmall>
         </View>
       </HStack>
-      <HStack space={4} style={{ alignItems: "center" }}>
+      <HStack
+        space={IODimensions.gap.listItem.transaction.chevron}
+        style={{ alignItems: "center" }}
+      >
         {badge ? (
           <Badge text={badge?.text} variant={badge?.variant} />
         ) : (
@@ -166,7 +169,7 @@ const StartComponent = ({
   return (
     <LogoPaymentWithFallback
       brand={logoIcon as IOLogoPaymentType}
-      size={CARD_LOGO_SIZE}
+      size={IODimensions.size.icon.listItem}
     />
   );
 };
@@ -253,25 +256,26 @@ const ListItemTransactionSkeleton = ({
           size={IODimensions.size.avatar.small}
         />
       </View>
-      <VStack space={4} style={{ flexGrow: 1 }}>
+      <VStack space={IODimensions.gap.skeleton.items} style={{ flexGrow: 1 }}>
         <IOSkeleton
-          height={16}
-          radius={IODimensions.radius.default}
+          height={IOTypography.h6.size}
+          radius={IODimensions.radius.skeleton.text}
           shape="rectangle"
-          width={62}
+          width="30%"
         />
         <IOSkeleton
-          height={16}
-          radius={IODimensions.radius.default}
+          height={IOTypography.bodySmall.size}
+          radius={IODimensions.radius.skeleton.text}
           shape="rectangle"
-          width={107}
+          width="50%"
         />
       </VStack>
       <View style={{ marginLeft: IODimensions.gap.listItem.default.leading }}>
         <IOSkeleton
-          height={24}
-          radius={IODimensions.radius.default}
+          height={IOTypography.h6.lineHeight}
+          radius={IODimensions.radius.skeleton.text}
           shape="rectangle"
+          // About a typical amount + Chevron
           width={70}
         />
       </View>

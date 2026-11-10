@@ -1,7 +1,7 @@
 import { GestureResponderEvent, StyleSheet, View } from "react-native";
 
 import { useIOTheme } from "../../context";
-import { IODimensions } from "../../core";
+import { IODimensions, IOTypography } from "../../core";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
 import { Icon } from "../icons";
@@ -187,21 +187,29 @@ const ModulePaymentNoticeSkeleton = ({
     accessibilityState={{ busy: true }}
     accessible={true}
     endBlock={
-      <IOSkeleton height={24} radius={16} shape="rectangle" width={64} />
+      <IOSkeleton
+        height={IODimensions.height.badge}
+        radius={IODimensions.radius.badge}
+        shape="rectangle"
+        width={64}
+      />
     }
     startBlock={
-      <VStack space={4}>
+      <VStack
+        space={IODimensions.gap.skeleton.items}
+        style={{ flexGrow: 1, flexShrink: 1 }}
+      >
         <IOSkeleton
-          height={12}
-          radius={IODimensions.radius.default}
+          height={IOTypography.bodySmall.size}
+          radius={IODimensions.radius.skeleton.text}
           shape="rectangle"
-          width={120}
+          width="50%"
         />
         <IOSkeleton
-          height={16}
-          radius={IODimensions.radius.default}
+          height={IOTypography.body.size}
+          radius={IODimensions.radius.skeleton.text}
           shape="rectangle"
-          width={180}
+          width="75%"
         />
       </VStack>
     }
