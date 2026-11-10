@@ -7,7 +7,7 @@ import {
 } from "react-native";
 
 import { useIOColors } from "../../context";
-import { IODimensions } from "../../core";
+import { IODimensions, IOTypography } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
@@ -82,7 +82,7 @@ const ModuleContent = ({
             allowFontScaling
             color={moduleColors.foreground.icon.decorative}
             name={icon}
-            size={IODimensions.size.icon.module.leading}
+            size={IODimensions.size.icon.module.default}
           />
         ) : (
           image != null && (
@@ -178,23 +178,28 @@ const ModuleCredentialSkeleton = ({
     accessibilityState={{ busy: true }}
     accessible={true}
     endBlock={
-      <IOSkeleton height={24} radius={16} shape="rectangle" width={64} />
+      <IOSkeleton
+        height={IODimensions.height.badge}
+        radius={IODimensions.radius.badge}
+        shape="rectangle"
+        width={64}
+      />
     }
     startBlock={
       <HStack
         space={IODimensions.gap.module.leading}
-        style={{ alignItems: "center" }}
+        style={{ alignItems: "center", flexGrow: 1, flexShrink: 1 }}
       >
         <IOSkeleton
-          radius={IODimensions.radius.default}
+          radius={IODimensions.radius.skeleton.graphic}
           shape="square"
-          size={IODimensions.size.icon.module.leading}
+          size={IODimensions.size.icon.module.default}
         />
         <IOSkeleton
-          height={16}
-          radius={IODimensions.radius.default}
+          height={IOTypography.bodySmall.size}
+          radius={IODimensions.radius.skeleton.text}
           shape="rectangle"
-          width={96}
+          width="40%"
         />
       </HStack>
     }
@@ -203,8 +208,8 @@ const ModuleCredentialSkeleton = ({
 
 const styles = StyleSheet.create({
   image: {
-    width: IODimensions.size.icon.module.leading,
-    height: IODimensions.size.icon.module.leading,
+    width: IODimensions.size.icon.module.default,
+    height: IODimensions.size.icon.module.default,
     resizeMode: "contain"
   }
 });

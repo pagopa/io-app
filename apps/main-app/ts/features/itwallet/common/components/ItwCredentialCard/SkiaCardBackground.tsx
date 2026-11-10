@@ -3,7 +3,7 @@ import { Canvas } from "@shopify/react-native-skia";
 import { memo } from "react";
 import { ImageRequireSource, StyleSheet, View } from "react-native";
 
-import { useIsScreenFocused } from "../../hooks/useIsScreenFocused";
+import { useIsScreenFocused } from "../../../../../hooks/useIsScreenFocused";
 import { useLayoutSize } from "../../hooks/useLayoutSize";
 import { SkiaCardCornerOverlay, SkiaCardPatternOverlay } from "./CardOverlay";
 import { CredentialCardConfig } from "./config";

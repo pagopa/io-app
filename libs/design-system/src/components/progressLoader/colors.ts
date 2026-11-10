@@ -3,10 +3,10 @@ import type {
   IOComponentColor
 } from "../../core/tokens/colors/semantic";
 
-/* Track on the screen background, bar on the accent ink */
+/* `background` is the track, `foreground` the bar */
 export const progressLoaderColors = (s: IOColorSemantics) =>
   ({
-    background: s.background.default,
+    background: s.surface.secondary,
     foreground: s.foreground.accent
   }) satisfies {
     background: IOComponentColor<"background">;

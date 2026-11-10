@@ -123,14 +123,31 @@ describe("IOMarkdownLite", () => {
       expect(getByRole("link")).toBeTruthy();
     });
 
-    it("makes a paragraph containing a link keyboard focusable", () => {
-      const { toJSON } = renderComponent({
+    it.each([
+      {
+        name: "a link within text",
         content: "Read the [privacy policy](https://example.com)"
-      });
+      },
+      {
+        name: "a standalone link",
+        content: "[privacy policy](https://example.com)"
+      },
+      {
+        name: "a formatted link",
+        content: "Read the **[privacy policy](https://example.com)**"
+      }
+    ])(
+      "keeps the paragraph readable without an extra keyboard focus stop for $name",
+      ({ content }) => {
+        const onLinkPress = jest.fn();
+        const { getByRole, toJSON } = renderComponent({ content, onLinkPress });
 
-      expect(getFirstParagraphProps(toJSON).accessible).toBe(true);
-      expect(getFirstParagraphProps(toJSON).focusable).toBe(true);
-    });
+        expect(getFirstParagraphProps(toJSON).accessible).toBe(true);
+        expect(getFirstParagraphProps(toJSON).focusable).toBe(false);
+        fireEvent.press(getByRole("link"));
+        expect(onLinkPress).toHaveBeenCalledWith("https://example.com");
+      }
+    );
 
     it("calls onLinkPress callback when link is pressed", () => {
       const onLinkPress = jest.fn();
@@ -164,7 +181,7 @@ describe("IOMarkdownLite", () => {
       const links = getAllByRole("link");
 
       expect(getFirstParagraphProps(toJSON).accessible).toBe(true);
-      expect(getFirstParagraphProps(toJSON).focusable).toBe(true);
+      expect(getFirstParagraphProps(toJSON).focusable).toBe(false);
       expect(links).toHaveLength(2);
 
       fireEvent.press(links[0]);

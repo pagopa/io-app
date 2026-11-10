@@ -1,6 +1,7 @@
 import {
   BottomSheetBackdrop,
   BottomSheetBackdropProps,
+  BottomSheetBackgroundProps,
   BottomSheetFooter,
   BottomSheetFooterProps,
   BottomSheetModal,
@@ -52,6 +53,13 @@ const styles = StyleSheet.create({
     overflow: "hidden"
   }
 });
+
+const NonAccessibleBottomSheetBackground = ({
+  pointerEvents,
+  style
+}: BottomSheetBackgroundProps) => (
+  <View accessible={false} pointerEvents={pointerEvents} style={style} />
+);
 
 export type IOBottomSheetModal = {
   bottomSheet: JSX.Element;
@@ -191,6 +199,9 @@ export const useIOBottomSheetModal = ({
       <BottomSheetModal
         accessible={false}
         backdropComponent={BackdropElement}
+        backgroundComponent={
+          Platform.OS === "ios" ? NonAccessibleBottomSheetBackground : undefined
+        }
         backgroundStyle={{ backgroundColor }}
         containerComponent={
           Platform.OS === "android" && !screenReaderEnabled && !forceFullscreen

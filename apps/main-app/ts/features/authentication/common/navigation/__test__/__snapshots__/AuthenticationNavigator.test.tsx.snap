@@ -2466,6 +2466,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                           <Modal
                             accessible={false}
                             backdropComponent={[Function]}
+                            backgroundComponent={[Function]}
                             backgroundStyle={
                               {
                                 "backgroundColor": "#FFFFFF",
@@ -3315,6 +3316,7 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
                           <Modal
                             accessible={false}
                             backdropComponent={[Function]}
+                            backgroundComponent={[Function]}
                             backgroundStyle={
                               {
                                 "backgroundColor": "#FFFFFF",
