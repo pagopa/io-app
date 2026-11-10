@@ -166,7 +166,7 @@ describe("credential opportunities CTA", () => {
           screen: FIMS_ROUTES.CONSENTS,
           params: {
             ctaText: opportunitiesLabel(),
-            ctaUrl: "https://api.ced.pagopa.it/api/ced-card/v1/fauth",
+            ctaUrl: "https://api.ced.pagopa.it/api/ced-browser/v1/fauth",
             source: ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
             serviceId,
             serviceName: undefined,
