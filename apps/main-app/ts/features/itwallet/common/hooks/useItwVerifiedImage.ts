@@ -23,7 +23,8 @@ const fetchVerifiedImage = async (
   }
 
   const contentType =
-    response.headers.get("content-type") ?? "application/octet-stream";
+    response.headers.get("content-type")?.split(";")[0].trim().toLowerCase() ||
+    "application/octet-stream";
   // Display the verified bytes directly, without another download.
   return `data:${contentType};base64,${bytes.toString("base64")}`;
 };

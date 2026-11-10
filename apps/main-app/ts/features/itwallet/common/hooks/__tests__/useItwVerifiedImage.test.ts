@@ -65,14 +65,37 @@ describe("useItwVerifiedImage", () => {
     await waitFor(() => expect(result.current).toBe(verifiedUri));
   });
 
-  it("normalizes the content type for inline SVG rendering", async () => {
+  it.each([
+    {
+      name: "SVG with charset",
+      contentType: "image/svg+xml; charset=utf-8",
+      expectedType: "image/svg+xml"
+    },
+    {
+      name: "uppercase SVG with whitespace",
+      contentType: "IMAGE/SVG+XML ; charset=utf-8",
+      expectedType: "image/svg+xml"
+    },
+    {
+      name: "missing content type",
+      contentType: undefined,
+      expectedType: "application/octet-stream"
+    },
+    {
+      name: "empty content type",
+      contentType: "",
+      expectedType: "application/octet-stream"
+    }
+  ])("normalizes $name", async ({ contentType, expectedType }) => {
     mockFetch().mockResolvedValue({
       ...response,
-      headers: new Headers({ "content-type": "image/svg+xml; charset=utf-8" })
+      headers: new Headers(
+        contentType === undefined ? {} : { "content-type": contentType }
+      )
     } as Response);
     const { result } = renderHook(() => useItwVerifiedImage(uri, integrity));
     await waitFor(() =>
-      expect(result.current).toBe(`data:image/svg+xml;base64,${imageBase64}`)
+      expect(result.current).toBe(`data:${expectedType};base64,${imageBase64}`)
     );
   });
 
