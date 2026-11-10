@@ -140,7 +140,10 @@ const OtherWalletCardsContainer = withWalletCategoryFilter("other", () => {
   }
 
   return (
-    <View>
+    // Not flattened on Android: TalkBack would otherwise sort the section
+    // children together with the rest of the wallet, announcing the header
+    // after the cards
+    <View collapsable={false} testID="otherWalletCardsSectionTestID">
       <ListItemHeader
         label={I18n.t("features.wallet.cards.categories.other")}
         testID={"walletCardsCategoryOtherHeaderTestID"}
