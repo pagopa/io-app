@@ -2,9 +2,9 @@ import { CgnFeaturedOpportunity } from "@io-app/api-types/generated/definitions/
 import {
   H6,
   IOColors,
-  IOSpacingScale,
+  IODimensions,
+  IODimensionScale,
   IOText,
-  IOVisualCostants,
   VSpacer
 } from "@io-app/design-system";
 import I18n from "i18next";
@@ -21,8 +21,8 @@ import { openWebUrl } from "../../../../../utils/url";
 
 export const CGN_FEATURED_OPPORTUNITIES_MAX_ITEMS = 3;
 
-const CARD_SPACING: IOSpacingScale = 8;
-const CARD_PADDING: IOSpacingScale = 12;
+const CARD_SPACING: IODimensionScale = 8;
+const CARD_PADDING: IODimensionScale = 12;
 const CARD_BORDER_RADIUS = 8;
 const CARD_HEIGHT = 92;
 const LOGO_SIZE = 44;
@@ -89,7 +89,7 @@ export const CgnFeaturedOpportunities = ({
   opportunities: ReadonlyArray<CgnFeaturedOpportunity>;
 }) => {
   const { width } = useWindowDimensions();
-  const cardWidth = width - IOVisualCostants.appMarginDefault * 2;
+  const cardWidth = width - IODimensions.padding.screen.default * 2;
   const items = opportunities.slice(0, CGN_FEATURED_OPPORTUNITIES_MAX_ITEMS);
 
   if (items.length === 0) {
@@ -98,13 +98,13 @@ export const CgnFeaturedOpportunities = ({
 
   return (
     <View testID="CgnFeaturedOpportunities">
-      <View style={{ paddingHorizontal: IOVisualCostants.appMarginDefault }}>
+      <View style={{ paddingHorizontal: IODimensions.padding.screen.default }}>
         <H6>{I18n.t("bonus.cgn.merchantsList.featuredOpportunities.title")}</H6>
       </View>
       <VSpacer size={CARD_SPACING} />
       <FlatList
         contentContainerStyle={{
-          paddingHorizontal: IOVisualCostants.appMarginDefault
+          paddingHorizontal: IODimensions.padding.screen.default
         }}
         data={items}
         horizontal
