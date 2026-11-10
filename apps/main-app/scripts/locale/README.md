@@ -61,8 +61,7 @@ that gap: it lists frequent phrases (count ≥ 10) whose content words are **not
 yet covered by `COMPOUND_DEFS`. The workflow is:
 
 1. Run the script → review `compound_candidates.csv`.
-2. When a candidate is a real concept (e.g. `documenti digitali`, `valore
-legale`), add it to `COMPOUND_DEFS`.
+2. When a candidate is a real concept (e.g. `documenti digitali`, `valore legale`), add it to `COMPOUND_DEFS`.
 3. It becomes a counted group and drops off the candidate list.
 
 Verb/filler phrases (e.g. `attendi qualche secondo`) will also appear — these

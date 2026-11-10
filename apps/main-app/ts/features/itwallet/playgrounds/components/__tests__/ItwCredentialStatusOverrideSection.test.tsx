@@ -167,6 +167,22 @@ describe("ItwCredentialStatusOverrideSection", () => {
     ).toMatchObject({ checked: true });
   });
 
+  test.each([
+    { name: "PID", credential: pid, hasDigitalExpirationWarning: true },
+    { name: "mDL", credential: mdlSdJwt, hasDigitalExpirationWarning: false }
+  ])(
+    "offers the digital expiration warning only for the PID ($name)",
+    ({ credential, hasDigitalExpirationWarning }) => {
+      const component = renderSection("pre", [credential]);
+
+      fireEvent.press(component.getByText(credential.credentialType));
+
+      expect(
+        component.queryByTestId("RadioItemTestID_jwtExpiring") !== null
+      ).toBe(hasDigitalExpirationWarning);
+    }
+  );
+
   it("updates every representation with a single credential store action", () => {
     const component = renderSection("pre", allCredentials);
 
