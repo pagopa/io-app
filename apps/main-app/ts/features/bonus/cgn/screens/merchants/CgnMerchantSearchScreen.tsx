@@ -4,8 +4,8 @@ import {
   ContentWrapper,
   Divider,
   H6,
-  IOSpacingScale,
-  IOVisualCostants,
+  IODimensions,
+  IODimensionScale,
   Pictogram,
   SearchInput,
   SearchInputRef,
@@ -39,7 +39,7 @@ import {
   cgnSearchMerchantsSelector
 } from "../../store/reducers/merchants";
 
-const INPUT_PADDING: IOSpacingScale = 16;
+const INPUT_PADDING: IODimensionScale = 16;
 const MIN_SEARCH_TEXT_LENGTH = 3;
 const SEARCH_DELAY = 300;
 
@@ -153,7 +153,7 @@ export function CgnMerchantSearchScreen() {
 
 const styles = StyleSheet.create({
   emptyListContainer: {
-    marginHorizontal: IOVisualCostants.appMarginDefault
+    marginHorizontal: IODimensions.padding.screen.default
   }
 });
 
@@ -161,7 +161,7 @@ function EmptyListNoResults() {
   return (
     <View style={styles.emptyListContainer}>
       <View style={{ alignItems: "center" }}>
-        <Pictogram name="umbrella" size={120} />
+        <Pictogram name="umbrella" size={IODimensions.size.pictogram.screen} />
         <VSpacer size={24} />
       </View>
       <H6 style={{ textAlign: "center" }}>
@@ -183,7 +183,10 @@ function EmptyListShortQuery({
   return (
     <View style={styles.emptyListContainer}>
       <View style={{ alignItems: "center" }}>
-        <Pictogram name="searchLens" size={120} />
+        <Pictogram
+          name="searchLens"
+          size={IODimensions.size.pictogram.screen}
+        />
         <VSpacer size={24} />
       </View>
       <H6 style={{ textAlign: "center" }}>

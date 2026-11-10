@@ -9,12 +9,7 @@ import {
 import { SvgProps } from "react-native-svg";
 
 import { useIOTheme } from "../../context";
-import {
-  IOColors,
-  IOListItemVisualParams,
-  IOSpacer,
-  IOVisualCostants
-} from "../../core";
+import { IOColors, IODimensions } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
@@ -120,7 +115,7 @@ export const ModuleNavigationAlt = (
         <Icon
           color={theme["interactiveElem-default"]}
           name={rightIcon ?? "chevronRightListItem"}
-          size={IOListItemVisualParams.chevronSize}
+          size={IODimensions.size.icon.chevron}
           testID={testID ? `${testID}_icon` : undefined}
         />
       );
@@ -130,9 +125,12 @@ export const ModuleNavigationAlt = (
 
   return (
     <PressableModuleBase {...pressableProps} onPress={onPress} testID={testID}>
-      <HStack space={8} style={{ alignItems: "center" }}>
+      <HStack
+        space={IODimensions.gap.module.trailing}
+        style={{ alignItems: "center" }}
+      >
         <HStack
-          space={IOVisualCostants.iconMargin as IOSpacer}
+          space={IODimensions.gap.module.leading}
           style={{ alignItems: "center", flexGrow: 1, flexShrink: 1 }}
         >
           {!hugeFontEnabled && (
@@ -148,7 +146,10 @@ export const ModuleNavigationAlt = (
             </View>
           )}
 
-          <VStack space={8} style={{ flexShrink: 1, alignItems: "flex-start" }}>
+          <VStack
+            space={IODimensions.gap.module.topElement}
+            style={{ flexShrink: 1, alignItems: "flex-start" }}
+          >
             {badge ? <Badge {...badge} /> : null}
             <View>
               <BodySmall
@@ -185,14 +186,33 @@ const ModuleNavigationAltSkeleton = ({
     }
     startBlock={
       <HStack
-        space={IOVisualCostants.iconMargin as IOSpacer}
+        space={IODimensions.gap.module.leading}
         style={{ alignItems: "center" }}
       >
-        <IOSkeleton radius={8} shape="square" size={32} />
+        <IOSkeleton
+          radius={IODimensions.radius.default}
+          shape="square"
+          size={32}
+        />
         <VStack space={4}>
-          <IOSkeleton height={12} radius={8} shape="rectangle" width={52} />
-          <IOSkeleton height={16} radius={8} shape="rectangle" width={96} />
-          <IOSkeleton height={12} radius={8} shape="rectangle" width={160} />
+          <IOSkeleton
+            height={12}
+            radius={IODimensions.radius.default}
+            shape="rectangle"
+            width={52}
+          />
+          <IOSkeleton
+            height={16}
+            radius={IODimensions.radius.default}
+            shape="rectangle"
+            width={96}
+          />
+          <IOSkeleton
+            height={12}
+            radius={IODimensions.radius.default}
+            shape="rectangle"
+            width={160}
+          />
         </VStack>
       </HStack>
     }

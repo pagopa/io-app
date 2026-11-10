@@ -9,9 +9,8 @@ import {
   useBottomSheetModal
 } from "@gorhom/bottom-sheet";
 import {
-  IOBottomSheetHeaderRadius,
   IOColors,
-  IOVisualCostants,
+  IODimensions,
   useIOTheme,
   VSpacer
 } from "@io-app/design-system";
@@ -46,8 +45,8 @@ const screenHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
   bottomSheet: {
-    borderTopRightRadius: IOBottomSheetHeaderRadius,
-    borderTopLeftRadius: IOBottomSheetHeaderRadius,
+    borderTopRightRadius: IODimensions.radius.bottomSheet,
+    borderTopLeftRadius: IODimensions.radius.bottomSheet,
     borderCurve: "continuous",
     // Don't delete the overflow property
     // oterwise the above borderRadius won't work
@@ -133,7 +132,7 @@ export const useIOBottomSheetModal = ({
     <BottomSheetScrollView
       overScrollMode={"never"}
       style={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault
+        paddingHorizontal: IODimensions.padding.screen.default
       }}
     >
       {component}

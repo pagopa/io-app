@@ -6,13 +6,13 @@ import {
   HSpacer,
   HStack,
   IOColors,
+  IODimensions,
   IOLogoPaymentCardType,
   IOLogoPaymentExtType,
   IOLogoPaymentType,
   IOPaymentCardLogos,
   IOPaymentExtLogos,
   IOPaymentLogos,
-  IOVisualCostants,
   LogoPayment,
   LogoPaymentCard,
   LogoPaymentExt,
@@ -42,9 +42,9 @@ const styles = StyleSheet.create({
     rowGap: 16
   },
   horizontalScroll: {
-    marginLeft: -IOVisualCostants.appMarginDefault,
-    marginRight: -IOVisualCostants.appMarginDefault,
-    paddingHorizontal: IOVisualCostants.appMarginDefault
+    marginLeft: -IODimensions.padding.screen.default,
+    marginRight: -IODimensions.padding.screen.default,
+    paddingHorizontal: IODimensions.padding.screen.default
   }
 });
 

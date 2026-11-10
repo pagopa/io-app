@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { PressableProps, View, ViewProps } from "react-native";
 
 import { useIOTheme } from "../../context";
-import { IOColors, IOModuleStyles } from "../../core";
+import { IOColors, IODimensions, IOModuleStyles } from "../../core";
 import { HStack } from "../layout";
 
 type ModuleStaticMultipleBlockProps = {
@@ -53,7 +53,10 @@ export const ModuleStatic = ({
     >
       {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions -- ReactNode: "" and false mean nothing to render */}
       {startBlock && (
-        <HStack space={8} style={{ alignItems: "center" }}>
+        <HStack
+          space={IODimensions.gap.module.trailing}
+          style={{ alignItems: "center" }}
+        >
           <View
             style={{ flexDirection: "row", alignItems: "center", flexGrow: 1 }}
           >

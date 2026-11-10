@@ -554,7 +554,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -3431,7 +3432,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -5979,7 +5981,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -8323,7 +8326,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -10688,7 +10692,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -13068,7 +13073,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -15659,7 +15665,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -18556,7 +18563,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -20921,7 +20929,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -23236,7 +23245,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -25702,7 +25712,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -28210,7 +28221,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -30922,7 +30934,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -33513,7 +33526,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -36143,7 +36157,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -38732,7 +38747,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -41139,7 +41155,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -43518,7 +43535,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -46507,7 +46525,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -49301,7 +49320,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -51722,7 +51742,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -54794,7 +54815,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -57455,7 +57477,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -59820,7 +59843,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -62227,7 +62251,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -64606,7 +64631,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]

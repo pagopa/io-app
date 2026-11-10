@@ -1897,30 +1897,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -4001,30 +4011,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -6461,30 +6481,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -8921,30 +8951,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -11025,30 +11065,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -13129,30 +13179,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -15589,30 +15649,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -18049,30 +18119,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -20153,30 +20233,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -22257,30 +22347,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -24717,30 +24817,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -27177,30 +27287,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -29281,30 +29401,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -31385,30 +31515,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -33845,30 +33985,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -36305,30 +36455,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -38765,30 +38925,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -41225,30 +41395,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -44041,30 +44221,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -46857,30 +47047,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -49317,30 +49517,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -51777,30 +51987,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -54593,30 +54813,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -57409,30 +57639,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -59869,30 +60109,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -62329,30 +62579,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -65145,30 +65405,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -67961,30 +68231,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -70421,30 +70701,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -72881,30 +73171,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -75697,30 +75997,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -78513,30 +78823,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview disabled, pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -80617,30 +80937,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -82721,30 +83051,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -85181,30 +85521,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -87641,30 +87991,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -89745,30 +90105,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -91849,30 +92219,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -94309,30 +94689,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -96769,30 +97159,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -98873,30 +99273,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -100977,30 +101387,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -103437,30 +103857,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -105897,30 +106327,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -108001,30 +108441,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -110105,30 +110555,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -112565,30 +113025,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -115025,30 +115495,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -117485,30 +117965,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -119945,30 +120435,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -122761,30 +123261,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -125577,30 +126087,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -128037,30 +128557,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -130497,30 +131027,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -133313,30 +133853,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -136129,30 +136679,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -138589,30 +139149,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -141049,30 +141619,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -143865,30 +144445,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -146681,30 +147271,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -149141,30 +149741,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -151601,30 +152211,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -154417,30 +155037,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
@@ -157233,30 +157863,40 @@ exports[`ProfileNotificationSettings should match snapshot, preview enabled , pr
                             {
                               "alignSelf": "center",
                               "flex": 1,
-                              "gap": 4,
+                              "gap": 12,
                             }
                           }
                         >
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="footnote"
-                            maxFontSizeMultiplier={1.5}
+                          <View
                             style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 14,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 21,
-                                },
-                              ]
+                              {
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "gap": 4,
+                              }
                             }
                           >
-                            Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                          </Text>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="footnote"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 14,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 21,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                            </Text>
+                          </View>
                         </View>
                         <View
                           style={
