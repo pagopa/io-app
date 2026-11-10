@@ -32,6 +32,7 @@ import {
   loginFlowIsOneIdentityHandler,
   loginMethodHandler,
   loginSessionConfigHandler,
+  messageLanguageHandler,
   notificationConfigurationHandler,
   paymentMethodsHandler,
   Property,
@@ -53,6 +54,8 @@ type SuperProperties = {
   fontScale: number;
   isScreenLockSet: boolean;
   isScreenReaderEnabled: boolean;
+  LANGUAGE_MESSAGE: string;
+  LANGUAGE_UI: string;
   LOGIN_FLOW_IS_OI: boolean;
   LOGIN_METHOD: string;
   LOGIN_SESSION: LoginSessionDuration;
@@ -60,7 +63,6 @@ type SuperProperties = {
   NOTIFICATION_PERMISSION: NotificationPermissionType;
   SAVED_PAYMENT_METHOD?: number;
   SERVICE_CONFIGURATION: ServiceConfigurationTrackingType;
-  UI_LANGUAGE: string;
   WELFARE_STATUS: ReadonlyArray<string>;
 };
 
@@ -88,7 +90,8 @@ export const updateMixpanelSuperProperties = async (
     const CDC_STATUS = cdcStatusHandler(state);
     const WELFARE_STATUS = welfareStatusHandler(state);
     const CONNECTION_STATUS = offlineStatusHandler(state);
-    const UI_LANGUAGE = uiLanguageSelector(state);
+    const LANGUAGE_UI = uiLanguageSelector(state);
+    const LANGUAGE_MESSAGE = messageLanguageHandler(state);
 
     const superPropertiesObject: SuperProperties = {
       isScreenReaderEnabled: screenReaderEnabled,
@@ -110,7 +113,8 @@ export const updateMixpanelSuperProperties = async (
       CDC_STATUS,
       WELFARE_STATUS,
       CONNECTION_STATUS,
-      UI_LANGUAGE
+      LANGUAGE_UI,
+      LANGUAGE_MESSAGE
     };
 
     if (forceUpdateFor) {

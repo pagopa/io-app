@@ -31,6 +31,7 @@ import {
   cgnStatusHandler,
   loginMethodHandler,
   loginSessionConfigHandler,
+  messageLanguageHandler,
   mixpanelOptInHandler,
   MixpanelOptInTrackingType,
   notificationConfigurationHandler,
@@ -52,13 +53,14 @@ type ProfileProperties = {
   NOTIFICATION_CONFIGURATION: NotificationPreferenceConfiguration;
   NOTIFICATION_PERMISSION: NotificationPermissionType;
   NOTIFICATION_TOKEN: NotificationTokenType;
+  PROFILE_LANGUAGE_MESSAGE: string;
+  PROFILE_LANGUAGE_UI: string;
   SAVED_PAYMENT_METHOD: number;
   SEND_STATUS: PNServiceStatus;
   SERVICE_CONFIGURATION: ServiceConfigurationTrackingType;
   THEME_PREFERENCE: string;
   TOS_ACCEPTED_VERSION: number | string;
   TRACKING: MixpanelOptInTrackingType;
-  UI_LANGUAGE: string;
   WELFARE_STATUS: ReadonlyArray<string>;
 };
 
@@ -91,7 +93,8 @@ export const updateMixpanelProfileProperties = async (
     const TOS_ACCEPTED_VERSION = tosVersionHandler(state);
     const TRACKING = mixpanelOptInHandler(state);
     const WELFARE_STATUS = welfareStatusHandler(state);
-    const UI_LANGUAGE = uiLanguageSelector(state);
+    const PROFILE_LANGUAGE_UI = uiLanguageSelector(state);
+    const PROFILE_LANGUAGE_MESSAGE = messageLanguageHandler(state);
 
     const profilePropertiesObject: ProfileProperties = {
       BIOMETRIC_TECHNOLOGY,
@@ -111,7 +114,8 @@ export const updateMixpanelProfileProperties = async (
       TOS_ACCEPTED_VERSION,
       TRACKING,
       WELFARE_STATUS,
-      UI_LANGUAGE
+      PROFILE_LANGUAGE_UI,
+      PROFILE_LANGUAGE_MESSAGE
     };
 
     if (forceUpdateFor) {
