@@ -16,6 +16,10 @@ import { openAppSettings } from "../../../../utils/appSettings";
 import { checkAndRequestPermission } from "../../../../utils/calendar";
 import { requestWriteCalendarPermission } from "../../../../utils/permission";
 import { SETTINGS_ROUTES } from "../../common/navigation/routes";
+import {
+  trackLanguagePreferenceSelected,
+  trackPreferencesScreenView
+} from "../analytics";
 
 type PreferencesNavListItem = Pick<
   ComponentProps<typeof ListItemNav>,
@@ -31,6 +35,7 @@ const PreferencesScreen = () => {
   useFocusEffect(
     useCallback(() => {
       setAccessibilityFocus(titleRef, 400 as Millisecond);
+      trackPreferencesScreenView();
     }, [])
   );
 
@@ -53,6 +58,7 @@ const PreferencesScreen = () => {
   }, [navigation]);
 
   const navigateToLanguagePreferenceScreen = useCallback(() => {
+    trackLanguagePreferenceSelected();
     navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
       screen: SETTINGS_ROUTES.PROFILE_PREFERENCES_LANGUAGE
     });

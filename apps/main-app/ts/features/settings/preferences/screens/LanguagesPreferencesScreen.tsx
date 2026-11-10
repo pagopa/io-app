@@ -27,7 +27,10 @@ import {
 } from "../../../../utils/locale";
 import { profileUpsert } from "../../common/store/actions";
 import { profileSelector } from "../../common/store/selectors";
-import { trackUILanguageUpdate } from "../analytics";
+import {
+  trackMessageLanguageUpdate,
+  trackUILanguageUpdate
+} from "../analytics";
 
 /** Allows the user to select one of the available Languages as preferred */
 
@@ -58,7 +61,7 @@ const getLocaleName = (locale: Locales): string => {
 const LanguagesPreferencesScreen = () => {
   const dispatch = useIODispatch();
   const toast = useIOToast();
-  const previousSelectedItem = useRef<string | undefined>(undefined);
+  const previousSelectedItem = useRef<Locales | undefined>(undefined);
   const profile = useIOSelector(profileSelector, _.isEqual);
   const prevProfile = usePrevious(profile);
   const preferredLanguageSelect = useIOSelector(
@@ -94,7 +97,7 @@ const LanguagesPreferencesScreen = () => {
     [dispatch]
   );
 
-  const renderedItem: Array<RadioItem<string>> = useMemo(
+  const renderedItem: Array<RadioItem<Locales>> = useMemo(
     () =>
       availableTranslations.map(item => ({
         label: getLocaleNativeName(item),
@@ -103,6 +106,11 @@ const LanguagesPreferencesScreen = () => {
       })),
     []
   );
+
+  const currentMessageLanguage =
+    pot.isSome(profile) && profile.value.preferred_languages?.[0]
+      ? fromPreferredLanguageToLocale(profile.value.preferred_languages[0])
+      : "it";
 
   const initialSelectedItem = useMemo(
     () =>
@@ -151,13 +159,13 @@ const LanguagesPreferencesScreen = () => {
 
       setLocale(locale);
       preferredLanguageSaveSuccessDispatch(locale);
-      trackUILanguageUpdate(preferredLanguage, locale);
       setSelectedAppLocale(localeId);
       toast.success(
         I18n.t(
           "profile.preferences.list.preferred_language.toastApp.success.title"
         )
       );
+      trackUILanguageUpdate(preferredLanguage, locale);
     },
     [preferredLanguage, preferredLanguageSaveSuccessDispatch, toast]
   );
@@ -179,6 +187,14 @@ const LanguagesPreferencesScreen = () => {
           "profile.preferences.list.preferred_language.toastMessages.success.title"
         )
       );
+      const currentLanguage =
+        profile.value.preferred_languages?.[0] !== undefined
+          ? fromPreferredLanguageToLocale(profile.value.preferred_languages[0])
+          : "it";
+      trackMessageLanguageUpdate(
+        previousSelectedItem.current ?? "it",
+        currentLanguage
+      );
       return;
     }
 
@@ -195,14 +211,14 @@ const LanguagesPreferencesScreen = () => {
   }, [prevProfile, profile, toast]);
 
   const onLanguageSelected = useCallback(
-    (language: string) => {
+    (language: Locales) => {
       if (selectedItem !== language) {
-        previousSelectedItem.current = selectedItem;
+        previousSelectedItem.current = selectedItem ?? currentMessageLanguage;
         setSelectedItem(language);
-        upsertProfile(language as Locales);
+        upsertProfile(language);
       }
     },
-    [selectedItem, upsertProfile]
+    [currentMessageLanguage, selectedItem, upsertProfile]
   );
 
   const onAppLanguageSelected = useCallback(
@@ -283,7 +299,7 @@ const LanguagesPreferencesScreen = () => {
 
           <VSpacer size={8} />
 
-          <RadioGroup<string>
+          <RadioGroup<Locales>
             items={renderedItem}
             onPress={onLanguageSelected}
             selectedItem={selectedItem}
