@@ -13,6 +13,11 @@ import { ItwNfcNotSupportedComponent } from "../components/ItwNfcNotSupportedCom
 
 export type ItwDiscoveryInfoScreenNavigationParams = {
   animationEnabled?: boolean;
+  /**
+   * Credential offer URI to resume after the activation, when the flow was
+   * started from a credential offer (deeplink/QR code).
+   */
+  credentialOfferUri?: string;
   credentialType?: string;
   level?: EidIssuanceLevel;
 };
@@ -26,7 +31,11 @@ export type ItwDiscoveryInfoScreenProps = IOStackNavigationRouteProps<
 export const ItwDiscoveryInfoScreen = ({
   route
 }: ItwDiscoveryInfoScreenProps) => {
-  const { level = "l2", credentialType } = route.params ?? {};
+  const {
+    level = "l2",
+    credentialType,
+    credentialOfferUri
+  } = route.params ?? {};
   const isItWalletActivationDisabled = useIOSelector(
     itwIsActivationDisabledSelector
   );
@@ -47,7 +56,12 @@ export const ItwDiscoveryInfoScreen = ({
     }
 
     // Discovery screen for It-Wallet
-    return <ItwDiscoveryInfoComponent credentialType={credentialType} />;
+    return (
+      <ItwDiscoveryInfoComponent
+        credentialOfferUri={credentialOfferUri}
+        credentialType={credentialType}
+      />
+    );
   }
 
   if (level === "l2-fallback") {

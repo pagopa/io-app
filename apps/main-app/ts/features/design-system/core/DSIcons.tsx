@@ -1,8 +1,6 @@
 import {
   H4,
-  HStack,
   Icon,
-  IconContained,
   IOBiometricIcons,
   IOCategoryIcons,
   IOIcons,
@@ -19,7 +17,6 @@ import { JSX, useCallback } from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet, View } from "react-native";
 
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DSIconViewerBox, iconItemGutter } from "../components/DSIconViewerBox";
 
 interface IconSetObject {
@@ -242,21 +239,6 @@ export const DSIcons = () => {
               />
             ))}
           </View>
-        </VStack>
-
-        {/* IconContained */}
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>IconContained</H4>
-          <DSComponentViewerBox name="IconContained · Tonal variant, neutral color">
-            <HStack space={8}>
-              <IconContained color="neutral" icon="device" variant="tonal" />
-              <IconContained
-                color="neutral"
-                icon="institution"
-                variant="tonal"
-              />
-            </HStack>
-          </DSComponentViewerBox>
         </VStack>
 
         {/* Sizes */}

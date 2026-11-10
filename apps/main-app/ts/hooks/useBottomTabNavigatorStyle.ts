@@ -24,7 +24,7 @@ export const useBottomTabNavigatorStyle = () => {
         paddingLeft: 3,
         paddingRight: 3,
         borderTopWidth: 0,
-        paddingTop: 8,
+        paddingTop: 3,
         zIndex: 1,
         boxShadow: `0px 4px 32px ${hexToRgba(IOColors.black, 0.1)}`
       },

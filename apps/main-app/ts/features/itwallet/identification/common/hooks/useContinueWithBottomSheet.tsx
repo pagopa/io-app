@@ -4,8 +4,8 @@ import {
   BodySmall,
   HStack,
   Icon,
+  IODimensions,
   IOIcons,
-  IOListItemVisualParams,
   useIOTheme,
   VStack
 } from "@io-app/design-system";
@@ -173,7 +173,7 @@ const ListItem = (props: { content: string; icon: IOIcons }) => {
         allowFontScaling
         color={theme["icon-decorative"]}
         name={props.icon}
-        size={IOListItemVisualParams.iconSize}
+        size={IODimensions.size.icon.listItem}
       />
       <Body style={{ flex: 1, flexWrap: "wrap" }}>{props.content}</Body>
     </HStack>

@@ -3,6 +3,7 @@ import { ColorValue } from "react-native";
 import Animated from "react-native-reanimated";
 
 import { IOColors } from "../../core/IOColors";
+import { IODimensions } from "../../core/tokens";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 /* Icons */
 import IconAbacus from "./svg/IconAbacus";
@@ -428,7 +429,7 @@ export const IOIcons = {
 
 export type IOIcons = keyof typeof IOIcons;
 
-export type IOIconSizeScale = 16 | 20 | 24 | 32 | 48;
+export type IOIconSizeScale = (typeof IODimensions.size.icon.scale)[number];
 /* Sizes used exclusively for the Checkbox component */
 export type IOIconSizeScaleCheckbox = 14 | 18;
 

@@ -117,6 +117,12 @@ jest.mock("expo-store-review", () => ({
   requestReview: jest.fn().mockResolvedValue(undefined)
 }));
 
+jest.mock("expo-web-browser", () => ({
+  openAuthSessionAsync: jest
+    .fn()
+    .mockResolvedValue(Promise.resolve({ type: "opened" }))
+}));
+
 jest.mock("expo-linear-gradient", () => ({
   LinearGradient: "LinearGradient"
 }));
@@ -128,6 +134,10 @@ jest.mock("@io-app/expo-pdf-high-res-generator", () => ({
 jest.mock("@io-app/expo-nfc-antenna-info", () => ({
   getNfcAntennaInfo: jest.fn(),
   isHceSupported: jest.fn()
+}));
+
+jest.mock("@io-app/login-utils", () => ({
+  getRedirects: jest.fn()
 }));
 
 /* `@expo/ui` renders SwiftUI views, which cannot run under the Jest environment.
@@ -306,6 +316,11 @@ jest.mock("react-native-vision-camera", () => ({
 jest
   .spyOn(AccessibilityInfo, "isBoldTextEnabled")
   .mockImplementation(() => Promise.resolve(false));
+
+// Plain function (not a jest mock) so it survives `resetAllMocks` and
+// `restoreAllMocks`: the patched stack `CardContainer` calls it on every mount.
+// eslint-disable-next-line functional/immutable-data
+AccessibilityInfo.isScreenReaderEnabled = () => Promise.resolve(false);
 
 /** NefInfo's `fetch` method mock */
 jest.mock("@react-native-community/netinfo", () => ({

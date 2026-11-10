@@ -45,7 +45,7 @@ export const OneIdentityActiveSessionLoginCieAuthorizationWebView = ({
 
   const handleGoBack = useCallback(() => {
     dispatch(setFinishedActiveSessionLoginFlow());
-    navigation.navigate(ROUTES.MAIN, {
+    navigation.popTo(ROUTES.MAIN, {
       screen: MESSAGES_ROUTES.MESSAGES_HOME
     });
   }, [dispatch, navigation]);

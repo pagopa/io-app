@@ -1,11 +1,8 @@
 import { differenceInCalendarDays } from "date-fns";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 
 import { dateToAccessibilityReadableFormat } from "../../../utils/accessibility";
 import { format, formatDateAsLocal } from "../../../utils/dates";
-import { maybeNotNullyString } from "../../../utils/strings";
 
 // Memoized formatter to avoid unnecessary re-instantiation
 const shortDateFormatter = new Intl.DateTimeFormat("it", {
@@ -30,14 +27,10 @@ export function convertDateToWordDistance(
   // 0 days, distance < one day
   if (distance < 1) {
     const formatted = format(date, "H:mm");
-    return pipe(
-      todayAtLabel,
-      maybeNotNullyString,
-      O.fold(
-        () => formatted,
-        result => `${result} ${formatted}`
-      )
-    );
+    if (todayAtLabel === undefined || todayAtLabel.trim().length === 0) {
+      return formatted;
+    }
+    return `${todayAtLabel} ${formatted}`;
   } // distance = 1 day
   else if (distance === 1) {
     return lastDayLabel;
@@ -45,14 +38,13 @@ export function convertDateToWordDistance(
   else if (distance > 1 && date.getFullYear() === today.getFullYear()) {
     return shortDateFormatter.format(date);
   } else if (isNaN(distance)) {
-    return pipe(
-      invalidDateLabel,
-      maybeNotNullyString,
-      O.fold(
-        () => I18n.t("datetimes.notValid"),
-        result => result
-      )
-    );
+    if (
+      invalidDateLabel === undefined ||
+      invalidDateLabel.trim().length === 0
+    ) {
+      return I18n.t("datetimes.notValid");
+    }
+    return invalidDateLabel;
   } else {
     // distance > current year
     return formatDateAsLocal(date, true);

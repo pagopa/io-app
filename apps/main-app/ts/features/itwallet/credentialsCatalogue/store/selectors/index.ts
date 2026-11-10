@@ -30,9 +30,8 @@ export type CredentialsListEntry = {
 };
 
 /**
- * Hardcoded list of all obtainable credentials. When the credentials catalogue
- * is not enabled, this list is used as the source of truth for displaying
- * credentials in the UI.
+ * Hardcoded list of all obtainable credentials, used as a fallback when the
+ * credentials catalogue is not available.
  */
 const hardcodedCredentialsList: ReadonlyArray<CredentialsListEntry> = [
   ...l2Credentials,
@@ -107,15 +106,22 @@ export const itwCredentialsCatalogueByTypesSelector = createSelector(
 export const itwIsCredentialsCatalogueLoading = (state: GlobalState) =>
   pot.isLoading(state.features.itWallet.credentialsCatalogue.catalogue);
 
+/** Whether catalogue data or its locale bundles are still being fetched. */
+export const itwIsCredentialsCataloguePending = (state: GlobalState) => {
+  const { catalogue, translations } =
+    state.features.itWallet.credentialsCatalogue;
+  return pot.isLoading(catalogue) || pot.isLoading(translations);
+};
+
 export const itwIsCredentialsCatalogueUnavailable = (state: GlobalState) =>
   pot.isNone(state.features.itWallet.credentialsCatalogue.catalogue);
 
 /**
- * Return whether the list of obtainable credentials is built from the catalogue
- * and does not use hardcoded values.
+ * Return whether to show or not the CTA in the CED detail page to discover more
+ * CED opportunities
  */
-export const itwIsCatalogueEnabledForCredentialsList = (state: GlobalState) =>
-  state.features.itWallet.credentialsCatalogue.isEnabledForCredentialsList;
+export const itwDiscoverMoreCEDSelector = (state: GlobalState) =>
+  state.features.itWallet.preferences.isDiscoverMoreCEDEnabled ?? false;
 
 /**
  * Select the raw catalogue translations pot (all locales). Only populated for
@@ -165,9 +171,9 @@ const getCatalogueCredentialName = (
 
 /**
  * Returns a resolver function that resolves a credential display name. When the
- * credentials catalogue feature flag is enabled, names are resolved using
- * catalogue translations (v1.3.3+) when available, falling back to the
- * catalogue static name. When the FF is disabled, always falls back to the
+ * catalogue and its translations (v1.3.3+) are available, the name is resolved
+ * from the translations, falling back to the catalogue static name. Otherwise,
+ * or when the credential is not in the catalogue, it falls back to the
  * hardcoded i18n string.
  *
  * This is the single source of truth for credential name resolution across the
@@ -176,14 +182,13 @@ const getCatalogueCredentialName = (
  */
 export const itwCredentialNameResolverSelector = createSelector(
   [
-    itwIsCatalogueEnabledForCredentialsList,
     itwCredentialsCatalogueByTypesSelector,
     itwCatalogueTranslationsByLocaleSelector,
     itwLifecycleIsITWalletValidSelector
   ],
-  (isCatalogueEnabled, catalogue, translations, withL3Design) =>
+  (catalogue, translations, withL3Design) =>
     (credentialType: string | undefined, withDefault = ""): string => {
-      if (isCatalogueEnabled && credentialType && catalogue && translations) {
+      if (credentialType && catalogue && translations) {
         const resolvedName = getCatalogueCredentialName(
           catalogue[credentialType],
           translations
@@ -219,10 +224,9 @@ export const itwCredentialTypeFromDocTypeSelector = createSelector(
 
 /**
  * Select the list of all obtainable credentials that are available in the
- * catalogue (if enabled), or the hardcoded list otherwise.
+ * catalogue, or the hardcoded list when the catalogue is not available.
  *
- * When the catalogue is enabled, credentials are ordered and filtered according
- * to remote config:
+ * Credentials are ordered and filtered according to remote config:
  *
  * - Credentials in `hidden_credentials` are excluded.
  * - Credentials in `new_credentials` appear first (in array order).
@@ -232,7 +236,6 @@ export const itwCredentialTypeFromDocTypeSelector = createSelector(
  */
 export const itwAvailableCredentialsListSelector = createSelector(
   [
-    itwIsCatalogueEnabledForCredentialsList,
     itwCredentialsCatalogueSelector,
     itwCredentialNameResolverSelector,
     itwPinnedCredentialsSelector,
@@ -240,7 +243,6 @@ export const itwAvailableCredentialsListSelector = createSelector(
     itwHiddenCredentialsSelector
   ],
   (
-    isCatalogueEnabled,
     catalogue,
     resolveName,
     pinnedCredentials,
@@ -248,7 +250,7 @@ export const itwAvailableCredentialsListSelector = createSelector(
     hiddenCredentials
   ): ReadonlyArray<CredentialsListEntry> => {
     const selectCredentials = () => {
-      if (!isCatalogueEnabled || !catalogue) {
+      if (!catalogue) {
         return hardcodedCredentialsList;
       }
 

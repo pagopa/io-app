@@ -6,7 +6,7 @@ import {
   hexToRgba,
   IOButton,
   IOColors,
-  IOVisualCostants,
+  IODimensions,
   VSpacer,
   VStack
 } from "@io-app/design-system";
@@ -28,8 +28,8 @@ import {
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { useMaxBrightness } from "../../../../../utils/brightness.ts";
 import { ItwBrandedBox } from "../../../common/components/ItwBrandedBox.tsx";
+import { isItwProximityNfcEnabledSelector } from "../../../common/store/selectors";
 import { itwIsBannerVisibleSelector } from "../../../common/store/selectors/banners.ts";
-import { isItwProximityNfcMinAppVersionSupportedSelector } from "../../../common/store/selectors/remoteConfig.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import {
   trackItwProximityNfcStart,
@@ -73,7 +73,7 @@ export const ItwProximityPresentmentScreen = ({
     itwIsBannerVisibleSelector("proximity_qr_code_info")
   );
   const isNfcPresentmentSupported = useIOSelector(
-    isItwProximityNfcMinAppVersionSupportedSelector
+    isItwProximityNfcEnabledSelector
   );
 
   const isFailure = !!failure;
@@ -137,7 +137,7 @@ export const ItwProximityPresentmentScreen = ({
     <IOScrollView
       animatedRef={animatedScrollViewRef}
       contentContainerStyle={{
-        marginTop: safeAreaInsets.top + IOVisualCostants.headerHeight
+        marginTop: safeAreaInsets.top + IODimensions.height.header
       }}
     >
       {shouldShowExpiredCredentialsBanner && (

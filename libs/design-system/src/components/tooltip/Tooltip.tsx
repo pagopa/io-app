@@ -20,7 +20,7 @@ import Animated, { Easing, FadeIn, FadeOut } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useIOTheme, useIOThemeContext } from "../../context";
-import { IOColors } from "../../core/IOColors";
+import { IOColors, IODimensions } from "../../core";
 import { IconButton } from "../buttons";
 import { Body, H6 } from "../typography";
 import { BottomArrow, LeftArrow, RightArrow, TopArrow } from "./Arrows";
@@ -117,9 +117,8 @@ const styles = StyleSheet.create({
   },
   tooltipContainer: {
     position: "absolute",
-    paddingHorizontal: 16,
-    paddingVertical: 16,
-    borderRadius: 8,
+    padding: IODimensions.padding.tooltip,
+    borderRadius: IODimensions.radius.tooltip,
     zIndex: 2000,
     overflow: "visible"
   },
@@ -130,8 +129,9 @@ const styles = StyleSheet.create({
   },
   closeIcon: {
     position: "absolute",
-    right: 8,
-    top: 9 // It's been used `9` instead of `8` to fix accessibility focus order. In this way title is read before close icon.
+    right: IODimensions.offset.tooltip.close,
+    // One extra dp keeps the title before the close icon in the accessibility focus order
+    top: IODimensions.offset.tooltip.close + 1
   }
 });
 

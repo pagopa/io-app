@@ -37,6 +37,7 @@ jest.mock("@react-navigation/native", () => {
   return {
     ...actualNav,
     useNavigation: () => ({
+      addListener: jest.fn(),
       replace: mockReplace,
       dispatch: mockNavigationDispatch
     })
@@ -187,10 +188,11 @@ describe("OneIdentityActiveSessionCieIdLoginScreen", () => {
       payload: { url: "https://not-whitelisted.example.com" }
     });
 
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL,
-      params: { url: "https://not-whitelisted.example.com" }
-    });
+    expect(mockNavigationDispatch).toHaveBeenCalledWith(
+      StackActions.replace(AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL, {
+        url: "https://not-whitelisted.example.com"
+      })
+    );
   });
 
   it.each([
@@ -229,10 +231,11 @@ describe("OneIdentityActiveSessionCieIdLoginScreen", () => {
 
       fireEvent(cieIdLoginMock, "event", event);
 
-      expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR,
-        params: { failureData }
-      });
+      expect(mockNavigationDispatch).toHaveBeenCalledWith(
+        StackActions.replace(AUTHENTICATION_ROUTES.CIE_ID_ERROR, {
+          failureData
+        })
+      );
     }
   );
 

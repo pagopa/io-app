@@ -6,7 +6,7 @@ import {
   HStack,
   IconButton,
   IOButton,
-  IOVisualCostants,
+  IODimensions,
   OTPInput,
   OTPInputProps,
   RadioGroup,
@@ -41,11 +41,11 @@ type WrapperProps = {
 const radioButtons: ReadonlyArray<RadioItem<OtpID>> = [
   {
     id: OTP_LENGTH_8,
-    value: `OTP length ${OTP_LENGTH_8}`
+    label: `OTP length ${OTP_LENGTH_8}`
   },
   {
     id: OTP_LENGTH_6,
-    value: `OTP length ${OTP_LENGTH_6}`
+    label: `OTP length ${OTP_LENGTH_6}`
   }
 ];
 
@@ -199,7 +199,7 @@ export const DSOTPInput = () => {
             >
               <H4
                 color={theme["textHeading-default"]}
-                style={{ marginVertical: IOVisualCostants.appMarginDefault }}
+                style={{ marginVertical: IODimensions.padding.screen.default }}
               >
                 OTP Input with length of {otpConfig.otpLength}
               </H4>

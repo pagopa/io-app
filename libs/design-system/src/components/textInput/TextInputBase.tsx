@@ -14,6 +14,7 @@ import {
   Platform,
   Pressable,
   StyleSheet,
+  Text,
   TextInput,
   View,
   ViewStyle
@@ -28,7 +29,7 @@ import Animated, {
 } from "react-native-reanimated";
 
 import { useIONewTypeface, useIOTheme } from "../../context";
-import { hexToRgba, IOColors, IOSpacingScale } from "../../core";
+import { hexToRgba, IOColors, IODimensions } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import {
   IOFontSize,
@@ -37,7 +38,7 @@ import {
 } from "../../utils/fonts";
 import { getInputPropsByType, RNTextInputProps } from "../../utils/textInput";
 import { InputType, WithTestID } from "../../utils/types";
-import { Icon, IOIcons, IOIconSizeScale } from "../icons";
+import { Icon, IOIcons } from "../icons";
 import { HSpacer } from "../layout";
 import { BodySmall } from "../typography";
 
@@ -72,18 +73,18 @@ type InputTextProps = WithTestID<{
   value: string;
 }>;
 
-const inputMarginTop: IOSpacingScale = 16;
-const inputHeight = 60;
-const inputPaddingHorizontal: IOSpacingScale = 12;
-const inputPaddingVertical: IOSpacingScale = 8;
-const inputRadius = 8;
+const inputMarginTop = IODimensions.padding.textInput.floatingLabel;
+const inputHeight = IODimensions.height.textInput;
+const inputPaddingHorizontal = IODimensions.padding.textInput.horizontal;
+const inputPaddingVertical = IODimensions.padding.textInput.vertical;
+const inputRadius = IODimensions.radius.textInput;
 const inputTransitionDuration = 250;
 const inputLabelScaleFactor = 0.75; /* 16pt becomes 12pt */
 const inputLabelFontSize: IOFontSize = 16;
 const inputDisabledOpacity = 0.5;
-const inputRightElementMargin: IOSpacingScale = 8;
-const iconSize: IOIconSizeScale = 24;
-const iconMargin: IOSpacingScale = 8;
+const inputRightElementMargin = IODimensions.gap.textInput.trailing;
+const iconSize = IODimensions.size.icon.textInput;
+const iconMargin = IODimensions.gap.textInput.leading;
 
 const styles = StyleSheet.create({
   textInput: {
@@ -96,13 +97,13 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFill,
     borderRadius: inputRadius,
     borderCurve: "continuous",
-    borderWidth: 1
+    borderWidth: IODimensions.stroke.textInput.default
   },
   textInputInnerBorder: {
     ...StyleSheet.absoluteFill,
     borderRadius: inputRadius,
     borderCurve: "continuous",
-    borderWidth: 2
+    borderWidth: IODimensions.stroke.textInput.focused
   },
   textInputStyle: {
     flexGrow: 1,
@@ -219,6 +220,7 @@ const HelperRow = ({
   );
 };
 
+// oxlint-disable-next-line complexity
 export const TextInputBase = ({
   disabled = false,
   placeholder,
@@ -310,7 +312,10 @@ export const TextInputBase = ({
           )
         },
         {
-          translateY: withTiming(enableTransition ? -12 : 0, easingConf)
+          translateY: withTiming(
+            enableTransition ? -IODimensions.offset.textInput.floatingLabel : 0,
+            easingConf
+          )
         },
         {
           scale: withTiming(
@@ -480,6 +485,7 @@ export const TextInputBase = ({
           accessibilityElementsHidden={false}
           accessibilityHint={accessibilityHint}
           accessibilityLabel={accessibilityLabel ?? placeholder}
+          accessibilityLabelledBy={"labelledItem"}
           accessibilityLiveRegion="polite"
           accessibilityState={{ disabled }}
           accessible
@@ -535,7 +541,9 @@ export const TextInputBase = ({
           ]}
         >
           <Animated.Text
+            accessibilityElementsHidden={true}
             accessible={false}
+            importantForAccessibility="no-hide-descendants"
             maxFontSizeMultiplier={IOMaxFontSizeMultiplier}
             numberOfLines={1}
             onLayout={getLabelWidth}
@@ -581,7 +589,14 @@ export const TextInputBase = ({
           </Animated.View>
         )}
       </Pressable>
-
+      {Platform.OS === "android" && (
+        <Text
+          nativeID={"labelledItem"}
+          style={{ height: 0, width: 0, opacity: 0 }}
+        >
+          {accessibilityLabel}
+        </Text>
+      )}
       {(bottomMessage || activeCounterLimit != null) && (
         <HelperRow
           bottomMessage={bottomMessage}

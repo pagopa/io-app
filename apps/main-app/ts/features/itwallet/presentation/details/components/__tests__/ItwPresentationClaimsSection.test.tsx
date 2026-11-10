@@ -6,7 +6,11 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types.ts";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper.tsx";
-import { ItwStoredCredentialsMocks } from "../../../../common/utils/itwMocksUtils.ts";
+import {
+  ITW_ISSUING_AUTHORITY_CLAIM_MOCK_LABEL,
+  ItwStoredCredentialsMocks,
+  withIssuingAuthorityClaimMock
+} from "../../../../common/utils/itwMocksUtils.ts";
 import { CredentialMetadata } from "../../../../common/utils/itwTypesUtils.ts";
 import { ITW_ROUTES } from "../../../../navigation/routes.ts";
 import { ItwPresentationClaimsSection } from "../ItwPresentationClaimsSection.tsx";
@@ -45,6 +49,21 @@ describe("ItwPresentationClaimsSection", () => {
     const component = renderComponent(ItwStoredCredentialsMocks.dc);
 
     expect(component.queryByLabelText("QR Code")).toBeNull();
+  });
+
+  it("should not render the issuing_authority claim, already shown by the issuance metadata", () => {
+    const component = renderComponent(
+      withIssuingAuthorityClaimMock(ItwStoredCredentialsMocks.ts)
+    );
+
+    expect(
+      component.queryByText(ITW_ISSUING_AUTHORITY_CLAIM_MOCK_LABEL)
+    ).toBeNull();
+    expect(
+      component.queryByText(
+        I18n.t("features.itWallet.verifiableCredentials.claims.releasedBy")
+      )
+    ).not.toBeNull();
   });
 
   it("should expose the European Disability Card validity status to screen readers", () => {

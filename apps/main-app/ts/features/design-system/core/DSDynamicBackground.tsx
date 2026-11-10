@@ -7,7 +7,7 @@ import {
   hexToRgba,
   HStack,
   IOColors,
-  IOVisualCostants,
+  IODimensions,
   RadioGroup,
   useIOTheme,
   VStack
@@ -81,9 +81,9 @@ export const DSDynamicBackground = () => {
 
   const renderedOrganizationsURIs: Array<{
     id: string;
-    value: string;
+    label: string;
   }> = organizationsURIs.map(item => ({
-    value: item.name,
+    label: item.name,
     id: item.name
   }));
 
@@ -148,7 +148,7 @@ export const DSDynamicBackground = () => {
         style={{
           zIndex: 10,
           marginTop: headerHeight + insets.top,
-          marginHorizontal: IOVisualCostants.appMarginDefault
+          marginHorizontal: IODimensions.padding.screen.default
         }}
       >
         <VStack space={24}>
@@ -172,7 +172,7 @@ export const DSDynamicBackground = () => {
 
           <View
             style={{
-              borderRadius: IOVisualCostants.avatarRadiusSizeMedium,
+              borderRadius: IODimensions.radius.avatar.medium,
               borderCurve: "continuous",
               backgroundColor: IOColors[theme["appBackground-primary"]],
               borderWidth: 1,
@@ -203,8 +203,8 @@ export const DSDynamicBackground = () => {
           style={{
             height: scrollGradientHeight,
             position: "absolute",
-            left: -IOVisualCostants.appMarginDefault,
-            right: -IOVisualCostants.appMarginDefault,
+            left: -IODimensions.padding.screen.default,
+            right: -IODimensions.padding.screen.default,
             bottom: -scrollGradientHeight
           }}
         />

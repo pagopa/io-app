@@ -29,24 +29,21 @@ import Animated, {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { scheduleOnRN } from "react-native-worklets";
 
-import type { IOSpacer, IOSpacingScale } from "../../core/IOSpacing";
-
 import { useIOTheme } from "../../context";
 import {
   alertEdgeToEdgeInsetTransitionConfig,
   hexToRgba,
-  iconBtnSizeSmall,
   IOColors,
+  IODimensions,
   IOSpringValues,
   IOThemeDark,
   IOThemeLight,
-  IOTypography,
-  IOVisualCostants
+  IOTypography
 } from "../../core";
 import { WithTestID } from "../../utils/types";
 import { IconButton } from "../buttons/IconButton";
 import { HSpacer, HStack } from "../layout";
-import { IOText } from "../typography";
+import { AnimatedIOText } from "../typography";
 import { HeaderActionProps } from "./common";
 
 export type HeaderSecondLevel = BackProps &
@@ -123,12 +120,10 @@ interface TwoActions extends CommonProps {
   type: "twoActions";
 }
 
-const titleHorizontalMargin: IOSpacingScale = 16;
-
 const styles = StyleSheet.create({
   headerInner: {
-    paddingHorizontal: IOVisualCostants.appMarginDefault,
-    height: IOVisualCostants.headerHeight,
+    paddingHorizontal: IODimensions.padding.screen.default,
+    height: IODimensions.height.header,
     flexGrow: 1,
     flexDirection: "row",
     alignItems: "center",
@@ -137,7 +132,7 @@ const styles = StyleSheet.create({
   titleContainer: {
     flexGrow: 1,
     flexShrink: 1,
-    marginHorizontal: titleHorizontalMargin
+    marginHorizontal: IODimensions.gap.header.title
   }
 });
 
@@ -177,8 +172,6 @@ export const HeaderSecondLevel = ({
   const insets = useSafeAreaInsets();
   const isTitleAccessible = useMemo(() => !!title.trim(), [title]);
   const paddingTop = useSharedValue(ignoreSafeAreaMargin ? 0 : insets.top);
-
-  const AnimatedIOText = Animated.createAnimatedComponent(IOText);
 
   // If the variant is not set, set a fallback color
   const defaultIconColor = variant ?? "neutral";
@@ -306,7 +299,10 @@ export const HeaderSecondLevel = ({
     <Animated.View
       accessibilityRole="header"
       style={[
-        { borderBottomWidth: 1, borderColor: borderColorTransparentState },
+        {
+          borderBottomWidth: IODimensions.stroke.default,
+          borderColor: borderColorTransparentState
+        },
         ignoreSafeAreaMargin ? { borderColor: borderColorSolidState } : {},
         headerWrapperAnimatedStyle
       ]}
@@ -330,7 +326,7 @@ export const HeaderSecondLevel = ({
             testID={backTestID}
           />
         ) : (
-          <HSpacer size={32} />
+          <HSpacer size={IODimensions.size.iconButton.small} />
         )}
         <View
           accessibilityElementsHidden={!isTitleAccessible}
@@ -354,7 +350,11 @@ export const HeaderSecondLevel = ({
             {title}
           </AnimatedIOText>
         </View>
-        <HStack allowScaleSpacing space={16} style={{ flexShrink: 0 }}>
+        <HStack
+          allowScaleSpacing
+          space={IODimensions.gap.header.actions}
+          style={{ flexShrink: 0 }}
+        >
           {type === "threeActions" && (
             <IconButton
               {...thirdAction}
@@ -376,7 +376,7 @@ export const HeaderSecondLevel = ({
               persistentColorMode={!!variant}
             />
           ) : (
-            <HSpacer size={iconBtnSizeSmall as IOSpacer} />
+            <HSpacer size={IODimensions.size.iconButton.small} />
           )}
         </HStack>
       </Animated.View>

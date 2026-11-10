@@ -11,7 +11,7 @@ import { useWindowDimensions, View } from "react-native";
 
 import { useDetectSmallScreen } from "../../../../hooks/useDetectSmallScreen";
 
-export type PinCaouselItemProps = WithTestID<{
+export type PinCarouselItemProps = WithTestID<{
   description?: string;
   handleOnValidate: (val: string) => boolean;
   maxLength: number;
@@ -31,7 +31,7 @@ export const PinCarouselItem = memo(
     maxLength,
     handleOnValidate,
     onValueChange
-  }: PinCaouselItemProps) => {
+  }: PinCarouselItemProps) => {
     const { isDeviceScreenSmall } = useDetectSmallScreen();
     const { width: screenWidth } = useWindowDimensions();
 
@@ -46,6 +46,7 @@ export const PinCarouselItem = memo(
         testID={testID}
       >
         <H4
+          accessibilityRole="header"
           accessible
           ref={titleRef}
           style={{ textAlign: "center" }}

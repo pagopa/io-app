@@ -3,7 +3,7 @@ import { AccessibilityRole, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
 import { useIOTheme } from "../../context";
-import { IOListItemStyles, IOListItemVisualParams } from "../../core";
+import { IODimensions, IOListItemStyles } from "../../core";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
@@ -120,7 +120,7 @@ const ListItemInfoContent = ({
           allowFontScaling
           color={theme["icon-decorative"]}
           name={icon}
-          size={IOListItemVisualParams.iconSize}
+          size={IODimensions.size.icon.listItem}
         />
       )}
 
@@ -136,16 +136,17 @@ const ListItemInfoContent = ({
           accessibilityLabel={
             hasInteractiveElements ? listItemAccessibilityLabel : undefined
           }
-          accessible={hasInteractiveElements}
+          accessible={false}
           importantForAccessibility={
             hasInteractiveElements ? "yes" : "no-hide-descendants"
           }
+          screenReaderFocusable={hasInteractiveElements ? true : undefined}
           style={{ flexDirection: reversed ? "column-reverse" : "column" }}
         >
           {topElement?.type === "badge" && (
             <View style={{ alignSelf: "flex-start" }}>
               <Badge {...topElement.componentProps} />
-              <VSpacer size={4} />
+              <VSpacer size={IODimensions.gap.listItem.default.topElement} />
             </View>
           )}
 
@@ -303,7 +304,7 @@ export const ListItemInfo = ({
               IOListItemStyles.listItemInner,
               {
                 columnGap:
-                  IOListItemVisualParams.iconMargin *
+                  IODimensions.gap.listItem.default.leading *
                   dynamicFontScale *
                   spacingScaleMultiplier
               },
@@ -323,7 +324,9 @@ export const ListItemInfo = ({
         hasInteractiveElements ? undefined : listItemAccessibilityLabel
       }
       accessibilityRole={hasInteractiveElements ? undefined : accessibilityRole}
-      accessible={!hasInteractiveElements}
+      accessible={false}
+      importantForAccessibility={hasInteractiveElements ? undefined : "yes"}
+      screenReaderFocusable={hasInteractiveElements ? undefined : true}
       style={IOListItemStyles.listItem}
       testID={testID}
     >
@@ -332,7 +335,7 @@ export const ListItemInfo = ({
           IOListItemStyles.listItemInner,
           {
             columnGap:
-              IOListItemVisualParams.iconMargin *
+              IODimensions.gap.listItem.default.leading *
               dynamicFontScale *
               spacingScaleMultiplier
           }

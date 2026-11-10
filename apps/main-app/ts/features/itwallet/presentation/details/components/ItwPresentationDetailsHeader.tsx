@@ -21,7 +21,7 @@ import { useItwCredentialName } from "../../../common/hooks/useItwCredentialName
 import { itwShouldUpgradeCredentialSelector } from "../../../common/store/selectors";
 import { useTagPropsByStatus } from "../../../common/utils/itwCredentialUtils.ts";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
-import { useThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
+import { getLegacyThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
 import {
   itwCredentialsEidStatusSelector,
@@ -126,7 +126,7 @@ const ItwPresentationDetailsHeaderLegacy = ({
 }: ItwPresentationDetailsHeaderProps) => {
   const { isExperimental } = useIOExperimentalDesign();
   const { statusBarStyle, backgroundColor, textColor } =
-    useThemeColorByCredentialType(credential.credentialType);
+    getLegacyThemeColorByCredentialType(credential.credentialType);
   const credentialName = useItwCredentialName(credential.credentialType);
 
   const headerContent = useMemo(() => {

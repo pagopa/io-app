@@ -9,20 +9,17 @@ import {
 import Animated from "react-native-reanimated";
 
 import { useIOThemeContext } from "../../context";
-import { IOVisualCostants } from "../../core";
+import { IODimensions } from "../../core";
 import { hexToRgba, IOColors } from "../../core/IOColors";
-import { IOAlertRadius } from "../../core/IOShapes";
-import { IOAlertSpacing, IOSpacer } from "../../core/IOSpacing";
 import { useScaleAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
-import { Icon, IOIcons, IOIconSizeScale } from "../icons";
+import { Icon, IOIcons } from "../icons";
 import { HStack, VStack } from "../layout";
 import { Body, ButtonText } from "../typography";
 
-const ICON_SIZE: IOIconSizeScale = 24;
-
-const [padding, paddingFullWidth] = IOAlertSpacing;
+const { default: padding, fullWidth: paddingFullWidth } =
+  IODimensions.padding.alert;
 
 type AlertActionProps =
   | {
@@ -124,7 +121,8 @@ export const Alert = ({
 
   const paddingDefaultVariant: ViewStyle = {
     padding,
-    borderRadius: IOAlertRadius * dynamicFontScale * spacingScaleMultiplier,
+    borderRadius:
+      IODimensions.radius.alert * dynamicFontScale * spacingScaleMultiplier,
     borderCurve: "continuous"
   };
 
@@ -136,14 +134,14 @@ export const Alert = ({
   const renderMainBlock = () => (
     <HStack
       allowScaleSpacing
-      space={IOVisualCostants.iconMargin as IOSpacer}
+      space={IODimensions.gap.alert.leading}
       style={{ alignItems: "center" }}
     >
       <Icon
         allowFontScaling
         color={mapVariantStates[variant].foreground}
         name={mapVariantStates[variant].icon}
-        size={ICON_SIZE}
+        size={IODimensions.size.icon.alert}
       />
       {/* Sadly we don't have specific alignments style for text
       in React Native, like `text-box-trim` for CSS. So we
@@ -156,7 +154,7 @@ export const Alert = ({
           flex: 1
         }}
       >
-        <VStack allowScaleSpacing space={8}>
+        <VStack allowScaleSpacing space={IODimensions.gap.alert.action}>
           <Body
             accessibilityRole="text"
             color={mapVariantStates[variant].foreground}

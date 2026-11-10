@@ -4,9 +4,9 @@ import Animated from "react-native-reanimated";
 
 import { useIOTheme } from "../../context";
 import {
+  IODimensions,
   IOSelectionListItemStyles,
-  IOSelectionListItemVisualParams,
-  IOSelectionTickVisualParams
+  IOTypography
 } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
@@ -40,11 +40,11 @@ type ListItemRadioLoadingProps =
 
 type Props = WithTestID<{
   description?: ReactNode | string;
+  label: string;
   loadingProps?: ListItemRadioLoadingProps;
   onValueChange?: (newValue: boolean) => void;
   selected: boolean;
   startImage?: ListItemRadioGraphicProps;
-  value: string;
 }>;
 
 const DISABLED_OPACITY = 0.5;
@@ -57,8 +57,8 @@ type ListItemRadioProps = Pick<
 
 const styles = StyleSheet.create({
   imageSize: {
-    width: IOSelectionListItemVisualParams.iconSize,
-    height: IOSelectionListItemVisualParams.iconSize,
+    width: IODimensions.size.icon.selection,
+    height: IODimensions.size.icon.selection,
     resizeMode: "contain"
   }
 });
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
  * @param props
  */
 export const ListItemRadio = ({
-  value,
+  label,
   description,
   startImage,
   selected,
@@ -101,22 +101,32 @@ export const ListItemRadio = ({
   const disabledStyle = { opacity: disabled ? DISABLED_OPACITY : 1 };
 
   const SkeletonDescriptionLines = () => (
-    <VStack space={8}>
-      <IOSkeleton height={8} radius={8} shape="rectangle" width="100%" />
-      <IOSkeleton height={8} radius={8} shape="rectangle" width="100%" />
+    <VStack space={IODimensions.gap.skeleton.items}>
+      <IOSkeleton
+        height={IOTypography.bodySmall.size}
+        radius={IODimensions.radius.skeleton.text}
+        shape="rectangle"
+        width="100%"
+      />
+      <IOSkeleton
+        height={IOTypography.bodySmall.size}
+        radius={IODimensions.radius.skeleton.text}
+        shape="rectangle"
+        width="100%"
+      />
     </VStack>
   );
 
   const SkeletonIcon = () => (
     <View
       style={{
-        marginRight: IOSelectionListItemVisualParams.iconMargin
+        marginRight: IODimensions.gap.selection.leading
       }}
     >
       <IOSkeleton
-        radius={8}
+        radius={IODimensions.radius.skeleton.graphic}
         shape="square"
-        size={IOSelectionListItemVisualParams.iconSize}
+        size={IODimensions.size.icon.selection}
       />
     </View>
   );
@@ -128,7 +138,10 @@ export const ListItemRadio = ({
       accessibilityLabel={loadingAccessibilityLabel}
       accessibilityState={{ busy: true }}
       accessible={true}
-      style={[IOSelectionListItemStyles.listItem, { rowGap: 8 }]}
+      style={[
+        IOSelectionListItemStyles.listItem,
+        { rowGap: IODimensions.gap.skeleton.items }
+      ]}
     >
       <View style={IOSelectionListItemStyles.listItemInner}>
         <View
@@ -139,15 +152,27 @@ export const ListItemRadio = ({
             alignItems: "center"
           }}
         >
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              flexGrow: 1,
+              flexShrink: 1
+            }}
+          >
             {loadingProps?.skeletonIcon && <SkeletonIcon />}
-            <IOSkeleton height={16} radius={8} shape="rectangle" width={180} />
+            <IOSkeleton
+              height={IOTypography.h6.size}
+              radius={IODimensions.radius.skeleton.text}
+              shape="rectangle"
+              width="60%"
+            />
           </View>
-          <HSpacer size={8} />
+          <HSpacer size={IODimensions.gap.selection.control} />
           <View pointerEvents="none" style={disabledStyle}>
             <Radio
               checked={toggleValue}
-              size={IOSelectionTickVisualParams.size * dynamicFontScale}
+              size={IODimensions.size.selection.control * dynamicFontScale}
             />
           </View>
         </View>
@@ -193,7 +218,7 @@ export const ListItemRadio = ({
                 flexDirection: "row",
                 flexShrink: 1,
                 columnGap:
-                  IOSelectionListItemVisualParams.iconMargin *
+                  IODimensions.gap.selection.leading *
                   dynamicFontScale *
                   spacingScaleMultiplier
               }}
@@ -203,7 +228,7 @@ export const ListItemRadio = ({
                   allowFontScaling
                   color={theme["icon-decorative"]}
                   name={startImage.icon}
-                  size={IOSelectionListItemVisualParams.iconSize}
+                  size={IODimensions.size.icon.selection}
                 />
               )}
               {startImage?.uri && (
@@ -219,15 +244,15 @@ export const ListItemRadio = ({
                 <View style={{ alignSelf: "center" }}>
                   <LogoPayment
                     name={startImage.paymentLogo}
-                    size={IOSelectionListItemVisualParams.iconSize}
+                    size={IODimensions.size.icon.selection}
                   />
                 </View>
               )}
               <H6 color={theme["textBody-default"]} style={{ flexShrink: 1 }}>
-                {value}
+                {label}
               </H6>
             </View>
-            <HSpacer size={8} />
+            <HSpacer size={IODimensions.gap.selection.control} />
             <View
               accessibilityElementsHidden
               importantForAccessibility="no-hide-descendants"
@@ -235,16 +260,14 @@ export const ListItemRadio = ({
             >
               <Radio
                 checked={selected ?? toggleValue}
-                size={IOSelectionTickVisualParams.size * dynamicFontScale}
+                size={IODimensions.size.selection.control * dynamicFontScale}
               />
             </View>
           </View>
           {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions -- ReactNode: "" and false mean nothing to render */}
           {description && (
             <View>
-              <VSpacer
-                size={IOSelectionListItemVisualParams.descriptionMargin}
-              />
+              <VSpacer size={IODimensions.gap.selection.description} />
               <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
                 {description}
               </BodySmall>

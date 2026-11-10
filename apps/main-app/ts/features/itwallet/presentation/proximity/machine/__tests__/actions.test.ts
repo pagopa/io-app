@@ -66,24 +66,46 @@ describe("itwProximityMachine actions", () => {
   });
 
   it.each([
-    { engagementMode: "qrcode", proximity_flow: "qr_code" },
-    { engagementMode: "nfc", proximity_flow: "nfc" }
+    {
+      engagementMode: "qrcode",
+      retrievalMethod: "ble",
+      proximity_flow: "qr_code"
+    },
+    {
+      engagementMode: "nfc",
+      retrievalMethod: "ble",
+      proximity_flow: "nfc_ble"
+    },
+    { engagementMode: "nfc", retrievalMethod: "nfc", proximity_flow: "nfc_nfc" }
   ])(
-    "tracks the proximity start with proximity_flow $proximity_flow for engagementMode $engagementMode",
-    ({ engagementMode, proximity_flow }) => {
-      trackProximityStartAction({ context: { engagementMode } } as any);
+    "tracks the proximity start with proximity_flow $proximity_flow for engagementMode $engagementMode and retrievalMethod $retrievalMethod",
+    ({ engagementMode, retrievalMethod, proximity_flow }) => {
+      trackProximityStartAction({
+        context: { engagementMode, retrievalMethod }
+      } as any);
 
       expect(trackItwProximityStart).toHaveBeenCalledWith({ proximity_flow });
     }
   );
 
   it.each([
-    { engagementMode: "qrcode", proximity_flow: "qr_code" },
-    { engagementMode: "nfc", proximity_flow: "nfc" }
+    {
+      engagementMode: "qrcode",
+      retrievalMethod: "ble",
+      proximity_flow: "qr_code"
+    },
+    {
+      engagementMode: "nfc",
+      retrievalMethod: "ble",
+      proximity_flow: "nfc_ble"
+    },
+    { engagementMode: "nfc", retrievalMethod: "nfc", proximity_flow: "nfc_nfc" }
   ] as const)(
-    "tracks the proximity success with proximity_flow $proximity_flow for engagementMode $engagementMode",
-    ({ engagementMode, proximity_flow }) => {
-      trackProximitySuccessAction({ context: { engagementMode } } as any);
+    "tracks the proximity success with proximity_flow $proximity_flow for engagementMode $engagementMode and retrievalMethod $retrievalMethod",
+    ({ engagementMode, retrievalMethod, proximity_flow }) => {
+      trackProximitySuccessAction({
+        context: { engagementMode, retrievalMethod }
+      } as any);
 
       expect(trackItwProximityPresentationCompleted).toHaveBeenCalledWith({
         proximity_flow

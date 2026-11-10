@@ -21,9 +21,10 @@ import {
   validCredentialStatuses
 } from "../../utils/itwCredentialUtils";
 import { CredentialType } from "../../utils/itwMocksUtils";
-import { useThemeColorByCredentialType } from "../../utils/itwStyleUtils";
+import { getLegacyThemeColorByCredentialType } from "../../utils/itwStyleUtils";
 import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
 import { ItWalletIdLogo } from "../ItWalletIdLogo";
+import { CREDENTIAL_CARD_ASPECT_RATIO } from "./backgroundUtils";
 import { CardBackground, LegacyCardBackground } from "./CardBackground";
 import { useCredentialCardConfig } from "./config";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
@@ -165,11 +166,7 @@ export const ItwCredentialCard = memo(
   }
 );
 
-/**
- * @deprecated Only used for the older Documenti su IO, will be removed in the
- *   future
- */
-export const ItwCredentialCardLegacy = ({
+const LegacyCredentialCard = ({
   credentialType,
   credentialStatus = "valid",
   issuedAt
@@ -182,7 +179,7 @@ export const ItwCredentialCardLegacy = ({
     credentialStatus,
     credentialType
   );
-  const theme = useThemeColorByCredentialType(credentialType);
+  const theme = getLegacyThemeColorByCredentialType(credentialType);
   const credentialName = useItwCredentialName(credentialType);
   const tagPropsByStatus = useTagPropsByStatus();
   const borderColorByStatus = useBorderColorByStatus();
@@ -294,9 +291,15 @@ export const ItwCredentialCardLegacy = ({
   );
 };
 
+/**
+ * @deprecated Only used for the older Documenti su IO, will be removed in the
+ *   future
+ */
+export const ItwCredentialCardLegacy = memo(LegacyCredentialCard);
+
 const styles = StyleSheet.create({
   cardWrapper: {
-    aspectRatio: 16 / 10,
+    aspectRatio: CREDENTIAL_CARD_ASPECT_RATIO,
     borderRadius: 8
   },
   cardContainer: {
