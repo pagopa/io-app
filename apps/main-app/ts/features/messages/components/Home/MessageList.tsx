@@ -13,10 +13,8 @@ import {
   useIOSelector,
   useIOStore
 } from "../../../../store/hooks";
-import {
-  bannerLayoutTransition,
-  LandingScreenBannerPicker
-} from "../../../landingScreenMultiBanner/components/LandingScreenBannerPicker";
+import { LandingScreenBannerPicker } from "../../../landingScreenMultiBanner/components/LandingScreenBannerPicker";
+import { bannerLayoutTransition } from "../../../landingScreenMultiBanner/components/LandingScreenBannerTransition";
 import { trackPullToRefresh } from "../../analytics";
 import {
   messageListForCategorySelector,
