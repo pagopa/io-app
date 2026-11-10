@@ -1,12 +1,16 @@
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 
-import { itwShouldShowEngagementScreenSelector } from "..";
+import {
+  itwIsEngagementScreenShownSelector,
+  itwShouldShowEngagementScreenSelector
+} from "..";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { setProfileHashedFiscalCode } from "../../../../../../store/actions/crossSessions";
 import { appReducer } from "../../../../../../store/reducers";
 import { hashedProfileFiscalCodeSelector } from "../../../../../../store/reducers/crossSessions";
 import { logoutSuccess } from "../../../../../authentication/common/store/actions";
 import {
+  itwResetEngagementScreenShown,
   itwSetEngagementScreenShown,
   itwSetFiscalCodeWhitelisted
 } from "../../../../common/store/actions/preferences";
@@ -22,6 +26,33 @@ const userState = appReducer(
   ),
   itwSetFiscalCodeWhitelisted(true)
 );
+
+describe("itwIsEngagementScreenShownSelector", () => {
+  it("is false when the user is unknown", () =>
+    expect(itwIsEngagementScreenShownSelector(initialState)).toBe(false));
+
+  it("tracks the current user's marker", () => {
+    const user = hashedProfileFiscalCodeSelector(userState)!;
+    expect(itwIsEngagementScreenShownSelector(userState)).toBe(false);
+
+    const seenState = appReducer(userState, itwSetEngagementScreenShown(user));
+    expect(itwIsEngagementScreenShownSelector(seenState)).toBe(true);
+
+    expect(
+      itwIsEngagementScreenShownSelector(
+        appReducer(
+          seenState,
+          setProfileHashedFiscalCode("BBBBBB00B00B000B" as FiscalCode)
+        )
+      )
+    ).toBe(false);
+    expect(
+      itwIsEngagementScreenShownSelector(
+        appReducer(seenState, itwResetEngagementScreenShown())
+      )
+    ).toBe(false);
+  });
+});
 
 describe("ITW engagement eligibility", () => {
   beforeEach(() =>

@@ -10,7 +10,6 @@ import { View } from "react-native";
 
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { hashedProfileFiscalCodeSelector } from "../../../../store/reducers/crossSessions";
 import { resetTourCompletedAction } from "../../../tour/store/actions";
 import { isTourCompletedSelector } from "../../../tour/store/selectors";
 import {
@@ -18,21 +17,16 @@ import {
   itwSetDiscoverMoreCEDEnabled
 } from "../../common/store/actions/preferences.ts";
 import { itwIsDiscoverMoreCEDLocallyEnabledSelector } from "../../common/store/selectors/preferences";
+import { itwIsEngagementScreenShownSelector } from "../../loginEngagement/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ITW_TOUR_GROUP_ID } from "../../tour/utils/constants";
 
 export const ItwMiscSection = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
-  const isEngagementScreenShown = useIOSelector(state => {
-    const user = hashedProfileFiscalCodeSelector(state);
-    return (
-      user !== undefined &&
-      state.features.itWallet.preferences.engagementScreenShownByUser?.[
-        user
-      ] === true
-    );
-  });
+  const isEngagementScreenShown = useIOSelector(
+    itwIsEngagementScreenShownSelector
+  );
   const isDiscoverMoreCEDEnabled = useIOSelector(
     itwIsDiscoverMoreCEDLocallyEnabledSelector
   );

@@ -8,17 +8,24 @@ import {
 import { isItwCredential } from "../../../common/utils/itwCredentialUtils";
 import { itwCredentialsEidSelector } from "../../../credentials/store/selectors";
 
-export const itwShouldShowEngagementScreenSelector = (state: GlobalState) => {
+/** Whether the engagement screen has already been shown to the current user. */
+export const itwIsEngagementScreenShownSelector = (state: GlobalState) => {
   const user = hashedProfileFiscalCodeSelector(state);
+  return (
+    user !== undefined &&
+    state.features.itWallet.preferences.engagementScreenShownByUser?.[user] ===
+      true
+  );
+};
+
+export const itwShouldShowEngagementScreenSelector = (state: GlobalState) => {
   const eid = itwCredentialsEidSelector(state);
 
   return (
-    user !== undefined &&
     isItwEnabledSelector(state) &&
     isItwWhatsNewMinAppVersionSupportedSelector(state) &&
     itwIsFiscalCodeWhitelisted(state) &&
-    state.features.itWallet.preferences.engagementScreenShownByUser?.[user] !==
-      true &&
+    !itwIsEngagementScreenShownSelector(state) &&
     !(eid && isItwCredential(eid))
   );
 };
