@@ -64,7 +64,7 @@ export const PID_OVERRIDE_STATUSES: ReadonlyArray<ItwEidStatus> = [
   "invalid"
 ];
 
-/** Statuses available for regular credentials. */
+/** Regular credentials have no advance digital expiration warning. */
 export const CREDENTIAL_OVERRIDE_STATUSES: ReadonlyArray<ItwCredentialStatus> =
   [
     "valid",
@@ -72,7 +72,6 @@ export const CREDENTIAL_OVERRIDE_STATUSES: ReadonlyArray<ItwCredentialStatus> =
     "suspended",
     "expiring",
     "expired",
-    "jwtExpiring",
     "jwtExpired",
     "unknown"
   ];
