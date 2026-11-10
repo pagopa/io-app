@@ -788,6 +788,7 @@ exports[`OnboardingNavigator renders all routes (snapshot) 1`] = `
                             <Modal
                               accessible={false}
                               backdropComponent={[Function]}
+                              backgroundComponent={[Function]}
                               backgroundStyle={
                                 {
                                   "backgroundColor": "#FFFFFF",
@@ -1389,6 +1390,7 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                           <Modal
                             accessible={false}
                             backdropComponent={[Function]}
+                            backgroundComponent={[Function]}
                             backgroundStyle={
                               {
                                 "backgroundColor": "#FFFFFF",
