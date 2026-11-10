@@ -1,5 +1,5 @@
 import { Body, IOVisualCostants } from "@io-app/design-system";
-import { fireEvent } from "@testing-library/react-native";
+import { cleanupAsync, fireEvent } from "@testing-library/react-native";
 import { Platform, StyleSheet } from "react-native";
 import configureMockStore from "redux-mock-store";
 
@@ -51,7 +51,8 @@ describe.each(["scroll", "list"] as const)("%s native tab insets", kind => {
     jest.useFakeTimers();
   });
 
-  afterEach(() => {
+  afterEach(async () => {
+    await cleanupAsync();
     jest.clearAllTimers();
     jest.useRealTimers();
     jest.restoreAllMocks();
