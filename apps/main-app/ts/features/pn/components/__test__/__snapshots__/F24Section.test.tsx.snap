@@ -9175,6 +9175,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -9273,13 +9280,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                           User Type:      mandatory
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -9612,6 +9612,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -9710,13 +9717,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                           User Type:      not_set
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -10049,6 +10049,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -10147,13 +10154,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                           User Type:      recipient
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -10486,6 +10486,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -10584,13 +10591,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                           User Type:      mandatory
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -10923,6 +10923,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -11021,13 +11028,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                           User Type:      not_set
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -11360,6 +11360,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -11458,13 +11465,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                           User Type:      recipient
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -11797,6 +11797,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -11895,13 +11902,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                           User Type:      mandatory
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -12234,6 +12234,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -12332,13 +12339,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                           User Type:      not_set
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -12671,6 +12671,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -12769,13 +12776,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
                           User Type:      recipient
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -16060,6 +16060,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -16158,13 +16165,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                           User Type:      mandatory
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -16497,6 +16497,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -16595,13 +16602,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                           User Type:      not_set
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -16934,6 +16934,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -17032,13 +17039,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                           User Type:      recipient
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -17371,6 +17371,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -17469,13 +17476,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                           User Type:      mandatory
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -17808,6 +17808,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -17906,13 +17913,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                           User Type:      not_set
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -18245,6 +18245,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -18343,13 +18350,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                           User Type:      recipient
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -18682,6 +18682,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -18780,13 +18787,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                           User Type:      mandatory
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -19119,6 +19119,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -19217,13 +19224,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                           User Type:      not_set
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -19556,6 +19556,13 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -19654,13 +19661,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
                           User Type:      recipient
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -19993,6 +19993,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -20091,13 +20098,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                           User Type:      mandatory
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -20430,6 +20430,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -20528,13 +20535,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                           User Type:      not_set
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -20867,6 +20867,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -20965,13 +20972,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                           User Type:      recipient
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -21304,6 +21304,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -21402,13 +21409,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                           User Type:      mandatory
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -21741,6 +21741,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -21839,13 +21846,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                           User Type:      not_set
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -22178,6 +22178,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -22276,13 +22283,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                           User Type:      recipient
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -22615,6 +22615,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -22713,13 +22720,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                           User Type:      mandatory
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -23052,6 +23052,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -23150,13 +23157,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                           User Type:      not_set
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -23489,6 +23489,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -23587,13 +23594,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                           User Type:      recipient
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -26878,6 +26878,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -26976,13 +26983,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                           User Type:      mandatory
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -27315,6 +27315,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -27413,13 +27420,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                           User Type:      not_set
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -27752,6 +27752,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -27850,13 +27857,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                           User Type:      recipient
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -28189,6 +28189,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -28287,13 +28294,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                           User Type:      mandatory
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -28626,6 +28626,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -28724,13 +28731,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                           User Type:      not_set
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -29063,6 +29063,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -29161,13 +29168,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                           User Type:      recipient
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -29500,6 +29500,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -29598,13 +29605,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                           User Type:      mandatory
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -29937,6 +29937,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -30035,13 +30042,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                           User Type:      not_set
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -30374,6 +30374,13 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -30472,13 +30479,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
                           User Type:      recipient
                         </View>
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -30811,6 +30811,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -30961,13 +30968,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -31300,6 +31300,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -31450,13 +31457,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -31789,6 +31789,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -31939,13 +31946,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -32278,6 +32278,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -32428,13 +32435,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -32767,6 +32767,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -32917,13 +32924,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -33256,6 +33256,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -33406,13 +33413,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -33745,6 +33745,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -33895,13 +33902,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -34234,6 +34234,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -34384,13 +34391,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -34723,6 +34723,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -34873,13 +34880,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -38164,6 +38164,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -38314,13 +38321,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -38653,6 +38653,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -38803,13 +38810,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -39142,6 +39142,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -39292,13 +39299,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -39631,6 +39631,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -39781,13 +39788,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -40120,6 +40120,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -40270,13 +40277,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -40609,6 +40609,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -40759,13 +40766,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -41098,6 +41098,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -41248,13 +41255,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -41587,6 +41587,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -41737,13 +41744,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -42076,6 +42076,13 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -42226,13 +42233,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -42565,6 +42565,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -42715,13 +42722,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -43054,6 +43054,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -43204,13 +43211,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -43543,6 +43543,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -43693,13 +43700,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -44032,6 +44032,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -44182,13 +44189,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -44521,6 +44521,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -44671,13 +44678,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -45010,6 +45010,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -45160,13 +45167,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -45499,6 +45499,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -45649,13 +45656,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -45988,6 +45988,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -46138,13 +46145,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -46477,6 +46477,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -46627,13 +46634,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -49918,6 +49918,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -50068,13 +50075,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -50407,6 +50407,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -50557,13 +50564,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -50896,6 +50896,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -51046,13 +51053,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -51385,6 +51385,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -51535,13 +51542,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -51874,6 +51874,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -52024,13 +52031,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -52363,6 +52363,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -52513,13 +52520,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -52852,6 +52852,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -53002,13 +53009,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -53341,6 +53341,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -53491,13 +53498,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
@@ -53830,6 +53830,13 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -53980,13 +53987,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
                       >
                         Has no onPreNavigate callback
                       </View>
-                      <View
-                        style={
-                          {
-                            "height": 16,
-                          }
-                        }
-                      />
                     </View>
                   </View>
                 </View>
