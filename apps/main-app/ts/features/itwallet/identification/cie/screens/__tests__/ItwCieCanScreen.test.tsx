@@ -4,6 +4,7 @@ import { createStore } from "redux";
 import { createActor } from "xstate";
 
 import { applicationChangeState } from "../../../../../../store/actions/application";
+import { setScreenReaderEnabled } from "../../../../../../store/actions/preferences";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
@@ -17,6 +18,17 @@ const mockSend = jest.fn();
 
 const COMPLETE_CAN = "123456";
 const PARTIAL_CAN = "12345";
+const CONFIRM_BUTTON_TEST_ID = "itwCieCanConfirmButtonTestID";
+const CAN_ENTERED_EVENT = { type: "cie-can-entered", can: COMPLETE_CAN };
+
+const typeCan = (
+  { getByLabelText }: ReturnType<typeof renderComponent>,
+  can: string
+) =>
+  fireEvent.changeText(
+    getByLabelText(I18n.t("authentication.cie.pin.accessibility.label")),
+    can
+  );
 
 describe("ItwCieCanScreen", () => {
   beforeAll(() => {
@@ -33,54 +45,75 @@ describe("ItwCieCanScreen", () => {
     jest.restoreAllMocks();
   });
 
-  it.each([
-    { name: "partial CAN", can: PARTIAL_CAN },
-    { name: "complete CAN", can: COMPLETE_CAN }
-  ])("does not send the CAN when typing a $name", ({ can }) => {
-    const { getByLabelText } = renderComponent();
+  describe("when the screen reader is disabled", () => {
+    it("does not render the confirm button", () => {
+      const { queryByTestId } = renderComponent(false);
 
-    fireEvent.changeText(
-      getByLabelText(I18n.t("authentication.cie.pin.accessibility.label")),
-      can
-    );
+      expect(queryByTestId(CONFIRM_BUTTON_TEST_ID)).toBeNull();
+    });
 
-    expect(mockSend).not.toHaveBeenCalled();
+    it("does not send a partial CAN", () => {
+      const screen = renderComponent(false);
+
+      typeCan(screen, PARTIAL_CAN);
+
+      expect(mockSend).not.toHaveBeenCalled();
+    });
+
+    it("sends the CAN as soon as it is complete", () => {
+      const screen = renderComponent(false);
+
+      typeCan(screen, COMPLETE_CAN);
+
+      expect(mockSend).toHaveBeenCalledWith(CAN_ENTERED_EVENT);
+    });
   });
 
-  it.each([
-    { name: "disabled with a partial CAN", can: PARTIAL_CAN, disabled: true },
-    { name: "enabled with a complete CAN", can: COMPLETE_CAN, disabled: false }
-  ])("renders the confirm button $name", ({ can, disabled }) => {
-    const { getByLabelText, getByTestId } = renderComponent();
+  describe("when the screen reader is enabled", () => {
+    it.each([
+      { name: "partial CAN", can: PARTIAL_CAN },
+      { name: "complete CAN", can: COMPLETE_CAN }
+    ])("does not send the CAN when typing a $name", ({ can }) => {
+      const screen = renderComponent(true);
 
-    fireEvent.changeText(
-      getByLabelText(I18n.t("authentication.cie.pin.accessibility.label")),
-      can
-    );
+      typeCan(screen, can);
 
-    expect(
-      getByTestId("itwCieCanConfirmButtonTestID").props.accessibilityState
-    ).toEqual(expect.objectContaining({ disabled }));
-  });
+      expect(mockSend).not.toHaveBeenCalled();
+    });
 
-  it("sends the CAN when the confirm button is pressed", () => {
-    const { getByLabelText, getByTestId } = renderComponent();
+    it.each([
+      { name: "disabled with a partial CAN", can: PARTIAL_CAN, disabled: true },
+      {
+        name: "enabled with a complete CAN",
+        can: COMPLETE_CAN,
+        disabled: false
+      }
+    ])("renders the confirm button $name", ({ can, disabled }) => {
+      const screen = renderComponent(true);
 
-    fireEvent.changeText(
-      getByLabelText(I18n.t("authentication.cie.pin.accessibility.label")),
-      COMPLETE_CAN
-    );
-    fireEvent.press(getByTestId("itwCieCanConfirmButtonTestID"));
+      typeCan(screen, can);
 
-    expect(mockSend).toHaveBeenCalledWith({
-      type: "cie-can-entered",
-      can: COMPLETE_CAN
+      expect(
+        screen.getByTestId(CONFIRM_BUTTON_TEST_ID).props.accessibilityState
+      ).toEqual(expect.objectContaining({ disabled }));
+    });
+
+    it("sends the CAN when the confirm button is pressed", () => {
+      const screen = renderComponent(true);
+
+      typeCan(screen, COMPLETE_CAN);
+      fireEvent.press(screen.getByTestId(CONFIRM_BUTTON_TEST_ID));
+
+      expect(mockSend).toHaveBeenCalledWith(CAN_ENTERED_EVENT);
     });
   });
 });
 
-const renderComponent = () => {
-  const globalState = appReducer(undefined, applicationChangeState("active"));
+const renderComponent = (screenReaderEnabled: boolean) => {
+  const globalState = appReducer(
+    appReducer(undefined, applicationChangeState("active")),
+    setScreenReaderEnabled({ screenReaderEnabled })
+  );
 
   const logic = itwEidIssuanceMachine.provide({
     actions: { onInit: jest.fn() }

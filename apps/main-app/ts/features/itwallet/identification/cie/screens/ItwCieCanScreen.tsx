@@ -26,6 +26,7 @@ import {
 
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../../store/hooks";
+import { isScreenReaderEnabledSelector } from "../../../../../store/reducers/preferences";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
 import { withTrailingPoliceCarLightEmojii } from "../../../../../utils/strings";
@@ -41,6 +42,7 @@ export const ItwCieCanScreen = () => {
   usePreventScreenCapture();
 
   const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
+  const isScreenReaderEnabled = useIOSelector(isScreenReaderEnabledSelector);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const identification =
     ItwEidIssuanceMachineContext.useSelector(selectIdentification);
@@ -76,13 +78,19 @@ export const ItwCieCanScreen = () => {
     supportRequest: true
   });
 
-  const isCanComplete = can.length === CIE_CAN_LENGTH;
-
-  // The user confirms the CAN explicitly instead of being moved to the next
-  // screen as soon as the last digit is typed (a11y: no change on input).
-  const onConfirmPress = () => {
+  const submitCan = (value: string) => {
     Keyboard.dismiss();
-    machineRef.send({ type: "cie-can-entered", can });
+    machineRef.send({ type: "cie-can-entered", can: value });
+  };
+
+  // Screen reader users confirm the CAN explicitly with a button instead of
+  // being moved to the next screen on the last digit (a11y: no change on input).
+  const onCanChanged = (value: string) => {
+    setCan(value);
+
+    if (!isScreenReaderEnabled && value.length === CIE_CAN_LENGTH) {
+      submitCan(value);
+    }
   };
 
   return (
@@ -123,7 +131,7 @@ export const ItwCieCanScreen = () => {
                 autoFocus={isFocused}
                 key={isFocused ? "focused" : "unfocused"}
                 length={CIE_CAN_LENGTH}
-                onValueChange={setCan}
+                onValueChange={onCanChanged}
                 ref={canPadViewRef}
                 secret
                 value={can}
@@ -137,18 +145,20 @@ export const ItwCieCanScreen = () => {
         no longer lifts the footer. The opened offset removes the bottom
         padding already applied by `SafeAreaView`.
       */}
-      <KeyboardStickyView offset={{ opened: bottomInset }}>
-        <ContentWrapper style={{ paddingVertical: FOOTER_VERTICAL_PADDING }}>
-          <IOButton
-            disabled={!isCanComplete}
-            fullWidth
-            label={I18n.t("global.buttons.confirm")}
-            onPress={onConfirmPress}
-            testID="itwCieCanConfirmButtonTestID"
-            variant="solid"
-          />
-        </ContentWrapper>
-      </KeyboardStickyView>
+      {isScreenReaderEnabled && (
+        <KeyboardStickyView offset={{ opened: bottomInset }}>
+          <ContentWrapper style={{ paddingVertical: FOOTER_VERTICAL_PADDING }}>
+            <IOButton
+              disabled={can.length < CIE_CAN_LENGTH}
+              fullWidth
+              label={I18n.t("global.buttons.confirm")}
+              onPress={() => submitCan(can)}
+              testID="itwCieCanConfirmButtonTestID"
+              variant="solid"
+            />
+          </ContentWrapper>
+        </KeyboardStickyView>
+      )}
     </SafeAreaView>
   );
 };

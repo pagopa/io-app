@@ -28,6 +28,7 @@ import {
   useHeaderSecondLevel
 } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../../store/hooks";
+import { isScreenReaderEnabledSelector } from "../../../../../store/reducers/preferences";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
 import { withTrailingPoliceCarLightEmojii } from "../../../../../utils/strings";
@@ -44,6 +45,7 @@ export const ItwCiePinScreen = () => {
   usePreventScreenCapture();
 
   const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
+  const isScreenReaderEnabled = useIOSelector(isScreenReaderEnabledSelector);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isL3Enabled = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
@@ -90,13 +92,19 @@ export const ItwCiePinScreen = () => {
 
   useHeaderSecondLevel(headerProps);
 
-  const isPinComplete = pin.length === CIE_PIN_LENGTH;
-
-  // The user confirms the PIN explicitly instead of being moved to the next
-  // screen as soon as the last digit is typed (a11y: no change on input).
-  const onConfirmPress = () => {
+  const submitPin = (value: string) => {
     Keyboard.dismiss();
-    machineRef.send({ type: "cie-pin-entered", pin });
+    machineRef.send({ type: "cie-pin-entered", pin: value });
+  };
+
+  // Screen reader users confirm the PIN explicitly with a button instead of
+  // being moved to the next screen on the last digit (a11y: no change on input).
+  const onPinChanged = (value: string) => {
+    setPin(value);
+
+    if (!isScreenReaderEnabled && value.length === CIE_PIN_LENGTH) {
+      submitPin(value);
+    }
   };
 
   return (
@@ -146,7 +154,7 @@ export const ItwCiePinScreen = () => {
                 autoFocus={isFocused}
                 key={isFocused ? "focused" : "unfocused"}
                 length={CIE_PIN_LENGTH}
-                onValueChange={setPin}
+                onValueChange={onPinChanged}
                 ref={pinPadViewRef}
                 secret
                 value={pin}
@@ -160,18 +168,20 @@ export const ItwCiePinScreen = () => {
         no longer lifts the footer. The opened offset removes the bottom
         padding already applied by `SafeAreaView`.
       */}
-      <KeyboardStickyView offset={{ opened: bottomInset }}>
-        <ContentWrapper style={{ paddingVertical: FOOTER_VERTICAL_PADDING }}>
-          <IOButton
-            disabled={!isPinComplete}
-            fullWidth
-            label={I18n.t("global.buttons.confirm")}
-            onPress={onConfirmPress}
-            testID="itwCiePinConfirmButtonTestID"
-            variant="solid"
-          />
-        </ContentWrapper>
-      </KeyboardStickyView>
+      {isScreenReaderEnabled && (
+        <KeyboardStickyView offset={{ opened: bottomInset }}>
+          <ContentWrapper style={{ paddingVertical: FOOTER_VERTICAL_PADDING }}>
+            <IOButton
+              disabled={pin.length < CIE_PIN_LENGTH}
+              fullWidth
+              label={I18n.t("global.buttons.confirm")}
+              onPress={() => submitPin(pin)}
+              testID="itwCiePinConfirmButtonTestID"
+              variant="solid"
+            />
+          </ContentWrapper>
+        </KeyboardStickyView>
+      )}
       {pinInfoBottomSheet.bottomSheet}
     </SafeAreaView>
   );
