@@ -1,4 +1,5 @@
 import { ListItemHeader } from "@io-app/design-system";
+import { within } from "@testing-library/react-native";
 import I18n from "i18next";
 import _ from "lodash";
 import { Alert } from "react-native";
@@ -610,3 +611,46 @@ const renderComponent = (component: React.ReactElement) => {
     store
   );
 };
+
+describe("wallet sections screen reader grouping", () => {
+  // A flattened section lets TalkBack sort its header after the cards
+  test.each([
+    {
+      name: "IT-Wallet",
+      headerTestID: "walletCardsCategoryItwIdCardHeaderTestID",
+      render: () => {
+        jest
+          .spyOn(walletSelectors, "shouldRenderItwCardsContainerSelector")
+          .mockReturnValue(true);
+        jest
+          .spyOn(itwSelectors, "itwShouldRenderNewItWalletSelector")
+          .mockReturnValue(true);
+        jest
+          .spyOn(walletSelectors, "selectWalletCardsByCategory")
+          .mockReturnValue([]);
+        return renderComponent(<ItwWalletCardsContainer />);
+      },
+      sectionTestID: "itwWalletCardsSectionTestID"
+    },
+    {
+      name: "other",
+      headerTestID: "walletCardsCategoryOtherHeaderTestID",
+      render: () => {
+        jest
+          .spyOn(walletSelectors, "selectWalletOtherCards")
+          .mockImplementation(() => [T_CARDS["1"], T_CARDS["2"]]);
+        return renderComponent(<OtherWalletCardsContainer />);
+      },
+      sectionTestID: "otherWalletCardsSectionTestID"
+    }
+  ])(
+    "should keep the $name section as a native group",
+    ({ headerTestID, render, sectionTestID }) => {
+      const { getByTestId } = render();
+      const section = getByTestId(sectionTestID);
+
+      expect(section.props.collapsable).toBe(false);
+      expect(within(section).getByTestId(headerTestID)).toBeTruthy();
+    }
+  );
+});
