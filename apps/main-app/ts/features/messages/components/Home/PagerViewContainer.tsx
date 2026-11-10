@@ -120,7 +120,6 @@ export const PagerViewContainer = ({ ref }: { ref?: Ref<PagerView> }) => {
   useTabItemPressWhenScreenActive(onTabPressedCallback, false);
   useFocusEffect(
     useCallback(() => {
-      dispatchReloadAllMessagesIfNeeded(store.getState());
       // This hook has two use-cases:
       // - to send an analytics event on first landing, when there
       //   is a change-back using the messages bottom tab and when
@@ -138,6 +137,7 @@ export const PagerViewContainer = ({ ref }: { ref?: Ref<PagerView> }) => {
       //   but the list keeps its blank view placeholder visible).
       setTimeout(() => {
         const state = store.getState();
+        dispatchReloadAllMessagesIfNeeded(state);
         trackMessagePageOnFocusEventIfAllowed(state);
         loadNewlyReceivedMessagesIfNeededCallback();
       }, 100);
