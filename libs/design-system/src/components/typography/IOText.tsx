@@ -3,7 +3,8 @@ import {
   AccessibilityRole,
   GestureResponderEvent,
   Text,
-  TextStyle
+  TextStyle,
+  useWindowDimensions
 } from "react-native";
 import Animated from "react-native-reanimated";
 
@@ -101,7 +102,7 @@ const calculateTextStyle = (
  * @class
  * @param props
  */
-export const IOText = ({
+const IOTextBase = ({
   color,
   size,
   font,
@@ -171,4 +172,29 @@ export const IOText = ({
   );
 };
 
-export const AnimatedIOText = Animated.createAnimatedComponent(IOText);
+const getTextKey = <T,>(allowFontScaling: T, fontScale: number) =>
+  allowFontScaling === false ? 1 : fontScale;
+
+export const IOText = (props: IOTextProps) => {
+  const { fontScale } = useWindowDimensions();
+  return (
+    <IOTextBase
+      key={getTextKey(props.allowFontScaling, fontScale)}
+      {...props}
+    />
+  );
+};
+
+const AnimatedIOTextBase = Animated.createAnimatedComponent(IOTextBase);
+
+export const AnimatedIOText = (
+  props: Omit<ComponentProps<typeof AnimatedIOTextBase>, "key">
+) => {
+  const { fontScale } = useWindowDimensions();
+  return (
+    <AnimatedIOTextBase
+      key={getTextKey(props.allowFontScaling, fontScale)}
+      {...props}
+    />
+  );
+};

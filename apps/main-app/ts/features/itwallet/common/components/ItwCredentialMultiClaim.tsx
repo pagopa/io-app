@@ -126,7 +126,6 @@ export const ItwCredentialMultiClaim = ({
                 hidden={hidden}
                 isPreview={isPreview}
                 itemClaims={singleItemClaims}
-                itemTitle={displaySummaryValue}
                 onLongPress={onLongPress}
                 summaryLabel={summaryLabel}
                 summaryValue={displaySummaryValue}
