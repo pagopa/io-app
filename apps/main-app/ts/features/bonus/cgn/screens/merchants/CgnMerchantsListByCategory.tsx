@@ -8,7 +8,7 @@ import {
   HSpacer,
   Icon,
   IOColors,
-  IOVisualCostants
+  IODimensions
 } from "@io-app/design-system";
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
@@ -224,7 +224,7 @@ const CgnMerchantsListByCategory = () => {
         <Animated.FlatList
           contentContainerStyle={{
             flexGrow: 1,
-            paddingBottom: IOVisualCostants.appMarginDefault
+            paddingBottom: IODimensions.padding.screen.default
           }}
           data={merchantsAll}
           ItemSeparatorComponent={() => <Divider />}

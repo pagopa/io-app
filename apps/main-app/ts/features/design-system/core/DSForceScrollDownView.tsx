@@ -4,7 +4,7 @@ import {
   FooterActions,
   ForceScrollDownView,
   IOButton,
-  IOVisualCostants,
+  IODimensions,
   VStack
 } from "@io-app/design-system";
 import { ComponentProps, useState } from "react";
@@ -50,7 +50,7 @@ export const DSForceScrollDownView = () => {
     <ForceScrollDownView
       buttonAccessibilityLabel="Scroll to bottom"
       contentContainerStyle={{
-        paddingTop: IOVisualCostants.appMarginDefault
+        paddingTop: IODimensions.padding.screen.default
       }}
       footerActions={footerActions}
     >

@@ -22,19 +22,29 @@ or remove `react-native-device-info`.
 
 ## Identity compatibility
 
-- Android reads `Settings.Secure.ANDROID_ID`, just like the legacy implementation.
-  Its lifecycle depends on Android user, device, and app-signing key.
+- Android resolves the ID in this order and never throws:
+  1. `Settings.Secure.ANDROID_ID`, just like the legacy implementation. Its
+     lifecycle depends on Android user, device, and app-signing key.
+  2. If it is missing or empty, the UUID previously saved in SharedPreferences.
+  3. Otherwise, a newly generated UUID, which is saved for later calls.
+
+  Without a React context nothing can be read or saved, so a UUID is generated
+  once per process.
+
 - iOS reads the legacy Keychain generic-password item with account/service
   `deviceUID`, then the standard UserDefaults `deviceUID` key, then IDFV, then a
-  generated UUID. Missing stores receive the selected ID; existing values are
-  not overwritten. Strings are not normalized.
+  generated UUID. Missing stores receive the selected ID. A store whose value
+  differs from the selected ID is overwritten with it (see the resolver bullet
+  below). Strings are not normalized.
 - The Keychain query preserves `AfterFirstUnlockThisDeviceOnly` and the default
   access group. App signing and Keychain entitlements must retain access to the
   original item. Keychain persistence across reinstall is not guaranteed.
-- The iOS resolver serializes and caches successful lookups. Unlike the old
-  library, storage errors are thrown rather than treated as missing IDs.
-  Persistence failures do not return an unpersisted identity. Duplicate writes
-  succeed only if the existing item contains the same ID.
+- The iOS resolver serializes and caches lookups. Like the old library, it never
+  throws: storage errors are treated as missing values and fall back to the next
+  source (Keychain, defaults, IDFV, random UUID). When the Keychain read fails or
+  finds nothing, the ID is written back, replacing any existing item. Keychain and
+  UserDefaults are both realigned with the resolved ID, so a mismatching or
+  invalid UserDefaults value is overwritten.
 - The value is not a hardware serial number or an authentication credential.
   Consumers remain responsible for analytics consent and privacy disclosures.
   The bundled privacy manifest declares app-local UserDefaults access.

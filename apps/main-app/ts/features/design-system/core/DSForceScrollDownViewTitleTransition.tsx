@@ -3,7 +3,7 @@ import {
   ContentWrapper,
   ForceScrollDownView,
   IOColors,
-  IOVisualCostants,
+  IODimensions,
   VStack
 } from "@io-app/design-system";
 import { View } from "react-native";
@@ -27,7 +27,7 @@ export const DSForceScrollDownViewTitleTransition = () => {
       animatedRef={animatedScrollViewRef}
       buttonAccessibilityLabel="Scroll to bottom"
       contentContainerStyle={{
-        paddingTop: IOVisualCostants.appMarginDefault
+        paddingTop: IODimensions.padding.screen.default
       }}
       threshold={CUSTOM_SLOT_HEIGHT}
     >
