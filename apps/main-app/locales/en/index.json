@@ -3765,7 +3765,7 @@
       },
       "beforeContinue": {
         "requestBonus": "Claim the bonus",
-        "text": "By clicking \"Request the Bonus,\" you acknowledge that you have read, understood, and agree to the [Privacy Policy]({{privacyUrl}}) and the [Terms and Conditions of Use]({{tosUrl}})."
+        "text": "By clicking \"{{ctaText}}\" you acknowledge that you have read, understood, and agree to the [Privacy Policy]({{privacyUrl}}) and the [Terms and Conditions of Use]({{tosUrl}})."
       },
       "boolPrerequisites": {
         "emptyValueError": "Select an option to continue",
