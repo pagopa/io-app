@@ -197,22 +197,23 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
           </TabNavigation>
         </View>
         <VSpacer size={16} />
-        {selectedTab === CgnMerchantsHomeTabRoutes.CGN_CATEGORIES && (
-          <>
-            <CgnFeaturedOpportunities
-              onSelect={({ merchant, discount }) => {
-                dispatch(cgnSelectedMerchant.success(merchant));
-                dispatch(selectMerchantDiscount(discount));
-                dispatch(resetMerchantDiscountCode());
-                navigate(CGN_ROUTES.DETAILS.MAIN, {
-                  screen: CGN_ROUTES.DETAILS.MERCHANTS.DISCOUNT
-                });
-              }}
-              opportunities={featuredOpportunities}
-            />
-            <VSpacer size={16} />
-          </>
-        )}
+        {selectedTab === CgnMerchantsHomeTabRoutes.CGN_CATEGORIES &&
+          featuredOpportunities.length > 0 && (
+            <View testID="CgnFeaturedOpportunitiesSection">
+              <CgnFeaturedOpportunities
+                onSelect={({ merchant, discount }) => {
+                  dispatch(cgnSelectedMerchant.success(merchant));
+                  dispatch(selectMerchantDiscount(discount));
+                  dispatch(resetMerchantDiscountCode());
+                  navigate(CGN_ROUTES.DETAILS.MAIN, {
+                    screen: CGN_ROUTES.DETAILS.MERCHANTS.DISCOUNT
+                  });
+                }}
+                opportunities={featuredOpportunities}
+              />
+              <VSpacer size={16} />
+            </View>
+          )}
       </>
     ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
