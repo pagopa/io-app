@@ -6,10 +6,10 @@ import {
   H2,
   Icon,
   IOButton,
-  IOColorsLegacy,
   IOSkeleton,
   IOText,
   IOTypography,
+  useIOColors,
   useIOTheme,
   VSpacer
 } from "@io-app/design-system";
@@ -52,6 +52,11 @@ export const useIDPayStaticCodeModal = (
   );
 
   const isLoading = pot.isLoading(barcodePot);
+  const colors = useIOColors();
+  const barcodeContainerStyle = [
+    styles.barcodeContainer,
+    { borderColor: colors.stroke.default }
+  ];
 
   const IconPlaceholder = () => (
     <>
@@ -86,7 +91,7 @@ export const useIDPayStaticCodeModal = (
         width="75%"
       />
       <VSpacer size={24} />
-      <View style={styles.barcodeContainer}>
+      <View style={barcodeContainerStyle}>
         <IconPlaceholder />
         <IOSkeleton height={120} radius={4} shape="rectangle" width="100%" />
         <VSpacer size={12} />
@@ -119,7 +124,7 @@ export const useIDPayStaticCodeModal = (
           )}
         </Body>
         <VSpacer size={24} />
-        <View style={styles.barcodeContainer}>
+        <View style={barcodeContainerStyle}>
           <IconPlaceholder />
           <Barcode format="CODE128" value={barcode.trxCode} />
           <View style={{ alignItems: "center" }}>
@@ -231,7 +236,6 @@ export const useIDPayStaticCodeModal = (
 
 const styles = StyleSheet.create({
   barcodeContainer: {
-    borderColor: IOColorsLegacy["grey-100"],
     borderWidth: 1,
     padding: 16,
     borderRadius: 8

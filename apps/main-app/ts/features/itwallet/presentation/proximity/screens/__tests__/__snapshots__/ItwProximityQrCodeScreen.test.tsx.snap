@@ -2653,15 +2653,19 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                             >
                               <View
                                 style={
-                                  {
-                                    "alignItems": "center",
-                                    "aspectRatio": 1,
-                                    "backgroundColor": "#F4F5F8",
-                                    "borderRadius": 16,
-                                    "gap": 8,
-                                    "justifyContent": "center",
-                                    "padding": 16,
-                                  }
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "aspectRatio": 1,
+                                      "borderRadius": 16,
+                                      "gap": 8,
+                                      "justifyContent": "center",
+                                      "padding": 16,
+                                    },
+                                    {
+                                      "backgroundColor": "#F4F5F8",
+                                    },
+                                  ]
                                 }
                               >
                                 <RNSVGSvgView

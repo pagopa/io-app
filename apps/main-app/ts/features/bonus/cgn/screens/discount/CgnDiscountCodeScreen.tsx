@@ -4,7 +4,7 @@ import {
   H2,
   H4,
   Icon,
-  IOColorsLegacy,
+  useIOColors,
   useIOTheme,
   VSpacer
 } from "@io-app/design-system";
@@ -52,6 +52,7 @@ const CgnDiscountCodeScreen = () => {
   const [isDiscountCodeExpired, setIsDiscountCodeExpired] = useState(false);
   const navigation = useIONavigation();
   const theme = useIOTheme();
+  const colors = useIOColors();
 
   const generateNewDiscountCode = () => {
     dispatch(
@@ -124,7 +125,12 @@ const CgnDiscountCodeScreen = () => {
             {I18n.t(`bonus.cgn.merchantDetail.discount.title`)}
           </H2>
           <VSpacer size={24} />
-          <View style={styles.discountCodeContainer}>
+          <View
+            style={[
+              styles.discountCodeContainer,
+              { borderColor: colors.stroke.default }
+            ]}
+          >
             <View style={{ flexDirection: "row", alignSelf: "center" }}>
               <Icon color={theme["icon-decorative"]} name="tag" />
             </View>
@@ -173,7 +179,6 @@ const CgnDiscountCodeScreen = () => {
 
 const styles = StyleSheet.create({
   discountCodeContainer: {
-    borderColor: IOColorsLegacy["grey-100"],
     borderWidth: 1,
     padding: 16,
     borderRadius: 8

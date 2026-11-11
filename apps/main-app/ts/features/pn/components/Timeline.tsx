@@ -1,4 +1,10 @@
-import { Caption, H6, IOColorsLegacy, VSpacer } from "@io-app/design-system";
+import {
+  Caption,
+  H6,
+  IOColorsLegacy,
+  useIOColors,
+  VSpacer
+} from "@io-app/design-system";
 import { PropsWithChildren } from "react";
 import { StyleSheet, View } from "react-native";
 
@@ -58,15 +64,13 @@ const styles = StyleSheet.create({
   },
   rectangle: {
     flexGrow: 1,
-    width: 2,
-    backgroundColor: IOColorsLegacy["grey-200"]
+    width: 2
   },
   dot: {
     marginVertical: 4,
     width: 14,
     height: 14,
-    borderRadius: 14 / 2,
-    borderColor: IOColorsLegacy.white
+    borderRadius: 14 / 2
   }
 });
 
@@ -94,50 +98,72 @@ const TimelineDot = ({
   isFirst,
   isLast,
   status
-}: Pick<TimelineItemProps, "status"> & Position) => (
-  <View
-    style={[
-      styles.dot,
-      {
-        backgroundColor: mapColorStatus[status].background,
-        borderWidth: isFirst || isLast ? 0 : borderWidth
-      }
-    ]}
-  />
-);
+}: Pick<TimelineItemProps, "status"> & Position) => {
+  const colors = useIOColors();
+
+  return (
+    <View
+      style={[
+        styles.dot,
+        {
+          backgroundColor: mapColorStatus[status].background,
+          // The ring separates the dot from the line, so it matches the sheet
+          borderColor: colors.background.default,
+          borderWidth: isFirst || isLast ? 0 : borderWidth
+        }
+      ]}
+    />
+  );
+};
 
 const TimelineSeparator = ({
   children,
   isFirst,
   isLast
-}: PropsWithChildren<Pick<TimelineItemProps, "status"> & Position>) => (
-  <View style={styles.line}>
-    <View style={[styles.rectangle, isFirst ? styles.hidden : undefined]} />
-    {children}
-    <View style={[styles.rectangle, isLast ? styles.hidden : undefined]} />
-  </View>
-);
+}: PropsWithChildren<Pick<TimelineItemProps, "status"> & Position>) => {
+  const colors = useIOColors();
+  const lineStyle = [
+    styles.rectangle,
+    { backgroundColor: colors.stroke.divider }
+  ];
+
+  return (
+    <View style={styles.line}>
+      <View style={[lineStyle, isFirst ? styles.hidden : undefined]} />
+      {children}
+      <View style={[lineStyle, isLast ? styles.hidden : undefined]} />
+    </View>
+  );
+};
 
 const TimelineOppositeContent = ({
   day,
   month
-}: Pick<TimelineItemProps, "day" | "month">) => (
-  <View style={styles.oppositeContent}>
-    <H6 color="grey-700">{day}</H6>
-    <Caption color="grey-450">{month}</Caption>
-  </View>
-);
+}: Pick<TimelineItemProps, "day" | "month">) => {
+  const colors = useIOColors();
+
+  return (
+    <View style={styles.oppositeContent}>
+      <H6 color={colors.text.content.secondary}>{day}</H6>
+      <Caption color={colors.text.content.tertiary}>{month}</Caption>
+    </View>
+  );
+};
 
 const TimelineContent = ({
   description,
   time
-}: Pick<TimelineItemProps, "description" | "time">) => (
-  <View style={styles.content}>
-    <H6 color="grey-700">{description}</H6>
-    <VSpacer size={4} />
-    <Caption color="grey-450">{time}</Caption>
-  </View>
-);
+}: Pick<TimelineItemProps, "description" | "time">) => {
+  const colors = useIOColors();
+
+  return (
+    <View style={styles.content}>
+      <H6 color={colors.text.heading.secondary}>{description}</H6>
+      <VSpacer size={4} />
+      <Caption color={colors.text.content.tertiary}>{time}</Caption>
+    </View>
+  );
+};
 
 const TimelineItem = ({
   day,

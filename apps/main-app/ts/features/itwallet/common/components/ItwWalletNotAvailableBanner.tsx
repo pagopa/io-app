@@ -1,8 +1,8 @@
 import {
   BodySmall,
   Icon,
-  IOColorsLegacy,
-  IODimensions
+  IODimensions,
+  useIOColors
 } from "@io-app/design-system";
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
@@ -17,10 +17,11 @@ import { itwIsWalletInstanceStatusFailureSelector } from "../../walletInstance/s
  *
  * @deprecated Replace with `BannerErrorState` (see the TODO below)
  */
-// TODO: replace with `BannerErrorState` once its label supports two paragraphs with a gap (here `message` and `cta`); that also fixes the background in dark mode
+// TODO: replace with `BannerErrorState` once its label supports two paragraphs with a gap (here `message` and `cta`)
 export const ItwWalletNotAvailableBanner = withWalletCategoryFilter(
   "itw",
   () => {
+    const colors = useIOColors();
     const isWalletInstanceStatusFailure = useIOSelector(
       itwIsWalletInstanceStatusFailureSelector
     );
@@ -31,10 +32,16 @@ export const ItwWalletNotAvailableBanner = withWalletCategoryFilter(
 
     return (
       <View
-        style={styles.bannerContainer}
+        style={[
+          styles.bannerContainer,
+          { backgroundColor: colors.component.banner.background.neutral }
+        ]}
         testID="itwWalletNotAvailableBannerTestID"
       >
-        <Icon name="warningFilled" />
+        <Icon
+          color={colors.component.banner.foreground.content}
+          name="warningFilled"
+        />
         <BodySmall style={styles.textCenter}>
           {I18n.t("features.itWallet.generic.walletNotAvailable.message")}
         </BodySmall>
@@ -50,7 +57,6 @@ const styles = StyleSheet.create({
   bannerContainer: {
     padding: IODimensions.padding.banner,
     marginVertical: 8,
-    backgroundColor: IOColorsLegacy["grey-50"],
     borderRadius: IODimensions.radius.banner,
     alignItems: "center",
     gap: IODimensions.gap.banner.leading
