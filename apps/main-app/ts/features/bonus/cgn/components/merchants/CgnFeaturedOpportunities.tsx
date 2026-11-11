@@ -45,7 +45,8 @@ const styles = StyleSheet.create({
   logo: {
     width: LOGO_SIZE,
     height: LOGO_SIZE,
-    marginLeft: CARD_SPACING
+    marginLeft: CARD_SPACING,
+    borderRadius: 12
   }
 });
 
@@ -75,7 +76,7 @@ const FeaturedOpportunityCard = ({
         {merchant.imageUrl && (
           <Image
             accessibilityIgnoresInvertColors
-            resizeMode="contain"
+            resizeMode="cover"
             source={{ uri: merchant.imageUrl }}
             style={styles.logo}
           />
