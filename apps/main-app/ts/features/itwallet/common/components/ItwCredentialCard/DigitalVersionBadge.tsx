@@ -1,5 +1,5 @@
 import {
-  IOColorsLegacy,
+  IOColorPalette,
   IODimensions,
   makeFontStyleObject
 } from "@io-app/design-system";
@@ -164,7 +164,8 @@ const styles = StyleSheet.create({
   },
   faded: {
     ...StyleSheet.absoluteFill,
-    backgroundColor: IOColorsLegacy.white,
+    // Card artwork: same in both modes
+    backgroundColor: IOColorPalette.greyscale.white,
     opacity: 0.6,
     zIndex: 10
   }

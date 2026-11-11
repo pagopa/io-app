@@ -1,9 +1,4 @@
-import {
-  hexToRgba,
-  IOColorsLegacy,
-  Tag,
-  useScaleAnimation
-} from "@io-app/design-system";
+import { Tag, useScaleAnimation } from "@io-app/design-system";
 import { Canvas } from "@shopify/react-native-skia";
 import I18n from "i18next";
 import { ReactNode, useMemo } from "react";
@@ -18,12 +13,13 @@ import {
 import Animated from "react-native-reanimated";
 
 import { RotationSensor } from "../../../../../components/RotationSensor";
+import { useFeatureColors } from "../../../../../hooks/useFeatureColors";
 import { useRotationEffectEnabled } from "../../../../../hooks/useRotationSensor";
+import { itwColors } from "../../../colors";
 import { useItwCredentialName } from "../../hooks/useItwCredentialName";
 import { useLayoutSize } from "../../hooks/useLayoutSize";
 import {
   isItwCredential,
-  useBorderColorByStatus,
   useTagPropsByStatus,
   validCredentialStatuses
 } from "../../utils/itwCredentialUtils";
@@ -203,24 +199,29 @@ const CardSideBase = ({
   isItw,
   isAnimated
 }: CardSideBaseProps) => {
-  const borderColorMap = useBorderColorByStatus();
+  const { credentialCard, skeumorphicCard } = useFeatureColors(itwColors);
   const tagPropsByStatus = useTagPropsByStatus();
 
   const { size, onLayout } = useLayoutSize();
 
   const statusTagProps = tagPropsByStatus[status];
-  const borderColor = borderColorMap[status];
   // Include "jwtExpired" as a valid status because the credential skeumorphic card with this state
   // should not appear faded. Only the "expired" status should be displayed with reduced opacity.
   const isValid = [...validCredentialStatuses, "jwtExpired"].includes(status);
 
   const dynamicStyle: StyleProp<ViewStyle> = {
-    borderColor,
-    backgroundColor: isValid ? undefined : "rgba(255,255,255,0.7)"
+    borderColor: credentialCard.border[status],
+    backgroundColor: isValid ? undefined : skeumorphicCard.fadedOverlay
   };
 
   return (
-    <View onLayout={onLayout} style={styles.container}>
+    <View
+      onLayout={onLayout}
+      style={[
+        styles.container,
+        { boxShadow: `0px 4px 24px ${skeumorphicCard.shadow}` }
+      ]}
+    >
       <CardWidthContext.Provider value={size.width}>
         {/* Status badge  */}
         {statusTagProps && (
@@ -273,8 +274,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     borderRadius: 8,
-    overflow: "hidden",
-    boxShadow: `0px 4px 24px ${hexToRgba(IOColorsLegacy.black, 0.1)}`
+    overflow: "hidden"
   },
   card: {
     aspectRatio: SKEUMORPHIC_CARD_ASPECT_RATIO

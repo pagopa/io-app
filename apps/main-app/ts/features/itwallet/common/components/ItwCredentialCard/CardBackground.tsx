@@ -1,4 +1,4 @@
-import { IOColorsLegacy } from "@io-app/design-system";
+import { IOColorPalette } from "@io-app/design-system";
 import { memo } from "react";
 import {
   Image,
@@ -140,8 +140,8 @@ const legacyCredentialGradientColors: { [type: string]: Array<string> } = {
 };
 
 const LEGACY_DEFAULT_GRADIENT_COLORS = [
-  IOColorsLegacy["grey-100"],
-  IOColorsLegacy["grey-200"]
+  IOColorPalette.greyscale[100],
+  IOColorPalette.greyscale[200]
 ];
 
 /** CSS angle of the gradient line from the top-left to the bottom-right corner */
@@ -227,14 +227,15 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%"
   },
+  // Card artwork: same in both modes
   base: {
-    backgroundColor: IOColorsLegacy.white
+    backgroundColor: IOColorPalette.greyscale.white
   },
   softLight: {
     mixBlendMode: "soft-light"
   },
   legacyGradientContainer: {
-    backgroundColor: IOColorsLegacy["grey-100"]
+    backgroundColor: IOColorPalette.greyscale[100]
   },
   legacyGradient: {
     borderRadius: LEGACY_GRADIENT_BORDER_RADIUS,
@@ -244,7 +245,7 @@ const styles = StyleSheet.create({
     opacity: LEGACY_FADED_OPACITY
   },
   legacyGrayscaleBlend: {
-    backgroundColor: IOColorsLegacy.white,
+    backgroundColor: IOColorPalette.greyscale.white,
     mixBlendMode: "color"
   },
   legacyGrayscaleFilter: {

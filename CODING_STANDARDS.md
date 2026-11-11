@@ -47,6 +47,7 @@ Keep each feature self-contained under `apps/main-app/ts/features/<feature>/`, l
   - Use `s.…` for any intent the design system covers, the palette only for the feature's own hues, and a hex outside the palette only as a module-level `IOCustomColor` constant.
   - Give a palette color that's the same in both modes a one-line comment saying why: otherwise it reads as a dark mode bug.
   - A component that reads a feature config takes all its colors from it, without mixing `useIOColors()`.
+  - Artwork colors (a card's drawing, the brand gradients, the tables they're generated from) are data, not theme: keep them next to the code that draws them.
 
 ## I18n
 
