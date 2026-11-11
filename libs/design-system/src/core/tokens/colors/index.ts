@@ -91,7 +91,7 @@ const theme = (s: IOColorSemantics, mode: IOColorMode) => ({
     radio: checkboxColors(s),
     searchInput: searchInputColors(s),
     skeleton: skeletonColors(s),
-    stepper: stepperColors(s, mode),
+    stepper: stepperColors(s),
     switch: switchColors(s),
     tabItem: tabItemColors(s, mode),
     tag: tagColors(s),
