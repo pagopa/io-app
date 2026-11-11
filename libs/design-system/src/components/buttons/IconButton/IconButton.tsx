@@ -22,6 +22,11 @@ export type IconButton = WithTestID<{
   accessibilityLabel: string;
   color?: "contrast" | "neutral" | "primary";
   disabled?: boolean;
+  /**
+   * Use for actions that start a JS stack transition: on Android the press
+   * animation's commits reset the sliding card's transform, causing a flash.
+   */
+  disablePressAnimation?: boolean;
   icon: IOIcons;
   iconSize?: IOIconSizeScale;
   onPress: (event: GestureResponderEvent) => void;
@@ -34,6 +39,7 @@ export const IconButton = ({
   icon,
   iconSize = 24,
   disabled = false,
+  disablePressAnimation = false,
   onPress,
   accessibilityLabel,
   accessibilityHint,
@@ -73,8 +79,8 @@ export const IconButton = ({
       hitSlop={8}
       // Events
       onPress={onPress}
-      onPressIn={onPressIn}
-      onPressOut={onPressOut}
+      onPressIn={disablePressAnimation ? undefined : onPressIn}
+      onPressOut={disablePressAnimation ? undefined : onPressOut}
       // Test
       testID={testID}
     >
