@@ -1,4 +1,4 @@
-import { Body, IOVisualCostants } from "@io-app/design-system";
+import { Body, IODimensions } from "@io-app/design-system";
 import { cleanupAsync, fireEvent } from "@testing-library/react-native";
 import { Platform, StyleSheet } from "react-native";
 import configureMockStore from "redux-mock-store";
@@ -82,11 +82,11 @@ describe.each(["scroll", "list"] as const)("%s native tab insets", kind => {
       const actions = getByTestId("inset-content-actions");
       expect(scrollView.props.contentInsetAdjustmentBehavior).toBe("automatic");
       expect(StyleSheet.flatten(actions.props.style).paddingBottom).toBe(
-        bottomInset + IOVisualCostants.appMarginDefault
+        bottomInset + IODimensions.padding.footer.bottom
       );
       expect(
         StyleSheet.flatten(scrollView.props.contentContainerStyle).paddingBottom
-      ).toBe(IOVisualCostants.appMarginDefault + contentEndMargin);
+      ).toBe(IODimensions.padding.footer.bottom + contentEndMargin);
 
       const actionBlock = actions.find(
         node =>
@@ -103,7 +103,9 @@ describe.each(["scroll", "list"] as const)("%s native tab insets", kind => {
           getByTestId("inset-content").props.contentContainerStyle
         ).paddingBottom
       ).toBe(
-        IOVisualCostants.appMarginDefault + actionBlockHeight + contentEndMargin
+        IODimensions.padding.footer.bottom +
+          actionBlockHeight +
+          contentEndMargin
       );
     }
   );
@@ -138,6 +140,6 @@ describe.each(["scroll", "list"] as const)("%s native tab insets", kind => {
       StyleSheet.flatten(
         getByTestId("inset-content").props.contentContainerStyle
       ).paddingBottom
-    ).toBe(bottomInset + IOVisualCostants.appMarginDefault + contentEndMargin);
+    ).toBe(bottomInset + IODimensions.padding.footer.bottom + contentEndMargin);
   });
 });
