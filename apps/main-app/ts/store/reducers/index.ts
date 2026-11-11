@@ -305,6 +305,9 @@ export function createRootReducer(
               services: {
                 ...state.features.services
               },
+              tour: {
+                ...state.features.tour
+              },
               _persist: state.features._persist
             },
             identification: {
