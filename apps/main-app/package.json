@@ -1,6 +1,6 @@
 {
   "name": "@io-app/main-app",
-  "version": "3.43.0-rc.6",
+  "version": "3.43.0-rc.8",
   "private": true,
   "scripts": {
     "start": "expo start",
