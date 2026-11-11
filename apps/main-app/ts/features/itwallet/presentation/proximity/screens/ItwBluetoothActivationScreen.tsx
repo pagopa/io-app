@@ -4,6 +4,7 @@ import { useCallback } from "react";
 import { Alert, Platform } from "react-native";
 
 import { IOScrollViewWithListItems } from "../../../../../components/ui/IOScrollViewWithListItems";
+import { useHardwareBackButtonWhenFocused } from "../../../../../hooks/useHardwareBackButton";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import {
   trackItwProximityBluetoothActivation,
@@ -20,12 +21,21 @@ import {
 export const ItwBluetoothActivationScreen = () => {
   const machineRef = ItwProximityMachineContext.useActorRef();
 
+  const handleClose = () => {
+    trackItwProximityBluetoothActivationClose();
+    machineRef.send({ type: "close" });
+  };
+
   useHeaderSecondLevel({
     title: "",
-    goBack: () => {
-      trackItwProximityBluetoothActivationClose();
-      machineRef.send({ type: "close" });
-    }
+    goBack: handleClose
+  });
+
+  // On Android the back gesture/button would otherwise pop this screen and
+  // land on the presentment screen with an empty QR code
+  useHardwareBackButtonWhenFocused(() => {
+    handleClose();
+    return true;
   });
 
   useFocusEffect(
