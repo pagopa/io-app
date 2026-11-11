@@ -1,10 +1,16 @@
 import { ItwConfig } from "@io-app/api-types/generated/definitions/content/ItwConfig";
-import { PersistConfig, persistReducer } from "redux-persist";
+import {
+  createMigrate,
+  MigrationManifest,
+  PersistConfig,
+  persistReducer
+} from "redux-persist";
 import { getType } from "typesafe-actions";
 
 import { backendStatusLoadSuccess } from "../../../../../store/actions/backendStatus";
 import { Action } from "../../../../../store/actions/types";
 import createSecureStorage from "../../../../../store/storages/secureStorage";
+import { isDevEnv } from "../../../../../utils/environment";
 
 export type ItwRemoteConfigState = Partial<ItwConfig>;
 
@@ -22,12 +28,17 @@ const reducer = (
   }
 };
 
-const CURRENT_REDUX_ITW_REMOTE_CONFIG_STORE_VERSION = -1;
+const CURRENT_REDUX_ITW_REMOTE_CONFIG_STORE_VERSION = 0;
+
+export const migrations: MigrationManifest = {
+  "0": state => (state ? { ...state, discover_more_ced: undefined } : state)
+};
 
 const itwCredentialsPersistConfig: PersistConfig = {
   key: "itWalletRemoteConfig",
   storage: createSecureStorage(),
-  version: CURRENT_REDUX_ITW_REMOTE_CONFIG_STORE_VERSION
+  version: CURRENT_REDUX_ITW_REMOTE_CONFIG_STORE_VERSION,
+  migrate: createMigrate(migrations, { debug: isDevEnv })
 };
 
 const persistedReducer = persistReducer(itwCredentialsPersistConfig, reducer);
