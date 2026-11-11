@@ -4820,7 +4820,7 @@ exports[`ItwDiscoveryBanner snapshots should match snapshot for reactivation ban
                         }
                         accessible={false}
                         collapsable={false}
-                        focusable={true}
+                        focusable={false}
                         onBlur={[Function]}
                         onClick={[Function]}
                         onFocus={[Function]}
@@ -4889,9 +4889,7 @@ exports[`ItwDiscoveryBanner snapshots should match snapshot for reactivation ban
                           }
                         >
                           <View
-                            accessibilityLabel="Riattiva i tuoi documenti digitali su IO Per ragioni di sicurezza, se cambi dispositivo o rimuovi l’app, devi aggiungere di nuovo i tuoi documenti al Portafoglio. Inizia"
-                            accessibilityRole="button"
-                            accessible={true}
+                            accessible={false}
                             style={
                               {
                                 "alignSelf": "center",
@@ -4910,8 +4908,10 @@ exports[`ItwDiscoveryBanner snapshots should match snapshot for reactivation ban
                               }
                             >
                               <Text
+                                accessibilityElementsHidden={true}
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
+                                importantForAccessibility="no-hide-descendants"
                                 maxFontSizeMultiplier={1.5}
                                 style={
                                   [
@@ -4930,8 +4930,10 @@ exports[`ItwDiscoveryBanner snapshots should match snapshot for reactivation ban
                                 Riattiva i tuoi documenti digitali su IO
                               </Text>
                               <Text
+                                accessibilityElementsHidden={true}
                                 allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
+                                importantForAccessibility="no-hide-descendants"
                                 maxFontSizeMultiplier={1.5}
                                 style={
                                   [
@@ -4951,8 +4953,7 @@ exports[`ItwDiscoveryBanner snapshots should match snapshot for reactivation ban
                               </Text>
                             </View>
                             <View
-                              accessibilityElementsHidden={true}
-                              accessibilityLabel="Inizia"
+                              accessibilityLabel="Riattiva i tuoi documenti digitali su IO Per ragioni di sicurezza, se cambi dispositivo o rimuovi l’app, devi aggiungere di nuovo i tuoi documenti al Portafoglio. Inizia"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -4974,7 +4975,6 @@ exports[`ItwDiscoveryBanner snapshots should match snapshot for reactivation ban
                               accessible={true}
                               collapsable={false}
                               focusable={true}
-                              importantForAccessibility="no-hide-descendants"
                               onBlur={[Function]}
                               onClick={[Function]}
                               onFocus={[Function]}

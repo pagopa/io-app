@@ -344,7 +344,7 @@ exports[`ItwDiscoveryBanner should match snapshot with 'onboarding' banner type 
                           }
                           accessible={false}
                           collapsable={false}
-                          focusable={true}
+                          focusable={false}
                           onBlur={[Function]}
                           onClick={[Function]}
                           onFocus={[Function]}
@@ -413,9 +413,7 @@ exports[`ItwDiscoveryBanner should match snapshot with 'onboarding' banner type 
                             }
                           >
                             <View
-                              accessibilityLabel="Documenti su IO Puoi aggiungere al Portafoglio di IO i tuoi documenti digitali, disponibili anche senza connessione a internet. Attiva Documenti su IO"
-                              accessibilityRole="button"
-                              accessible={true}
+                              accessible={false}
                               style={
                                 {
                                   "alignSelf": "center",
@@ -434,8 +432,10 @@ exports[`ItwDiscoveryBanner should match snapshot with 'onboarding' banner type 
                                 }
                               >
                                 <Text
+                                  accessibilityElementsHidden={true}
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
+                                  importantForAccessibility="no-hide-descendants"
                                   maxFontSizeMultiplier={1.5}
                                   style={
                                     [
@@ -454,8 +454,10 @@ exports[`ItwDiscoveryBanner should match snapshot with 'onboarding' banner type 
                                   Documenti su IO
                                 </Text>
                                 <Text
+                                  accessibilityElementsHidden={true}
                                   allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
+                                  importantForAccessibility="no-hide-descendants"
                                   maxFontSizeMultiplier={1.5}
                                   style={
                                     [
@@ -475,8 +477,7 @@ exports[`ItwDiscoveryBanner should match snapshot with 'onboarding' banner type 
                                 </Text>
                               </View>
                               <View
-                                accessibilityElementsHidden={true}
-                                accessibilityLabel="Attiva Documenti su IO"
+                                accessibilityLabel="Documenti su IO Puoi aggiungere al Portafoglio di IO i tuoi documenti digitali, disponibili anche senza connessione a internet. Attiva Documenti su IO"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -498,7 +499,6 @@ exports[`ItwDiscoveryBanner should match snapshot with 'onboarding' banner type 
                                 accessible={true}
                                 collapsable={false}
                                 focusable={true}
-                                importantForAccessibility="no-hide-descendants"
                                 onBlur={[Function]}
                                 onClick={[Function]}
                                 onFocus={[Function]}
@@ -1085,7 +1085,7 @@ exports[`ItwDiscoveryBanner should match snapshot with 'reactivating' banner typ
                           }
                           accessible={false}
                           collapsable={false}
-                          focusable={true}
+                          focusable={false}
                           onBlur={[Function]}
                           onClick={[Function]}
                           onFocus={[Function]}
@@ -1154,9 +1154,7 @@ exports[`ItwDiscoveryBanner should match snapshot with 'reactivating' banner typ
                             }
                           >
                             <View
-                              accessibilityLabel="Riattiva Documenti su IO Per ragioni di sicurezza, quando cambi dispositivo o rimuovi l’app, devi aggiungere di nuovo i tuoi documenti al Portafoglio. Inizia"
-                              accessibilityRole="button"
-                              accessible={true}
+                              accessible={false}
                               style={
                                 {
                                   "alignSelf": "center",
@@ -1175,8 +1173,10 @@ exports[`ItwDiscoveryBanner should match snapshot with 'reactivating' banner typ
                                 }
                               >
                                 <Text
+                                  accessibilityElementsHidden={true}
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
+                                  importantForAccessibility="no-hide-descendants"
                                   maxFontSizeMultiplier={1.5}
                                   style={
                                     [
@@ -1195,8 +1195,10 @@ exports[`ItwDiscoveryBanner should match snapshot with 'reactivating' banner typ
                                   Riattiva Documenti su IO
                                 </Text>
                                 <Text
+                                  accessibilityElementsHidden={true}
                                   allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
+                                  importantForAccessibility="no-hide-descendants"
                                   maxFontSizeMultiplier={1.5}
                                   style={
                                     [
@@ -1216,8 +1218,7 @@ exports[`ItwDiscoveryBanner should match snapshot with 'reactivating' banner typ
                                 </Text>
                               </View>
                               <View
-                                accessibilityElementsHidden={true}
-                                accessibilityLabel="Inizia"
+                                accessibilityLabel="Riattiva Documenti su IO Per ragioni di sicurezza, quando cambi dispositivo o rimuovi l’app, devi aggiungere di nuovo i tuoi documenti al Portafoglio. Inizia"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -1239,7 +1240,6 @@ exports[`ItwDiscoveryBanner should match snapshot with 'reactivating' banner typ
                                 accessible={true}
                                 collapsable={false}
                                 focusable={true}
-                                importantForAccessibility="no-hide-descendants"
                                 onBlur={[Function]}
                                 onClick={[Function]}
                                 onFocus={[Function]}

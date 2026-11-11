@@ -336,7 +336,7 @@ exports[`ItwProximityQrCodeInfoBanner should match snapshot 1`] = `
                         }
                         accessible={false}
                         collapsable={false}
-                        focusable={true}
+                        focusable={false}
                         onBlur={[Function]}
                         onClick={[Function]}
                         onFocus={[Function]}
@@ -404,9 +404,7 @@ exports[`ItwProximityQrCodeInfoBanner should match snapshot 1`] = `
                           }
                         >
                           <View
-                            accessibilityLabel="Come funziona la verifica? Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio. Scopri di più"
-                            accessibilityRole="button"
-                            accessible={true}
+                            accessible={false}
                             style={
                               {
                                 "alignSelf": "center",
@@ -425,8 +423,10 @@ exports[`ItwProximityQrCodeInfoBanner should match snapshot 1`] = `
                               }
                             >
                               <Text
+                                accessibilityElementsHidden={true}
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
+                                importantForAccessibility="no-hide-descendants"
                                 maxFontSizeMultiplier={1.5}
                                 style={
                                   [
@@ -445,8 +445,10 @@ exports[`ItwProximityQrCodeInfoBanner should match snapshot 1`] = `
                                 Come funziona la verifica?
                               </Text>
                               <Text
+                                accessibilityElementsHidden={true}
                                 allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
+                                importantForAccessibility="no-hide-descendants"
                                 maxFontSizeMultiplier={1.5}
                                 style={
                                   [
@@ -466,8 +468,7 @@ exports[`ItwProximityQrCodeInfoBanner should match snapshot 1`] = `
                               </Text>
                             </View>
                             <View
-                              accessibilityElementsHidden={true}
-                              accessibilityLabel="Scopri di più"
+                              accessibilityLabel="Come funziona la verifica? Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio. Scopri di più"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -489,7 +490,6 @@ exports[`ItwProximityQrCodeInfoBanner should match snapshot 1`] = `
                               accessible={true}
                               collapsable={false}
                               focusable={true}
-                              importantForAccessibility="no-hide-descendants"
                               onBlur={[Function]}
                               onClick={[Function]}
                               onFocus={[Function]}

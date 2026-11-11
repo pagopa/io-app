@@ -1302,7 +1302,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                               }
                               accessible={false}
                               collapsable={false}
-                              focusable={true}
+                              focusable={false}
                               onBlur={[Function]}
                               onClick={[Function]}
                               onFocus={[Function]}
@@ -1370,9 +1370,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                 }
                               >
                                 <View
-                                  accessibilityLabel="Come funziona la verifica? Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio. Scopri di più"
-                                  accessibilityRole="button"
-                                  accessible={true}
+                                  accessible={false}
                                   style={
                                     {
                                       "alignSelf": "center",
@@ -1391,8 +1389,10 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                     }
                                   >
                                     <Text
+                                      accessibilityElementsHidden={true}
                                       allowFontScaling={true}
                                       dynamicTypeRamp="headline"
+                                      importantForAccessibility="no-hide-descendants"
                                       maxFontSizeMultiplier={1.5}
                                       style={
                                         [
@@ -1411,8 +1411,10 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                       Come funziona la verifica?
                                     </Text>
                                     <Text
+                                      accessibilityElementsHidden={true}
                                       allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
+                                      importantForAccessibility="no-hide-descendants"
                                       maxFontSizeMultiplier={1.5}
                                       style={
                                         [
@@ -1432,8 +1434,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                     </Text>
                                   </View>
                                   <View
-                                    accessibilityElementsHidden={true}
-                                    accessibilityLabel="Scopri di più"
+                                    accessibilityLabel="Come funziona la verifica? Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio. Scopri di più"
                                     accessibilityRole="button"
                                     accessibilityState={
                                       {
@@ -1455,7 +1456,6 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                     accessible={true}
                                     collapsable={false}
                                     focusable={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     onBlur={[Function]}
                                     onClick={[Function]}
                                     onFocus={[Function]}
@@ -3352,7 +3352,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                               }
                               accessible={false}
                               collapsable={false}
-                              focusable={true}
+                              focusable={false}
                               onBlur={[Function]}
                               onClick={[Function]}
                               onFocus={[Function]}
@@ -3420,9 +3420,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                 }
                               >
                                 <View
-                                  accessibilityLabel="Come funziona la verifica? Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio. Scopri di più"
-                                  accessibilityRole="button"
-                                  accessible={true}
+                                  accessible={false}
                                   style={
                                     {
                                       "alignSelf": "center",
@@ -3441,8 +3439,10 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                     }
                                   >
                                     <Text
+                                      accessibilityElementsHidden={true}
                                       allowFontScaling={true}
                                       dynamicTypeRamp="headline"
+                                      importantForAccessibility="no-hide-descendants"
                                       maxFontSizeMultiplier={1.5}
                                       style={
                                         [
@@ -3461,8 +3461,10 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                       Come funziona la verifica?
                                     </Text>
                                     <Text
+                                      accessibilityElementsHidden={true}
                                       allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
+                                      importantForAccessibility="no-hide-descendants"
                                       maxFontSizeMultiplier={1.5}
                                       style={
                                         [
@@ -3482,8 +3484,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                     </Text>
                                   </View>
                                   <View
-                                    accessibilityElementsHidden={true}
-                                    accessibilityLabel="Scopri di più"
+                                    accessibilityLabel="Come funziona la verifica? Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio. Scopri di più"
                                     accessibilityRole="button"
                                     accessibilityState={
                                       {
@@ -3505,7 +3506,6 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                     accessible={true}
                                     collapsable={false}
                                     focusable={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     onBlur={[Function]}
                                     onClick={[Function]}
                                     onFocus={[Function]}
@@ -5191,7 +5191,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                               }
                               accessible={false}
                               collapsable={false}
-                              focusable={true}
+                              focusable={false}
                               onBlur={[Function]}
                               onClick={[Function]}
                               onFocus={[Function]}
@@ -5259,9 +5259,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                 }
                               >
                                 <View
-                                  accessibilityLabel="Come funziona la verifica? Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio. Scopri di più"
-                                  accessibilityRole="button"
-                                  accessible={true}
+                                  accessible={false}
                                   style={
                                     {
                                       "alignSelf": "center",
@@ -5280,8 +5278,10 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                     }
                                   >
                                     <Text
+                                      accessibilityElementsHidden={true}
                                       allowFontScaling={true}
                                       dynamicTypeRamp="headline"
+                                      importantForAccessibility="no-hide-descendants"
                                       maxFontSizeMultiplier={1.5}
                                       style={
                                         [
@@ -5300,8 +5300,10 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                       Come funziona la verifica?
                                     </Text>
                                     <Text
+                                      accessibilityElementsHidden={true}
                                       allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
+                                      importantForAccessibility="no-hide-descendants"
                                       maxFontSizeMultiplier={1.5}
                                       style={
                                         [
@@ -5321,8 +5323,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                     </Text>
                                   </View>
                                   <View
-                                    accessibilityElementsHidden={true}
-                                    accessibilityLabel="Scopri di più"
+                                    accessibilityLabel="Come funziona la verifica? Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio. Scopri di più"
                                     accessibilityRole="button"
                                     accessibilityState={
                                       {
@@ -5344,7 +5345,6 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                     accessible={true}
                                     collapsable={false}
                                     focusable={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     onBlur={[Function]}
                                     onClick={[Function]}
                                     onFocus={[Function]}
@@ -7254,7 +7254,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                               }
                               accessible={false}
                               collapsable={false}
-                              focusable={true}
+                              focusable={false}
                               onBlur={[Function]}
                               onClick={[Function]}
                               onFocus={[Function]}
@@ -7322,9 +7322,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                 }
                               >
                                 <View
-                                  accessibilityLabel="Come funziona la verifica? Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio. Scopri di più"
-                                  accessibilityRole="button"
-                                  accessible={true}
+                                  accessible={false}
                                   style={
                                     {
                                       "alignSelf": "center",
@@ -7343,8 +7341,10 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                     }
                                   >
                                     <Text
+                                      accessibilityElementsHidden={true}
                                       allowFontScaling={true}
                                       dynamicTypeRamp="headline"
+                                      importantForAccessibility="no-hide-descendants"
                                       maxFontSizeMultiplier={1.5}
                                       style={
                                         [
@@ -7363,8 +7363,10 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                       Come funziona la verifica?
                                     </Text>
                                     <Text
+                                      accessibilityElementsHidden={true}
                                       allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
+                                      importantForAccessibility="no-hide-descendants"
                                       maxFontSizeMultiplier={1.5}
                                       style={
                                         [
@@ -7384,8 +7386,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                     </Text>
                                   </View>
                                   <View
-                                    accessibilityElementsHidden={true}
-                                    accessibilityLabel="Scopri di più"
+                                    accessibilityLabel="Come funziona la verifica? Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio. Scopri di più"
                                     accessibilityRole="button"
                                     accessibilityState={
                                       {
@@ -7407,7 +7408,6 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                     accessible={true}
                                     collapsable={false}
                                     focusable={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     onBlur={[Function]}
                                     onClick={[Function]}
                                     onFocus={[Function]}
