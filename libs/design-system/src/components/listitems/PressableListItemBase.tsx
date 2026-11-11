@@ -2,10 +2,11 @@ import { ComponentProps, PropsWithChildren, useCallback } from "react";
 import { GestureResponderEvent, Pressable } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { IODimensions, IOListItemStyles } from "../../core";
+import { IODimensions } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
 import { WithTestID } from "../../utils/types";
+import { IOListItemStyles } from "./styles";
 
 export type PressableListItemBaseProps = WithTestID<
   Pick<

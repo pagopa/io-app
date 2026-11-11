@@ -44,6 +44,31 @@ describe("index", () => {
       undefined,
       applicationChangeState("active")
     );
+    it.each([
+      { name: "successful logout", action: logoutSuccess() },
+      {
+        name: "failed logout",
+        action: logoutFailure({ error: Error("") })
+      }
+    ])("should preserve tour state after $name", ({ action }) => {
+      const tourState = {
+        ...initialState.features.tour,
+        completed: ["wallet", "payments"],
+        _persist: { version: 0, rehydrated: true }
+      };
+      const testState = {
+        ...initialState,
+        features: {
+          ...initialState.features,
+          tour: tourState
+        }
+      };
+
+      const outputState = createRootReducer([])(testState, action);
+
+      expect(outputState.features.tour).toEqual(tourState);
+    });
+
     [logoutSuccess(), logoutFailure({ error: Error("") })].forEach(action =>
       it(`should remove 'registeredToken' and set 'tokenStatus' to 'unsent' when receiving an action of type '${action.type}'`, () => {
         const testState = {

@@ -2,9 +2,9 @@ import {
   Body,
   Icon,
   IOButton,
-  IOColors,
   IODimensions,
   IOSkeleton,
+  useIOColors,
   useIOTheme
 } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
@@ -140,17 +140,29 @@ type StatusBoxProps = {
   iconName: "qrCode" | "warningFilled";
 };
 
-const StatusBox = ({ iconName, description, action }: StatusBoxProps) => (
-  <View style={styles.statusBox}>
-    <Icon color="grey-700" name={iconName} size={24} />
-    <Body style={styles.statusDescription}>{description}</Body>
-    {action}
-  </View>
-);
+const StatusBox = ({ iconName, description, action }: StatusBoxProps) => {
+  const colors = useIOColors();
+
+  return (
+    <View
+      style={[
+        styles.statusBox,
+        { backgroundColor: colors.component.banner.background.neutral }
+      ]}
+    >
+      <Icon
+        color={colors.component.banner.foreground.content}
+        name={iconName}
+        size={24}
+      />
+      <Body style={styles.statusDescription}>{description}</Body>
+      {action}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   statusBox: {
-    backgroundColor: IOColors["grey-50"],
     alignItems: "center",
     justifyContent: "center",
     aspectRatio: 1,

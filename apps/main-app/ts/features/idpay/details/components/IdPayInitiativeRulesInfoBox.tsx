@@ -2,7 +2,7 @@ import {
   Body,
   H6,
   IOButton,
-  IOColors,
+  IOColorsLegacy,
   IOSkeleton,
   useIOTheme,
   VSpacer,
@@ -40,7 +40,7 @@ const IdPayInitiativeRulesInfoBox = (props: Props) => {
         style={[
           styles.infoBox,
           // TODO: add a new theme key for more visible card border
-          { borderColor: IOColors[theme["textInputBorder-default"]] }
+          { borderColor: IOColorsLegacy[theme["textInputBorder-default"]] }
         ]}
       >
         <H6>{I18n.t("idpay.initiative.beneficiaryDetails.infobox.title")}</H6>
@@ -74,7 +74,7 @@ const IdPayInitiativeRulesInfoBoxSkeleton = () => {
     <View
       style={[
         styles.infoBox,
-        { borderColor: IOColors[theme["textInputBorder-default"]] }
+        { borderColor: IOColorsLegacy[theme["textInputBorder-default"]] }
       ]}
     >
       <IOSkeleton height={24} radius={4} shape="rectangle" width={"40%"} />

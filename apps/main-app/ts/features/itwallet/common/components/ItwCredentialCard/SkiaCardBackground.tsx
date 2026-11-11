@@ -1,4 +1,4 @@
-import { IOColors } from "@io-app/design-system";
+import { IOColorPalette } from "@io-app/design-system";
 import { Canvas } from "@shopify/react-native-skia";
 import { memo } from "react";
 import { ImageRequireSource, StyleSheet, View } from "react-native";
@@ -32,7 +32,11 @@ export const SkiaCardBackground = memo(
     return (
       <View
         onLayout={onLayout}
-        style={[StyleSheet.absoluteFill, { backgroundColor: IOColors.white }]}
+        style={[
+          StyleSheet.absoluteFill,
+          // Card artwork: same in both modes
+          { backgroundColor: IOColorPalette.greyscale.white }
+        ]}
         testID="itwCredentialCardSkiaBackgroundTestID"
       >
         <Canvas

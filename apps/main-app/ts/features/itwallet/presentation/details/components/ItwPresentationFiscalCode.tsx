@@ -1,17 +1,14 @@
-import {
-  H3,
-  IOColors,
-  IODimensions,
-  useScaleAnimation
-} from "@io-app/design-system";
+import { H3, IODimensions, useScaleAnimation } from "@io-app/design-system";
 import I18n from "i18next";
 import { memo } from "react";
 import { Dimensions, Pressable, StyleSheet } from "react-native";
 import Barcode from "react-native-barcode-builder";
 import Animated from "react-native-reanimated";
 
+import { useFeatureColors } from "../../../../../hooks/useFeatureColors";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
+import { itwColors } from "../../../colors";
 import { selectFiscalCodeFromEid } from "../../../credentials/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 
@@ -49,6 +46,7 @@ const barcodeWidth = barcodeTotalWidth / ENCODED_FISCAL_CODE_LENGTH_CODE39;
 const ItwPresentationFiscalCode = () => {
   const navigation = useIONavigation();
   const fiscalCode = useIOSelector(selectFiscalCodeFromEid);
+  const { fiscalCode: colors } = useFeatureColors(itwColors);
 
   const handleOnPress = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
@@ -72,16 +70,24 @@ const ItwPresentationFiscalCode = () => {
       onPressIn={onPressIn}
       onPressOut={onPressOut}
     >
-      <Animated.View style={[styles.button, scaleAnimatedStyle]}>
+      <Animated.View
+        style={[
+          styles.button,
+          { backgroundColor: colors.background, borderColor: colors.border },
+          scaleAnimatedStyle
+        ]}
+      >
         <Barcode
-          background={IOColors.white}
+          background={colors.background}
           format={"CODE39"} // CODE39 it's the encoding format used by the physical TS-CNS card
           height={80}
-          lineColor={IOColors.black}
+          lineColor={colors.code}
           value={fiscalCode}
           width={barcodeWidth}
         />
-        <H3 style={styles.text}>{fiscalCode}</H3>
+        <H3 color={colors.code} style={styles.text}>
+          {fiscalCode}
+        </H3>
       </Animated.View>
     </Pressable>
   );
@@ -93,17 +99,12 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     paddingHorizontal: buttonPaddingHorizontal,
     rowGap: 0,
-    borderColor: IOColors["grey-100"],
-    // Always white regardless of the theme
-    backgroundColor: IOColors.white,
     borderWidth: IODimensions.stroke.default,
     borderRadius: IODimensions.radius.card,
     borderCurve: "continuous"
   },
   text: {
-    alignSelf: "center",
-    // Always black regardless of the theme
-    color: IOColors.black
+    alignSelf: "center"
   }
 });
 

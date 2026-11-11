@@ -22,14 +22,10 @@ import Animated, {
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { useIOTheme } from "../../context";
-import {
-  footerBoxShadow,
-  IOColors,
-  IODimensions,
-  IODimensionScale
-} from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions, IODimensionScale } from "../../core";
 import { FooterActions, FooterActionsMeasurements } from "./FooterActions";
+import { footerBoxShadow } from "./styles";
 
 const shadowTransitionDistance: IODimensionScale = 24;
 const defaultScrollEventThrottle = 8;
@@ -70,7 +66,7 @@ export const ScrollViewWithStickyFooterActions = ({
   footerActionProps,
   scrollViewProps
 }: ScrollViewWithStickyFooterActionsProps) => {
-  const theme = useIOTheme();
+  const footerColors = useIOColors().component.footer;
   const { bottom: safeAreaBottom } = useSafeAreaInsets();
   const scrollY = useSharedValue(0);
   const [scrollViewHeight, setScrollViewHeight] = useState(0);
@@ -83,9 +79,7 @@ export const ScrollViewWithStickyFooterActions = ({
 
   const placeholderTopEdge =
     placeholderY - scrollViewHeight + placeholderHeight;
-  const backgroundColor = transparent
-    ? "transparent"
-    : IOColors[theme["appBackground-primary"]];
+  const backgroundColor = transparent ? "transparent" : footerColors.background;
 
   const handleScroll = useAnimatedScrollHandler(({ contentOffset }) => {
     scrollY.set(contentOffset.y);

@@ -1,3 +1,4 @@
+import { IOColors } from "@io-app/design-system";
 import I18n from "i18next";
 import { createStore } from "redux";
 import { createActor, StateFrom } from "xstate";
@@ -6,6 +7,10 @@ import { IOStackNavigationProp } from "../../../../../../navigation/params/AppPa
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import {
+  findAllByStyle,
+  withDarkTheme
+} from "../../../../../../utils/testColors";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import * as remoteConfig from "../../../../common/store/selectors/remoteConfig";
 import { testProximityDeps } from "../../../../machine/utils/testDeps";
@@ -193,6 +198,21 @@ describe("ItwProximityPresentmentScreen", () => {
       ).toBeTruthy();
     }
   );
+
+  it("should use the dark neutral banner background for the error box in dark mode", () => {
+    const { toJSON } = renderComponent(
+      { machineState: "error" },
+      { source: "WALLET_HOME" },
+      "dark"
+    );
+
+    expect(
+      findAllByStyle(toJSON(), {
+        aspectRatio: 1,
+        backgroundColor: IOColors.dark.component.banner.background.neutral
+      })
+    ).toHaveLength(1);
+  });
 });
 
 type RenderOptions =
@@ -202,7 +222,8 @@ type RenderOptions =
 
 const renderComponent = (
   options: RenderOptions,
-  routeParams: ItwProximityPresentmentScreenNavigationParams
+  routeParams: ItwProximityPresentmentScreenNavigationParams,
+  theme: "dark" | "light" = "light"
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, initialState as any);
@@ -228,15 +249,17 @@ const renderComponent = (
     params: routeParams
   };
 
+  const Component = () => (
+    <ItwProximityMachineContext.Provider options={{ snapshot }}>
+      <ItwProximityPresentmentScreen
+        navigation={mockNavigation}
+        route={route}
+      />
+    </ItwProximityMachineContext.Provider>
+  );
+
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    () => (
-      <ItwProximityMachineContext.Provider options={{ snapshot }}>
-        <ItwProximityPresentmentScreen
-          navigation={mockNavigation}
-          route={route}
-        />
-      </ItwProximityMachineContext.Provider>
-    ),
+    theme === "dark" ? withDarkTheme(Component) : Component,
     ITW_PROXIMITY_ROUTES.PRESENTMENT,
     {},
     store
