@@ -24,7 +24,7 @@ import { ITW_ROUTES } from "../../navigation/routes";
 import { trackCredentialDetail } from "../../presentation/details/analytics";
 import { ITW_PRESENTATION_DETAILS_SCREENVIEW_EVENTS } from "../../presentation/details/analytics/enum";
 import { useItwStatusIconColor } from "../hooks/useItwStatusIconColor";
-import { itwShouldHideEidLifecycleAlert } from "../store/selectors";
+import { itwShouldHideEidLifecycleAlert } from "../store/selectors/upgrade";
 import { parseClaims, WellKnownClaim } from "../utils/itwClaimsUtils";
 import { CredentialMetadata } from "../utils/itwTypesUtils";
 import { ItwCredentialClaim } from "./ItwCredentialClaim";

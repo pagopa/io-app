@@ -16,7 +16,7 @@ import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selec
 import { ITW_ROUTES } from "../../navigation/routes";
 import { useItwEidInvalidBottomSheet } from "../hooks/useItwEidInvalidBottomSheet";
 import { useItwEidLifecycleAlertTracking } from "../hooks/useItwEidLifecycleAlertTracking";
-import { itwShouldRenderL3UpgradeBannerSelector } from "../store/selectors";
+import { itwIsL3UpgradeOfferedSelector } from "../store/selectors/upgrade";
 import { CredentialMetadata, ItwEidStatus } from "../utils/itwTypesUtils";
 
 const defaultLifecycleStatus: Array<ItwEidStatus> = [
@@ -51,9 +51,7 @@ export const ItwEidLifecycleAlert = ({
     itwAreAllCredentialsExpiredSelector
   );
   const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
-  const isUpgradeAvailable = useIOSelector(
-    itwShouldRenderL3UpgradeBannerSelector
-  );
+  const isUpgradeAvailable = useIOSelector(itwIsL3UpgradeOfferedSelector);
   const isOffline = offlineAccessReason !== undefined;
 
   const { trackAlertTap } = useItwEidLifecycleAlertTracking({

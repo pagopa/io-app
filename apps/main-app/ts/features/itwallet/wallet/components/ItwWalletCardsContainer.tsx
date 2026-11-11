@@ -22,12 +22,14 @@ import { ItwL2EngagementBanner } from "../../common/components/ItwL2EngagementBa
 import { ItwWalletReadyBanner } from "../../common/components/ItwWalletReadyBanner";
 import { useItwStatusIconColor } from "../../common/hooks/useItwStatusIconColor.ts";
 import {
-  itwShouldHideEidLifecycleAlert,
   itwShouldRenderL2EngagementBannerSelector,
-  itwShouldRenderNewItWalletSelector,
+  itwShouldRenderNewItWalletSelector
+} from "../../common/store/selectors";
+import {
+  itwShouldHideEidLifecycleAlert,
   itwShouldRenderNonDismissibleUpgradeBannerSelector,
   itwShouldRenderUpgradeBannerSelector
-} from "../../common/store/selectors";
+} from "../../common/store/selectors/upgrade";
 import { ItwEidStatus } from "../../common/utils/itwTypesUtils.ts";
 import {
   itwCredentialsEidExpirationSelector,
