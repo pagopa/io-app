@@ -21,7 +21,10 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList"
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { cgnFeaturedOpportunitiesSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import CgnAnimatedHeader from "../../components/CgnAnimatedHeader";
-import { CgnFeaturedOpportunities } from "../../components/merchants/CgnFeaturedOpportunities";
+import {
+  CgnFeaturedOpportunities,
+  CgnFeaturedOpportunitiesSkeleton
+} from "../../components/merchants/CgnFeaturedOpportunities";
 import { useDisableRootNavigatorGesture } from "../../hooks/useDisableRootNavigatorGesture";
 import CGN_ROUTES from "../../navigation/routes";
 import {
@@ -30,7 +33,10 @@ import {
   resetMerchantDiscountCode,
   selectMerchantDiscount
 } from "../../store/actions/merchants";
-import { resolvedCgnFeaturedOpportunitiesSelector } from "../../store/selectors/featuredOpportunities";
+import {
+  isLoadingFeaturedOpportunitiesSelector,
+  resolvedCgnFeaturedOpportunitiesSelector
+} from "../../store/selectors/featuredOpportunities";
 import {
   CategoryRow,
   CgnMerchantCategoriesListScreen
@@ -63,6 +69,9 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
   const featuredReferences = useIOSelector(cgnFeaturedOpportunitiesSelector);
   const featuredOpportunities = useIOSelector(
     resolvedCgnFeaturedOpportunitiesSelector
+  );
+  const isFeaturedOpportunitiesLoading = useIOSelector(
+    isLoadingFeaturedOpportunitiesSelector
   );
 
   useEffect(() => {
@@ -198,7 +207,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
         </View>
         <VSpacer size={16} />
         {selectedTab === CgnMerchantsHomeTabRoutes.CGN_CATEGORIES &&
-          featuredOpportunities.length > 0 && (
+          (featuredOpportunities.length > 0 ? (
             <View testID="CgnFeaturedOpportunitiesSection">
               <CgnFeaturedOpportunities
                 onSelect={({ merchant, discount }) => {
@@ -213,11 +222,26 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
               />
               <VSpacer size={16} />
             </View>
-          )}
+          ) : (
+            isFeaturedOpportunitiesLoading &&
+            featuredReferences.length > 0 && (
+              <>
+                <CgnFeaturedOpportunitiesSkeleton />
+                <VSpacer size={16} />
+              </>
+            )
+          ))}
       </>
     ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [dispatch, featuredOpportunities, navigate, selectedTab]
+    [
+      dispatch,
+      featuredOpportunities,
+      featuredReferences,
+      isFeaturedOpportunitiesLoading,
+      navigate,
+      selectedTab
+    ]
   );
 
   return (

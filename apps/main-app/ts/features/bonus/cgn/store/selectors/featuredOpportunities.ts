@@ -1,11 +1,14 @@
 import { createSelector } from "reselect";
 
-import { isReady } from "../../../../../common/model/RemoteValue";
+import { isLoading, isReady } from "../../../../../common/model/RemoteValue";
 import { cgnFeaturedOpportunitiesSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { ResolvedCgnFeaturedOpportunity } from "../actions/merchants";
 
 const emptyOpportunities: ReadonlyArray<ResolvedCgnFeaturedOpportunity> = [];
+
+export const isLoadingFeaturedOpportunitiesSelector = (state: GlobalState) =>
+  isLoading(state.bonus.cgn.featuredOpportunities);
 
 export const resolvedCgnFeaturedOpportunitiesSelector = createSelector(
   (state: GlobalState) => state.bonus.cgn.featuredOpportunities,

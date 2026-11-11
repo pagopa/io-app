@@ -1,11 +1,14 @@
+import { CgnFeaturedOpportunity } from "@io-app/api-types/generated/definitions/content/CgnFeaturedOpportunity";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import { createStore } from "redux";
 
+import { remoteLoading } from "../../../../../../common/model/RemoteValue";
 import { setLocale } from "../../../../../../i18n";
 import { useIONavigation } from "../../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
+import * as remoteConfigSelectors from "../../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import CGN_ROUTES from "../../../navigation/routes";
@@ -89,6 +92,49 @@ describe("CgnMerchantsCategoriesSelectionScreen", () => {
     const { queryByTestId } = renderComponent(defaultState);
 
     expect(queryByTestId("CgnFeaturedOpportunitiesSection")).toBeNull();
+    expect(queryByTestId("CgnFeaturedOpportunitiesSkeleton")).toBeNull();
+  });
+
+  it("should render the featured opportunities skeleton while they are loading", () => {
+    jest
+      .spyOn(remoteConfigSelectors, "cgnFeaturedOpportunitiesSelector")
+      .mockReturnValue([
+        {
+          merchantId: "merchant-1",
+          discountId: "discount-1"
+        } as CgnFeaturedOpportunity
+      ]);
+    const { getByTestId, queryByTestId } = renderComponent({
+      ...defaultState,
+      bonus: {
+        ...defaultState.bonus,
+        cgn: {
+          ...defaultState.bonus.cgn,
+          featuredOpportunities: remoteLoading
+        }
+      }
+    });
+
+    expect(getByTestId("CgnFeaturedOpportunitiesSkeleton")).toBeTruthy();
+    expect(queryByTestId("CgnFeaturedOpportunitiesSection")).toBeNull();
+  });
+
+  it("should not render the featured opportunities skeleton when no references are configured", () => {
+    jest
+      .spyOn(remoteConfigSelectors, "cgnFeaturedOpportunitiesSelector")
+      .mockReturnValue([]);
+    const { queryByTestId } = renderComponent({
+      ...defaultState,
+      bonus: {
+        ...defaultState.bonus,
+        cgn: {
+          ...defaultState.bonus.cgn,
+          featuredOpportunities: remoteLoading
+        }
+      }
+    });
+
+    expect(queryByTestId("CgnFeaturedOpportunitiesSkeleton")).toBeNull();
   });
 
   it("should render the tab navigation with categories and merchants tabs", () => {

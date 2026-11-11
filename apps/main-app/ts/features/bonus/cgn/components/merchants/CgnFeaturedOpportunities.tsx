@@ -3,6 +3,7 @@ import {
   IOColors,
   IODimensions,
   IODimensionScale,
+  IOSkeleton,
   IOText,
   VSpacer
 } from "@io-app/design-system";
@@ -85,6 +86,22 @@ const FeaturedOpportunityCard = ({
     </Pressable>
   );
 };
+
+export const CgnFeaturedOpportunitiesSkeleton = () => (
+  <View
+    style={{ paddingHorizontal: IODimensions.padding.screen.default }}
+    testID="CgnFeaturedOpportunitiesSkeleton"
+  >
+    <IOSkeleton height={24} radius={4} shape="rectangle" width="50%" />
+    <VSpacer size={CARD_SPACING} />
+    <IOSkeleton
+      height={CARD_HEIGHT}
+      radius={CARD_BORDER_RADIUS}
+      shape="rectangle"
+      width="100%"
+    />
+  </View>
+);
 
 export const CgnFeaturedOpportunities = ({
   opportunities,
