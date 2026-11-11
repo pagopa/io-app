@@ -1,4 +1,5 @@
 import { Institution } from "@io-app/api-types/generated/definitions/services/Institution";
+import { cleanupAsync } from "@testing-library/react-native";
 import { FlatList } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import configureMockStore from "redux-mock-store";
@@ -15,7 +16,8 @@ describe("InstitutionList", () => {
     jest.useFakeTimers();
   });
 
-  afterEach(() => {
+  afterEach(async () => {
+    await cleanupAsync();
     jest.clearAllTimers();
     jest.useRealTimers();
   });
