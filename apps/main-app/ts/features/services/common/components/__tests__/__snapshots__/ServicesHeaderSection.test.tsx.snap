@@ -333,7 +333,7 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
               },
               {
                 "backgroundColor": "#FFFFFF",
-                "borderColor": "rgba(14,15,19,0.1)",
+                "borderColor": "#E8EBF1",
                 "borderRadius": 12,
                 "height": 66,
                 "padding": 8,
