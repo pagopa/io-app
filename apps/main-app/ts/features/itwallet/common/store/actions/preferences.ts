@@ -58,6 +58,11 @@ export const itwSetProximityNfcLocallyEnabled = createStandardAction(
   "ITW_SET_PROXIMITY_NFC_LOCALLY_ENABLED"
 )<boolean>();
 
+/** Local override showing the What's New engagement screen. */
+export const itwSetWhatsNewLocallyEnabled = createStandardAction(
+  "ITW_SET_WHATS_NEW_LOCALLY_ENABLED"
+)<boolean>();
+
 export type ItwWalletActivationFeedbackBannerData = {
   authMethod: string;
   docStatus: "active" | "not_active";
@@ -90,4 +95,5 @@ export type ItwPreferencesActions =
   | ActionType<typeof itwSetL2Fallback>
   | ActionType<typeof itwSetPidReissuingSurveyHidden>
   | ActionType<typeof itwSetProximityNfcLocallyEnabled>
-  | ActionType<typeof itwSetWalletActivationFeedbackBannerData>;
+  | ActionType<typeof itwSetWalletActivationFeedbackBannerData>
+  | ActionType<typeof itwSetWhatsNewLocallyEnabled>;

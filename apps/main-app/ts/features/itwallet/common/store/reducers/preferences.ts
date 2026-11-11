@@ -20,6 +20,7 @@ import {
   itwSetPidReissuingSurveyHidden,
   itwSetProximityNfcLocallyEnabled,
   itwSetWalletActivationFeedbackBannerData,
+  itwSetWhatsNewLocallyEnabled,
   ItwWalletActivationFeedbackBannerData
 } from "../actions/preferences";
 
@@ -50,6 +51,8 @@ export type ItwPreferencesState = {
   isPidReissuingSurveyHidden?: boolean;
   // Local feature flag enabling NFC engagement in the Proximity presentation
   isProximityNfcLocallyEnabled?: boolean;
+  // Local feature flag enabling the What's New engagement screen
+  isWhatsNewLocallyEnabled?: boolean;
   // Set when a credential is successfully added together with an IT Wallet eID activation.
   // Holds the data needed to render the credential success survey banner in WALLET_HOME;
   walletActivationFeedbackBannerData?: ItwWalletActivationFeedbackBannerData;
@@ -87,14 +90,15 @@ const reducer = (
       // - isFiscalCodeWhitelisted: avoids to have the value undefined after a wallet reset
       // - isItwActivationDisabled: should persist across wallet resets
       // - isL2Fallback: preserves the restricted experience during reissuance
-      // - isProximityNfcLocallyEnabled: local feature flag
+      // - isProximityNfcLocallyEnabled, isWhatsNewLocallyEnabled: local feature flags
       const {
         claimValuesHidden,
         engagementScreenShownByUser,
         isFiscalCodeWhitelisted,
         isItwActivationDisabled,
         isL2Fallback,
-        isProximityNfcLocallyEnabled
+        isProximityNfcLocallyEnabled,
+        isWhatsNewLocallyEnabled
       } = state;
       return {
         ...itwPreferencesInitialState,
@@ -103,7 +107,8 @@ const reducer = (
         isFiscalCodeWhitelisted,
         isItwActivationDisabled,
         isL2Fallback,
-        isProximityNfcLocallyEnabled
+        isProximityNfcLocallyEnabled,
+        isWhatsNewLocallyEnabled
       };
 
     case getType(itwResetEngagementScreenShown):
@@ -177,6 +182,9 @@ const reducer = (
         walletActivationFeedbackBannerData: action.payload
       };
     }
+
+    case getType(itwSetWhatsNewLocallyEnabled):
+      return { ...state, isWhatsNewLocallyEnabled: action.payload };
 
     default:
       return state;
