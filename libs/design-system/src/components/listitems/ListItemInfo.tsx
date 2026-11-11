@@ -119,7 +119,7 @@ const ListItemInfoContent = ({
       {icon && !hugeFontEnabled && (
         <Icon
           allowFontScaling
-          color={listItemColors.foreground.icon.decorative}
+          color={listItemColors.foreground.icon}
           name={icon}
           size={IODimensions.size.icon.listItem}
         />

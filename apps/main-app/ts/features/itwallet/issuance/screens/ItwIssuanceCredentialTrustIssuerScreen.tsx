@@ -2,6 +2,7 @@ import {
   ContentWrapper,
   ForceScrollDownView,
   H2,
+  IOMarkdownLite,
   ListItemHeader,
   useIOColors,
   VSpacer
@@ -13,6 +14,7 @@ import { useCallback, useRef } from "react";
 import type { CredentialIssuanceMode } from "../../machine/credential/context";
 
 import IOMarkdown from "../../../../components/IOMarkdown";
+import { handleOpenLink } from "../../../../components/IOMarkdown/renderRules";
 import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -34,7 +36,6 @@ import { itwIpzsItwalletPrivacyUrlSelector } from "../../common/store/selectors/
 import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import { ISSUER_MOCK_NAME } from "../../common/utils/itwMocksUtils";
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
-import { generateItwIOMarkdownRules } from "../../common/utils/markdown";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
@@ -251,13 +252,14 @@ const ContentView = ({
         />
         <ItwRequestedClaimsList items={requiredClaims} />
         <VSpacer size={32} />
-        <IOMarkdown
+        <IOMarkdownLite
           content={I18n.t("features.itWallet.issuance.credentialAuth.tos", {
             privacyUrl: ipzsPrivacyUrl
           })}
-          rules={generateItwIOMarkdownRules({
-            linkCallback: trackOpenItwTos
-          })}
+          onLinkPress={url => {
+            handleOpenLink(url);
+            trackOpenItwTos();
+          }}
         />
       </ContentWrapper>
     </ForceScrollDownView>

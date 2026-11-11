@@ -221,7 +221,7 @@ export const ListItemRadio = ({
               {startImage?.icon && !hugeFontEnabled && (
                 <Icon
                   allowFontScaling
-                  color={listItemColors.foreground.icon.decorative}
+                  color={listItemColors.foreground.icon}
                   name={startImage.icon}
                   size={IODimensions.size.icon.selection}
                 />
