@@ -845,7 +845,7 @@ exports[`CiePinScreen should match snapshot 1`] = `
                                     }
                                     accessible={false}
                                     collapsable={false}
-                                    focusable={true}
+                                    focusable={false}
                                     onBlur={[Function]}
                                     onClick={[Function]}
                                     onFocus={[Function]}
@@ -913,9 +913,7 @@ exports[`CiePinScreen should match snapshot 1`] = `
                                       }
                                     >
                                       <View
-                                        accessibilityLabel="Come si accede? Abbiamo preparato una guida per aiutarti passo passo. Leggi come fare"
-                                        accessibilityRole="link"
-                                        accessible={true}
+                                        accessible={false}
                                         style={
                                           {
                                             "alignSelf": "center",
@@ -934,8 +932,10 @@ exports[`CiePinScreen should match snapshot 1`] = `
                                           }
                                         >
                                           <Text
+                                            accessibilityElementsHidden={true}
                                             allowFontScaling={true}
                                             dynamicTypeRamp="headline"
+                                            importantForAccessibility="no-hide-descendants"
                                             maxFontSizeMultiplier={1.5}
                                             style={
                                               [
@@ -954,8 +954,10 @@ exports[`CiePinScreen should match snapshot 1`] = `
                                             Come si accede?
                                           </Text>
                                           <Text
+                                            accessibilityElementsHidden={true}
                                             allowFontScaling={true}
                                             dynamicTypeRamp="footnote"
+                                            importantForAccessibility="no-hide-descendants"
                                             maxFontSizeMultiplier={1.5}
                                             style={
                                               [
@@ -975,9 +977,8 @@ exports[`CiePinScreen should match snapshot 1`] = `
                                           </Text>
                                         </View>
                                         <View
-                                          accessibilityElementsHidden={true}
-                                          accessibilityLabel="Leggi come fare"
-                                          accessibilityRole="button"
+                                          accessibilityLabel="Come si accede? Abbiamo preparato una guida per aiutarti passo passo. Leggi come fare"
+                                          accessibilityRole="link"
                                           accessibilityState={
                                             {
                                               "busy": undefined,
@@ -998,7 +999,6 @@ exports[`CiePinScreen should match snapshot 1`] = `
                                           accessible={true}
                                           collapsable={false}
                                           focusable={true}
-                                          importantForAccessibility="no-hide-descendants"
                                           onBlur={[Function]}
                                           onClick={[Function]}
                                           onFocus={[Function]}

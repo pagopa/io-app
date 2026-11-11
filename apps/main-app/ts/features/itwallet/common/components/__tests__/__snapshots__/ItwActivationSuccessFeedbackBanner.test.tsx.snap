@@ -343,7 +343,7 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=act
                           }
                           accessible={false}
                           collapsable={false}
-                          focusable={true}
+                          focusable={false}
                           onBlur={[Function]}
                           onClick={[Function]}
                           onFocus={[Function]}
@@ -412,9 +412,7 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=act
                             }
                           >
                             <View
-                              accessibilityLabel="Puoi dirci com’è andata? Raccontaci la tua esperienza con l’attivazione di IT-⁠Wallet e aiutaci a migliorare. Inizia"
-                              accessibilityRole="button"
-                              accessible={true}
+                              accessible={false}
                               style={
                                 {
                                   "alignSelf": "center",
@@ -433,8 +431,10 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=act
                                 }
                               >
                                 <Text
+                                  accessibilityElementsHidden={true}
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
+                                  importantForAccessibility="no-hide-descendants"
                                   maxFontSizeMultiplier={1.5}
                                   style={
                                     [
@@ -453,8 +453,10 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=act
                                   Puoi dirci com’è andata?
                                 </Text>
                                 <Text
+                                  accessibilityElementsHidden={true}
                                   allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
+                                  importantForAccessibility="no-hide-descendants"
                                   maxFontSizeMultiplier={1.5}
                                   style={
                                     [
@@ -474,8 +476,7 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=act
                                 </Text>
                               </View>
                               <View
-                                accessibilityElementsHidden={true}
-                                accessibilityLabel="Inizia"
+                                accessibilityLabel="Puoi dirci com’è andata? Raccontaci la tua esperienza con l’attivazione di IT-⁠Wallet e aiutaci a migliorare. Inizia"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -497,7 +498,6 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=act
                                 accessible={true}
                                 collapsable={false}
                                 focusable={true}
-                                importantForAccessibility="no-hide-descendants"
                                 onBlur={[Function]}
                                 onClick={[Function]}
                                 onFocus={[Function]}
@@ -1224,7 +1224,7 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=not
                           }
                           accessible={false}
                           collapsable={false}
-                          focusable={true}
+                          focusable={false}
                           onBlur={[Function]}
                           onClick={[Function]}
                           onFocus={[Function]}
@@ -1293,9 +1293,7 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=not
                             }
                           >
                             <View
-                              accessibilityLabel="Puoi dirci com’è andata? Raccontaci la tua esperienza con l’attivazione di IT-⁠Wallet e aiutaci a migliorare. Inizia"
-                              accessibilityRole="button"
-                              accessible={true}
+                              accessible={false}
                               style={
                                 {
                                   "alignSelf": "center",
@@ -1314,8 +1312,10 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=not
                                 }
                               >
                                 <Text
+                                  accessibilityElementsHidden={true}
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
+                                  importantForAccessibility="no-hide-descendants"
                                   maxFontSizeMultiplier={1.5}
                                   style={
                                     [
@@ -1334,8 +1334,10 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=not
                                   Puoi dirci com’è andata?
                                 </Text>
                                 <Text
+                                  accessibilityElementsHidden={true}
                                   allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
+                                  importantForAccessibility="no-hide-descendants"
                                   maxFontSizeMultiplier={1.5}
                                   style={
                                     [
@@ -1355,8 +1357,7 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=not
                                 </Text>
                               </View>
                               <View
-                                accessibilityElementsHidden={true}
-                                accessibilityLabel="Inizia"
+                                accessibilityLabel="Puoi dirci com’è andata? Raccontaci la tua esperienza con l’attivazione di IT-⁠Wallet e aiutaci a migliorare. Inizia"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -1378,7 +1379,6 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=not
                                 accessible={true}
                                 collapsable={false}
                                 focusable={true}
-                                importantForAccessibility="no-hide-descendants"
                                 onBlur={[Function]}
                                 onClick={[Function]}
                                 onFocus={[Function]}
@@ -2105,7 +2105,7 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=not
                           }
                           accessible={false}
                           collapsable={false}
-                          focusable={true}
+                          focusable={false}
                           onBlur={[Function]}
                           onClick={[Function]}
                           onFocus={[Function]}
@@ -2174,9 +2174,7 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=not
                             }
                           >
                             <View
-                              accessibilityLabel="Puoi dirci com’è andata? Raccontaci la tua esperienza con l’attivazione di IT-⁠Wallet e aiutaci a migliorare. Inizia"
-                              accessibilityRole="button"
-                              accessible={true}
+                              accessible={false}
                               style={
                                 {
                                   "alignSelf": "center",
@@ -2195,8 +2193,10 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=not
                                 }
                               >
                                 <Text
+                                  accessibilityElementsHidden={true}
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
+                                  importantForAccessibility="no-hide-descendants"
                                   maxFontSizeMultiplier={1.5}
                                   style={
                                     [
@@ -2215,8 +2215,10 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=not
                                   Puoi dirci com’è andata?
                                 </Text>
                                 <Text
+                                  accessibilityElementsHidden={true}
                                   allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
+                                  importantForAccessibility="no-hide-descendants"
                                   maxFontSizeMultiplier={1.5}
                                   style={
                                     [
@@ -2236,8 +2238,7 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=not
                                 </Text>
                               </View>
                               <View
-                                accessibilityElementsHidden={true}
-                                accessibilityLabel="Inizia"
+                                accessibilityLabel="Puoi dirci com’è andata? Raccontaci la tua esperienza con l’attivazione di IT-⁠Wallet e aiutaci a migliorare. Inizia"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -2259,7 +2260,6 @@ exports[`ItwActivationSuccessFeedbackBanner renders correctly with docStatus=not
                                 accessible={true}
                                 collapsable={false}
                                 focusable={true}
-                                importantForAccessibility="no-hide-descendants"
                                 onBlur={[Function]}
                                 onClick={[Function]}
                                 onFocus={[Function]}

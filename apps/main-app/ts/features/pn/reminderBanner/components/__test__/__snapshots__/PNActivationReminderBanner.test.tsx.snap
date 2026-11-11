@@ -344,7 +344,7 @@ exports[`pnActivationBanner should match snapshot 1`] = `
                           }
                           accessible={false}
                           collapsable={false}
-                          focusable={true}
+                          focusable={false}
                           onBlur={[Function]}
                           onClick={[Function]}
                           onFocus={[Function]}
@@ -413,9 +413,7 @@ exports[`pnActivationBanner should match snapshot 1`] = `
                             }
                           >
                             <View
-                              accessibilityLabel="Risparmia sui costi di notifica! Scopri e attiva SEND su IO per ricevere le comunicazioni a valore legale direttamente in app. Attiva SEND su IO"
-                              accessibilityRole="button"
-                              accessible={true}
+                              accessible={false}
                               style={
                                 {
                                   "alignSelf": "center",
@@ -434,8 +432,10 @@ exports[`pnActivationBanner should match snapshot 1`] = `
                                 }
                               >
                                 <Text
+                                  accessibilityElementsHidden={true}
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
+                                  importantForAccessibility="no-hide-descendants"
                                   maxFontSizeMultiplier={1.5}
                                   style={
                                     [
@@ -454,8 +454,10 @@ exports[`pnActivationBanner should match snapshot 1`] = `
                                   Risparmia sui costi di notifica!
                                 </Text>
                                 <Text
+                                  accessibilityElementsHidden={true}
                                   allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
+                                  importantForAccessibility="no-hide-descendants"
                                   maxFontSizeMultiplier={1.5}
                                   style={
                                     [
@@ -475,8 +477,7 @@ exports[`pnActivationBanner should match snapshot 1`] = `
                                 </Text>
                               </View>
                               <View
-                                accessibilityElementsHidden={true}
-                                accessibilityLabel="Attiva SEND su IO"
+                                accessibilityLabel="Risparmia sui costi di notifica! Scopri e attiva SEND su IO per ricevere le comunicazioni a valore legale direttamente in app. Attiva SEND su IO"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -498,7 +499,6 @@ exports[`pnActivationBanner should match snapshot 1`] = `
                                 accessible={true}
                                 collapsable={false}
                                 focusable={true}
-                                importantForAccessibility="no-hide-descendants"
                                 onBlur={[Function]}
                                 onClick={[Function]}
                                 onFocus={[Function]}

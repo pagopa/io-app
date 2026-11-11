@@ -343,7 +343,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                         }
                         accessible={false}
                         collapsable={false}
-                        focusable={true}
+                        focusable={false}
                         onBlur={[Function]}
                         onClick={[Function]}
                         onFocus={[Function]}
@@ -411,9 +411,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                           }
                         >
                           <View
-                            accessibilityLabel="Questo è un messaggio dinamico: il suo contenuto potrebbe cambiare nel tempo per darti informazioni sempre aggiornate. Scopri di più"
-                            accessibilityRole="button"
-                            accessible={true}
+                            accessible={false}
                             style={
                               {
                                 "alignSelf": "center",
@@ -432,8 +430,10 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                               }
                             >
                               <Text
+                                accessibilityElementsHidden={true}
                                 allowFontScaling={true}
                                 dynamicTypeRamp="footnote"
+                                importantForAccessibility="no-hide-descendants"
                                 maxFontSizeMultiplier={1.5}
                                 style={
                                   [
@@ -453,8 +453,7 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                               </Text>
                             </View>
                             <View
-                              accessibilityElementsHidden={true}
-                              accessibilityLabel="Scopri di più"
+                              accessibilityLabel="Questo è un messaggio dinamico: il suo contenuto potrebbe cambiare nel tempo per darti informazioni sempre aggiornate. Scopri di più"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -476,7 +475,6 @@ exports[`RemoteContentBanner Should match snapshot 1`] = `
                               accessible={true}
                               collapsable={false}
                               focusable={true}
-                              importantForAccessibility="no-hide-descendants"
                               onBlur={[Function]}
                               onClick={[Function]}
                               onFocus={[Function]}

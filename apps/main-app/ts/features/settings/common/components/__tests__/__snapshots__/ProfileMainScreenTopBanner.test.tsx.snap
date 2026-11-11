@@ -35,7 +35,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
     }
     accessible={false}
     collapsable={false}
-    focusable={true}
+    focusable={false}
     onBlur={[Function]}
     onClick={[Function]}
     onFocus={[Function]}
@@ -104,9 +104,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
       }
     >
       <View
-        accessibilityLabel="Vuoi modificare il carattere usato per i testi in app? Modifica stile carattere"
-        accessibilityRole="button"
-        accessible={true}
+        accessible={false}
         style={
           {
             "alignSelf": "center",
@@ -125,8 +123,10 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
           }
         >
           <Text
+            accessibilityElementsHidden={true}
             allowFontScaling={true}
             dynamicTypeRamp="headline"
+            importantForAccessibility="no-hide-descendants"
             maxFontSizeMultiplier={1.5}
             style={
               [
@@ -146,8 +146,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
           </Text>
         </View>
         <View
-          accessibilityElementsHidden={true}
-          accessibilityLabel="Modifica stile carattere"
+          accessibilityLabel="Vuoi modificare il carattere usato per i testi in app? Modifica stile carattere"
           accessibilityRole="button"
           accessibilityState={
             {
@@ -169,7 +168,6 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
           accessible={true}
           collapsable={false}
           focusable={true}
-          importantForAccessibility="no-hide-descendants"
           onBlur={[Function]}
           onClick={[Function]}
           onFocus={[Function]}

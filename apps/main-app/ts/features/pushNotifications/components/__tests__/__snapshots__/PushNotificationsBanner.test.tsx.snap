@@ -345,7 +345,7 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                           }
                           accessible={false}
                           collapsable={false}
-                          focusable={true}
+                          focusable={false}
                           onBlur={[Function]}
                           onClick={[Function]}
                           onFocus={[Function]}
@@ -414,9 +414,7 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                             }
                           >
                             <View
-                              accessibilityLabel="Non perderti i messaggi importanti Attiva le notifiche push per sapere quando ricevi un messaggio su IO Attiva notifiche push"
-                              accessibilityRole="button"
-                              accessible={true}
+                              accessible={false}
                               style={
                                 {
                                   "alignSelf": "center",
@@ -435,8 +433,10 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                 }
                               >
                                 <Text
+                                  accessibilityElementsHidden={true}
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
+                                  importantForAccessibility="no-hide-descendants"
                                   maxFontSizeMultiplier={1.5}
                                   style={
                                     [
@@ -455,8 +455,10 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                   Non perderti i messaggi importanti
                                 </Text>
                                 <Text
+                                  accessibilityElementsHidden={true}
                                   allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
+                                  importantForAccessibility="no-hide-descendants"
                                   maxFontSizeMultiplier={1.5}
                                   style={
                                     [
@@ -476,8 +478,7 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                 </Text>
                               </View>
                               <View
-                                accessibilityElementsHidden={true}
-                                accessibilityLabel="Attiva notifiche push"
+                                accessibilityLabel="Non perderti i messaggi importanti Attiva le notifiche push per sapere quando ricevi un messaggio su IO Attiva notifiche push"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -499,7 +500,6 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                 accessible={true}
                                 collapsable={false}
                                 focusable={true}
-                                importantForAccessibility="no-hide-descendants"
                                 onBlur={[Function]}
                                 onClick={[Function]}
                                 onFocus={[Function]}

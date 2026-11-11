@@ -344,7 +344,7 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                           }
                           accessible={false}
                           collapsable={false}
-                          focusable={true}
+                          focusable={false}
                           onBlur={[Function]}
                           onClick={[Function]}
                           onFocus={[Function]}
@@ -413,9 +413,7 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                             }
                           >
                             <View
-                              accessibilityLabel="È tutto pronto! Ora puoi aggiungere il primo documento al Portafoglio di IO. Aggiungi documento"
-                              accessibilityRole="button"
-                              accessible={true}
+                              accessible={false}
                               style={
                                 {
                                   "alignSelf": "center",
@@ -434,8 +432,10 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                                 }
                               >
                                 <Text
+                                  accessibilityElementsHidden={true}
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
+                                  importantForAccessibility="no-hide-descendants"
                                   maxFontSizeMultiplier={1.5}
                                   style={
                                     [
@@ -454,8 +454,10 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                                   È tutto pronto!
                                 </Text>
                                 <Text
+                                  accessibilityElementsHidden={true}
                                   allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
+                                  importantForAccessibility="no-hide-descendants"
                                   maxFontSizeMultiplier={1.5}
                                   style={
                                     [
@@ -475,8 +477,7 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                                 </Text>
                               </View>
                               <View
-                                accessibilityElementsHidden={true}
-                                accessibilityLabel="Aggiungi documento"
+                                accessibilityLabel="È tutto pronto! Ora puoi aggiungere il primo documento al Portafoglio di IO. Aggiungi documento"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -498,7 +499,6 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                                 accessible={true}
                                 collapsable={false}
                                 focusable={true}
-                                importantForAccessibility="no-hide-descendants"
                                 onBlur={[Function]}
                                 onClick={[Function]}
                                 onFocus={[Function]}
@@ -1085,7 +1085,7 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                           }
                           accessible={false}
                           collapsable={false}
-                          focusable={true}
+                          focusable={false}
                           onBlur={[Function]}
                           onClick={[Function]}
                           onFocus={[Function]}
@@ -1154,9 +1154,7 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                             }
                           >
                             <View
-                              accessibilityLabel="Aggiungi il tuo primo documento Ti bastano pochi secondi per avere i tuoi documenti personali sempre a portata di mano! Aggiungi documento"
-                              accessibilityRole="button"
-                              accessible={true}
+                              accessible={false}
                               style={
                                 {
                                   "alignSelf": "center",
@@ -1175,8 +1173,10 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                                 }
                               >
                                 <Text
+                                  accessibilityElementsHidden={true}
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
+                                  importantForAccessibility="no-hide-descendants"
                                   maxFontSizeMultiplier={1.5}
                                   style={
                                     [
@@ -1195,8 +1195,10 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                                   Aggiungi il tuo primo documento
                                 </Text>
                                 <Text
+                                  accessibilityElementsHidden={true}
                                   allowFontScaling={true}
                                   dynamicTypeRamp="footnote"
+                                  importantForAccessibility="no-hide-descendants"
                                   maxFontSizeMultiplier={1.5}
                                   style={
                                     [
@@ -1216,8 +1218,7 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                                 </Text>
                               </View>
                               <View
-                                accessibilityElementsHidden={true}
-                                accessibilityLabel="Aggiungi documento"
+                                accessibilityLabel="Aggiungi il tuo primo documento Ti bastano pochi secondi per avere i tuoi documenti personali sempre a portata di mano! Aggiungi documento"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -1239,7 +1240,6 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                                 accessible={true}
                                 collapsable={false}
                                 focusable={true}
-                                importantForAccessibility="no-hide-descendants"
                                 onBlur={[Function]}
                                 onClick={[Function]}
                                 onFocus={[Function]}

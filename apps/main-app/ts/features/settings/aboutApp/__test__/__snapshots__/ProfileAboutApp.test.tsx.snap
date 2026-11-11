@@ -695,7 +695,7 @@ exports[`ProfileAboutApp should match the snapshot 1`] = `
                               }
                               accessible={false}
                               collapsable={false}
-                              focusable={true}
+                              focusable={false}
                               onBlur={[Function]}
                               onClick={[Function]}
                               onFocus={[Function]}
@@ -763,9 +763,7 @@ exports[`ProfileAboutApp should match the snapshot 1`] = `
                                 }
                               >
                                 <View
-                                  accessibilityLabel="Vuoi saperne di più? Vai al sito di IO"
-                                  accessibilityRole="button"
-                                  accessible={true}
+                                  accessible={false}
                                   style={
                                     {
                                       "alignSelf": "center",
@@ -784,8 +782,10 @@ exports[`ProfileAboutApp should match the snapshot 1`] = `
                                     }
                                   >
                                     <Text
+                                      accessibilityElementsHidden={true}
                                       allowFontScaling={true}
                                       dynamicTypeRamp="footnote"
+                                      importantForAccessibility="no-hide-descendants"
                                       maxFontSizeMultiplier={1.5}
                                       style={
                                         [
@@ -805,8 +805,7 @@ exports[`ProfileAboutApp should match the snapshot 1`] = `
                                     </Text>
                                   </View>
                                   <View
-                                    accessibilityElementsHidden={true}
-                                    accessibilityLabel="Vai al sito di IO"
+                                    accessibilityLabel="Vuoi saperne di più? Vai al sito di IO"
                                     accessibilityRole="button"
                                     accessibilityState={
                                       {
@@ -828,7 +827,6 @@ exports[`ProfileAboutApp should match the snapshot 1`] = `
                                     accessible={true}
                                     collapsable={false}
                                     focusable={true}
-                                    importantForAccessibility="no-hide-descendants"
                                     onBlur={[Function]}
                                     onClick={[Function]}
                                     onFocus={[Function]}

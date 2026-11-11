@@ -1913,7 +1913,7 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                   }
                                   accessible={false}
                                   collapsable={false}
-                                  focusable={true}
+                                  focusable={false}
                                   onBlur={[Function]}
                                   onClick={[Function]}
                                   onFocus={[Function]}
@@ -1982,9 +1982,7 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                     }
                                   >
                                     <View
-                                      accessibilityLabel="Non sai cosa scegliere? Ti diamo una mano"
-                                      accessibilityRole="button"
-                                      accessible={true}
+                                      accessible={false}
                                       style={
                                         {
                                           "alignSelf": "center",
@@ -2003,8 +2001,10 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                         }
                                       >
                                         <Text
+                                          accessibilityElementsHidden={true}
                                           allowFontScaling={true}
                                           dynamicTypeRamp="headline"
+                                          importantForAccessibility="no-hide-descendants"
                                           maxFontSizeMultiplier={1.5}
                                           style={
                                             [
@@ -2024,8 +2024,7 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                         </Text>
                                       </View>
                                       <View
-                                        accessibilityElementsHidden={true}
-                                        accessibilityLabel="Ti diamo una mano"
+                                        accessibilityLabel="Non sai cosa scegliere? Ti diamo una mano"
                                         accessibilityRole="button"
                                         accessibilityState={
                                           {
@@ -2047,7 +2046,6 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                         accessible={true}
                                         collapsable={false}
                                         focusable={true}
-                                        importantForAccessibility="no-hide-descendants"
                                         onBlur={[Function]}
                                         onClick={[Function]}
                                         onFocus={[Function]}
