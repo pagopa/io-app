@@ -59,9 +59,10 @@ const FeaturedOpportunityCard = ({
   opportunity: ResolvedCgnFeaturedOpportunity;
 }) => {
   const { merchant, discount } = opportunity;
+  const description = discount.description ?? discount.name;
   return (
     <Pressable
-      accessibilityLabel={`${merchant.name}. ${discount.name}`}
+      accessibilityLabel={`${merchant.name}. ${description}`}
       accessibilityRole="button"
       onPress={() => onSelect(opportunity)}
     >
@@ -69,7 +70,7 @@ const FeaturedOpportunityCard = ({
         <View style={styles.cardTextContainer}>
           <H6 numberOfLines={2}>{merchant.name}</H6>
           <VSpacer size={4} />
-          <IOText numberOfLines={1}>{discount.name}</IOText>
+          <IOText numberOfLines={1}>{description}</IOText>
         </View>
         {merchant.imageUrl && (
           <Image

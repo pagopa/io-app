@@ -65,6 +65,36 @@ describe("CgnFeaturedOpportunities", () => {
     expect(queryByText("Partner 5")).toBeNull();
   });
 
+  it.each([
+    {
+      name: "uses the opportunity description when available",
+      description: "Save 20% on your purchase" as NonEmptyString,
+      expected: "Save 20% on your purchase"
+    },
+    {
+      name: "falls back to the opportunity name when the description is missing",
+      description: undefined,
+      expected: "Description 1"
+    }
+  ])("$name", ({ description, expected }) => {
+    const opportunity = makeOpportunity(1);
+    const onSelect = jest.fn();
+    const resolvedOpportunity = {
+      ...opportunity,
+      discount: { ...opportunity.discount, description }
+    };
+    const { getByText, getByRole } = render(
+      <CgnFeaturedOpportunities
+        onSelect={onSelect}
+        opportunities={[resolvedOpportunity]}
+      />
+    );
+
+    expect(getByText(expected).props.numberOfLines).toBe(1);
+    fireEvent.press(getByRole("button", { name: `Partner 1. ${expected}` }));
+    expect(onSelect).toHaveBeenCalledWith(resolvedOpportunity);
+  });
+
   it("selects the resolved merchant and discount when pressed", () => {
     const onSelect = jest.fn();
     const opportunity = makeOpportunity(1);
