@@ -11,12 +11,14 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { resetTourCompletedAction } from "../../../tour/store/actions";
 import { isTourCompletedSelector } from "../../../tour/store/selectors";
 import { itwSetDiscoverMoreCEDEnabled } from "../../common/store/actions/preferences.ts";
-import { itwDiscoverMoreCEDSelector } from "../../credentialsCatalogue/store/selectors";
+import { itwIsDiscoverMoreCEDLocallyEnabledSelector } from "../../common/store/selectors/preferences";
 import { ITW_TOUR_GROUP_ID } from "../../tour/utils/constants";
 
 export const ItwMiscSection = () => {
   const dispatch = useIODispatch();
-  const isDiscoverMoreCEDEnabled = useIOSelector(itwDiscoverMoreCEDSelector);
+  const isDiscoverMoreCEDEnabled = useIOSelector(
+    itwIsDiscoverMoreCEDLocallyEnabledSelector
+  );
 
   const isTourCompleted = useIOSelector(state =>
     isTourCompletedSelector(state, ITW_TOUR_GROUP_ID)
