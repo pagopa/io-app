@@ -386,6 +386,7 @@ exports[`ActiveSessionIdpLoginScreen should match snapshots 1`] = `
                         <Modal
                           accessible={false}
                           backdropComponent={[Function]}
+                          backgroundComponent={[Function]}
                           backgroundStyle={
                             {
                               "backgroundColor": "#FFFFFF",

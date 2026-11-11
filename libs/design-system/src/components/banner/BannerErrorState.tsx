@@ -10,13 +10,13 @@ import {
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
 import { useIOTheme, useIOThemeContext } from "../../context";
-import { IOBannerBigSpacing, IOBannerRadius } from "../../core";
+import { IODimensions } from "../../core";
 import { hexToRgba, IOColors } from "../../core/IOColors";
 import { useScaleAnimation } from "../../hooks";
 import { WithTestID } from "../../utils/types";
 import { IOButton } from "../buttons";
 import { Icon, IOIcons } from "../icons";
-import { VSpacer } from "../layout";
+import { VStack } from "../layout";
 import { Body } from "../typography";
 
 const styles = StyleSheet.create({
@@ -24,9 +24,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     alignContent: "center",
-    borderRadius: IOBannerRadius,
+    borderRadius: IODimensions.radius.banner,
     borderCurve: "continuous",
-    padding: IOBannerBigSpacing
+    padding: IODimensions.padding.banner
   }
 });
 
@@ -90,14 +90,29 @@ export const BannerErrorState = ({
       accessibilityLabel={accessibilityLabel}
       accessibilityRole={actionText !== undefined ? "button" : undefined}
       accessible={true}
-      style={{ flex: 1, alignItems: "center", gap: 8 }}
+      style={{
+        flex: 1,
+        alignItems: "center",
+        gap: IODimensions.gap.banner.action
+      }}
     >
-      {icon && <Icon color={foregroundColor} name={icon} size={24} />}
-      {label && (
-        <Body color={foregroundColor} style={{ textAlign: "center" }}>
-          {label}
-        </Body>
-      )}
+      <VStack
+        space={IODimensions.gap.banner.leading}
+        style={{ alignItems: "center" }}
+      >
+        {icon && (
+          <Icon
+            color={foregroundColor}
+            name={icon}
+            size={IODimensions.size.icon.banner}
+          />
+        )}
+        {label && (
+          <Body color={foregroundColor} style={{ textAlign: "center" }}>
+            {label}
+          </Body>
+        )}
+      </VStack>
       {actionText && (
         /* Disable pointer events to avoid
             pressed state on the button */
@@ -106,7 +121,6 @@ export const BannerErrorState = ({
           importantForAccessibility="no-hide-descendants"
           pointerEvents="none"
         >
-          <VSpacer size={4} />
           <IOButton
             color="primary"
             label={actionText}

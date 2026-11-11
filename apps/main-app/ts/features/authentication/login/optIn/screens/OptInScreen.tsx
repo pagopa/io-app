@@ -2,6 +2,7 @@ import {
   ContentWrapper,
   FeatureInfo,
   H3,
+  IODimensions,
   Pictogram,
   VSpacer
 } from "@io-app/design-system";
@@ -131,7 +132,10 @@ const OptInScreen = () => {
           */}
         {!isDeviceScreenSmall && (
           <View style={{ alignSelf: "center" }} testID="pictogram-test">
-            <Pictogram name="passcode" size={120} />
+            <Pictogram
+              name="passcode"
+              size={IODimensions.size.pictogram.screen}
+            />
           </View>
         )}
         <VSpacer size={24} />
