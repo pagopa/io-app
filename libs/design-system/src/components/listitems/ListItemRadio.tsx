@@ -3,12 +3,7 @@ import { Image, Pressable, StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
 
 import { useIOColors } from "../../context";
-import {
-  IODimensions,
-  IOOpacity,
-  IOSelectionListItemStyles,
-  IOTypography
-} from "../../core";
+import { IODimensions, IOOpacity, IOTypography } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
@@ -19,6 +14,7 @@ import { IOLogoPaymentType, LogoPayment } from "../logos";
 import { Radio } from "../radio/Radio";
 import { IOSkeleton } from "../skeleton";
 import { BodySmall, H6 } from "../typography";
+import { IOSelectionListItemStyles } from "./styles";
 
 type ListItemRadioGraphicProps =
   | { icon: IOIcons; paymentLogo?: never; uri?: never }

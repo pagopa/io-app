@@ -2,10 +2,11 @@ import { PropsWithChildren } from "react";
 import { ColorValue, LayoutChangeEvent, StyleSheet, View } from "react-native";
 
 import { useIOColors, useIOThemeContext } from "../../context";
-import { footerBoxShadow, IODimensions } from "../../core";
+import { IODimensions } from "../../core";
 import { WithTestID } from "../../utils/types";
 import { IOButton, IOButtonBlockSpecificProps } from "../buttons";
 import { useBottomMargins } from "./hooks/useBottomMargins";
+import { footerBoxShadow } from "./styles";
 
 export type FooterActionsInlineMeasurements = {
   /* Height of the safe bottom area. It includes:

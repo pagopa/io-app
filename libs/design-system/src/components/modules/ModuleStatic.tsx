@@ -2,8 +2,9 @@ import { ReactNode } from "react";
 import { PressableProps, View, ViewProps } from "react-native";
 
 import { useIOColors } from "../../context";
-import { IODimensions, IOModuleStyles, IOOpacity } from "../../core";
+import { IODimensions, IOOpacity } from "../../core";
 import { HStack } from "../layout";
+import { IOModuleStyles } from "./styles";
 
 type ModuleStaticMultipleBlockProps = {
   children?: never;

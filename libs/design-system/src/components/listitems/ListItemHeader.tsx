@@ -2,7 +2,7 @@ import { ComponentProps, useCallback, useMemo } from "react";
 import { View } from "react-native";
 
 import { useIOColors } from "../../context";
-import { IODimensions, IOListItemStyles, IORoleColor } from "../../core";
+import { IODimensions, IORoleColor } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
@@ -10,6 +10,7 @@ import { IconButton, IOButton, IOButtonLinkSpecificProps } from "../buttons";
 import { Icon, IOIcons } from "../icons";
 import { VSpacer } from "../layout";
 import { BodySmall, H6 } from "../typography";
+import { IOListItemStyles } from "./styles";
 
 export type ListItemHeader = IconProps &
   WithTestID<{
