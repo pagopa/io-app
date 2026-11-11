@@ -19,6 +19,10 @@ const mockToastSuccess = jest.fn();
 const mockTrackItwStartDeactivation = jest.fn();
 const JWT_EXPIRING_DAYS = 15;
 
+jest.mock("../../../../../../hooks/useReduceMotionEnabled", () => ({
+  useReduceMotionEnabled: jest.fn(() => false)
+}));
+
 jest.mock("@io-app/design-system", () => ({
   ...jest.requireActual<typeof import("@io-app/design-system")>(
     "@io-app/design-system"

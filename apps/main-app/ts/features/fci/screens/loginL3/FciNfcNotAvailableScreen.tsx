@@ -1,4 +1,4 @@
-import { FeatureInfo, VSpacer } from "@io-app/design-system";
+import { FeatureInfo, IODimensions, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
 
 import { IOScrollViewCentredContent } from "../../../../components/ui/IOScrollViewCentredContent";
@@ -36,7 +36,7 @@ export const FciNfcNotAvailableScreen = () => {
         }
       }}
       contentContainerStyle={{
-        paddingHorizontal: 32
+        paddingHorizontal: IODimensions.padding.screen.centred
       }}
       description={I18n.t("features.fci.requestL3.nfcNotAvailable.description")}
       pictogram="updateOS"

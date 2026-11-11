@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { GestureResponderEvent, PressableProps } from "react-native";
 
 import { useIOTheme } from "../../context";
-import { IOListItemVisualParams } from "../../core";
+import { IODimensions, IOTypography } from "../../core";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
 import { Icon } from "../icons";
@@ -41,9 +41,12 @@ const ModuleAttachmentContent = ({
   const theme = useIOTheme();
 
   return (
-    <HStack space={8} style={{ alignItems: "center" }}>
+    <HStack
+      space={IODimensions.gap.module.trailing}
+      style={{ alignItems: "center" }}
+    >
       <VStack
-        space={4}
+        space={IODimensions.gap.module.description}
         style={{ alignItems: "flex-start", flexShrink: 1, flexGrow: 1 }}
       >
         <Body
@@ -63,7 +66,7 @@ const ModuleAttachmentContent = ({
         <Icon
           color={theme["interactiveElem-default"]}
           name="chevronRightListItem"
-          size={IOListItemVisualParams.chevronSize}
+          size={IODimensions.size.icon.chevron}
         />
       )}
     </HStack>
@@ -155,9 +158,23 @@ const ModuleAttachmentSkeleton = ({
     accessibilityState={{ busy: true }}
     accessible={true}
     startBlock={
-      <VStack space={4}>
-        <IOSkeleton height={16} radius={8} shape="rectangle" width={114} />
-        <IOSkeleton height={20} radius={16} shape="rectangle" width={42} />
+      <VStack
+        space={IODimensions.gap.module.description}
+        style={{ flexGrow: 1, flexShrink: 1 }}
+      >
+        <IOSkeleton
+          height={IOTypography.body.size}
+          radius={IODimensions.radius.skeleton.text}
+          shape="rectangle"
+          width="35%"
+        />
+        <IOSkeleton
+          height={IODimensions.height.badge}
+          radius={IODimensions.radius.badge}
+          shape="rectangle"
+          // About a three-letter badge (PDF, DOC, etc…)
+          width={42}
+        />
       </VStack>
     }
   />

@@ -16,7 +16,7 @@ import Animated, {
 } from "react-native-reanimated";
 
 import { useIOTheme } from "../../context";
-import { IOSelectionTickVisualParams, IOSpringValues } from "../../core";
+import { IODimensions, IOSpringValues } from "../../core";
 import { IOColors } from "../../core/IOColors";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { AnimatedTick } from "../common/AnimatedTick";
@@ -28,11 +28,9 @@ type Props = {
   size: number;
 };
 
-const checkBoxRadius = 5;
-
 const styles = StyleSheet.create({
   checkboxBorder: {
-    borderWidth: IOSelectionTickVisualParams.borderWidth,
+    borderWidth: IODimensions.stroke.selection.control,
     borderCurve: "continuous",
     position: "absolute",
     left: 0,
@@ -64,7 +62,7 @@ export const Checkbox = ({ size, checked, onPress, disabled }: OwnProps) => {
   const checkboxSizeStyle: ViewStyle = {
     width: size,
     height: size,
-    borderRadius: checkBoxRadius * dynamicFontScale
+    borderRadius: IODimensions.radius.selection.control * dynamicFontScale
   };
 
   const checkboxWrapperSizeStyle: ViewStyle = {

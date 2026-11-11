@@ -1,3 +1,120 @@
+## 3.43.0-rc.8 (2026-11-10)
+
+### Features
+
+- **IT-Wallet:** [[SIW-5464](https://pagopa.atlassian.net/browse/SIW-5464)] Remote FF for CED opportunities ([#8838](https://github.com/pagopa/io-app/pull/8838))
+
+### Bug Fixes
+
+- **IT-Wallet:** [[SIW-3834](https://pagopa.atlassian.net/browse/SIW-3834),[SIW-3818](https://pagopa.atlassian.net/browse/SIW-3818)] Enhance keyboard accessibility for privacy link in credential trust issuer screen ([#8847](https://github.com/pagopa/io-app/pull/8847))
+- [[IEL-740](https://pagopa.atlassian.net/browse/IEL-740)] Correct iOS bottom sheet keyboard focus order ([#8824](https://github.com/pagopa/io-app/pull/8824))
+
+### ❤️ Thank You
+
+- DavideOnano @DavideOnano
+- Emanuele Dall'Ara @LeleDallas
+- Fabio Bombardi @shadowsheep1
+- Martino Cesari Tomba @forrest57
+- Riccardo Sacco @riccardosacco99
+
+## 3.43.0-rc.7 (2026-11-09)
+
+### Bug Fixes
+
+- **IT-Wallet:** [[SIW-5353](https://pagopa.atlassian.net/browse/SIW-5353)] Announce wallet headers before cards ([#8843](https://github.com/pagopa/io-app/pull/8843))
+
+### Chores
+
+- **release:** 3.42.2-rc.0 ([#8858](https://github.com/pagopa/io-app/pull/8858))
+
+### ❤️ Thank You
+
+- Alessandro Dell'Oste @adelloste
+- MonicaRungi-EY
+
+## 3.42.2-rc.0 (2026-11-09)
+
+### Chores
+
+- [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Avoid startup crash when device ID lookup fails ([#8854](https://github.com/pagopa/io-app/pull/8854))
+
+### ❤️ Thank You
+
+- Alessandro Dell'Oste @adelloste
+
+## 3.43.0-rc.6 (2026-11-06)
+
+### Bug Fixes
+
+- **IT-Wallet:** [[SIW-5304](https://pagopa.atlassian.net/browse/SIW-5304)] Remove "expiring" label from non IT-Wallet documents ([#8783](https://github.com/pagopa/io-app/pull/8783))
+- [[IEG-3321](https://pagopa.atlassian.net/browse/IEG-3321)] Omit CGN banner calls based on FF ([#8848](https://github.com/pagopa/io-app/pull/8848))
+- **IT-Wallet:** [[SIW-5186](https://pagopa.atlassian.net/browse/SIW-5186)] Back from DocIO fallback landing to mode selection ([#8709](https://github.com/pagopa/io-app/pull/8709))
+
+### Chores
+
+- **release:** 3.42.1-rc.0 ([#8850](https://github.com/pagopa/io-app/pull/8850))
+- [[IOPLT-2266](https://pagopa.atlassian.net/browse/IOPLT-2266)] Bump `oxfmt` to `0.76` ([#8845](https://github.com/pagopa/io-app/pull/8845))
+- [[IOPLT-2109](https://pagopa.atlassian.net/browse/IOPLT-2109)] Update dev server `supertest` dependency ([#8641](https://github.com/pagopa/io-app/pull/8641))
+
+### ❤️ Thank You
+
+- Damiano Plebani
+- Emanuele Dall'Ara @LeleDallas
+- Federico Mastrini @mastro993
+- MonicaRungi-EY
+- Riccardo Sacco @riccardosacco99
+
+## 3.42.1-rc.0 (2026-11-06)
+
+### Bug Fixes
+
+- [[IEG-3321](https://pagopa.atlassian.net/browse/IEG-3321)] Omit CGN banner calls based on FF ([#8848](https://github.com/pagopa/io-app/pull/8848))
+
+### ❤️ Thank You
+
+- Emanuele Dall'Ara @LeleDallas
+
+## 3.43.0-rc.5 (2026-11-05)
+
+### Bug Fixes
+
+- **IT-Wallet:** [[SIW-5130](https://pagopa.atlassian.net/browse/SIW-5130)] Fix intro credentials empty values ([#8688](https://github.com/pagopa/io-app/pull/8688))
+- [[IOPLT-2060](https://pagopa.atlassian.net/browse/IOPLT-2060)] Restore `topic` value based on guards in store review context ([#8560](https://github.com/pagopa/io-app/pull/8560))
+- **IT-Wallet:** [[SIW-5431](https://pagopa.atlassian.net/browse/SIW-5431),[SIW-5225](https://pagopa.atlassian.net/browse/SIW-5225)] fix mdoc remote presentation, proximity ios termination and bump deps ([#8834](https://github.com/pagopa/io-app/pull/8834))
+
+### ❤️ Thank You
+
+- Alessandro Mazzon
+- Cristiano Tofani
+- DavideOnano @DavideOnano
+- Emanuele Dall'Ara @LeleDallas
+
+## 3.43.0-rc.4 (2026-11-04)
+
+### Bug Fixes
+
+- [[IOPLT-2222](https://pagopa.atlassian.net/browse/IOPLT-2222)] Avoid `IT-Wallet` text break across lines ([#8820](https://github.com/pagopa/io-app/pull/8820))
+
+### Chores
+
+- [[IOPLT-2256](https://pagopa.atlassian.net/browse/IOPLT-2256)] Bump `@faker-js/faker` to `10.x` ([#8832](https://github.com/pagopa/io-app/pull/8832))
+
+### ❤️ Thank You
+
+- Damiano Plebani
+
+## 3.43.0-rc.3 (2026-11-03)
+
+### Bug Fixes
+
+- **IT-Wallet:** [[SIW-5430](https://pagopa.atlassian.net/browse/SIW-5430)] Show detail title in nested claims sheet ([#8831](https://github.com/pagopa/io-app/pull/8831))
+- [[IOPLT-2250](https://pagopa.atlassian.net/browse/IOPLT-2250)] Add dark mode support to ITW issuance intro card ([#8830](https://github.com/pagopa/io-app/pull/8830))
+
+### ❤️ Thank You
+
+- Damiano Plebani
+- Federico Mastrini @mastro993
+
 ## 3.43.0-rc.2 (2026-11-02)
 
 ### Features

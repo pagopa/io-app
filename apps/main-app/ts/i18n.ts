@@ -1,7 +1,7 @@
 import { BackendStatusMessage } from "@io-app/api-types/generated/definitions/content/BackendStatusMessage";
 import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/session_manager/PreferredLanguage";
 // eslint-disable-next-line no-restricted-syntax -- setup module: `I18n.use(plugin)` would be flagged as a React hook
-import i18next from "i18next";
+import i18next, { PostProcessorModule } from "i18next";
 // import i18next, {
 //   BackendModule,
 //   InitOptions,
@@ -136,8 +136,19 @@ export const availableTranslations: ReadonlyArray<Locales> = Object.keys(
 //   }
 // }
 
+const ITW_BRAND = "IT-Wallet";
+// A word joiner (U+2060) after the hyphen keeps the brand name on one line
+const ITW_BRAND_NO_BREAK = "IT-\u2060Wallet";
+
+export const itwBrandNoBreak: PostProcessorModule = {
+  type: "postProcessor",
+  name: "itwBrandNoBreak",
+  process: (value: string) => value.replaceAll(ITW_BRAND, ITW_BRAND_NO_BREAK)
+};
+
 void i18next
   .use(initReactI18next)
+  .use(itwBrandNoBreak)
   // .use(SmartI18nextBackend)
   .init({
     lng: "it",
@@ -153,6 +164,7 @@ void i18next
       useSuspense: true
     },
     resources,
+    postProcess: [itwBrandNoBreak.name],
     // backend: {
     //   localResources: resources
     // },
