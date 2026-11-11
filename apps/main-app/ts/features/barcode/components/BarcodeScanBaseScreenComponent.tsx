@@ -3,7 +3,7 @@ import {
   HStack,
   IconButton,
   IOColors,
-  IOVisualCostants,
+  IODimensions,
   LoadingSpinner,
   TabItem,
   TabNavigation
@@ -259,8 +259,8 @@ const BarcodeScanBaseScreenComponent = ({
   const HeaderTransparent = () => (
     <View
       style={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault,
-        height: IOVisualCostants.headerHeight,
+        paddingHorizontal: IODimensions.padding.screen.default,
+        height: IODimensions.height.header,
         flexGrow: 1,
         flexDirection: "row",
         alignItems: "center",

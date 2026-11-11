@@ -2,7 +2,7 @@ import { memo, useMemo } from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
 
 import { useIOTheme } from "../../context";
-import { hexToRgba, IOColors } from "../../core/IOColors";
+import { hexToRgba, IOColors, IODimensions } from "../../core";
 import { H6, IOText } from "../typography";
 
 const MAX_WIDTH = 48;
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
-    borderRadius: 8,
+    borderRadius: IODimensions.radius.otpInput,
     borderCurve: "continuous"
   }
 });
@@ -52,7 +52,7 @@ export const BoxedInput = memo(({ status, value, secret }: Props) => {
   const statusStyle: Record<Props["status"], ViewStyle> = useMemo(
     () => ({
       error: {
-        borderWidth: 1,
+        borderWidth: IODimensions.stroke.otpInput.default,
         borderColor: IOColors[theme["otpInputBorder-error"]],
         backgroundColor: hexToRgba(
           IOColors[theme["otpInputBorder-error"]],
@@ -60,11 +60,11 @@ export const BoxedInput = memo(({ status, value, secret }: Props) => {
         )
       },
       focus: {
-        borderWidth: 2,
+        borderWidth: IODimensions.stroke.otpInput.focused,
         borderColor: IOColors[theme["interactiveElem-default"]]
       },
       default: {
-        borderWidth: 1,
+        borderWidth: IODimensions.stroke.otpInput.default,
         borderColor: IOColors[theme["otpInputBorder-default"]]
       }
     }),

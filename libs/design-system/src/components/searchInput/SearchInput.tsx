@@ -25,9 +25,9 @@ import Animated, {
 import { useIONewTypeface, useIOTheme } from "../../context";
 import {
   IOColors,
-  IOSpacingScale,
-  IOTypography,
-  IOVisualCostants
+  IODimensions,
+  IODimensionScale,
+  IOTypography
 } from "../../core";
 import {
   IOFontSize,
@@ -39,15 +39,15 @@ import { Icon, IOIconSizeScale } from "../icons";
 import { IOText } from "../typography";
 
 /* Component visual attributes */
-const inputPaddingHorizontal: IOSpacingScale = 12;
-const inputPaddingVertical: IOSpacingScale = 8;
-const inputPaddingClearButton: IOSpacingScale = 8;
+const inputPaddingHorizontal: IODimensionScale = 12;
+const inputPaddingVertical: IODimensionScale = 8;
+const inputPaddingClearButton: IODimensionScale = 8;
 const inputRadius = 8;
-const iconMargin: IOSpacingScale = 8;
+const iconMargin: IODimensionScale = 8;
 const iconSize: IOIconSizeScale = 16;
 const iconCloseSize: IOIconSizeScale = 24;
 const inputFontSizePlaceholder: IOFontSize = 14;
-const cancelButtonMargin: IOSpacingScale = 16;
+const cancelButtonMargin: IODimensionScale = 16;
 const inputTransitionDuration = 250;
 
 export type SearchInputRef = {
@@ -125,7 +125,7 @@ export const SearchInput = ({
        - `SearchInput` entire width
        - `Cancel` button */
   const inputWidth: number =
-    Dimensions.get("window").width - IOVisualCostants.appMarginDefault * 2;
+    Dimensions.get("window").width - IODimensions.padding.screen.default * 2;
 
   const [cancelButtonWidth, setCancelButtonWidth] =
     useState<LayoutRectangle["width"]>(0);
@@ -171,7 +171,7 @@ export const SearchInput = ({
           translateX: interpolate(
             showCancelButton,
             [0, 1],
-            [cancelButtonWidth + IOVisualCostants.appMarginDefault, 0],
+            [cancelButtonWidth + IODimensions.padding.screen.default, 0],
             Extrapolation.CLAMP
           )
         }

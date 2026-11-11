@@ -1,9 +1,9 @@
 import {
   H3,
   HStack,
-  IOBannerRadius,
   IOButton,
   IOColors,
+  IODimensions,
   IOText,
   IOTypography,
   LabelMini,
@@ -28,7 +28,7 @@ const AMOUNT_STEP_IN_CENTS = 1250;
 
 /** Neutral block the sample values are rendered on */
 const blockStyle: ViewStyle = {
-  borderRadius: IOBannerRadius,
+  borderRadius: IODimensions.radius.banner,
   paddingHorizontal: 20,
   paddingVertical: 16,
   borderWidth: 1

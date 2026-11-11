@@ -1,6 +1,7 @@
 import { View } from "react-native";
 
 import { useIOTheme } from "../../context";
+import { IODimensions } from "../../core";
 import { Icon, IOIcons } from "../icons";
 import { BodySmall, H6 } from "../typography";
 import {
@@ -33,7 +34,7 @@ export const ModuleSummary = ({
           </BodySmall>
         )}
       </View>
-      <View style={{ marginLeft: 8 }}>
+      <View style={{ marginLeft: IODimensions.gap.module.trailing }}>
         <Icon color={theme["interactiveElem-default"]} name={icon} size={24} />
       </View>
     </PressableModuleBase>

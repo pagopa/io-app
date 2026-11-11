@@ -3,8 +3,8 @@ import {
   Icon,
   IOButton,
   IOColors,
+  IODimensions,
   IOSkeleton,
-  IOVisualCostants,
   useIOTheme
 } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
@@ -41,7 +41,7 @@ const WINDOW_WIDTH = Dimensions.get("window").width;
  */
 const QR_CODE_SIZE =
   WINDOW_WIDTH -
-  IOVisualCostants.appMarginDefault * 2 - // Subtracting the horizontal screen padding (both sides)
+  IODimensions.padding.screen.default * 2 - // Subtracting the horizontal screen padding (both sides)
   ITW_BRANDED_BOX_PADDING * 2; // Subtracting the branded box padding (both sides)
 
 type Props = {

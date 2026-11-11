@@ -342,7 +342,8 @@ exports[`error screens should display an error screen in case of missing_sid err
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -1101,7 +1102,8 @@ exports[`error screens should display an error screen in case of preferences err
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -1901,7 +1903,8 @@ exports[`loading screens + error interop should render the correct loading scree
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
