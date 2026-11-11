@@ -1,7 +1,6 @@
 import {
   HeaderActionProps,
-  hexToRgba,
-  IOColorsLegacy,
+  IOTextColor,
   useIOThemeContext
 } from "@io-app/design-system";
 import { ReactNode } from "react";
@@ -14,12 +13,13 @@ import { useIOSelector } from "../../store/hooks";
 import { isScreenReaderEnabledSelector } from "../../store/reducers/preferences";
 import { IOScrollView, IOScrollViewActions } from "../ui/IOScrollView";
 import { BonusCard } from "./BonusCard";
+import { bonusCardColors } from "./colors";
 
 export type BonusCardColorSchemeValues = {
   background: string;
   // Skeleton or other visual elements
   foreground: string;
-  text: IOColorsLegacy;
+  text: IOTextColor;
 };
 
 export type BonusScreenComponentProps = BaseProps &
@@ -39,16 +39,8 @@ type CardThemeColors = Record<
 >;
 
 export const defaultBonusCardColors: CardThemeColors = {
-  light: {
-    background: IOColorsLegacy["blueItalia-50"],
-    foreground: IOColorsLegacy["blueItalia-100"],
-    text: "blueItalia-850"
-  },
-  dark: {
-    background: "#35364C",
-    foreground: hexToRgba(IOColorsLegacy["blueIO-300"], 0.3),
-    text: "blueIO-50"
-  }
+  light: bonusCardColors("light"),
+  dark: bonusCardColors("dark")
 };
 
 const BonusCardScreenComponent = ({

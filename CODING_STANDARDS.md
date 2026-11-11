@@ -43,7 +43,10 @@ Keep each feature self-contained under `apps/main-app/ts/features/<feature>/`, l
 - Don't use the palette (`IOColorPalette`) or a hex value in a component. If no semantic token fits, add one to the design system's semantic layer.
 - A component whose icon and text share a color takes `foreground`; one where they differ takes `icon` and `text`. See `libs/design-system/src/core/tokens/colors/README.md`.
 - In the design system, declare a component's colors in its own `colors.ts`, by variant, role (`background`, `foreground`, `border`) and state.
-- Put colors of a single feature in that feature's own `colors.ts`, built from the palette.
+- Put colors of a single feature in that feature's own `colors.ts`: a function of the semantic tokens and the mode, `(s, mode) => ({ … })` (drop the parameters it doesn't use), keyed by UI element, then role. Read it with `useFeatureColors(config)`, which accepts only tokens and declared hexes.
+  - Use `s.…` for any intent the design system covers, the palette only for the feature's own hues, and a hex outside the palette only as a module-level `IOCustomColor` constant.
+  - Give a palette color that's the same in both modes a one-line comment saying why: otherwise it reads as a dark mode bug.
+  - A component that reads a feature config takes all its colors from it, without mixing `useIOColors()`.
 
 ## I18n
 

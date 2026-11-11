@@ -1,16 +1,13 @@
 import {
   ContentWrapper,
-  IOColorsLegacy,
   IODimensions,
   IODimensionScale,
-  useIOTheme,
   VSpacer
 } from "@io-app/design-system";
 import I18n from "i18next";
 import { PropsWithChildren, useState } from "react";
 import {
   AccessibilityInfo,
-  ColorValue,
   LayoutChangeEvent,
   StyleSheet,
   View
@@ -23,8 +20,10 @@ import Animated, {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
+import { useFeatureColors } from "../../../../hooks/useFeatureColors";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { paymentsColors } from "../../common/colors";
 import {
   PaymentCard,
   PaymentCardComponentProps
@@ -45,9 +44,9 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
   const translationY = useSharedValue(0);
   const [titleHeight, setTitleHeight] = useState(0);
 
-  const theme = useIOTheme();
-  const backgroundColor = IOColorsLegacy[theme["appBackground-primary"]];
-  const blueHeaderColor: ColorValue = IOColorsLegacy["blueIO-600"];
+  const { details } = useFeatureColors(paymentsColors);
+  const backgroundColor = details.background;
+  const blueHeaderColor = details.header;
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
 
   useHeaderSecondLevel({
