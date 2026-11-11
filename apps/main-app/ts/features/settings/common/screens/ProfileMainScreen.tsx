@@ -1,14 +1,14 @@
 import {
   ContentWrapper,
   Divider,
-  IOVisualCostants,
+  IODimensions,
   ListItemAction,
   ListItemNav,
   useIOToast,
   VSpacer
 } from "@io-app/design-system";
-import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { openAuthSessionAsync } from "expo-web-browser";
 import I18n from "i18next";
 import {
   ComponentProps,
@@ -259,7 +259,7 @@ const ProfileMainScreenFC = () => {
       <VSpacer size={16} />
       <FlatList
         contentContainerStyle={{
-          paddingHorizontal: IOVisualCostants.appMarginDefault
+          paddingHorizontal: IODimensions.padding.screen.default
         }}
         data={profileNavListItems}
         ItemSeparatorComponent={Divider}
@@ -275,7 +275,7 @@ const ProfileMainScreenFC = () => {
             icon="message"
             label={feedbackLabel}
             onPress={() => {
-              void openAuthenticationSession(surveyUrl, "");
+              void openAuthSessionAsync(surveyUrl);
             }}
             testID="feedbackButton"
             variant="primary"

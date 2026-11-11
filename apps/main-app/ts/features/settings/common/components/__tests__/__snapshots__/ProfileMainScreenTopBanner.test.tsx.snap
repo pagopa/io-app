@@ -111,30 +111,40 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
           {
             "alignSelf": "center",
             "flex": 1,
-            "gap": 4,
+            "gap": 12,
           }
         }
       >
-        <Text
-          allowFontScaling={true}
-          dynamicTypeRamp="headline"
-          maxFontSizeMultiplier={1.5}
+        <View
           style={
-            [
-              {},
-              {
-                "color": "#0E0F13",
-                "fontFamily": "Titillio",
-                "fontSize": 16,
-                "fontStyle": "normal",
-                "fontWeight": "600",
-                "lineHeight": 24,
-              },
-            ]
+            {
+              "display": "flex",
+              "flexDirection": "column",
+              "gap": 4,
+            }
           }
         >
-          Vuoi modificare il carattere usato per i testi in app?
-        </Text>
+          <Text
+            allowFontScaling={true}
+            dynamicTypeRamp="headline"
+            maxFontSizeMultiplier={1.5}
+            style={
+              [
+                {},
+                {
+                  "color": "#0E0F13",
+                  "fontFamily": "Titillio",
+                  "fontSize": 16,
+                  "fontStyle": "normal",
+                  "fontWeight": "600",
+                  "lineHeight": 24,
+                },
+              ]
+            }
+          >
+            Vuoi modificare il carattere usato per i testi in app?
+          </Text>
+        </View>
         <View
           accessibilityElementsHidden={true}
           accessibilityLabel="Modifica stile carattere"
@@ -171,13 +181,6 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
           onStartShouldSetResponder={[Function]}
           pointerEvents="none"
         >
-          <View
-            style={
-              {
-                "height": 8,
-              }
-            }
-          />
           <Text
             accessibilityElementsHidden={true}
             accessible={false}
@@ -342,8 +345,8 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
           {
             "opacity": 0.6,
             "position": "absolute",
-            "right": 10,
-            "top": 10,
+            "right": 8,
+            "top": 8,
           }
         }
       >

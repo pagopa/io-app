@@ -739,6 +739,8 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                                 "alignItems": "center",
                                 "display": "flex",
                                 "flexDirection": "row",
+                                "flexGrow": 1,
+                                "flexShrink": 1,
                                 "gap": 8,
                               }
                             }
@@ -749,6 +751,7 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                                   "alignItems": "center",
                                   "flexDirection": "row",
                                   "flexGrow": 1,
+                                  "flexShrink": 1,
                                 }
                               }
                             >
@@ -757,7 +760,9 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                                   {
                                     "display": "flex",
                                     "flexDirection": "column",
-                                    "gap": 4,
+                                    "flexGrow": 1,
+                                    "flexShrink": 1,
+                                    "gap": 8,
                                   }
                                 }
                               >
@@ -779,8 +784,8 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                                         "backgroundColor": "#E8EBF1",
                                         "borderCurve": "continuous",
                                         "borderRadius": 8,
-                                        "height": 12,
-                                        "width": 120,
+                                        "height": 14,
+                                        "width": "50%",
                                       },
                                       {
                                         "animationDuration": "1250ms",
@@ -808,8 +813,8 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                                         "backgroundColor": "#E8EBF1",
                                         "borderCurve": "continuous",
                                         "borderRadius": 8,
-                                        "height": 12,
-                                        "width": 120,
+                                        "height": 14,
+                                        "width": "50%",
                                       },
                                       {},
                                     ]
@@ -834,7 +839,7 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                                         "borderCurve": "continuous",
                                         "borderRadius": 8,
                                         "height": 16,
-                                        "width": 180,
+                                        "width": "75%",
                                       },
                                       {
                                         "animationDuration": "1250ms",
@@ -863,7 +868,7 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                                         "borderCurve": "continuous",
                                         "borderRadius": 8,
                                         "height": 16,
-                                        "width": 180,
+                                        "width": "75%",
                                       },
                                       {},
                                     ]
@@ -888,7 +893,7 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                                   {
                                     "backgroundColor": "#E8EBF1",
                                     "borderCurve": "continuous",
-                                    "borderRadius": 16,
+                                    "borderRadius": 24,
                                     "height": 24,
                                     "width": 64,
                                   },
@@ -917,7 +922,7 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
                                   {
                                     "backgroundColor": "#E8EBF1",
                                     "borderCurve": "continuous",
-                                    "borderRadius": 16,
+                                    "borderRadius": 24,
                                     "height": 24,
                                     "width": 64,
                                   },

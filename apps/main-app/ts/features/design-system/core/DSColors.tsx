@@ -7,9 +7,9 @@ import {
   IOColorsNeutral,
   IOColorsStatus,
   IOColorsTints,
+  IODimensions,
   IOThemeDark,
   IOThemeLight,
-  IOVisualCostants,
   themeStatusColorsDarkMode,
   themeStatusColorsLightMode,
   useIOTheme,
@@ -66,16 +66,16 @@ const styles = StyleSheet.create({
   },
   darkModeWrapper: {
     right: 0,
-    marginRight: IOVisualCostants.appMarginDefault * -1,
-    marginLeft: IOVisualCostants.appMarginDefault * -1,
+    marginRight: IODimensions.padding.screen.default * -1,
+    marginLeft: IODimensions.padding.screen.default * -1,
     backgroundColor: IOColors.black,
     borderTopLeftRadius: 24,
     borderBottomLeftRadius: 24
   },
   lightModeWrapper: {
     left: 0,
-    marginRight: IOVisualCostants.appMarginDefault * -1,
-    marginLeft: IOVisualCostants.appMarginDefault * -1,
+    marginRight: IODimensions.padding.screen.default * -1,
+    marginLeft: IODimensions.padding.screen.default * -1,
     backgroundColor: IOColors.white,
     borderTopRightRadius: 24,
     borderBottomRightRadius: 24
@@ -146,7 +146,7 @@ const ColorThemeGroup = ({
                         isSameColorValue && {
                           width:
                             Dimensions.get("window").width -
-                            IOVisualCostants.appMarginDefault -
+                            IODimensions.padding.screen.default -
                             colorItemGutter +
                             colorItemPadding
                         }
