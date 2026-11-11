@@ -1,7 +1,8 @@
 import { CgnFeaturedOpportunity } from "@io-app/api-types/generated/definitions/content/CgnFeaturedOpportunity";
-import { fireEvent } from "@testing-library/react-native";
+import { act, fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import { createStore } from "redux";
+import { getType } from "typesafe-actions";
 
 import { remoteLoading } from "../../../../../../common/model/RemoteValue";
 import { setLocale } from "../../../../../../i18n";
@@ -12,6 +13,7 @@ import * as remoteConfigSelectors from "../../../../../../store/reducers/backend
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import CGN_ROUTES from "../../../navigation/routes";
+import { cgnFeaturedOpportunities } from "../../../store/actions/merchants";
 import CgnMerchantsCategoriesSelectionScreen, {
   CgnMerchantsHomeTabRoutes
 } from "../CgnMerchantsCategoriesSelectionScreen";
@@ -135,6 +137,41 @@ describe("CgnMerchantsCategoriesSelectionScreen", () => {
     });
 
     expect(queryByTestId("CgnFeaturedOpportunitiesSkeleton")).toBeNull();
+  });
+
+  it("should not request featured opportunities again when the references content is unchanged", () => {
+    const references = [
+      {
+        merchantId: "merchant-1",
+        discountId: "discount-1"
+      } as CgnFeaturedOpportunity
+    ];
+    const selectorSpy = jest
+      .spyOn(remoteConfigSelectors, "cgnFeaturedOpportunitiesSelector")
+      .mockImplementation(() =>
+        references.map(reference => ({ ...reference }))
+      );
+    const store = createStore(appReducer, defaultState as any);
+    const dispatchSpy = jest.spyOn(store, "dispatch");
+    renderScreenWithNavigationStoreContext(
+      CgnMerchantsCategoriesSelectionScreen,
+      CGN_ROUTES.DETAILS.MERCHANTS.CATEGORIES,
+      {},
+      store
+    );
+    const countFeaturedRequests = () =>
+      dispatchSpy.mock.calls.filter(
+        ([action]) => action.type === getType(cgnFeaturedOpportunities.request)
+      ).length;
+    expect(countFeaturedRequests()).toBe(1);
+
+    act(() => {
+      store.dispatch({ type: "UNRELATED_ACTION" } as any);
+    });
+
+    expect(countFeaturedRequests()).toBe(1);
+    selectorSpy.mockRestore();
+    dispatchSpy.mockRestore();
   });
 
   it("should render the tab navigation with categories and merchants tabs", () => {

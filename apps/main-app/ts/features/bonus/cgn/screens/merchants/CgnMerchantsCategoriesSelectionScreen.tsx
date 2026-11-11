@@ -6,6 +6,7 @@ import {
   VSpacer
 } from "@io-app/design-system";
 import I18n from "i18next";
+import _ from "lodash";
 import { useEffect, useMemo, useState } from "react";
 import { RefreshControl, View } from "react-native";
 import Animated, {
@@ -66,7 +67,10 @@ const isCategoryRow = (item: CgnMerchantsListItem): item is CategoryRow =>
 const CgnMerchantsCategoriesSelectionScreen = () => {
   const { navigate } = useIONavigation();
   const dispatch = useIODispatch();
-  const featuredReferences = useIOSelector(cgnFeaturedOpportunitiesSelector);
+  const featuredReferences = useIOSelector(
+    cgnFeaturedOpportunitiesSelector,
+    _.isEqual
+  );
   const featuredOpportunities = useIOSelector(
     resolvedCgnFeaturedOpportunitiesSelector
   );
