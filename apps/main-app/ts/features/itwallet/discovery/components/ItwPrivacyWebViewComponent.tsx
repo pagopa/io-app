@@ -1,8 +1,4 @@
-import {
-  IOColors,
-  useIOFontDynamicScale,
-  useIOTheme
-} from "@io-app/design-system";
+import { useIOColors, useIOFontDynamicScale } from "@io-app/design-system";
 import { useEffect, useRef, useState } from "react";
 import { Platform } from "react-native";
 import WebView from "react-native-webview";
@@ -24,10 +20,10 @@ const ItwPrivacyWebViewComponent = ({ source, onLoadEnd, onError }: Props) => {
   const [contentHeight, setContentHeight] = useState<number>(0);
   const webViewRef = useRef<WebView>(null);
   const { dynamicFontScale } = useIOFontDynamicScale();
-  const theme = useIOTheme();
-  const backgroundColor = IOColors[theme["appBackground-primary"]];
-  const textColor = IOColors[theme["textBody-default"]];
-  const linkColor = IOColors[theme["interactiveElem-default"]];
+  const colors = useIOColors();
+  const backgroundColor = colors.background.default;
+  const textColor = colors.text.content.default;
+  const linkColor = colors.text.content.action;
   const textZoom = Math.round(dynamicFontScale * 100);
   const { styleScript, injectedJavaScript } = getPrivacyWebViewScripts({
     backgroundColor,
