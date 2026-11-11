@@ -3,7 +3,8 @@ import {
   Icon,
   IOCategoryIcons,
   IOColors,
-  IOSpacingScale,
+  IODimensions,
+  IODimensionScale,
   IOText
 } from "@io-app/design-system";
 import I18n from "i18next";
@@ -22,14 +23,9 @@ type CgnMerchantCardProps = WithTestID<{
   textColor: "black" | "white";
 }>;
 
-const cardPadding: IOSpacingScale = 16;
-const cardBorderRadius = 8;
 const iconSize = 32;
 const cardMinHeight = 116;
-const cardSafeInnerSpace: IOSpacingScale = 24;
-const badgeBorderRadius = 24;
-const badgeHPadding: IOSpacingScale = 8;
-const badgeVPadding: IOSpacingScale = 4;
+const cardSafeInnerSpace: IODimensionScale = 24;
 const badgeTextLetterSpacing = 0.5;
 const badgeTextLineHeight = 16;
 const badgeTextSize = 12;
@@ -39,10 +35,10 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     minHeight: cardMinHeight,
-    padding: cardPadding,
-    borderRadius: cardBorderRadius,
+    padding: IODimensions.padding.card,
+    borderRadius: IODimensions.radius.card,
     borderCurve: "continuous",
-    borderWidth: 1,
+    borderWidth: IODimensions.stroke.default,
     flexDirection: "column",
     alignItems: "flex-start",
     justifyContent: "space-between"
@@ -57,16 +53,18 @@ const styles = StyleSheet.create({
     width: "100%",
     marginBottom: cardSafeInnerSpace
   },
+  /** @deprecated Replace with `Badge` (see the TODO below) */
+  // TODO: replace with `<Badge forceLightMode variant="cgn" />` once `Badge` supports `forceLightMode`, like `Tag`
   newsBadge: {
     alignItems: "center",
     backgroundColor: IOColors["hanPurple-100"],
-    borderRadius: badgeBorderRadius,
+    borderRadius: IODimensions.radius.badge,
     borderCurve: "continuous",
     flexDirection: "row",
     justifyContent: "center",
     overflow: "hidden",
-    paddingHorizontal: badgeHPadding,
-    paddingVertical: badgeVPadding
+    paddingHorizontal: IODimensions.padding.badge.horizontal,
+    paddingVertical: IODimensions.padding.badge.vertical
   },
   newsBadgeText: {
     letterSpacing: badgeTextLetterSpacing,

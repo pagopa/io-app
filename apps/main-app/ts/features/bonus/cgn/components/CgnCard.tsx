@@ -2,6 +2,7 @@ import {
   BodySmall,
   H6,
   IOColors,
+  IODimensions,
   Tag,
   useIOThemeContext
 } from "@io-app/design-system";
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    padding: 16,
+    padding: IODimensions.padding.card,
     paddingTop: 12,
     justifyContent: "space-between"
   },

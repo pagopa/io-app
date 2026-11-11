@@ -1,5 +1,5 @@
 import {
-  IOVisualCostants,
+  IODimensions,
   TabItem,
   TabNavigation,
   VSpacer
@@ -68,8 +68,8 @@ const ReceiptFilterTabs = ({ selectedCategory, onCategorySelected }: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: -IOVisualCostants.appMarginDefault * 2,
-    paddingHorizontal: IOVisualCostants.appMarginDefault
+    marginHorizontal: -IODimensions.padding.screen.default * 2,
+    paddingHorizontal: IODimensions.padding.screen.default
   }
 });
 

@@ -319,6 +319,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, no payments 1`] = `
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -696,6 +697,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -799,7 +801,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       {
                                         "borderColor": "#E8EBF1",
                                       },
-                                      false,
                                     ]
                                   }
                                   style={
@@ -818,7 +819,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       {
                                         "borderColor": "#E8EBF1",
                                       },
-                                      false,
                                       {
                                         "transform": [
                                           {
@@ -834,7 +834,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       {
                                         "display": "flex",
                                         "flexDirection": "row",
-                                        "gap": 12,
+                                        "gap": 8,
                                       }
                                     }
                                   >
@@ -1058,7 +1058,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       {
                                         "borderColor": "#E8EBF1",
                                       },
-                                      false,
                                     ]
                                   }
                                   style={
@@ -1077,7 +1076,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       {
                                         "borderColor": "#E8EBF1",
                                       },
-                                      false,
                                       {
                                         "transform": [
                                           {
@@ -1093,7 +1091,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       {
                                         "display": "flex",
                                         "flexDirection": "row",
-                                        "gap": 12,
+                                        "gap": 8,
                                       }
                                     }
                                   >
@@ -1344,7 +1342,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       {
                                         "borderColor": "#E8EBF1",
                                       },
-                                      false,
                                     ]
                                   }
                                   style={
@@ -1363,7 +1360,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       {
                                         "borderColor": "#E8EBF1",
                                       },
-                                      false,
                                       {
                                         "transform": [
                                           {
@@ -1379,7 +1375,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       {
                                         "display": "flex",
                                         "flexDirection": "row",
-                                        "gap": 12,
+                                        "gap": 8,
                                       }
                                     }
                                   >
@@ -1630,7 +1626,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       {
                                         "borderColor": "#E8EBF1",
                                       },
-                                      false,
                                     ]
                                   }
                                   style={
@@ -1649,7 +1644,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       {
                                         "borderColor": "#E8EBF1",
                                       },
-                                      false,
                                       {
                                         "transform": [
                                           {
@@ -1665,7 +1659,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       {
                                         "display": "flex",
                                         "flexDirection": "row",
-                                        "gap": 12,
+                                        "gap": 8,
                                       }
                                     }
                                   >
@@ -1916,7 +1910,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       {
                                         "borderColor": "#E8EBF1",
                                       },
-                                      false,
                                     ]
                                   }
                                   style={
@@ -1935,7 +1928,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       {
                                         "borderColor": "#E8EBF1",
                                       },
-                                      false,
                                       {
                                         "transform": [
                                           {
@@ -1951,7 +1943,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       {
                                         "display": "flex",
                                         "flexDirection": "row",
-                                        "gap": 12,
+                                        "gap": 8,
                                       }
                                     }
                                   >
@@ -2202,7 +2194,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       {
                                         "borderColor": "#E8EBF1",
                                       },
-                                      false,
                                     ]
                                   }
                                   style={
@@ -2221,7 +2212,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       {
                                         "borderColor": "#E8EBF1",
                                       },
-                                      false,
                                       {
                                         "transform": [
                                           {
@@ -2237,7 +2227,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       {
                                         "display": "flex",
                                         "flexDirection": "row",
-                                        "gap": 12,
+                                        "gap": 8,
                                       }
                                     }
                                   >
@@ -2488,7 +2478,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       {
                                         "borderColor": "#E8EBF1",
                                       },
-                                      false,
                                     ]
                                   }
                                   style={
@@ -2507,7 +2496,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       {
                                         "borderColor": "#E8EBF1",
                                       },
-                                      false,
                                       {
                                         "transform": [
                                           {
@@ -2523,7 +2511,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                       {
                                         "display": "flex",
                                         "flexDirection": "row",
-                                        "gap": 12,
+                                        "gap": 8,
                                       }
                                     }
                                   >

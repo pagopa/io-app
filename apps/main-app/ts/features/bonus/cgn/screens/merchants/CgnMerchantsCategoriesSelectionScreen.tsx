@@ -1,7 +1,7 @@
 import {
   IOColors,
+  IODimensions,
   IOIcons,
-  IOVisualCostants,
   TabItem,
   TabNavigation,
   VSpacer
@@ -127,7 +127,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
     (refreshControlProps?.refreshing ?? false) && isPullRefresh;
   const contentContainerPaddingBottom = ListFooterComponentStyle
     ? 0
-    : IOVisualCostants.appMarginDefault + bottom;
+    : IODimensions.padding.screen.default + bottom;
 
   useEffect(() => {
     isRefreshingSharedValue.value = isRefreshing ? 1 : 0;

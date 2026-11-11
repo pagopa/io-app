@@ -3,16 +3,16 @@ import {
   BodySmall,
   H3,
   IOColors,
+  IODimensions,
+  IODimensionScale,
   IOSkeleton,
-  IOSpacingScale,
-  IOVisualCostants,
   useIOTheme,
   VStack
 } from "@io-app/design-system";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
 
-const ITEM_PADDING_VERTICAL: IOSpacingScale = 6;
-const AVATAR_MARGIN_RIGHT: IOSpacingScale = 16;
+const ITEM_PADDING_VERTICAL: IODimensionScale = 6;
+const AVATAR_MARGIN_RIGHT: IODimensionScale = 16;
 
 const styles = StyleSheet.create({
   container: {
@@ -75,9 +75,9 @@ export const ServicesHeaderSkeleton = () => (
     <View style={styles.itemAvatar}>
       <IOSkeleton
         color={IOColors["grey-200"]}
-        radius={IOVisualCostants.avatarRadiusSizeMedium}
+        radius={IODimensions.radius.avatar.medium}
         shape="square"
-        size={IOVisualCostants.avatarSizeMedium}
+        size={IODimensions.size.avatar.medium}
       />
     </View>
     <VStack space={8} style={{ flex: 1 }}>
