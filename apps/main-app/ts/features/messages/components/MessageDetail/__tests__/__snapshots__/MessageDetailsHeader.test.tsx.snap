@@ -525,7 +525,7 @@ exports[`MessageDetailsHeader component should match the snapshot with a valid t
                                   },
                                   {
                                     "backgroundColor": "#FFFFFF",
-                                    "borderColor": "rgba(14,15,19,0.1)",
+                                    "borderColor": "#E8EBF1",
                                     "borderRadius": 8,
                                     "height": 44,
                                     "padding": 6,
@@ -1096,7 +1096,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                                   },
                                   {
                                     "backgroundColor": "#FFFFFF",
-                                    "borderColor": "rgba(14,15,19,0.1)",
+                                    "borderColor": "#E8EBF1",
                                     "borderRadius": 8,
                                     "height": 44,
                                     "padding": 6,

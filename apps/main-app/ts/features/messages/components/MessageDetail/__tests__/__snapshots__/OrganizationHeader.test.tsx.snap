@@ -452,7 +452,7 @@ exports[`OrganizationHeader component should match the snapshot for a TPM denomi
                                 },
                                 {
                                   "backgroundColor": "#FFFFFF",
-                                  "borderColor": "rgba(14,15,19,0.1)",
+                                  "borderColor": "#E8EBF1",
                                   "borderRadius": 8,
                                   "height": 44,
                                   "padding": 6,
@@ -940,7 +940,7 @@ exports[`OrganizationHeader component should match the snapshot for a non third-
                                 },
                                 {
                                   "backgroundColor": "#FFFFFF",
-                                  "borderColor": "rgba(14,15,19,0.1)",
+                                  "borderColor": "#E8EBF1",
                                   "borderRadius": 8,
                                   "height": 44,
                                   "padding": 6,
