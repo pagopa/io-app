@@ -12,7 +12,7 @@ exports[`Test Avatar Components - Experimental Enabled Avatar Snapshot 1`] = `
       },
       {
         "backgroundColor": "#FFFFFF",
-        "borderColor": "rgba(14,15,19,0.1)",
+        "borderColor": "#E8EBF1",
         "borderRadius": 8,
         "height": 44,
         "padding": 6,
@@ -67,7 +67,7 @@ exports[`Test Avatar Components - Experimental Enabled AvatarSearch Snapshot 1`]
       },
       {
         "backgroundColor": "#FFFFFF",
-        "borderColor": "rgba(14,15,19,0.1)",
+        "borderColor": "#E8EBF1",
         "borderRadius": 8,
         "height": 44,
         "padding": 6,
@@ -121,7 +121,7 @@ exports[`Test Avatar Components Avatar Snapshot 1`] = `
       },
       {
         "backgroundColor": "#FFFFFF",
-        "borderColor": "rgba(14,15,19,0.1)",
+        "borderColor": "#E8EBF1",
         "borderRadius": 8,
         "height": 44,
         "padding": 6,
@@ -176,7 +176,7 @@ exports[`Test Avatar Components AvatarSearch Snapshot 1`] = `
       },
       {
         "backgroundColor": "#FFFFFF",
-        "borderColor": "rgba(14,15,19,0.1)",
+        "borderColor": "#E8EBF1",
         "borderRadius": 8,
         "height": 44,
         "padding": 6,

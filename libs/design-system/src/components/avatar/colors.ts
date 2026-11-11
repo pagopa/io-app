@@ -8,16 +8,15 @@ import {
   type IOTokenColor,
   IOColorPalette as p
 } from "../../core/tokens/colors/palette";
-import { withAlpha } from "../../core/tokens/colors/utils";
 
-/* A white tile with a black 10% border in both modes: logos are drawn for it */
+/* Tiles and placeholder icon are the same in both modes: logos are drawn for a white tile */
 export const avatarColors = (s: IOColorSemantics) =>
   ({
     background: { logo: p.greyscale.white, placeholder: p.greyscale[50] },
-    border: withAlpha(p.greyscale.black, 0.1),
-    icon: s.icon.decorative
+    border: s.stroke.default,
+    icon: p.greyscale[300]
   }) satisfies {
     background: Named<IOTokenColor>;
-    border: IOTokenColor;
-    icon: IOComponentColor<"foreground">;
+    border: IOComponentColor<"stroke">;
+    icon: IOTokenColor;
   };
