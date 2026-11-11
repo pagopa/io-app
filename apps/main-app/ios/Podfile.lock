@@ -4421,7 +4421,7 @@ SPEC CHECKSUMS:
   fast_float: b32c788ed9c6a8c584d114d0047beda9664e7cc6
   FBLazyVector: 07433c4ab85da44d0b5ceac374ff4e1d57c7aa23
   fmt: 530618a01105dae0fa3a2f27c81ae11fa8f67eac
-  glog: 0456694f3aaf09460b660ea327cfc11defbeea4c
+  glog: 9c7bd858f1402a8e680d1637276210773c093b76
   hermes-engine: a2a9fc7160af80292783f30b771f14a477f29712
   IoReactNativeCie: d30d9055f74cfc1fd00c8583316c6321abdb7794
   IoReactNativeHttpClient: bc2f2838fe9f959375d4d7e0419b11ebf27af379
@@ -4439,7 +4439,7 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-secure-storage: 64dcc5dff82ec5ce136d7904bc076d70db157dec
   Pulsar: b74a2333a1f655d04a8bc144a7273cb7ffdf7122
   PulsarHaptics: 62d13e9ef63535263f110a925e587d5d027dc683
-  RCT-Folly: b29feb752b08042c62badaef7d453f3bb5e6ae23
+  RCT-Folly: 36c4f904fb6cd0219dcb76b94e9502d2a72fab0b
   RCTDeprecation: f05668eea7b0e209e77e8ab1dc6a5e3b342f6f65
   RCTRequired: c1ddbcb9ab4d51c36bda2a96556d064cb8825357
   RCTSwiftUI: 3b36c814293f91f5179c0f113a885ce47853035c
