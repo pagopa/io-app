@@ -63,8 +63,8 @@ describe("CiePinScreen", () => {
       if (selector.name === "isFastLoginEnabledSelector") {
         return false;
       }
-      if (selector.name === "isCieProdSelector") {
-        return true;
+      if (selector.name === "isCiePreprodSelector") {
+        return false;
       }
       if (selector.name === "isNfcEnabledSelector") {
         return pot.some(true);

@@ -55,7 +55,7 @@ import {
   isSessionExpiredSelector
 } from "../../../common/store/selectors";
 import { LOGIN_TYPES } from "../../../common/utils";
-import { isCieProdSelector } from "../../cie/store/selectors";
+import { isCiePreprodSelector } from "../../cie/store/selectors";
 import useNavigateToLoginMethod from "../../hooks/useNavigateToLoginMethod";
 import { LandingSessionExpiredComponent } from "../components/LandingSessionExpiredComponent";
 import { useInfoBottomsheetComponent } from "../hooks/useInfoBottomsheetComponent";
@@ -104,7 +104,7 @@ export const LandingScreen = () => {
     continueWithRootOrJailbreakSelector
   );
 
-  const isCieProd = useIOSelector(isCieProdSelector);
+  const isCiePreprod = useIOSelector(isCiePreprodSelector);
 
   useFocusEffect(
     useCallback(() => {
@@ -287,7 +287,7 @@ export const LandingScreen = () => {
         <SectionStatusComponent sectionKey={"login"} />
         <ContentWrapper>
           <IOButton
-            color={isCieProd ? "primary" : "danger"}
+            color={isCiePreprod ? "danger" : "primary"}
             fullWidth
             icon="cie"
             label={I18n.t("authentication.landing.loginCie")}

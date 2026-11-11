@@ -4,8 +4,8 @@ import { CIE_ENVS } from "../../utils";
 export const cieEnvSelector = (state: GlobalState) =>
   state.features.loginFeatures.cieLogin.cieEnv;
 
-export const isCieProdSelector = (state: GlobalState) =>
-  cieEnvSelector(state) === CIE_ENVS.PROD;
+export const isCiePreprodSelector = (state: GlobalState) =>
+  cieEnvSelector(state) === CIE_ENVS.PREPROD;
 
 // TODO: remove these selectors if not used anymore,
 // when we've decided to definetively remove the CIE Tooltip feature

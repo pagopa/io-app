@@ -25,15 +25,15 @@ describe("CIE selectors", () => {
   });
 
   it.each([
-    { cieEnv: "production", expected: true },
-    { cieEnv: "preprod", expected: false }
+    { cieEnv: "production", expected: false },
+    { cieEnv: "preprod", expected: true }
   ])(
-    "isCieProdSelector should return $expected when cieEnv is $cieEnv",
+    "isCiePreprodSelector should return $expected when cieEnv is $cieEnv",
     ({ cieEnv, expected }) => {
       const state = {
         features: { loginFeatures: { cieLogin: { cieEnv } } }
       } as any;
-      expect(selectors.isCieProdSelector(state)).toBe(expected);
+      expect(selectors.isCiePreprodSelector(state)).toBe(expected);
     }
   );
 

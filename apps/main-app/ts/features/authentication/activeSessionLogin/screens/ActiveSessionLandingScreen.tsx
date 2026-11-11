@@ -25,7 +25,7 @@ import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { useCieLoginMethodSelection } from "../../common/hooks/useCieLoginMethodSelection";
 import { LOGIN_TYPES } from "../../common/utils";
-import { isCieProdSelector } from "../../login/cie/store/selectors";
+import { isCiePreprodSelector } from "../../login/cie/store/selectors";
 import useNavigateToLoginMethod from "../../login/hooks/useNavigateToLoginMethod";
 import { LandingSessionExpiredComponent } from "../../login/landing/components/LandingSessionExpiredComponent";
 import { setActiveSessionLoginBlockingScreenHasBeenVisualized } from "../store/actions";
@@ -58,7 +58,7 @@ export const ActiveSessionLandingScreen = () => {
     dispatch(setActiveSessionLoginBlockingScreenHasBeenVisualized());
   });
 
-  const isCieProd = useIOSelector(isCieProdSelector);
+  const isCiePreprod = useIOSelector(isCiePreprodSelector);
 
   useFocusEffect(
     useCallback(() => {
@@ -106,7 +106,7 @@ export const ActiveSessionLandingScreen = () => {
       <SectionStatusComponent sectionKey={"login"} />
       <ContentWrapper>
         <IOButton
-          color={isCieProd ? "primary" : "danger"}
+          color={isCiePreprod ? "danger" : "primary"}
           fullWidth
           icon="cie"
           label={I18n.t("authentication.landing.loginCie")}

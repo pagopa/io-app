@@ -63,7 +63,7 @@ import { loginSuccess } from "../../../common/store/actions";
 import { AUTH_LEVELS, getIdpLoginUri } from "../../../common/utils";
 import { CieRequestAuthenticationOverlay } from "../components/CieRequestAuthenticationOverlay";
 import { nfcIsEnabled } from "../store/actions";
-import { isCieProdSelector, isNfcEnabledSelector } from "../store/selectors";
+import { isCiePreprodSelector, isNfcEnabledSelector } from "../store/selectors";
 import { CIE_ENVS, cieFlowForDevServerEnabled, getCieEntityId } from "../utils";
 
 const CIE_PIN_LENGTH = 8;
@@ -208,10 +208,10 @@ const CiePinScreen = () => {
     }, [])
   );
 
-  const isCieProd = useIOSelector(isCieProdSelector);
+  const isCiePreprod = useIOSelector(isCiePreprodSelector);
 
   useHeaderSecondLevel({
-    title: withTrailingPoliceCarLightEmojii("", !isCieProd),
+    title: withTrailingPoliceCarLightEmojii("", isCiePreprod),
     supportRequest: true
   });
 

@@ -27,7 +27,7 @@ import { useIOSelector } from "../../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
 import { withTrailingPoliceCarLightEmojii } from "../../../../../utils/strings";
-import { isCieProdSelector } from "../../../../authentication/login/cie/store/selectors";
+import { isCiePreprodSelector } from "../../../../authentication/login/cie/store/selectors";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 import { trackItWalletCiePinEnter } from "../../analytics";
@@ -38,7 +38,7 @@ const CIE_PIN_LENGTH = 8;
 export const ItwCiePinScreen = () => {
   usePreventScreenCapture();
 
-  const isCieProd = useIOSelector(isCieProdSelector);
+  const isCiePreprod = useIOSelector(isCiePreprodSelector);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isL3Enabled = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
@@ -74,11 +74,11 @@ export const ItwCiePinScreen = () => {
   // the L2 "Documenti su IO" flow keeps the support request entry point.
   const headerProps: HeaderSecondLevelHookProps = isL3Enabled
     ? {
-        title: withTrailingPoliceCarLightEmojii("", !isCieProd),
+        title: withTrailingPoliceCarLightEmojii("", isCiePreprod),
         supportRequest: false
       }
     : {
-        title: withTrailingPoliceCarLightEmojii("", !isCieProd),
+        title: withTrailingPoliceCarLightEmojii("", isCiePreprod),
         supportRequest: true
       };
 

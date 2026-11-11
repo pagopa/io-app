@@ -24,7 +24,7 @@ import { useIOSelector } from "../../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
 import { withTrailingPoliceCarLightEmojii } from "../../../../../utils/strings";
-import { isCieProdSelector } from "../../../../authentication/login/cie/store/selectors";
+import { isCiePreprodSelector } from "../../../../authentication/login/cie/store/selectors";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { selectIdentification } from "../../../machine/eid/selectors";
 import { trackItwIdEnterCan } from "../../analytics";
@@ -34,7 +34,7 @@ const CIE_CAN_LENGTH = 6;
 export const ItwCieCanScreen = () => {
   usePreventScreenCapture();
 
-  const isCieProd = useIOSelector(isCieProdSelector);
+  const isCiePreprod = useIOSelector(isCiePreprodSelector);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const identification =
     ItwEidIssuanceMachineContext.useSelector(selectIdentification);
@@ -65,7 +65,7 @@ export const ItwCieCanScreen = () => {
   );
 
   useHeaderSecondLevel({
-    title: withTrailingPoliceCarLightEmojii("", !isCieProd),
+    title: withTrailingPoliceCarLightEmojii("", isCiePreprod),
     supportRequest: true
   });
 
