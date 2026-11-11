@@ -44,7 +44,10 @@ type WrappedListItemMessageProps = {
   source: "SEARCH" | MessageListCategory;
 };
 
-/** Keeps list layout/refresh updates out of unchanged rows while observing row state. */
+/**
+ * Keeps list layout/refresh updates out of unchanged rows while observing row
+ * state.
+ */
 export const WrappedListItemMessage = memo(
   ({ index, message, source }: WrappedListItemMessageProps) => {
     const dispatch = useIODispatch();
@@ -193,6 +196,7 @@ export const WrappedListItemMessage = memo(
         avatarDouble={avatarDouble}
         formattedDate={messageDate}
         isRead={isRead}
+        messageId={message.id}
         messageTitle={messageTitle}
         onLongPress={() => toggleScheduledMessageArchivingCallback(true)}
         onPress={onPressCallback}

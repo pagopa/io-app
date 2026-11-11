@@ -11,7 +11,6 @@ import { MessagesHomeScreen } from "../MessagesHomeScreen";
 jest.mock("../../components/Home/MessagesListContainer");
 jest.mock("../../components/Home/Preconditions");
 jest.mock("../../components/Home/SecuritySuggestions");
-jest.mock("../../components/Home/TabNavigationContainer");
 jest.mock("../../components/Home/Toasts");
 
 describe("MessagesHomeScreen", () => {

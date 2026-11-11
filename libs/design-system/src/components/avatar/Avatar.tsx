@@ -1,4 +1,4 @@
-import { ComponentProps, memo, useEffect, useMemo, useState } from "react";
+import { ComponentProps, memo, useState } from "react";
 import { Image, ImageSourcePropType, StyleSheet, View } from "react-native";
 
 import { Icon } from "../../components/icons";
@@ -48,35 +48,31 @@ const styles = StyleSheet.create({
  */
 export const Avatar = ({ logoUri, size }: Avatar) => {
   const theme = useIOTheme();
-  const [failedUris, setFailedUris] = useState<ReadonlyArray<string>>([]);
-  useEffect(() => {
-    // Reset failed URIs when there's a prop change for logoUri
-    setFailedUris(prev => (prev.length === 0 ? prev : []));
-  }, [logoUri]);
+  const [imageIndex, setImageIndex] = useState(0);
 
-  const candidate = useMemo(() => {
-    if (
-      logoUri === undefined ||
-      typeof logoUri === "number" ||
-      failedUris.length === 0
-    ) {
-      return logoUri;
-    }
-    const candidates = Array.isArray(logoUri) ? logoUri : [logoUri];
-    return candidates.find(
-      source => source.uri === undefined || !failedUris.includes(source.uri)
+  const [imageSource, setImageSource] = useState(
+    logoUri === undefined ? undefined : addCacheTimestampToUri(logoUri)
+  );
+  const logoKey = JSON.stringify(logoUri);
+  const [prevLogoKey, setPrevLogoKey] = useState(logoKey);
+
+  // A recycled list cell receives a different logo: restart from its first
+  // source instead of keeping the previous logo or its fallback
+  if (logoKey !== prevLogoKey) {
+    setPrevLogoKey(logoKey);
+    setImageIndex(0);
+    setImageSource(
+      logoUri === undefined ? undefined : addCacheTimestampToUri(logoUri)
     );
-  }, [logoUri, failedUris]);
-
-  const imageSource =
-    candidate === undefined ? undefined : addCacheTimestampToUri(candidate);
+  }
 
   const onError = () => {
-    const uri =
-      typeof candidate === "object"
-        ? (Array.isArray(candidate) ? candidate[0] : candidate)?.uri
-        : undefined;
-    setFailedUris(prev => (uri === undefined ? prev : [...prev, uri]));
+    if (Array.isArray(logoUri) && imageIndex + 1 < logoUri.length) {
+      setImageIndex(imageIndex + 1);
+      setImageSource(addCacheTimestampToUri(logoUri[imageIndex + 1]));
+      return;
+    }
+    setImageSource(undefined);
   };
 
   const avatarSize = IODimensions.size.avatar[size];

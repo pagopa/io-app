@@ -50,8 +50,7 @@ const generateMessage = (id: string, isArchived: boolean): UIMessage => ({
 });
 
 const isRowSelected = (row: ReturnType<typeof within>) =>
-  row.getByTestId("AnimatedMessageCheckboxInput").props.accessibilityState
-    .checked;
+  row.getByTestId("MessageCheckboxInput").props.accessibilityState.checked;
 
 describe("MessagesListContainer", () => {
   beforeEach(() => {

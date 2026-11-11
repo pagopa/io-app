@@ -74,6 +74,7 @@ export type ListItemMessageProps = Pick<
     avatarDouble?: boolean;
     formattedDate: string;
     isRead: boolean;
+    messageId?: string;
     messageTitle: string;
     organizationName: string;
     selected?: boolean;
@@ -105,6 +106,7 @@ export const ListItemMessage = ({
   avatarDouble,
   formattedDate,
   isRead,
+  messageId,
   messageTitle,
   onLongPress,
   onPress,
@@ -185,7 +187,13 @@ export const ListItemMessage = ({
                     }
                   ]}
                 >
-                  <MessageCheckbox accessible={false} checked={selected} />
+                  {/* Keyed by message so a recycled list cell does not animate
+                  the selection state of the previously rendered message */}
+                  <MessageCheckbox
+                    accessible={false}
+                    checked={selected}
+                    key={messageId}
+                  />
                 </View>
               </View>
             </View>

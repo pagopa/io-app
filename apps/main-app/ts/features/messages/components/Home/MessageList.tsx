@@ -135,16 +135,12 @@ export const MessageList = forwardRef<
     }
   }, [category, dispatch, store]);
 
-  const ListHeader = useMemo(() => {
-    const BannerPicker =
-      category === "INBOX" ? <LandingScreenBannerPicker /> : null;
-    return (
-      <View>
-        {NavigationBar}
-        {BannerPicker}
-      </View>
-    );
-  }, [NavigationBar, category]);
+  const ListHeader = (
+    <View>
+      {NavigationBar}
+      {category === "INBOX" && <LandingScreenBannerPicker />}
+    </View>
+  );
 
   return (
     <FlashList

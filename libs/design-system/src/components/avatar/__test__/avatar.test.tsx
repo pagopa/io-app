@@ -1,4 +1,5 @@
 import { fireEvent, render } from "@testing-library/react-native";
+import { ImageSourcePropType } from "react-native";
 
 import { renderWithExperimentalEnabledContextProvider } from "../../../utils/testing";
 import { Avatar, AvatarSearch } from "../Avatar";
@@ -74,4 +75,47 @@ describe("Avatar logo updates", () => {
 
     expect(component.queryByTestId("avatar_image")).toBeNull();
   });
+
+  it("shows the new logo after a local image failed", () => {
+    const component = render(<Avatar logoUri={1} size="small" />);
+    fireEvent(component.getByTestId("avatar_image"), "error");
+    expect(component.queryByTestId("avatar_image")).toBeNull();
+
+    component.rerender(<Avatar logoUri={logoB} size="small" />);
+
+    expect(renderedUri(component)).toBe(logoB[0].uri);
+  });
+
+  it("keeps the fallback when an equal logo is passed as a new object", () => {
+    const component = render(<Avatar logoUri={[...logoA]} size="small" />);
+    fireEvent(component.getByTestId("avatar_image"), "error");
+    expect(renderedUri(component)).toBe(logoA[1].uri);
+
+    component.rerender(<Avatar logoUri={[...logoA]} size="small" />);
+
+    expect(renderedUri(component)).toBe(logoA[1].uri);
+  });
+});
+
+describe("Avatar placeholder fallback", () => {
+  test.each<[string, ImageSourcePropType, number]>([
+    ["a single remote image", { uri: "https://logos/a.png" }, 1],
+    [
+      "every remote image",
+      [{ uri: "https://logos/a.png" }, { uri: "https://logos/b.png" }],
+      2
+    ],
+    ["a local image", 1, 1],
+    ["an image without uri", { headers: {} }, 1]
+  ])(
+    "shows the placeholder when %s fails to load",
+    (_, logoUri, errorCount) => {
+      const component = render(<Avatar logoUri={logoUri} size="small" />);
+      Array.from({ length: errorCount }).forEach(() =>
+        fireEvent(component.getByTestId("avatar_image"), "error")
+      );
+
+      expect(component.queryByTestId("avatar_image")).toBeNull();
+    }
+  );
 });

@@ -5,8 +5,14 @@ import {
   IODimensions,
   useIOTheme
 } from "@io-app/design-system";
-import { useEffect, useMemo, useState } from "react";
-import { Image, ImageSourcePropType, StyleSheet, View } from "react-native";
+import { useCallback, useState } from "react";
+import {
+  Image,
+  ImageSourcePropType,
+  ImageURISource,
+  StyleSheet,
+  View
+} from "react-native";
 
 import { addCacheTimestampToUri } from "../../../../../utils/image";
 
@@ -43,6 +49,20 @@ const styles = StyleSheet.create({
   }
 });
 
+const getImageState = (backgroundLogoUri?: ImageSourcePropType) => {
+  switch (typeof backgroundLogoUri) {
+    case "number":
+      return backgroundLogoUri;
+    case "object":
+      if (Array.isArray(backgroundLogoUri)) {
+        return addCacheTimestampToUri(backgroundLogoUri[0]);
+      }
+      return addCacheTimestampToUri(backgroundLogoUri as ImageURISource);
+    default:
+      return undefined;
+  }
+};
+
 /**
  * `AvatarDouble` component is used to display the background logo of an
  * organization, with a fixed pagoPA icon on top. It accepts the following
@@ -57,35 +77,34 @@ const styles = StyleSheet.create({
  */
 export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
   const theme = useIOTheme();
-  const [failedUris, setFailedUris] = useState<ReadonlyArray<string>>([]);
-  useEffect(() => {
-    // Reset failed URIs when there's a prop change for backgroundLogoUri
-    setFailedUris(prev => (prev.length === 0 ? prev : []));
-  }, [backgroundLogoUri]);
+  const [imageIndex, setImageIndex] = useState(0);
+  const logoKey = JSON.stringify(backgroundLogoUri); // compare by content rather than by reference
+  const [prevLogoKey, setPrevLogoKey] = useState(logoKey);
 
-  const candidate = useMemo(() => {
-    if (
-      backgroundLogoUri === undefined ||
-      typeof backgroundLogoUri === "number"
-    ) {
-      return backgroundLogoUri;
-    }
-    const candidates = Array.isArray(backgroundLogoUri)
-      ? backgroundLogoUri
-      : [backgroundLogoUri];
-    return candidates.find(
-      source => source.uri === undefined || !failedUris.includes(source.uri)
-    );
-  }, [backgroundLogoUri, failedUris]);
+  const imageInitialState = useCallback(
+    () => getImageState(backgroundLogoUri),
+    [backgroundLogoUri]
+  );
+  const [imageSource, setImageSource] = useState(imageInitialState);
 
-  const imageSource =
-    typeof candidate === "object"
-      ? addCacheTimestampToUri(candidate)
-      : candidate;
+  // A recycled list cell receives a different logo: restart from its first
+  // source instead of keeping the previous logo or its fallback
+  if (logoKey !== prevLogoKey) {
+    setPrevLogoKey(logoKey);
+    setImageIndex(0);
+    setImageSource(getImageState(backgroundLogoUri));
+  }
 
   const onError = () => {
-    const uri = typeof candidate === "object" ? candidate.uri : undefined;
-    setFailedUris(prev => (uri === undefined ? prev : [...prev, uri]));
+    if (
+      Array.isArray(backgroundLogoUri) &&
+      imageIndex + 1 < backgroundLogoUri.length
+    ) {
+      setImageIndex(imageIndex + 1);
+      setImageSource(addCacheTimestampToUri(backgroundLogoUri[imageIndex + 1]));
+      return;
+    }
+    setImageSource(undefined);
   };
 
   return (
