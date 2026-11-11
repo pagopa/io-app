@@ -1,6 +1,9 @@
 import { hashedProfileFiscalCodeSelector } from "../../../../../store/reducers/crossSessions";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { itwIsFiscalCodeWhitelisted } from "../../../common/store/selectors/preferences";
+import {
+  itwIsFiscalCodeWhitelisted,
+  itwIsWhatsNewLocallyEnabledSelector
+} from "../../../common/store/selectors/preferences";
 import {
   isItwEnabledSelector,
   isItwWhatsNewMinAppVersionSupportedSelector
@@ -20,10 +23,13 @@ export const itwIsEngagementScreenShownSelector = (state: GlobalState) => {
 
 export const itwShouldShowEngagementScreenSelector = (state: GlobalState) => {
   const eid = itwCredentialsEidSelector(state);
+  const isWhatsNewEnabled =
+    isItwWhatsNewMinAppVersionSupportedSelector(state) ||
+    itwIsWhatsNewLocallyEnabledSelector(state);
 
   return (
     isItwEnabledSelector(state) &&
-    isItwWhatsNewMinAppVersionSupportedSelector(state) &&
+    isWhatsNewEnabled &&
     itwIsFiscalCodeWhitelisted(state) &&
     !itwIsEngagementScreenShownSelector(state) &&
     !(eid && isItwCredential(eid))

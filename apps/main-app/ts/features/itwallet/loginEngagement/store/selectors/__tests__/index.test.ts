@@ -12,7 +12,8 @@ import { logoutSuccess } from "../../../../../authentication/common/store/action
 import {
   itwResetEngagementScreenShown,
   itwSetEngagementScreenShown,
-  itwSetFiscalCodeWhitelisted
+  itwSetFiscalCodeWhitelisted,
+  itwSetWhatsNewLocallyEnabled
 } from "../../../../common/store/actions/preferences";
 import * as remoteConfig from "../../../../common/store/selectors/remoteConfig";
 import { ItwStoredCredentialsMocks } from "../../../../common/utils/itwMocksUtils";
@@ -88,12 +89,17 @@ describe("ITW engagement eligibility", () => {
     expect(itwShouldShowEngagementScreenSelector(userState)).toBe(expected);
   });
 
-  it("does not show when the remote flag is off", () => {
+  it("shows when the remote or the local flag is on", () => {
     jest.spyOn(remoteConfig, "isItwEnabledSelector").mockReturnValue(true);
     jest
       .spyOn(remoteConfig, "isItwWhatsNewMinAppVersionSupportedSelector")
       .mockReturnValue(false);
     expect(itwShouldShowEngagementScreenSelector(userState)).toBe(false);
+    expect(
+      itwShouldShowEngagementScreenSelector(
+        appReducer(userState, itwSetWhatsNewLocallyEnabled(true))
+      )
+    ).toBe(true);
   });
 
   it("does not show when the feature is disabled, the user is not whitelisted or unknown", () => {

@@ -13,6 +13,7 @@ import {
   itwSetL2Fallback,
   itwSetProximityNfcLocallyEnabled,
   itwSetWalletActivationFeedbackBannerData,
+  itwSetWhatsNewLocallyEnabled,
   ItwWalletActivationFeedbackBannerData
 } from "../../actions/preferences";
 import reducer, {
@@ -112,6 +113,14 @@ describe("IT Wallet preferences reducer", () => {
       itwLifecycleStoresReset()
     );
     expect(state.isProximityNfcLocallyEnabled).toBe(true);
+  });
+
+  it("preserves the local What's New flag through wallet resets", () => {
+    const state = reducer(
+      reducer(INITIAL_STATE, itwSetWhatsNewLocallyEnabled(true)),
+      itwLifecycleStoresReset()
+    );
+    expect(state.isWhatsNewLocallyEnabled).toBe(true);
   });
 
   it("should handle itwSetClaimValuesHidden action", () => {
