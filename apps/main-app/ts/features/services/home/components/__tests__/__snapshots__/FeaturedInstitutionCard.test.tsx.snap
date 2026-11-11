@@ -444,7 +444,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                                       },
                                       {
                                         "backgroundColor": "#FFFFFF",
-                                        "borderColor": "rgba(14,15,19,0.1)",
+                                        "borderColor": "#E8EBF1",
                                         "borderRadius": 8,
                                         "height": 44,
                                         "padding": 6,
@@ -984,7 +984,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                                       },
                                       {
                                         "backgroundColor": "#FFFFFF",
-                                        "borderColor": "rgba(14,15,19,0.1)",
+                                        "borderColor": "#E8EBF1",
                                         "borderRadius": 8,
                                         "height": 44,
                                         "padding": 6,
