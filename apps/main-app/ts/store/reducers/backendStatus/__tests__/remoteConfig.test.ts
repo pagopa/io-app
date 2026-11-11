@@ -1387,7 +1387,7 @@ describe("cgnFeaturedOpportunitiesSelector", () => {
         cgn: {
           featured_opportunities: {
             min_app_version: { ios: "2.0.0.0", android: "2.0.0.0" },
-            opportunities: [{ partnerName: "Partner", description: "Offer" }]
+            opportunities: [{ merchantId: "merchant", discountId: "discount" }]
           }
         }
       })
@@ -1400,7 +1400,7 @@ describe("cgnFeaturedOpportunitiesSelector", () => {
   });
 
   it("returns opportunities when the app meets the minimum version", () => {
-    const opportunities = [{ partnerName: "Partner", description: "Offer" }];
+    const opportunities = [{ merchantId: "merchant", discountId: "discount" }];
     const state = {
       remoteConfig: O.some({
         cgn: {

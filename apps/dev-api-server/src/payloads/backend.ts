@@ -8,6 +8,9 @@ import {
   sendServiceId
 } from "../features/pn/services/dataService";
 import { serverUrl } from "../utils/server";
+import { merchantsAll } from "./features/cgn/merchants";
+
+const FEATURED_OPPORTUNITIES_COUNT = 3;
 
 export const backendInfo = {
   min_app_version: { android: "1.27.0", ios: "1.27.0" },
@@ -60,17 +63,14 @@ export const backendStatus: BackendStatus = {
           android: "1.0.0.0",
           ios: "1.0.0.0"
         },
-        opportunities: [
-          {
-            partnerName: "Partner Esempio",
-            description: "Sconto del 20% sul tuo prossimo acquisto",
-            ctaUrl: "https://io.italia.it"
-          },
-          {
-            partnerName: "Partner Senza Link",
-            description: "Offerta disponibile in negozio"
-          }
-        ]
+        opportunities: merchantsAll
+          .slice(0, FEATURED_OPPORTUNITIES_COUNT)
+          .flatMap(merchant =>
+            merchant.discounts.slice(0, 1).map(discount => ({
+              merchantId: merchant.id,
+              discountId: discount.id
+            }))
+          )
       },
       show_cgn_engagement_banner: {
         min_app_version: {

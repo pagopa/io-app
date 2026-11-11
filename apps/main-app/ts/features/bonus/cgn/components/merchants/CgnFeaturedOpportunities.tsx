@@ -1,4 +1,3 @@
-import { CgnFeaturedOpportunity } from "@io-app/api-types/generated/definitions/content/CgnFeaturedOpportunity";
 import {
   H6,
   IOColors,
@@ -17,9 +16,10 @@ import {
   View
 } from "react-native";
 
-import { openWebUrl } from "../../../../../utils/url";
-
-export const CGN_FEATURED_OPPORTUNITIES_MAX_ITEMS = 3;
+import {
+  CGN_FEATURED_OPPORTUNITIES_MAX_ITEMS,
+  ResolvedCgnFeaturedOpportunity
+} from "../../store/actions/merchants";
 
 const CARD_SPACING: IODimensionScale = 8;
 const CARD_PADDING: IODimensionScale = 12;
@@ -51,30 +51,31 @@ const styles = StyleSheet.create({
 
 const FeaturedOpportunityCard = ({
   cardWidth,
-  opportunity
+  opportunity,
+  onSelect
 }: {
   cardWidth: number;
-  opportunity: CgnFeaturedOpportunity;
+  onSelect: (opportunity: ResolvedCgnFeaturedOpportunity) => void;
+  opportunity: ResolvedCgnFeaturedOpportunity;
 }) => {
-  const ctaUrl = opportunity.ctaUrl;
+  const { merchant, discount } = opportunity;
   return (
     <Pressable
-      accessibilityLabel={`${opportunity.partnerName}. ${opportunity.description}`}
-      accessibilityRole={ctaUrl ? "link" : undefined}
-      disabled={!ctaUrl}
-      onPress={ctaUrl ? () => openWebUrl(ctaUrl) : undefined}
+      accessibilityLabel={`${merchant.name}. ${discount.name}`}
+      accessibilityRole="button"
+      onPress={() => onSelect(opportunity)}
     >
       <View style={[styles.card, { width: cardWidth }]}>
         <View style={styles.cardTextContainer}>
-          <H6 numberOfLines={2}>{opportunity.partnerName}</H6>
+          <H6 numberOfLines={2}>{merchant.name}</H6>
           <VSpacer size={4} />
-          <IOText numberOfLines={1}>{opportunity.description}</IOText>
+          <IOText numberOfLines={1}>{discount.name}</IOText>
         </View>
-        {opportunity.partnerLogo && (
+        {merchant.imageUrl && (
           <Image
             accessibilityIgnoresInvertColors
             resizeMode="contain"
-            source={{ uri: opportunity.partnerLogo }}
+            source={{ uri: merchant.imageUrl }}
             style={styles.logo}
           />
         )}
@@ -84,9 +85,11 @@ const FeaturedOpportunityCard = ({
 };
 
 export const CgnFeaturedOpportunities = ({
-  opportunities
+  opportunities,
+  onSelect
 }: {
-  opportunities: ReadonlyArray<CgnFeaturedOpportunity>;
+  onSelect: (opportunity: ResolvedCgnFeaturedOpportunity) => void;
+  opportunities: ReadonlyArray<ResolvedCgnFeaturedOpportunity>;
 }) => {
   const { width } = useWindowDimensions();
   const cardWidth = width - IODimensions.padding.screen.default * 2;
@@ -109,9 +112,13 @@ export const CgnFeaturedOpportunities = ({
         data={items}
         horizontal
         ItemSeparatorComponent={() => <View style={{ width: CARD_SPACING }} />}
-        keyExtractor={(item, index) => `${item.partnerName}-${index}`}
+        keyExtractor={item => `${item.merchant.id}-${item.discount.id}`}
         renderItem={({ item }) => (
-          <FeaturedOpportunityCard cardWidth={cardWidth} opportunity={item} />
+          <FeaturedOpportunityCard
+            cardWidth={cardWidth}
+            onSelect={onSelect}
+            opportunity={item}
+          />
         )}
         showsHorizontalScrollIndicator={false}
         snapToInterval={cardWidth + CARD_SPACING}

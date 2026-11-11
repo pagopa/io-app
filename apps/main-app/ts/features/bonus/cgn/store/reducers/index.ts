@@ -7,6 +7,9 @@ import cgnBucketReducer, { CgnBucketState } from "./bucket";
 import cgnCategoriesReducer, { CgnCategoriesState } from "./categories";
 import cgnDetailsReducer, { CgnDetailsState } from "./details";
 import eycaReducer, { EycaState } from "./eyca";
+import featuredOpportunitiesReducer, {
+  CgnFeaturedOpportunitiesState
+} from "./featuredOpportunities";
 import cgnMerchantsReducer, { CgnMerchantsState } from "./merchants";
 import cgnOtpReducer, { CgnOtpState } from "./otp";
 import cgnUnsubscribeReducer, { CgnUnsubscribeState } from "./unsubscribe";
@@ -18,6 +21,7 @@ export type CgnState = {
   categories: CgnCategoriesState;
   detail: CgnDetailsState;
   eyca: EycaState;
+  featuredOpportunities: CgnFeaturedOpportunitiesState;
   merchants: CgnMerchantsState;
   otp: CgnOtpState;
   unsubscribe: CgnUnsubscribeState;
@@ -32,6 +36,7 @@ const cgnReducer = combineReducers<CgnState, Action>({
   otp: cgnOtpReducer,
   bucket: cgnBucketReducer,
   eyca: eycaReducer,
+  featuredOpportunities: featuredOpportunitiesReducer,
   unsubscribe: cgnUnsubscribeReducer
 });
 

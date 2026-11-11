@@ -7,6 +7,7 @@ import { OnlineMerchants } from "@io-app/api-types/generated/definitions/cgn/mer
 import { OnlineMerchantSearchRequest } from "@io-app/api-types/generated/definitions/cgn/merchants/OnlineMerchantSearchRequest";
 import { SearchRequest } from "@io-app/api-types/generated/definitions/cgn/merchants/SearchRequest";
 import { SearchResult } from "@io-app/api-types/generated/definitions/cgn/merchants/SearchResult";
+import { CgnFeaturedOpportunity } from "@io-app/api-types/generated/definitions/content/CgnFeaturedOpportunity";
 import {
   ActionType,
   createAsyncAction,
@@ -14,6 +15,23 @@ import {
 } from "typesafe-actions";
 
 import { NetworkError } from "../../../../../utils/errors";
+
+export const CGN_FEATURED_OPPORTUNITIES_MAX_ITEMS = 3;
+
+export type ResolvedCgnFeaturedOpportunity = Readonly<{
+  discount: Discount;
+  merchant: Merchant;
+}>;
+
+export const cgnFeaturedOpportunities = createAsyncAction(
+  "CGN_FEATURED_OPPORTUNITIES_REQUEST",
+  "CGN_FEATURED_OPPORTUNITIES_SUCCESS",
+  "CGN_FEATURED_OPPORTUNITIES_FAILURE"
+)<
+  ReadonlyArray<CgnFeaturedOpportunity>,
+  ReadonlyArray<ResolvedCgnFeaturedOpportunity>,
+  NetworkError
+>();
 
 /** Count merchants conventioned with CGN */
 export const cgnMerchantsCount = createAsyncAction(
@@ -62,6 +80,7 @@ export const resetMerchantDiscountCode = createStandardAction(
 )<void>();
 
 export type CgnMerchantsAction =
+  | ActionType<typeof cgnFeaturedOpportunities>
   | ActionType<typeof cgnMerchantsCount>
   | ActionType<typeof cgnOfflineMerchants>
   | ActionType<typeof cgnOnlineMerchants>

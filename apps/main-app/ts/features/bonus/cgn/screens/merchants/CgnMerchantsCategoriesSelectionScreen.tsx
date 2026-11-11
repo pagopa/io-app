@@ -18,12 +18,19 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { cgnFeaturedOpportunitiesSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import CgnAnimatedHeader from "../../components/CgnAnimatedHeader";
 import { CgnFeaturedOpportunities } from "../../components/merchants/CgnFeaturedOpportunities";
 import { useDisableRootNavigatorGesture } from "../../hooks/useDisableRootNavigatorGesture";
 import CGN_ROUTES from "../../navigation/routes";
+import {
+  cgnFeaturedOpportunities,
+  cgnSelectedMerchant,
+  resetMerchantDiscountCode,
+  selectMerchantDiscount
+} from "../../store/actions/merchants";
+import { resolvedCgnFeaturedOpportunitiesSelector } from "../../store/selectors/featuredOpportunities";
 import {
   CategoryRow,
   CgnMerchantCategoriesListScreen
@@ -52,7 +59,15 @@ const isCategoryRow = (item: CgnMerchantsListItem): item is CategoryRow =>
 
 const CgnMerchantsCategoriesSelectionScreen = () => {
   const { navigate } = useIONavigation();
-  const featuredOpportunities = useIOSelector(cgnFeaturedOpportunitiesSelector);
+  const dispatch = useIODispatch();
+  const featuredReferences = useIOSelector(cgnFeaturedOpportunitiesSelector);
+  const featuredOpportunities = useIOSelector(
+    resolvedCgnFeaturedOpportunitiesSelector
+  );
+
+  useEffect(() => {
+    dispatch(cgnFeaturedOpportunities.request(featuredReferences));
+  }, [dispatch, featuredReferences]);
   useDisableRootNavigatorGesture();
   const { bottom } = useSafeAreaInsets();
   const [selectedTab, setSelectedTab] = useState<
@@ -184,14 +199,24 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
         <VSpacer size={16} />
         {selectedTab === CgnMerchantsHomeTabRoutes.CGN_CATEGORIES && (
           <>
-            <CgnFeaturedOpportunities opportunities={featuredOpportunities} />
+            <CgnFeaturedOpportunities
+              onSelect={({ merchant, discount }) => {
+                dispatch(cgnSelectedMerchant.success(merchant));
+                dispatch(selectMerchantDiscount(discount));
+                dispatch(resetMerchantDiscountCode());
+                navigate(CGN_ROUTES.DETAILS.MAIN, {
+                  screen: CGN_ROUTES.DETAILS.MERCHANTS.DISCOUNT
+                });
+              }}
+              opportunities={featuredOpportunities}
+            />
             <VSpacer size={16} />
           </>
         )}
       </>
     ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [featuredOpportunities, selectedTab]
+    [dispatch, featuredOpportunities, navigate, selectedTab]
   );
 
   return (
@@ -215,6 +240,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
           tintColor="transparent"
           {...refreshControlProps}
           onRefresh={() => {
+            dispatch(cgnFeaturedOpportunities.request(featuredReferences));
             refreshControlProps.onRefresh();
             setIsPullRefresh(true);
           }}

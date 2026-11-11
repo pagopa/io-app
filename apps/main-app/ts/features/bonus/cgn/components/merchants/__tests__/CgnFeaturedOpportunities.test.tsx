@@ -1,13 +1,24 @@
-import { CgnFeaturedOpportunity } from "@io-app/api-types/generated/definitions/content/CgnFeaturedOpportunity";
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { fireEvent, render } from "@testing-library/react-native";
 import I18n from "i18next";
 
-import * as urlUtils from "../../../../../../utils/url";
+import { ResolvedCgnFeaturedOpportunity } from "../../../store/actions/merchants";
 import { CgnFeaturedOpportunities } from "../CgnFeaturedOpportunities";
 
-const makeOpportunity = (index: number): CgnFeaturedOpportunity => ({
-  partnerName: `Partner ${index}`,
-  description: `Description ${index}`
+const makeOpportunity = (index: number): ResolvedCgnFeaturedOpportunity => ({
+  merchant: {
+    id: `merchant-${index}` as NonEmptyString,
+    name: `Partner ${index}` as NonEmptyString,
+    discounts: [],
+    allNationalAddresses: false
+  },
+  discount: {
+    id: `discount-${index}` as NonEmptyString,
+    name: `Description ${index}` as NonEmptyString,
+    startDate: new Date("2020-01-01"),
+    endDate: new Date("2099-12-31"),
+    productCategories: []
+  }
 });
 
 describe("CgnFeaturedOpportunities", () => {
@@ -15,7 +26,7 @@ describe("CgnFeaturedOpportunities", () => {
 
   it("renders nothing when there are no opportunities", () => {
     const { queryByTestId } = render(
-      <CgnFeaturedOpportunities opportunities={[]} />
+      <CgnFeaturedOpportunities onSelect={jest.fn()} opportunities={[]} />
     );
 
     expect(queryByTestId("CgnFeaturedOpportunities")).toBeNull();
@@ -23,7 +34,10 @@ describe("CgnFeaturedOpportunities", () => {
 
   it("renders the section title and the opportunities", () => {
     const { getByTestId, getByText } = render(
-      <CgnFeaturedOpportunities opportunities={[makeOpportunity(1)]} />
+      <CgnFeaturedOpportunities
+        onSelect={jest.fn()}
+        opportunities={[makeOpportunity(1)]}
+      />
     );
 
     expect(getByTestId("CgnFeaturedOpportunities")).toBeTruthy();
@@ -38,7 +52,10 @@ describe("CgnFeaturedOpportunities", () => {
     const opportunities = [1, 2, 3, 4, 5].map(makeOpportunity);
 
     const { getByText, queryByText } = render(
-      <CgnFeaturedOpportunities opportunities={opportunities} />
+      <CgnFeaturedOpportunities
+        onSelect={jest.fn()}
+        opportunities={opportunities}
+      />
     );
 
     expect(getByText("Partner 1")).toBeTruthy();
@@ -48,36 +65,21 @@ describe("CgnFeaturedOpportunities", () => {
     expect(queryByText("Partner 5")).toBeNull();
   });
 
-  it("opens the configured opportunity URL", () => {
-    const openWebUrlSpy = jest
-      .spyOn(urlUtils, "openWebUrl")
-      .mockImplementation();
-    const opportunity = {
-      ...makeOpportunity(1),
-      ctaUrl: "https://example.com/opportunity"
-    };
+  it("selects the resolved merchant and discount when pressed", () => {
+    const onSelect = jest.fn();
+    const opportunity = makeOpportunity(1);
     const { getByLabelText } = render(
-      <CgnFeaturedOpportunities opportunities={[opportunity]} />
+      <CgnFeaturedOpportunities
+        onSelect={onSelect}
+        opportunities={[opportunity]}
+      />
     );
 
     fireEvent.press(getByLabelText("Partner 1. Description 1"));
 
-    expect(openWebUrlSpy).toHaveBeenCalledWith(opportunity.ctaUrl);
-  });
-
-  it("disables the card when the opportunity has no CTA URL", () => {
-    const openWebUrlSpy = jest
-      .spyOn(urlUtils, "openWebUrl")
-      .mockImplementation();
-    const { getByLabelText } = render(
-      <CgnFeaturedOpportunities opportunities={[makeOpportunity(1)]} />
-    );
-
+    expect(onSelect).toHaveBeenCalledWith(opportunity);
     expect(
-      getByLabelText("Partner 1. Description 1").props.accessibilityState
-    ).toMatchObject({ disabled: true });
-    fireEvent.press(getByLabelText("Partner 1. Description 1"));
-
-    expect(openWebUrlSpy).not.toHaveBeenCalled();
+      getByLabelText("Partner 1. Description 1").props.accessibilityRole
+    ).toBe("button");
   });
 });

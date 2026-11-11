@@ -236,3 +236,5 @@ export const generateMerchantsAll = (): ReadonlyArray<Merchant> => {
 
   return merchants.map(m => generateMerchantDetail(m));
 };
+
+export const merchantsAll = generateMerchantsAll();
