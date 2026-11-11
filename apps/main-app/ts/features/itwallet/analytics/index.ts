@@ -32,6 +32,13 @@ import {
 
 // Screen view events
 
+export const trackItwActivationModalDialog = () => {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_ACTIVATION_MODAL_DIALOG,
+    buildEventProperties("UX", "screen_view")
+  );
+};
+
 export const trackItwBannerVisualized = (
   properties: TrackItwBannerProperties
 ) => {
@@ -111,6 +118,20 @@ export const trackItwSettings = () => {
 };
 
 // Actions events
+
+export const trackItwActivationModalDialogActivationStart = () => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_ACTIVATION_MODAL_DIALOG_ACTIVATION_START,
+    buildEventProperties("UX", "action")
+  );
+};
+
+export const trackItwActivationModalDialogDismissed = () => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_ACTIVATION_MODAL_DIALOG_DISMISSED,
+    buildEventProperties("UX", "action")
+  );
+};
 
 export const trackItwBannerTap = (properties: TrackItwBannerProperties) => {
   void mixpanelTrack(
