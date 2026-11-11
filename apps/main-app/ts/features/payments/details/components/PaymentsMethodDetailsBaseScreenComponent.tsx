@@ -1,6 +1,6 @@
 import {
   ContentWrapper,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   IODimensionScale,
   useIOTheme,
@@ -46,8 +46,8 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
   const [titleHeight, setTitleHeight] = useState(0);
 
   const theme = useIOTheme();
-  const backgroundColor = IOColors[theme["appBackground-primary"]];
-  const blueHeaderColor: ColorValue = IOColors["blueIO-600"];
+  const backgroundColor = IOColorsLegacy[theme["appBackground-primary"]];
+  const blueHeaderColor: ColorValue = IOColorsLegacy["blueIO-600"];
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
 
   useHeaderSecondLevel({

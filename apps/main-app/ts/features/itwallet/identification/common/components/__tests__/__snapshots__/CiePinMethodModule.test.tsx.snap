@@ -57,7 +57,6 @@ exports[`CiePinMethodModule When isL3 is false and isReissuance mode is false re
       [
         {
           "alignItems": "center",
-          "borderColor": "#E8EBF1",
           "borderCurve": "continuous",
           "borderRadius": 8,
           "borderWidth": 1,
@@ -75,7 +74,6 @@ exports[`CiePinMethodModule When isL3 is false and isReissuance mode is false re
       [
         {
           "alignItems": "center",
-          "borderColor": "#E8EBF1",
           "borderCurve": "continuous",
           "borderRadius": 8,
           "borderWidth": 1,
@@ -299,7 +297,6 @@ exports[`CiePinMethodModule When isL3 is false and isReissuance mode is true ren
       [
         {
           "alignItems": "center",
-          "borderColor": "#E8EBF1",
           "borderCurve": "continuous",
           "borderRadius": 8,
           "borderWidth": 1,
@@ -317,7 +314,6 @@ exports[`CiePinMethodModule When isL3 is false and isReissuance mode is true ren
       [
         {
           "alignItems": "center",
-          "borderColor": "#E8EBF1",
           "borderCurve": "continuous",
           "borderRadius": 8,
           "borderWidth": 1,
@@ -541,7 +537,6 @@ exports[`CiePinMethodModule When isL3 is true and isReissuance mode is false ren
       [
         {
           "alignItems": "center",
-          "borderColor": "#E8EBF1",
           "borderCurve": "continuous",
           "borderRadius": 8,
           "borderWidth": 1,
@@ -559,7 +554,6 @@ exports[`CiePinMethodModule When isL3 is true and isReissuance mode is false ren
       [
         {
           "alignItems": "center",
-          "borderColor": "#E8EBF1",
           "borderCurve": "continuous",
           "borderRadius": 8,
           "borderWidth": 1,
@@ -783,7 +777,6 @@ exports[`CiePinMethodModule When isL3 is true and isReissuance mode is true rend
       [
         {
           "alignItems": "center",
-          "borderColor": "#E8EBF1",
           "borderCurve": "continuous",
           "borderRadius": 8,
           "borderWidth": 1,
@@ -801,7 +794,6 @@ exports[`CiePinMethodModule When isL3 is true and isReissuance mode is true rend
       [
         {
           "alignItems": "center",
-          "borderColor": "#E8EBF1",
           "borderCurve": "continuous",
           "borderRadius": 8,
           "borderWidth": 1,

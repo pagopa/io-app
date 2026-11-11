@@ -970,7 +970,6 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                               "bottom": 0,
                               "position": "absolute",
                             },
-                            false,
                             undefined,
                           ]
                         }
@@ -984,7 +983,6 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                               "bottom": 0,
                               "position": "absolute",
                             },
-                            false,
                             undefined,
                           ]
                         }

@@ -2,7 +2,7 @@ import {
   Alert,
   ListItemCheckbox,
   ListItemHeader,
-  useIOTheme,
+  useIOColors,
   VSpacer,
   VStack
 } from "@io-app/design-system";
@@ -50,7 +50,7 @@ const RequestedCredentialsBlock = ({
 );
 
 const ItwRemotePresentationDetails = () => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   const machineRef = ItwRemoteMachineContext.useActorRef();
   const presentationDetails = ItwRemoteMachineContext.useSelector(
@@ -85,7 +85,7 @@ const ItwRemotePresentationDetails = () => {
                   })
                 : undefined
             }
-            iconColor={theme["icon-decorative"]}
+            iconColor={colors.icon.decorative}
             iconName="security"
             label={I18n.t(
               "features.itWallet.presentation.selectiveDisclosure.requiredClaims"

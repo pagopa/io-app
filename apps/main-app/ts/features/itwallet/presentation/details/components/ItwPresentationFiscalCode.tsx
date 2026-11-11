@@ -1,6 +1,6 @@
 import {
   H3,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   useScaleAnimation
 } from "@io-app/design-system";
@@ -74,10 +74,10 @@ const ItwPresentationFiscalCode = () => {
     >
       <Animated.View style={[styles.button, scaleAnimatedStyle]}>
         <Barcode
-          background={IOColors.white}
+          background={IOColorsLegacy.white}
           format={"CODE39"} // CODE39 it's the encoding format used by the physical TS-CNS card
           height={80}
-          lineColor={IOColors.black}
+          lineColor={IOColorsLegacy.black}
           value={fiscalCode}
           width={barcodeWidth}
         />
@@ -93,9 +93,9 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     paddingHorizontal: buttonPaddingHorizontal,
     rowGap: 0,
-    borderColor: IOColors["grey-100"],
+    borderColor: IOColorsLegacy["grey-100"],
     // Always white regardless of the theme
-    backgroundColor: IOColors.white,
+    backgroundColor: IOColorsLegacy.white,
     borderWidth: IODimensions.stroke.default,
     borderRadius: IODimensions.radius.card,
     borderCurve: "continuous"
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   text: {
     alignSelf: "center",
     // Always black regardless of the theme
-    color: IOColors.black
+    color: IOColorsLegacy.black
   }
 });
 

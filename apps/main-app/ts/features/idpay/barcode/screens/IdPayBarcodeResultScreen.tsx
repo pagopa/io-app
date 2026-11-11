@@ -2,7 +2,7 @@ import { TransactionBarCodeResponse } from "@io-app/api-types/generated/definiti
 import {
   Body,
   H3,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   IOText,
   IOTypography,
@@ -289,7 +289,7 @@ const styles = StyleSheet.create({
   },
   barcodeContainer: {
     /* TODO: Dark mode: Replace with theme values */
-    borderColor: IOColors["grey-100"],
+    borderColor: IOColorsLegacy["grey-100"],
     borderWidth: 1,
     padding: 16,
     borderRadius: 8

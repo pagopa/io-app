@@ -1,5 +1,5 @@
 import {
-  IOColors,
+  IOColorsLegacy,
   IOPictograms,
   IOPictogramSizeScale,
   Pictogram
@@ -133,10 +133,10 @@ const CieCardReadingAnimation = ({
         }
         radius={imgSize / 2}
         size={imgSize}
-        strokeBgColor={IOColors["grey-100"]}
+        strokeBgColor={IOColorsLegacy["grey-100"]}
         strokeColor={
           readingState === ReadingState.error
-            ? IOColors["grey-100"]
+            ? IOColorsLegacy["grey-100"]
             : circleColor
         }
         strokeWidth={circleBorderWidth}

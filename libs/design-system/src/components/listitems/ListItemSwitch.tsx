@@ -6,8 +6,8 @@ import {
   View
 } from "react-native";
 
-import { useIOTheme } from "../../context";
-import { IODimensions, IOSelectionListItemStyles } from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions, IOOpacity, IOSelectionListItemStyles } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
@@ -38,8 +38,6 @@ type PartialProps = WithTestID<{
   switchTestID?: string;
 }>;
 
-const DISABLED_OPACITY = 0.5;
-
 /* Estimated height of the native switch component,
 both on iOS & Android */
 const ESTIMATED_SWITCH_HEIGHT = 32;
@@ -63,7 +61,7 @@ export const ListItemSwitch = memo(
     switchTestID,
     testID
   }: ListItemSwitchProps) => {
-    const theme = useIOTheme();
+    const listItemColors = useIOColors().component.listItem;
     const { dynamicFontScale, spacingScaleMultiplier, hugeFontEnabled } =
       useIOFontDynamicScale();
 
@@ -82,7 +80,7 @@ export const ListItemSwitch = memo(
         style={[
           IOSelectionListItemStyles.listItem,
           {
-            opacity: disabled ? DISABLED_OPACITY : 1
+            opacity: disabled ? IOOpacity.disabled : 1
           }
         ]}
         testID={testID ?? "ListItemSwitch"}
@@ -117,7 +115,7 @@ export const ListItemSwitch = memo(
             {icon && !hugeFontEnabled && (
               <Icon
                 allowFontScaling
-                color={theme["icon-decorative"]}
+                color={listItemColors.foreground.icon}
                 name={icon}
                 size={IODimensions.size.icon.selection}
               />
@@ -131,7 +129,7 @@ export const ListItemSwitch = memo(
 
             <H6
               accessible={!canRenderSwitch}
-              color={theme["textBody-default"]}
+              color={listItemColors.foreground.label}
               importantForAccessibility={
                 !canRenderSwitch ? "yes" : "no-hide-descendants"
               }
@@ -170,7 +168,10 @@ export const ListItemSwitch = memo(
         {description && (
           <>
             <VSpacer size={IODimensions.gap.selection.description} />
-            <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
+            <BodySmall
+              color={listItemColors.foreground.description}
+              weight="Regular"
+            >
               {description}
             </BodySmall>
           </>

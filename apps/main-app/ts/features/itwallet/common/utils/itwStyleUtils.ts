@@ -1,4 +1,4 @@
-import { IOColors } from "@io-app/design-system";
+import { IOColorsLegacy } from "@io-app/design-system";
 import Color from "color";
 import { StatusBarStyle } from "react-native";
 
@@ -30,19 +30,19 @@ const legacyThemeColorsByCredentialType: Record<string, BaseCredentialColors> =
     },
     [CredentialType.EDUCATION_ATTENDANCE]: {
       backgroundColor: "#F2F1CE",
-      textColor: IOColors.black
+      textColor: IOColorsLegacy.black
     },
     [CredentialType.EDUCATION_DEGREE]: {
       backgroundColor: "#F2F1CE",
-      textColor: IOColors.black
+      textColor: IOColorsLegacy.black
     },
     [CredentialType.EDUCATION_DIPLOMA]: {
       backgroundColor: "#F2F1CE",
-      textColor: IOColors.black
+      textColor: IOColorsLegacy.black
     },
     [CredentialType.EDUCATION_ENROLLMENT]: {
       backgroundColor: "#E0F2CE",
-      textColor: IOColors.black
+      textColor: IOColorsLegacy.black
     },
     [CredentialType.EUROPEAN_DISABILITY_CARD]: {
       backgroundColor: "#315B76",
@@ -54,7 +54,7 @@ const legacyThemeColorsByCredentialType: Record<string, BaseCredentialColors> =
     },
     [CredentialType.RESIDENCY]: {
       backgroundColor: "#F2E4CE",
-      textColor: IOColors.black
+      textColor: IOColorsLegacy.black
     },
     [CredentialType.PID]: {
       backgroundColor: "#295699",

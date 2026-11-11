@@ -6,7 +6,8 @@ import {
   View
 } from "react-native";
 
-import { IOColors, IODimensions } from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions } from "../../core";
 import { IconButton } from "../buttons";
 import { H4 } from "../typography";
 
@@ -17,8 +18,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: IODimensions.padding.screen.default,
     paddingTop: IODimensions.padding.screen.default,
-    paddingBottom: IODimensions.padding.screen.default,
-    backgroundColor: IOColors.white
+    paddingBottom: IODimensions.padding.screen.default
   }
 });
 
@@ -42,6 +42,7 @@ export const ModalBSHeader = ({
   closeAccessibilityLabel
 }: Props) => {
   const headerRef = createRef<View>();
+  const headerColors = useIOColors().component.header;
 
   useLayoutEffect(() => {
     const reactNode = findNodeHandle(headerRef.current);
@@ -52,7 +53,13 @@ export const ModalBSHeader = ({
   }, []);
 
   return (
-    <View ref={headerRef} style={styles.container}>
+    <View
+      ref={headerRef}
+      style={[
+        styles.container,
+        { backgroundColor: headerColors.background.default }
+      ]}
+    >
       {isValidElement(title) ? (
         title
       ) : (

@@ -3,7 +3,6 @@ import { Alert } from "react-native";
 
 import { renderWithExperimentalEnabledContextProvider } from "../../../utils/testing";
 import { IconButton } from "../IconButton";
-import { IconButtonContained } from "../IconButtonContained";
 import { IconButtonSolid } from "../IconButtonSolid";
 import { IOButton } from "../IOButton";
 
@@ -90,17 +89,6 @@ describe("Test Buttons Components - Experimental Enabled", () => {
   it("IconButton Snapshot", () => {
     const { toJSON } = renderWithExperimentalEnabledContextProvider(
       <IconButton
-        accessibilityLabel={"accessibilityLabel"}
-        icon={"spid"}
-        onPress={onButtonPress}
-      />
-    );
-    expect(toJSON()).toMatchSnapshot();
-  });
-
-  it("IconButtonContained Snapshot", () => {
-    const { toJSON } = renderWithExperimentalEnabledContextProvider(
-      <IconButtonContained
         accessibilityLabel={"accessibilityLabel"}
         icon={"spid"}
         onPress={onButtonPress}

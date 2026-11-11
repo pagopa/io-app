@@ -1,5 +1,5 @@
 import {
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   IOSkeleton,
   useIOThemeContext,
@@ -13,10 +13,14 @@ const WalletCardSkeleton = withWalletCardBaseComponent(() => {
   const { themeType } = useIOThemeContext();
 
   const cardColor =
-    themeType === "light" ? IOColors["grey-100"] : IOColors["grey-850"];
+    themeType === "light"
+      ? IOColorsLegacy["grey-100"]
+      : IOColorsLegacy["grey-850"];
 
   const skeletonColor =
-    themeType === "light" ? IOColors["grey-200"] : IOColors["grey-900"];
+    themeType === "light"
+      ? IOColorsLegacy["grey-200"]
+      : IOColorsLegacy["grey-900"];
 
   return (
     <View style={[styleSheet.card, { backgroundColor: cardColor }]}>

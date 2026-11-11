@@ -2,7 +2,7 @@ import {
   Body,
   Icon,
   IOButton,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   IOSkeleton,
   useIOTheme
@@ -150,7 +150,7 @@ const StatusBox = ({ iconName, description, action }: StatusBoxProps) => (
 
 const styles = StyleSheet.create({
   statusBox: {
-    backgroundColor: IOColors["grey-50"],
+    backgroundColor: IOColorsLegacy["grey-50"],
     alignItems: "center",
     justifyContent: "center",
     aspectRatio: 1,

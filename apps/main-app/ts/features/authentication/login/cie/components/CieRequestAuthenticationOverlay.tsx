@@ -1,4 +1,4 @@
-import { IOColors, useIOTheme } from "@io-app/design-system";
+import { IOColorsLegacy, useIOTheme } from "@io-app/design-system";
 import CookieManager from "@react-native-cookies/cookies";
 import I18n from "i18next";
 import {
@@ -346,7 +346,7 @@ const ErrorComponent = (
     <View
       style={{
         flex: 1,
-        backgroundColor: IOColors[theme["appBackground-primary"]]
+        backgroundColor: IOColorsLegacy[theme["appBackground-primary"]]
       }}
     >
       <OperationResultScreenContent
