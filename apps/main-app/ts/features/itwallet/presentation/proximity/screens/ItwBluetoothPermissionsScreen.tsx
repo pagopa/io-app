@@ -19,20 +19,26 @@ import { checkBluetoothPermissions } from "../utils/ble";
 export const ItwBluetoothPermissionsScreen = () => {
   const machineRef = ItwProximityMachineContext.useActorRef();
 
-  const handleClose = () => {
+  // If the user granted the permission from settings, going back continues the
+  // flow, otherwise it closes the proximity flow
+  const handleBack = async () => {
+    if (await checkBluetoothPermissions()) {
+      machineRef.send({ type: "continue" });
+      return;
+    }
     trackItwProximityBluetoothAccessClose();
     machineRef.send({ type: "close" });
   };
 
   useHeaderSecondLevel({
     title: "",
-    goBack: handleClose
+    goBack: () => void handleBack()
   });
 
   // On Android the back gesture/button would otherwise pop this screen and
   // land on the presentment screen with an empty QR code
   useHardwareBackButtonWhenFocused(() => {
-    handleClose();
+    void handleBack();
     return true;
   });
 

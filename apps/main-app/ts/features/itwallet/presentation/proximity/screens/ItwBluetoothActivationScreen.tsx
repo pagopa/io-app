@@ -21,20 +21,26 @@ import {
 export const ItwBluetoothActivationScreen = () => {
   const machineRef = ItwProximityMachineContext.useActorRef();
 
-  const handleClose = () => {
+  // If the user enabled Bluetooth from settings, going back continues the flow
+  // to the QR code, otherwise it closes the proximity flow
+  const handleBack = async () => {
+    if (await checkBluetoothActivation()) {
+      machineRef.send({ type: "continue" });
+      return;
+    }
     trackItwProximityBluetoothActivationClose();
     machineRef.send({ type: "close" });
   };
 
   useHeaderSecondLevel({
     title: "",
-    goBack: handleClose
+    goBack: () => void handleBack()
   });
 
   // On Android the back gesture/button would otherwise pop this screen and
   // land on the presentment screen with an empty QR code
   useHardwareBackButtonWhenFocused(() => {
-    handleClose();
+    void handleBack();
     return true;
   });
 
