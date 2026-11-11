@@ -221,7 +221,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
                       "top": 0,
                     },
                     {
-                      "borderRadius": 7.5,
+                      "borderRadius": 9,
                       "height": 36,
                       "width": 36,
                     },
@@ -259,7 +259,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
                       "top": 0,
                     },
                     {
-                      "borderRadius": 7.5,
+                      "borderRadius": 9,
                       "height": 36,
                       "width": 36,
                     },
@@ -277,7 +277,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
                       "top": 0,
                     },
                     {
-                      "borderRadius": 7.5,
+                      "borderRadius": 9,
                       "height": 36,
                       "width": 36,
                     },

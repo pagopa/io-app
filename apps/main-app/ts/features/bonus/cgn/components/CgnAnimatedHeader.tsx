@@ -4,7 +4,7 @@ import {
   H3,
   HStack,
   IOColors,
-  IOVisualCostants,
+  IODimensions,
   useIOThemeContext,
   VSpacer
 } from "@io-app/design-system";
@@ -109,7 +109,7 @@ const CgnAnimatedHeader = ({
         )}
         <ContentWrapper
           style={{
-            paddingBottom: IOVisualCostants.appMarginDefault
+            paddingBottom: IODimensions.padding.screen.default
           }}
         >
           <HStack space={16} style={{ alignItems: "center" }}>

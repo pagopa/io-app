@@ -1,9 +1,8 @@
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 
 import { useIOTheme, useIOThemeContext } from "../../context";
-import { IOListItemLogoMargin } from "../../core";
+import { IODimensions, IOTypography } from "../../core";
 import { addCacheTimestampToUri } from "../../utils/image";
-import { VStack } from "../layout";
 import { IOSkeleton } from "../skeleton";
 import { IOText } from "../typography";
 import { ModuleStatic } from "./ModuleStatic";
@@ -31,11 +30,12 @@ type ModuleIDPLoadingProps = {
 
 type ModuleIDPProps = ModuleIDPContentProps | ModuleIDPLoadingProps;
 
+const IDP_LOGO_SIZE = { width: 120, height: 28 };
+
 const styles = StyleSheet.create({
   idpLogo: {
-    marginStart: IOListItemLogoMargin,
-    width: 120,
-    height: 28,
+    ...IDP_LOGO_SIZE,
+    marginStart: IODimensions.gap.module.trailing,
     resizeMode: "contain"
   }
 });
@@ -70,18 +70,13 @@ const ModuleIDPContent = ({
   name,
   onPress,
   testID,
-  withLooseSpacing,
   accessibilityLabel
 }: ModuleIDPContentProps) => {
   const theme = useIOTheme();
   const IDPLogoSource = useIDPLogo(logo);
 
   return (
-    <PressableModuleBase
-      onPress={onPress}
-      testID={testID}
-      withLooseSpacing={withLooseSpacing}
-    >
+    <PressableModuleBase onPress={onPress} testID={testID}>
       <IOText
         accessibilityLabel={accessibilityLabel ?? name}
         color={theme["textBody-tertiary"]}
@@ -113,11 +108,21 @@ const ModuleIDPSkeleton = ({
     accessibilityLabel={loadingAccessibilityLabel}
     accessibilityState={{ busy: true }}
     accessible={true}
-    endBlock={<IOSkeleton radius={8} shape="square" size={24} />}
+    endBlock={
+      <IOSkeleton
+        height={IDP_LOGO_SIZE.height}
+        radius={IODimensions.radius.skeleton.graphic}
+        shape="rectangle"
+        width={IDP_LOGO_SIZE.width}
+      />
+    }
     startBlock={
-      <VStack space={4}>
-        <IOSkeleton height={10} radius={8} shape="rectangle" width={100} />
-      </VStack>
+      <IOSkeleton
+        height={IOTypography.caption.size}
+        radius={IODimensions.radius.skeleton.text}
+        shape="rectangle"
+        width="50%"
+      />
     }
   />
 );

@@ -3,7 +3,7 @@ import { ColorValue, StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
 
 import { useIOThemeContext } from "../../context";
-import { hexToRgba, IOColors } from "../../core/IOColors";
+import { hexToRgba, IOColors, IODimensions } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useErrorShakeAnimation } from "../../utils/hooks/useErrorShakeAnimation";
 import { HStack } from "../layout";
@@ -16,14 +16,12 @@ type CodeInputProps = {
   variant?: "neutral" | "primary";
 };
 
-const DOT_SIZE = 16;
-
 const styles = StyleSheet.create({
   dotShape: {
-    width: DOT_SIZE,
-    height: DOT_SIZE,
-    borderRadius: DOT_SIZE / 2,
-    borderWidth: 2
+    width: IODimensions.size.codeInput.dot,
+    height: IODimensions.size.codeInput.dot,
+    borderRadius: IODimensions.size.codeInput.dot / 2,
+    borderWidth: IODimensions.stroke.codeInput.dot
   }
 });
 
@@ -112,7 +110,7 @@ export const CodeInput = ({
         animatedStyle
       ]}
     >
-      <HStack space={DOT_SIZE}>
+      <HStack space={IODimensions.gap.codeInput.items}>
         {[...Array(length)].map((_, i) =>
           value[i] ? (
             <FilledDot color={filledDotColor} key={i} />

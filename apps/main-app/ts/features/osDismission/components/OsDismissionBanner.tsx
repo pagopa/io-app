@@ -1,4 +1,4 @@
-import { Banner, IOVisualCostants } from "@io-app/design-system";
+import { Banner, IODimensions } from "@io-app/design-system";
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
 
@@ -30,7 +30,7 @@ const OsDismissionBanner = ({ handleOnClose }: Props) => (
 
 const styles = StyleSheet.create({
   margins: {
-    marginHorizontal: IOVisualCostants.appMarginDefault,
+    marginHorizontal: IODimensions.padding.screen.default,
     marginVertical: 16
   }
 });

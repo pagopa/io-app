@@ -10,24 +10,18 @@ import {
 import Animated from "react-native-reanimated";
 
 import { useIOTheme, useIOThemeContext } from "../../context";
-import { IOBannerBigSpacing, IOBannerRadius, IOTypography } from "../../core";
+import { IODimensions, IOTypography } from "../../core";
 import { hexToRgba, IOColors } from "../../core/IOColors";
 import { useScaleAnimation } from "../../hooks";
 import { WithTestID } from "../../utils/types";
 import { IconButton } from "../buttons";
-import { VSpacer } from "../layout";
-import {
-  IOPictogramsBleed,
-  IOPictogramSizeScale,
-  PictogramBleed
-} from "../pictograms";
+import { VStack } from "../layout";
+import { IOPictogramsBleed, PictogramBleed } from "../pictograms";
 import { BodySmall, H6, IOText } from "../typography";
 
 /* Styles */
-const sizePictogram: IOPictogramSizeScale = 80;
-const closeButtonDistanceFromEdge = 10;
 const closeButtonOpacity = 0.6;
-const bannerPadding = IOBannerBigSpacing;
+const bannerPadding = IODimensions.padding.banner;
 
 const styles = StyleSheet.create({
   container: {
@@ -35,7 +29,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     alignContent: "center",
     padding: bannerPadding,
-    borderRadius: IOBannerRadius,
+    borderRadius: IODimensions.radius.banner,
     borderCurve: "continuous"
   },
   bleedPictogram: {
@@ -43,8 +37,8 @@ const styles = StyleSheet.create({
   },
   closeIconButton: {
     position: "absolute",
-    right: closeButtonDistanceFromEdge,
-    top: closeButtonDistanceFromEdge,
+    right: IODimensions.offset.banner.close,
+    top: IODimensions.offset.banner.close,
     opacity: closeButtonOpacity
   }
 });
@@ -178,35 +172,41 @@ export const Banner = ({
         }
         accessibilityRole={action === undefined ? "text" : undefined}
         accessible={action === undefined}
-        style={{ flex: 1, alignSelf: "center", gap: 4 }}
+        style={{
+          flex: 1,
+          alignSelf: "center",
+          gap: IODimensions.gap.banner.action
+        }}
       >
-        {title && (
-          <H6
-            accessibilityElementsHidden={
-              action !== undefined ? true : undefined
-            }
-            color={colorTitle}
-            importantForAccessibility={
-              action !== undefined ? "no-hide-descendants" : undefined
-            }
-          >
-            {title}
-          </H6>
-        )}
-        {content && (
-          <BodySmall
-            accessibilityElementsHidden={
-              action !== undefined ? true : undefined
-            }
-            color={theme["textBody-tertiary"]}
-            importantForAccessibility={
-              action !== undefined ? "no-hide-descendants" : undefined
-            }
-            weight={"Regular"}
-          >
-            {content}
-          </BodySmall>
-        )}
+        <VStack space={IODimensions.gap.banner.description}>
+          {title && (
+            <H6
+              accessibilityElementsHidden={
+                action !== undefined ? true : undefined
+              }
+              color={colorTitle}
+              importantForAccessibility={
+                action !== undefined ? "no-hide-descendants" : undefined
+              }
+            >
+              {title}
+            </H6>
+          )}
+          {content && (
+            <BodySmall
+              accessibilityElementsHidden={
+                action !== undefined ? true : undefined
+              }
+              color={theme["textBody-tertiary"]}
+              importantForAccessibility={
+                action !== undefined ? "no-hide-descendants" : undefined
+              }
+              weight={"Regular"}
+            >
+              {content}
+            </BodySmall>
+          )}
+        </VStack>
         {action && (
           /* Disable pointer events to avoid
              pressed state on the button */
@@ -221,7 +221,6 @@ export const Banner = ({
             onPress={onPress}
             pointerEvents="none"
           >
-            <VSpacer size={8} />
             <IOText
               accessibilityElementsHidden={true}
               // A11y
@@ -239,7 +238,10 @@ export const Banner = ({
         )}
       </View>
       <View style={[styles.bleedPictogram, { alignSelf: "center" }]}>
-        <PictogramBleed name={pictogramName} size={sizePictogram} />
+        <PictogramBleed
+          name={pictogramName}
+          size={IODimensions.size.pictogram.banner}
+        />
       </View>
       {onClose && labelClose && (
         <View style={styles.closeIconButton}>

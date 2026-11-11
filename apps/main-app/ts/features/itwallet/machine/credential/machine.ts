@@ -26,7 +26,7 @@ export const itwCredentialIssuanceMachine = itwCredentialSetup.createMachine({
           ]
         },
         "select-credential": {
-          target: "EvaluateFlow",
+          target: "WaitingForCredentialsCatalogue",
           actions: [
             "onInit",
             assign(({ event }) => ({
@@ -76,7 +76,7 @@ export const itwCredentialIssuanceMachine = itwCredentialSetup.createMachine({
     CredentialOfferResolved: {
       on: {
         "confirm-credential-offer": {
-          target: "EvaluateFlow",
+          target: "WaitingForCredentialsCatalogue",
           actions: ["onInit", assign({ mode: "issuance" })]
         },
         close: {
@@ -88,6 +88,22 @@ export const itwCredentialIssuanceMachine = itwCredentialSetup.createMachine({
             issuerConf: undefined
           })
         }
+      }
+    },
+    WaitingForCredentialsCatalogue: {
+      tags: [ItwTags.Loading],
+      invoke: {
+        src: "waitForCredentialsCatalogue",
+        input: ({ context }) => ({ deps: context.deps }),
+        onError: { target: "EvaluateFlow" }
+      },
+      on: {
+        "credentials-catalogue-ready": { target: "EvaluateFlow" },
+        back: {
+          target: "Idle",
+          actions: assign({ credentialType: undefined })
+        },
+        close: { target: "Completed", actions: "closeIssuance" }
       }
     },
     EvaluateFlow: {
