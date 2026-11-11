@@ -3764,8 +3764,7 @@
         "title": "To continue, we need to verify this information"
       },
       "beforeContinue": {
-        "requestBonus": "Claim the bonus",
-        "text": "By clicking \"{{ctaText}}\" you acknowledge that you have read, understood, and agree to the [Privacy Policy]({{privacyUrl}}) and the [Terms and Conditions of Use]({{tosUrl}})."
+        "requestBonus": "Claim the bonus"
       },
       "boolPrerequisites": {
         "emptyValueError": "Select an option to continue",
