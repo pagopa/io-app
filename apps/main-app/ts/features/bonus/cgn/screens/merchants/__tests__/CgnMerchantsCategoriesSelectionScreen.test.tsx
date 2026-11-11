@@ -85,6 +85,12 @@ describe("CgnMerchantsCategoriesSelectionScreen", () => {
     expect(component).toBeTruthy();
   });
 
+  it("should not render the featured opportunities section when no opportunities are configured", () => {
+    const { queryByTestId } = renderComponent(defaultState);
+
+    expect(queryByTestId("CgnFeaturedOpportunitiesSection")).toBeNull();
+  });
+
   it("should render the tab navigation with categories and merchants tabs", () => {
     const { getByTestId } = renderComponent(defaultState);
 
