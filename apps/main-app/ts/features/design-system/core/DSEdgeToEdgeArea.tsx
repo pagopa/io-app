@@ -3,7 +3,7 @@ import {
   H4,
   hexToRgba,
   IOColors,
-  IOVisualCostants
+  IODimensions
 } from "@io-app/design-system";
 import { ScrollView, Text, View } from "react-native";
 import {
@@ -67,7 +67,7 @@ export const DSEdgeToEdgeArea = () => {
             position: "absolute",
             bottom: 0,
             width: "100%",
-            paddingHorizontal: IOVisualCostants.appMarginDefault,
+            paddingHorizontal: IODimensions.padding.screen.default,
             backgroundColor: hexToRgba(IOColors["blueIO-500"], 0.7),
             paddingBottom: insets.bottom
           }}

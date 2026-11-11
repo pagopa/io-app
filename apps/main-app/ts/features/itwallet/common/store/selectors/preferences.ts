@@ -56,3 +56,8 @@ export const itwIsActivationDisabledSelector = (state: GlobalState) =>
 export const itwWalletActivationFeedbackBannerDataSelector = (
   state: GlobalState
 ) => state.features.itWallet.preferences.walletActivationFeedbackBannerData;
+
+/** Returns whether CED opportunities are locally enabled. */
+export const itwIsDiscoverMoreCEDLocallyEnabledSelector = (
+  state: GlobalState
+) => state.features.itWallet.preferences.isDiscoverMoreCEDEnabled ?? false;

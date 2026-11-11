@@ -54,7 +54,7 @@ Reach for it when you have to reproduce a style outside the React Native text tr
 ```tsx
 <IOSkeleton
   height={IOTypography.h2.size}
-  radius={4}
+  radius={IODimensions.radius.skeleton.text}
   shape="rectangle"
   width="80%"
 />
