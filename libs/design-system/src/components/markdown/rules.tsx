@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 
 import type {
   MarkdownNode,
@@ -242,47 +242,64 @@ const hardbreakRule: RenderRule = node => (
   <Fragment key={node.key}>{"\n"}</Fragment>
 );
 
-const bulletListRule: RenderRule = (node, renderChildren) => (
-  <View
-    accessibilityRole="list"
-    accessible={false}
-    key={node.key}
-    style={{ paddingLeft: 12 }}
-  >
-    <VSpacer size={8} />
-    {node.children.map(child => (
-      <View accessible key={child.key} style={{ flexDirection: "row" }}>
-        <Body>{getUnorderedListBullet(node.listDepth ?? 0)}</Body>
-        <HSpacer size={8} />
-        <View accessible={false} style={{ flex: 1, flexShrink: 1 }}>
-          {renderChildren(child.children)}
-        </View>
-      </View>
-    ))}
-    <VSpacer size={8} />
-  </View>
+const makeListRule =
+  (
+    getMarker: (index: number, depth: number) => string,
+    accessibilityMarker?: string
+  ): RenderRule =>
+  (node, renderChildren) => (
+    <View
+      accessibilityRole="list"
+      accessible={false}
+      key={node.key}
+      style={{ paddingLeft: 12 }}
+    >
+      <VSpacer size={8} />
+      {node.children.map((child, i) => {
+        const nestedListIndex = child.children.findIndex(
+          block => block.type === "bullet_list" || block.type === "ordered_list"
+        );
+        const content =
+          nestedListIndex < 0
+            ? child.children
+            : child.children.slice(0, nestedListIndex);
+        const remainingContent =
+          nestedListIndex < 0 ? [] : child.children.slice(nestedListIndex);
+
+        return (
+          <View accessible={false} key={child.key}>
+            <View accessible style={{ flexDirection: "row" }}>
+              <Body
+                accessibilityLabel={
+                  Platform.OS === "android" ? accessibilityMarker : undefined
+                }
+              >
+                {getMarker(i + 1, node.listDepth ?? 0)}
+              </Body>
+              <HSpacer size={8} />
+              <View accessible={false} style={{ flex: 1, flexShrink: 1 }}>
+                {renderChildren(content)}
+              </View>
+            </View>
+            {remainingContent.length > 0 && (
+              <View accessible={false} style={{ paddingLeft: 12 }}>
+                {renderChildren(remainingContent)}
+              </View>
+            )}
+          </View>
+        );
+      })}
+      <VSpacer size={8} />
+    </View>
+  );
+
+const bulletListRule = makeListRule(
+  (_index, depth) => getUnorderedListBullet(depth),
+  // TalkBack does not consistently announce the hollow and triangular glyphs.
+  getUnorderedListBullet(0)
 );
 
-const orderedListRule: RenderRule = (node, renderChildren) => (
-  <View
-    accessibilityRole="list"
-    accessible={false}
-    key={node.key}
-    style={{ paddingLeft: 12 }}
-  >
-    <VSpacer size={8} />
-    {node.children.map((child, i) => (
-      <View accessible key={child.key} style={{ flexDirection: "row" }}>
-        <Body>{getOrderedListMarker(i + 1, node.listDepth ?? 0)}</Body>
-        <HSpacer size={8} />
-        <View accessible={false} style={{ flex: 1, flexShrink: 1 }}>
-          {renderChildren(child.children)}
-        </View>
-      </View>
-    ))}
-    <VSpacer size={8} />
-  </View>
-);
+const orderedListRule = makeListRule(getOrderedListMarker);
 
 const listItemRule: RenderRule = (node, renderChildren) => (
   <View key={node.key} style={{ flex: 1, flexShrink: 1 }}>
