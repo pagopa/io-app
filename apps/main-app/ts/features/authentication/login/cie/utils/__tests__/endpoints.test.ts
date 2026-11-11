@@ -1,5 +1,6 @@
 import { Platform } from "react-native";
 
+import { CieEnv } from "..";
 import { getCieIdpUrl } from "../endpoints";
 
 describe("getCieIdpUrl", () => {
@@ -28,5 +29,9 @@ describe("getCieIdpUrl", () => {
 
   it("should return null for prod", () => {
     expect(getCieIdpUrl("production")).toBeNull();
+  });
+
+  it("should return null for an unknown environment", () => {
+    expect(getCieIdpUrl("unknown" as CieEnv)).toBeNull();
   });
 });

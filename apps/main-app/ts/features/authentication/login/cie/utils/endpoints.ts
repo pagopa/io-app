@@ -12,7 +12,7 @@ const CIE_IDP_BASE_URL_MAP: Record<CieEnv, null | string> = {
 export const getCieIdpUrl = (cieEnv: CieEnv) => {
   const baseUrl = CIE_IDP_BASE_URL_MAP[cieEnv];
 
-  if (baseUrl === null) {
+  if (baseUrl == null) {
     return null;
   }
 
