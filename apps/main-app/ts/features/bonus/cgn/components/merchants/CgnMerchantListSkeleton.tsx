@@ -1,4 +1,4 @@
-import { Divider, IOSkeleton, IOVisualCostants } from "@io-app/design-system";
+import { Divider, IODimensions, IOSkeleton } from "@io-app/design-system";
 import { View } from "react-native";
 
 type Props = {
@@ -18,7 +18,7 @@ export function CgnMerchantListSkeleton(props: Props) {
               paddingVertical: 13,
               paddingHorizontal: hasIcons
                 ? 0
-                : IOVisualCostants.appMarginDefault
+                : IODimensions.padding.screen.default
             }}
           >
             <IOSkeleton

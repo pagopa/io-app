@@ -1,8 +1,5 @@
+import { getRedirects } from "@io-app/login-utils";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import {
-  getRedirects,
-  isLoginUtilsError
-} from "@pagopa/io-react-native-login-utils";
 import { err, ok, Result, ResultAsync } from "neverthrow";
 import pako from "pako";
 import URLParse from "url-parse";
@@ -135,20 +132,6 @@ export const regenerateKeyGetRedirectsAndVerifySaml = async (
 };
 
 /**
- * Builds a failure reason for the native redirects flow, including the native
- * error details when available.
- *
- * @param error The error object to extract the failure message from.
- * @returns A string describing the failure reason.
- */
-const getNativeRedirectsFailure = (error: unknown): string => {
-  if (isLoginUtilsError(error)) {
-    return `${error.code} ${unknownToString(error.userInfo)}`;
-  }
-  return unknownToString(error);
-};
-
-/**
  * Follows the native redirects starting from the given URL and returns the last
  * redirect URL.
  *
@@ -162,7 +145,7 @@ export const getLastRedirect = async (
 ) => {
   const redirectsResult = await ResultAsync.fromPromise(
     getRedirects(url, headers, "SAMLRequest"),
-    getNativeRedirectsFailure
+    unknownToString
   );
 
   if (redirectsResult.isErr()) {

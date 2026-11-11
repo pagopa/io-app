@@ -11,11 +11,11 @@ import {
   H5,
   H6,
   HSpacer,
+  IODimensions,
   IOPictogramsBleed,
-  IOSpacer,
+  IOSpace,
   IOText,
   IOToast,
-  IOVisualCostants,
   Nullable,
   VSpacer
 } from "@io-app/design-system";
@@ -260,7 +260,7 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
       aspectRatio: 1
     });
     const screenWidth =
-      Dimensions.get("screen").width - IOVisualCostants.appMarginDefault * 2;
+      Dimensions.get("screen").width - IODimensions.padding.screen.default * 2;
 
     useLayoutEffect(() => {
       Image.getSize(image.url, (width, height) => {
@@ -450,8 +450,8 @@ export const headerNodeToReactNative = (
   onPress: (url: string) => void,
   render: Renderer,
   screenReaderEnabled: boolean,
-  marginStart: IOSpacer | undefined = undefined,
-  marginEnd: IOSpacer | undefined = undefined
+  marginStart: IOSpace | undefined = undefined,
+  marginEnd: IOSpace | undefined = undefined
 ) => {
   const Heading = headingsMap[header.depth];
 

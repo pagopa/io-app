@@ -3,11 +3,7 @@ import { Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
 import { useIOTheme } from "../../context";
-import {
-  IOSelectionListItemStyles,
-  IOSelectionListItemVisualParams,
-  IOSelectionTickVisualParams
-} from "../../core";
+import { IODimensions, IOSelectionListItemStyles } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
@@ -108,7 +104,7 @@ export const ListItemCheckbox = ({
                 flexDirection: "row",
                 flexShrink: 1,
                 columnGap:
-                  IOSelectionListItemVisualParams.iconMargin *
+                  IODimensions.gap.selection.leading *
                   dynamicFontScale *
                   spacingScaleMultiplier
               }}
@@ -118,14 +114,14 @@ export const ListItemCheckbox = ({
                   allowFontScaling
                   color={theme["icon-decorative"]}
                   name={icon}
-                  size={IOSelectionListItemVisualParams.iconSize}
+                  size={IODimensions.size.icon.selection}
                 />
               )}
               <H6 color={theme["textBody-default"]} style={{ flexShrink: 1 }}>
                 {label}
               </H6>
             </View>
-            <HSpacer size={8} />
+            <HSpacer size={IODimensions.gap.selection.control} />
             <View
               accessibilityElementsHidden
               importantForAccessibility="no-hide-descendants"
@@ -133,15 +129,13 @@ export const ListItemCheckbox = ({
             >
               <Checkbox
                 checked={selected ?? toggleValue}
-                size={IOSelectionTickVisualParams.size * dynamicFontScale}
+                size={IODimensions.size.selection.control * dynamicFontScale}
               />
             </View>
           </View>
           {description && (
             <View>
-              <VSpacer
-                size={IOSelectionListItemVisualParams.descriptionMargin}
-              />
+              <VSpacer size={IODimensions.gap.selection.description} />
               <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
                 {description}
               </BodySmall>
