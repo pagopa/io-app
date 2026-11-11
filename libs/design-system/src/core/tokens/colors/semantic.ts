@@ -102,6 +102,8 @@ export const light = {
     success: p.green[700],
     /* On `background.accent`, not interactive */
     onAccent: { default: p.greyscale.white, error: p.red[100] },
+    /* The unfilled part of a step */
+    inactive: p.greyscale[200],
     /* Ink of interactive elements */
     action: {
       primary: {
@@ -255,6 +257,7 @@ export const dark = {
     error: p.red[400],
     success: p.green[500],
     onAccent: light.foreground.onAccent,
+    inactive: p.greyscale[700],
     action: {
       primary: {
         default: p.blueIO[300],
