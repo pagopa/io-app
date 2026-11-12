@@ -5,10 +5,11 @@ import {
   IOButton,
   IOButtonBlockSpecificProps,
   IOButtonLinkSpecificProps,
-  IOColors,
+  IOColorsLegacy,
   IOPictograms,
   IOPictogramSizeScale,
   Pictogram,
+  useIOColors,
   useIOTheme,
   VSpacer,
   VStack
@@ -164,7 +165,8 @@ const ReaderAnimation = ({
   const [progressBarValue, setProgressBarValue] = useState(0);
 
   const theme = useIOTheme();
-  const circleColor = IOColors[theme["interactiveElem-default"]];
+  const colors = useIOColors();
+  const circleColor = IOColorsLegacy[theme["interactiveElem-default"]];
 
   const progress = useSharedValue(0);
 
@@ -217,8 +219,8 @@ const ReaderAnimation = ({
         progress={status === "success" ? 100 : progressBarValue}
         radius={imgSize / 2}
         size={imgSize}
-        strokeBgColor={IOColors["grey-100"]}
-        strokeColor={status === "error" ? IOColors["grey-100"] : circleColor}
+        strokeBgColor={colors.stroke.default}
+        strokeColor={status === "error" ? colors.stroke.default : circleColor}
         strokeWidth={circleBorderWidth}
       >
         <View style={styles.imgTranslated}>

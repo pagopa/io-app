@@ -1,4 +1,9 @@
-import { Body, hexToRgba, IOColors, IODimensions } from "@io-app/design-system";
+import {
+  Body,
+  hexToRgba,
+  IOColorsLegacy,
+  IODimensions
+} from "@io-app/design-system";
 import { StyleSheet, View } from "react-native";
 
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
@@ -39,14 +44,13 @@ export const AlertModal = ({ message }: AlertModalProps) => {
             {
               backgroundColor: modal.backgroundColor,
               borderWidth: 1,
-              borderColor: hexToRgba(IOColors.white, 0.1)
+              borderColor: hexToRgba(IOColorsLegacy.white, 0.1)
             }
           ]}
         >
           <Body>{message}</Body>
         </View>
       }
-      opacity={backdrop.opacity}
     />
   );
 };

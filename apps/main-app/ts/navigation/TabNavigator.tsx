@@ -1,6 +1,6 @@
 import { createNativeBottomTabNavigator } from "@bottom-tabs/react-navigation";
 import {
-  IOColors,
+  IOColorsLegacy,
   makeFontStyleObject,
   useIOTheme
 } from "@io-app/design-system";
@@ -50,11 +50,11 @@ export const MainTabNavigator = () => {
         labeled
         minimizeBehavior="onScrollDown"
         scrollEdgeAppearance="opaque"
-        tabBarActiveTintColor={IOColors[theme["interactiveElem-default"]]}
+        tabBarActiveTintColor={IOColorsLegacy[theme["interactiveElem-default"]]}
         tabBarHidden={!isArchivingDisabled}
-        tabBarInactiveTintColor={IOColors[theme["textBody-tertiary"]]}
+        tabBarInactiveTintColor={IOColorsLegacy[theme["textBody-tertiary"]]}
         tabBarStyle={{
-          backgroundColor: IOColors[theme["appBackground-primary"]]
+          backgroundColor: IOColorsLegacy[theme["appBackground-primary"]]
         }}
         tabLabelStyle={makeFontStyleObject(
           11,

@@ -1,6 +1,6 @@
 import {
   hexToRgba,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   IODimensionScale,
   useIOTheme
@@ -127,7 +127,8 @@ export const IOListView = <T,>({
   /* GENERATE EASING GRADIENT
        Background color should be app main background
        (both light and dark themes) */
-  const HEADER_BG_COLOR: ColorValue = IOColors[theme["appBackground-primary"]];
+  const HEADER_BG_COLOR: ColorValue =
+    IOColorsLegacy[theme["appBackground-primary"]];
 
   /* When the secondary action is visible, add extra margin
        to avoid little space from iPhone bottom handle */
@@ -204,7 +205,10 @@ export const IOListView = <T,>({
                 style={[
                   styles.gradientContainer,
                   debugMode && {
-                    backgroundColor: hexToRgba(IOColors["error-500"], 0.15)
+                    backgroundColor: hexToRgba(
+                      IOColorsLegacy["error-500"],
+                      0.15
+                    )
                   }
                 ]}
               >
@@ -212,9 +216,12 @@ export const IOListView = <T,>({
                   style={[
                     opacityTransition,
                     debugMode && {
-                      borderTopColor: IOColors["error-500"],
+                      borderTopColor: IOColorsLegacy["error-500"],
                       borderTopWidth: 1,
-                      backgroundColor: hexToRgba(IOColors["error-500"], 0.4)
+                      backgroundColor: hexToRgba(
+                        IOColorsLegacy["error-500"],
+                        0.4
+                      )
                     }
                   ]}
                 >

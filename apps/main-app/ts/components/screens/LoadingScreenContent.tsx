@@ -5,7 +5,7 @@ import {
   H3,
   IOButton,
   IOButtonProps,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   IOMarkdownLite,
   useIOTheme,
@@ -74,7 +74,7 @@ export const LoadingScreenContent = ({
       edges={headerVisible ? ["bottom"] : undefined}
       style={[
         styles.container,
-        { backgroundColor: IOColors[theme["appBackground-primary"]] }
+        { backgroundColor: IOColorsLegacy[theme["appBackground-primary"]] }
       ]}
       testID={testID}
     >

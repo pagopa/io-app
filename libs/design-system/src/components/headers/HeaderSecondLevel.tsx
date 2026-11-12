@@ -29,16 +29,14 @@ import Animated, {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { scheduleOnRN } from "react-native-worklets";
 
-import { useIOTheme } from "../../context";
+import { useIOColors } from "../../context";
 import {
   alertEdgeToEdgeInsetTransitionConfig,
-  hexToRgba,
   IOColors,
   IODimensions,
   IOSpringValues,
-  IOThemeDark,
-  IOThemeLight,
-  IOTypography
+  IOTypography,
+  withAlpha
 } from "../../core";
 import { WithTestID } from "../../utils/types";
 import { IconButton } from "../buttons/IconButton";
@@ -71,6 +69,8 @@ interface Base extends CommonProps {
 
 type CommonProps = WithTestID<{
   backgroundColor?: string;
+  /** Disables the actions' press animation. See `IconButton`. */
+  disablePressAnimation?: boolean;
   // Prevents screen readers from focusing on the title when other elements are focused
   // (e.g. when an input text is throwing an error)
   ignoreAccessibilityCheck?: boolean;
@@ -152,6 +152,7 @@ export const HeaderSecondLevel = ({
   type,
   variant,
   backgroundColor,
+  disablePressAnimation = false,
   transparent = false,
   ignoreSafeAreaMargin = false,
   enableDiscreteTransition = false,
@@ -168,7 +169,8 @@ export const HeaderSecondLevel = ({
 
   const titleRef = createRef<View>();
 
-  const theme = useIOTheme();
+  const colors = useIOColors();
+  const headerColors = colors.component.header;
   const insets = useSafeAreaInsets();
   const isTitleAccessible = useMemo(() => !!title.trim(), [title]);
   const paddingTop = useSharedValue(ignoreSafeAreaMargin ? 0 : insets.top);
@@ -180,28 +182,23 @@ export const HeaderSecondLevel = ({
   to the title color: if variant is set, the color will
   be persistent, otherwise it will vary depending
   on the color scheme. */
-  const titleColorVariant =
-    variant === "contrast"
-      ? IOColors[IOThemeDark["textHeading-default"]]
-      : IOColors[IOThemeLight["textHeading-default"]];
+  const titleColorScheme = variant
+    ? IOColors[variant === "contrast" ? "dark" : "light"]
+    : colors;
 
-  const titleColor: ColorValue = variant
-    ? titleColorVariant
-    : IOColors[theme["textHeading-default"]];
+  const titleColor: ColorValue =
+    titleColorScheme.component.header.foreground.default;
 
   /* Visual attributes when there are transitions between states */
-  const HEADER_DEFAULT_BG_COLOR: IOColors = theme["appBackground-primary"];
-
   const headerBgColorSolidState =
-    backgroundColor ?? IOColors[HEADER_DEFAULT_BG_COLOR];
+    backgroundColor ?? headerColors.background.default;
 
   const headerBgColorTransparentState = transparent
-    ? hexToRgba(headerBgColorSolidState, 0)
+    ? withAlpha(headerBgColorSolidState, 0)
     : headerBgColorSolidState;
 
-  const borderColorDefault = IOColors[theme["divider-default"]];
-  const borderColorSolidState = backgroundColor ?? borderColorDefault;
-  const borderColorTransparentState = hexToRgba(borderColorSolidState, 0);
+  const borderColorSolidState = backgroundColor ?? headerColors.border;
+  const borderColorTransparentState = withAlpha(borderColorSolidState, 0);
 
   useLayoutEffect(() => {
     if (isTitleAccessible) {
@@ -315,6 +312,7 @@ export const HeaderSecondLevel = ({
           <IconButton
             accessibilityLabel={backAccessibilityLabel}
             color={defaultIconColor}
+            disablePressAnimation={disablePressAnimation}
             icon={Platform.select({
               android: "backAndroid",
               default: "backiOS"
@@ -359,6 +357,7 @@ export const HeaderSecondLevel = ({
             <IconButton
               {...thirdAction}
               color={defaultIconColor}
+              disablePressAnimation={disablePressAnimation}
               persistentColorMode={!!variant}
             />
           )}
@@ -366,6 +365,7 @@ export const HeaderSecondLevel = ({
             <IconButton
               {...secondAction}
               color={defaultIconColor}
+              disablePressAnimation={disablePressAnimation}
               persistentColorMode={!!variant}
             />
           )}
@@ -373,6 +373,7 @@ export const HeaderSecondLevel = ({
             <IconButton
               {...firstAction}
               color={defaultIconColor}
+              disablePressAnimation={disablePressAnimation}
               persistentColorMode={!!variant}
             />
           ) : (

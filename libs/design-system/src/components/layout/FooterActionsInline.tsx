@@ -1,11 +1,12 @@
 import { PropsWithChildren } from "react";
 import { ColorValue, LayoutChangeEvent, StyleSheet, View } from "react-native";
 
-import { useIOTheme, useIOThemeContext } from "../../context";
-import { footerBoxShadow, IOColors, IODimensions } from "../../core";
+import { useIOColors, useIOThemeContext } from "../../context";
+import { IODimensions } from "../../core";
 import { WithTestID } from "../../utils/types";
 import { IOButton, IOButtonBlockSpecificProps } from "../buttons";
 import { useBottomMargins } from "./hooks/useBottomMargins";
+import { footerBoxShadow } from "./styles";
 
 export type FooterActionsInlineMeasurements = {
   /* Height of the safe bottom area. It includes:
@@ -55,7 +56,8 @@ export const FooterActionsInline = ({
   onMeasure,
   testID
 }: FooterActionsInline) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
+  const footerColors = colors.component.footer;
   const { themeType } = useIOThemeContext();
 
   const { bottomMargin } = useBottomMargins(false, excludeSafeAreaMargins);
@@ -64,7 +66,7 @@ export const FooterActionsInline = ({
 
   /* Background color should be app main background
      (both light and dark themes) */
-  const HEADER_BG_COLOR: ColorValue = IOColors[theme["appBackground-primary"]];
+  const HEADER_BG_COLOR: ColorValue = footerColors.background;
 
   const getActionBlockMeasurements = (event: LayoutChangeEvent) => {
     const { height } = event.nativeEvent.layout;
@@ -93,7 +95,7 @@ export const FooterActionsInline = ({
         /* Apply bottom border only on dark theme, only if fixed */
         themeType === "dark" &&
           fixed && {
-            borderTopColor: IOColors[theme["divider-bottomBar"]],
+            borderTopColor: colors.stroke.divider,
             borderTopWidth: 1
           }
       ]}

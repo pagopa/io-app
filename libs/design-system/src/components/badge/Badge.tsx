@@ -1,13 +1,7 @@
-import {
-  ColorValue,
-  Platform,
-  StyleSheet,
-  View,
-  ViewStyle
-} from "react-native";
+import { Platform, StyleSheet, View, ViewStyle } from "react-native";
 
-import { useIOThemeContext } from "../../context";
-import { hexToRgba, IOColors, IODimensions } from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { IOText } from "../typography";
@@ -19,16 +13,6 @@ export type Badge = WithTestID<{
   text: string;
   variant: "cgn" | "default" | "error" | "highlight" | "success" | "warning";
 }>;
-
-type OutlinedVariantProps = {
-  background?: never;
-  foreground: IOColors;
-};
-
-type SolidVariantProps = {
-  background: ColorValue;
-  foreground: IOColors;
-};
 
 const styles = StyleSheet.create({
   badge: {
@@ -60,128 +44,10 @@ export const Badge = ({
   testID
 }: Badge) => {
   const { dynamicFontScale } = useIOFontDynamicScale();
-  const { themeType } = useIOThemeContext();
-
-  const bgOpacityDarkMode = 0.2;
-
-  const mapVariantsLightMode: Record<
-    NonNullable<Badge["variant"]>,
-    SolidVariantProps
-  > = {
-    default: {
-      foreground: "blueIO-850",
-      background: IOColors["blueIO-50"]
-    },
-    warning: {
-      foreground: "warning-850",
-      background: IOColors["warning-100"]
-    },
-    success: {
-      foreground: "success-850",
-      background: IOColors["success-100"]
-    },
-    error: {
-      foreground: "error-850",
-      background: IOColors["error-100"]
-    },
-    cgn: {
-      foreground: "hanPurple-500",
-      background: IOColors["hanPurple-100"]
-    },
-    highlight: {
-      foreground: "turquoise-850",
-      background: IOColors["turquoise-50"]
-    }
-  };
-
-  const mapVariantsDarkMode: Record<
-    NonNullable<Badge["variant"]>,
-    SolidVariantProps
-  > = {
-    default: {
-      foreground: "blueIO-200",
-      background: hexToRgba(IOColors["blueIO-200"], bgOpacityDarkMode)
-    },
-    warning: {
-      foreground: "warning-400",
-      background: hexToRgba(IOColors["warning-400"], bgOpacityDarkMode)
-    },
-    success: {
-      foreground: "success-400",
-      background: hexToRgba(IOColors["success-400"], bgOpacityDarkMode)
-    },
-    error: {
-      foreground: "error-400",
-      background: hexToRgba(IOColors["error-400"], bgOpacityDarkMode)
-    },
-    cgn: {
-      foreground: "hanPurple-250",
-      background: hexToRgba(IOColors["hanPurple-250"], bgOpacityDarkMode)
-    },
-    highlight: {
-      foreground: "turquoise-300",
-      background: hexToRgba(IOColors["turquoise-300"], bgOpacityDarkMode)
-    }
-  };
-
-  const mapOutlineVariantsLightMode: Record<
-    NonNullable<Badge["variant"]>,
-    OutlinedVariantProps
-  > = {
-    default: {
-      foreground: "blueIO-850"
-    },
-    warning: {
-      foreground: "warning-850"
-    },
-    success: {
-      foreground: "success-850"
-    },
-    error: {
-      foreground: "error-850"
-    },
-    cgn: {
-      foreground: "hanPurple-500"
-    },
-    highlight: {
-      foreground: "turquoise-850"
-    }
-  };
-
-  const mapOutlineVariantsDarkMode: Record<
-    NonNullable<Badge["variant"]>,
-    OutlinedVariantProps
-  > = {
-    default: {
-      foreground: "blueIO-200"
-    },
-    warning: {
-      foreground: "warning-400"
-    },
-    success: {
-      foreground: "success-400"
-    },
-    error: {
-      foreground: "error-400"
-    },
-    cgn: {
-      foreground: "hanPurple-250"
-    },
-    highlight: {
-      foreground: "turquoise-300"
-    }
-  };
-
-  const variantMap =
-    themeType === "light"
-      ? outline
-        ? mapOutlineVariantsLightMode
-        : mapVariantsLightMode
-      : outline
-        ? mapOutlineVariantsDarkMode
-        : mapVariantsDarkMode;
-
-  const { background, foreground } = variantMap[variant];
+  const colors = useIOColors();
+  const badgeColors = colors.component.badge[variant];
+  /* The outline variant uses it for the border too */
+  const foreground = badgeColors.foreground.default;
 
   const dynamicStyle: ViewStyle = {
     borderRadius: IODimensions.radius.badge * dynamicFontScale,
@@ -198,11 +64,9 @@ export const Badge = ({
         outline
           ? {
               borderWidth: IODimensions.stroke.default,
-              borderColor: IOColors[foreground]
+              borderColor: foreground
             }
-          : {
-              backgroundColor: background ?? undefined
-            }
+          : { backgroundColor: badgeColors.background.default }
       ]}
       testID={testID}
     >
