@@ -1,4 +1,4 @@
-import { IOColorsLegacy, useIOTheme, VSpacer } from "@io-app/design-system";
+import { useIOColors, VSpacer } from "@io-app/design-system";
 import { ComponentProps, Ref, useCallback, useRef } from "react";
 import {
   Animated,
@@ -15,7 +15,6 @@ import { trackCarousel } from "../analytics/carouselAnalytics";
 const styles = StyleSheet.create({
   normalDot: {
     borderRadius: 20,
-    borderColor: IOColorsLegacy["grey-650"],
     marginHorizontal: 4
   },
   indicatorContainer: {
@@ -37,10 +36,10 @@ const CarouselDots = (props: CarouselDotsProps) => {
   const { carouselCards, dotEasterEggCallback, scrollX } = props;
   const dotTouchCount = useRef(0);
 
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
-  const primaryColor = IOColorsLegacy[theme["interactiveElem-default"]];
-  const backgroundColor = IOColorsLegacy[theme["appBackground-primary"]];
+  const primaryColor = colors.foreground.accent;
+  const backgroundColor = colors.background.default;
 
   const screenDimension = useWindowDimensions();
   const windowWidth = screenDimension.width;
@@ -96,7 +95,12 @@ const CarouselDots = (props: CarouselDotsProps) => {
       {carouselCards.map((_, imageIndex) => (
         <Animated.View
           key={imageIndex}
-          style={[styles.normalDot, getDotsAnimationStyle(imageIndex)]}
+          style={[
+            styles.normalDot,
+            /* The ring of an unselected dot, as an unchecked radio */
+            { borderColor: colors.stroke.input },
+            getDotsAnimationStyle(imageIndex)
+          ]}
         />
       ))}
     </View>
