@@ -15,3 +15,83 @@
   color: var(--color-visited-text) !important;
   font-weight: 600;
 }
+
+/* State clicked on the diagram, described in #state-details. */
+#diagram-canvas g.node {
+  cursor: pointer;
+}
+
+#diagram-canvas g.selected > rect,
+#diagram-canvas g.selected > path {
+  stroke: var(--color-accent) !important;
+  stroke-dasharray: 6 3;
+  stroke-width: 3px !important;
+}
+
+#state-details {
+  position: absolute;
+  top: 44px;
+  right: 8px;
+  overflow: auto;
+  max-width: min(420px, calc(100% - 16px));
+  max-height: calc(100% - 52px);
+  box-sizing: border-box;
+  padding: 8px 12px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-background);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 20%);
+  cursor: auto;
+  user-select: text;
+}
+
+#state-details[hidden] {
+  display: none;
+}
+
+#state-details header {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+#state-details h3 {
+  flex: 1;
+  margin: 4px 0;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+#state-details header button {
+  width: auto;
+  padding: 0 6px;
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+#state-details .state-type {
+  margin-left: 8px;
+  color: var(--color-muted);
+  font-size: 12px;
+  font-weight: normal;
+}
+
+#state-details h4 {
+  margin: 10px 0 4px;
+  color: var(--color-muted);
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+#state-details ul {
+  margin: 0;
+  padding-left: 18px;
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+#state-details .empty {
+  color: var(--color-muted);
+  font-size: 12px;
+}

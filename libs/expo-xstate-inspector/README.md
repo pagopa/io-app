@@ -4,6 +4,11 @@ This Expo dev tools plugin shows the state of XState actors running in the app.
 It displays machine diagrams, active and visited states, taken transitions,
 context, events, and child actors.
 
+Click a state to open a box listing its configured entry, exit, initial, and
+transition actions, its invoked actors (with their IDs when provided), and its
+transitions. These are definitions, not an execution trace; anonymous actions
+and inline actors are labelled as such. Click elsewhere or press × to close it.
+
 ## Why
 
 [Stately's browser inspector](https://github.com/statelyai/inspect/blob/d72a7fce0927380e0538383ce2dbf2df22fce2e9/src/browser.ts)

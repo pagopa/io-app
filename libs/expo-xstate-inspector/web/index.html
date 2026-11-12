@@ -3,6 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <title>XState inspector</title>
+    <link
+      rel="icon"
+      type="image/png"
+      href="/_expo/plugins/@io-app/expo-xstate-inspector/favicon.png"
+    />
     <!-- Absolute paths: Expo serves this page without a trailing slash. -->
     <link
       rel="stylesheet"
@@ -50,6 +55,13 @@
           Follow
         </button>
       </div>
+      <aside
+        id="state-details"
+        aria-label="State details"
+        aria-live="polite"
+        data-no-pan
+        hidden
+      ></aside>
     </main>
     <div
       id="resizer"

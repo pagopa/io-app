@@ -11,7 +11,7 @@ type LabelledTransitions = [
   transitions: TransitionsConfig
 ];
 
-const labelledTransitions = (
+export const labelledTransitions = (
   node: StateNodeConfig
 ): Array<LabelledTransitions> => [
   ...Object.entries(node.on ?? {}).map(
@@ -28,7 +28,12 @@ const labelledTransitions = (
   ["onDone", "xstate.done.state", node.onDone],
   ...toArray(node.invoke).flatMap((invoke): Array<LabelledTransitions> => [
     [`done ${nameOf(invoke.src) ?? ""}`, "xstate.done.actor", invoke.onDone],
-    [`error ${nameOf(invoke.src) ?? ""}`, "xstate.error.actor", invoke.onError]
+    [`error ${nameOf(invoke.src) ?? ""}`, "xstate.error.actor", invoke.onError],
+    [
+      `snapshot ${nameOf(invoke.src) ?? ""}`,
+      "xstate.snapshot",
+      invoke.onSnapshot
+    ]
   ])
 ];
 
