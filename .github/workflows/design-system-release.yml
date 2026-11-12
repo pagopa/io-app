@@ -2,26 +2,33 @@ name: Publish the Design System to npm registry
 on:
   release:
     types: [created]
+  workflow_dispatch:
 jobs:
   npm-release:
     runs-on: ubuntu-latest
     permissions:
       contents: write
       id-token: write # Required for OIDC
-    if: startsWith(github.event.release.tag_name, 'design-system-v')
+    if: startsWith(github.event.release.tag_name || github.ref_name, 'design-system-v')
     environment: prod-libs
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          ref: ${{ github.event.release.tag_name || github.ref_name }}
       - uses: ./.github/actions/setup-pnpm
       - name: Install npm 11
         run: npm install -g npm@11.7.0
       - name: Set the GitHub release title
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          RELEASE_TAG: ${{ github.event.release.tag_name || github.ref_name }}
         run: |
           VERSION=$(node -p "require('./libs/design-system/package.json').version")
+          if [[ "$RELEASE_TAG" != "design-system-v$VERSION" ]]; then
+            echo "::error::Release tag '$RELEASE_TAG' does not match package version '$VERSION'"
+            exit 1
+          fi
           gh release edit "$RELEASE_TAG" --title "Design System: v$VERSION"
       - name: Cache Nx
         uses: actions/cache@2c8a9bd7457de244a408f35966fab2fb45fda9c8 # v6.0.0
@@ -37,7 +44,7 @@ jobs:
         working-directory: libs/design-system
         run: |
           VERSION=$(node -p "require('./package.json').version")
-          if [[[ "$VERSION" == *-* ]]; then
+          if [[ "$VERSION" == *-* ]]; then
             npm publish --tag next
           else
             npm publish

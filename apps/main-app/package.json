@@ -45,7 +45,7 @@
     "@io-app/api-types": "workspace:*",
     "@io-app/login-utils": "workspace:*",
     "@io-app/design-system": "workspace:@pagopa/io-app-design-system@*",
-    "@io-app/expo-crypto": "workspace:*",
+    "@io-app/expo-crypto": "workspace:@pagopa/expo-crypto@*",
     "@io-app/expo-navigation-bar-manager": "workspace:*",
     "@io-app/expo-device-internal": "workspace:*",
     "@io-app/expo-pdf-high-res-generator": "workspace:*",
