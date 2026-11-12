@@ -1,3 +1,20 @@
+## 3.43.0-rc.9 (2026-11-11)
+
+### Bug Fixes
+
+- [[IOPLT-2268](https://pagopa.atlassian.net/browse/IOPLT-2268)] Fix components with missing dark mode support ([#8856](https://github.com/pagopa/io-app/pull/8856))
+- **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Keep tour guide state after logout ([#8862](https://github.com/pagopa/io-app/pull/8862))
+
+### Chores
+
+- **IT-Wallet:** [[SIW-5349](https://pagopa.atlassian.net/browse/SIW-5349)] Enhance Privacy web component accessibility ([#8855](https://github.com/pagopa/io-app/pull/8855))
+
+### ❤️ Thank You
+
+- Damiano Plebani
+- DavideOnano @DavideOnano
+- Federico Mastrini @mastro993
+
 ## 3.43.0-rc.8 (2026-11-10)
 
 ### Features
