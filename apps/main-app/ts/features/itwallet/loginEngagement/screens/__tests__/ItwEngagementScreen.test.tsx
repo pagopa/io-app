@@ -28,7 +28,6 @@ jest.mock("@react-navigation/native", () => ({
 
 describe("ItwEngagementScreen", () => {
   beforeEach(() => jest.clearAllMocks());
-  afterEach(() => jest.useRealTimers());
   afterAll(() => mockTrack.mockRestore());
 
   const renderScreen = () => {
@@ -67,16 +66,13 @@ describe("ItwEngagementScreen", () => {
   });
 
   it("tracks the screen again when it regains focus", () => {
-    jest.useFakeTimers();
     renderScreen();
 
     act(() =>
       navigationRef.current?.dispatch(StackActions.push(ITW_ROUTES.ENGAGEMENT))
     );
-    act(() => jest.runAllTimers());
     expect(mockTrack).toHaveBeenCalledTimes(2);
     act(() => navigationRef.current?.dispatch(StackActions.pop()));
-    act(() => jest.runAllTimers());
     expect(mockTrack).toHaveBeenCalledTimes(3);
     expect(mockTrack).toHaveBeenLastCalledWith("ITW_ACTIVATION_MODAL_DIALOG", {
       event_category: "UX",
