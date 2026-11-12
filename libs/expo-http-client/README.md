@@ -1,76 +1,178 @@
 # @io-app/expo-http-client
 
-Local [Expo module](https://docs.expo.dev/modules/overview/) that exposes a native HTTP client with controllable redirects, an in-memory cookie storage and request cancellation. It wraps [Alamofire](https://github.com/Alamofire/Alamofire) on iOS and [Ktor](https://ktor.io/) on Android.
+Local [Expo module](https://docs.expo.dev/modules/overview/) providing a custom HTTP client with controllable redirect behaviour, cookie management, and request cancellation. It wraps [Alamofire](https://github.com/Alamofire/Alamofire) on iOS and [Ktor](https://ktor.io/) on Android.
 
-It is used by the FIMS single sign-on flow, which needs to stop redirect chains and inspect each hop.
+## Motivation
 
-## Platforms
-
-| Platform | Implementation                                  | Requirements           |
-| -------- | ----------------------------------------------- | ---------------------- |
-| iOS      | Swift, Alamofire `5.11.2` via Swift Package Mgr | iOS 15.1               |
-| Android  | Kotlin, Ktor `3.2.3` (Android engine)           | `INTERNET` permission¹ |
-
-¹ Declared in the module `AndroidManifest.xml`, merged into the app.
-
-On any other platform the native module is not loaded: `nativeRequest` rejects and the other functions throw an `Error`.
+The standard `fetch` API and most React Native networking solutions automatically follow HTTP redirects without giving the caller any control. This library exposes a `followRedirects` flag so you can stop redirect chains mid-flight — useful when a redirect destination carries security-relevant information (e.g. authorization codes appended to a redirect URL) that must be inspected before the client proceeds.
 
 ## API
 
+### `nativeRequest(config)`
+
+Sends an HTTP request and returns a `Promise<HttpClientResponse>`.
+
+#### Config
+
+| Field                 | Type                     | Required | Default     | Description                                 |
+| --------------------- | ------------------------ | -------- | ----------- | ------------------------------------------- |
+| `url`                 | `string`                 | ✅       | —           | Full URL of the request                     |
+| `verb`                | `'get' \| 'post'`        | ✅       | —           | HTTP method                                 |
+| `headers`             | `Record<string, string>` | —        | `{}`        | Request headers                             |
+| `body`                | `Record<string, string>` | —        | —           | Form-encoded body (POST only)               |
+| `followRedirects`     | `boolean`                | —        | `true`      | Whether to follow HTTP redirects            |
+| `timeoutMilliseconds` | `number`                 | —        | `60000`     | Request timeout in milliseconds             |
+| `requestId`           | `string`                 | —        | random UUID | Identifier used to cancel the request later |
+
+#### Response
+
+All outcomes — including network errors — resolve (never reject) the promise with an `HttpClientResponse`:
+
+**Success** — HTTP status code < 400:
+
+```ts
+{
+  type: "success";
+  status: number;
+  body: string;
+  headers: Record<string, string | undefined>;
+}
+```
+
+**Failure** — HTTP status code ≥ 400, or a non-HTTP error:
+
+```ts
+{
+  type: "failure";
+  code: number; // HTTP status code, or 900 for non-HTTP errors
+  message: string;
+  headers: Record<string, string | undefined>;
+}
+```
+
+Response headers are always normalised to lowercase keys.
+
+##### Non-HTTP error codes
+
+When a network-level failure occurs (not an HTTP error response), the `code` field is set to `900` (`NonHttpErrorCode`) and the `message` field identifies the cause:
+
+| `message`                                          | Cause                                                                        |
+| -------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `'Timeout'`                                        | Request exceeded `timeoutMilliseconds`                                       |
+| `'Cancelled'`                                      | Request was cancelled via `cancelRequestWithId` / `cancelAllRunningRequests` |
+| `'TLS Failure'`                                    | SSL/TLS handshake error                                                      |
+| `'Serialization Failure'`                          | Response body could not be decoded as UTF-8                                  |
+| `Bad configuration, missing 'verb'` / `'url'`      | Missing required field                                                       |
+| `Unsupported configuration, unknown verb '<verb>'` | `verb` is neither `get` nor `post`                                           |
+| Any other message                                  | Unexpected network or native error                                           |
+
+### `setCookie(domain, path, name, value)`
+
+Injects a cookie into the native HTTP client's cookie storage for the given domain.
+
+```ts
+setCookie("https://example.com", "/", "session", "abc123");
+```
+
+### `removeAllCookiesForDomain(domain)`
+
+Removes all cookies stored for the given domain.
+
+```ts
+removeAllCookiesForDomain("https://example.com");
+```
+
+### `cancelRequestWithId(requestId)`
+
+Cancels the in-flight request with the given `requestId`. The corresponding promise resolves with a `failure` response (`code: 900, message: 'Cancelled'`).
+
+```ts
+cancelRequestWithId("my-request-id");
+```
+
+### `cancelAllRunningRequests()`
+
+Cancels all currently running requests.
+
+```ts
+cancelAllRunningRequests();
+```
+
+### `deallocate()`
+
+Cancels all running requests and releases native resources (HTTP client instances, cookie storage). Call this when the component or screen that owns the client is unmounted.
+
+```ts
+deallocate();
+```
+
+## Type guards and helpers
+
 ```ts
 import {
-  cancelAllRunningRequests,
-  cancelRequestWithId,
-  deallocate,
-  nativeRequest,
-  removeAllCookiesForDomain,
-  setCookie
+  isSuccessResponse,
+  isFailureResponse,
+  isCancelledFailure,
+  isTimeoutFailure,
+  isTLSFailure,
+  isSerializationFailure,
+  NonHttpErrorCode
 } from "@io-app/expo-http-client";
 ```
 
-| Function                               | Description                                                                                              |
-| -------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| `nativeRequest(config)`                | Sends a request, see below.                                                                              |
-| `setCookie(domain, path, name, value)` | Adds a cookie to the native cookie storage. `domain` is a URL such as `https://example.com`.             |
-| `removeAllCookiesForDomain(domain)`    | Removes the cookies stored for `domain`.                                                                 |
-| `cancelRequestWithId(requestId)`       | Cancels a running request: its promise resolves with a `Cancelled` failure.                              |
-| `cancelAllRunningRequests()`           | Cancels every running request.                                                                           |
-| `deallocate()`                         | Cancels every running request. On Android it also closes the Ktor clients and clears the cookie storage. |
+| Helper                      | Description                                    |
+| --------------------------- | ---------------------------------------------- |
+| `isSuccessResponse(r)`      | `true` when `r.type === 'success'`             |
+| `isFailureResponse(r)`      | `true` when `r.type === 'failure'`             |
+| `isCancelledFailure(r)`     | `true` when the request was cancelled          |
+| `isTimeoutFailure(r)`       | `true` when the request timed out              |
+| `isTLSFailure(r)`           | `true` on a TLS/SSL error                      |
+| `isSerializationFailure(r)` | `true` when the body could not be deserialized |
 
-### `nativeRequest(config)`
+## Usage example
 
-| Field                 | Type                     | Required | Default     | Notes                                          |
-| --------------------- | ------------------------ | -------- | ----------- | ---------------------------------------------- |
-| `verb`                | `"get" \| "post"`        | ✅       | —           |                                                |
-| `url`                 | `string`                 | ✅       | —           |                                                |
-| `headers`             | `Record<string, string>` | —        | `{}`        |                                                |
-| `body`                | `Record<string, string>` | —        | —           | POST only, `application/x-www-form-urlencoded` |
-| `followRedirects`     | `boolean`                | —        | `true`      |                                                |
-| `timeoutMilliseconds` | `number`                 | —        | `60000`     |                                                |
-| `requestId`           | `string`                 | —        | random UUID | Used by `cancelRequestWithId`                  |
+```ts
+import {
+  nativeRequest,
+  cancelRequestWithId,
+  isSuccessResponse,
+  isTimeoutFailure,
+  isCancelledFailure
+} from "@io-app/expo-http-client";
 
-The promise **always resolves** with an `HttpClientResponse`, whose `headers` keys are lowercase:
+// Simple GET
+const response = await nativeRequest({
+  verb: "get",
+  url: "https://api.example.com/data",
+  headers: { Authorization: "Bearer token" },
+  timeoutMilliseconds: 10_000,
+  requestId: "fetch-data"
+});
 
-- `{ type: "success", status, body, headers }` for HTTP status `< 400`;
-- `{ type: "failure", code, message, headers }` for HTTP status `>= 400`, or for non-HTTP errors with `code: 900` (`NonHttpErrorCode`).
+if (isSuccessResponse(response)) {
+  console.log(response.status, response.body);
+} else if (isTimeoutFailure(response)) {
+  console.warn("Request timed out");
+} else if (isCancelledFailure(response)) {
+  console.warn("Request was cancelled");
+} else {
+  console.error("HTTP error", response.code, response.message);
+}
 
-| Non-HTTP `message`                                 | Cause                                | Guard                    |
-| -------------------------------------------------- | ------------------------------------ | ------------------------ |
-| `Timeout`                                          | `timeoutMilliseconds` elapsed        | `isTimeoutFailure`       |
-| `Cancelled`                                        | `cancelRequestWithId` / `cancelAll…` | `isCancelledFailure`     |
-| `TLS Failure`                                      | TLS handshake failed                 | `isTLSFailure`           |
-| `Serialization Failure`                            | Body is not valid UTF-8              | `isSerializationFailure` |
-| `Bad configuration, missing 'verb'` / `'url'`      | Missing required field               | —                        |
-| `Unsupported configuration, unknown verb '<verb>'` | `verb` is neither `get` nor `post`   | —                        |
-| Any other message                                  | Unexpected network or native error   | —                        |
+// POST with form-encoded body
+const loginResponse = await nativeRequest({
+  verb: "post",
+  url: "https://auth.example.com/login",
+  body: { username: "user", password: "secret" },
+  followRedirects: false, // inspect redirect URL manually
+  requestId: "login"
+});
 
-`isSuccessResponse` and `isFailureResponse` narrow the response type.
-
-All native functions are async and share the same serial queue, so they run in call order, as in the original TurboModule: a cancel issued right after a request always finds it registered, and a cookie set right after `deallocate` is sent by the next request. Apart from `nativeRequest`, the wrappers stay synchronous (`void`), as in the original library.
+// Cancel a specific request
+cancelRequestWithId("fetch-data");
+```
 
 ## Testing
-
-`mocks/ExpoHttpClient.ts` mocks the native module, as described in [Mocking native calls](https://docs.expo.dev/modules/mocking/). The main app does not use the `jest-expo` preset, so `apps/main-app/jestSetup.js` mocks `src/ExpoHttpClientModule` inline with `jest.fn`: type guards and wrappers run their real code.
 
 ```sh
 pnpm nx run-many -t oxlint,tsc-noemit,test -p @io-app/expo-http-client
