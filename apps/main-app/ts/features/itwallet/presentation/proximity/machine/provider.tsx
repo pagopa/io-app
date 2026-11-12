@@ -1,3 +1,4 @@
+import { inspect } from "@io-app/expo-xstate-inspector";
 import { createActorContext } from "@xstate/react";
 import { PropsWithChildren } from "react";
 
@@ -24,6 +25,7 @@ export const ItwProximityMachineProvider = ({
     <ItwProximityMachineContext.Provider
       logic={itwProximityMachine}
       options={{
+        inspect,
         input: { deps: { env, navigation, store } }
       }}
     >
