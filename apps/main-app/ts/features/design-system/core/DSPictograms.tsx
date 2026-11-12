@@ -1,16 +1,16 @@
 import {
   H4,
-  hexToRgba,
   HSpacer,
-  IOColors,
+  IOColorPalette,
   IOPictograms,
   IOPictogramsBleed,
   IOPictogramsObject,
   Pictogram,
   PictogramBleed,
   SVGPictogramProps,
-  useIOTheme,
-  VStack
+  useIOColors,
+  VStack,
+  withAlpha
 } from "@io-app/design-system";
 import { JSX } from "react";
 import { StyleSheet, View } from "react-native";
@@ -39,12 +39,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "row"
   },
-  agnosticPictogramWrapperBlue: {
-    backgroundColor: IOColors["blueIO-500"]
-  },
   agnosticPictogramWrapperWhite: {
-    backgroundColor: IOColors.white,
-    borderColor: hexToRgba(IOColors.black, 0.1),
+    backgroundColor: IOColorPalette.greyscale.white,
+    borderColor: withAlpha(IOColorPalette.greyscale.black, 0.1),
     borderWidth: 1
   }
 });
@@ -77,7 +74,8 @@ const sectionMargin = 40;
 const sectionTitleMargin = 16;
 
 export const DSPictograms = () => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
+
   return (
     <DesignSystemScreen title={"Pictograms"}>
       <VStack space={sectionMargin}>
@@ -105,7 +103,7 @@ export const DSPictograms = () => {
 
         {/* Bleed */}
         <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Bleed</H4>
+          <H4>Bleed</H4>
           <View style={styles.itemsWrapper}>
             {Object.entries(IOPictogramsBleed).map(([pictogramItemName]) => (
               <DSAssetViewerBox
@@ -126,7 +124,7 @@ export const DSPictograms = () => {
 
         {/* Objects */}
         <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Objects</H4>
+          <H4>Objects</H4>
           <View style={styles.itemsWrapper}>
             {Object.entries(IOPictogramsObject).map(([pictogramItemName]) => (
               <DSAssetViewerBox
@@ -147,13 +145,13 @@ export const DSPictograms = () => {
 
         {/* Color mode agnostic */}
         <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Color mode agnostic</H4>
+          <H4>Color mode agnostic</H4>
           <VStack space={24}>
             <DSComponentViewerBox name={`pictogramStyle = "light-content"`}>
               <View
                 style={[
                   styles.agnosticPictogramWrapper,
-                  styles.agnosticPictogramWrapperBlue
+                  { backgroundColor: colors.background.accent }
                 ]}
               >
                 <Pictogram name="feature" pictogramStyle="light-content" />

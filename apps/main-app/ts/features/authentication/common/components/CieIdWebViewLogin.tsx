@@ -11,7 +11,11 @@ import { useIOStore } from "../../../../store/hooks";
 import { useOneIdentityLoginSource } from "../../../lollipop/hooks/useOneIdentityLoginSource";
 import { trackLoginOIConfigurationError } from "../../common/analytics";
 import { LoadingOverlay } from "../../login/cie/shared/LoadingSpinnerOverlay";
-import { getCieIdpId, isAuthenticationUrl } from "../../login/cie/utils";
+import {
+  CieEnv,
+  getCieIdpId,
+  isAuthenticationUrl
+} from "../../login/cie/utils";
 import { useCieIdApp } from "../hooks/useCieIdApp";
 import { oneIdentityAllowedCieOriginsSelector } from "../store/selectors/remoteConfig";
 import {
@@ -58,16 +62,16 @@ export type CieIdWebViewLoginEvent =
   | { type: "CANCEL" };
 
 export type CieIdWebViewLoginProps = {
+  /** The CIE environment to authenticate against. */
+  cieEnv: CieEnv;
   /** The login flow this WebView is part of; defaults to a first-time login. */
   flow?: LoginType;
-  /** Indicates whether the environment is UAT. */
-  isUat: boolean;
   /** Callback invoked for various authentication-related events. */
   onEvent: (event: CieIdWebViewLoginEvent) => void;
 };
 
 export const CieIdWebViewLogin = memo(
-  ({ flow = LOGIN_TYPES.AUTH, isUat, onEvent }: CieIdWebViewLoginProps) => {
+  ({ flow = LOGIN_TYPES.AUTH, cieEnv, onEvent }: CieIdWebViewLoginProps) => {
     const [authenticatedUrl, setAuthenticatedUrl] = useState<null | string>(
       null
     );
@@ -108,7 +112,7 @@ export const CieIdWebViewLogin = memo(
     const { startCieIdApp } = useCieIdApp({
       onFailure: handleLoginFailure,
       onSuccess: handleAuthenticationSuccess,
-      useUat: isUat
+      cieEnv
     });
 
     const handleFailure = useCallback(
@@ -124,7 +128,7 @@ export const CieIdWebViewLogin = memo(
     const { loginSourceState, shouldBlockUrlNavigationWhileCheckingLollipop } =
       useOneIdentityLoginSource({
         flow,
-        idpId: getCieIdpId(isUat),
+        idpId: getCieIdpId(cieEnv),
         onFailure: handleFailure,
         minAuthLevel: AUTH_LEVELS.L2
       });
