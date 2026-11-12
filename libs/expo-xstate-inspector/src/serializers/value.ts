@@ -30,8 +30,8 @@ export const serializeValue = (
     return "[Circular]";
   }
   const path = [...ancestors, value];
-  return Array.isArray(value)
-    ? value.map(item => serializeValue(item, path))
+  return Array.isArray(value) || value instanceof Set
+    ? Array.from(value, item => serializeValue(item, path))
     : Object.fromEntries(
         Object.entries(value).map(([key, item]) => [
           key,

@@ -20,8 +20,8 @@ export const buildStateDiagram = (
   const resolveTarget = createTargetResolver(definition);
   const nodes = listStateNodes(definition);
   const declarations = buildStateDeclarations(definition);
-  const edges = nodes.flatMap(({ node, path }) =>
-    buildTransitionEdges(node, path, resolveTarget)
+  const edges = [{ node: definition, path: [] }, ...nodes].flatMap(
+    ({ node, path }) => buildTransitionEdges(node, path, resolveTarget)
   );
   const compound = new Set(
     nodes.filter(({ node }) => node.states).map(({ path }) => toNodeId(path))
