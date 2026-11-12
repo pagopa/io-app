@@ -143,13 +143,14 @@ export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
     backendCgnMerchants.getOnlineMerchants
   );
 
-  // CGN get selected Merchant detail
+  // CGN Featured Opportunities
   yield* takeLatest(
     getType(cgnFeaturedOpportunities.request),
     cgnFeaturedOpportunitiesSaga,
     backendCgnMerchants.getMerchant
   );
 
+  // CGN get selected Merchant detail
   yield* takeLatest(
     getType(cgnSelectedMerchant.request),
     cgnMerchantDetailUntilCancelled,
