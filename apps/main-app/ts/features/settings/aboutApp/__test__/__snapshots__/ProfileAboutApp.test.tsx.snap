@@ -782,92 +782,95 @@ exports[`ProfileAboutApp should match the snapshot 1`] = `
                                       }
                                     }
                                   >
-                                    <Text
-                                      accessible={false}
-                                      allowFontScaling={true}
-                                      dynamicTypeRamp="footnote"
-                                      maxFontSizeMultiplier={1.5}
-                                      style={
-                                        [
-                                          {},
-                                          {
-                                            "color": "#555C70",
-                                            "fontFamily": "Titillio",
-                                            "fontSize": 14,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "400",
-                                            "lineHeight": 21,
-                                          },
-                                        ]
-                                      }
-                                    >
-                                      Vuoi saperne di più?
-                                    </Text>
-                                  </View>
-                                  <View
-                                    accessibilityLabel="Vai al sito di IO"
-                                    accessibilityRole="button"
-                                    accessibilityState={
-                                      {
-                                        "busy": undefined,
-                                        "checked": undefined,
-                                        "disabled": undefined,
-                                        "expanded": undefined,
-                                        "selected": undefined,
-                                      }
-                                    }
-                                    accessibilityValue={
-                                      {
-                                        "max": undefined,
-                                        "min": undefined,
-                                        "now": undefined,
-                                        "text": undefined,
-                                      }
-                                    }
-                                    accessible={true}
-                                    collapsable={false}
-                                    focusable={true}
-                                    onBlur={[Function]}
-                                    onClick={[Function]}
-                                    onFocus={[Function]}
-                                    onResponderGrant={[Function]}
-                                    onResponderMove={[Function]}
-                                    onResponderRelease={[Function]}
-                                    onResponderTerminate={[Function]}
-                                    onResponderTerminationRequest={[Function]}
-                                    onStartShouldSetResponder={[Function]}
-                                  >
                                     <View
                                       style={
                                         {
-                                          "height": 8,
+                                          "display": "flex",
+                                          "flexDirection": "column",
+                                          "gap": 4,
                                         }
                                       }
-                                    />
-                                    <Text
-                                      accessibilityElementsHidden={true}
-                                      accessible={false}
-                                      allowFontScaling={true}
-                                      ellipsizeMode="tail"
-                                      importantForAccessibility="no-hide-descendants"
-                                      maxFontSizeMultiplier={1.5}
-                                      numberOfLines={1}
-                                      style={
-                                        [
-                                          {},
-                                          {
-                                            "color": "#0B3EE3",
-                                            "fontFamily": "Titillio",
-                                            "fontSize": 16,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                            "lineHeight": undefined,
-                                          },
-                                        ]
-                                      }
                                     >
-                                      Vai al sito di IO
-                                    </Text>
+                                      <Text
+                                        accessible={false}
+                                        allowFontScaling={true}
+                                        dynamicTypeRamp="footnote"
+                                        maxFontSizeMultiplier={1.5}
+                                        style={
+                                          [
+                                            {},
+                                            {
+                                              "color": "#555C70",
+                                              "fontFamily": "Titillio",
+                                              "fontSize": 14,
+                                              "fontStyle": "normal",
+                                              "fontWeight": "400",
+                                              "lineHeight": 21,
+                                            },
+                                          ]
+                                        }
+                                      >
+                                        Vuoi saperne di più?
+                                      </Text>
+                                    </View>
+                                    <View
+                                      accessibilityLabel="Vai al sito di IO"
+                                      accessibilityRole="button"
+                                      accessibilityState={
+                                        {
+                                          "busy": undefined,
+                                          "checked": undefined,
+                                          "disabled": undefined,
+                                          "expanded": undefined,
+                                          "selected": undefined,
+                                        }
+                                      }
+                                      accessibilityValue={
+                                        {
+                                          "max": undefined,
+                                          "min": undefined,
+                                          "now": undefined,
+                                          "text": undefined,
+                                        }
+                                      }
+                                      accessible={true}
+                                      collapsable={false}
+                                      focusable={true}
+                                      onBlur={[Function]}
+                                      onClick={[Function]}
+                                      onFocus={[Function]}
+                                      onResponderGrant={[Function]}
+                                      onResponderMove={[Function]}
+                                      onResponderRelease={[Function]}
+                                      onResponderTerminate={[Function]}
+                                      onResponderTerminationRequest={[Function]}
+                                      onStartShouldSetResponder={[Function]}
+                                    >
+                                      <Text
+                                        accessibilityElementsHidden={true}
+                                        accessible={false}
+                                        allowFontScaling={true}
+                                        ellipsizeMode="tail"
+                                        importantForAccessibility="no-hide-descendants"
+                                        maxFontSizeMultiplier={1.5}
+                                        numberOfLines={1}
+                                        style={
+                                          [
+                                            {},
+                                            {
+                                              "color": "#0B3EE3",
+                                              "fontFamily": "Titillio",
+                                              "fontSize": 16,
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                              "lineHeight": undefined,
+                                            },
+                                          ]
+                                        }
+                                      >
+                                        Vai al sito di IO
+                                      </Text>
+                                    </View>
                                   </View>
                                 </View>
                                 <View

@@ -1,6 +1,9 @@
-import { Caption, H6, IOColors, VSpacer } from "@io-app/design-system";
+import { Caption, H6, VSpacer } from "@io-app/design-system";
 import { PropsWithChildren } from "react";
 import { StyleSheet, View } from "react-native";
+
+import { useFeatureColors } from "../../../hooks/useFeatureColors";
+import { pnColors } from "../colors";
 
 export type TimelineItemProps = {
   accessibilityLabel: string;
@@ -22,10 +25,6 @@ export type TimelineStatus =
   | "effective"
   | "unreachable"
   | "viewed";
-
-type ColorStates = {
-  background: string;
-};
 
 type Position = {
   isFirst: boolean;
@@ -58,35 +57,15 @@ const styles = StyleSheet.create({
   },
   rectangle: {
     flexGrow: 1,
-    width: 2,
-    backgroundColor: IOColors["grey-200"]
+    width: 2
   },
   dot: {
     marginVertical: 4,
     width: 14,
     height: 14,
-    borderRadius: 14 / 2,
-    borderColor: IOColors.white
+    borderRadius: 14 / 2
   }
 });
-
-const mapColorStatus: Record<NonNullable<TimelineStatus>, ColorStates> = {
-  cancelled: {
-    background: IOColors["warning-500"]
-  },
-  default: {
-    background: IOColors["grey-300"]
-  },
-  effective: {
-    background: IOColors["info-500"]
-  },
-  unreachable: {
-    background: IOColors["error-500"]
-  },
-  viewed: {
-    background: IOColors["success-500"]
-  }
-};
 
 const borderWidth = 1.5;
 
@@ -94,50 +73,71 @@ const TimelineDot = ({
   isFirst,
   isLast,
   status
-}: Pick<TimelineItemProps, "status"> & Position) => (
-  <View
-    style={[
-      styles.dot,
-      {
-        backgroundColor: mapColorStatus[status].background,
-        borderWidth: isFirst || isLast ? 0 : borderWidth
-      }
-    ]}
-  />
-);
+}: Pick<TimelineItemProps, "status"> & Position) => {
+  const colors = useFeatureColors(pnColors);
+
+  return (
+    <View
+      style={[
+        styles.dot,
+        {
+          backgroundColor: colors.timeline.status[status],
+          borderColor: colors.timeline.dotRing,
+          borderWidth: isFirst || isLast ? 0 : borderWidth
+        }
+      ]}
+    />
+  );
+};
 
 const TimelineSeparator = ({
   children,
   isFirst,
   isLast
-}: PropsWithChildren<Pick<TimelineItemProps, "status"> & Position>) => (
-  <View style={styles.line}>
-    <View style={[styles.rectangle, isFirst ? styles.hidden : undefined]} />
-    {children}
-    <View style={[styles.rectangle, isLast ? styles.hidden : undefined]} />
-  </View>
-);
+}: PropsWithChildren<Pick<TimelineItemProps, "status"> & Position>) => {
+  const colors = useFeatureColors(pnColors);
+  const lineStyle = [
+    styles.rectangle,
+    { backgroundColor: colors.timeline.line }
+  ];
+
+  return (
+    <View style={styles.line}>
+      <View style={[lineStyle, isFirst ? styles.hidden : undefined]} />
+      {children}
+      <View style={[lineStyle, isLast ? styles.hidden : undefined]} />
+    </View>
+  );
+};
 
 const TimelineOppositeContent = ({
   day,
   month
-}: Pick<TimelineItemProps, "day" | "month">) => (
-  <View style={styles.oppositeContent}>
-    <H6 color="grey-700">{day}</H6>
-    <Caption color="grey-450">{month}</Caption>
-  </View>
-);
+}: Pick<TimelineItemProps, "day" | "month">) => {
+  const colors = useFeatureColors(pnColors);
+
+  return (
+    <View style={styles.oppositeContent}>
+      <H6 color={colors.timeline.day}>{day}</H6>
+      <Caption color={colors.timeline.month}>{month}</Caption>
+    </View>
+  );
+};
 
 const TimelineContent = ({
   description,
   time
-}: Pick<TimelineItemProps, "description" | "time">) => (
-  <View style={styles.content}>
-    <H6 color="grey-700">{description}</H6>
-    <VSpacer size={4} />
-    <Caption color="grey-450">{time}</Caption>
-  </View>
-);
+}: Pick<TimelineItemProps, "description" | "time">) => {
+  const colors = useFeatureColors(pnColors);
+
+  return (
+    <View style={styles.content}>
+      <H6 color={colors.timeline.title}>{description}</H6>
+      <VSpacer size={4} />
+      <Caption color={colors.timeline.time}>{time}</Caption>
+    </View>
+  );
+};
 
 const TimelineItem = ({
   day,

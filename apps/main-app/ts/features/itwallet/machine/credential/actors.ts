@@ -1,6 +1,6 @@
 import type { CredentialOffer } from "@pagopa/io-react-native-wallet";
 
-import { fromPromise } from "xstate";
+import { fromCallback, fromPromise } from "xstate";
 
 import { assert } from "../../../../utils/assert";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
@@ -16,6 +16,7 @@ import {
 } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { CredentialsVault } from "../../credentials/utils/vault";
+import { itwIsCredentialsCataloguePending } from "../../credentialsCatalogue/store/selectors";
 import {
   trackWalletInstanceRenewalFailure,
   trackWalletInstanceRenewalSuccess
@@ -25,6 +26,7 @@ import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwSetWalletInstanceRenewalError } from "../../walletInstance/store/actions";
 import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
 import { Context } from "./context";
+import { CredentialIssuanceEvents } from "./events";
 import { CredentialIssuanceMachineDeps } from "./input";
 
 export type GetWalletAttestationActorInput = {
@@ -398,11 +400,16 @@ export const processCredentialOfferActor = fromPromise<
   const { itwVersion } = input.deps;
 
   const wallet = getIoWallet(itwVersion);
+  const offerApi = wallet.CredentialsOffer;
 
-  const offer = await wallet.CredentialsOffer.resolveCredentialOffer(
-    input.credentialOfferUri
-  );
-  const grantDetails = wallet.CredentialsOffer.extractGrantDetails(offer);
+  if (!offerApi.isSupported) {
+    throw new Error(
+      `Credential offer is not supported by IT-Wallet version ${itwVersion}`
+    );
+  }
+
+  const offer = await offerApi.resolveCredentialOffer(input.credentialOfferUri);
+  const grantDetails = offerApi.extractGrantDetails(offer);
 
   const { issuerConf } = await wallet.CredentialIssuance.evaluateIssuerTrust(
     offer.credential_issuer,
@@ -430,4 +437,23 @@ export const processCredentialOfferActor = fromPromise<
     grantDetails,
     issuerConf
   };
+});
+
+/**
+ * Waits for any ongoing catalogue and translation requests without refetching.
+ * Fetch failures retain the existing cached/static content fallback.
+ */
+export const waitForCredentialsCatalogueActor = fromCallback<
+  CredentialIssuanceEvents,
+  { deps: CredentialIssuanceMachineDeps }
+>(({ input, sendBack }) => {
+  const { store } = input.deps;
+  const checkReadiness = () => {
+    if (!itwIsCredentialsCataloguePending(store.getState())) {
+      sendBack({ type: "credentials-catalogue-ready" });
+    }
+  };
+  const unsubscribe = store.subscribe(checkReadiness);
+  checkReadiness();
+  return unsubscribe;
 });

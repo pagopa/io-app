@@ -1,28 +1,22 @@
-import {
-  HSpacer,
-  IOColors,
-  IOSpacer,
-  useIOTheme,
-  VSpacer
-} from "@io-app/design-system";
+import { HSpacer, IOSpace, useIOColors, VSpacer } from "@io-app/design-system";
 import { Text, View } from "react-native";
 
 type DSSpacerLabelProps = {
-  value: IOSpacer;
+  value: IOSpace;
 };
 
 type DSSpacerViewerBoxProps = {
   orientation?: "horizontal" | "vertical";
-  size: IOSpacer;
+  size: IOSpace;
 };
 
 const DSSpacerLabel = ({ value }: DSSpacerLabelProps) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
   return (
     <Text
       ellipsizeMode="tail"
       numberOfLines={1}
-      style={{ fontSize: 9, color: IOColors[theme["textBody-tertiary"]] }}
+      style={{ fontSize: 9, color: colors.text.content.tertiary }}
     >
       {value}
     </Text>
@@ -33,39 +27,35 @@ export const DSSpacerViewerBox = ({
   size,
   orientation = "vertical"
 }: DSSpacerViewerBoxProps) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
   return (
     <>
       {orientation === "vertical" ? (
         <View style={{ flexDirection: "column" }}>
           <View
             style={{
-              backgroundColor: IOColors[theme["appBackground-tertiary"]]
+              backgroundColor: colors.surface.tertiary
             }}
           >
             <VSpacer size={size} />
           </View>
-          {size && (
-            <View style={{ flexDirection: "row", marginTop: 4 }}>
-              <DSSpacerLabel value={size} />
-            </View>
-          )}
+          <View style={{ flexDirection: "row", marginTop: 4 }}>
+            <DSSpacerLabel value={size} />
+          </View>
         </View>
       ) : (
         <View style={{ flexDirection: "row" }}>
           <View
             style={{
-              backgroundColor: IOColors[theme["appBackground-tertiary"]],
+              backgroundColor: colors.surface.tertiary,
               height: 75
             }}
           >
             <HSpacer size={size} />
           </View>
-          {size && (
-            <View style={{ flexDirection: "column", marginLeft: 4 }}>
-              <DSSpacerLabel value={size} />
-            </View>
-          )}
+          <View style={{ flexDirection: "column", marginLeft: 4 }}>
+            <DSSpacerLabel value={size} />
+          </View>
         </View>
       )}
     </>

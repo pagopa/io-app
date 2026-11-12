@@ -2,9 +2,7 @@ import {
   BodySmall,
   H3,
   HeaderSecondLevel,
-  IOAppMargin,
-  IOColors,
-  IOVisualCostants
+  IODimensions
 } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
@@ -13,10 +11,12 @@ import { Dimensions, StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { useFeatureColors } from "../../../../../hooks/useFeatureColors";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { useMaxBrightness } from "../../../../../utils/brightness.ts";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
+import { itwColors } from "../../../colors";
 import {
   selectFiscalCodeFromEid,
   selectNameSurnameFromEid
@@ -44,9 +44,9 @@ const { height: windowHeight, width: windowWidth } = Dimensions.get("window");
  */
 const availableHeight =
   windowHeight - // Start with the height of the screen
-  IOVisualCostants.headerHeight - // Removes the height of the header
-  IOAppMargin[2] - // Removes the vertical padding of the fiscal code container
-  IOAppMargin[4]; // Removes the vertical padding of the screen
+  IODimensions.height.header - // Removes the height of the header
+  IODimensions.padding.screen.default * 2 - // Screen margin, top and bottom
+  IODimensions.padding.screen.default; // Room around the fiscal code container
 
 /** For aesthetics, we take the 90% of the available height. */
 const barcodeTotalHeight = availableHeight * 0.9;
@@ -72,6 +72,7 @@ const ItwPresentationCredentialFiscalCodeModal = () => {
 
   const nameSurname = useIOSelector(selectNameSurnameFromEid);
   const fiscalCode = useIOSelector(selectFiscalCodeFromEid);
+  const { fiscalCode: colors } = useFeatureColors(itwColors);
 
   usePreventScreenCapture();
   useMaxBrightness({ useSmoothTransition: true });
@@ -109,19 +110,26 @@ const ItwPresentationCredentialFiscalCodeModal = () => {
           }
         ]}
       >
-        <View style={styles.container}>
-          <BodySmall style={styles.text} weight="Semibold">
+        <View
+          style={[
+            styles.container,
+            { backgroundColor: colors.background, borderColor: colors.border }
+          ]}
+        >
+          <BodySmall color={colors.code} style={styles.text} weight="Semibold">
             {nameSurname}
           </BodySmall>
           <Barcode
-            background={IOColors.white}
+            background={colors.background}
             format={"CODE39"} // CODE39 it's the encoding format used by the physical TS-CNS card
             height={barcodeWidth} // and the width as height
-            lineColor={IOColors.black}
+            lineColor={colors.code}
             value={fiscalCode}
             width={barcodeHeigth} // Since it is rotated by 90 degrees, we use the height as width
           />
-          <H3 style={styles.text}>{fiscalCode}</H3>
+          <H3 color={colors.code} style={styles.text}>
+            {fiscalCode}
+          </H3>
         </View>
       </View>
     </View>
@@ -138,9 +146,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 32,
     rowGap: 4,
-    borderColor: IOColors["grey-100"],
-    // Always white regardless of the theme
-    backgroundColor: IOColors.white,
     borderWidth: 1,
     borderRadius: 8
   },
@@ -148,9 +153,7 @@ const styles = StyleSheet.create({
     transform: [{ rotate: "90deg" }]
   },
   text: {
-    alignSelf: "center",
-    // Always black regardless of the theme
-    color: IOColors.black
+    alignSelf: "center"
   }
 });
 

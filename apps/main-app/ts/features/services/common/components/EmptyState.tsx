@@ -1,4 +1,11 @@
-import { Body, H6, VSpacer, VStack, WithTestID } from "@io-app/design-system";
+import {
+  Body,
+  H6,
+  IODimensions,
+  VSpacer,
+  VStack,
+  WithTestID
+} from "@io-app/design-system";
 import { StyleSheet, View } from "react-native";
 
 import {
@@ -26,7 +33,10 @@ export const EmptyState = ({
 }: EmptyStateProps) => (
   <View testID={testID}>
     <VStack space={24} style={{ alignItems: "center" }}>
-      <AnimatedPictogram name={pictogram} size={120} />
+      <AnimatedPictogram
+        name={pictogram}
+        size={IODimensions.size.pictogram.screen}
+      />
       <H6 accessibilityRole="header" style={styles.text}>
         {title}
       </H6>

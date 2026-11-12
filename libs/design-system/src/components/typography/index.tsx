@@ -3,7 +3,6 @@ export * from "./BodyMonospace";
 export * from "./BodySmall";
 export * from "./ButtonText";
 export * from "./Caption";
-export * from "./common";
 export * from "./ComposedBodyFromArray";
 export * from "./H1";
 export * from "./H2";

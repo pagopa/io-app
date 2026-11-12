@@ -1,5 +1,5 @@
 import {
-  IOColors,
+  IOColorsLegacy,
   makeFontStyleObject,
   useIOTheme
 } from "@io-app/design-system";
@@ -65,8 +65,9 @@ export const MainTabNavigator = () => {
           ),
           tabBarHideOnKeyboard: true,
           tabBarAllowFontScaling: false,
-          tabBarActiveTintColor: IOColors[theme["interactiveElem-default"]],
-          tabBarInactiveTintColor: IOColors[theme["textBody-tertiary"]],
+          tabBarActiveTintColor:
+            IOColorsLegacy[theme["interactiveElem-default"]],
+          tabBarInactiveTintColor: IOColorsLegacy[theme["textBody-tertiary"]],
           tabBarStyle
         }}
       >

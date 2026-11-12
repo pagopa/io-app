@@ -433,113 +433,116 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                   }
                                 }
                               >
-                                <Text
-                                  accessible={false}
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="headline"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#0E0F13",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Non perderti i messaggi importanti
-                                </Text>
-                                <Text
-                                  accessible={false}
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Attiva le notifiche push per sapere quando ricevi un messaggio su IO
-                                </Text>
-                              </View>
-                              <View
-                                accessibilityLabel="Attiva notifiche push"
-                                accessibilityRole="button"
-                                accessibilityState={
-                                  {
-                                    "busy": undefined,
-                                    "checked": undefined,
-                                    "disabled": undefined,
-                                    "expanded": undefined,
-                                    "selected": undefined,
-                                  }
-                                }
-                                accessibilityValue={
-                                  {
-                                    "max": undefined,
-                                    "min": undefined,
-                                    "now": undefined,
-                                    "text": undefined,
-                                  }
-                                }
-                                accessible={true}
-                                collapsable={false}
-                                focusable={true}
-                                onBlur={[Function]}
-                                onClick={[Function]}
-                                onFocus={[Function]}
-                                onResponderGrant={[Function]}
-                                onResponderMove={[Function]}
-                                onResponderRelease={[Function]}
-                                onResponderTerminate={[Function]}
-                                onResponderTerminationRequest={[Function]}
-                                onStartShouldSetResponder={[Function]}
-                              >
                                 <View
                                   style={
                                     {
-                                      "height": 8,
+                                      "display": "flex",
+                                      "flexDirection": "column",
+                                      "gap": 4,
                                     }
                                   }
-                                />
-                                <Text
-                                  accessibilityElementsHidden={true}
-                                  accessible={false}
-                                  allowFontScaling={true}
-                                  ellipsizeMode="tail"
-                                  importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={1}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": undefined,
-                                      },
-                                    ]
-                                  }
                                 >
-                                  Attiva notifiche push
-                                </Text>
+                                  <Text
+                                    accessible={false}
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="headline"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#2B2E38",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Non perderti i messaggi importanti
+                                  </Text>
+                                  <Text
+                                    accessible={false}
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Attiva le notifiche push per sapere quando ricevi un messaggio su IO
+                                  </Text>
+                                </View>
+                                <View
+                                  accessibilityLabel="Attiva notifiche push"
+                                  accessibilityRole="button"
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
+                                  }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
+                                >
+                                  <Text
+                                    accessibilityElementsHidden={true}
+                                    accessible={false}
+                                    allowFontScaling={true}
+                                    ellipsizeMode="tail"
+                                    importantForAccessibility="no-hide-descendants"
+                                    maxFontSizeMultiplier={1.5}
+                                    numberOfLines={1}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": undefined,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Attiva notifiche push
+                                  </Text>
+                                </View>
                               </View>
                             </View>
                             <View
@@ -695,8 +698,8 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                 {
                                   "opacity": 0.6,
                                   "position": "absolute",
-                                  "right": 10,
-                                  "top": 10,
+                                  "right": 8,
+                                  "top": 8,
                                 }
                               }
                             >
@@ -864,6 +867,7 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                         <Modal
                           accessible={false}
                           backdropComponent={[Function]}
+                          backgroundComponent={[Function]}
                           backgroundStyle={
                             {
                               "backgroundColor": "#FFFFFF",

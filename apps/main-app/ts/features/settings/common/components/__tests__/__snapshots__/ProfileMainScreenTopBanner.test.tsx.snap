@@ -123,92 +123,95 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
             }
           }
         >
-          <Text
-            accessible={false}
-            allowFontScaling={true}
-            dynamicTypeRamp="headline"
-            maxFontSizeMultiplier={1.5}
-            style={
-              [
-                {},
-                {
-                  "color": "#0E0F13",
-                  "fontFamily": "Titillio",
-                  "fontSize": 16,
-                  "fontStyle": "normal",
-                  "fontWeight": "600",
-                  "lineHeight": 24,
-                },
-              ]
-            }
-          >
-            Vuoi modificare il carattere usato per i testi in app?
-          </Text>
-        </View>
-        <View
-          accessibilityLabel="Modifica stile carattere"
-          accessibilityRole="button"
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          onBlur={[Function]}
-          onClick={[Function]}
-          onFocus={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-        >
           <View
             style={
               {
-                "height": 8,
+                "display": "flex",
+                "flexDirection": "column",
+                "gap": 4,
               }
             }
-          />
-          <Text
-            accessibilityElementsHidden={true}
-            accessible={false}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
-            importantForAccessibility="no-hide-descendants"
-            maxFontSizeMultiplier={1.5}
-            numberOfLines={1}
-            style={
-              [
-                {},
-                {
-                  "color": "#0B3EE3",
-                  "fontFamily": "Titillio",
-                  "fontSize": 16,
-                  "fontStyle": "normal",
-                  "fontWeight": "600",
-                  "lineHeight": undefined,
-                },
-              ]
-            }
           >
-            Modifica stile carattere
-          </Text>
+            <Text
+              accessible={false}
+              allowFontScaling={true}
+              dynamicTypeRamp="headline"
+              maxFontSizeMultiplier={1.5}
+              style={
+                [
+                  {},
+                  {
+                    "color": "#2B2E38",
+                    "fontFamily": "Titillio",
+                    "fontSize": 16,
+                    "fontStyle": "normal",
+                    "fontWeight": "600",
+                    "lineHeight": 24,
+                  },
+                ]
+              }
+            >
+              Vuoi modificare il carattere usato per i testi in app?
+            </Text>
+          </View>
+          <View
+            accessibilityLabel="Modifica stile carattere"
+            accessibilityRole="button"
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+          >
+            <Text
+              accessibilityElementsHidden={true}
+              accessible={false}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              importantForAccessibility="no-hide-descendants"
+              maxFontSizeMultiplier={1.5}
+              numberOfLines={1}
+              style={
+                [
+                  {},
+                  {
+                    "color": "#0B3EE3",
+                    "fontFamily": "Titillio",
+                    "fontSize": 16,
+                    "fontStyle": "normal",
+                    "fontWeight": "600",
+                    "lineHeight": undefined,
+                  },
+                ]
+              }
+            >
+              Modifica stile carattere
+            </Text>
+          </View>
         </View>
       </View>
       <View
@@ -349,8 +352,8 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
           {
             "opacity": 0.6,
             "position": "absolute",
-            "right": 10,
-            "top": 10,
+            "right": 8,
+            "top": 8,
           }
         }
       >
@@ -595,7 +598,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
             "padding": 16,
           },
           {
-            "backgroundColor": "rgba(255,102,102,0.2)",
+            "backgroundColor": "#FFD9D9",
           },
         ]
       }
@@ -607,7 +610,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
             "padding": 16,
           },
           {
-            "backgroundColor": "rgba(255,102,102,0.2)",
+            "backgroundColor": "#FFD9D9",
           },
           {
             "transform": [
@@ -636,7 +639,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
           align="xMidYMid"
           bbHeight={36}
           bbWidth={36}
-          color="#FFD9D9"
+          color="#5D1313"
           focusable={false}
           height={36}
           importantForAccessibility="no-hide-descendants"
@@ -713,7 +716,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
                 [
                   {},
                   {
-                    "color": "#FFD9D9",
+                    "color": "#5D1313",
                     "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
@@ -734,7 +737,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
                 [
                   {},
                   {
-                    "color": "#FFD9D9",
+                    "color": "#5D1313",
                     "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",

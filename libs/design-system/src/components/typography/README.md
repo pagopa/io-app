@@ -4,19 +4,19 @@
 
 Fonts are handled differently than Android and iOS. To use the font, `Titillio-Semibold` example, you must apply the following properties for Android:
 
-```css
-{
-  fontFamily: 'Titillio-Semibold'
-}
+```js
+const androidStyle = {
+  fontFamily: "Titillio-Semibold"
+};
 ```
 
 while in iOS the code to be applied is:
 
-```css
-{
-  fontFamily: 'Titillio',
-  fontWeight: '600',
-}
+```js
+const iosStyle = {
+  fontFamily: "Titillio",
+  fontWeight: "600"
+};
 ```
 
 The different font handling is managed by the `makeFontFamilyName` function. It's included in the [fonts.ts](../../utils/fonts.ts) file, which contains many other utility functions that simplify font management.
@@ -26,16 +26,14 @@ The different font handling is managed by the `makeFontFamilyName` function. It'
 Every predefined style (`H1`, `Body`, `Caption`, …) reads its visual attributes from `IOTypography`, exported by [IOTypography.ts](../../core/IOTypography.ts). A value lives there and nowhere else, so the components can't drift from what a consumer reads.
 
 ```tsx
-import { IOTypography, useIOTheme } from "@pagopa/io-app-design-system";
+import { IOTypography, useIOColors } from "@pagopa/io-app-design-system";
 
-const theme = useIOTheme();
-const {
-  h1: { colorToken, ...h1Style }
-} = IOTypography;
+const typographyColors = useIOColors().component.typography;
+const { h1: h1Style } = IOTypography;
 // { dynamicTypeRamp: "largeTitle", lineHeight: 42, size: 28, weight: "Semibold" }
 ```
 
-Like `IOColors`, the name doubles as the type of its own keys, so a component can take a style by name:
+Like `IOColorsLegacy`, the name doubles as the type of its own keys, so a component can take a style by name:
 
 ```tsx
 type Props = { typographicStyle?: IOTypography }; // "hero" | "h1" | …
@@ -44,7 +42,7 @@ type Props = { typographicStyle?: IOTypography }; // "hero" | "h1" | …
 The keys mirror the `IOText` props, so an entry can be spread straight into the component. That's what every style does:
 
 ```tsx
-<IOText {...h1Style} color={theme[colorToken]}>
+<IOText {...h1Style} color={typographyColors.h1}>
   …
 </IOText>
 ```
@@ -54,18 +52,15 @@ Reach for it when you have to reproduce a style outside the React Native text tr
 ```tsx
 <IOSkeleton
   height={IOTypography.h2.size}
-  radius={4}
+  radius={IODimensions.radius.skeleton.text}
   shape="rectangle"
   width="80%"
 />
 ```
 
-Two entries need a word of warning:
+`h6` carries a `legacySize`, applied while the legacy typeface is enabled.
 
-- `buttonText` pins a static `color` rather than a `colorToken`, because `IOButton` and `SearchInput` animate it through Reanimated;
-- `h6` carries a `legacySize`, applied while the legacy typeface is enabled.
-
-The color of a text rendered as a link is the same for every style, so it's exported on its own as `IOTypographicLinkColorToken`.
+`IOTypography` holds no color: the default ink of each style is in `useIOColors().component.typography`, under the style's own name (`typography.h1`), plus `link` for any style rendered `asLink`. Outside React, read it from `IOColors.light` / `IOColors.dark`. A `color` prop overrides it. `ButtonText` defaults to the action ink, `foreground.action.primary`; its DS callers set the ink of the component it sits in.
 
 ## `IOText`
 
