@@ -3,10 +3,9 @@ import {
   hexToRgba,
   IOButton,
   IOButtonLinkSpecificProps,
-  IOColors,
-  IOSpacer,
-  IOSpacingScale,
-  IOVisualCostants,
+  IOColorsLegacy,
+  IODimensions,
+  IODimensionScale,
   useIOTheme,
   VSpacer
 } from "@io-app/design-system";
@@ -103,16 +102,7 @@ type IOSCrollViewHeaderScrollValues = ComponentProps<
    the gradient opaciy transition */
 const gradientOpacityScrollTrigger = 0.85;
 /* Extended gradient area above the actions */
-const gradientSafeAreaHeight: IOSpacingScale = 96;
-/* End content margin before the actions */
-const contentEndMargin: IOSpacingScale = 32;
-/* Margin between solid variant and outline variant */
-const spaceBetweenActions: IOSpacer = 16;
-/* Margin between solid variant and link variant */
-const spaceBetweenActionAndLink: IOSpacer = 16;
-/* Extra bottom margin for iPhone bottom handle because
-   Link variant doesn't have a fixed height */
-const extraSafeAreaMargin: IOSpacingScale = 8;
+const gradientSafeAreaHeight: IODimensionScale = 96;
 
 const styles = StyleSheet.create({
   gradientBottomActions: {
@@ -125,7 +115,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFill
   },
   buttonContainer: {
-    paddingHorizontal: IOVisualCostants.appMarginDefault,
+    paddingHorizontal: IODimensions.padding.screen.default,
     width: "100%",
     flexShrink: 0
   },
@@ -207,7 +197,8 @@ export const IOScrollView = ({
   /* GENERATE EASING GRADIENT
      Background color should be app main background
      (both light and dark themes) */
-  const APP_BG_COLOR: ColorValue = IOColors[theme["appBackground-primary"]];
+  const APP_BG_COLOR: ColorValue =
+    IOColorsLegacy[theme["appBackground-primary"]];
 
   const { colors, locations } = easeGradient({
     colorStops: {
@@ -221,7 +212,9 @@ export const IOScrollView = ({
   /* When the secondary action is visible, add extra margin
      to avoid little space from iPhone bottom handle */
   const extraBottomMargin =
-    actions?.secondary && needSafeAreaMargin ? extraSafeAreaMargin : 0;
+    actions?.secondary && needSafeAreaMargin
+      ? IODimensions.padding.footer.homeIndicator
+      : 0;
 
   /* Safe background block. Cover at least 85% of the space
      to avoid glitchy elements underneath */
@@ -234,7 +227,7 @@ export const IOScrollView = ({
   /* Height of the safe bottom area, applied to the ScrollView:
      Actions + Content end margin */
   const safeBottomAreaHeight =
-    bottomMargin + actionBlockHeight + contentEndMargin;
+    bottomMargin + actionBlockHeight + IODimensions.padding.screen.end;
 
   const handleScroll = useAnimatedScrollHandler(
     ({ contentOffset, layoutMeasurement, contentSize }) => {
@@ -309,9 +302,9 @@ export const IOScrollView = ({
               ? 0
               : actions
                 ? safeBottomAreaHeight
-                : bottomMargin + contentEndMargin,
+                : bottomMargin + IODimensions.padding.screen.end,
             paddingHorizontal: includeContentMargins
-              ? IOVisualCostants.appMarginDefault
+              ? IODimensions.padding.screen.default
               : 0,
             ...contentContainerStyle
           },
@@ -362,7 +355,7 @@ export const IOScrollView = ({
             style={[
               styles.gradientContainer,
               debugMode && {
-                backgroundColor: hexToRgba(IOColors["error-500"], 0.15)
+                backgroundColor: hexToRgba(IOColorsLegacy["error-500"], 0.15)
               }
             ]}
           >
@@ -370,9 +363,9 @@ export const IOScrollView = ({
               style={[
                 opacityTransition,
                 debugMode && {
-                  borderTopColor: IOColors["error-500"],
+                  borderTopColor: IOColorsLegacy["error-500"],
                   borderTopWidth: 1,
-                  backgroundColor: hexToRgba(IOColors["error-500"], 0.4)
+                  backgroundColor: hexToRgba(IOColorsLegacy["error-500"], 0.4)
                 }
               ]}
             >
@@ -440,14 +433,14 @@ export const renderActionButtons = (
             marginBottom: extraBottomMargin
           }}
         >
-          <VSpacer size={spaceBetweenActionAndLink} />
+          <VSpacer size={IODimensions.gap.footer.link} />
           <IOButton color="primary" variant="link" {...secondaryAction} />
         </View>
       )}
 
       {type === "ThreeButtons" && (
         <Fragment>
-          <VSpacer size={spaceBetweenActions} />
+          <VSpacer size={IODimensions.gap.footer.actions} />
           <IOButton color="primary" variant="outline" {...secondaryAction} />
 
           <View
@@ -456,7 +449,7 @@ export const renderActionButtons = (
               marginBottom: extraBottomMargin
             }}
           >
-            <VSpacer size={spaceBetweenActionAndLink} />
+            <VSpacer size={IODimensions.gap.footer.link} />
             <IOButton color="primary" variant="link" {...tertiaryAction} />
           </View>
         </Fragment>

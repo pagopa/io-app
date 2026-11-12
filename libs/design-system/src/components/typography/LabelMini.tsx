@@ -1,8 +1,8 @@
 import { Ref } from "react";
 import { Pressable, View } from "react-native";
 
-import { useIOTheme } from "../../context";
-import { IOTypographicLinkColorToken, IOTypography } from "../../core";
+import { useIOColors } from "../../context";
+import { IOTypography } from "../../core";
 import { IOFontWeight } from "../../utils/fonts";
 import {
   IOText,
@@ -17,9 +17,7 @@ type LabelMiniProps = Omit<TypographicStyleProps, "ref"> &
     weight?: Extract<IOFontWeight, "Regular" | "Semibold">;
   };
 
-const {
-  labelMini: { colorToken, ...labelMiniStyle }
-} = IOTypography;
+const { labelMini: labelMiniStyle } = IOTypography;
 
 /** `LabelMini` typographic style */
 export const LabelMini = ({
@@ -32,11 +30,11 @@ export const LabelMini = ({
   onPress,
   ...props
 }: LabelMiniProps) => {
-  const theme = useIOTheme();
+  const typographyColors = useIOColors().component.typography;
 
   const defaultColor = asLink
-    ? theme[IOTypographicLinkColorToken]
-    : theme[colorToken];
+    ? typographyColors.link
+    : typographyColors.labelMini;
 
   const LabelMiniProps: IOTextProps = {
     ...props,

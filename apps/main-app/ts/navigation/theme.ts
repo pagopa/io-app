@@ -1,4 +1,8 @@
-import { IOColors, IOThemeDark, IOThemeLight } from "@io-app/design-system";
+import {
+  IOColorsLegacy,
+  IOThemeDark,
+  IOThemeLight
+} from "@io-app/design-system";
 import { DarkTheme, DefaultTheme } from "@react-navigation/native";
 
 // React Navigation Themes
@@ -7,8 +11,8 @@ export const IONavigationDarkTheme = {
   ...DarkTheme,
   colors: {
     ...DarkTheme.colors,
-    background: IOColors[IOThemeDark["appBackground-primary"]],
-    card: IOColors[IOThemeDark["appBackground-primary"]]
+    background: IOColorsLegacy[IOThemeDark["appBackground-primary"]],
+    card: IOColorsLegacy[IOThemeDark["appBackground-primary"]]
   }
 };
 
@@ -16,7 +20,7 @@ export const IONavigationLightTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    background: IOColors[IOThemeLight["appBackground-primary"]],
-    card: IOColors[IOThemeLight["appBackground-primary"]]
+    background: IOColorsLegacy[IOThemeLight["appBackground-primary"]],
+    card: IOColorsLegacy[IOThemeLight["appBackground-primary"]]
   }
 };

@@ -1,4 +1,4 @@
-import { Banner, IOVisualCostants, useIOToast } from "@io-app/design-system";
+import { Banner, IODimensions, useIOToast } from "@io-app/design-system";
 import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useEffect } from "react";
@@ -114,7 +114,7 @@ export const LoginExpirationBanner = ({ handleOnClose }: Props) => {
 
 const styles = StyleSheet.create({
   margins: {
-    marginHorizontal: IOVisualCostants.appMarginDefault,
+    marginHorizontal: IODimensions.padding.screen.default,
     marginVertical: 16
   }
 });

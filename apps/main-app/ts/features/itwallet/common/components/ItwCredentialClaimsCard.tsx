@@ -1,10 +1,4 @@
-import {
-  H6,
-  IOAccordionRadius,
-  IOColors,
-  IOSpacingScale,
-  useIOThemeContext
-} from "@io-app/design-system";
+import { H6, IODimensions } from "@io-app/design-system";
 import { LinearGradient } from "expo-linear-gradient";
 import { PropsWithChildren, ReactNode } from "react";
 import {
@@ -17,12 +11,11 @@ import {
 } from "react-native";
 import Animated, { AnimatedStyle } from "react-native-reanimated";
 
-import { useItWalletTheme } from "../utils/theme";
-
-const cardSpacing: IOSpacingScale = 16;
+import { useFeatureColors } from "../../../../hooks/useFeatureColors";
+import { itwColors } from "../../colors";
 
 // Border width offset to ensure the header gradient fits within the border curves.
-const CARD_BORDER = 1;
+const CARD_BORDER = IODimensions.stroke.default;
 
 type ItwCredentialClaimsCardProps = PropsWithChildren<{
   /** The end color of the credential-specific header gradient. */
@@ -58,8 +51,7 @@ export const ItwCredentialClaimsCard = ({
   onHeaderPress,
   title
 }: ItwCredentialClaimsCardProps) => {
-  const { theme } = useIOThemeContext();
-  const itwTheme = useItWalletTheme();
+  const { claimsCard: colors } = useFeatureColors(itwColors);
 
   const isHeaderInteractive = onHeaderPress !== undefined;
 
@@ -69,7 +61,7 @@ export const ItwCredentialClaimsCard = ({
       style={[styles.header, headerStyle]}
     >
       <LinearGradient
-        colors={[itwTheme["card-background"], gradientEndColor]}
+        colors={[colors.headerGradientStart, gradientEndColor]}
         style={StyleSheet.absoluteFill}
       />
       {/*
@@ -95,8 +87,8 @@ export const ItwCredentialClaimsCard = ({
       style={[
         styles.card,
         {
-          backgroundColor: IOColors[theme["appBackground-primary"]],
-          borderColor: IOColors[theme["cardBorder-default"]]
+          backgroundColor: colors.background,
+          borderColor: colors.border
         }
       ]}
     >
@@ -119,14 +111,14 @@ export const ItwCredentialClaimsCard = ({
 
 const styles = StyleSheet.create({
   card: {
-    borderWidth: 1,
-    borderRadius: IOAccordionRadius,
+    borderWidth: CARD_BORDER,
+    borderRadius: IODimensions.radius.accordion,
     borderCurve: "continuous"
   },
   header: {
-    padding: cardSpacing,
-    borderTopLeftRadius: IOAccordionRadius - CARD_BORDER,
-    borderTopRightRadius: IOAccordionRadius - CARD_BORDER,
+    padding: IODimensions.padding.card,
+    borderTopLeftRadius: IODimensions.radius.accordion - CARD_BORDER,
+    borderTopRightRadius: IODimensions.radius.accordion - CARD_BORDER,
     overflow: "hidden",
     flexDirection: "row",
     alignItems: "center"

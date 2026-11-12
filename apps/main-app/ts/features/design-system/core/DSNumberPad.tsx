@@ -3,13 +3,12 @@ import {
   BodySmall,
   CodeInput,
   H2,
-  hexToRgba,
   IOButton,
-  IOColors,
-  IOVisualCostants,
+  IODimensions,
   ListItemSwitch,
   NumberPad,
   Pictogram,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
@@ -22,9 +21,20 @@ const PIN_LENGTH = 6;
 
 export const DSNumberPad = () => {
   const [value, setValue] = useState("");
-  const [primaryBackground, setPrimaryBackground] = useState(false);
+  const [accentBackground, setAccentBackground] = useState(false);
 
   const insets = useSafeAreaInsets();
+  const colors = useIOColors();
+
+  const backgroundColor = accentBackground
+    ? colors.background.accent
+    : colors.background.default;
+  const headingColor = accentBackground
+    ? colors.foreground.onAccent.default
+    : colors.text.heading.default;
+  const textColor = accentBackground
+    ? colors.foreground.onAccent.default
+    : colors.text.content.default;
 
   const navigation = useNavigation();
 
@@ -38,13 +48,9 @@ export const DSNumberPad = () => {
 
   useEffect(() => {
     navigation.setOptions({
-      headerStyle: {
-        backgroundColor: primaryBackground
-          ? IOColors["blueIO-500"]
-          : IOColors.white
-      }
+      headerStyle: { backgroundColor }
     });
-  }, [primaryBackground, navigation]);
+  }, [backgroundColor, navigation]);
   return (
     <View
       style={[
@@ -53,37 +59,33 @@ export const DSNumberPad = () => {
           justifyContent: "flex-end",
           paddingTop: insets.top,
           paddingBottom: insets.bottom,
-          paddingHorizontal: IOVisualCostants.appMarginDefault
+          paddingHorizontal: IODimensions.padding.screen.default
         },
-        {
-          backgroundColor: primaryBackground
-            ? IOColors["blueIO-500"]
-            : IOColors.white
-        }
+        { backgroundColor }
       ]}
     >
       <View
         style={{
-          backgroundColor: IOColors.white,
+          backgroundColor: colors.surface.default,
           borderRadius: 16,
           paddingHorizontal: 16,
-          borderColor: hexToRgba(IOColors.black, 0.2),
+          borderColor: colors.stroke.default,
           borderWidth: 1
         }}
       >
         <ListItemSwitch
           label="Attiva sfondo blu"
-          onSwitchValueChange={() => setPrimaryBackground(v => !v)}
-          value={primaryBackground}
+          onSwitchValueChange={() => setAccentBackground(v => !v)}
+          value={accentBackground}
         />
       </View>
       <View style={{ alignItems: "center" }}>
         <VSpacer size={16} />
         <Pictogram name="key" size={64} />
         <VSpacer size={8} />
-        <H2 color={primaryBackground ? "white" : "black"}>Ciao {`{name}`},</H2>
+        <H2 color={headingColor}>Ciao {`{name}`},</H2>
         <VSpacer size={8} />
-        <Body color={primaryBackground ? "white" : "black"}>
+        <Body color={textColor}>
           {"per accedere usa il volto o il codice di sblocco"}
         </Body>
       </View>
@@ -97,10 +99,7 @@ export const DSNumberPad = () => {
             bottom: -32
           }}
         >
-          <BodySmall
-            color={primaryBackground ? "white" : "black"}
-            weight="Semibold"
-          >
+          <BodySmall color={textColor} weight="Semibold">
             {value}
           </BodySmall>
         </View>
@@ -109,7 +108,7 @@ export const DSNumberPad = () => {
           onValidate={v => v === "123456"}
           onValueChange={setValue}
           value={value}
-          variant={primaryBackground ? "primary" : "neutral"}
+          variant={accentBackground ? "contrast" : "neutral"}
         />
       </View>
       <VSpacer size={48} />
@@ -130,12 +129,12 @@ export const DSNumberPad = () => {
           onBiometricPress={() => Alert.alert("biometric")}
           onDeletePress={onDeletePress}
           onNumberPress={onValueChange}
-          variant={primaryBackground ? "primary" : "neutral"}
+          variant={accentBackground ? "contrast" : "primary"}
         />
         <VSpacer size={32} />
         <View style={{ alignSelf: "center" }}>
           <IOButton
-            color={primaryBackground ? "contrast" : "primary"}
+            color={accentBackground ? "contrast" : "primary"}
             label="Hai dimenticato il codice di sblocco?"
             onPress={() => Alert.alert("Forgot unlock code")}
             variant="link"
