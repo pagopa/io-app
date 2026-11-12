@@ -1,7 +1,7 @@
 import {
   BodySmall,
   H6,
-  IOColors,
+  IODimensions,
   Tag,
   useIOThemeContext
 } from "@io-app/design-system";
@@ -12,7 +12,9 @@ import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
 import eycaLogo from "../../../../../img/bonus/cgn/eyca_logo.png";
 import CgnCardShapeDarkMode from "../../../../../img/features/cgn/cgn-card-dark.svg";
 import CgnCardShapeLightMode from "../../../../../img/features/cgn/cgn-card.svg";
+import { useFeatureColors } from "../../../../hooks/useFeatureColors";
 import { format } from "../../../../utils/dates";
+import { cgnColors } from "../colors";
 
 export type CgnCardProps = {
   expireDate?: Date;
@@ -23,13 +25,21 @@ export const CgnCard = ({ expireDate, withEycaLogo }: CgnCardProps) => {
   const { themeType } = useIOThemeContext();
   const isDark = themeType === "dark";
 
-  const textColor: IOColors = isDark ? "grey-50" : "blueItalia-850";
+  const colors = useFeatureColors(cgnColors);
+  const textColor = colors.walletCard.text;
 
   const isExpired = expireDate === undefined;
 
   const eycaLogoComponent = (
     <View
-      style={[styles.logoContainer, { bottom: 12, right: 12 }]}
+      style={[
+        styles.logoContainer,
+        {
+          backgroundColor: colors.walletCard.logoBackground,
+          bottom: 12,
+          right: 12
+        }
+      ]}
       testID="cgnEycaLogoTestID"
     >
       <Image
@@ -42,7 +52,14 @@ export const CgnCard = ({ expireDate, withEycaLogo }: CgnCardProps) => {
 
   const cngLogoComponent = (
     <View
-      style={[styles.logoContainer, { top: 12, right: 12 }]}
+      style={[
+        styles.logoContainer,
+        {
+          backgroundColor: colors.walletCard.logoBackground,
+          top: 12,
+          right: 12
+        }
+      ]}
       testID="cgnLogoTestID"
     >
       <Image
@@ -111,7 +128,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    padding: 16,
+    padding: IODimensions.padding.card,
     paddingTop: 12,
     justifyContent: "space-between"
   },
@@ -124,7 +141,6 @@ const styles = StyleSheet.create({
   logoContainer: {
     position: "absolute",
     padding: 5,
-    backgroundColor: IOColors.white,
     borderRadius: 8
   },
   logo: {

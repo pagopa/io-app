@@ -8,8 +8,8 @@ import {
   useAnimatedStyle
 } from "react-native-reanimated";
 
-import { useIOTheme } from "../context";
-import { hexToRgba, IOColors, IOScaleEffect } from "../core";
+import { useIOColors } from "../context";
+import { IOScaleEffect } from "../core";
 import { useSpringPressProgressValue } from "../utils/hooks";
 
 export const useListItemAnimation = (): {
@@ -22,12 +22,7 @@ export const useListItemAnimation = (): {
   const { progress, onPressIn, onPressOut } =
     useSpringPressProgressValue("button");
 
-  const theme = useIOTheme();
-
-  const mapBackgroundStates: Record<string, string> = {
-    default: hexToRgba(IOColors[theme["listItem-pressed"]], 0),
-    pressed: IOColors[theme["listItem-pressed"]]
-  };
+  const backgroundColors = useIOColors().component.listItem.background;
 
   // Interpolate animation values from `isPressed` values
   const scaleAnimatedStyle = useAnimatedStyle(() => ({
@@ -47,7 +42,7 @@ export const useListItemAnimation = (): {
     backgroundColor: interpolateColor(
       progress.value,
       [0, 1],
-      [mapBackgroundStates.default, mapBackgroundStates.pressed]
+      [backgroundColors.default, backgroundColors.pressed]
     )
   }));
 

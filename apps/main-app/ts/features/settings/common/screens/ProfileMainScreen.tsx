@@ -1,14 +1,14 @@
 import {
   ContentWrapper,
   Divider,
-  IOVisualCostants,
+  IODimensions,
   ListItemAction,
   ListItemNav,
   useIOToast,
   VSpacer
 } from "@io-app/design-system";
-import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { openAuthSessionAsync } from "expo-web-browser";
 import I18n from "i18next";
 import {
   ComponentProps,
@@ -62,7 +62,7 @@ type ProfileNavListItem = Pick<
   "description" | "onPress" | "testID"
 > & {
   isHidden?: boolean;
-  value: string;
+  label: string;
 };
 
 const ListItem = memo(ListItemNav);
@@ -168,14 +168,14 @@ const ProfileMainScreenFC = () => {
       [
         {
           // Data
-          value: I18n.t("profile.main.data.title"),
+          label: I18n.t("profile.main.data.title"),
           description: I18n.t("profile.main.data.description"),
           onPress: navigateToProfile,
           testID: "profileDataButton"
         },
         {
           // Preferences
-          value: I18n.t("profile.main.preferences.title"),
+          label: I18n.t("profile.main.preferences.title"),
           description: I18n.t("profile.main.preferences.description"),
           onPress: () =>
             navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
@@ -184,7 +184,7 @@ const ProfileMainScreenFC = () => {
         },
         {
           // IT Wallet
-          value: I18n.t("features.itWallet.settings.item.title"),
+          label: I18n.t("features.itWallet.settings.item.title"),
           description: I18n.t("features.itWallet.settings.item.description"),
           onPress: () =>
             navigation.navigate(ITW_ROUTES.MAIN, {
@@ -195,7 +195,7 @@ const ProfileMainScreenFC = () => {
         },
         {
           // Security
-          value: I18n.t("profile.main.security.title"),
+          label: I18n.t("profile.main.security.title"),
           description: I18n.t("profile.main.security.description"),
           onPress: () =>
             navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
@@ -204,7 +204,7 @@ const ProfileMainScreenFC = () => {
         },
         {
           // Privacy
-          value: I18n.t("profile.main.privacy.title"),
+          label: I18n.t("profile.main.privacy.title"),
           description: I18n.t("profile.main.privacy.description"),
           onPress: () =>
             navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
@@ -213,7 +213,7 @@ const ProfileMainScreenFC = () => {
         },
         {
           // Info about IO app
-          value: I18n.t("profile.main.appInfo.title"),
+          label: I18n.t("profile.main.appInfo.title"),
           description: I18n.t("profile.main.appInfo.description"),
           onPress: () =>
             navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
@@ -225,24 +225,24 @@ const ProfileMainScreenFC = () => {
   );
 
   const keyExtractor = useCallback(
-    (item: ProfileNavListItem, index: number) => `${item.value}-${index}`,
+    (item: ProfileNavListItem, index: number) => `${item.label}-${index}`,
     []
   );
 
   const renderProfileNavItem = useCallback(
     ({ item }: ListRenderItemInfo<ProfileNavListItem>) => {
-      const { value, description, testID, onPress } = item;
+      const { label, description, testID, onPress } = item;
       const accessibilityLabel = description
-        ? `${value}; ${description}`
-        : value;
+        ? `${label}; ${description}`
+        : label;
 
       return (
         <ListItem
           accessibilityLabel={accessibilityLabel}
           description={description}
+          label={label}
           onPress={onPress}
           testID={testID}
-          value={value}
         />
       );
     },
@@ -259,7 +259,7 @@ const ProfileMainScreenFC = () => {
       <VSpacer size={16} />
       <FlatList
         contentContainerStyle={{
-          paddingHorizontal: IOVisualCostants.appMarginDefault
+          paddingHorizontal: IODimensions.padding.screen.default
         }}
         data={profileNavListItems}
         ItemSeparatorComponent={Divider}
@@ -275,7 +275,7 @@ const ProfileMainScreenFC = () => {
             icon="message"
             label={feedbackLabel}
             onPress={() => {
-              void openAuthenticationSession(surveyUrl, "");
+              void openAuthSessionAsync(surveyUrl);
             }}
             testID="feedbackButton"
             variant="primary"

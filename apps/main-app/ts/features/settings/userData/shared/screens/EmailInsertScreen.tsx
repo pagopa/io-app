@@ -7,8 +7,8 @@ import {
   ContentWrapper,
   H1,
   IOButton,
+  IODimensions,
   IOToast,
-  IOVisualCostants,
   TextInputValidation,
   VSpacer
 } from "@io-app/design-system";
@@ -138,6 +138,7 @@ const EmailInsertScreen = () => {
   );
 
   const flow = getFlowType(isOnboarding, isFirstOnboarding);
+  const editingFlow = isFciEditEmailFlow ? "firma con IO" : flow;
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
   // This reference is used to prevent the refresh visual glitch
   // caused by the polling stop in the email validation screen.
@@ -152,7 +153,7 @@ const EmailInsertScreen = () => {
 
   useOnFirstRender(() => {
     if (isProfileEmailAlreadyTaken) {
-      trackEmailEditing(flow);
+      trackEmailEditing(editingFlow);
       if (isFirstOnboarding) {
         IOToast.info(
           I18n.t("email.newinsert.alert.title", {
@@ -164,7 +165,7 @@ const EmailInsertScreen = () => {
         );
       }
     } else {
-      trackEmailDuplicateEditing(flow);
+      trackEmailDuplicateEditing(editingFlow);
     }
   });
 
@@ -568,7 +569,7 @@ const EmailInsertScreen = () => {
             behavior={Platform.OS === "android" ? undefined : "padding"}
             keyboardVerticalOffset={Platform.select({
               ios: 110 + 16,
-              android: IOVisualCostants.appMarginDefault
+              android: IODimensions.padding.screen.default
             })}
           >
             <ContinueButton onContinue={continueOnPress} />

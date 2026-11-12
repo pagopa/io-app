@@ -985,6 +985,7 @@ exports[`MessageRouterScreen renders the loading component when isLoading is tru
                                       },
                                     ]
                                   }
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -1216,6 +1217,7 @@ exports[`MessageRouterScreen renders the loading component when isLoading is tru
                                         },
                                       ]
                                     }
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {

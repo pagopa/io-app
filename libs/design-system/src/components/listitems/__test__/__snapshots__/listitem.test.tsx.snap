@@ -159,7 +159,9 @@ exports[`Test List Item Components - Experimental Enabled ListItemAction Snapsho
 exports[`Test List Item Components - Experimental Enabled ListItemInfo Snapshot 1`] = `
 <View
   accessibilityLabel="accessibilityLabel"
-  accessible={true}
+  accessible={false}
+  importantForAccessibility="yes"
+  screenReaderFocusable={true}
   style={
     {
       "marginHorizontal": -24,
@@ -786,9 +788,6 @@ exports[`Test List Item Components - Experimental Enabled ListItemNavAlert Snaps
             "flexDirection": "row",
             "justifyContent": "space-between",
           },
-          {
-            "columnGap": 12,
-          },
         ]
       }
       style={
@@ -797,9 +796,6 @@ exports[`Test List Item Components - Experimental Enabled ListItemNavAlert Snaps
             "alignItems": "center",
             "flexDirection": "row",
             "justifyContent": "space-between",
-          },
-          {
-            "columnGap": 12,
           },
           {
             "transform": [
@@ -869,6 +865,13 @@ exports[`Test List Item Components - Experimental Enabled ListItemNavAlert Snaps
           />
         </RNSVGGroup>
       </RNSVGSvgView>
+      <View
+        style={
+          {
+            "width": 12,
+          }
+        }
+      />
       <View
         style={
           {
@@ -1822,7 +1825,7 @@ exports[`Test List Item Components - Experimental Enabled ListItemTransaction Sn
           "display": "flex",
           "flexDirection": "column",
           "flexGrow": 1,
-          "gap": 4,
+          "gap": 8,
         }
       }
     >
@@ -1845,7 +1848,7 @@ exports[`Test List Item Components - Experimental Enabled ListItemTransaction Sn
               "borderCurve": "continuous",
               "borderRadius": 8,
               "height": 16,
-              "width": 62,
+              "width": "30%",
             },
             {
               "animationDuration": "1250ms",
@@ -1874,7 +1877,7 @@ exports[`Test List Item Components - Experimental Enabled ListItemTransaction Sn
               "borderCurve": "continuous",
               "borderRadius": 8,
               "height": 16,
-              "width": 62,
+              "width": "30%",
             },
             {},
           ]
@@ -1898,8 +1901,8 @@ exports[`Test List Item Components - Experimental Enabled ListItemTransaction Sn
               "backgroundColor": "#E8EBF1",
               "borderCurve": "continuous",
               "borderRadius": 8,
-              "height": 16,
-              "width": 107,
+              "height": 14,
+              "width": "50%",
             },
             {
               "animationDuration": "1250ms",
@@ -1927,8 +1930,8 @@ exports[`Test List Item Components - Experimental Enabled ListItemTransaction Sn
               "backgroundColor": "#E8EBF1",
               "borderCurve": "continuous",
               "borderRadius": 8,
-              "height": 16,
-              "width": 107,
+              "height": 14,
+              "width": "50%",
             },
             {},
           ]
@@ -2284,7 +2287,9 @@ exports[`Test List Item Components ListItemAction Snapshot 1`] = `
 exports[`Test List Item Components ListItemInfo Snapshot 1`] = `
 <View
   accessibilityLabel="accessibilityLabel"
-  accessible={true}
+  accessible={false}
+  importantForAccessibility="yes"
+  screenReaderFocusable={true}
   style={
     {
       "marginHorizontal": -24,
@@ -2911,9 +2916,6 @@ exports[`Test List Item Components ListItemNavAlert Snapshot 1`] = `
             "flexDirection": "row",
             "justifyContent": "space-between",
           },
-          {
-            "columnGap": 12,
-          },
         ]
       }
       style={
@@ -2922,9 +2924,6 @@ exports[`Test List Item Components ListItemNavAlert Snapshot 1`] = `
             "alignItems": "center",
             "flexDirection": "row",
             "justifyContent": "space-between",
-          },
-          {
-            "columnGap": 12,
           },
           {
             "transform": [
@@ -2994,6 +2993,13 @@ exports[`Test List Item Components ListItemNavAlert Snapshot 1`] = `
           />
         </RNSVGGroup>
       </RNSVGSvgView>
+      <View
+        style={
+          {
+            "width": 12,
+          }
+        }
+      />
       <View
         style={
           {
@@ -3947,7 +3953,7 @@ exports[`Test List Item Components ListItemTransaction Snapshot 1`] = `
           "display": "flex",
           "flexDirection": "column",
           "flexGrow": 1,
-          "gap": 4,
+          "gap": 8,
         }
       }
     >
@@ -3970,7 +3976,7 @@ exports[`Test List Item Components ListItemTransaction Snapshot 1`] = `
               "borderCurve": "continuous",
               "borderRadius": 8,
               "height": 16,
-              "width": 62,
+              "width": "30%",
             },
             {
               "animationDuration": "1250ms",
@@ -3999,7 +4005,7 @@ exports[`Test List Item Components ListItemTransaction Snapshot 1`] = `
               "borderCurve": "continuous",
               "borderRadius": 8,
               "height": 16,
-              "width": 62,
+              "width": "30%",
             },
             {},
           ]
@@ -4023,8 +4029,8 @@ exports[`Test List Item Components ListItemTransaction Snapshot 1`] = `
               "backgroundColor": "#E8EBF1",
               "borderCurve": "continuous",
               "borderRadius": 8,
-              "height": 16,
-              "width": 107,
+              "height": 14,
+              "width": "50%",
             },
             {
               "animationDuration": "1250ms",
@@ -4052,8 +4058,8 @@ exports[`Test List Item Components ListItemTransaction Snapshot 1`] = `
               "backgroundColor": "#E8EBF1",
               "borderCurve": "continuous",
               "borderRadius": 8,
-              "height": 16,
-              "width": 107,
+              "height": 14,
+              "width": "50%",
             },
             {},
           ]

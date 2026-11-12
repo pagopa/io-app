@@ -83,6 +83,7 @@ jest.mock("@react-native-cookies/cookies", () => jest.fn());
 jest.mock("expo-sharing", () => ({ shareAsync: jest.fn() }));
 jest.mock("expo-clipboard", () => mockClipboard);
 jest.mock("expo-calendar", () => ({
+  EntityTypes: { EVENT: "event", REMINDER: "reminder" },
   getCalendarsAsync: jest.fn().mockResolvedValue([]),
   getEventsAsync: jest.fn().mockResolvedValue([])
 }));
@@ -109,12 +110,19 @@ jest.mock("@io-app/expo-navigation-bar-manager", () => ({
 // Mock DeviceInfo for version checks
 jest.mock("@io-app/expo-device-internal", () => ({
   getUniqueIdSync: jest.fn(() => "SOME-UNIQUE-ID"),
-  isDisplayZoomed: jest.fn(() => false)
+  isDisplayZoomed: jest.fn(() => false),
+  isHapticFeedbackEnabled: jest.fn(() => true)
 }));
 
 jest.mock("expo-store-review", () => ({
   isAvailableAsync: jest.fn().mockResolvedValue(true),
   requestReview: jest.fn().mockResolvedValue(undefined)
+}));
+
+jest.mock("expo-web-browser", () => ({
+  openAuthSessionAsync: jest
+    .fn()
+    .mockResolvedValue(Promise.resolve({ type: "opened" }))
 }));
 
 jest.mock("expo-linear-gradient", () => ({
@@ -132,6 +140,10 @@ jest.mock("@io-app/expo-nfc-antenna-info", () => ({
 
 jest.mock("@io-app/expo-switch-access", () => ({
   isSwitchAccessEnabled: () => Promise.resolve(false)
+}));
+
+jest.mock("@io-app/login-utils", () => ({
+  getRedirects: jest.fn()
 }));
 
 /* `@expo/ui` renders SwiftUI views, which cannot run under the Jest environment.

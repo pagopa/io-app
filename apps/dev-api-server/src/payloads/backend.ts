@@ -95,6 +95,7 @@ export const backendStatus: BackendStatus = {
     oneIdentity: {
       rolloutPercentage: 0,
       cieNativeRedirectsEnabled: false,
+      cieAndroidClearSessionCookiesEnabled: false,
       allowedCieOrigins: [
         "https://idserver.servizicie.interno.gov.it",
         "https://oidc.idserver.servizicie.interno.gov.it",
@@ -125,6 +126,13 @@ export const backendStatus: BackendStatus = {
           configuration_id: "cdc-onboarding",
           service_id: "01JV4M365CHAZN5C0FDR62DCVD",
           service_name: "Carta della Cultura - Onboarding"
+        },
+        {
+          configuration_id: "ced-opportunities",
+          service_id: "01KTXJ47AAJMZFRJPA4V4TX5D0",
+          organization_fiscal_code: "15376371009",
+          organization_name: "IO - L'app dei servizi pubblici",
+          service_name: "Carta Europea della Disabilità"
         }
       ],
       iOSCookieDisabledServiceIds: [
@@ -399,7 +407,10 @@ export const backendStatus: BackendStatus = {
         android: "2.66.0.0"
       },
       ipatente_cta_visible: true,
-      feedback_banner_visible: true
+      feedback_banner_visible: true,
+      discover_more_ced: {
+        min_app_version: { ios: "0.0.0.0", android: "0.0.0.0" }
+      }
     },
     landing_banners: {
       priority_order: [

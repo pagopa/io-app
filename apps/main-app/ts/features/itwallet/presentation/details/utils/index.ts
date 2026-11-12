@@ -2,7 +2,7 @@ import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import {
   CredentialMetadata,
   ItwCredentialStatus,
-  ItwJwtCredentialStatus
+  ItwEidStatus
 } from "../../../common/utils/itwTypesUtils";
 
 const EXCLUDED_CREDENTIAL_STATUSES: ReadonlyArray<ItwCredentialStatus> = [
@@ -34,7 +34,7 @@ const EXCLUDED_CREDENTIAL_STATUSES: ReadonlyArray<ItwCredentialStatus> = [
  */
 export const getItwDisplayCredentialStatus = (
   credentialStatus: ItwCredentialStatus,
-  eidStatus: ItwJwtCredentialStatus | undefined,
+  eidStatus: ItwEidStatus | undefined,
   isOffline: boolean,
   isEid: boolean
 ): ItwCredentialStatus => {

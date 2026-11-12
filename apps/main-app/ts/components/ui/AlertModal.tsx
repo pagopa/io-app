@@ -1,8 +1,8 @@
 import {
   Body,
   hexToRgba,
-  IOColors,
-  IOVisualCostants
+  IOColorsLegacy,
+  IODimensions
 } from "@io-app/design-system";
 import { StyleSheet, View } from "react-native";
 
@@ -17,8 +17,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: "auto",
     width: "auto",
-    padding: IOVisualCostants.appMarginDefault,
-    marginHorizontal: IOVisualCostants.appMarginDefault,
+    padding: IODimensions.padding.screen.default,
+    marginHorizontal: IODimensions.padding.screen.default,
     borderCurve: "continuous",
     borderRadius: 16
   }
@@ -44,14 +44,13 @@ export const AlertModal = ({ message }: AlertModalProps) => {
             {
               backgroundColor: modal.backgroundColor,
               borderWidth: 1,
-              borderColor: hexToRgba(IOColors.white, 0.1)
+              borderColor: hexToRgba(IOColorsLegacy.white, 0.1)
             }
           ]}
         >
           <Body>{message}</Body>
         </View>
       }
-      opacity={backdrop.opacity}
     />
   );
 };

@@ -1,5 +1,5 @@
 import {
-  IOVisualCostants,
+  IODimensions,
   ListItemHeader,
   ListItemNav
 } from "@io-app/design-system";
@@ -23,7 +23,7 @@ import { sortedFavouriteServicesSelector } from "../store/selectors";
 
 const styles = StyleSheet.create({
   listItemWrapper: {
-    marginHorizontal: IOVisualCostants.appMarginDefault * -1
+    marginHorizontal: IODimensions.padding.screen.default * -1
   }
 });
 
@@ -132,6 +132,7 @@ export const FavouriteServicesScreen = () => {
         >
           <ListItemNav
             description={item.institution.name}
+            label={item.name}
             onPress={() => {
               analytics.trackServiceSelected({
                 organization_name: item.institution.name,
@@ -146,7 +147,6 @@ export const FavouriteServicesScreen = () => {
                 }
               });
             }}
-            value={item.name}
           />
         </ListItemSwipeAction>
       </View>

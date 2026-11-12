@@ -1,11 +1,9 @@
-import {
-  IOColors,
-  IOFontWeight,
-  makeFontStyleObject
-} from "@io-app/design-system";
+import { IOFontWeight, makeFontStyleObject } from "@io-app/design-system";
 import { FunctionComponent, PropsWithChildren, useContext } from "react";
 import { Text, TextStyle, useWindowDimensions } from "react-native";
 
+import { useFeatureColors } from "../../../../../hooks/useFeatureColors";
+import { itwColors } from "../../../colors";
 import { HIDDEN_CLAIM_TEXT } from "../../utils/constants.ts";
 import { CardWidthContext } from "./CardWidthContext";
 
@@ -30,6 +28,7 @@ export const ClaimLabel: FunctionComponent<
   ...props
 }) => {
   const cardWidth = useContext(CardWidthContext);
+  const { skeumorphicCard: colors } = useFeatureColors(itwColors);
   const { width: screenWidth } = useWindowDimensions();
 
   // REFERENCE_CARD_WIDTH is the card width at the 360 px baseline screen (360 − 32 px padding).
@@ -56,9 +55,7 @@ export const ClaimLabel: FunctionComponent<
           undefined,
           false
         ),
-        // Skeumorphic MUST NOT change appearance based on the current theme (both system and app theme)
-        // so it is safe to force the text color and make sure it is readable
-        color: IOColors["grey-900"],
+        color: colors.label,
         textTransform
       }}
     >

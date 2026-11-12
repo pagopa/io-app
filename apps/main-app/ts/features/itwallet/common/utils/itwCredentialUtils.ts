@@ -1,4 +1,4 @@
-import { IOColors, Tag, useIOTheme } from "@io-app/design-system";
+import { Tag } from "@io-app/design-system";
 import { Mdoc, SdJwt } from "@pagopa/io-react-native-wallet";
 import { isBefore } from "date-fns";
 import I18n from "i18next";
@@ -135,23 +135,6 @@ export const getCredentialNameFromType = (
   return name || withDefault || type;
 };
 
-export const useBorderColorByStatus: () => {
-  [key in ItwCredentialStatus]: string;
-} = () => {
-  const theme = useIOTheme();
-
-  return {
-    valid: IOColors[theme["appBackground-primary"]],
-    invalid: IOColors["error-600"],
-    suspended: IOColors["error-600"],
-    expired: IOColors["error-600"],
-    expiring: IOColors["warning-700"],
-    jwtExpired: IOColors["error-600"],
-    jwtExpiring: IOColors["warning-700"],
-    unknown: IOColors["grey-300"]
-  };
-};
-
 export const borderVariantByStatus: {
   [key in ItwCredentialStatus]: ItwIridescentBorderVariant;
 } = {
@@ -194,7 +177,7 @@ export const useTagPropsByStatus = (): {
   },
   unknown: {
     variant: "custom",
-    icon: { name: "infoFilled", color: "grey-450" },
+    icon: { name: "infoFilled", color: "grey" },
     text: I18n.t("features.itWallet.card.status.unknown")
   }
 });

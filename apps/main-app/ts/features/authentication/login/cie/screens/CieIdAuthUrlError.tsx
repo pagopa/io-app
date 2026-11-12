@@ -1,25 +1,32 @@
-import { Route, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { setFinishedActiveSessionLoginFlow } from "../../../activeSessionLogin/store/actions";
 import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
+import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { trackCieIdNoWhitelistUrl } from "../analytics";
 
-export type UrlNotCompliant = { url: string };
-const CieIdAuthUrlError = () => {
-  const route =
-    useRoute<
-      Route<typeof AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL, UrlNotCompliant>
-    >();
+export type CieIdAuthUrlErrorScreenParams = {
+  url: string;
+};
+
+type CieIdAuthUrlErrorProps = IOStackNavigationRouteProps<
+  AuthenticationParamsList,
+  typeof AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL
+>;
+
+const CieIdAuthUrlErrorScreen = ({
+  navigation,
+  route
+}: CieIdAuthUrlErrorProps) => {
   const { url } = route.params;
-  const navigation = useIONavigation();
+
   const dispatch = useIODispatch();
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
 
@@ -42,9 +49,7 @@ const CieIdAuthUrlError = () => {
       // allows the user to return to the screen from which the flow began
       navigation.popToTop();
     } else {
-      navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.LANDING
-      });
+      navigation.popTo(AUTHENTICATION_ROUTES.LANDING);
     }
   }, [dispatch, isActiveSessionLogin, navigation]);
 
@@ -62,4 +67,4 @@ const CieIdAuthUrlError = () => {
   );
 };
 
-export default CieIdAuthUrlError;
+export default CieIdAuthUrlErrorScreen;

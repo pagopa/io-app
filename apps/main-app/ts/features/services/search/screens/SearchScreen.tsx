@@ -3,9 +3,9 @@ import {
   AvatarSearchProps,
   ContentWrapper,
   Divider,
-  IOSpacingScale,
+  IODimensions,
+  IODimensionScale,
   IOToast,
-  IOVisualCostants,
   ListItemHeader,
   SearchInput,
   SearchInputRef
@@ -33,7 +33,7 @@ import { getLogoForInstitution } from "../../common/utils";
 import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
 import { searchPaginatedInstitutionsGet } from "../store/actions";
 
-const INPUT_PADDING: IOSpacingScale = 16;
+const INPUT_PADDING: IODimensionScale = 16;
 const MIN_QUERY_LENGTH = 3;
 
 type InstitutionListItemComponentProps = {
@@ -240,7 +240,7 @@ export const SearchScreen = () => {
         contentContainerStyle={{
           flexGrow: 1,
           paddingBottom: insets.bottom,
-          paddingHorizontal: IOVisualCostants.appMarginDefault
+          paddingHorizontal: IODimensions.padding.screen.default
         }}
         data={data?.institutions}
         ItemSeparatorComponent={Divider}

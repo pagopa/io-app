@@ -392,6 +392,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                 },
                               ]
                             }
+                            pointerEvents="none"
                             style={
                               [
                                 {
@@ -654,7 +655,9 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                           >
                             <View
                               accessibilityLabel="Vai su "Impostazioni""
-                              accessible={true}
+                              accessible={false}
+                              importantForAccessibility="yes"
+                              screenReaderFocusable={true}
                               style={
                                 {
                                   "marginHorizontal": -24,
@@ -755,7 +758,9 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                           >
                             <View
                               accessibilityLabel="Seleziona "Notifiche""
-                              accessible={true}
+                              accessible={false}
+                              importantForAccessibility="yes"
+                              screenReaderFocusable={true}
                               style={
                                 {
                                   "marginHorizontal": -24,
@@ -856,7 +861,9 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                           >
                             <View
                               accessibilityLabel="Attiva "Consenti notifiche""
-                              accessible={true}
+                              accessible={false}
+                              importantForAccessibility="yes"
+                              screenReaderFocusable={true}
                               style={
                                 {
                                   "marginHorizontal": -24,
@@ -966,7 +973,6 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                               "bottom": 0,
                               "position": "absolute",
                             },
-                            false,
                             undefined,
                           ]
                         }
@@ -980,7 +986,6 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                               "bottom": 0,
                               "position": "absolute",
                             },
-                            false,
                             undefined,
                           ]
                         }

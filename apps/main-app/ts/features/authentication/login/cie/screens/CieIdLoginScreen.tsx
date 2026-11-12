@@ -15,13 +15,14 @@ import {
   HeaderSecondLevelHookProps,
   useHeaderSecondLevel
 } from "../../../../../hooks/useHeaderSecondLevel";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { useLollipopLoginSource } from "../../../../lollipop/hooks/useLollipopLoginSource";
 import { useOnboardingAbortAlert } from "../../../../onboarding/hooks/useOnboardingAbortAlert";
 import { remoteApiLoginUrlPrefixSelector } from "../../../activeSessionLogin/store/selectors";
 import { trackLoginSpidError } from "../../../common/analytics/spidAnalytics";
 import { IdpSuccessfulAuthentication } from "../../../common/components/IdpSuccessfulAuthentication";
+import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { loginFailure, loginSuccess } from "../../../common/store/actions";
 import { loggedInAuthSelector } from "../../../common/store/selectors";
@@ -37,14 +38,10 @@ import {
 import { IdpCIE_ID } from "../../hooks/useNavigateToLoginMethod";
 import { LoadingOverlay } from "../shared/LoadingSpinnerOverlay";
 import {
-  cieIDSelectedSecurityLevelSelector,
-  isCieLoginUatEnabledSelector
+  cieEnvSelector,
+  cieIDSelectedSecurityLevelSelector
 } from "../store/selectors";
-import {
-  getCieIdEnvironment,
-  getCieIDLoginUri,
-  isAuthenticationUrl
-} from "../utils";
+import { getCieIDLoginUri, isAuthenticationUrl } from "../utils";
 import {
   CIE_ID_ERROR,
   CIE_ID_ERROR_MESSAGE,
@@ -52,42 +49,42 @@ import {
   IO_LOGIN_CIE_URL_SCHEME
 } from "../utils/cie";
 
-const CieIdLoginScreen = () => {
-  const navigation = useIONavigation();
+type CieIdLoginScreenProps = IOStackNavigationRouteProps<
+  AuthenticationParamsList,
+  typeof AUTHENTICATION_ROUTES.CIE_ID_LOGIN
+>;
+
+const CieIdLoginScreen = ({ navigation }: CieIdLoginScreenProps) => {
   const webView = useRef<WebView>(null);
   const dispatch = useIODispatch();
   const [authenticatedUrl, setAuthenticatedUrl] = useState<null | string>(null);
   const loggedInAuth = useIOSelector(loggedInAuthSelector, _isEqual);
   const apiLoginUrlPrefix = useIOSelector(remoteApiLoginUrlPrefixSelector);
-  const isUat = useIOSelector(isCieLoginUatEnabledSelector);
+  const cieEnv = useIOSelector(cieEnvSelector);
   // cieIDSelectedSecurityLevel is always set before this screen is reached
   // (navigateToCieIdLoginScreen dispatches it synchronously before navigating);
   // the fallback only satisfies the type, since the reducer marks it optional.
   // L2 matches navigateToCieIdLoginScreen's own default for the same value
   const spidLevel =
     useIOSelector(cieIDSelectedSecurityLevelSelector) ?? AUTH_LEVELS.L2;
-  const loginUri = getCieIDLoginUri(spidLevel, isUat, apiLoginUrlPrefix);
+  const loginUri = getCieIDLoginUri(spidLevel, cieEnv, apiLoginUrlPrefix);
   const [isLoadingWebView, setIsLoadingWebView] = useState(true);
+
   const navigateToCieIdAuthenticationError = useCallback(() => {
-    navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
-    });
+    navigation.replace(AUTHENTICATION_ROUTES.CIE_ID_ERROR);
   }, [navigation]);
 
   const navigateToCieIdAuthUrlError = useCallback(
     (url: string) => {
-      navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL,
-        params: { url }
+      navigation.replace(AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL, {
+        url
       });
     },
     [navigation]
   );
 
   const navigateToLandingScreen = useCallback(() => {
-    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.LANDING
-    });
+    navigation.popTo(AUTHENTICATION_ROUTES.LANDING);
   }, [navigation]);
 
   const checkIfUrlIsWhitelisted = useCallback(
@@ -206,11 +203,11 @@ const CieIdLoginScreen = () => {
               checkIfUrlIsWhitelisted(result.url);
             }
           },
-          getCieIdEnvironment(isUat)
+          cieEnv
         );
       }
     },
-    [handleLoginFailure, isUat, checkIfUrlIsWhitelisted]
+    [handleLoginFailure, cieEnv, checkIfUrlIsWhitelisted]
   );
 
   const handleOnShouldStartLoadWithRequest = (

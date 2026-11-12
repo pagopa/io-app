@@ -2,8 +2,8 @@ import { UserDataProcessingChoiceEnum } from "@io-app/api-types/generated/defini
 import { UserDataProcessingStatusEnum } from "@io-app/api-types/generated/definitions/identity/UserDataProcessingStatus";
 import {
   Divider,
+  IODimensions,
   IOToast,
-  IOVisualCostants,
   ListItemNav
 } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -297,10 +297,10 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
             : ""
         }`}
         description={description}
+        label={value}
         onPress={onPress}
         testID={testID}
         topElement={topElement}
-        value={value}
       />
     ),
     []
@@ -326,7 +326,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
       >
         <FlatList
           contentContainerStyle={{
-            paddingHorizontal: IOVisualCostants.appMarginDefault
+            paddingHorizontal: IODimensions.padding.screen.default
           }}
           data={privacyNavListItems}
           ItemSeparatorComponent={Divider}

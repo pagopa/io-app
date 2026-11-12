@@ -1,6 +1,6 @@
 import {
   ContentWrapper,
-  IOSpacingScale,
+  IODimensionScale,
   VSpacer,
   VStack
 } from "@io-app/design-system";
@@ -69,7 +69,11 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
   return (
     <VStack space={8}>
       <CardContainer backgroundColor={backgroundColor}>
-        <FlipGestureDetector isFlipped={isFlipped} setIsFlipped={setIsFlipped}>
+        <FlipGestureDetector
+          direction="leftright"
+          isFlipped={isFlipped}
+          setIsFlipped={setIsFlipped}
+        >
           <ItwSkeumorphicCard
             credential={credential}
             isFlipped={isFlipped}
@@ -104,7 +108,7 @@ const CardContainer = ({
   </View>
 );
 
-const cardPaddingHorizontal: IOSpacingScale = 16;
+const cardPaddingHorizontal: IODimensionScale = 16;
 
 const styles = StyleSheet.create({
   cardContainer: {

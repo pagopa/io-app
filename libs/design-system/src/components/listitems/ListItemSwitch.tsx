@@ -6,11 +6,8 @@ import {
   View
 } from "react-native";
 
-import { useIOTheme } from "../../context";
-import {
-  IOSelectionListItemStyles,
-  IOSelectionListItemVisualParams
-} from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions, IOOpacity } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
@@ -20,6 +17,7 @@ import { LoadingSpinner } from "../loadingSpinner";
 import { IOLogoPaymentType, LogoPayment } from "../logos";
 import { Switch } from "../switch/Switch";
 import { BodySmall, H6, LabelMini } from "../typography";
+import { IOSelectionListItemStyles } from "./styles";
 
 export type ListItemSwitchGraphicProps =
   | { icon: IOIcons; paymentLogo?: never }
@@ -40,8 +38,6 @@ type PartialProps = WithTestID<{
   onSwitchValueChange?: (newValue: boolean) => void;
   switchTestID?: string;
 }>;
-
-const DISABLED_OPACITY = 0.5;
 
 /* Estimated height of the native switch component,
 both on iOS & Android */
@@ -66,7 +62,7 @@ export const ListItemSwitch = memo(
     switchTestID,
     testID
   }: ListItemSwitchProps) => {
-    const theme = useIOTheme();
+    const listItemColors = useIOColors().component.listItem;
     const { dynamicFontScale, spacingScaleMultiplier, hugeFontEnabled } =
       useIOFontDynamicScale();
 
@@ -85,7 +81,7 @@ export const ListItemSwitch = memo(
         style={[
           IOSelectionListItemStyles.listItem,
           {
-            opacity: disabled ? DISABLED_OPACITY : 1
+            opacity: disabled ? IOOpacity.disabled : 1
           }
         ]}
         testID={testID ?? "ListItemSwitch"}
@@ -104,7 +100,7 @@ export const ListItemSwitch = memo(
               flexDirection: "row",
               alignItems: icon ? "flex-start" : "center",
               columnGap:
-                IOSelectionListItemVisualParams.iconMargin *
+                IODimensions.gap.selection.leading *
                 dynamicFontScale *
                 spacingScaleMultiplier
             }}
@@ -120,21 +116,21 @@ export const ListItemSwitch = memo(
             {icon && !hugeFontEnabled && (
               <Icon
                 allowFontScaling
-                color={theme["icon-decorative"]}
+                color={listItemColors.foreground.icon}
                 name={icon}
-                size={IOSelectionListItemVisualParams.iconSize}
+                size={IODimensions.size.icon.selection}
               />
             )}
             {paymentLogo && (
               <LogoPayment
                 name={paymentLogo}
-                size={IOSelectionListItemVisualParams.iconSize}
+                size={IODimensions.size.icon.selection}
               />
             )}
 
             <H6
               accessible={!canRenderSwitch}
-              color={theme["textBody-default"]}
+              color={listItemColors.foreground.label}
               importantForAccessibility={
                 !canRenderSwitch ? "yes" : "no-hide-descendants"
               }
@@ -143,7 +139,7 @@ export const ListItemSwitch = memo(
               {label}
             </H6>
           </View>
-          <HSpacer size={8} />
+          <HSpacer size={IODimensions.gap.selection.control} />
           <View
             style={{
               justifyContent: "center",
@@ -172,15 +168,18 @@ export const ListItemSwitch = memo(
         </View>
         {description && (
           <>
-            <VSpacer size={IOSelectionListItemVisualParams.descriptionMargin} />
-            <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
+            <VSpacer size={IODimensions.gap.selection.description} />
+            <BodySmall
+              color={listItemColors.foreground.description}
+              weight="Regular"
+            >
               {description}
             </BodySmall>
           </>
         )}
         {action && (
           <>
-            <VSpacer size={IOSelectionListItemVisualParams.actionMargin} />
+            <VSpacer size={IODimensions.gap.selection.action} />
             <LabelMini asLink onPress={action.onPress}>
               {action.label}
             </LabelMini>
