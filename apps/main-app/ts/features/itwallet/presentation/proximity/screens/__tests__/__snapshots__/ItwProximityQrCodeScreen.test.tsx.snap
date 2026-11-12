@@ -292,7 +292,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                               <View
                                 style={
                                   {
-                                    "width": 32,
+                                    "width": 24,
                                   }
                                 }
                               />
@@ -896,32 +896,41 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                 </Text>
                               </View>
                               <View
-                                accessibilityLabel="Immagine del codice QR da mostrare a chi verifica i documenti digitali"
-                                accessibilityRole="image"
-                                accessible={true}
-                                collapsable={false}
-                                entering={
-                                  FadeIn {
-                                    "build": [Function],
-                                    "durationV": 200,
-                                    "randomizeDelay": false,
-                                    "reduceMotionV": "system",
-                                  }
-                                }
-                                jestAnimatedProps={
+                                style={
                                   {
-                                    "value": {},
-                                  }
-                                }
-                                jestAnimatedStyle={
-                                  {
-                                    "value": {},
+                                    "height": 670,
+                                    "width": 670,
                                   }
                                 }
                               >
                                 <View
-                                  testID="qrcode"
-                                />
+                                  accessibilityLabel="Immagine del codice QR da mostrare a chi verifica i documenti digitali"
+                                  accessibilityRole="image"
+                                  accessible={true}
+                                  collapsable={false}
+                                  entering={
+                                    FadeIn {
+                                      "build": [Function],
+                                      "durationV": 200,
+                                      "randomizeDelay": false,
+                                      "reduceMotionV": "system",
+                                    }
+                                  }
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                >
+                                  <View
+                                    testID="qrcode"
+                                  />
+                                </View>
                               </View>
                             </View>
                           </View>
@@ -1377,50 +1386,60 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                     {
                                       "alignSelf": "center",
                                       "flex": 1,
-                                      "gap": 4,
+                                      "gap": 12,
                                     }
                                   }
                                 >
-                                  <Text
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="headline"
-                                    maxFontSizeMultiplier={1.5}
+                                  <View
                                     style={
-                                      [
-                                        {},
-                                        {
-                                          "color": "#0E0F13",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
+                                      {
+                                        "display": "flex",
+                                        "flexDirection": "column",
+                                        "gap": 4,
+                                      }
                                     }
                                   >
-                                    Come funziona la verifica?
-                                  </Text>
-                                  <Text
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {},
-                                        {
-                                          "color": "#555C70",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 14,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "400",
-                                          "lineHeight": 21,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio.
-                                  </Text>
+                                    <Text
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="headline"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {},
+                                          {
+                                            "color": "#2B2E38",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": 24,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Come funziona la verifica?
+                                    </Text>
+                                    <Text
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="footnote"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {},
+                                          {
+                                            "color": "#555C70",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 14,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "400",
+                                            "lineHeight": 21,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio.
+                                    </Text>
+                                  </View>
                                   <View
                                     accessibilityElementsHidden={true}
                                     accessibilityLabel="Scopri di più"
@@ -1457,13 +1476,6 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                     onStartShouldSetResponder={[Function]}
                                     pointerEvents="none"
                                   >
-                                    <View
-                                      style={
-                                        {
-                                          "height": 8,
-                                        }
-                                      }
-                                    />
                                     <Text
                                       accessibilityElementsHidden={true}
                                       accessible={false}
@@ -1628,8 +1640,8 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                     {
                                       "opacity": 0.6,
                                       "position": "absolute",
-                                      "right": 10,
-                                      "top": 10,
+                                      "right": 8,
+                                      "top": 8,
                                     }
                                   }
                                 >
@@ -1942,7 +1954,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={3}
+                handlerTag={5}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -2102,7 +2114,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                               <View
                                 style={
                                   {
-                                    "width": 32,
+                                    "width": 24,
                                   }
                                 }
                               />
@@ -2650,15 +2662,19 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                             >
                               <View
                                 style={
-                                  {
-                                    "alignItems": "center",
-                                    "aspectRatio": 1,
-                                    "backgroundColor": "#F4F5F8",
-                                    "borderRadius": 16,
-                                    "gap": 8,
-                                    "justifyContent": "center",
-                                    "padding": 16,
-                                  }
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "aspectRatio": 1,
+                                      "borderRadius": 16,
+                                      "gap": 8,
+                                      "justifyContent": "center",
+                                      "padding": 16,
+                                    },
+                                    {
+                                      "backgroundColor": "#F4F5F8",
+                                    },
+                                  ]
                                 }
                               >
                                 <RNSVGSvgView
@@ -3424,50 +3440,60 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                     {
                                       "alignSelf": "center",
                                       "flex": 1,
-                                      "gap": 4,
+                                      "gap": 12,
                                     }
                                   }
                                 >
-                                  <Text
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="headline"
-                                    maxFontSizeMultiplier={1.5}
+                                  <View
                                     style={
-                                      [
-                                        {},
-                                        {
-                                          "color": "#0E0F13",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
+                                      {
+                                        "display": "flex",
+                                        "flexDirection": "column",
+                                        "gap": 4,
+                                      }
                                     }
                                   >
-                                    Come funziona la verifica?
-                                  </Text>
-                                  <Text
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {},
-                                        {
-                                          "color": "#555C70",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 14,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "400",
-                                          "lineHeight": 21,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio.
-                                  </Text>
+                                    <Text
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="headline"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {},
+                                          {
+                                            "color": "#2B2E38",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": 24,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Come funziona la verifica?
+                                    </Text>
+                                    <Text
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="footnote"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {},
+                                          {
+                                            "color": "#555C70",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 14,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "400",
+                                            "lineHeight": 21,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio.
+                                    </Text>
+                                  </View>
                                   <View
                                     accessibilityElementsHidden={true}
                                     accessibilityLabel="Scopri di più"
@@ -3504,13 +3530,6 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                     onStartShouldSetResponder={[Function]}
                                     pointerEvents="none"
                                   >
-                                    <View
-                                      style={
-                                        {
-                                          "height": 8,
-                                        }
-                                      }
-                                    />
                                     <Text
                                       accessibilityElementsHidden={true}
                                       accessible={false}
@@ -3675,8 +3694,8 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                     {
                                       "opacity": 0.6,
                                       "position": "absolute",
-                                      "right": 10,
-                                      "top": 10,
+                                      "right": 8,
+                                      "top": 8,
                                     }
                                   }
                                 >
@@ -4149,7 +4168,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                               <View
                                 style={
                                   {
-                                    "width": 32,
+                                    "width": 24,
                                   }
                                 }
                               />
@@ -4753,59 +4772,110 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                 </Text>
                               </View>
                               <View
-                                collapsable={false}
-                                jestAnimatedProps={
-                                  {
-                                    "value": {},
-                                  }
-                                }
-                                jestAnimatedStyle={
-                                  {
-                                    "value": {},
-                                  }
-                                }
-                                jestInlineStyle={
-                                  [
-                                    {
-                                      "backgroundColor": "#E8EBF1",
-                                      "borderCurve": "continuous",
-                                      "borderRadius": 16,
-                                      "height": 670,
-                                      "width": 670,
-                                    },
-                                    {
-                                      "animationDuration": "1250ms",
-                                      "animationIterationCount": "infinite",
-                                      "animationName": {
-                                        "0%, 100%": {
-                                          "opacity": 0.75,
-                                        },
-                                        "50%": {
-                                          "opacity": 0.35,
-                                        },
-                                      },
-                                      "animationTimingFunction": CubicBezierEasing {
-                                        "x1": 0.37,
-                                        "x2": 0.63,
-                                        "y1": 0,
-                                        "y2": 1,
-                                      },
-                                    },
-                                  ]
-                                }
                                 style={
-                                  [
-                                    {
-                                      "backgroundColor": "#E8EBF1",
-                                      "borderCurve": "continuous",
-                                      "borderRadius": 16,
-                                      "height": 670,
-                                      "width": 670,
-                                    },
-                                    {},
-                                  ]
+                                  {
+                                    "height": 670,
+                                    "width": 670,
+                                  }
                                 }
-                              />
+                              >
+                                <View
+                                  collapsable={false}
+                                  exiting={
+                                    FadeOut {
+                                      "build": [Function],
+                                      "durationV": 200,
+                                      "randomizeDelay": false,
+                                      "reduceMotionV": "system",
+                                    }
+                                  }
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    {
+                                      "bottom": 0,
+                                      "left": 0,
+                                      "position": "absolute",
+                                      "right": 0,
+                                      "top": 0,
+                                    }
+                                  }
+                                  style={
+                                    [
+                                      {
+                                        "bottom": 0,
+                                        "left": 0,
+                                        "position": "absolute",
+                                        "right": 0,
+                                        "top": 0,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <View
+                                    collapsable={false}
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "backgroundColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
+                                          "borderRadius": 16,
+                                          "height": 670,
+                                          "width": 670,
+                                        },
+                                        {
+                                          "animationDuration": "1250ms",
+                                          "animationIterationCount": "infinite",
+                                          "animationName": {
+                                            "0%, 100%": {
+                                              "opacity": 0.75,
+                                            },
+                                            "50%": {
+                                              "opacity": 0.35,
+                                            },
+                                          },
+                                          "animationTimingFunction": CubicBezierEasing {
+                                            "x1": 0.37,
+                                            "x2": 0.63,
+                                            "y1": 0,
+                                            "y2": 1,
+                                          },
+                                        },
+                                      ]
+                                    }
+                                    style={
+                                      [
+                                        {
+                                          "backgroundColor": "#E8EBF1",
+                                          "borderCurve": "continuous",
+                                          "borderRadius": 16,
+                                          "height": 670,
+                                          "width": 670,
+                                        },
+                                        {},
+                                      ]
+                                    }
+                                  />
+                                </View>
+                              </View>
                             </View>
                           </View>
                           <View
@@ -5260,50 +5330,60 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                     {
                                       "alignSelf": "center",
                                       "flex": 1,
-                                      "gap": 4,
+                                      "gap": 12,
                                     }
                                   }
                                 >
-                                  <Text
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="headline"
-                                    maxFontSizeMultiplier={1.5}
+                                  <View
                                     style={
-                                      [
-                                        {},
-                                        {
-                                          "color": "#0E0F13",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
+                                      {
+                                        "display": "flex",
+                                        "flexDirection": "column",
+                                        "gap": 4,
+                                      }
                                     }
                                   >
-                                    Come funziona la verifica?
-                                  </Text>
-                                  <Text
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {},
-                                        {
-                                          "color": "#555C70",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 14,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "400",
-                                          "lineHeight": 21,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio.
-                                  </Text>
+                                    <Text
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="headline"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {},
+                                          {
+                                            "color": "#2B2E38",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": 24,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Come funziona la verifica?
+                                    </Text>
+                                    <Text
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="footnote"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {},
+                                          {
+                                            "color": "#555C70",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 14,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "400",
+                                            "lineHeight": 21,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio.
+                                    </Text>
+                                  </View>
                                   <View
                                     accessibilityElementsHidden={true}
                                     accessibilityLabel="Scopri di più"
@@ -5340,13 +5420,6 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                     onStartShouldSetResponder={[Function]}
                                     pointerEvents="none"
                                   >
-                                    <View
-                                      style={
-                                        {
-                                          "height": 8,
-                                        }
-                                      }
-                                    />
                                     <Text
                                       accessibilityElementsHidden={true}
                                       accessible={false}
@@ -5511,8 +5584,8 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                     {
                                       "opacity": 0.6,
                                       "position": "absolute",
-                                      "right": 10,
-                                      "top": 10,
+                                      "right": 8,
+                                      "top": 8,
                                     }
                                   }
                                 >
@@ -5825,7 +5898,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={6}
+                handlerTag={8}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -5985,7 +6058,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                               <View
                                 style={
                                   {
-                                    "width": 32,
+                                    "width": 24,
                                   }
                                 }
                               />
@@ -6839,32 +6912,41 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                 </Text>
                               </View>
                               <View
-                                accessibilityLabel="Immagine del codice QR da mostrare a chi verifica i documenti digitali"
-                                accessibilityRole="image"
-                                accessible={true}
-                                collapsable={false}
-                                entering={
-                                  FadeIn {
-                                    "build": [Function],
-                                    "durationV": 200,
-                                    "randomizeDelay": false,
-                                    "reduceMotionV": "system",
-                                  }
-                                }
-                                jestAnimatedProps={
+                                style={
                                   {
-                                    "value": {},
-                                  }
-                                }
-                                jestAnimatedStyle={
-                                  {
-                                    "value": {},
+                                    "height": 670,
+                                    "width": 670,
                                   }
                                 }
                               >
                                 <View
-                                  testID="qrcode"
-                                />
+                                  accessibilityLabel="Immagine del codice QR da mostrare a chi verifica i documenti digitali"
+                                  accessibilityRole="image"
+                                  accessible={true}
+                                  collapsable={false}
+                                  entering={
+                                    FadeIn {
+                                      "build": [Function],
+                                      "durationV": 200,
+                                      "randomizeDelay": false,
+                                      "reduceMotionV": "system",
+                                    }
+                                  }
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                >
+                                  <View
+                                    testID="qrcode"
+                                  />
+                                </View>
                               </View>
                             </View>
                           </View>
@@ -7320,50 +7402,60 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                     {
                                       "alignSelf": "center",
                                       "flex": 1,
-                                      "gap": 4,
+                                      "gap": 12,
                                     }
                                   }
                                 >
-                                  <Text
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="headline"
-                                    maxFontSizeMultiplier={1.5}
+                                  <View
                                     style={
-                                      [
-                                        {},
-                                        {
-                                          "color": "#0E0F13",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
+                                      {
+                                        "display": "flex",
+                                        "flexDirection": "column",
+                                        "gap": 4,
+                                      }
                                     }
                                   >
-                                    Come funziona la verifica?
-                                  </Text>
-                                  <Text
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {},
-                                        {
-                                          "color": "#555C70",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 14,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "400",
-                                          "lineHeight": 21,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio.
-                                  </Text>
+                                    <Text
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="headline"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {},
+                                          {
+                                            "color": "#2B2E38",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": 24,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Come funziona la verifica?
+                                    </Text>
+                                    <Text
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="footnote"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {},
+                                          {
+                                            "color": "#555C70",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 14,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "400",
+                                            "lineHeight": 21,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio.
+                                    </Text>
+                                  </View>
                                   <View
                                     accessibilityElementsHidden={true}
                                     accessibilityLabel="Scopri di più"
@@ -7400,13 +7492,6 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                     onStartShouldSetResponder={[Function]}
                                     pointerEvents="none"
                                   >
-                                    <View
-                                      style={
-                                        {
-                                          "height": 8,
-                                        }
-                                      }
-                                    />
                                     <Text
                                       accessibilityElementsHidden={true}
                                       accessible={false}
@@ -7571,8 +7656,8 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                     {
                                       "opacity": 0.6,
                                       "position": "absolute",
-                                      "right": 10,
-                                      "top": 10,
+                                      "right": 8,
+                                      "top": 8,
                                     }
                                   }
                                 >

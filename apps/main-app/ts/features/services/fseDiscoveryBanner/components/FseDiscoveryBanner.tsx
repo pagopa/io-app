@@ -1,7 +1,6 @@
-import { Banner, IOVisualCostants } from "@io-app/design-system";
+import { Banner, ContentWrapper } from "@io-app/design-system";
 import I18n from "i18next";
 import { useCallback, useEffect } from "react";
-import { StyleSheet, View } from "react-native";
 
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
@@ -59,7 +58,7 @@ export const FseDiscoveryBanner = ({
     : {};
 
   return (
-    <View style={styles.margins}>
+    <ContentWrapper style={{ marginVertical: 16 }}>
       <Banner
         action={I18n.t("features.fseDiscoveryBanner.cta")}
         color="turquoise"
@@ -70,13 +69,6 @@ export const FseDiscoveryBanner = ({
         title={I18n.t("features.fseDiscoveryBanner.title")}
         {...maybeCloseProps}
       />
-    </View>
+    </ContentWrapper>
   );
 };
-
-const styles = StyleSheet.create({
-  margins: {
-    marginHorizontal: IOVisualCostants.appMarginDefault,
-    marginVertical: 16
-  }
-});

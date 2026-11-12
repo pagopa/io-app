@@ -6,10 +6,8 @@ import {
   H2,
   H6,
   HStack,
-  IOAppMargin,
-  IOColors,
-  IOSpacer,
-  useIOTheme,
+  IODimensions,
+  useIOColors,
   VStack
 } from "@io-app/design-system";
 import { View } from "react-native";
@@ -34,7 +32,7 @@ export const DSLayout = () => {
 };
 
 const Grid = () => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <View>
@@ -44,23 +42,24 @@ const Grid = () => {
       </ContentWrapper>
 
       <VStack space={16}>
-        {IOAppMargin.map((value, i) => (
+        {IODimensions.padding.screen.scale.map((value, i) => (
           <View
             key={`${value}-${i}`}
             style={{
-              backgroundColor: IOColors[theme["appBackground-tertiary"]]
+              backgroundColor: colors.surface.tertiary
             }}
           >
             <ContentWrapper margin={value}>
               <View
                 style={{
                   paddingVertical: 16,
-                  backgroundColor: IOColors[theme["appBackground-secondary"]]
+                  backgroundColor: colors.surface.secondary
                 }}
               >
-                <Body color={theme["textBody-secondary"]}>Content example</Body>
+                <Body color={colors.text.content.secondary}>
+                  Content example
+                </Body>
                 <BodySmall
-                  color={theme["textBody-tertiary"]}
                   style={{ position: "absolute", right: 4, top: 4 }}
                   weight="Regular"
                 >
@@ -86,7 +85,7 @@ const Spacing = () => (
 
         {/* Vertical */}
         <VStack space={16}>
-          {IOSpacer.map((spacerEntry, i) => (
+          {IODimensions.gap.scale.map((spacerEntry, i) => (
             <DSSpacerViewerBox
               key={`${spacerEntry}-${i}-vertical`}
               orientation="vertical"
@@ -102,7 +101,7 @@ const Spacing = () => (
 
         {/* Horizontal */}
         <HStack space={8}>
-          {IOSpacer.map((spacerEntry, i) => (
+          {IODimensions.gap.scale.map((spacerEntry, i) => (
             <DSSpacerViewerBox
               key={`${spacerEntry}-${i}-horizontal`}
               orientation="horizontal"
@@ -116,13 +115,11 @@ const Spacing = () => (
 );
 
 const Stack = () => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <ContentWrapper>
-      <H2 color={theme["textHeading-default"]} style={{ marginBottom: 16 }}>
-        Stack
-      </H2>
+      <H2 style={{ marginBottom: 16 }}>Stack</H2>
 
       <VStack space={24}>
         <VStack space={16}>
@@ -132,7 +129,7 @@ const Stack = () => {
             <DSComponentViewerBox name="VStack, space 16">
               <View
                 style={{
-                  backgroundColor: IOColors[theme["appBackground-secondary"]]
+                  backgroundColor: colors.surface.secondary
                 }}
               >
                 <VStack space={16}>
@@ -145,7 +142,7 @@ const Stack = () => {
           <View
             style={{
               alignSelf: "flex-start",
-              backgroundColor: IOColors[theme["appBackground-secondary"]]
+              backgroundColor: colors.surface.secondary
             }}
           >
             <VStack space={16} style={{ alignItems: "center" }}>
@@ -162,7 +159,7 @@ const Stack = () => {
           <DSComponentViewerBox name="HStack, space 16">
             <View
               style={{
-                backgroundColor: IOColors[theme["appBackground-secondary"]]
+                backgroundColor: colors.surface.secondary
               }}
             >
               <HStack space={16}>
@@ -174,7 +171,7 @@ const Stack = () => {
           {/* <DSComponentViewerBox name="HStack, space 16, centered">
           <View
             style={{
-              backgroundColor: IOColors[theme["appBackground-secondary"]]
+              backgroundColor: colors.surface.secondary
             }}
           >
             <HStack space={16} style={{ alignItems: "center" }}>
@@ -189,7 +186,7 @@ const Stack = () => {
 };
 
 const VStackBlocks = () => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <>
@@ -201,13 +198,10 @@ const VStackBlocks = () => {
             paddingHorizontal: 8,
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: IOColors[theme["appBackground-tertiary"]]
+            backgroundColor: colors.surface.tertiary
           }}
         >
-          <BodySmall
-            color={theme["textBody-tertiary"]}
-            weight="Regular"
-          >{`Block n.${i + 1}`}</BodySmall>
+          <BodySmall weight="Regular">{`Block n.${i + 1}`}</BodySmall>
         </View>
       ))}
       <View
@@ -216,19 +210,17 @@ const VStackBlocks = () => {
           paddingHorizontal: 16,
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: IOColors[theme["appBackground-tertiary"]]
+          backgroundColor: colors.surface.tertiary
         }}
       >
-        <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
-          Different height
-        </BodySmall>
+        <BodySmall weight="Regular">Different height</BodySmall>
       </View>
     </>
   );
 };
 
 const HStackBlocks = () => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <>
@@ -240,12 +232,10 @@ const HStackBlocks = () => {
             paddingVertical: 8,
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: IOColors[theme["appBackground-tertiary"]]
+            backgroundColor: colors.surface.tertiary
           }}
         >
-          <BodySmall color={theme["textBody-tertiary"]} weight="Regular">{`${
-            i + 1
-          }`}</BodySmall>
+          <BodySmall weight="Regular">{`${i + 1}`}</BodySmall>
         </View>
       ))}
       <View
@@ -254,12 +244,10 @@ const HStackBlocks = () => {
           paddingVertical: 16,
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: IOColors[theme["appBackground-tertiary"]]
+          backgroundColor: colors.surface.tertiary
         }}
       >
-        <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
-          Growing block
-        </BodySmall>
+        <BodySmall weight="Regular">Growing block</BodySmall>
       </View>
     </>
   );

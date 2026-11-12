@@ -1,4 +1,4 @@
-import { IOColors } from "@io-app/design-system";
+import { IOColorsLegacy } from "@io-app/design-system";
 import { ReactNode } from "react";
 import { ColorValue, StyleSheet, View } from "react-native";
 
@@ -38,7 +38,7 @@ type Props = Readonly<{
 
 /** Creates a full screen overlay on top of another screen for `AlertModal` */
 export const AlertModalOverlay = ({
-  backgroundColor = IOColors.white,
+  backgroundColor = IOColorsLegacy.white,
   opacity = 1,
   children,
   foreground

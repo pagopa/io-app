@@ -3,8 +3,8 @@ import {
   BodyMonospace,
   BodySmall,
   H4,
-  IOColors,
-  IOVisualCostants,
+  IOColorsLegacy,
+  IODimensions,
   PressableListItemBase,
   TextInput,
   VSpacer
@@ -48,7 +48,7 @@ const IdPayOnboardingPlayground = () => {
   return (
     <ScrollView
       contentContainerStyle={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault,
+        paddingHorizontal: IODimensions.padding.screen.default,
         flexGrow: 1
       }}
     >
@@ -201,7 +201,7 @@ const TestServiceItem = (props: TestServiceItemProps) => {
     <View
       style={{
         borderBottomWidth: 1,
-        borderBottomColor: IOColors["grey-100"]
+        borderBottomColor: IOColorsLegacy["grey-100"]
       }}
     >
       <PressableListItemBase onPress={props.onPress}>
