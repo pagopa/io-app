@@ -11,7 +11,6 @@ import { ServiceId } from "@io-app/api-types/generated/definitions/services/Serv
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
-import { err, ok, Result } from "neverthrow";
 import { Platform } from "react-native";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
@@ -82,25 +81,18 @@ export const cgnMerchantsModalSelector = createSelector(
     )
 );
 
-const getCgnFeaturedOpportunities = (
-  cgnConfig: BackendStatus["config"]["cgn"] | undefined
-): Result<ReadonlyArray<CgnFeaturedOpportunity>, string> => {
-  const featuredOpportunities = cgnConfig?.featured_opportunities;
-  if (!featuredOpportunities) {
-    return err("Featured opportunities not configured");
-  }
-  if (!isMinAppVersionSupported(O.some(featuredOpportunities))) {
-    return err("App version below featured opportunities minimum");
-  }
-  return ok(featuredOpportunities.opportunities);
-};
-
 export const cgnFeaturedOpportunitiesSelector = createSelector(
   remoteConfigSelector,
-  remoteConfig =>
-    getCgnFeaturedOpportunities(
-      remoteConfig._tag === "Some" ? remoteConfig.value.cgn : undefined
-    ).unwrapOr(emptyCgnFeaturedOpportunities)
+  remoteConfig => {
+    const featuredOpportunities =
+      remoteConfig._tag === "Some"
+        ? remoteConfig.value.cgn?.featured_opportunities
+        : undefined;
+    return featuredOpportunities &&
+      isMinAppVersionSupported(O.some(featuredOpportunities))
+      ? featuredOpportunities.opportunities
+      : emptyCgnFeaturedOpportunities;
+  }
 );
 
 export const isCGNDiscoveryBannerEnabledSelector = (state: GlobalState) =>
