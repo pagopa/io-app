@@ -2,7 +2,7 @@ import { NoticeListItem } from "@io-app/api-types/generated/definitions/pagopa/b
 import {
   ContentWrapper,
   Divider,
-  IOVisualCostants,
+  IODimensions,
   ListItemHeader
 } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -194,7 +194,7 @@ const ReceiptListScreen = () => {
   return (
     <AnimatedSectionList
       contentContainerStyle={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault,
+        paddingHorizontal: IODimensions.padding.screen.default,
         minHeight: isEmpty ? "100%" : undefined,
         paddingBottom: insets.bottom + 24
       }}

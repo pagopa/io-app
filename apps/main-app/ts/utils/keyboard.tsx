@@ -1,4 +1,4 @@
-import { IOVisualCostants } from "@io-app/design-system";
+import { IODimensions } from "@io-app/design-system";
 import { ReactNode } from "react";
 import { KeyboardAvoidingView, Platform } from "react-native";
 
@@ -16,7 +16,7 @@ export const withKeyboard = (
     behavior={Platform.OS === "android" ? undefined : "padding"}
     keyboardVerticalOffset={Platform.select({
       ios: insideSafeAreaView ? 110 : 0,
-      android: IOVisualCostants.appMarginDefault
+      android: IODimensions.padding.screen.default
     })}
   >
     {content}

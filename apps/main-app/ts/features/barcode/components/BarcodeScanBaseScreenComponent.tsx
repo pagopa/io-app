@@ -2,8 +2,8 @@ import {
   HeaderActionProps,
   HStack,
   IconButton,
-  IOColors,
-  IOVisualCostants,
+  IOColorsLegacy,
+  IODimensions,
   LoadingSpinner,
   TabItem,
   TabNavigation
@@ -259,8 +259,8 @@ const BarcodeScanBaseScreenComponent = ({
   const HeaderTransparent = () => (
     <View
       style={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault,
-        height: IOVisualCostants.headerHeight,
+        paddingHorizontal: IODimensions.padding.screen.default,
+        height: IODimensions.height.header,
         flexGrow: 1,
         flexDirection: "row",
         alignItems: "center",
@@ -280,7 +280,11 @@ const BarcodeScanBaseScreenComponent = ({
     <View style={[styles.screen, { paddingBottom: insets.bottom }]}>
       <View style={styles.cameraContainer}>{cameraView}</View>
       <View style={styles.navigationContainer}>
-        <TabNavigation color="dark" selectedIndex={0} tabAlignment="stretch">
+        <TabNavigation
+          color="contrast"
+          selectedIndex={0}
+          tabAlignment="stretch"
+        >
           <TabItem
             accessibilityLabel={I18n.t("barcodeScan.tabs.a11y.scan")}
             label={I18n.t("barcodeScan.tabs.scan")}
@@ -317,7 +321,7 @@ const BarcodeScanBaseScreenComponent = ({
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: IOColors["blueIO-850"]
+    backgroundColor: IOColorsLegacy["blueIO-850"]
   },
   headerContainer: {
     flex: 1,
