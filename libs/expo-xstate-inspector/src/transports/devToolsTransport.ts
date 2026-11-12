@@ -2,7 +2,8 @@ import { getDevToolsPluginClientAsync } from "expo/devtools";
 
 import type { InspectorTransport } from "../types/transport";
 
-import { PLUGIN_NAME } from "../constants/plugin";
+// Must match `PLUGIN_NAME` in web/src/constants/plugin.ts.
+const PLUGIN_NAME = "expo-xstate-inspector";
 
 /** Sends inspector messages through the Expo dev tools plugin channel. */
 export const createDevToolsTransport = (): InspectorTransport => {

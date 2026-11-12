@@ -1,5 +1,6 @@
 button {
   all: unset;
+  outline: revert;
   display: block;
   width: 100%;
   box-sizing: border-box;

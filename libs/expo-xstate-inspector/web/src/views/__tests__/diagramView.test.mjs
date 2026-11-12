@@ -84,6 +84,42 @@ test("preserves messages when the system theme changes", async t => {
   assert.equal(renderDiagram.mock.callCount(), 1);
 });
 
+for (const outcome of ["resolve", "reject"]) {
+  test(`ignores an in-flight render that ${outcome}s after a message`, async t => {
+    const { actor, container, renderDiagram, view } = setup(t, false);
+    let settle;
+    const pending = new Promise((resolve, reject) => {
+      settle = outcome === "resolve" ? resolve : reject;
+    });
+    renderDiagram.mock.mockImplementationOnce(() => pending);
+
+    const rendering = view.render(actor);
+    view.showMessage("Disconnected.");
+    settle(outcome === "resolve" ? "<svg>stale</svg>" : new Error("stale"));
+    await rendering;
+
+    assert.equal(container.textContent, "Disconnected.");
+    assert.equal(container.innerHTML, undefined);
+  });
+}
+
+test("ignores an older render failure after a newer diagram", async t => {
+  const { actor, container, renderDiagram, view } = setup(t, false);
+  let reject;
+  const pending = new Promise((_, fail) => {
+    reject = fail;
+  });
+  renderDiagram.mock.mockImplementationOnce(() => pending);
+
+  const rendering = view.render(actor);
+  await view.render({ ...actor, snapshot: { value: "running" } });
+  reject(new Error("stale"));
+  await rendering;
+
+  assert.equal(container.innerHTML, "<svg>light</svg>");
+  assert.equal(container.textContent, undefined);
+});
+
 test("describes the clicked state until another machine is shown", async t => {
   const { actor, details, view } = setup(t, false);
   await view.render(actor);

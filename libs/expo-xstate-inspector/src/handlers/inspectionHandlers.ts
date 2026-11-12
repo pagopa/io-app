@@ -1,6 +1,5 @@
 import type {
   AnyActor,
-  InspectedActorEvent,
   InspectedEventEvent,
   InspectedMicrostepEvent,
   InspectedSnapshotEvent
@@ -21,7 +20,7 @@ type Dependencies = {
 };
 
 export const handleActor = (
-  event: InspectedActorEvent,
+  event: InspectedEventEvent,
   { registry, transport }: Dependencies
 ) => {
   // Inspection events always carry actor instances.
@@ -33,13 +32,18 @@ export const handleActor = (
 
 export const handleEvent = (
   event: InspectedEventEvent,
-  { transport }: Dependencies
-) =>
+  dependencies: Dependencies
+) => {
+  const { transport } = dependencies;
+  if (event.event.type === "xstate.init") {
+    handleActor(event, dependencies);
+  }
   transport.send("event", {
     event: serializeValue(event.event),
     sessionId: event.actorRef.sessionId,
     timestamp: Date.now()
   });
+};
 
 export const handleMicrostep = (
   event: InspectedMicrostepEvent,

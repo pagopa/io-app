@@ -29,6 +29,7 @@ export const createDiagramView = (
   viewport: Pick<PanZoom, "update">
 ) => {
   const colorScheme = window.matchMedia("(prefers-color-scheme: dark)");
+  const requests = { latest: 0 };
   const shown: {
     actor?: InspectedActor;
     code?: string;
@@ -54,6 +55,7 @@ export const createDiagramView = (
     details.render(state);
   };
   const showMessage = (text: string) => {
+    requests.latest++;
     shown.code = undefined;
     shown.definition = undefined;
     shown.actor = undefined;
@@ -68,6 +70,7 @@ export const createDiagramView = (
       showMessage("No machine selected.");
       return;
     }
+    const request = { id: requests.latest };
     try {
       const { code, edgeKeys } = buildStateDiagram(
         actor.definition,
@@ -82,8 +85,9 @@ export const createDiagramView = (
         return;
       }
       shown.code = drawing;
+      request.id = ++requests.latest;
       const svg = await renderDiagram(code, colorScheme.matches);
-      if (svg === undefined) {
+      if (request.id !== requests.latest || svg === undefined) {
         return;
       }
       container.innerHTML = svg;
@@ -96,9 +100,11 @@ export const createDiagramView = (
       showSelection();
       viewport.update({ isNew });
     } catch (error) {
-      showMessage(
-        `Could not render the diagram: ${error instanceof Error ? error.message : String(error)}`
-      );
+      if (request.id === requests.latest) {
+        showMessage(
+          `Could not render the diagram: ${error instanceof Error ? error.message : String(error)}`
+        );
+      }
     }
   };
   colorScheme.addEventListener("change", () => {

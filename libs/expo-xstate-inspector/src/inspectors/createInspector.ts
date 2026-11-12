@@ -4,7 +4,6 @@ import type { ActorRegistry } from "../types/registry";
 import type { InspectorTransport } from "../types/transport";
 
 import {
-  handleActor,
   handleEvent,
   handleMicrostep,
   handleSnapshot
@@ -25,8 +24,6 @@ export const createInspector = (
   );
   return (event: InspectionEvent) => {
     switch (event.type) {
-      case "@xstate.actor":
-        return handleActor(event, dependencies);
       case "@xstate.event":
         return handleEvent(event, dependencies);
       case "@xstate.microstep":

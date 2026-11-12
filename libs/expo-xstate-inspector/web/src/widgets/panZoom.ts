@@ -118,6 +118,9 @@ export const bindPanZoom = (
   viewport.addEventListener(
     "wheel",
     event => {
+      if (isOnControl(event)) {
+        return;
+      }
       event.preventDefault();
       if (event.ctrlKey || event.metaKey) {
         const delta = clamp(event.deltaY, -MAX_WHEEL_DELTA, MAX_WHEEL_DELTA);
