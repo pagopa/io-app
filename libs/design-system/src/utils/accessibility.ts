@@ -1,11 +1,5 @@
-import { isSwitchAccessEnabled } from "@io-app/expo-switch-access";
 import { useEffect, useState } from "react";
-import {
-  AccessibilityInfo,
-  AppState,
-  Platform,
-  useWindowDimensions
-} from "react-native";
+import { AccessibilityInfo, Platform, useWindowDimensions } from "react-native";
 
 import { IOMaxFontSizeMultiplier } from "./fonts";
 
@@ -39,28 +33,6 @@ export const useBoldTextEnabled = () => {
   }, []);
 
   return boldTextEnabled;
-};
-
-export const useSwitchAccessEnabled = () => {
-  const [switchAccessEnabled, setSwitchAccessEnabled] = useState(false);
-
-  useEffect(() => {
-    const updateSwitchAccessState = () =>
-      void isSwitchAccessEnabled().then(setSwitchAccessEnabled);
-
-    void updateSwitchAccessState();
-    const subscription = AppState.addEventListener("change", state => {
-      if (state === "active") {
-        void updateSwitchAccessState();
-      }
-    });
-
-    return () => {
-      subscription.remove();
-    };
-  }, []);
-
-  return switchAccessEnabled;
 };
 
 export const useScreenReaderEnabled = () => {
