@@ -1,0 +1,14 @@
+{
+  "name": "@io-app/expo-switch-access",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/expo-switch-access",
+  "projectType": "library",
+  "targets": {
+    "tsc-noemit": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm --filter @io-app/expo-switch-access run tsc-noemit"
+      }
+    }
+  }
+}
