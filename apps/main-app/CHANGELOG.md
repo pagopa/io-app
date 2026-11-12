@@ -1,3 +1,39 @@
+## 3.43.0-rc.9 (2026-11-11)
+
+### Bug Fixes
+
+- [[IOPLT-2268](https://pagopa.atlassian.net/browse/IOPLT-2268)] Fix components with missing dark mode support ([#8856](https://github.com/pagopa/io-app/pull/8856))
+- **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Keep tour guide state after logout ([#8862](https://github.com/pagopa/io-app/pull/8862))
+
+### Chores
+
+- **IT-Wallet:** [[SIW-5349](https://pagopa.atlassian.net/browse/SIW-5349)] Enhance Privacy web component accessibility ([#8855](https://github.com/pagopa/io-app/pull/8855))
+
+### ❤️ Thank You
+
+- Damiano Plebani
+- DavideOnano @DavideOnano
+- Federico Mastrini @mastro993
+
+## 3.43.0-rc.8 (2026-11-10)
+
+### Features
+
+- **IT-Wallet:** [[SIW-5464](https://pagopa.atlassian.net/browse/SIW-5464)] Remote FF for CED opportunities ([#8838](https://github.com/pagopa/io-app/pull/8838))
+
+### Bug Fixes
+
+- **IT-Wallet:** [[SIW-3834](https://pagopa.atlassian.net/browse/SIW-3834),[SIW-3818](https://pagopa.atlassian.net/browse/SIW-3818)] Enhance keyboard accessibility for privacy link in credential trust issuer screen ([#8847](https://github.com/pagopa/io-app/pull/8847))
+- [[IEL-740](https://pagopa.atlassian.net/browse/IEL-740)] Correct iOS bottom sheet keyboard focus order ([#8824](https://github.com/pagopa/io-app/pull/8824))
+
+### ❤️ Thank You
+
+- DavideOnano @DavideOnano
+- Emanuele Dall'Ara @LeleDallas
+- Fabio Bombardi @shadowsheep1
+- Martino Cesari Tomba @forrest57
+- Riccardo Sacco @riccardosacco99
+
 ## 3.43.0-rc.7 (2026-11-09)
 
 ### Bug Fixes

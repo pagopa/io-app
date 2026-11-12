@@ -1,4 +1,4 @@
-import { Alert, H4, useIOTheme, VStack } from "@io-app/design-system";
+import { Alert, H4, VStack } from "@io-app/design-system";
 import { Alert as RNAlert } from "react-native";
 
 /* Types */
@@ -13,32 +13,28 @@ const onPress = () => {
   RNAlert.alert("Action triggered");
 };
 
-export const DSAlert = () => {
-  const theme = useIOTheme();
-
-  return (
-    <DesignSystemScreen title={"Alert"}>
-      <VStack space={blockMargin}>
-        {/* Content only */}
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Content only</H4>
-          {renderContentOnly()}
-        </VStack>
-
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Content + Action</H4>
-          {renderContentPlusAction()}
-        </VStack>
-
-        {/* Full width */}
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Full width</H4>
-          {renderFullWidth()}
-        </VStack>
+export const DSAlert = () => (
+  <DesignSystemScreen title={"Alert"}>
+    <VStack space={blockMargin}>
+      {/* Content only */}
+      <VStack space={sectionTitleMargin}>
+        <H4>Content only</H4>
+        {renderContentOnly()}
       </VStack>
-    </DesignSystemScreen>
-  );
-};
+
+      <VStack space={sectionTitleMargin}>
+        <H4>Content + Action</H4>
+        {renderContentPlusAction()}
+      </VStack>
+
+      {/* Full width */}
+      <VStack space={sectionTitleMargin}>
+        <H4>Full width</H4>
+        {renderFullWidth()}
+      </VStack>
+    </VStack>
+  </DesignSystemScreen>
+);
 
 const renderContentOnly = () => (
   <VStack space={componentInnerMargin}>

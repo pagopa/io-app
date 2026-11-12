@@ -15,10 +15,9 @@ import Animated, {
   withTiming
 } from "react-native-reanimated";
 
-import { useIOTheme } from "../../context";
+import { useIOColors } from "../../context";
 import { IOSpringValues } from "../../core/IOAnimations";
-import { IOColors } from "../../core/IOColors";
-import { IOSelectionTickVisualParams } from "../../core/IOStyles";
+import { IODimensions } from "../../core/tokens";
 import { AnimatedTick } from "../common/AnimatedTick";
 
 type OwnProps = Pick<PressableProps, "disabled" | "onPress"> & Props;
@@ -33,7 +32,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 0,
     top: 0,
-    borderWidth: IOSelectionTickVisualParams.borderWidth
+    borderWidth: IODimensions.stroke.selection.control
   },
   radioCircle: {
     position: "absolute",
@@ -47,11 +46,8 @@ const styles = StyleSheet.create({
  * `ListItemRadio*` components.
  */
 export const Radio = ({ size, checked, onPress, disabled }: OwnProps) => {
-  const theme = useIOTheme();
+  const radioColors = useIOColors().component.radio;
   const isChecked = checked ?? false;
-
-  const borderColor = IOColors[theme["selection-border-off"]];
-  const backgroundColor = IOColors[theme["selection-background-on"]];
 
   const circleAnimationProgress = useSharedValue(checked ? 1 : 0);
   const tickAnimationProgress = useSharedValue(checked ? 1 : 0);
@@ -97,13 +93,17 @@ export const Radio = ({ size, checked, onPress, disabled }: OwnProps) => {
       testID="RadioInput"
     >
       <View
-        style={[styles.radioBorder, radioButtonSizeStyle, { borderColor }]}
+        style={[
+          styles.radioBorder,
+          radioButtonSizeStyle,
+          { borderColor: radioColors.border }
+        ]}
       />
       <Animated.View
         style={[
           styles.radioCircle,
           radioButtonSizeStyle,
-          { backgroundColor },
+          { backgroundColor: radioColors.background },
           animatedCheckboxSquare
         ]}
       />
@@ -112,7 +112,7 @@ export const Radio = ({ size, checked, onPress, disabled }: OwnProps) => {
           <AnimatedTick
             progress={tickAnimationProgress}
             size={size}
-            stroke={IOColors[theme["selection-tick"]]}
+            stroke={radioColors.foreground}
           />
         </View>
       )}

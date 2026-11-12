@@ -15,13 +15,10 @@ import { idpSelected } from "../../common/store/actions";
 import { AUTH_LEVELS, AuthLevel } from "../../common/utils";
 import { fastLoginOptInFFEnabled } from "../../fastLogin/store/selectors";
 import {
-  isCieLoginUatEnabledSelector,
+  cieEnvSelector,
   isCieSupportedSelector
 } from "../../login/cie/store/selectors";
-import {
-  cieFlowForDevServerEnabled,
-  getCieIdEnvironment
-} from "../../login/cie/utils";
+import { cieFlowForDevServerEnabled } from "../../login/cie/utils";
 import {
   ChosenIdentifier,
   Identifier
@@ -52,7 +49,7 @@ const useNavigateToLoginMethod = () => {
   const isCIEAuthenticationSupported = useIOSelector(isCieSupportedSelector);
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
 
-  const isCieUatEnabled = useIOSelector(isCieLoginUatEnabledSelector);
+  const cieEnv = useIOSelector(cieEnvSelector);
 
   const isCieSupported =
     cieFlowForDevServerEnabled ||
@@ -114,10 +111,7 @@ const useNavigateToLoginMethod = () => {
         dispatch(cieIDSetSelectedSecurityLevel(spidLevel));
       }
 
-      if (
-        isCieIdAvailable(getCieIdEnvironment(isCieUatEnabled)) ||
-        cieFlowForDevServerEnabled
-      ) {
+      if (isCieIdAvailable(cieEnv) || cieFlowForDevServerEnabled) {
         withIsFastLoginOptInCheck(
           () => {
             navigate(AUTHENTICATION_ROUTES.MAIN, {
@@ -131,15 +125,13 @@ const useNavigateToLoginMethod = () => {
       } else {
         navigate(AUTHENTICATION_ROUTES.MAIN, {
           screen: AUTHENTICATION_ROUTES.CIE_NOT_INSTALLED,
-          params: {
-            isUat: isCieUatEnabled
-          }
+          params: { cieEnv }
         });
       }
     },
     [
       dispatch,
-      isCieUatEnabled,
+      cieEnv,
       withIsFastLoginOptInCheck,
       navigate,
       isActiveSessionLogin

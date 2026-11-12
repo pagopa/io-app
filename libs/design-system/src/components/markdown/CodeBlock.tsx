@@ -1,7 +1,6 @@
 import { View } from "react-native";
 
-import { useIOTheme } from "../../context";
-import { IOColors } from "../../core";
+import { useIOColors } from "../../context";
 import { BodyMonospace } from "../typography/BodyMonospace";
 
 type CodeBlockProps = {
@@ -13,13 +12,13 @@ type CodeBlockProps = {
  * GitHub's fenced code block styling.
  */
 export const CodeBlock = ({ content }: CodeBlockProps) => {
-  const theme = useIOTheme();
+  const codeBlockColors = useIOColors().component.codeBlock;
 
   return (
     <View
       style={{
-        backgroundColor: IOColors[theme["appBackground-secondary"]],
-        borderColor: IOColors[theme["cardBorder-default"]],
+        backgroundColor: codeBlockColors.background,
+        borderColor: codeBlockColors.border,
         borderWidth: 1,
         borderRadius: 4,
         borderCurve: "continuous",

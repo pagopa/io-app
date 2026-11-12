@@ -5,8 +5,10 @@ import { createSelector } from "reselect";
 import { Locales } from "../../../../../i18n";
 import { persistedPreferencesSelector } from "../../../../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { itwIsDiscoverMoreCEDLocallyEnabledSelector } from "../../../common/store/selectors/preferences";
 import {
   itwHiddenCredentialsSelector,
+  itwIsDiscoverMoreCEDRemotelyEnabledSelector,
   itwNewCredentialsSelector,
   itwPinnedCredentialsSelector
 } from "../../../common/store/selectors/remoteConfig";
@@ -121,7 +123,8 @@ export const itwIsCredentialsCatalogueUnavailable = (state: GlobalState) =>
  * CED opportunities
  */
 export const itwDiscoverMoreCEDSelector = (state: GlobalState) =>
-  state.features.itWallet.preferences.isDiscoverMoreCEDEnabled ?? false;
+  itwIsDiscoverMoreCEDLocallyEnabledSelector(state) ||
+  itwIsDiscoverMoreCEDRemotelyEnabledSelector(state);
 
 /**
  * Select the raw catalogue translations pot (all locales). Only populated for
