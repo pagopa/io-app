@@ -66,7 +66,7 @@ PODS:
     - ExpoModulesCore
   - ExpoFont (55.0.8):
     - ExpoModulesCore
-  - ExpoHttpClient (1.0.0):
+  - ExpoHttpClient (2.0.0):
     - ExpoModulesCore
   - ExpoImagePicker (55.0.22):
     - ExpoModulesCore
@@ -4308,7 +4308,7 @@ SPEC CHECKSUMS:
   ExpoDomWebView: b2e9d601f9cb77d3c97da73234e175b64be91928
   ExpoFileSystem: 61e663d0bbd1a973d324530d1d6ee559a5e5192c
   ExpoFont: a7e34a75bdfb703fa07a0e87807f836236608c76
-  ExpoHttpClient: 161805a3c409dbab03de9c4bfcae5ad87dff1d5a
+  ExpoHttpClient: cc6259576bf4483e3804af953d11ee38ae0fef6a
   ExpoImagePicker: f82edc16bb8eeb6260c2759b0015afc0ab45a3d0
   ExpoKeepAwake: d0eb7a0719500d2a43fbf29b6f79e84d70c75ebf
   ExpoLinearGradient: caf2c659e6ea0c473ece8f6164eaeae05740664d

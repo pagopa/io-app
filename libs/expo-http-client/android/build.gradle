@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'expo.modules.httpclient'
-version = '1.0.0'
+version = '2.0.0'
 
 def ktorVersion = '3.2.3'
 def coroutinesVersion = '1.8.1'
@@ -13,7 +13,7 @@ android {
   namespace "expo.modules.httpclient"
   defaultConfig {
     versionCode 1
-    versionName "1.0.0"
+    versionName "2.0.0"
   }
   lintOptions {
     abortOnError false

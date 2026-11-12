@@ -1,6 +1,6 @@
 {
   "name": "@io-app/expo-http-client",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Expo module exposing a native HTTP client (Alamofire on iOS, Ktor on Android) for io-app",
   "private": true,
   "main": "index.ts",
