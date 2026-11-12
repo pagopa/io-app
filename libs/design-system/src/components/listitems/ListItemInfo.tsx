@@ -181,7 +181,7 @@ const ListItemInfoContent = ({
         </View>
       </View>
 
-      {imageSource && imageSource !== failedImageSource && (
+      {imageSource && imageSource !== failedImageSource && !hugeFontEnabled && (
         <View
           accessible={false}
           importantForAccessibility="no-hide-descendants"
