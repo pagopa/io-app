@@ -7,10 +7,8 @@ type DevToolsClientCallbacks = {
 };
 
 const broadcastUrl = () => {
-  const host =
-    new URLSearchParams(location.search).get("devServer") || location.host;
   const protocol = location.protocol === "https:" ? "wss" : "ws";
-  return `${protocol}://${host}/expo-dev-plugins/broadcast`;
+  return `${protocol}://${location.host}/expo-dev-plugins/broadcast`;
 };
 
 /** Connects to the app through the Expo dev tools broadcast socket. */
