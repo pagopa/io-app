@@ -2,7 +2,7 @@ import {
   CryptoError,
   isKeyStrongboxBacked,
   PublicKey
-} from "@pagopa/io-react-native-crypto";
+} from "@io-app/expo-crypto";
 import { jwkThumbprintByEncoding } from "jwk-thumbprint";
 
 import {

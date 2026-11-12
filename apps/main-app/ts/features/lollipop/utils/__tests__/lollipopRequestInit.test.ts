@@ -1,4 +1,4 @@
-import { PublicKey } from "@pagopa/io-react-native-crypto";
+import { PublicKey } from "@io-app/expo-crypto";
 import MockDate from "mockdate";
 import URLParse from "url-parse";
 
@@ -40,10 +40,6 @@ const requestInit: RequestInit = {
 
 const configurationError =
   "Bad input parameters, unable to compose RequestAndKeyInfoForLPFetch";
-
-jest.mock("@pagopa/io-react-native-crypto", () => ({
-  sign: jest.fn().mockResolvedValue("MockSignature")
-}));
 
 MockDate.set("2023-01-01T01:00:00");
 const mockTimestamp = 1672534800; // 2023-01-01T01:00:00
@@ -176,7 +172,7 @@ describe("customContentSignatureBases", () => {
 describe("customContentToSignPromises", () => {
   const baseInput = baseCustomContentInput;
 
-  const { sign } = jest.requireMock("@pagopa/io-react-native-crypto");
+  const { sign } = jest.requireMock("@io-app/expo-crypto");
 
   beforeEach(() => {
     sign.mockReset().mockResolvedValue("MockSignature");
@@ -307,7 +303,7 @@ describe("Test lollipopRequestInit", () => {
   });
 
   it("should ignore custom content signature failure and keep main signature", async () => {
-    const { sign } = jest.requireMock("@pagopa/io-react-native-crypto");
+    const { sign } = jest.requireMock("@io-app/expo-crypto");
     sign
       .mockResolvedValueOnce("MockSignature")
       .mockRejectedValueOnce(new Error("Failure"));

@@ -1,4 +1,4 @@
-import { deleteKey } from "@pagopa/io-react-native-crypto";
+import { deleteKey } from "@io-app/expo-crypto";
 import { all, call, put, select } from "typed-redux-saga/macro";
 
 import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../../store/reducers/persistedPreferences";

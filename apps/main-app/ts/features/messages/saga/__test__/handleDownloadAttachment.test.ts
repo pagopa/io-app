@@ -1,5 +1,5 @@
 import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
-import { PublicKey } from "@pagopa/io-react-native-crypto";
+import { PublicKey } from "@io-app/expo-crypto";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import ReactNativeBlobUtil from "react-native-blob-util";
