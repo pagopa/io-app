@@ -3,7 +3,7 @@ import {
   H2,
   IconButton,
   IOButton,
-  IOColors,
+  IOColorsLegacy,
   Pictogram,
   VSpacer
 } from "@io-app/design-system";
@@ -96,7 +96,7 @@ const TosBonusComponent: FunctionComponent<Props> = props => {
 
   return (
     <LoadingSpinnerOverlay isLoading={!isLoadEnd}>
-      <SafeAreaView style={{ flex: 1, backgroundColor: IOColors.white }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: IOColorsLegacy.white }}>
         <View
           style={{
             paddingHorizontal: 16,

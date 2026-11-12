@@ -2,6 +2,7 @@ import {
   StatusEnum,
   TransactionBarCodeResponse
 } from "@io-app/api-types/generated/definitions/idpay/TransactionBarCodeResponse";
+import { IOColors } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
@@ -12,6 +13,7 @@ import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 import { getNetworkError } from "../../../../../utils/errors";
+import { findAllByStyle, withDarkTheme } from "../../../../../utils/testColors";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { IdPayBarcodeRoutes } from "../../navigation/routes";
 import { IdPayBarcodeResultScreen } from "../IdPayBarcodeResultScreen";
@@ -20,11 +22,15 @@ jest.mock("../../../../../utils/clipboard", () => ({
   clipboardSetStringWithFeedback: jest.fn()
 }));
 
-const renderComponent = (state: GlobalState) => {
+const renderComponent = (
+  state: GlobalState,
+  theme: "dark" | "light" = "light"
+) => {
   const store = createStore(appReducer, state as any);
+  const Component = () => <IdPayBarcodeResultScreen />;
 
   return renderScreenWithNavigationStoreContext(
-    () => <IdPayBarcodeResultScreen />,
+    theme === "dark" ? withDarkTheme(Component) : Component,
     IdPayBarcodeRoutes.IDPAY_BARCODE_RESULT,
     {
       initiativeId: "initiativeId"
@@ -93,6 +99,30 @@ describe("IdPayBarcodeResultScreen", () => {
 
     fireEvent.press(copyButton);
     expect(mockClipboard).toHaveBeenCalledWith(barcodeData.trxCode);
+  });
+
+  it("should draw the barcode box border with the dark stroke token in dark mode", () => {
+    const successState = {
+      ...globalState,
+      features: {
+        ...globalState.features,
+        idPay: {
+          ...globalState.features.idPay,
+          barcode: {
+            ["initiativeId"]: pot.some(barcodeData)
+          }
+        }
+      }
+    };
+
+    const { toJSON } = renderComponent(successState, "dark");
+
+    expect(
+      findAllByStyle(toJSON(), {
+        borderColor: IOColors.dark.stroke.default,
+        borderWidth: 1
+      })
+    ).toHaveLength(1);
   });
 
   it("should not render modal when there's an error on barcode generation", () => {

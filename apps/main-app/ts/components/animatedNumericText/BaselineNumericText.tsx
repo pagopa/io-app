@@ -1,4 +1,4 @@
-import { IOText, IOTypography, useIOTheme } from "@io-app/design-system";
+import { IOText, IOTypography, useIOColors } from "@io-app/design-system";
 
 import { AnimatedNumericTextProps } from "./types";
 
@@ -24,13 +24,13 @@ export const BaselineNumericText = ({
   value,
   weight = h1.weight
 }: AnimatedNumericTextProps) => {
-  const theme = useIOTheme();
+  const typographyColors = useIOColors().component.typography;
 
   return (
     <IOText
       accessibilityLabel={accessibilityLabel}
       allowFontScaling={allowFontScaling}
-      color={color ?? theme[h1.colorToken]}
+      color={color ?? typographyColors.h1}
       maxFontSizeMultiplier={maxFontSizeMultiplier}
       size={size}
       weight={weight}

@@ -114,10 +114,8 @@ The library is made up of several parts:
 
 Essential core visual attributes of the design language. It includes:
 
-- **`IOColors`**: Defines the main color palette, themes (light/dark) and other color-related utilities
-- **`IOSpacing`**: Defines the main spacing scale and various component spacing attributes
-- **`IOStyles`**: Defines common styles shared across components
-- **`IOShapes`**: Defines visual shape-related attributes, such as radius
+- [**`IOColors`**](./src/core/tokens/colors/README.md): Defines every color token (palette, semantic light/dark and component colors), read with `useIOColors()`
+- [**`IODimensions`**](./src/core/tokens/dimensions/README.md): Defines every dimension token (spacing, padding, radius, stroke, sizes): scales, system and component values
 - **`IOTypography`**: Defines the visual attributes of each typographic style
 - **`IOAnimations`**: Defines common animation attributes used for interactive elements (used by the [`reanimated`](https://docs.swmansion.com/react-native-reanimated/) library)
 - **`IOTransitions`**: Defines reusable custom enter/exit transitions (used by the [`reanimated`](https://docs.swmansion.com/react-native-reanimated/) library)
@@ -157,7 +155,6 @@ Essential atomic components:
 - [**TextInput**](./src/components/textInput/)
 - [**List Items**](./src/components/listitems/)
   - [`ListItemAction`](./src/components/listitems/ListItemAction.tsx)
-  - [`ListItemAmount`](./src/components/listitems/ListItemAmount.tsx)
   - [`ListItemHeader`](./src/components/listitems/ListItemHeader.tsx)
   - [`ListItemInfo`](./src/components/listitems/ListItemInfo.tsx)
   - [`ListItemInfoCopy`](./src/components/listitems/ListItemInfoCopy.tsx)
