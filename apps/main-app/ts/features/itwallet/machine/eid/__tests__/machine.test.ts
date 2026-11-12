@@ -14,6 +14,7 @@ import {
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { idps } from "../../../../../utils/idps";
+import * as itwIoWallet from "../../../common/utils/itwIoWallet";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import {
   CredentialAccessToken,
@@ -3543,5 +3544,38 @@ describe("itwEidIssuanceMachine credential trigger", () => {
     });
 
     expect(actor.getSnapshot().context.credentialOfferUri).toBe(expected);
+  });
+
+  test.each([
+    {
+      name: "keeps the offer when the SDK supports credential offers",
+      isSupported: true,
+      expected: T_CREDENTIAL_OFFER_URI
+    },
+    {
+      name: "drops the offer when the SDK does not support credential offers",
+      isSupported: false,
+      expected: undefined
+    }
+  ])("$name", ({ isSupported, expected }) => {
+    const getIoWalletSpy = jest
+      .spyOn(itwIoWallet, "getIoWallet")
+      .mockReturnValue({ CredentialsOffer: { isSupported } } as never);
+
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
+    actor.start();
+
+    actor.send({
+      type: "start",
+      mode: "issuance",
+      level: "l3",
+      credentialType: "MDL",
+      credentialOfferUri: T_CREDENTIAL_OFFER_URI
+    });
+
+    expect(getIoWalletSpy).toHaveBeenCalledWith("1.4.6");
+    expect(actor.getSnapshot().context.credentialOfferUri).toBe(expected);
+
+    getIoWalletSpy.mockRestore();
   });
 });
