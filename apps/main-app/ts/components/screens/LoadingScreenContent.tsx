@@ -5,7 +5,8 @@ import {
   H3,
   IOButton,
   IOButtonProps,
-  IOColors,
+  IOColorsLegacy,
+  IODimensions,
   IOMarkdownLite,
   useIOTheme,
   VSpacer,
@@ -73,7 +74,7 @@ export const LoadingScreenContent = ({
       edges={headerVisible ? ["bottom"] : undefined}
       style={[
         styles.container,
-        { backgroundColor: IOColors[theme["appBackground-primary"]] }
+        { backgroundColor: IOColorsLegacy[theme["appBackground-primary"]] }
       ]}
       testID={testID}
     >
@@ -91,7 +92,7 @@ export const LoadingScreenContent = ({
               <AnimatedPictogram
                 loop={true}
                 name={animatedPictogramSource}
-                size={120}
+                size={IODimensions.size.pictogram.screen}
               />
             ) : (
               <LoadingIndicator />

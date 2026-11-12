@@ -1,11 +1,10 @@
 import {
   ContentWrapper,
-  hexToRgba,
-  IOColors,
+  IODimensions,
   IOPictogramSizeScale,
-  IOVisualCostants,
   RadioGroup,
-  useIOTheme
+  useIOColors,
+  withAlpha
 } from "@io-app/design-system";
 import { LinearGradient } from "expo-linear-gradient";
 import { useCallback, useState } from "react";
@@ -24,7 +23,7 @@ type AnimatedPictogramType = {
 
 export const DSAnimatedPictograms = () => {
   const insets = useSafeAreaInsets();
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   const scrollGradientHeight = 32;
   const pictogramSize: IOPictogramSizeScale = 180;
@@ -68,7 +67,7 @@ export const DSAnimatedPictograms = () => {
 
   const pictogramAreaHeight =
     pictogramSize +
-    IOVisualCostants.appMarginDefault * 2 -
+    IODimensions.padding.screen.default * 2 -
     scrollGradientHeight;
 
   return (
@@ -78,12 +77,12 @@ export const DSAnimatedPictograms = () => {
           width: "100%",
           zIndex: 1,
           minHeight: pictogramAreaHeight,
-          backgroundColor: IOColors[theme["appBackground-primary"]],
+          backgroundColor: colors.background.default,
           position: "absolute",
           alignItems: "center"
         }}
       >
-        <View style={{ marginVertical: IOVisualCostants.appMarginDefault }}>
+        <View style={{ marginVertical: IODimensions.padding.screen.default }}>
           <AnimatedPictogram
             key={getCurrentPictogram()?.name || pictogramsRefs[0].name}
             name={getCurrentPictogram()?.name || pictogramsRefs[0].name}
@@ -93,14 +92,14 @@ export const DSAnimatedPictograms = () => {
 
         <LinearGradient
           colors={[
-            IOColors[theme["appBackground-primary"]],
-            hexToRgba(IOColors[theme["appBackground-primary"]], 0)
+            colors.background.default,
+            withAlpha(colors.background.default, 0)
           ]}
           style={{
             height: scrollGradientHeight,
             position: "absolute",
-            left: -IOVisualCostants.appMarginDefault,
-            right: -IOVisualCostants.appMarginDefault,
+            left: -IODimensions.padding.screen.default,
+            right: -IODimensions.padding.screen.default,
             bottom: -scrollGradientHeight
           }}
         />

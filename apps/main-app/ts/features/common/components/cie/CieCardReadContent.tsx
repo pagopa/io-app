@@ -7,10 +7,12 @@ import {
   IOButton,
   IOButtonBlockSpecificProps,
   IOButtonLinkSpecificProps,
-  IOColors,
+  IOColorsLegacy,
+  IODimensions,
   IOPictograms,
   IOSpringValues,
   Pictogram,
+  useIOColors,
   VSpacer,
   VStack
 } from "@io-app/design-system";
@@ -121,9 +123,10 @@ const LinearProgressBar = (
 ) => {
   const { progress = 0 } = props;
   const [width, setWidth] = useState(0);
+  const colors = useIOColors();
 
-  const backgroundColor = IOColors["grey-200"];
-  const foregroundColor = IOColors["turquoise-500"];
+  const backgroundColor = colors.stroke.default;
+  const foregroundColor = IOColorsLegacy["turquoise-500"];
 
   // Convert progress to 0-100 scale and round to avoid floating-point precision issues
   const progressPercent = Math.round(
@@ -189,7 +192,10 @@ const ContentIos = (props: CieCardReadContentProps) => (
           <Title title={props.title} />
           <Subtitle subtitle={props.subtitle} />
         </View>
-        <Pictogram name={props.pictogram} size={120} />
+        <Pictogram
+          name={props.pictogram}
+          size={IODimensions.size.pictogram.screen}
+        />
       </HStack>
     </VStack>
     <Actions
@@ -200,6 +206,7 @@ const ContentIos = (props: CieCardReadContentProps) => (
 );
 
 const ContentAndroid = (props: CieCardReadContentProps) => {
+  const colors = useIOColors();
   const announceStep = 30;
 
   const progressPercent = Math.round(
@@ -223,8 +230,8 @@ const ContentAndroid = (props: CieCardReadContentProps) => {
             progress={(props.progress || 0) * 100}
             radius={120}
             size={240}
-            strokeBgColor={IOColors["grey-200"]}
-            strokeColor={IOColors["blueIO-500"]}
+            strokeBgColor={colors.stroke.default}
+            strokeColor={colors.foreground.accent}
             strokeWidth={4}
           >
             <Pictogram name={props.pictogram} size={180} />
