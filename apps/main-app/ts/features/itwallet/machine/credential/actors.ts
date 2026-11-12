@@ -400,11 +400,16 @@ export const processCredentialOfferActor = fromPromise<
   const { itwVersion } = input.deps;
 
   const wallet = getIoWallet(itwVersion);
+  const offerApi = wallet.CredentialsOffer;
 
-  const offer = await wallet.CredentialsOffer.resolveCredentialOffer(
-    input.credentialOfferUri
-  );
-  const grantDetails = wallet.CredentialsOffer.extractGrantDetails(offer);
+  if (!offerApi.isSupported) {
+    throw new Error(
+      `Credential offer is not supported by IT-Wallet version ${itwVersion}`
+    );
+  }
+
+  const offer = await offerApi.resolveCredentialOffer(input.credentialOfferUri);
+  const grantDetails = offerApi.extractGrantDetails(offer);
 
   const { issuerConf } = await wallet.CredentialIssuance.evaluateIssuerTrust(
     offer.credential_issuer,
