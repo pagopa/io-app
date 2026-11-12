@@ -789,7 +789,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                     [
                                       {
                                         "alignItems": "center",
-                                        "borderColor": "#E8EBF1",
                                         "borderCurve": "continuous",
                                         "borderRadius": 8,
                                         "borderWidth": 1,
@@ -807,7 +806,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                     [
                                       {
                                         "alignItems": "center",
-                                        "borderColor": "#E8EBF1",
                                         "borderCurve": "continuous",
                                         "borderRadius": 8,
                                         "borderWidth": 1,
@@ -1046,7 +1044,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                     [
                                       {
                                         "alignItems": "center",
-                                        "borderColor": "#E8EBF1",
                                         "borderCurve": "continuous",
                                         "borderRadius": 8,
                                         "borderWidth": 1,
@@ -1064,7 +1061,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                     [
                                       {
                                         "alignItems": "center",
-                                        "borderColor": "#E8EBF1",
                                         "borderCurve": "continuous",
                                         "borderRadius": 8,
                                         "borderWidth": 1,
@@ -1330,7 +1326,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                     [
                                       {
                                         "alignItems": "center",
-                                        "borderColor": "#E8EBF1",
                                         "borderCurve": "continuous",
                                         "borderRadius": 8,
                                         "borderWidth": 1,
@@ -1348,7 +1343,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                     [
                                       {
                                         "alignItems": "center",
-                                        "borderColor": "#E8EBF1",
                                         "borderCurve": "continuous",
                                         "borderRadius": 8,
                                         "borderWidth": 1,
@@ -1614,7 +1608,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                     [
                                       {
                                         "alignItems": "center",
-                                        "borderColor": "#E8EBF1",
                                         "borderCurve": "continuous",
                                         "borderRadius": 8,
                                         "borderWidth": 1,
@@ -1632,7 +1625,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                     [
                                       {
                                         "alignItems": "center",
-                                        "borderColor": "#E8EBF1",
                                         "borderCurve": "continuous",
                                         "borderRadius": 8,
                                         "borderWidth": 1,
@@ -1898,7 +1890,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                     [
                                       {
                                         "alignItems": "center",
-                                        "borderColor": "#E8EBF1",
                                         "borderCurve": "continuous",
                                         "borderRadius": 8,
                                         "borderWidth": 1,
@@ -1916,7 +1907,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                     [
                                       {
                                         "alignItems": "center",
-                                        "borderColor": "#E8EBF1",
                                         "borderCurve": "continuous",
                                         "borderRadius": 8,
                                         "borderWidth": 1,
@@ -2182,7 +2172,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                     [
                                       {
                                         "alignItems": "center",
-                                        "borderColor": "#E8EBF1",
                                         "borderCurve": "continuous",
                                         "borderRadius": 8,
                                         "borderWidth": 1,
@@ -2200,7 +2189,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                     [
                                       {
                                         "alignItems": "center",
-                                        "borderColor": "#E8EBF1",
                                         "borderCurve": "continuous",
                                         "borderRadius": 8,
                                         "borderWidth": 1,
@@ -2466,7 +2454,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                     [
                                       {
                                         "alignItems": "center",
-                                        "borderColor": "#E8EBF1",
                                         "borderCurve": "continuous",
                                         "borderRadius": 8,
                                         "borderWidth": 1,
@@ -2484,7 +2471,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                     [
                                       {
                                         "alignItems": "center",
-                                        "borderColor": "#E8EBF1",
                                         "borderCurve": "continuous",
                                         "borderRadius": 8,
                                         "borderWidth": 1,

@@ -9,9 +9,8 @@ import {
 } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { useIOTheme, useIOThemeContext } from "../../context";
+import { useIOColors } from "../../context";
 import { IODimensions, IOTypography } from "../../core";
-import { hexToRgba, IOColors } from "../../core/IOColors";
 import { useScaleAnimation } from "../../hooks";
 import { WithTestID } from "../../utils/types";
 import { IconButton } from "../buttons";
@@ -103,22 +102,6 @@ export const bannerBackgroundColours: Array<BaseBannerProps["color"]> = [
   "turquoise"
 ];
 
-const mapBackgroundColorLightMode: Record<
-  NonNullable<BaseBannerProps["color"]>,
-  IOColors
-> = {
-  neutral: "grey-50",
-  turquoise: "turquoise-50"
-};
-
-const mapBackgroundColorDarkMode: Record<
-  NonNullable<BaseBannerProps["color"]>,
-  IOColors
-> = {
-  neutral: "grey-50",
-  turquoise: "turquoise-300"
-};
-
 export const Banner = ({
   color,
   pictogramName,
@@ -136,22 +119,10 @@ export const Banner = ({
 }: Banner) => {
   const { onPressIn, onPressOut, scaleAnimatedStyle } =
     useScaleAnimation("medium");
-  const { themeType } = useIOThemeContext();
-  const theme = useIOTheme();
-
-  // Dynamic colors
-  const colorTitle: IOColors =
-    themeType === "dark" ? "grey-50" : theme["textHeading-default"];
-  const colorCloseButton: IconButton["color"] =
-    themeType === "dark" ? "contrast" : "neutral";
-  const colorMainButton =
-    themeType === "dark" ? "blueIO-200" : theme["interactiveElem-default"];
+  const bannerColors = useIOColors().component.banner;
 
   const dynamicContainerStyles: ViewStyle = {
-    backgroundColor:
-      themeType === "dark"
-        ? hexToRgba(IOColors[mapBackgroundColorDarkMode[color]], 0.1)
-        : IOColors[mapBackgroundColorLightMode[color]]
+    backgroundColor: bannerColors.background[color]
   };
 
   /* Generates a complete fallbackAccessibilityLabel by concatenating the title, content, and action
@@ -175,9 +146,12 @@ export const Banner = ({
         }}
       >
         <VStack space={IODimensions.gap.banner.description}>
-          {title && <H6 color={colorTitle}>{title}</H6>}
+          {title && <H6 color={bannerColors.foreground.title}>{title}</H6>}
           {content && (
-            <BodySmall color={theme["textBody-tertiary"]} weight={"Regular"}>
+            <BodySmall
+              color={bannerColors.foreground.content}
+              weight={"Regular"}
+            >
               {content}
             </BodySmall>
           )}
@@ -198,7 +172,7 @@ export const Banner = ({
               accessibilityElementsHidden={true}
               // A11y
               accessible={false}
-              color={colorMainButton}
+              color={bannerColors.foreground.action}
               ellipsizeMode="tail"
               importantForAccessibility="no-hide-descendants"
               numberOfLines={1}
@@ -220,7 +194,7 @@ export const Banner = ({
         <View style={styles.closeIconButton}>
           <IconButton
             accessibilityLabel={labelClose}
-            color={colorCloseButton}
+            color={bannerColors.closeButton}
             icon="closeSmall"
             onPress={onClose}
           />

@@ -419,8 +419,8 @@ importers:
         specifier: ^0.2.1
         version: 0.2.1(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
       '@pagopa/io-react-native-wallet':
-        specifier: 3.9.0
-        version: 3.9.0(3e93541cad22002c1d5778a57b01df00)
+        specifier: 3.9.1
+        version: 3.9.1(3e93541cad22002c1d5778a57b01df00)
       '@pagopa/react-native-cie':
         specifier: ^1.5.0
         version: 1.5.0
@@ -3669,8 +3669,8 @@ packages:
       react: '*'
       react-native: '*'
 
-  '@pagopa/io-react-native-wallet@3.9.0':
-    resolution: {integrity: sha512-c3nK4tToGNmFlMz0T8bf/uHoyCmQSbUvbTw8EoMTJMWgANMdmV8FjarZ0SDULoabNM2BKpb/KT511Qt2e/IKug==}
+  '@pagopa/io-react-native-wallet@3.9.1':
+    resolution: {integrity: sha512-xLaAXoNF3wYNRcqPXJtN507EK3I+WQpY5jCAKayYvgoaAOohH2ykV6G4JhrlxQTwc2WcD5wrYK1gspn6H3X5YA==}
     peerDependencies:
       '@pagopa/io-react-native-crypto': '*'
       '@pagopa/io-react-native-iso18013': '*'
@@ -16626,7 +16626,7 @@ snapshots:
       react: 19.2.0
       react-native: 0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)
 
-  '@pagopa/io-react-native-wallet@3.9.0(3e93541cad22002c1d5778a57b01df00)':
+  '@pagopa/io-react-native-wallet@3.9.1(3e93541cad22002c1d5778a57b01df00)':
     dependencies:
       '@owf/crypto': 0.4.2
       '@owf/token-status-list': 0.4.2

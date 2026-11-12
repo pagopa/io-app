@@ -1,6 +1,6 @@
 import {
   FooterActions,
-  IOColors,
+  IOColorsLegacy,
   useFooterActionsMeasurements,
   useIOTheme
 } from "@io-app/design-system";
@@ -102,7 +102,7 @@ const TosWebviewComponent: FunctionComponent<Props> = ({
           source={webViewSource}
           style={{
             flex: 1,
-            backgroundColor: IOColors[theme["appBackground-primary"]]
+            backgroundColor: IOColorsLegacy[theme["appBackground-primary"]]
           }}
           textZoom={100}
         />
