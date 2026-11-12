@@ -1,9 +1,4 @@
-import {
-  Body,
-  hexToRgba,
-  IOColorsLegacy,
-  IODimensions
-} from "@io-app/design-system";
+import { Body, IODimensions } from "@io-app/design-system";
 import { StyleSheet, View } from "react-native";
 
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
@@ -39,14 +34,7 @@ export const AlertModal = ({ message }: AlertModalProps) => {
       backgroundColor={backdrop.backgroundColor}
       foreground={
         <View
-          style={[
-            styles.container,
-            {
-              backgroundColor: modal.backgroundColor,
-              borderWidth: 1,
-              borderColor: hexToRgba(IOColorsLegacy.white, 0.1)
-            }
-          ]}
+          style={[styles.container, { backgroundColor: modal.backgroundColor }]}
         >
           <Body>{message}</Body>
         </View>

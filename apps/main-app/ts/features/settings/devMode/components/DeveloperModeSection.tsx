@@ -10,7 +10,6 @@ import {
   ListItemInfoCopy,
   ListItemNav,
   ListItemSwitch,
-  useIOTheme,
   VSpacer
 } from "@io-app/design-system";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -605,8 +604,6 @@ const DeveloperModeSection = () => {
   const dispatch = useIODispatch();
   const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
 
-  const theme = useIOTheme();
-
   const handleShowModal = () => {
     showModal(
       <AlertModal
@@ -619,9 +616,7 @@ const DeveloperModeSection = () => {
     <>
       <ContentWrapper testID="developerModeSection">
         <VSpacer size={24} />
-        <H2 color={theme["textHeading-default"]}>
-          {I18n.t("profile.main.developersSectionHeader")}
-        </H2>
+        <H2>{I18n.t("profile.main.developersSectionHeader")}</H2>
         <VSpacer size={8} />
 
         {/* Enable/Disable Developer Mode */}

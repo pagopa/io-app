@@ -1,4 +1,4 @@
-import { IOColorsLegacy, useIOColors, useIOTheme } from "@io-app/design-system";
+import { useIOColors } from "@io-app/design-system";
 import { ColorValue } from "react-native";
 
 type ModalStyleProps = {
@@ -14,14 +14,13 @@ type ModalStyleProps = {
 /** Returns the common style used for modals */
 export const useModalStyle = (): ModalStyleProps => {
   const colors = useIOColors();
-  const theme = useIOTheme();
 
   return {
     backdrop: {
       backgroundColor: colors.background.overlay
     },
     modal: {
-      backgroundColor: IOColorsLegacy[theme["appBackground-primary"]]
+      backgroundColor: colors.background.default
     }
   };
 };
