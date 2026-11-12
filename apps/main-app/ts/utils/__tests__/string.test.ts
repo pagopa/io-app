@@ -29,6 +29,30 @@ describe("capitalize", () => {
   it("should return a string where each word has first char in uppercase-5", () => {
     expect(capitalize("   hello,world   ", ",")).toEqual("   Hello,World   ");
   });
+
+  it.each([
+    "Anna [Maria",
+    "Carta (Visa",
+    "c++",
+    "Nome (alias) [x]",
+    "50% + 1 $&"
+  ])("should not interpret %j as a regular expression", input => {
+    expect(() => capitalize(input)).not.toThrow();
+  });
+
+  it.each([
+    ["McDonald", "McDonald"],
+    ["3M", "3M"],
+    ["c++", "C++"],
+    ["anna [maria", "Anna [maria"],
+    ["d'angelo", "D'angelo"],
+    ["a.b", "A.b"]
+  ])(
+    "should only change the first char of each word (%s)",
+    (input, expected) => {
+      expect(capitalize(input)).toEqual(expected);
+    }
+  );
 });
 
 describe("isStringNullyOrEmpty", () => {
