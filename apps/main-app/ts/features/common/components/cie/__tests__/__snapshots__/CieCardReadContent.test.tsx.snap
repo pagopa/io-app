@@ -42,7 +42,7 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
       onLayout={[Function]}
       style={
         {
-          "backgroundColor": "#D2D6E3",
+          "backgroundColor": "#E8EBF1",
           "borderRadius": 4,
           "height": 4,
           "justifyContent": "center",
@@ -1280,7 +1280,7 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
       onLayout={[Function]}
       style={
         {
-          "backgroundColor": "#D2D6E3",
+          "backgroundColor": "#E8EBF1",
           "borderRadius": 4,
           "height": 4,
           "justifyContent": "center",
@@ -1582,7 +1582,7 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
       onLayout={[Function]}
       style={
         {
-          "backgroundColor": "#D2D6E3",
+          "backgroundColor": "#E8EBF1",
           "borderRadius": 4,
           "height": 4,
           "justifyContent": "center",
@@ -2800,7 +2800,7 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
       onLayout={[Function]}
       style={
         {
-          "backgroundColor": "#D2D6E3",
+          "backgroundColor": "#E8EBF1",
           "borderRadius": 4,
           "height": 4,
           "justifyContent": "center",

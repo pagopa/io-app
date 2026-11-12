@@ -2,9 +2,9 @@ import { TypeEnum as ClauseType } from "@io-app/api-types/generated/definitions/
 import { DocumentToSign } from "@io-app/api-types/generated/definitions/fci/DocumentToSign";
 import {
   FooterActionsInline,
-  IOColors,
   IODimensions,
-  useFooterActionsInlineMeasurements
+  useFooterActionsInlineMeasurements,
+  useIOColors
 } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
@@ -59,8 +59,7 @@ import {
 
 const styles = StyleSheet.create({
   pdf: {
-    flex: 1,
-    backgroundColor: IOColors["grey-700"]
+    flex: 1
   }
 });
 
@@ -69,6 +68,7 @@ export type FciDocumentsScreenNavigationParams = Readonly<{
 }>;
 
 const FciDocumentsScreen = () => {
+  const colors = useIOColors();
   const pdfRef = useRef<PdfRef>(null);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -252,7 +252,7 @@ const FciDocumentsScreen = () => {
       source={{
         uri: `${downloadPath}`
       }}
-      style={styles.pdf}
+      style={[styles.pdf, { backgroundColor: colors.surface.document }]}
     />
   );
 

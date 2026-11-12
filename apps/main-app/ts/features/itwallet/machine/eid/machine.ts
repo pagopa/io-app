@@ -1,6 +1,6 @@
 import { and, assertEvent, assign, not, or, raise } from "xstate";
 
-import { CURRENT_ITW_SPECS_VERSION } from "../../common/utils/constants";
+import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { getIssuanceItwVersion } from "../../common/utils/itwIssuanceUtils";
 import { ItwTags } from "../tags";
 import { InitialContext } from "./context";
@@ -78,13 +78,12 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
               mode: event.mode,
               level: event.level,
               credentialType: event.credentialType,
-              // TODO: [SIW-5384] Use `CredentialsOffer.isSupported` from the Wallet SDK instead of checking the specs version
-              // Credential offers are not supported by the 1.0.0 specs (Documenti su IO),
-              // so the offer cannot be resumed after an L2 activation
-              credentialOfferUri:
-                itwVersion === CURRENT_ITW_SPECS_VERSION
-                  ? event.credentialOfferUri
-                  : undefined,
+              // The offer cannot be resumed when the issuance IT-Wallet version does not support credential offers
+              // (e.g. 1.0.0 specs used for Documenti su IO after an L2 activation)
+              credentialOfferUri: getIoWallet(itwVersion).CredentialsOffer
+                .isSupported
+                ? event.credentialOfferUri
+                : undefined,
               itwVersion
             };
           }),
