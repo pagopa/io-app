@@ -159,9 +159,7 @@ exports[`Test List Item Components - Experimental Enabled ListItemAction Snapsho
 exports[`Test List Item Components - Experimental Enabled ListItemInfo Snapshot 1`] = `
 <View
   accessibilityLabel="accessibilityLabel"
-  accessible={false}
-  importantForAccessibility="yes"
-  screenReaderFocusable={true}
+  accessible={true}
   style={
     {
       "marginHorizontal": -24,
@@ -2287,9 +2285,7 @@ exports[`Test List Item Components ListItemAction Snapshot 1`] = `
 exports[`Test List Item Components ListItemInfo Snapshot 1`] = `
 <View
   accessibilityLabel="accessibilityLabel"
-  accessible={false}
-  importantForAccessibility="yes"
-  screenReaderFocusable={true}
+  accessible={true}
   style={
     {
       "marginHorizontal": -24,
