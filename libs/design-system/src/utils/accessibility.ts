@@ -35,6 +35,27 @@ export const useBoldTextEnabled = () => {
   return boldTextEnabled;
 };
 
+export const useScreenReaderEnabled = () => {
+  const [screenReaderEnabled, setScreenReaderEnabled] = useState(false);
+
+  useEffect(() => {
+    const subscription = AccessibilityInfo.addEventListener(
+      "screenReaderChanged",
+      setScreenReaderEnabled
+    );
+
+    AccessibilityInfo.isScreenReaderEnabled()
+      .then(setScreenReaderEnabled)
+      .catch(_ => false);
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
+  return screenReaderEnabled;
+};
+
 /**
  * Returns a font size multiplier based on the font scale of the device, but
  * limited to the `IOMaxFontSizeMultiplier` value.
