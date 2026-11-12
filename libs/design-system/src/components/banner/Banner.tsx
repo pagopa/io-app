@@ -183,34 +183,32 @@ export const Banner = ({
               </BodySmall>
             )}
           </VStack>
-          {action && (
-            /* Disable pointer events to avoid
-             pressed state on the button */
-            <Pressable
-              accessibilityHint={accessibilityHint}
-              accessibilityLabel={action}
-              accessibilityRole={accessibilityRole}
-              accessible={true}
-              onPress={onPress}
-              onPressIn={onPressIn}
-              onPressOut={onPressOut}
-            >
-              <IOText
-                accessibilityElementsHidden={true}
-                // A11y
-                accessible={false}
-                color={bannerColors.foreground.action}
-                ellipsizeMode="tail"
-                importantForAccessibility="no-hide-descendants"
-                numberOfLines={1}
-                size={IOTypography.buttonText.size}
-                weight="Semibold"
-              >
-                {action}
-              </IOText>
-            </Pressable>
-          )}
         </View>
+        {action && (
+          <Pressable
+            accessibilityHint={accessibilityHint}
+            accessibilityLabel={action}
+            accessibilityRole={accessibilityRole}
+            accessible={true}
+            onPress={onPress}
+            onPressIn={onPressIn}
+            onPressOut={onPressOut}
+          >
+            <IOText
+              accessibilityElementsHidden={true}
+              // A11y
+              accessible={false}
+              color={bannerColors.foreground.action}
+              ellipsizeMode="tail"
+              importantForAccessibility="no-hide-descendants"
+              numberOfLines={1}
+              size={IOTypography.buttonText.size}
+              weight="Semibold"
+            >
+              {action}
+            </IOText>
+          </Pressable>
+        )}
       </View>
       <View style={[styles.bleedPictogram, { alignSelf: "center" }]}>
         <PictogramBleed
