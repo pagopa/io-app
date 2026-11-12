@@ -15,8 +15,8 @@ import {
   CGN_FEATURED_OPPORTUNITIES_MAX_ITEMS,
   cgnFeaturedOpportunities,
   cgnSelectedMerchant,
-  cgnSelectedMerchantCancel,
-  ResolvedCgnFeaturedOpportunity
+  ResolvedCgnFeaturedOpportunity,
+  selectFeaturedOpportunity
 } from "../../../store/actions/merchants";
 
 export function* cgnFeaturedOpportunitiesSaga(
@@ -114,6 +114,6 @@ export function* cgnMerchantDetailUntilCancelled(
 ) {
   yield* race({
     detail: call(cgnMerchantDetail, getMerchant, merchantSelected),
-    cancelled: take(getType(cgnSelectedMerchantCancel))
+    cancelled: take(getType(selectFeaturedOpportunity))
   });
 }

@@ -68,12 +68,12 @@ export const cgnSelectedMerchant = createAsyncAction(
 )<Merchant["id"], Merchant, NetworkError>();
 
 /**
- * Cancels a pending `cgnSelectedMerchant` request, so it can't overwrite a
- * newer selection
+ * Selects a featured merchant and discount in one step. It also cancels any
+ * pending `cgnSelectedMerchant` request, so it can't overwrite this selection
  */
-export const cgnSelectedMerchantCancel = createStandardAction(
-  "CGN_SELECTED_MERCHANT_CANCEL"
-)<void>();
+export const selectFeaturedOpportunity = createStandardAction(
+  "CGN_SELECT_FEATURED_OPPORTUNITY"
+)<ResolvedCgnFeaturedOpportunity>();
 
 export const selectMerchantDiscount = createStandardAction(
   "CGN_SELECT_MERCHANT_DISCOUNT"
@@ -94,7 +94,7 @@ export type CgnMerchantsAction =
   | ActionType<typeof cgnOnlineMerchants>
   | ActionType<typeof cgnSearchMerchants>
   | ActionType<typeof cgnSelectedMerchant>
-  | ActionType<typeof cgnSelectedMerchantCancel>
   | ActionType<typeof resetMerchantDiscountCode>
+  | ActionType<typeof selectFeaturedOpportunity>
   | ActionType<typeof selectMerchantDiscount>
   | ActionType<typeof setMerchantDiscountCode>;

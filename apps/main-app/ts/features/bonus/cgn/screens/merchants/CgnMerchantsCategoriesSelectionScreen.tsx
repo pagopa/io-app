@@ -31,10 +31,7 @@ import { useDisableRootNavigatorGesture } from "../../hooks/useDisableRootNaviga
 import CGN_ROUTES from "../../navigation/routes";
 import {
   cgnFeaturedOpportunities,
-  cgnSelectedMerchant,
-  cgnSelectedMerchantCancel,
-  resetMerchantDiscountCode,
-  selectMerchantDiscount
+  selectFeaturedOpportunity
 } from "../../store/actions/merchants";
 import {
   isLoadingFeaturedOpportunitiesSelector,
@@ -216,12 +213,8 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
           (featuredOpportunities.length > 0 ? (
             <View testID="CgnFeaturedOpportunitiesSection">
               <CgnFeaturedOpportunities
-                onSelect={({ merchant, discount }) => {
-                  // Cancel any pending regular merchant request, so it can't overwrite this selection
-                  dispatch(cgnSelectedMerchantCancel());
-                  dispatch(cgnSelectedMerchant.success(merchant));
-                  dispatch(selectMerchantDiscount(discount));
-                  dispatch(resetMerchantDiscountCode());
+                onSelect={opportunity => {
+                  dispatch(selectFeaturedOpportunity(opportunity));
                   navigate(CGN_ROUTES.DETAILS.MAIN, {
                     screen: CGN_ROUTES.DETAILS.MERCHANTS.DISCOUNT
                   });

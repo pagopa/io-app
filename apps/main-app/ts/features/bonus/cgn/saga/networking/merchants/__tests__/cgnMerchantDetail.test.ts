@@ -1,3 +1,4 @@
+import { Discount } from "@io-app/api-types/generated/definitions/cgn/merchants/Discount";
 import { DiscountCodeTypeEnum } from "@io-app/api-types/generated/definitions/cgn/merchants/DiscountCodeType";
 import { Merchant } from "@io-app/api-types/generated/definitions/cgn/merchants/Merchant";
 import { SupportTypeEnum } from "@io-app/api-types/generated/definitions/cgn/merchants/SupportType";
@@ -12,7 +13,7 @@ import { withRefreshApiCall } from "../../../../../../authentication/fastLogin/s
 import {
   cgnFeaturedOpportunities,
   cgnSelectedMerchant,
-  cgnSelectedMerchantCancel
+  selectFeaturedOpportunity
 } from "../../../../store/actions/merchants";
 import {
   cgnFeaturedOpportunitiesSaga,
@@ -261,6 +262,7 @@ describe("cgnMerchantDetailUntilCancelled", () => {
   const requestAction = cgnSelectedMerchant.request(merchant.id);
   const getMerchant = jest.fn();
   const pendingResponse = new Promise<never>(() => undefined);
+  const featuredDiscount = { id: "discount-id" } as Discount;
 
   it("should dispatch success when the detail request is not cancelled", async () => {
     await expectSaga(
@@ -285,7 +287,9 @@ describe("cgnMerchantDetailUntilCancelled", () => {
       requestAction
     )
       .provide([[matchers.call.fn(withRefreshApiCall), pendingResponse]])
-      .dispatch(cgnSelectedMerchantCancel())
+      .dispatch(
+        selectFeaturedOpportunity({ merchant, discount: featuredDiscount })
+      )
       .not.put(cgnSelectedMerchant.success(merchant))
       .not.put.actionType(getType(cgnSelectedMerchant.failure))
       .run();
