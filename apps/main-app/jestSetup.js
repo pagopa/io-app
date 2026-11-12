@@ -83,6 +83,7 @@ jest.mock("@react-native-cookies/cookies", () => jest.fn());
 jest.mock("expo-sharing", () => ({ shareAsync: jest.fn() }));
 jest.mock("expo-clipboard", () => mockClipboard);
 jest.mock("expo-calendar", () => ({
+  EntityTypes: { EVENT: "event", REMINDER: "reminder" },
   getCalendarsAsync: jest.fn().mockResolvedValue([]),
   getEventsAsync: jest.fn().mockResolvedValue([])
 }));
@@ -109,7 +110,8 @@ jest.mock("@io-app/expo-navigation-bar-manager", () => ({
 // Mock DeviceInfo for version checks
 jest.mock("@io-app/expo-device-internal", () => ({
   getUniqueIdSync: jest.fn(() => "SOME-UNIQUE-ID"),
-  isDisplayZoomed: jest.fn(() => false)
+  isDisplayZoomed: jest.fn(() => false),
+  isHapticFeedbackEnabled: jest.fn(() => true)
 }));
 
 jest.mock("expo-store-review", () => ({

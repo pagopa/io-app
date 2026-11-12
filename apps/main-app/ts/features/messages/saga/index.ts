@@ -4,12 +4,14 @@ import {
   put,
   select,
   takeEvery,
-  takeLatest
+  takeLatest,
+  takeLeading
 } from "typed-redux-saga/macro";
 
 import { logoutSuccess } from "../../authentication/common/store/actions";
 import { clearCache } from "../../settings/common/store/actions";
 import {
+  addCalendarEventRequest,
   downloadAttachment,
   getMessageDataAction,
   loadMessageById,
@@ -26,6 +28,7 @@ import {
 import { startProcessingMessageArchivingAction } from "../store/actions/archiving";
 import { retrievingDataPreconditionStatusAction } from "../store/actions/preconditions";
 import { retryDataAfterFastLoginSessionExpirationSelector } from "../store/reducers/messageGetStatus";
+import { handleAddCalendarEvent } from "./handleAddCalendarEvent";
 import {
   handleClearAllAttachments,
   handleClearAttachment
@@ -107,6 +110,9 @@ export function* watchMessagesSaga(): SagaIterator {
 
   // handle message details data loading composition
   yield* takeLatest(getMessageDataAction.request, handleLoadMessageData);
+
+  // ignore repeated reminder requests while one is in progress
+  yield* takeLeading(addCalendarEventRequest, handleAddCalendarEvent);
 
   // Signal that message's sagas are ready
   yield* put(setMessageSagasRegisteredAction());
