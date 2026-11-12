@@ -19,8 +19,8 @@ import {
 import Animated, { Easing, FadeIn, FadeOut } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { useIOTheme, useIOThemeContext } from "../../context";
-import { IOColors, IODimensions } from "../../core";
+import { useIOColors, useIOThemeContext } from "../../context";
+import { IODimensions } from "../../core";
 import { IconButton } from "../buttons";
 import { Body, H6 } from "../typography";
 import { BottomArrow, LeftArrow, RightArrow, TopArrow } from "./Arrows";
@@ -108,7 +108,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: "100%",
     height: "100%",
-    backgroundColor: IOColors.black,
     zIndex: 997
   },
   childrenContainer: {
@@ -176,10 +175,9 @@ export const Tooltip = ({
   );
 
   // Theme
-  const theme = useIOTheme();
+  const tooltipColors = useIOColors().component.tooltip;
   const { themeType } = useIOThemeContext();
   const backdropOpacity = themeType === "light" ? 0.4 : 0.8;
-  const tooltipBackground = IOColors[theme["appBackground-secondary"]];
 
   const Arrow = useMemo(
     () => ARROWS_BY_PLACEMENT[currentPlacement],
@@ -308,7 +306,11 @@ export const Tooltip = ({
             <View
               style={[
                 styles.backdrop,
-                { opacity: backdropOpacity, height: screenDimensions.height }
+                {
+                  backgroundColor: tooltipColors.backdrop,
+                  opacity: backdropOpacity,
+                  height: screenDimensions.height
+                }
               ]}
             />
           </Animated.View>
@@ -317,7 +319,7 @@ export const Tooltip = ({
           onLayout={handleTooltipOnLayout}
           style={[
             styles.tooltipContainer,
-            { backgroundColor: tooltipBackground },
+            { backgroundColor: tooltipColors.background },
             getTooltipCoords(
               currentPlacement,
               childrenCoords,
@@ -352,7 +354,7 @@ export const Tooltip = ({
             tooltipVisibility
           ]}
         >
-          <Arrow color={tooltipBackground} />
+          <Arrow color={tooltipColors.background} />
         </View>
       </Modal>
     </>

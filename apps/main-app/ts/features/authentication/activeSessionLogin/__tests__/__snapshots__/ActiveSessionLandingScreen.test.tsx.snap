@@ -1480,7 +1480,6 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                       [
                                         {
                                           "alignItems": "center",
-                                          "borderColor": "#E8EBF1",
                                           "borderCurve": "continuous",
                                           "borderRadius": 8,
                                           "borderWidth": 1,
@@ -1498,7 +1497,6 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                       [
                                         {
                                           "alignItems": "center",
-                                          "borderColor": "#E8EBF1",
                                           "borderCurve": "continuous",
                                           "borderRadius": 8,
                                           "borderWidth": 1,
@@ -1719,7 +1717,6 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                       [
                                         {
                                           "alignItems": "center",
-                                          "borderColor": "#E8EBF1",
                                           "borderCurve": "continuous",
                                           "borderRadius": 8,
                                           "borderWidth": 1,
@@ -1737,7 +1734,6 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                       [
                                         {
                                           "alignItems": "center",
-                                          "borderColor": "#E8EBF1",
                                           "borderCurve": "continuous",
                                           "borderRadius": 8,
                                           "borderWidth": 1,
@@ -2010,7 +2006,7 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                             [
                                               {},
                                               {
-                                                "color": "#0E0F13",
+                                                "color": "#2B2E38",
                                                 "fontFamily": "Titillio",
                                                 "fontSize": 16,
                                                 "fontStyle": "normal",

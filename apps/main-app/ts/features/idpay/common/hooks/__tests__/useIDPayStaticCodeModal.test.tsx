@@ -2,6 +2,7 @@ import {
   StatusEnum,
   TransactionBarCodeResponse
 } from "@io-app/api-types/generated/definitions/idpay/TransactionBarCodeResponse";
+import { IOColors } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent, render } from "@testing-library/react-native";
 import I18n from "i18next";
@@ -14,6 +15,7 @@ import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 import { getNetworkError } from "../../../../../utils/errors";
+import { findAllByStyle, withDarkTheme } from "../../../../../utils/testColors";
 import { useIDPayStaticCodeModal } from "../useIDPayStaticCodeModal";
 
 jest.mock("../../../../../utils/hooks/bottomSheet", () => ({
@@ -54,7 +56,7 @@ const barcodeData = {
   trxExpirationSeconds: 99999999
 } as TransactionBarCodeResponse;
 
-const renderHook = (state: GlobalState) => {
+const renderHook = (state: GlobalState, theme: "dark" | "light" = "light") => {
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore({
     ...state
@@ -65,9 +67,11 @@ const renderHook = (state: GlobalState) => {
     return bottomSheet;
   };
 
+  const Themed = theme === "dark" ? withDarkTheme(Component) : Component;
+
   return render(
     <Provider store={store}>
-      <Component />
+      <Themed />
     </Provider>
   );
 };
@@ -151,4 +155,31 @@ describe("useIDPayStaticCodeModal component", () => {
       )
     ).toBeFalsy();
   });
+
+  it.each([
+    { name: "loading", value: pot.someLoading(barcodeData) },
+    { name: "ready", value: pot.some(barcodeData) }
+  ])(
+    "should draw the $name barcode box border with the dark stroke token in dark mode",
+    ({ value }) => {
+      const state = {
+        ...globalState,
+        features: {
+          ...globalState.features,
+          idPay: {
+            ...globalState.features.idPay,
+            staticCode: { [defaultParams.initiativeId]: value }
+          }
+        }
+      };
+      const { toJSON } = renderHook(state, "dark");
+
+      expect(
+        findAllByStyle(toJSON(), {
+          borderColor: IOColors.dark.stroke.default,
+          borderWidth: 1
+        })
+      ).toHaveLength(1);
+    }
+  );
 });

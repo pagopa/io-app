@@ -5,7 +5,7 @@ import {
   HStack,
   IconButton,
   IOButton,
-  IOColors,
+  IOColorsLegacy,
   useIOTheme,
   VStack
 } from "@io-app/design-system";
@@ -60,7 +60,7 @@ export const TourTooltip = ({
 }: Props) => {
   const theme = useIOTheme();
   const insets = useSafeAreaInsets();
-  const tooltipBgColor = IOColors[theme["appBackground-secondary"]];
+  const tooltipBgColor = IOColorsLegacy[theme["appBackground-secondary"]];
   const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
   const tooltipHeight = useSharedValue(0);
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
   tooltip: {
     borderRadius: BORDER_RADIUS,
     borderCurve: "continuous",
-    boxShadow: `0px 2px 8px ${hexToRgba(IOColors.black, 0.15)}`,
+    boxShadow: `0px 2px 8px ${hexToRgba(IOColorsLegacy.black, 0.15)}`,
     padding: 16
   },
   closeIconButton: {
