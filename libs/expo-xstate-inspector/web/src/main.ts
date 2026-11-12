@@ -7,6 +7,7 @@ import { createActorListView } from "./views/actorListView.js";
 import { createChildActorTableView } from "./views/childActorTableView.js";
 import { createDetailsView } from "./views/detailsView.js";
 import { createDiagramView } from "./views/diagramView.js";
+import { createStateDetailsView } from "./views/stateDetailsView.js";
 import { bindPanelResizer } from "./widgets/panelResizer.js";
 import { bindPanZoom } from "./widgets/panZoom.js";
 import { bindTabs } from "./widgets/tabs.js";
@@ -22,10 +23,23 @@ const element = (id: string) => {
 
 bindTabs(element("tabs"));
 bindPanelResizer(element("resizer"));
-const panZoom = bindPanZoom(element("diagram"), element("diagram-canvas"), () =>
-  element("diagram-canvas").querySelectorAll("g.active")
+const panZoom = bindPanZoom(
+  element("diagram"),
+  element("diagram-canvas"),
+  () => element("diagram-canvas").querySelectorAll("g.active"),
+  target => diagram.selectAt(target)
 );
 bindZoomControls(element("zoom-controls"), panZoom);
+
+const stateDetails = createStateDetailsView(element("state-details"), () =>
+  diagram.selectAt(null)
+);
+const diagram = createDiagramView(
+  element("diagram-canvas"),
+  stateDetails,
+  createMermaidRenderer(element("mermaid-sandbox")),
+  panZoom
+);
 
 const controller = createInspectorController({
   actors: createActorStore(),
@@ -37,11 +51,7 @@ const controller = createInspectorController({
       events: element("events")
     }),
     childActors: createChildActorTableView(element("child-actors")),
-    diagram: createDiagramView(
-      element("diagram-canvas"),
-      createMermaidRenderer(element("mermaid-sandbox")),
-      panZoom
-    ),
+    diagram,
     actorList: createActorListView(element("actors"), sessionId =>
       controller.selectByUser(sessionId)
     )
