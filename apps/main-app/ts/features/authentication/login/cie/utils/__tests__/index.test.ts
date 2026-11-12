@@ -1,6 +1,6 @@
 import { Platform } from "react-native";
 
-import { getCieIdEnvironment, isAuthenticationUrl } from "..";
+import { isAuthenticationUrl } from "..";
 
 type PlatformSpec = { android?: unknown; default?: unknown; ios?: unknown };
 
@@ -61,15 +61,5 @@ describe("isAuthenticationUrl", () => {
   it.each(LIVELLO3_URLS)("should be false on android -> %s", url => {
     setPlatform("android");
     expect(isAuthenticationUrl(url)).toBe(false);
-  });
-});
-
-describe("getCieIdEnvironment", () => {
-  it("should target the preprod CieID app when UAT is enabled", () => {
-    expect(getCieIdEnvironment(true)).toEqual("preprod");
-  });
-
-  it("should target the production CieID app when UAT is disabled", () => {
-    expect(getCieIdEnvironment(false)).toEqual("production");
   });
 });

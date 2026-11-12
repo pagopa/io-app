@@ -747,30 +747,40 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot when isItwDiscoveryB
                                 {
                                   "alignSelf": "center",
                                   "flex": 1,
-                                  "gap": 4,
+                                  "gap": 12,
                                 }
                               }
                             >
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
+                              <View
                                 style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 14,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 21,
-                                    },
-                                  ]
+                                  {
+                                    "display": "flex",
+                                    "flexDirection": "column",
+                                    "gap": 4,
+                                  }
                                 }
                               >
-                                Puoi aggiungere al Portafoglio di IO i tuoi documenti digitali, disponibili anche senza connessione a internet.
-                              </Text>
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 14,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 21,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Puoi aggiungere al Portafoglio di IO i tuoi documenti digitali, disponibili anche senza connessione a internet.
+                                </Text>
+                              </View>
                               <View
                                 accessibilityElementsHidden={true}
                                 accessibilityLabel="Inizia"
@@ -807,13 +817,6 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot when isItwDiscoveryB
                                 onStartShouldSetResponder={[Function]}
                                 pointerEvents="none"
                               >
-                                <View
-                                  style={
-                                    {
-                                      "height": 8,
-                                    }
-                                  }
-                                />
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
@@ -1464,30 +1467,40 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'onboarding' ba
                                 {
                                   "alignSelf": "center",
                                   "flex": 1,
-                                  "gap": 4,
+                                  "gap": 12,
                                 }
                               }
                             >
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
+                              <View
                                 style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 14,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 21,
-                                    },
-                                  ]
+                                  {
+                                    "display": "flex",
+                                    "flexDirection": "column",
+                                    "gap": 4,
+                                  }
                                 }
                               >
-                                Puoi aggiungere al Portafoglio di IO i tuoi documenti digitali, disponibili anche senza connessione a internet.
-                              </Text>
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 14,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 21,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Puoi aggiungere al Portafoglio di IO i tuoi documenti digitali, disponibili anche senza connessione a internet.
+                                </Text>
+                              </View>
                               <View
                                 accessibilityElementsHidden={true}
                                 accessibilityLabel="Inizia"
@@ -1524,13 +1537,6 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'onboarding' ba
                                 onStartShouldSetResponder={[Function]}
                                 pointerEvents="none"
                               >
-                                <View
-                                  style={
-                                    {
-                                      "height": 8,
-                                    }
-                                  }
-                                />
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}
@@ -2181,30 +2187,40 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'reactivating' 
                                 {
                                   "alignSelf": "center",
                                   "flex": 1,
-                                  "gap": 4,
+                                  "gap": 12,
                                 }
                               }
                             >
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
+                              <View
                                 style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 14,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 21,
-                                    },
-                                  ]
+                                  {
+                                    "display": "flex",
+                                    "flexDirection": "column",
+                                    "gap": 4,
+                                  }
                                 }
                               >
-                                Riattiva Documenti su IO per aggiungere di nuovo i tuoi documenti al Portafoglio.
-                              </Text>
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 14,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 21,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Riattiva Documenti su IO per aggiungere di nuovo i tuoi documenti al Portafoglio.
+                                </Text>
+                              </View>
                               <View
                                 accessibilityElementsHidden={true}
                                 accessibilityLabel="Inizia"
@@ -2241,13 +2257,6 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'reactivating' 
                                 onStartShouldSetResponder={[Function]}
                                 pointerEvents="none"
                               >
-                                <View
-                                  style={
-                                    {
-                                      "height": 8,
-                                    }
-                                  }
-                                />
                                 <Text
                                   accessibilityElementsHidden={true}
                                   accessible={false}

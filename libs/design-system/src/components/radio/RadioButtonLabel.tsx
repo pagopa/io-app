@@ -1,8 +1,8 @@
 import { ComponentProps, useState } from "react";
 import { Pressable, View } from "react-native";
 
-import { useIOTheme } from "../../context";
-import { IOSelectionTickVisualParams } from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions, IOOpacity } from "../../core";
 import { triggerHaptic } from "../../functions/haptic-feedback/hapticFeedback";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { H6 } from "../typography/H6";
@@ -13,8 +13,6 @@ type Props = {
   // dispatch the new value after the radio button changes state
   onValueChange?: (newValue: boolean) => void;
 };
-
-const DISABLED_OPACITY = 0.5;
 
 type RadioButtonLabelProps = Pick<
   ComponentProps<typeof Pressable>,
@@ -40,7 +38,7 @@ export const RadioButtonLabel = ({
   accessibilityHint
 }: RadioButtonLabelProps) => {
   const { dynamicFontScale, spacingScaleMultiplier } = useIOFontDynamicScale();
-  const theme = useIOTheme();
+  const radioColors = useIOColors().component.radio;
 
   const [toggleValue, setToggleValue] = useState(checked ?? false);
 
@@ -65,7 +63,7 @@ export const RadioButtonLabel = ({
       onPress={toggleRadioButton}
       style={{
         alignSelf: "flex-start",
-        opacity: disabled ? DISABLED_OPACITY : 1
+        opacity: disabled ? IOOpacity.disabled : 1
       }}
       testID="RadioButton"
     >
@@ -75,7 +73,10 @@ export const RadioButtonLabel = ({
           alignItems: "flex-start",
           flexShrink: 1,
           width: "100%",
-          columnGap: 8 * dynamicFontScale * spacingScaleMultiplier
+          columnGap:
+            IODimensions.gap.selection.control *
+            dynamicFontScale *
+            spacingScaleMultiplier
         }}
       >
         <View
@@ -85,10 +86,10 @@ export const RadioButtonLabel = ({
         >
           <Radio
             checked={checked ?? toggleValue}
-            size={IOSelectionTickVisualParams.size * dynamicFontScale}
+            size={IODimensions.size.selection.control * dynamicFontScale}
           />
         </View>
-        <H6 color={theme["textBody-default"]} style={{ flexShrink: 1 }}>
+        <H6 color={radioColors.label} style={{ flexShrink: 1 }}>
           {label}
         </H6>
       </View>
