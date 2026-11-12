@@ -1,12 +1,10 @@
 import {
   Body,
   H6,
-  hexToRgba,
   HStack,
   IconButton,
   IOButton,
-  IOColorsLegacy,
-  useIOTheme,
+  useIOColors,
   VStack
 } from "@io-app/design-system";
 import I18n from "i18next";
@@ -58,9 +56,9 @@ export const TourTooltip = ({
   onBack,
   onSkip
 }: Props) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const insets = useSafeAreaInsets();
-  const tooltipBgColor = IOColorsLegacy[theme["appBackground-secondary"]];
+  const tooltipBgColor = colors.surface.secondary;
   const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
   const tooltipHeight = useSharedValue(0);
@@ -145,7 +143,15 @@ export const TourTooltip = ({
           arrowAnimatedStyle
         ]}
       />
-      <View style={[styles.tooltip, { backgroundColor: tooltipBgColor }]}>
+      <View
+        style={[
+          styles.tooltip,
+          {
+            backgroundColor: tooltipBgColor,
+            boxShadow: `0px 2px 8px ${colors.surface.shadow}`
+          }
+        ]}
+      >
         <VStack space={16}>
           <VStack space={4}>
             <H6 style={{ paddingRight: TOOLTIP_TITLE_SAFE_PADDING }}>
@@ -204,7 +210,6 @@ const styles = StyleSheet.create({
   tooltip: {
     borderRadius: BORDER_RADIUS,
     borderCurve: "continuous",
-    boxShadow: `0px 2px 8px ${hexToRgba(IOColorsLegacy.black, 0.15)}`,
     padding: 16
   },
   closeIconButton: {
