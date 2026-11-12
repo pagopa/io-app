@@ -4,6 +4,7 @@ import { watchMessagesSaga } from "..";
 import { logoutSuccess } from "../../../authentication/common/store/actions";
 import { clearCache } from "../../../settings/common/store/actions";
 import {
+  addCalendarEventRequest,
   downloadAttachment,
   getMessageDataAction,
   loadMessageById,
@@ -20,6 +21,7 @@ import {
 import { startProcessingMessageArchivingAction } from "../../store/actions/archiving";
 import { retrievingDataPreconditionStatusAction } from "../../store/actions/preconditions";
 import { retryDataAfterFastLoginSessionExpirationSelector } from "../../store/reducers/messageGetStatus";
+import { handleAddCalendarEvent } from "../handleAddCalendarEvent";
 import {
   handleClearAllAttachments,
   handleClearAttachment
@@ -91,6 +93,8 @@ describe("watchMessagesSaga", () => {
       .next()
       .takeLatest(getMessageDataAction.request, handleLoadMessageData)
       .next()
+      .takeLeading(addCalendarEventRequest, handleAddCalendarEvent)
+      .next()
       .put(setMessageSagasRegisteredAction())
       .next()
       .select(retryDataAfterFastLoginSessionExpirationSelector)
@@ -152,6 +156,8 @@ describe("watchMessagesSaga", () => {
       )
       .next()
       .takeLatest(getMessageDataAction.request, handleLoadMessageData)
+      .next()
+      .takeLeading(addCalendarEventRequest, handleAddCalendarEvent)
       .next()
       .put(setMessageSagasRegisteredAction())
       .next()
