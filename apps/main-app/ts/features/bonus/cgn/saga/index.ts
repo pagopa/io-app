@@ -37,7 +37,7 @@ import { handleGetEycaStatus } from "./networking/eyca/details/getEycaStatus";
 import { cgnGetMerchantsCountSaga } from "./networking/merchants/cgnGetMerchantsCountSaga";
 import {
   cgnFeaturedOpportunitiesSaga,
-  cgnMerchantDetail
+  cgnMerchantDetailUntilCancelled
 } from "./networking/merchants/cgnMerchantDetail";
 import { cgnOfflineMerchantsSaga } from "./networking/merchants/cgnOfflineMerchantsSaga";
 import { cgnOnlineMerchantsSaga } from "./networking/merchants/cgnOnlineMerchantsSaga";
@@ -152,7 +152,7 @@ export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
 
   yield* takeLatest(
     getType(cgnSelectedMerchant.request),
-    cgnMerchantDetail,
+    cgnMerchantDetailUntilCancelled,
     backendCgnMerchants.getMerchant
   );
 

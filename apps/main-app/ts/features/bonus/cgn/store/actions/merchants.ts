@@ -67,6 +67,14 @@ export const cgnSelectedMerchant = createAsyncAction(
   "CGN_SELECTED_MERCHANT_FAILURE"
 )<Merchant["id"], Merchant, NetworkError>();
 
+/**
+ * Cancels a pending `cgnSelectedMerchant` request, so it can't overwrite a
+ * newer selection
+ */
+export const cgnSelectedMerchantCancel = createStandardAction(
+  "CGN_SELECTED_MERCHANT_CANCEL"
+)<void>();
+
 export const selectMerchantDiscount = createStandardAction(
   "CGN_SELECT_MERCHANT_DISCOUNT"
 )<Discount>();
@@ -86,6 +94,7 @@ export type CgnMerchantsAction =
   | ActionType<typeof cgnOnlineMerchants>
   | ActionType<typeof cgnSearchMerchants>
   | ActionType<typeof cgnSelectedMerchant>
+  | ActionType<typeof cgnSelectedMerchantCancel>
   | ActionType<typeof resetMerchantDiscountCode>
   | ActionType<typeof selectMerchantDiscount>
   | ActionType<typeof setMerchantDiscountCode>;

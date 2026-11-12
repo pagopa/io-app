@@ -1,7 +1,8 @@
 import { Merchant } from "@io-app/api-types/generated/definitions/cgn/merchants/Merchant";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { endOfDay, startOfDay } from "date-fns";
-import { call, put } from "typed-redux-saga/macro";
+import { call, put, race, take } from "typed-redux-saga/macro";
+import { getType } from "typesafe-actions";
 
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import {
@@ -14,6 +15,7 @@ import {
   CGN_FEATURED_OPPORTUNITIES_MAX_ITEMS,
   cgnFeaturedOpportunities,
   cgnSelectedMerchant,
+  cgnSelectedMerchantCancel,
   ResolvedCgnFeaturedOpportunity
 } from "../../../store/actions/merchants";
 
@@ -100,4 +102,18 @@ export function* cgnMerchantDetail(
   } catch (e) {
     yield* put(cgnSelectedMerchant.failure(getNetworkError(e)));
   }
+}
+
+/**
+ * Runs `cgnMerchantDetail` until it completes or a featured selection cancels
+ * it
+ */
+export function* cgnMerchantDetailUntilCancelled(
+  getMerchant: ReturnType<typeof BackendCgnMerchants>["getMerchant"],
+  merchantSelected: ReturnType<(typeof cgnSelectedMerchant)["request"]>
+) {
+  yield* race({
+    detail: call(cgnMerchantDetail, getMerchant, merchantSelected),
+    cancelled: take(getType(cgnSelectedMerchantCancel))
+  });
 }

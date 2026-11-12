@@ -5,16 +5,19 @@ import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { expectSaga, testSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
+import { getType } from "typesafe-actions";
 
 import { getGenericError } from "../../../../../../../utils/errors";
 import { withRefreshApiCall } from "../../../../../../authentication/fastLogin/saga/utils";
 import {
   cgnFeaturedOpportunities,
-  cgnSelectedMerchant
+  cgnSelectedMerchant,
+  cgnSelectedMerchantCancel
 } from "../../../../store/actions/merchants";
 import {
   cgnFeaturedOpportunitiesSaga,
-  cgnMerchantDetail
+  cgnMerchantDetail,
+  cgnMerchantDetailUntilCancelled
 } from "../cgnMerchantDetail";
 
 const merchant: Merchant = {
@@ -250,6 +253,41 @@ describe("cgnFeaturedOpportunitiesSaga", () => {
         ]
       ])
       .put(cgnFeaturedOpportunities.success([{ merchant: partner, discount }]))
+      .run();
+  });
+});
+
+describe("cgnMerchantDetailUntilCancelled", () => {
+  const requestAction = cgnSelectedMerchant.request(merchant.id);
+  const getMerchant = jest.fn();
+  const pendingResponse = new Promise<never>(() => undefined);
+
+  it("should dispatch success when the detail request is not cancelled", async () => {
+    await expectSaga(
+      cgnMerchantDetailUntilCancelled,
+      getMerchant,
+      requestAction
+    )
+      .provide([
+        [
+          matchers.call.fn(withRefreshApiCall),
+          { right: { status: 200, value: merchant } }
+        ]
+      ])
+      .put(cgnSelectedMerchant.success(merchant))
+      .run();
+  });
+
+  it("should not dispatch success when a featured selection cancels the pending request", async () => {
+    await expectSaga(
+      cgnMerchantDetailUntilCancelled,
+      getMerchant,
+      requestAction
+    )
+      .provide([[matchers.call.fn(withRefreshApiCall), pendingResponse]])
+      .dispatch(cgnSelectedMerchantCancel())
+      .not.put(cgnSelectedMerchant.success(merchant))
+      .not.put.actionType(getType(cgnSelectedMerchant.failure))
       .run();
   });
 });

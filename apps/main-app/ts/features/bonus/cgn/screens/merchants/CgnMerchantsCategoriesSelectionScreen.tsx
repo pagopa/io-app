@@ -31,6 +31,7 @@ import CGN_ROUTES from "../../navigation/routes";
 import {
   cgnFeaturedOpportunities,
   cgnSelectedMerchant,
+  cgnSelectedMerchantCancel,
   resetMerchantDiscountCode,
   selectMerchantDiscount
 } from "../../store/actions/merchants";
@@ -215,6 +216,8 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
             <View testID="CgnFeaturedOpportunitiesSection">
               <CgnFeaturedOpportunities
                 onSelect={({ merchant, discount }) => {
+                  // Cancel any pending regular merchant request, so it can't overwrite this selection
+                  dispatch(cgnSelectedMerchantCancel());
                   dispatch(cgnSelectedMerchant.success(merchant));
                   dispatch(selectMerchantDiscount(discount));
                   dispatch(resetMerchantDiscountCode());

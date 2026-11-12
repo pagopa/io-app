@@ -1,10 +1,10 @@
 import {
   H6,
-  IOColors,
   IODimensions,
   IODimensionScale,
   IOSkeleton,
   IOText,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import I18n from "i18next";
@@ -32,13 +32,11 @@ const styles = StyleSheet.create({
   card: {
     flexDirection: "row",
     alignItems: "center",
-    height: CARD_HEIGHT,
+    minHeight: CARD_HEIGHT,
     padding: CARD_PADDING,
     borderRadius: CARD_BORDER_RADIUS,
     borderCurve: "continuous",
-    borderWidth: 1,
-    borderColor: IOColors["grey-100"],
-    backgroundColor: IOColors["grey-50"]
+    borderWidth: 1
   },
   cardTextContainer: {
     flex: 1
@@ -60,6 +58,7 @@ const FeaturedOpportunityCard = ({
   onSelect: (opportunity: ResolvedCgnFeaturedOpportunity) => void;
   opportunity: ResolvedCgnFeaturedOpportunity;
 }) => {
+  const colors = useIOColors();
   const { merchant, discount } = opportunity;
   const description = discount.description ?? discount.name;
   return (
@@ -68,11 +67,24 @@ const FeaturedOpportunityCard = ({
       accessibilityRole="button"
       onPress={() => onSelect(opportunity)}
     >
-      <View style={[styles.card, { width: cardWidth }]}>
+      <View
+        style={[
+          styles.card,
+          {
+            width: cardWidth,
+            backgroundColor: colors.surface.secondary,
+            borderColor: colors.stroke.default
+          }
+        ]}
+      >
         <View style={styles.cardTextContainer}>
-          <H6 numberOfLines={2}>{merchant.name}</H6>
+          <H6 color={colors.text.heading.default} numberOfLines={2}>
+            {merchant.name}
+          </H6>
           <VSpacer size={4} />
-          <IOText numberOfLines={1}>{description}</IOText>
+          <IOText color={colors.text.content.default} numberOfLines={1}>
+            {description}
+          </IOText>
         </View>
         {merchant.imageUrl && (
           <Image
