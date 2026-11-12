@@ -1,6 +1,6 @@
 /* eslint-disable functional/immutable-data */
 module.exports = {
-  presets: ["module:@react-native/babel-preset"],
+  presets: ["babel-preset-expo"],
   plugins: [
     [
       "module-resolver",
@@ -15,6 +15,7 @@ module.exports = {
     ],
     "macros",
     ["@babel/plugin-transform-export-namespace-from", { loose: true }],
+    "@babel/plugin-transform-class-static-block",
     [
       "react-native-worklets/plugin",
       {

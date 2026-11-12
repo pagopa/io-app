@@ -25,6 +25,7 @@ import authenticationReducer, {
   INITIAL_STATE as authenticationInitialState,
   AuthenticationState
 } from "../../features/authentication/common/store/reducers";
+import { loginFlowInitialState } from "../../features/authentication/common/store/reducers/loginFlow";
 import { fastLoginOptInInitialState } from "../../features/authentication/fastLogin/store/reducers/optInReducer";
 import { cieReducer } from "../../features/authentication/login/cie/store/reducers";
 import { cieLoginInitialState } from "../../features/authentication/login/cie/store/reducers/cieLogin";
@@ -255,14 +256,18 @@ export function createRootReducer(
                 },
                 cieLogin: {
                   ...cieLoginInitialState,
+                  cieEnv: state.features.loginFeatures.cieLogin.cieEnv,
                   isCieIDTourGuideEnabled:
                     state.features.loginFeatures.cieLogin
                       .isCieIDTourGuideEnabled,
-                  useUat: state.features.loginFeatures.cieLogin.useUat,
                   _persist: state.features.loginFeatures.cieLogin._persist
                 },
                 loginConfig: {
                   ...state.features.loginFeatures.loginConfig
+                },
+                loginFlow: {
+                  ...loginFlowInitialState,
+                  _persist: state.features.loginFeatures.loginFlow._persist
                 },
                 activeSessionLogin: {
                   ...activeSessionLoginInitialState,
@@ -299,6 +304,9 @@ export function createRootReducer(
               },
               services: {
                 ...state.features.services
+              },
+              tour: {
+                ...state.features.tour
               },
               _persist: state.features._persist
             },

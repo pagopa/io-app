@@ -1,17 +1,13 @@
 import {
-  AnimatedMessageCheckbox,
   Avatar,
   BodySmall,
   H6,
-  hexToRgba,
   HStack,
-  IOColors,
+  IODimensions,
   IOListItemStyles,
-  IOVisualCostants,
+  MessageCheckbox,
   Tag,
   triggerHaptic,
-  useIOTheme,
-  useIOThemeContext,
   useListItemAnimation,
   WithTestID
 } from "@io-app/design-system";
@@ -28,22 +24,27 @@ import {
 import Animated from "react-native-reanimated";
 import Svg, { Circle } from "react-native-svg";
 
+import { useFeatureColors } from "../../../../../hooks/useFeatureColors";
+import { messagesColors } from "../../../colors";
 import { AvatarDouble } from "./AvatarDouble";
 
 export const ListItemMessageStandardHeight = 95;
 export const ListItemMessageEnhancedHeight = 133;
 
 const styles = StyleSheet.create({
+  listItem: {
+    paddingVertical: IODimensions.padding.listItem.messages.vertical,
+    paddingHorizontal: IODimensions.padding.listItem.messages.horizontal
+  },
   container: {
-    flexDirection: "row",
-    paddingHorizontal: 16
+    flexDirection: "row"
   },
   organizationContainer: {
     flexDirection: "row"
   },
   messageReadContainer: {
     justifyContent: "center",
-    marginLeft: 8
+    marginLeft: IODimensions.gap.listItem.messages.trailing
   },
   serviceNameAndMessageTitleContainer: {
     flexDirection: "row"
@@ -54,10 +55,13 @@ const styles = StyleSheet.create({
   serviceLogoContainer: {
     alignItems: "center",
     justifyContent: "center",
-    height: IOVisualCostants.avatarSizeSmall,
-    width: IOVisualCostants.avatarSizeSmall
+    height: IODimensions.size.avatar.small,
+    width: IODimensions.size.avatar.small
   },
-  textContainer: { flex: 1, marginLeft: 8 }
+  textContainer: {
+    flex: 1,
+    marginLeft: IODimensions.gap.listItem.messages.leading
+  }
 });
 
 export type ListItemMessageProps = Pick<
@@ -108,8 +112,7 @@ export const ListItemMessage = ({
   serviceLogos,
   testID
 }: ListItemMessageProps) => {
-  const theme = useIOTheme();
-  const { themeType } = useIOThemeContext();
+  const colors = useFeatureColors(messagesColors);
 
   const { onPressIn, onPressOut, scaleAnimatedStyle, backgroundAnimatedStyle } =
     useListItemAnimation();
@@ -125,11 +128,8 @@ export const ListItemMessage = ({
   );
 
   // Component colors
-  const unreadBadgeColor = IOColors[theme["interactiveElem-default"]];
-  const selectedBgColor =
-    themeType === "dark"
-      ? hexToRgba(IOColors["blueIO-300"], 0.1)
-      : IOColors["blueIO-50"];
+  const unreadBadgeColor = colors.listItem.unreadBadge;
+  const selectedBgColor = colors.listItem.selectedBackground;
 
   return (
     <Pressable
@@ -151,7 +151,7 @@ export const ListItemMessage = ({
     >
       <Animated.View
         style={[
-          IOListItemStyles.listItem,
+          styles.listItem,
           !selected ? backgroundAnimatedStyle : undefined,
           { flexGrow: 1, justifyContent: "center" }
         ]}
@@ -179,10 +179,7 @@ export const ListItemMessage = ({
                     }
                   ]}
                 >
-                  <AnimatedMessageCheckbox
-                    accessible={false}
-                    checked={selected}
-                  />
+                  <MessageCheckbox accessible={false} checked={selected} />
                 </View>
               </View>
             </View>
@@ -193,15 +190,17 @@ export const ListItemMessage = ({
                 react and react-native (on react-native, 'flex: 1' does
                 something similar to 'flex-grow') */}
                 <H6
-                  color={theme["textBody-default"]}
+                  color={colors.listItem.title}
                   numberOfLines={1}
                   style={{ flexGrow: 1, flexShrink: 1 }}
                 >
                   {organizationName}
                 </H6>
                 <BodySmall
-                  color={theme["textBody-tertiary"]}
-                  style={{ marginLeft: 8 }}
+                  color={colors.listItem.preview}
+                  style={{
+                    marginLeft: IODimensions.gap.listItem.messages.trailing
+                  }}
                   weight="Regular"
                 >
                   {formattedDate}
@@ -221,8 +220,10 @@ export const ListItemMessage = ({
               {tag && (
                 /* We add a `View` because we need to re-arrange block elements using
                `VStack` and/or `HStack` */
-                <View style={{ marginTop: 8 }}>
-                  <HStack space={8}>
+                <View
+                  style={{ marginTop: IODimensions.gap.listItem.messages.tag }}
+                >
+                  <HStack space={IODimensions.gap.listItem.messages.tag}>
                     <Tag text={tag.text} variant={tag.variant} />
                     {tag.variant === "legalMessage" && (
                       <Tag

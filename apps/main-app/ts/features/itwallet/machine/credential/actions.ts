@@ -100,24 +100,20 @@ export const navigateToWalletAction = ({
   context.deps.toast.success(
     I18n.t("features.itWallet.issuance.credentialResult.toast")
   );
-  context.deps.navigation.reset({
-    index: 1,
-    routes: [
-      {
-        name: ROUTES.MAIN,
-        params: {
-          screen: ROUTES.WALLET_HOME
-        }
-      }
-    ]
+  context.deps.navigation.popTo(ROUTES.MAIN, {
+    screen: ROUTES.WALLET_HOME,
+    params: {}
   });
 };
 
 export const navigateToEidVerificationExpiredScreenAction = ({
   context
 }: CredentialIssuanceActionArgs) => {
-  context.deps.navigation.replace(ITW_ROUTES.MAIN, {
-    screen: ITW_ROUTES.PRESENTATION.EID_VERIFICATION_EXPIRED
+  // Resets only the nested ITW stack, keeping the navigator and its machines mounted
+  context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
+    state: {
+      routes: [{ name: ITW_ROUTES.PRESENTATION.EID_VERIFICATION_EXPIRED }]
+    }
   });
 };
 
@@ -158,7 +154,7 @@ export const closeIssuanceAction = ({
     );
   }
 
-  navigation.navigate(ROUTES.MAIN, {
+  navigation.popTo(ROUTES.MAIN, {
     screen: ROUTES.WALLET_HOME,
     params: {}
   });

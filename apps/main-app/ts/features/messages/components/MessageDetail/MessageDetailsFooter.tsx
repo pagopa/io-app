@@ -1,7 +1,7 @@
 import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import {
   ContentWrapper,
-  IOColors,
+  IOColorsLegacy,
   useIOTheme,
   VSpacer
 } from "@io-app/design-system";
@@ -39,7 +39,7 @@ const generateMessageSectionData = (
           accessibilityLabel: I18n.t(
             "messageDetails.showMoreDataBottomSheet.messageIdAccessibility"
           ),
-          icon: "docPaymentTitle",
+          icon: "docTitle",
           label: I18n.t("messageDetails.showMoreDataBottomSheet.messageId"),
           value: messageId
         }
@@ -52,7 +52,7 @@ const generateMessageSectionData = (
           accessibilityLabel: I18n.t(
             "messageDetails.showMoreDataBottomSheet.noticeCodeAccessibility"
           ),
-          icon: "docPaymentCode",
+          icon: "docCode",
           label: I18n.t("messageDetails.showMoreDataBottomSheet.noticeCode"),
           value: formatPaymentNoticeNumber(noticeNumber),
           valueToCopy: noticeNumber
@@ -115,7 +115,7 @@ export const MessageDetailsFooter = ({
       style={{
         paddingBottom: "75%",
         marginBottom: "-75%",
-        backgroundColor: IOColors[theme["appBackground-secondary"]]
+        backgroundColor: IOColorsLegacy[theme["appBackground-secondary"]]
       }}
     >
       <VSpacer size={16} />

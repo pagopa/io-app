@@ -1,6 +1,10 @@
 import { NotificationPaymentInfo } from "@io-app/api-types/generated/definitions/pn/NotificationPaymentInfo";
 import { NotificationStatusHistory } from "@io-app/api-types/generated/definitions/pn/NotificationStatusHistory";
-import { IOColors, IOVisualCostants, useIOTheme } from "@io-app/design-system";
+import {
+  IOColorsLegacy,
+  IODimensions,
+  useIOTheme
+} from "@io-app/design-system";
 import I18n from "i18next";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
@@ -22,8 +26,8 @@ const styles = StyleSheet.create({
   container: {
     paddingBottom: "95%",
     marginBottom: "-95%",
-    paddingHorizontal: IOVisualCostants.appMarginDefault,
-    paddingTop: IOVisualCostants.appMarginDefault
+    paddingHorizontal: IODimensions.padding.screen.default,
+    paddingTop: IODimensions.padding.screen.default
   }
 });
 
@@ -55,7 +59,7 @@ const generateMessageSectionData = (
             "features.pn.details.infoSection.iunAccessibility",
             { iun }
           ),
-          icon: "docPaymentTitle",
+          icon: "docTitle",
           label: I18n.t("features.pn.details.infoSection.iun"),
           value: iun
         }
@@ -72,7 +76,7 @@ const generateMessageSectionData = (
             "messageDetails.showMoreDataBottomSheet.messageIdAccessibility",
             { messageId }
           ),
-          icon: "docPaymentTitle",
+          icon: "docTitle",
           label: I18n.t("messageDetails.showMoreDataBottomSheet.messageId"),
           value: messageId
         }
@@ -95,7 +99,7 @@ const generateMessageSectionData = (
               "messageDetails.showMoreDataBottomSheet.noticeCodeAccessibility",
               { paymentNoticeNumber }
             ),
-            icon: "docPaymentCode",
+            icon: "docCode",
             label: I18n.t("messageDetails.showMoreDataBottomSheet.noticeCode"),
             value: paymentNoticeNumber,
             valueToCopy: paidNoticeCode
@@ -122,7 +126,7 @@ const generateMessageSectionData = (
               "messageDetails.showMoreDataBottomSheet.noticeCodeAccessibility",
               { paymentNoticeNumber }
             ),
-            icon: "docPaymentCode",
+            icon: "docCode",
             label: I18n.t("messageDetails.showMoreDataBottomSheet.noticeCode"),
             value: paymentNoticeNumber,
             valueToCopy: payment.noticeCode
@@ -176,7 +180,7 @@ export const MessageBottomMenu = ({
     <View
       style={[
         styles.container,
-        { backgroundColor: IOColors[theme["appBackground-secondary"]] }
+        { backgroundColor: IOColorsLegacy[theme["appBackground-secondary"]] }
       ]}
     >
       <TimelineListItem

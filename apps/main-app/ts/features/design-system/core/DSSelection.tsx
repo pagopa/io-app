@@ -1,18 +1,16 @@
 import {
-  AnimatedMessageCheckbox,
   BodySmall,
   CheckboxLabel,
   Divider,
   H4,
   HSpacer,
-  IOColors,
   ListItemCheckbox,
   ListItemRadioWithAmount,
   ListItemSwitch,
-  NativeSwitch,
+  MessageCheckbox,
   RadioGroup,
   RadioItem,
-  useIOTheme,
+  Switch,
   VStack
 } from "@io-app/design-system";
 import { ComponentProps, useState } from "react";
@@ -26,47 +24,44 @@ const sectionMargin = 40;
 const componentMargin = 32;
 const componentInnerMargin = 8;
 
-export const DSSelection = () => {
-  const theme = useIOTheme();
-  return (
-    <DesignSystemScreen title={"Selection"}>
-      <VStack space={sectionMargin}>
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Checkbox</H4>
-          <VStack space={componentMargin}>
-            {/* CheckboxLabel */}
-            {renderCheckboxLabel()}
-            {/* ListItemCheckbox */}
-            {renderListItemCheckbox()}
-          </VStack>
-        </VStack>
-
-        {/* AnimatedMessageCheckbox */}
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Checkbox (Messages)</H4>
-          <AnimatedMessageCheckboxShowroom />
-        </VStack>
-
-        {/* RadioListItem */}
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Radio</H4>
-          <RadioListItemsShowroom />
-        </VStack>
-
-        {/* Switch */}
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Switch</H4>
-          <VStack space={componentMargin}>
-            {/* Native Switch */}
-            <NativeSwitchShowroom />
-            {/* ListItemSwitch */}
-            <ListItemSwitchShowroom />
-          </VStack>
+export const DSSelection = () => (
+  <DesignSystemScreen title={"Selection"}>
+    <VStack space={sectionMargin}>
+      <VStack space={sectionTitleMargin}>
+        <H4>Checkbox</H4>
+        <VStack space={componentMargin}>
+          {/* CheckboxLabel */}
+          {renderCheckboxLabel()}
+          {/* ListItemCheckbox */}
+          {renderListItemCheckbox()}
         </VStack>
       </VStack>
-    </DesignSystemScreen>
-  );
-};
+
+      {/* MessageCheckbox */}
+      <VStack space={sectionTitleMargin}>
+        <H4>Checkbox (Messages)</H4>
+        <MessageCheckboxShowroom />
+      </VStack>
+
+      {/* RadioListItem */}
+      <VStack space={sectionTitleMargin}>
+        <H4>Radio</H4>
+        <RadioListItemsShowroom />
+      </VStack>
+
+      {/* Switch */}
+      <VStack space={sectionTitleMargin}>
+        <H4>Switch</H4>
+        <VStack space={componentMargin}>
+          {/* Switch */}
+          <SwitchShowroom />
+          {/* ListItemSwitch */}
+          <ListItemSwitchShowroom />
+        </VStack>
+      </VStack>
+    </VStack>
+  </DesignSystemScreen>
+);
 
 const renderCheckboxLabel = () => (
   <VStack space={componentMargin}>
@@ -90,13 +85,13 @@ const renderListItemCheckbox = () => (
     <DSComponentViewerBox name="ListItemCheckbox">
       <ListItemCheckbox
         accessibilityLabel={""}
-        value="Usa configurazione rapida"
+        label="Usa configurazione rapida"
       />
       <Divider />
       <ListItemCheckbox
         accessibilityLabel={""}
         icon="coggle"
-        value="Usa configurazione rapida"
+        label="Usa configurazione rapida"
       />
       <Divider />
       <ListItemCheckbox
@@ -104,7 +99,7 @@ const renderListItemCheckbox = () => (
         description={
           "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
         }
-        value="Usa configurazione rapida"
+        label="Usa configurazione rapida"
       />
       <Divider />
       <ListItemCheckbox
@@ -112,7 +107,7 @@ const renderListItemCheckbox = () => (
         description={
           "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
         }
-        value="Questa è un'altra prova ancora più lunga per andare su due righe"
+        label="Questa è un'altra prova ancora più lunga per andare su due righe"
       />
       <Divider />
       <ListItemCheckbox
@@ -121,7 +116,7 @@ const renderListItemCheckbox = () => (
           "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano."
         }
         icon="bonus"
-        value="Let's try with a loooong loooooong looooooong title + icon"
+        label="Let's try with a loooong loooooong looooooong title + icon"
       />
       <Divider />
       <ListItemCheckbox
@@ -130,14 +125,14 @@ const renderListItemCheckbox = () => (
           "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti."
         }
         icon="coggle"
-        value="Usa configurazione rapida"
+        label="Usa configurazione rapida"
       />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ListItemCheckbox (disabled)">
       <ListItemCheckbox
         accessibilityLabel={""}
         disabled
-        value="Usa configurazione rapida"
+        label="Usa configurazione rapida"
       />
       <Divider />
       <ListItemCheckbox
@@ -147,15 +142,15 @@ const renderListItemCheckbox = () => (
         }
         disabled
         icon="coggle"
-        value="Usa configurazione rapida"
+        label="Usa configurazione rapida"
       />
       <Divider />
       <ListItemCheckbox
         accessibilityLabel={""}
         disabled
         icon="coggle"
+        label="Usa configurazione rapida"
         selected={true}
-        value="Usa configurazione rapida"
       />
     </DSComponentViewerBox>
   </VStack>
@@ -166,18 +161,18 @@ const renderListItemCheckbox = () => (
 const mockRadioItems = (): ReadonlyArray<RadioItem<string>> => [
   {
     startImage: { icon: "coggle" },
-    value: "Let's try with a basic title",
+    label: "Let's try with a basic title",
     description:
       "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano.",
     id: "example-1"
   },
   {
-    value: "Let's try with JSX description",
+    label: "Let's try with JSX description",
     description: (
-      <BodySmall color="grey-700" weight="Regular">
+      <BodySmall weight="Regular">
         Ti contatteranno solo i servizi che hanno qualcosa di importante da
         dirti.{" "}
-        <Text style={{ color: IOColors["grey-700"], fontWeight: "600" }}>
+        <Text style={{ fontWeight: "600" }}>
           Potrai sempre disattivare le comunicazioni che non ti interessano.
         </Text>
       </BodySmall>
@@ -186,23 +181,23 @@ const mockRadioItems = (): ReadonlyArray<RadioItem<string>> => [
   },
   {
     startImage: { paymentLogo: "myBank" },
-    value: "Payment method item",
+    label: "Payment method item",
     description:
       "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano.",
     id: "example-paymentLogo"
   },
   {
-    value: "Let's try with a basic title",
+    label: "Let's try with a basic title",
     description:
       "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti.",
     id: "example-2"
   },
   {
-    value: "Let's try with a very looong loooooong title instead",
+    label: "Let's try with a very looong loooooong title instead",
     id: "example-3"
   },
   {
-    value: "Let's try with a disabled item",
+    label: "Let's try with a disabled item",
     description:
       "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti.",
     id: "example-disabled",
@@ -212,7 +207,7 @@ const mockRadioItems = (): ReadonlyArray<RadioItem<string>> => [
 
 const mockRadioItemsSkeleton = (): ReadonlyArray<RadioItem<string>> => [
   {
-    value: "Skeleton example",
+    label: "Skeleton example",
     description:
       "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti.",
     id: "example-loading",
@@ -223,7 +218,7 @@ const mockRadioItemsSkeleton = (): ReadonlyArray<RadioItem<string>> => [
     }
   },
   {
-    value: "Skeleton example",
+    label: "Skeleton example",
     description:
       "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti.",
     id: "example-loading-withIcon",
@@ -234,7 +229,7 @@ const mockRadioItemsSkeleton = (): ReadonlyArray<RadioItem<string>> => [
     }
   },
   {
-    value: "Skeleton example",
+    label: "Skeleton example",
     description:
       "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti.",
     id: "example-loading-withDescription",
@@ -245,7 +240,7 @@ const mockRadioItemsSkeleton = (): ReadonlyArray<RadioItem<string>> => [
     }
   },
   {
-    value: "Skeleton example",
+    label: "Skeleton example",
     description:
       "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti.",
     id: "example-loading-withIcon-withDescription",
@@ -300,30 +295,30 @@ const RadioListItemsShowroom = () => {
   );
 };
 
-const AnimatedMessageCheckboxShowroom = () => {
+const MessageCheckboxShowroom = () => {
   const [isEnabled, setIsEnabled] = useState(true);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   return (
-    <DSComponentViewerBox name="AnimatedMessageCheckbox">
+    <DSComponentViewerBox name="MessageCheckbox">
       <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <AnimatedMessageCheckbox checked={isEnabled} />
+        <MessageCheckbox checked={isEnabled} />
         <HSpacer size={24} />
-        <NativeSwitch onValueChange={toggleSwitch} value={isEnabled} />
+        <Switch onValueChange={toggleSwitch} value={isEnabled} />
       </View>
     </DSComponentViewerBox>
   );
 };
 
 // SWITCH
-const NativeSwitchShowroom = () => {
+const SwitchShowroom = () => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   return (
-    <DSComponentViewerBox name="NativeSwitch">
+    <DSComponentViewerBox name="Switch">
       <View style={{ alignSelf: "flex-start" }}>
-        <NativeSwitch onValueChange={toggleSwitch} value={isEnabled} />
+        <Switch onValueChange={toggleSwitch} value={isEnabled} />
       </View>
     </DSComponentViewerBox>
   );

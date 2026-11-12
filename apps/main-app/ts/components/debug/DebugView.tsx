@@ -1,6 +1,6 @@
 import {
-  IOColors,
-  IOVisualCostants,
+  IOColorsLegacy,
+  IODimensions,
   ListItemHeader
 } from "@io-app/design-system";
 import { PropsWithChildren } from "react";
@@ -27,9 +27,9 @@ export const DebugView = ({
       style={{
         paddingHorizontal: 24,
         paddingBottom: 12,
-        backgroundColor: IOColors["grey-100"],
+        backgroundColor: IOColorsLegacy["grey-100"],
         marginHorizontal: ignoreHorizontalMargins
-          ? -IOVisualCostants.appMarginDefault
+          ? -IODimensions.padding.screen.default
           : 0
       }}
       testID="DebugViewTestID"

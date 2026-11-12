@@ -103,7 +103,8 @@ describe("persistedPnBannerDismissReducer", () => {
       store.dispatch(
         loginSuccess({
           token: "mock-token",
-          idp: "test"
+          idp: "test",
+          isOneIdentityLogin: false
         })
       );
 

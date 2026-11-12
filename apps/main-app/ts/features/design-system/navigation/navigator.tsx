@@ -1,9 +1,8 @@
 import {
   IconButton,
-  IOColors,
   makeFontStyleObject,
+  useIOColors,
   useIOExperimentalDesign,
-  useIOTheme,
   useIOThemeContext
 } from "@io-app/design-system";
 import { ThemeProvider, useNavigation } from "@react-navigation/native";
@@ -59,6 +58,14 @@ import { DSLoadingScreen } from "../core/DSLoadingScreen";
 import { DSLoadingScreenExtendedProps } from "../core/DSLoadingScreenExtendedProps";
 import { DSLogos } from "../core/DSLogos";
 import { DSModules } from "../core/DSModules";
+import { DSNativeBottomSheet } from "../core/DSNativeBottomSheet";
+import {
+  NativeSheetFitToContents,
+  NativeSheetHalf,
+  // NativeSheetLongContent,
+  // NativeSheetLongContentFit,
+  NativeSheetTwoDetents
+} from "../core/DSNativeBottomSheetContent";
 import { DSNumberPad } from "../core/DSNumberPad";
 import { DSOTPInput } from "../core/DSOTPInput";
 import { DSPictograms } from "../core/DSPictograms";
@@ -100,12 +107,11 @@ const RNNCloseButton = () => {
 export const DesignSystemNavigator = () => {
   const { isExperimental } = useIOExperimentalDesign();
   const { themeType } = useIOThemeContext();
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   const customModalHeaderConf = {
     headerRight: RNNCloseButton,
-    title: DESIGN_SYSTEM_ROUTES.DEBUG.FULL_SCREEN_MODAL.title,
-    sheetCornerRadius: 24,
+    title: DESIGN_SYSTEM_ROUTES.NATIVE.FULL_SCREEN_MODAL.title,
     headerTitleStyle: {
       ...makeFontStyleObject(
         14,
@@ -114,7 +120,7 @@ export const DesignSystemNavigator = () => {
         isExperimental ? "Regular" : "Semibold",
         undefined
       ),
-      color: IOColors[theme["textHeading-default"]]
+      color: colors.text.heading.default
     }
   };
 
@@ -127,7 +133,7 @@ export const DesignSystemNavigator = () => {
       <Stack.Navigator
         initialRouteName={DESIGN_SYSTEM_ROUTES.MAIN.route}
         screenOptions={{
-          headerTintColor: IOColors[theme["interactiveElem-default"]],
+          headerTintColor: colors.foreground.action.primary.default,
           headerTitleStyle: {
             ...makeFontStyleObject(
               14,
@@ -136,10 +142,10 @@ export const DesignSystemNavigator = () => {
               isExperimental ? "Regular" : "Semibold",
               undefined
             ),
-            color: IOColors[theme["textHeading-default"]]
+            color: colors.text.heading.default
           },
           headerTitleAlign: "center",
-          headerBackTitleVisible: false,
+          headerBackButtonDisplayMode: "minimal",
           headerShown: true,
           autoHideHomeIndicator: true
         }}
@@ -636,9 +642,28 @@ export const DesignSystemNavigator = () => {
           }}
         />
 
+        {/* NATIVE */}
+        <Stack.Screen
+          component={DSNativeBottomSheet}
+          name={DESIGN_SYSTEM_ROUTES.NATIVE.BOTTOM_SHEET.route}
+          options={{
+            headerTitle: DESIGN_SYSTEM_ROUTES.NATIVE.BOTTOM_SHEET.title
+          }}
+        />
+
+        <Stack.Screen
+          component={DSFullScreenModal}
+          name={DESIGN_SYSTEM_ROUTES.NATIVE.FULL_SCREEN_MODAL.route}
+          options={{
+            ...customModalHeaderConf,
+            presentation: "pageSheet"
+          }}
+        />
+
         <Stack.Group
           screenOptions={{
             presentation: "formSheet",
+            gestureEnabled: true,
             ...(Platform.OS === "ios"
               ? {
                   gestureEnabled: isGestureEnabled
@@ -647,10 +672,49 @@ export const DesignSystemNavigator = () => {
           }}
         >
           <Stack.Screen
-            component={DSFullScreenModal}
-            name={DESIGN_SYSTEM_ROUTES.DEBUG.FULL_SCREEN_MODAL.route}
-            options={customModalHeaderConf}
+            component={NativeSheetFitToContents}
+            name={DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.FIT_TO_CONTENTS.route}
+            options={{
+              sheetAllowedDetents: "fitToContents",
+              headerShown: false
+            }}
           />
+          <Stack.Screen
+            component={NativeSheetHalf}
+            name={DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.HALF_SCREEN.route}
+            options={{
+              sheetAllowedDetents: [0.5],
+              headerShown: false
+            }}
+          />
+          <Stack.Screen
+            component={NativeSheetTwoDetents}
+            name={DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.TWO_DETENTS.route}
+            options={{
+              sheetAllowedDetents: [0.35, 0.8],
+              headerShown: false
+            }}
+          />
+          {/* TODO: Re-enable after bumping react-native-screens to >= 4.26.0 (iOS crash with a ScrollView inside a formSheet) */}
+          {/*
+          <Stack.Screen
+            component={NativeSheetLongContent}
+            name={DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.LONG_CONTENT.route}
+            options={{
+              sheetAllowedDetents: [0.5, 1.0],
+              sheetGrabberVisible: true,
+              headerShown: false
+            }}
+          />
+          <Stack.Screen
+            component={NativeSheetLongContentFit}
+            name={DESIGN_SYSTEM_ROUTES.NATIVE_SHEETS.LONG_CONTENT_FIT.route}
+            options={{
+              sheetAllowedDetents: "fitToContents",
+              headerShown: false
+            }}
+          />
+          */}
         </Stack.Group>
       </Stack.Navigator>
     </ThemeProvider>

@@ -81,7 +81,8 @@ export function* handleTestLogin({
         yield* put(
           loginSuccess({
             token: testLoginResponse.right.value.token,
-            idp: "test"
+            idp: "test",
+            isOneIdentityLogin: false
           })
         );
         return;
@@ -97,9 +98,11 @@ export function* handleTestLogin({
     yield* put(
       loginFailure({
         error: new Error(
-          (readableReport(testLoginResponse.left).match(/"status":\d{3}/) ?? [
-            "unknown error"
-          ])[0]
+          (
+            readableReport(testLoginResponse.left).match(/"status":\d{3}/) ?? [
+              "unknown error"
+            ]
+          )[0]
         ),
         idp: "test"
       })

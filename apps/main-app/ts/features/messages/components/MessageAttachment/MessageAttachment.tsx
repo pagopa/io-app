@@ -4,14 +4,13 @@ import {
   FooterActionsInline,
   IOToast
 } from "@io-app/design-system";
-import * as B from "fp-ts/lib/boolean";
-import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useCallback, useState } from "react";
 import ReactNativeBlobUtil from "react-native-blob-util";
 
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIOSelector } from "../../../../store/hooks";
+import { isTestEnv } from "../../../../utils/environment";
 import { isIos } from "../../../../utils/platform";
 import { share } from "../../../../utils/share";
 import {
@@ -53,6 +52,7 @@ const MessageAttachmentFooter = ({
       actions={{
         type: "SingleButton",
         primary: {
+          testID: "message-attachment-save-or-share-button",
           label: I18n.t("messagePDFPreview.singleBtn"),
           accessibilityLabel: I18n.t(
             "messagePDFPreview.singleBtnAccessibility"
@@ -67,6 +67,7 @@ const MessageAttachmentFooter = ({
   ) : (
     <FooterActionsInline
       endAction={{
+        testID: "message-attachment-save-button",
         color: "primary",
         label: I18n.t("messagePDFPreview.save"),
         accessibilityLabel: I18n.t("messagePDFPreview.saveAccessibility"),
@@ -94,6 +95,7 @@ const MessageAttachmentFooter = ({
         }
       }}
       startAction={{
+        testID: "message-attachment-share-button",
         color: "primary",
         label: I18n.t("messagePDFPreview.share"),
         accessibilityLabel: I18n.t("messagePDFPreview.shareAccessibility"),
@@ -112,51 +114,42 @@ const onPDFError = (
   isPN: boolean,
   serviceId?: ServiceId,
   attachmentCategory?: string
-) =>
-  pipe(
-    isPN,
-    B.fold(
-      () => {
-        trackThirdPartyMessageAttachmentCorruptedFile(messageId, serviceId);
-        IOToast.error(I18n.t("messageDetails.attachments.corruptedFile"));
-      },
-      () => trackPNAttachmentOpeningSuccess("error", attachmentCategory)
-    )
-  );
+) => {
+  if (isPN) {
+    trackPNAttachmentOpeningSuccess("error", attachmentCategory);
+  } else {
+    trackThirdPartyMessageAttachmentCorruptedFile(messageId, serviceId);
+    IOToast.error(I18n.t("messageDetails.attachments.corruptedFile"));
+  }
+};
 
-const onLoadComplete = (isPN: boolean, attachmentCategory?: string) =>
-  pipe(
-    isPN,
-    B.fold(
-      () => trackThirdPartyMessageAttachmentPreviewSuccess(),
-      () => trackPNAttachmentOpeningSuccess("displayer", attachmentCategory)
-    )
-  );
+const onLoadComplete = (isPN: boolean, attachmentCategory?: string) => {
+  if (isPN) {
+    trackPNAttachmentOpeningSuccess("displayer", attachmentCategory);
+  } else {
+    trackThirdPartyMessageAttachmentPreviewSuccess();
+  }
+};
 
-const onShare = (isPN: boolean, attachmentCategory?: string) =>
-  pipe(
-    isPN,
-    B.fold(
-      () => trackThirdPartyMessageAttachmentUserAction("share"),
-      () =>
-        pipe(
-          isIos,
-          B.fold(
-            () => trackPNAttachmentShare(attachmentCategory),
-            () => trackPNAttachmentSaveShare(attachmentCategory)
-          )
-        )
-    )
-  );
+const onShare = (isPN: boolean, attachmentCategory?: string) => {
+  if (isPN) {
+    if (isIos) {
+      trackPNAttachmentSaveShare(attachmentCategory);
+    } else {
+      trackPNAttachmentShare(attachmentCategory);
+    }
+  } else {
+    trackThirdPartyMessageAttachmentUserAction("share");
+  }
+};
 
-const onDownload = (isPN: boolean, attachmentCategory?: string) =>
-  pipe(
-    isPN,
-    B.fold(
-      () => trackThirdPartyMessageAttachmentUserAction("download"),
-      () => trackPNAttachmentSave(attachmentCategory)
-    )
-  );
+const onDownload = (isPN: boolean, attachmentCategory?: string) => {
+  if (isPN) {
+    trackPNAttachmentSave(attachmentCategory);
+  } else {
+    trackThirdPartyMessageAttachmentUserAction("download");
+  }
+};
 
 export type MessageAttachmentProps = {
   attachmentId: string;
@@ -190,6 +183,7 @@ export const MessageAttachment = ({
       <OperationResultScreenContent
         pictogram={"umbrella"}
         subtitle={I18n.t("messageDetails.submitBugText")}
+        testID="message-attachment-generic-error"
         title={I18n.t("global.genericError")}
       />
     );
@@ -204,6 +198,7 @@ export const MessageAttachment = ({
         <OperationResultScreenContent
           pictogram={"umbrella"}
           subtitle={I18n.t("messagePDFPreview.errors.previewing.body")}
+          testID="message-attachment-preview-error"
           title={I18n.t("messagePDFPreview.errors.previewing.title")}
         />
       ) : (
@@ -223,3 +218,5 @@ export const MessageAttachment = ({
     </>
   );
 };
+
+export const testable = isTestEnv ? { MessageAttachmentFooter } : undefined;

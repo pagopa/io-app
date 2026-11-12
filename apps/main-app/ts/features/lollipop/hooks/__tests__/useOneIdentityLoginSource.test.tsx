@@ -1,4 +1,6 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
+import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
+import CookieManager from "@react-native-cookies/cookies";
 import { act, renderHook, waitFor } from "@testing-library/react-native";
 import { err, ok } from "neverthrow";
 import { Provider } from "react-redux";
@@ -7,7 +9,9 @@ import URLParse from "url-parse";
 
 import { apiUrlPrefix } from "../../../../config";
 import { applicationChangeState } from "../../../../store/actions/application";
+import { setProfileHashedFiscalCode } from "../../../../store/actions/crossSessions";
 import { appReducer } from "../../../../store/reducers";
+import { hashedProfileFiscalCodeSelector } from "../../../../store/reducers/crossSessions";
 import { SpidIdp } from "../../../../utils/idps";
 import * as authenticationAnalytics from "../../../authentication/common/analytics";
 import { setOneIdentityEnv } from "../../../authentication/common/store/actions/loginConfig";
@@ -56,6 +60,10 @@ jest.mock("../../utils/login", () => ({
   ...jest.requireActual("../../utils/login"),
   followNativeRedirectsAndVerifySaml: jest.fn(),
   lollipopSamlVerify: jest.fn()
+}));
+
+jest.mock("@react-native-cookies/cookies", () => ({
+  removeSessionCookies: jest.fn()
 }));
 
 jest.mock("../../../authentication/fastLogin/store/selectors", () => ({
@@ -107,6 +115,7 @@ const abortedResponse: FetchResponse = {
 };
 
 interface SetupOptions {
+  clearSessionCookies?: boolean;
   flow?: LoginType;
   followRedirectsNatively?: boolean;
   minAuthLevel?: AuthLevel;
@@ -119,6 +128,7 @@ const createTestStore = () => {
 };
 
 const setupTest = ({
+  clearSessionCookies,
   flow = LOGIN_TYPES.AUTH,
   followRedirectsNatively,
   minAuthLevel = AUTH_LEVELS.L2,
@@ -129,6 +139,7 @@ const setupTest = ({
   const utils = renderHook(
     () =>
       useOneIdentityLoginSource({
+        clearSessionCookies,
         flow,
         followRedirectsNatively,
         idpId: mockIdp.id,
@@ -275,7 +286,10 @@ describe("useOneIdentityLoginSource", () => {
     await waitFor(() => {
       expect(result.current.loginSourceState.status).toBe("failure");
     });
-    expect(onFailure).toHaveBeenCalled();
+    expect(onFailure).toHaveBeenCalledWith({
+      reason: "Unexpected HTTP status 500",
+      url: `${apiUrlPrefix}/api/auth/v1/reserve`
+    });
   });
 
   it("should trigger a new reserve request when generateLoginSource is called after a successful response", async () => {
@@ -424,9 +438,44 @@ describe("useOneIdentityLoginSource", () => {
     });
 
     expect(mockRetriableFetch).not.toHaveBeenCalled();
-    expect(onFailure).toHaveBeenCalledWith(
-      "Unable to generate ephemeral public key"
+    expect(onFailure).toHaveBeenCalledWith({
+      reason: "Unable to generate ephemeral public key"
+    });
+  });
+
+  it("should clear the session cookies before the reserve request when clearSessionCookies is enabled", async () => {
+    jest.mocked(CookieManager.removeSessionCookies).mockResolvedValue(true);
+    mockRetriableFetch.mockResolvedValue(successResponse(200, reserveResponse));
+
+    const { result } = setupTest({ clearSessionCookies: true });
+
+    await waitFor(() => {
+      expect(result.current.loginSourceState.status).toBe(
+        "one-identity-authorize"
+      );
+    });
+
+    const removeSessionCookies = jest.mocked(
+      CookieManager.removeSessionCookies
     );
+    expect(removeSessionCookies).toHaveBeenCalledTimes(1);
+    expect(removeSessionCookies.mock.invocationCallOrder[0]).toBeLessThan(
+      mockRetriableFetch.mock.invocationCallOrder[0]
+    );
+  });
+
+  it("should not clear the session cookies by default", async () => {
+    mockRetriableFetch.mockResolvedValue(successResponse(200, reserveResponse));
+
+    const { result } = setupTest();
+
+    await waitFor(() => {
+      expect(result.current.loginSourceState.status).toBe(
+        "one-identity-authorize"
+      );
+    });
+
+    expect(CookieManager.removeSessionCookies).not.toHaveBeenCalled();
   });
 
   it("should send LV as login_type in the reserve body when fast login is enabled", async () => {
@@ -474,6 +523,42 @@ describe("useOneIdentityLoginSource", () => {
       );
     });
   });
+
+  it.each([
+    { name: "auth", flow: LOGIN_TYPES.AUTH, sendsCurrentUser: false },
+    { name: "reauth", flow: LOGIN_TYPES.REAUTH, sendsCurrentUser: true }
+  ])(
+    "should send current_user in the reserve body only when re-authenticating ($name)",
+    async ({ flow, sendsCurrentUser }) => {
+      mockRetriableFetch.mockResolvedValue(
+        successResponse(200, reserveResponse)
+      );
+
+      // The stored fiscal code survives logout: it is set in both flows
+      const store = createTestStore();
+      store.dispatch(
+        setProfileHashedFiscalCode("AAAAAA00A00A000A" as FiscalCode)
+      );
+      const hashedFiscalCode = hashedProfileFiscalCodeSelector(
+        store.getState()
+      );
+      expect(hashedFiscalCode).toBeDefined();
+
+      setupTest({ flow, store });
+
+      await waitFor(() => {
+        expect(mockRetriableFetch).toHaveBeenCalledWith(
+          `${apiUrlPrefix}/api/auth/v1/reserve`,
+          expect.anything()
+        );
+      });
+
+      const [, { body }] = mockRetriableFetch.mock.calls[0];
+      expect(JSON.parse(body).current_user).toBe(
+        sendsCurrentUser ? hashedFiscalCode : undefined
+      );
+    }
+  );
 
   describe("shouldBlockUrlNavigationWhileCheckingLollipop", () => {
     const setupReadyState = async () => {
@@ -534,6 +619,27 @@ describe("useOneIdentityLoginSource", () => {
       expect(onFailure).not.toHaveBeenCalled();
     });
 
+    it("should keep the /authorize webviewSource while the assertion-ref is being verified", async () => {
+      jest.mocked(lollipopSamlVerify).mockImplementation(() => undefined);
+
+      const { result } = await setupReadyState();
+      const authorizeState = result.current.loginSourceState;
+      const url = "https://idp.example.com/sso?SAMLRequest=encoded-request";
+
+      act(() => {
+        result.current.shouldBlockUrlNavigationWhileCheckingLollipop(url);
+      });
+
+      expect(result.current.loginSourceState).toEqual({
+        status: "verifying-assertion-ref",
+        url,
+        webviewSource:
+          authorizeState.status === "one-identity-authorize"
+            ? authorizeState.webviewSource
+            : undefined
+      });
+    });
+
     it("should call onFailure with the reason when LolliPOP verification fails", async () => {
       jest
         .mocked(lollipopSamlVerify)
@@ -553,7 +659,7 @@ describe("useOneIdentityLoginSource", () => {
 
       expect(blocked).toBe(true);
       await waitFor(() => {
-        expect(onFailure).toHaveBeenCalledWith("mismatch");
+        expect(onFailure).toHaveBeenCalledWith({ reason: "mismatch", url });
       });
     });
   });
@@ -598,9 +704,9 @@ describe("useOneIdentityLoginSource", () => {
           errorUrl,
           flow
         );
-        expect(onFailure).toHaveBeenCalledWith(
-          expect.stringContaining("Missing SAMLRequest")
-        );
+        expect(onFailure).toHaveBeenCalledWith({
+          reason: expect.stringContaining("Missing SAMLRequest")
+        });
       }
     );
 
@@ -665,9 +771,9 @@ describe("useOneIdentityLoginSource", () => {
       });
 
       expect(spyTrackLoginOIConfigurationError).not.toHaveBeenCalled();
-      expect(onFailure).toHaveBeenCalledWith(
-        expect.stringContaining("Missing SAMLRequest")
-      );
+      expect(onFailure).toHaveBeenCalledWith({
+        reason: expect.stringContaining("Missing SAMLRequest")
+      });
     });
 
     it("should not follow the redirects natively when disabled", async () => {
@@ -758,7 +864,7 @@ describe("useOneIdentityLoginSource", () => {
           error: reason
         });
       });
-      expect(onFailure).toHaveBeenCalledWith(reason);
+      expect(onFailure).toHaveBeenCalledWith({ reason });
     });
 
     it("should discard the result of a stale native redirects flow when generateLoginSource is called again", async () => {

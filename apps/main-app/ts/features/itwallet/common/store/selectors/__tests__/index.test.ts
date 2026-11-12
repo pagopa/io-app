@@ -1,32 +1,20 @@
-import {
-  isItwDiscoveryBannerRenderableSelector,
-  isItwProximityEnabledSelector,
-  itwIsL2FallbackSelector,
-  itwOfflineAccessAvailableSelector,
-  itwShouldRenderDiscoveryBannerSelector,
-  itwShouldRenderInboxDiscoveryBannerSelector,
-  itwShouldRenderL2EngagementBannerForInactiveWalletSelector,
-  itwShouldRenderL2EngagementBannerSelector,
-  itwShouldRenderL3UpgradeBannerSelector,
-  itwShouldRenderNewItWalletSelector,
-  itwShouldRenderUpgradeBannerSelector,
-  itwShouldRenderWalletDiscoveryBannerSelector,
-  itwShouldRenderWalletReadyBannerSelector,
-  itwShouldRenderWalletUpgradeMDLDetailsBannerSelector
-} from "..";
+import * as commonSelectors from "..";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import * as connectivitySelectors from "../../../../../connectivity/store/selectors";
 import { OfflineAccessReasonEnum } from "../../../../../ingress/store/reducer";
 import * as ingressSelectors from "../../../../../ingress/store/selectors";
 import * as credentialsSelectors from "../../../../credentials/store/selectors";
 import * as lifecycleSelectors from "../../../../lifecycle/store/selectors";
 import * as proximityCredentialsSelectors from "../../../../presentation/proximity/store/selectors/credentials";
 import * as walletInstanceSelectors from "../../../../walletInstance/store/selectors";
+import { ItwEidStatus } from "../../../utils/itwTypesUtils";
 import { itwSetL2Fallback } from "../../actions/preferences";
 import * as bannersSelectors from "../banners";
 import * as preferencesSelectors from "../preferences";
 import * as remoteConfigSelectors from "../remoteConfig";
+import * as upgradeSelectors from "../upgrade";
 
 describe("fallback wallet banners", () => {
   afterEach(() => {
@@ -100,13 +88,13 @@ describe("fallback wallet banners", () => {
         .spyOn(bannersSelectors, "itwIsWalletDiscoveryBannerVisibleSelector")
         .mockReturnValue(true);
 
-      expect(itwIsL2FallbackSelector(state)).toBe(
+      expect(commonSelectors.itwIsL2FallbackSelector(state)).toBe(
         fallback && active && !upgraded
       );
-      expect(itwShouldRenderL2EngagementBannerSelector(state)).toBe(
-        !offline && active && !upgraded && fallback
-      );
-      expect(itwShouldRenderUpgradeBannerSelector(state)).toBe(
+      expect(
+        commonSelectors.itwShouldRenderL2EngagementBannerSelector(state)
+      ).toBe(!offline && active && !upgraded && fallback);
+      expect(upgradeSelectors.itwShouldRenderUpgradeBannerSelector(state)).toBe(
         !offline && !upgraded && !(fallback && active)
       );
     }
@@ -145,7 +133,9 @@ describe("isItwDiscoveryBannerRenderableSelector", () => {
         .mockReturnValue(offlineAccessReason);
 
       expect(
-        isItwDiscoveryBannerRenderableSelector({} as unknown as GlobalState)
+        commonSelectors.isItwDiscoveryBannerRenderableSelector(
+          {} as unknown as GlobalState
+        )
       ).toBe(expected);
     }
   );
@@ -174,28 +164,40 @@ describe("itwOfflineAccessAvailableSelector", () => {
         .mockImplementation(() => isWalletEmpty);
 
       expect(
-        itwOfflineAccessAvailableSelector({} as unknown as GlobalState)
+        commonSelectors.itwOfflineAccessAvailableSelector(
+          {} as unknown as GlobalState
+        )
       ).toEqual(isAvailable);
     }
   );
 });
 
-describe("itwShouldRenderL3UpgradeBannerSelector", () => {
+describe("itwCanUpgradeToL3Selector", () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.clearAllMocks();
   });
 
   it.each`
-    itwEnabled | offlineAccessReason                       | isL3Enabled | isEidL3  | expected
-    ${true}    | ${undefined}                              | ${true}     | ${false} | ${true}
-    ${true}    | ${undefined}                              | ${true}     | ${false} | ${true}
-    ${true}    | ${undefined}                              | ${false}    | ${false} | ${false}
-    ${true}    | ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${true}     | ${false} | ${false}
-    ${false}   | ${undefined}                              | ${true}     | ${false} | ${true}
+    itwEnabled | offlineAccessReason                       | isL3Enabled | isEidL3  | isActivationDisabled | expected
+    ${true}    | ${undefined}                              | ${true}     | ${false} | ${false}             | ${true}
+    ${true}    | ${undefined}                              | ${false}    | ${false} | ${false}             | ${false}
+    ${true}    | ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${true}     | ${false} | ${false}             | ${false}
+    ${true}    | ${undefined}                              | ${true}     | ${true}  | ${false}             | ${false}
+    ${true}    | ${undefined}                              | ${true}     | ${false} | ${true}              | ${false}
+    ${false}   | ${undefined}                              | ${true}     | ${false} | ${false}             | ${true}
   `(
-    "should return $expected when offlineAccessReason is $offlineAccessReason, isL3Enabled is $isL3Enabled, isEidL3 is $isEidL3",
-    ({ offlineAccessReason, isL3Enabled, isEidL3, expected }) => {
+    "should return $expected when offlineAccessReason is $offlineAccessReason, isL3Enabled is $isL3Enabled, isEidL3 is $isEidL3, isActivationDisabled is $isActivationDisabled",
+    ({
+      offlineAccessReason,
+      isL3Enabled,
+      isEidL3,
+      isActivationDisabled,
+      expected
+    }) => {
+      jest
+        .spyOn(preferencesSelectors, "itwIsActivationDisabledSelector")
+        .mockReturnValue(isActivationDisabled);
       jest
         .spyOn(remoteConfigSelectors, "isItwEnabledSelector")
         .mockReturnValue(true);
@@ -213,7 +215,7 @@ describe("itwShouldRenderL3UpgradeBannerSelector", () => {
         .mockReturnValue(isEidL3);
 
       expect(
-        itwShouldRenderL3UpgradeBannerSelector({} as unknown as GlobalState)
+        upgradeSelectors.itwCanUpgradeToL3Selector({} as unknown as GlobalState)
       ).toBe(expected);
     }
   );
@@ -279,7 +281,9 @@ describe("itwShouldRenderWalletReadyBannerSelector", () => {
         .spyOn(remoteConfigSelectors, "isItwMinAppVersionSupportedSelector")
         .mockReturnValue(false);
 
-      expect(itwShouldRenderWalletReadyBannerSelector(state)).toBe(expected);
+      expect(
+        commonSelectors.itwShouldRenderWalletReadyBannerSelector(state)
+      ).toBe(expected);
     }
   );
 });
@@ -331,7 +335,7 @@ describe("itwShouldRenderWalletUpgradeMDLDetailsBannerSelector", () => {
         .mockReturnValue(!isBannerHidden);
 
       expect(
-        itwShouldRenderWalletUpgradeMDLDetailsBannerSelector(
+        commonSelectors.itwShouldRenderWalletUpgradeMDLDetailsBannerSelector(
           {} as unknown as GlobalState
         )
       ).toBe(expected);
@@ -385,7 +389,9 @@ describe("itwShouldRenderDiscoveryBannerSelector", () => {
         .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
         .mockReturnValue(lifecycleValid);
 
-      expect(itwShouldRenderDiscoveryBannerSelector(state)).toBe(expected);
+      expect(
+        commonSelectors.itwShouldRenderDiscoveryBannerSelector(state)
+      ).toBe(expected);
     }
   );
 });
@@ -451,7 +457,9 @@ describe("itwShouldRenderInboxDiscoveryBannerSelector", () => {
         .spyOn(walletInstanceSelectors, "itwIsRemotelyActiveSelector")
         .mockReturnValue(isRemotelyActive);
 
-      expect(itwShouldRenderInboxDiscoveryBannerSelector(state)).toBe(expected);
+      expect(
+        commonSelectors.itwShouldRenderInboxDiscoveryBannerSelector(state)
+      ).toBe(expected);
     }
   );
 });
@@ -496,9 +504,9 @@ describe("itwShouldRenderWalletDiscoveryBannerSelector", () => {
         .mockReturnValue(lifecycleValid);
       mockItwIsBannerHiddenSelector(isBannerHidden);
 
-      expect(itwShouldRenderWalletDiscoveryBannerSelector(state)).toBe(
-        expected
-      );
+      expect(
+        commonSelectors.itwShouldRenderWalletDiscoveryBannerSelector(state)
+      ).toBe(expected);
     }
   );
 });
@@ -559,7 +567,9 @@ describe("itwShouldRenderL2EngagementBannerForInactiveWalletSelector", () => {
         .mockReturnValue(isActivationDisabled);
 
       expect(
-        itwShouldRenderL2EngagementBannerForInactiveWalletSelector(state)
+        commonSelectors.itwShouldRenderL2EngagementBannerForInactiveWalletSelector(
+          state
+        )
       ).toBe(expected);
     }
   );
@@ -620,7 +630,9 @@ describe("itwShouldRenderL2EngagementBannerSelector", () => {
         .spyOn(preferencesSelectors, "itwIsActivationDisabledSelector")
         .mockReturnValue(isActivationDisabled);
 
-      expect(itwShouldRenderL2EngagementBannerSelector(state)).toBe(expected);
+      expect(
+        commonSelectors.itwShouldRenderL2EngagementBannerSelector(state)
+      ).toBe(expected);
     }
   );
 });
@@ -662,9 +674,183 @@ describe("isItwProximityEnabledSelector", () => {
         )
         .mockReturnValue(hasPresentableCredentials);
 
-      expect(isItwProximityEnabledSelector({} as unknown as GlobalState)).toBe(
-        expected
+      expect(
+        commonSelectors.isItwProximityEnabledSelector(
+          {} as unknown as GlobalState
+        )
+      ).toBe(expected);
+    }
+  );
+});
+
+describe("isItwProximityNfcEnabledSelector", () => {
+  test.each([
+    { name: "both flags off", remote: false, local: false, expected: false },
+    { name: "remote flag on", remote: true, local: false, expected: true },
+    { name: "local flag on", remote: false, local: true, expected: true },
+    { name: "both flags on", remote: true, local: true, expected: true }
+  ])("returns $expected with $name", ({ remote, local, expected }) => {
+    jest
+      .spyOn(
+        remoteConfigSelectors,
+        "isItwProximityNfcMinAppVersionSupportedSelector"
+      )
+      .mockReturnValue(remote);
+    jest
+      .spyOn(preferencesSelectors, "itwIsProximityNfcLocallyEnabledSelector")
+      .mockReturnValue(local);
+
+    expect(
+      commonSelectors.isItwProximityNfcEnabledSelector(
+        {} as unknown as GlobalState
+      )
+    ).toBe(expected);
+  });
+});
+
+describe("itwShouldHideEidLifecycleAlert", () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  const mockState = ({
+    eidStatus,
+    isItWalletValid = false,
+    isL3Enabled = false,
+    isOffline = false,
+    areSomeCredentialsExpired = false,
+    isActivationDisabled = false,
+    isL2Fallback = false
+  }: {
+    areSomeCredentialsExpired?: boolean;
+    eidStatus: ItwEidStatus;
+    isActivationDisabled?: boolean;
+    isItWalletValid?: boolean;
+    isL2Fallback?: boolean;
+    isL3Enabled?: boolean;
+    isOffline?: boolean;
+  }) => {
+    jest
+      .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
+      .mockReturnValue(eidStatus);
+    jest
+      .spyOn(credentialsSelectors, "itwAreEidAndAnyCredentialExpiredSelector")
+      .mockReturnValue(eidStatus === "jwtExpired" && areSomeCredentialsExpired);
+    jest
+      .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+      .mockReturnValue(isItWalletValid);
+    jest
+      .spyOn(commonSelectors, "itwIsL2FallbackSelector")
+      .mockReturnValue(isL2Fallback);
+    jest
+      .spyOn(preferencesSelectors, "itwIsActivationDisabledSelector")
+      .mockReturnValue(isActivationDisabled);
+    jest
+      .spyOn(remoteConfigSelectors, "isItwEnabledSelector")
+      .mockReturnValue(true);
+    jest
+      .spyOn(remoteConfigSelectors, "isItwMinAppVersionSupportedSelector")
+      .mockReturnValue(isL3Enabled);
+    jest
+      .spyOn(preferencesSelectors, "itwIsFiscalCodeWhitelisted")
+      .mockReturnValue(false);
+    jest
+      .spyOn(ingressSelectors, "offlineAccessReasonSelector")
+      .mockReturnValue(
+        isOffline ? OfflineAccessReasonEnum.DEVICE_OFFLINE : undefined
       );
+    jest
+      .spyOn(connectivitySelectors, "isConnectedSelector")
+      .mockReturnValue(!isOffline);
+  };
+
+  it.each`
+    eidStatus        | isItWalletValid | isL3Enabled | isOffline | areSomeCredentialsExpired | expected
+    ${"valid"}       | ${true}         | ${true}     | ${false}  | ${false}                  | ${true}
+    ${"invalid"}     | ${true}         | ${true}     | ${false}  | ${false}                  | ${false}
+    ${"jwtExpiring"} | ${true}         | ${true}     | ${false}  | ${false}                  | ${true}
+    ${"jwtExpired"}  | ${true}         | ${true}     | ${false}  | ${false}                  | ${false}
+    ${"jwtExpired"}  | ${true}         | ${true}     | ${false}  | ${true}                   | ${false}
+    ${"valid"}       | ${false}        | ${true}     | ${false}  | ${false}                  | ${true}
+    ${"jwtExpiring"} | ${false}        | ${true}     | ${false}  | ${false}                  | ${true}
+    ${"jwtExpired"}  | ${false}        | ${true}     | ${false}  | ${false}                  | ${true}
+    ${"jwtExpired"}  | ${false}        | ${true}     | ${false}  | ${true}                   | ${false}
+    ${"valid"}       | ${false}        | ${false}    | ${false}  | ${false}                  | ${false}
+    ${"jwtExpiring"} | ${false}        | ${false}    | ${false}  | ${false}                  | ${false}
+    ${"valid"}       | ${false}        | ${true}     | ${true}   | ${false}                  | ${false}
+    ${"jwtExpiring"} | ${false}        | ${true}     | ${true}   | ${false}                  | ${true}
+    ${"jwtExpiring"} | ${false}        | ${false}    | ${true}   | ${false}                  | ${true}
+    ${"jwtExpiring"} | ${true}         | ${true}     | ${true}   | ${false}                  | ${true}
+  `(
+    "should return $expected when the eID is $eidStatus, isItWalletValid=$isItWalletValid, isL3Enabled=$isL3Enabled, isOffline=$isOffline and areSomeCredentialsExpired=$areSomeCredentialsExpired",
+    ({
+      eidStatus,
+      isItWalletValid,
+      isL3Enabled,
+      isOffline,
+      areSomeCredentialsExpired,
+      expected
+    }) => {
+      mockState({
+        eidStatus,
+        isItWalletValid,
+        isL3Enabled,
+        isOffline,
+        areSomeCredentialsExpired
+      });
+
+      expect(
+        upgradeSelectors.itwShouldHideEidLifecycleAlert(
+          {} as unknown as GlobalState
+        )
+      ).toBe(expected);
+    }
+  );
+  it.each`
+    eidStatus        | areSomeCredentialsExpired | expected
+    ${"valid"}       | ${false}                  | ${false}
+    ${"jwtExpiring"} | ${false}                  | ${false}
+    ${"jwtExpired"}  | ${false}                  | ${false}
+    ${"jwtExpired"}  | ${true}                   | ${false}
+  `(
+    "should not hide the alert (eID $eidStatus, credentials expired: $areSomeCredentialsExpired) when IT-Wallet activation is disabled",
+    ({ eidStatus, areSomeCredentialsExpired, expected }) => {
+      mockState({
+        eidStatus,
+        isL3Enabled: true,
+        isActivationDisabled: true,
+        areSomeCredentialsExpired
+      });
+
+      expect(
+        upgradeSelectors.itwShouldHideEidLifecycleAlert(
+          {} as unknown as GlobalState
+        )
+      ).toBe(expected);
+    }
+  );
+
+  it.each`
+    eidStatus        | areSomeCredentialsExpired | expected
+    ${"valid"}       | ${false}                  | ${false}
+    ${"jwtExpiring"} | ${false}                  | ${false}
+    ${"jwtExpired"}  | ${false}                  | ${false}
+    ${"jwtExpired"}  | ${true}                   | ${false}
+  `(
+    "should not hide the alert (eID $eidStatus, credentials expired: $areSomeCredentialsExpired) when the wallet uses L2 fallback",
+    ({ eidStatus, areSomeCredentialsExpired, expected }) => {
+      mockState({
+        eidStatus,
+        isL3Enabled: true,
+        isL2Fallback: true,
+        areSomeCredentialsExpired
+      });
+
+      expect(
+        upgradeSelectors.itwShouldHideEidLifecycleAlert(
+          {} as unknown as GlobalState
+        )
+      ).toBe(expected);
     }
   );
 });
@@ -699,7 +885,9 @@ describe("itwShouldRenderNewItWalletSelector", () => {
         .mockReturnValue(isItWalletEnabled);
 
       expect(
-        itwShouldRenderNewItWalletSelector({} as unknown as GlobalState)
+        commonSelectors.itwShouldRenderNewItWalletSelector(
+          {} as unknown as GlobalState
+        )
       ).toEqual(expected);
     }
   );

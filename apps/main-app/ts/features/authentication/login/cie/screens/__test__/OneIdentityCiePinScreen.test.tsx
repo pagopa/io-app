@@ -24,6 +24,7 @@ jest.mock("@react-navigation/native", () => {
   return {
     ...actualNav,
     useNavigation: () => ({
+      addListener: jest.fn(),
       navigate: mockNavigate
     })
   };
@@ -132,13 +133,13 @@ describe("OneIdentityCiePinScreen", () => {
   });
 });
 
-function renderComponent(useUat = false) {
+function renderComponent(cieEnv = "production") {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const finalState = merge(undefined, initialState, {
     features: {
       loginFeatures: {
         cieLogin: {
-          useUat
+          cieEnv
         }
       }
     }

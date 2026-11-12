@@ -1,3 +1,4 @@
+import WebView from "react-native-webview";
 import { createStore } from "redux";
 import { createActor } from "xstate";
 
@@ -5,6 +6,7 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { originSchemasWhiteList } from "../../../../authentication/common/utils";
 import { trackItwPrivacyScreen } from "../../../analytics";
 import { EidIssuanceLevel } from "../../../machine/eid/context";
 import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
@@ -37,6 +39,14 @@ describe("ItwIpzsPrivacyScreen", () => {
     renderComponent("l2");
 
     expect(trackItwPrivacyScreen).toHaveBeenCalledWith("L2");
+  });
+
+  it("should apply the origin whitelist to the privacy WebView", () => {
+    const component = renderComponent("l2");
+
+    expect(component.UNSAFE_getByType(WebView).props.originWhitelist).toEqual(
+      originSchemasWhiteList
+    );
   });
 
   it("should track the L3 privacy screen view", () => {

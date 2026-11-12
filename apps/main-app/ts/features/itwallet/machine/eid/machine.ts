@@ -1,6 +1,7 @@
 import { and, assertEvent, assign, not, or, raise } from "xstate";
 
 import { CURRENT_ITW_SPECS_VERSION } from "../../common/utils/constants";
+import { getIssuanceItwVersion } from "../../common/utils/itwIssuanceUtils";
 import { ItwTags } from "../tags";
 import { InitialContext } from "./context";
 import { IssuanceFailureType } from "./failure";
@@ -43,11 +44,20 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
     restart: {
       target: "#itwEidIssuanceMachine.Idle",
       actions: [
+        // Keep track of the L3 identification when the user without a CIE falls back to
+        // Documenti su IO, so that they can go back to it from the Documenti su IO landing.
+        assign(({ context, event }) => ({
+          l2FallbackOrigin:
+            context.level === "l3" && event.level === "l2-fallback"
+              ? { credentialType: context.credentialType }
+              : undefined
+        })),
         raise(({ event }) => ({
           type: "start",
           mode: event.mode,
           level: event.level,
-          credentialType: event.credentialType
+          credentialType: event.credentialType,
+          credentialOfferUri: event.credentialOfferUri
         }))
       ]
     }
@@ -57,19 +67,27 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
       description: "The machine is in idle, ready to start the issuance flow",
       on: {
         start: {
-          actions: assign(({ event }) => ({
-            mode: event.mode,
-            level: event.level,
-            credentialType: event.credentialType,
+          actions: assign(({ event }) => {
             // Override the IT-Wallet version from the global store set on machine init.
             // This is necessary because a user might use a different IT-Wallet version outside this machine:
             // - User has 1.0 PID and is upgrading (1.0 -> 1.4)
             // - User is whitelisted but falls back to L2 (1.4 -> 1.0)
-            itwVersion:
-              event.mode === "upgrade" || event.level === "l3"
-                ? CURRENT_ITW_SPECS_VERSION
-                : "1.0.0"
-          })),
+            const itwVersion = getIssuanceItwVersion(event.mode, event.level);
+
+            return {
+              mode: event.mode,
+              level: event.level,
+              credentialType: event.credentialType,
+              // TODO: [SIW-5384] Use `CredentialsOffer.isSupported` from the Wallet SDK instead of checking the specs version
+              // Credential offers are not supported by the 1.0.0 specs (Documenti su IO),
+              // so the offer cannot be resumed after an L2 activation
+              credentialOfferUri:
+                itwVersion === CURRENT_ITW_SPECS_VERSION
+                  ? event.credentialOfferUri
+                  : undefined,
+              itwVersion
+            };
+          }),
           target: "EvaluatingIssuanceMode"
         },
         close: {
@@ -98,14 +116,29 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
       on: {
         "accept-tos": [
           {
+            // Once the ToS are accepted the user can no longer go back to the L3 identification
+            actions: assign({ l2FallbackOrigin: undefined }),
             // Verify the trust federation
             target: "TrustFederationVerification"
           }
         ],
-        close: {
-          target: "#itwEidIssuanceMachine.Idle",
-          actions: "closeIssuance"
-        }
+        close: [
+          {
+            // The user tapped "Non ho la CIE" during L3 identification: go back there
+            guard: "isL2FallbackFromL3",
+            actions: assign(({ context }) => ({
+              level: "l3",
+              credentialType: context.l2FallbackOrigin?.credentialType,
+              itwVersion: getIssuanceItwVersion("issuance", "l3"),
+              l2FallbackOrigin: undefined
+            })),
+            target: "#itwEidIssuanceMachine.UserIdentification.Identification"
+          },
+          {
+            target: "#itwEidIssuanceMachine.Idle",
+            actions: [assign({ l2FallbackOrigin: undefined }), "closeIssuance"]
+          }
+        ]
       }
     },
     TrustFederationVerification: {
@@ -121,8 +154,14 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
         onDone: [
           {
             // When no integrity hardware key exists or the user is upgrading to IT-Wallet
-            // we need to create a new integrity key tag and a new wallet instance
-            guard: or([not("hasIntegrityKeyTag"), "isUpgrade"]),
+            // we need to create a new integrity key tag and a new wallet instance.
+            // Without an eID, the stored wallet instance might belong to different specs
+            // (e.g. an abandoned Documenti su IO activation), so it cannot be reused.
+            guard: or([
+              not("hasIntegrityKeyTag"),
+              "isUpgrade",
+              and([not("isWalletValid"), not("hasWalletInstanceForSpecs")])
+            ]),
             target: "WalletInstanceCreation"
           },
           {
@@ -309,8 +348,11 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
         "storeWalletActivationFeedbackBannerData"
       ],
       on: {
+        // The ITW navigator stays mounted, so the machine must return to Idle with
+        // store-derived context refreshed to accept a new `start`
         "add-new-credential": {
-          actions: ["navigateToCredentialCatalog"]
+          target: "Idle",
+          actions: ["navigateToCredentialCatalog", "onInit"]
         },
         "go-to-wallet": {
           actions: "navigateToWallet"

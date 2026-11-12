@@ -12,9 +12,9 @@ import {
 } from "../../actions/lollipop";
 import lollipopReducer, { testable } from "./../lollipop";
 
-jest.mock("react-native-device-info", () => ({
-  getReadableVersion: jest.fn().mockReturnValue("1.2.3.4"),
-  getVersion: jest.fn().mockReturnValue("1.2.3.4")
+jest.mock("expo-application", () => ({
+  nativeApplicationVersion: "1.2.3.4",
+  nativeBuildVersion: "4"
 }));
 
 const globalState = appReducer(undefined, applicationChangeState("active"));

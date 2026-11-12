@@ -86,26 +86,31 @@ describe("OneIdentityIdpSelectionScreen", () => {
     ).toBeTruthy();
   });
 
-  it("should forward the failure to useDebugInfo when the fetch fails", () => {
+  it("should forward the failure reason and URL to useDebugInfo when the fetch fails", () => {
     mockUseGetIdps.mockReturnValue({
-      state: { status: "failure", error: "IDP_LIST_FETCH_ERROR" }
+      state: {
+        status: "failure",
+        error: "IDP_LIST_FETCH_ERROR",
+        url: "https://example.com/idps.json"
+      }
     });
 
     renderComponent();
 
     expect(mockUseDebugInfo).toHaveBeenCalledWith({
-      failure: "IDP_LIST_FETCH_ERROR"
+      reason: "IDP_LIST_FETCH_ERROR",
+      url: "https://example.com/idps.json"
     });
   });
 
-  it("should forward no failure to useDebugInfo when the fetch is not failing", () => {
+  it("should forward no debug data to useDebugInfo when the fetch is not failing", () => {
     mockUseGetIdps.mockReturnValue({
       state: { status: "success", data: mockIdps }
     });
 
     renderComponent();
 
-    expect(mockUseDebugInfo).toHaveBeenCalledWith({ failure: undefined });
+    expect(mockUseDebugInfo).toHaveBeenCalledWith({});
   });
 
   it("should render the fetched IDPs on success", () => {

@@ -187,7 +187,8 @@ describe("the ZendeskAskPermissions screen", () => {
         store.dispatch(
           loginSuccess({
             idp: "test",
-            token: "mock-token"
+            token: "mock-token",
+            isOneIdentityLogin: false
           })
         );
         store.dispatch(
@@ -210,7 +211,8 @@ describe("the ZendeskAskPermissions screen", () => {
         store.dispatch(
           loginSuccess({
             idp: "test",
-            token: "mock-token"
+            token: "mock-token",
+            isOneIdentityLogin: false
           })
         );
         store.dispatch(
@@ -235,7 +237,8 @@ describe("the ZendeskAskPermissions screen", () => {
         store.dispatch(
           loginSuccess({
             idp: "test",
-            token: "mock-token"
+            token: "mock-token",
+            isOneIdentityLogin: false
           })
         );
         store.dispatch(

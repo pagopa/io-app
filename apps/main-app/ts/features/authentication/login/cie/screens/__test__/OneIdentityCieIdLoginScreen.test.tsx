@@ -34,6 +34,7 @@ jest.mock("@react-navigation/native", () => {
   return {
     ...actualNav,
     useNavigation: () => ({
+      addListener: jest.fn(),
       replace: mockReplace,
       dispatch: mockNavigationDispatch,
       navigate: jest.fn()
@@ -106,7 +107,11 @@ describe("OneIdentityCieIdLoginScreen", () => {
     });
 
     expect(mockDispatch).toHaveBeenCalledWith(
-      loginSuccess({ token: "session-token", idp: "cieid" })
+      loginSuccess({
+        token: "session-token",
+        idp: "cieid",
+        isOneIdentityLogin: true
+      })
     );
   });
 
@@ -126,7 +131,9 @@ describe("OneIdentityCieIdLoginScreen", () => {
     );
 
     expect(mockNavigationDispatch).toHaveBeenCalledWith(
-      authErrorReplaceAction("err-code")
+      authErrorReplaceAction("err-code", {
+        reason: expect.stringContaining("err-code")
+      })
     );
     expect(mockReplace).not.toHaveBeenCalled();
   });
@@ -138,10 +145,11 @@ describe("OneIdentityCieIdLoginScreen", () => {
       .calls[0][0];
     onSuccess("https://not-whitelisted.example.com");
 
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL,
-      params: { url: "https://not-whitelisted.example.com" }
-    });
+    expect(mockNavigationDispatch).toHaveBeenCalledWith(
+      StackActions.replace(AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL, {
+        url: "https://not-whitelisted.example.com"
+      })
+    );
   });
 
   it("should navigate to CIE_ID_ERROR on a generic WebView error", () => {
@@ -149,20 +157,34 @@ describe("OneIdentityCieIdLoginScreen", () => {
     const webview = getByTestId("cie-id-webview");
 
     fireEvent(webview, "onError", {
-      nativeEvent: { url: "https://example.com/authorize" }
+      nativeEvent: {
+        url: "https://example.com/authorize",
+        code: -2,
+        description: "net::ERR_INTERNET_DISCONNECTED"
+      }
     });
 
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR
-    });
+    expect(mockNavigationDispatch).toHaveBeenCalledWith(
+      StackActions.replace(AUTHENTICATION_ROUTES.CIE_ID_ERROR, {
+        failureData: {
+          description: "net::ERR_INTERNET_DISCONNECTED",
+          code: -2,
+          url: "https://example.com/authorize"
+        }
+      })
+    );
   });
 });
 
-const authErrorReplaceAction = (errorCodeOrMessage?: string) =>
+const authErrorReplaceAction = (
+  errorCodeOrMessage: string | undefined,
+  failureData: Record<string, unknown>
+) =>
   StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
     errorCodeOrMessage,
     authMethod: "CIE_ID",
-    authLevel: AUTH_LEVELS.L2
+    authLevel: AUTH_LEVELS.L2,
+    failureData
   });
 
 const renderComponent = () => {
@@ -172,7 +194,7 @@ const renderComponent = () => {
   return renderScreenWithNavigationStoreContext(
     OneIdentityCieIdLoginScreen,
     AUTHENTICATION_ROUTES.CIE_ID_LOGIN,
-    { spidLevel: AUTH_LEVELS.L2, isUat: false },
+    { spidLevel: AUTH_LEVELS.L2 },
     store
   );
 };

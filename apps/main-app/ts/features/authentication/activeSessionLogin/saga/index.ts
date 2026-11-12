@@ -1,3 +1,4 @@
+import { StackActions } from "@react-navigation/native";
 import {
   call,
   fork,
@@ -9,6 +10,7 @@ import {
 } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
 
+import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
 import NavigationService from "../../../../navigation/NavigationService";
 import ROUTES from "../../../../navigation/routes";
 import {
@@ -25,6 +27,7 @@ import {
   trackSpidLoginSuccess
 } from "../../common/analytics";
 import { updateLoginMethodProfileAndSuperProperties } from "../../common/analytics/spidAnalytics";
+import { isOneIdentityLoginEnabledSelector } from "../../common/store/selectors/loginConfig";
 import { updateLoginSessionProfileAndSuperProperties } from "../../fastLogin/analytics/optinAnalytics";
 import { watchCieAuthenticationSaga } from "../../login/cie/sagas/cie";
 import { IdpCIE, IdpCIE_ID } from "../../login/hooks/useNavigateToLoginMethod";
@@ -73,6 +76,7 @@ export function* handleActiveSessionLoginSaga(): Generator<
     const fastLoginOptIn = yield* select(
       isActiveSessionFastLoginEnabledSelector
     );
+    const isOneIdentityLogin = yield* select(isOneIdentityLoginEnabledSelector);
     const cieIDSelectedSecurityLevel = yield* select(
       cieIDSelectedSecurityLevelActiveSessionLoginSelector
     );
@@ -117,9 +121,15 @@ export function* handleActiveSessionLoginSaga(): Generator<
         idp,
         token,
         fastLoginOptIn: !!fastLoginOptIn,
-        cieIDSelectedSecurityLevel
+        cieIDSelectedSecurityLevel,
+        isOneIdentityLogin
       })
     );
+    // Refresh all the super properties from the post-consolidation state, so
+    // that those derived from the authentication (e.g. LOGIN_FLOW_IS_OI)
+    // reflect the newly created session.
+    const globalState: GlobalState = yield* select();
+    yield* call(updateMixpanelSuperProperties, globalState);
     // This event is tracked with the correct LOGIN_SESSION and LOGIN_METHOD
     // because they were just forced in the profile/super properties above.
     // AUTH_SECURITY_LEVEL, however, may be stale: we don't know the actual
@@ -146,9 +156,12 @@ export function* handleNavigateAfterFinishedStandardActiveSessionLoginFlow(
     // If the user is logging in from the active session login flow, we can be sure that the session is valid
     // and we can directly navigate him to the home screen, skipping all the checks about pending background
     // actions and session expiration blocking screen.
-    yield* call(NavigationService.navigate, ROUTES.MAIN, {
-      screen: MESSAGES_ROUTES.MESSAGES_HOME
-    });
+    yield* call(
+      NavigationService.dispatchNavigationAction,
+      StackActions.popTo(ROUTES.MAIN, {
+        screen: MESSAGES_ROUTES.MESSAGES_HOME
+      })
+    );
   }
   return;
 }
