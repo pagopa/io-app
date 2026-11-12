@@ -28,9 +28,8 @@ import {
   WHITELISTED_DOMAINS
 } from "../../../common/utils/cie";
 import { LoadingOverlay } from "../../../login/cie/shared/LoadingSpinnerOverlay";
-import { isCieLoginUatEnabledSelector } from "../../../login/cie/store/selectors";
+import { cieEnvSelector } from "../../../login/cie/store/selectors";
 import {
-  getCieIdEnvironment,
   getCieIDLoginUri,
   isAuthenticationUrl
 } from "../../../login/cie/utils";
@@ -61,7 +60,7 @@ const ActiveSessionCieIdLoginScreen = () => {
   const [authenticatedUrl, setAuthenticatedUrl] = useState<null | string>(null);
   const isLoginUrlWithTokenRef = useRef<boolean>(false);
   const apiLoginUrlPrefix = useIOSelector(remoteApiLoginUrlPrefixSelector);
-  const isUat = useIOSelector(isCieLoginUatEnabledSelector);
+  const cieEnv = useIOSelector(cieEnvSelector);
   // cieIDSelectedSecurityLevel is always set before this screen is reached
   // (navigateToCieIdLoginScreen dispatches it synchronously before navigating);
   // the fallback only satisfies the type, since the reducer marks it optional.
@@ -70,7 +69,7 @@ const ActiveSessionCieIdLoginScreen = () => {
     useIOSelector(cieIDSelectedSecurityLevelActiveSessionLoginSelector) ??
     AUTH_LEVELS.L2;
   const acsUrl = `${apiLoginUrlPrefix}${ACS_PATH}`;
-  const loginUri = getCieIDLoginUri(spidLevel, isUat, apiLoginUrlPrefix);
+  const loginUri = getCieIDLoginUri(spidLevel, cieEnv, apiLoginUrlPrefix);
   const [isLoadingWebView, setIsLoadingWebView] = useState(true);
   const { forceLogoutAndNavigateToLanding } = useActiveSessionLoginNavigation();
   // Forces logout due to a corrupted session,
@@ -205,11 +204,11 @@ const ActiveSessionCieIdLoginScreen = () => {
               checkIfUrlIsWhitelisted(result.url);
             }
           },
-          getCieIdEnvironment(isUat)
+          cieEnv
         );
       }
     },
-    [handleLoginFailure, isUat, checkIfUrlIsWhitelisted]
+    [handleLoginFailure, cieEnv, checkIfUrlIsWhitelisted]
   );
 
   const handleOnShouldStartLoadWithRequest = (

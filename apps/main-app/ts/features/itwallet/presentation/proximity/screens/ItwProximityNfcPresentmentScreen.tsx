@@ -2,9 +2,9 @@ import {
   H4,
   HStack,
   IOButton,
-  IOColors,
   IODimensions,
-  Pictogram
+  Pictogram,
+  useIOColors
 } from "@io-app/design-system";
 import I18n from "i18next";
 import { useMemo } from "react";
@@ -77,6 +77,7 @@ const IOsContent = () => {
 };
 
 const AndroidContent = () => {
+  const colors = useIOColors();
   const machineRef = ItwProximityMachineContext.useActorRef();
 
   const isLoading = ItwProximityMachineContext.useSelector(selectIsLoading);
@@ -111,8 +112,8 @@ const AndroidContent = () => {
           progress={isSuccess ? 100 : 0}
           radius={120}
           size={240}
-          strokeBgColor={IOColors["grey-200"]}
-          strokeColor={IOColors["blueIO-500"]}
+          strokeBgColor={colors.stroke.default}
+          strokeColor={colors.foreground.accent}
           strokeWidth={4}
         >
           <Pictogram

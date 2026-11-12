@@ -1,4 +1,4 @@
-import { IOColors, useIOTheme } from "@io-app/design-system";
+import { IOColorsLegacy, useIOTheme } from "@io-app/design-system";
 import I18n from "i18next";
 import { Modal } from "react-native";
 
@@ -10,7 +10,7 @@ const RefreshTokenLoadingScreen = () => {
   const theme = useIOTheme();
 
   return (
-    <Modal backdropColor={IOColors[theme["appBackground-primary"]]}>
+    <Modal backdropColor={IOColorsLegacy[theme["appBackground-primary"]]}>
       <LoadingScreenContent title={I18n.t("fastLogin.loadingScreen.title")} />
     </Modal>
   );

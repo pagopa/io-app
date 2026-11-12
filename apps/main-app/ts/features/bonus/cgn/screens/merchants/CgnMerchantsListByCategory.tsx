@@ -4,10 +4,8 @@ import {
   ContentWrapper,
   Divider,
   H3,
-  hexToRgba,
   HSpacer,
   Icon,
-  IOColors,
   IODimensions
 } from "@io-app/design-system";
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
@@ -19,9 +17,11 @@ import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { isError, isLoading } from "../../../../../common/model/RemoteValue";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
+import { useFeatureColors } from "../../../../../hooks/useFeatureColors";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { cgnColors } from "../../colors";
 import { CgnMerchantListSkeleton } from "../../components/merchants/CgnMerchantListSkeleton";
 import { CgnMerchantListViewRenderItem } from "../../components/merchants/CgnMerchantsListView";
 import { CgnDetailsParamsList } from "../../navigation/params";
@@ -42,6 +42,7 @@ export type CgnMerchantListByCategoryScreenNavigationParams = Readonly<{
 }>;
 
 const CgnMerchantsListByCategory = () => {
+  const colors = useFeatureColors(cgnColors);
   const animatedFlatListRef = useAnimatedRef<Animated.FlatList<any>>();
 
   const dispatch = useIODispatch();
@@ -159,14 +160,14 @@ const CgnMerchantsListByCategory = () => {
               style={{
                 justifyContent: "center",
                 alignItems: "center",
-                backgroundColor: hexToRgba(IOColors.white, 0.2),
+                backgroundColor: colors.category.iconBackground,
                 height: 66,
                 width: 66,
                 borderRadius: 8
               }}
             >
               <Icon
-                color={categorySpecs.textColor}
+                color={colors.category.content[categorySpecs.textColor]}
                 name={categorySpecs.icon}
                 size={32}
               />
@@ -180,7 +181,7 @@ const CgnMerchantsListByCategory = () => {
                     categoryName: getCategoryName(categorySpecs.type)
                   }
                 )}
-                color={categorySpecs.textColor}
+                color={colors.category.content[categorySpecs.textColor]}
               >
                 {getCategoryName(categorySpecs.type)}
               </H3>
@@ -198,7 +199,7 @@ const CgnMerchantsListByCategory = () => {
       }}
       refreshing={isListRefreshing}
       style={{ zIndex: 1 }}
-      tintColor={IOColors[categorySpecs?.textColor ?? "black"]}
+      tintColor={colors.category.content[categorySpecs?.textColor ?? "black"]}
     />
   );
 

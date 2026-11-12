@@ -8,8 +8,8 @@ import type {
   RenderContext
 } from "./types";
 
-import { useIOTheme } from "../../context";
-import { IOTypographicLinkColorToken, IOTypography } from "../../core";
+import { useIOColors } from "../../context";
+import { IOTypography } from "../../core";
 import { parse } from "./parser";
 import { DEFAULT_RULES } from "./rules";
 
@@ -52,7 +52,7 @@ export const IOMarkdown = ({
   disabledRules,
   rules = {}
 }: IOMarkdownProps) => {
-  const theme = useIOTheme();
+  const typographyColors = useIOColors().component.typography;
 
   const ast = useMemo(
     () => parse(content, disabledRules),
@@ -73,12 +73,12 @@ export const IOMarkdown = ({
   const context = useMemo<RenderContext>(
     () => ({
       onLinkPress: handleLinkPress,
-      linkColor: theme[IOTypographicLinkColorToken],
+      linkColor: typographyColors.link,
       textAlign: textAlign ?? "auto",
       fontSize: small ? bodySmall.size : body.size,
       lineHeight: small ? bodySmall.lineHeight : body.lineHeight
     }),
-    [handleLinkPress, textAlign, small, theme]
+    [handleLinkPress, textAlign, small, typographyColors]
   );
 
   // Partial, since a caller can blank out a node type via `rules`

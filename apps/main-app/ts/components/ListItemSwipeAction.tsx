@@ -1,7 +1,7 @@
 import {
   ContentWrapper,
   IconButton,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   IOSpringValues,
   triggerHaptic,
@@ -141,7 +141,7 @@ const ListItemSwipeAction = ({
 
   const backgroundStyle = useAnimatedStyle(() => ({
     backgroundColor:
-      translateX.value < 0 ? IOColors["error-600"] : "transparent"
+      translateX.value < 0 ? IOColorsLegacy["error-600"] : "transparent"
   }));
 
   const animatedStyle = useAnimatedStyle(() => ({
@@ -224,7 +224,7 @@ const ListItemSwipeAction = ({
   const swipeableContentStyle = useMemo(
     () => ({
       flex: 1,
-      backgroundColor: IOColors[theme["appBackground-primary"]],
+      backgroundColor: IOColorsLegacy[theme["appBackground-primary"]],
       marginHorizontal: IODimensions.padding.screen.default * -1
     }),
     [theme]

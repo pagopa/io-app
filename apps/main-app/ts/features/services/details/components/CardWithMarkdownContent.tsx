@@ -1,4 +1,8 @@
-import { IOColors, IODimensions, useIOTheme } from "@io-app/design-system";
+import {
+  IOColorsLegacy,
+  IODimensions,
+  useIOTheme
+} from "@io-app/design-system";
 import { useLinkTo } from "@react-navigation/native";
 import { memo, ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
@@ -31,8 +35,8 @@ const CardWrapper = ({ children }: { children: ReactNode }) => {
       style={[
         styles.card,
         {
-          backgroundColor: IOColors[theme["appBackground-primary"]],
-          borderColor: IOColors[theme["cardBorder-default"]]
+          backgroundColor: IOColorsLegacy[theme["appBackground-primary"]],
+          borderColor: IOColorsLegacy[theme["cardBorder-default"]]
         }
       ]}
     >
