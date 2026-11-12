@@ -45,6 +45,10 @@ global.AbortController = AbortController;
 // eslint-disable-next-line functional/immutable-data, no-underscore-dangle
 global.__reanimatedWorkletInit = jest.fn();
 
+jest.mock("@io-app/expo-switch-access", () => ({
+  isSwitchAccessEnabled: jest.fn().mockResolvedValue(false)
+}));
+
 jest.mock("./src/utils/accessibility", () => ({
   useBoldTextEnabled: () => false,
   useScreenReaderEnabled: () => false,
