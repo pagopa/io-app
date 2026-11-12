@@ -21,6 +21,7 @@ import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel"
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { cgnFeaturedOpportunitiesSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import CgnAnimatedHeader from "../../components/CgnAnimatedHeader";
 import {
   CgnFeaturedOpportunities,
@@ -79,9 +80,9 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
     isLoadingFeaturedOpportunitiesSelector
   );
 
-  useEffect(() => {
+  useOnFirstRender(() => {
     dispatch(cgnFeaturedOpportunities.request(featuredReferences));
-  }, [dispatch, featuredReferences]);
+  });
   useDisableRootNavigatorGesture();
   const { bottom } = useSafeAreaInsets();
   const [selectedTab, setSelectedTab] = useState<
