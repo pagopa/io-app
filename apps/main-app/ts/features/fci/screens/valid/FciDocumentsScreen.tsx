@@ -2,7 +2,7 @@ import { TypeEnum as ClauseType } from "@io-app/api-types/generated/definitions/
 import { DocumentToSign } from "@io-app/api-types/generated/definitions/fci/DocumentToSign";
 import {
   FooterActionsInline,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   useFooterActionsInlineMeasurements
 } from "@io-app/design-system";
@@ -60,7 +60,7 @@ import {
 const styles = StyleSheet.create({
   pdf: {
     flex: 1,
-    backgroundColor: IOColors["grey-700"]
+    backgroundColor: IOColorsLegacy["grey-700"]
   }
 });
 

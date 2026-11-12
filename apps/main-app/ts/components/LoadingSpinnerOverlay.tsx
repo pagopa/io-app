@@ -2,7 +2,7 @@ import {
   H3,
   hexToRgba,
   IOButton,
-  IOColors,
+  IOColorsLegacy,
   useIOTheme
 } from "@io-app/design-system";
 import I18n from "i18next";
@@ -58,7 +58,7 @@ const LoadingSpinnerOverlay = ({
             styles.overlay,
             {
               backgroundColor: hexToRgba(
-                IOColors[theme["appBackground-primary"]],
+                IOColorsLegacy[theme["appBackground-primary"]],
                 loadingOpacity
               )
             }

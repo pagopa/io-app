@@ -5,7 +5,7 @@ import {
   HSpacer,
   HStack,
   IconButton,
-  IOColors,
+  IOColorsLegacy,
   useIOTheme,
   WithTestID
 } from "@io-app/design-system";
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     paddingBottom: 14,
     borderBottomWidth: 0,
     position: "relative",
-    boxShadow: `0px 4px 8px ${hexToRgba(IOColors.black, 0.1)}`,
+    boxShadow: `0px 4px 8px ${hexToRgba(IOColorsLegacy.black, 0.1)}`,
     zIndex: 999
   }
 });
@@ -74,8 +74,8 @@ const renderNavigationComponent = (
 const DocumentsNavigationBar = (props: Props) => {
   const theme = useIOTheme();
 
-  const backgroundColor = IOColors[theme["appBackground-primary"]];
-  const borderColor = IOColors[theme["divider-default"]];
+  const backgroundColor = IOColorsLegacy[theme["appBackground-primary"]];
+  const borderColor = IOColorsLegacy[theme["divider-default"]];
 
   return (
     <View style={[styles.container, { backgroundColor, borderColor }]}>

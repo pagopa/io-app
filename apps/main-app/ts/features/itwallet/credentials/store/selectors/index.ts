@@ -313,6 +313,23 @@ export const itwCredentialsEidIssuedAtSelector = createSelector(
 );
 
 /**
+ * Returns whether the eID AND at least one other credential are digitally
+ * expired.
+ *
+ * @param state - The global state.
+ * @returns Whether the eID and one credential are digitally expired.
+ */
+export const itwAreEidAndAnyCredentialExpiredSelector = createSelector(
+  itwCredentialsEidStatusSelector,
+  itwCredentialsSelector,
+  (eidStatus, credentials): boolean =>
+    eidStatus === "jwtExpired" &&
+    Object.values(credentials).some(
+      c => getCredentialStatus(c) === "jwtExpired"
+    )
+);
+
+/**
  * Returns all stored credential instances of the given type, in every format.
  * Unlike the representative-based selectors, this reads the raw store so it
  * includes every copy of a credential obtained in batch. Used for clean up
