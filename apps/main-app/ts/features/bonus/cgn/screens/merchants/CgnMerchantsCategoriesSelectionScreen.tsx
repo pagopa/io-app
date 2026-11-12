@@ -103,6 +103,9 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
   const categoriesScreen = CgnMerchantCategoriesListScreen();
   const merchantsScreen = CgnMerchantsListScreen();
 
+  const isCategoriesTabSelected =
+    selectedTab === CgnMerchantsHomeTabRoutes.CGN_CATEGORIES;
+
   const {
     data,
     refreshControlProps,
@@ -110,10 +113,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
     ListFooterComponentStyle,
     ListEmptyComponent,
     ItemSeparatorComponent
-  } =
-    selectedTab === CgnMerchantsHomeTabRoutes.CGN_CATEGORIES
-      ? categoriesScreen
-      : merchantsScreen;
+  } = isCategoriesTabSelected ? categoriesScreen : merchantsScreen;
 
   const tabRoutesKeys = Object.keys(CgnMerchantsHomeTabRoutes);
 
@@ -212,7 +212,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
           </TabNavigation>
         </View>
         <VSpacer size={16} />
-        {selectedTab === CgnMerchantsHomeTabRoutes.CGN_CATEGORIES &&
+        {isCategoriesTabSelected &&
           (featuredOpportunities.length > 0 ? (
             <View testID="CgnFeaturedOpportunitiesSection">
               <CgnFeaturedOpportunities
