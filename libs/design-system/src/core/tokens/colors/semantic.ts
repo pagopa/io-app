@@ -202,6 +202,8 @@ export const light = {
     divider: p.greyscale[200],
     focused: p.blueIO[500],
     input: p.greyscale[650],
+    /* The ring of an unselected step or page */
+    inactive: p.greyscale[650],
     error: p.red[600],
     onAccent: p.greyscale.white
   }
@@ -346,6 +348,7 @@ export const dark = {
     divider: p.greyscale[850],
     focused: p.blueIO[300],
     input: p.greyscale[650],
+    inactive: p.greyscale[450],
     error: p.red[400],
     onAccent: light.stroke.onAccent
   }

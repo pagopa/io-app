@@ -97,8 +97,7 @@ const CarouselDots = (props: CarouselDotsProps) => {
           key={imageIndex}
           style={[
             styles.normalDot,
-            /* The ring of an unselected dot, as an unchecked radio */
-            { borderColor: colors.stroke.input },
+            { borderColor: colors.stroke.inactive },
             getDotsAnimationStyle(imageIndex)
           ]}
         />
