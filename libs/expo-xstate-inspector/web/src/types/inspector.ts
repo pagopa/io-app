@@ -26,8 +26,10 @@ export type InspectedActor = Partial<
 };
 
 export type InvokeConfig = {
+  id?: string;
   onDone?: TransitionsConfig;
   onError?: TransitionsConfig;
+  onSnapshot?: TransitionsConfig;
   src?: ConfigRef;
 };
 
@@ -40,8 +42,12 @@ export type Snapshot = Omit<SerializedSnapshot, "status" | "value"> & {
 export type StateNodeConfig = {
   after?: Record<string, TransitionsConfig>;
   always?: TransitionsConfig;
+  entry?: Array<ConfigRef> | ConfigRef;
+  exit?: Array<ConfigRef> | ConfigRef;
   id?: string;
-  initial?: string | { target?: string };
+  initial?:
+    | string
+    | { actions?: Array<ConfigRef> | ConfigRef; target?: string };
   invoke?: Array<InvokeConfig> | InvokeConfig;
   on?: Record<string, TransitionsConfig>;
   onDone?: TransitionsConfig;
@@ -53,7 +59,11 @@ export type StateValue = string | { [key: string]: StateValue };
 
 export type TransitionConfig =
   | string
-  | { guard?: ConfigRef; target?: Array<string> | string };
+  | {
+      actions?: Array<ConfigRef> | ConfigRef;
+      guard?: ConfigRef;
+      target?: Array<string> | string;
+    };
 
 export type TransitionsConfig =
   | Array<TransitionConfig>

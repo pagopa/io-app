@@ -16,3 +16,6 @@ export const FIT_MARGIN = 16;
 export const FOLLOW_FOCUS_RATIO = 0.25;
 
 export const FOLLOW_MAX_ZOOM = 1;
+
+// A press moving at most this many pixels selects instead of panning.
+export const MAX_TAP_DISTANCE = 4;

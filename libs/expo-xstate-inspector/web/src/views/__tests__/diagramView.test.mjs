@@ -9,19 +9,28 @@ const setup = (t, dark) => {
   t.after(() => {
     delete globalThis.window;
   });
-  const container = { querySelector: () => null };
+  const container = { querySelector: () => null, querySelectorAll: () => [] };
   const renderDiagram = mock.fn(async (_code, isDark) =>
     isDark ? "<svg>dark</svg>" : "<svg>light</svg>"
   );
   const viewport = { update: mock.fn() };
-  const view = createDiagramView(container, renderDiagram, viewport);
+  const details = { render: mock.fn() };
+  const view = createDiagramView(container, details, renderDiagram, viewport);
   const actor = {
     definition: { states: { idle: {}, running: {} } },
     snapshot: { value: "idle" },
     visited: new Set(),
     taken: new Set()
   };
-  return { actor, colorScheme, container, renderDiagram, view, viewport };
+  return {
+    actor,
+    colorScheme,
+    container,
+    details,
+    renderDiagram,
+    view,
+    viewport
+  };
 };
 
 for (const dark of [false, true]) {
@@ -73,4 +82,29 @@ test("preserves messages when the system theme changes", async t => {
 
   assert.equal(container.textContent, "Disconnected.");
   assert.equal(renderDiagram.mock.callCount(), 1);
+});
+
+test("describes the clicked state until another machine is shown", async t => {
+  const { actor, details, view } = setup(t, false);
+  await view.render(actor);
+  const stateElement = {
+    id: "diagram-1-state-s_running-3",
+    getAttribute: () => null
+  };
+
+  view.selectAt({ closest: () => stateElement });
+  assert.deepEqual(details.render.mock.calls.at(-1).arguments, [
+    { node: {}, path: ["running"] }
+  ]);
+
+  await view.render({ ...actor, snapshot: { value: "running" } });
+  assert.deepEqual(details.render.mock.calls.at(-1).arguments[0].path, [
+    "running"
+  ]);
+
+  await view.render({ ...actor, definition: { states: { running: {} } } });
+  assert.deepEqual(details.render.mock.calls.at(-1).arguments, [undefined]);
+
+  view.selectAt({ closest: () => null });
+  assert.deepEqual(details.render.mock.calls.at(-1).arguments, [undefined]);
 });
