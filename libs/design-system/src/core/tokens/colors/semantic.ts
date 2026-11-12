@@ -49,7 +49,9 @@ export const light = {
   background: {
     default: p.greyscale.white,
     accent: p.blueIO[500],
-    overlay: withAlpha(p.greyscale.black, 0.15)
+    overlay: withAlpha(p.greyscale.black, 0.15),
+    /* Camera screens (barcode scanner), around and behind the preview */
+    camera: p.blueIO[850]
   },
   /**
    * What sits on the background (cards, alerts, tints, screen regions);
@@ -60,6 +62,10 @@ export const light = {
     secondary: p.greyscale[50],
     tertiary: p.greyscale[100],
     skeleton: p.greyscale[100],
+    /* Behind the pages of a document viewer */
+    document: p.greyscale[200],
+    /* Shadow of elevated surfaces (tab bar, tooltips), the same in both modes */
+    shadow: withAlpha(p.greyscale.black, 0.1),
     accent: p.blueIO[50],
     error: p.red[100],
     info: p.lightBlue[100],
@@ -220,13 +226,16 @@ export const dark = {
   background: {
     default: p.greyscale.black,
     accent: light.background.accent,
-    overlay: withAlpha(p.greyscale.black, 0.7)
+    overlay: withAlpha(p.greyscale.black, 0.7),
+    camera: light.background.camera
   },
   surface: {
     default: p.greyscale.black,
     secondary: p.greyscale[900],
     tertiary: p.greyscale[700],
     skeleton: p.greyscale[850],
+    document: p.greyscale[700],
+    shadow: light.surface.shadow,
     accent: withAlpha(p.blueIO[200], 0.2),
     error: withAlpha(p.red[400], 0.2),
     info: withAlpha(p.lightBlue[400], 0.2),
