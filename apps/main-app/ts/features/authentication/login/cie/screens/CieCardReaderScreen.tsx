@@ -66,8 +66,9 @@ import {
   CieAuthenticationErrorPayload,
   CieAuthenticationErrorReason
 } from "../store/actions";
-import { isCieLoginUatEnabledSelector } from "../store/selectors";
-import { getCieUatEndpoint } from "../utils/endpoints";
+import { cieEnvSelector } from "../store/selectors";
+import { CieEnv } from "../utils";
+import { getCieIdpUrl } from "../utils/endpoints";
 
 export type CieCardReaderScreenNavigationParams = {
   authorizationUri: string;
@@ -122,7 +123,7 @@ const CieCardReaderScreen = () => {
 
   const dispatch = useIODispatch();
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
-  const isCieUatEnabled = useIOSelector(isCieLoginUatEnabledSelector);
+  const cieEnv = useIOSelector(cieEnvSelector);
   const isScreenReaderEnabled = useIOSelector(isScreenReaderEnabledSelector);
 
   const ciePin = route.params.ciePin;
@@ -345,7 +346,7 @@ const CieCardReaderScreen = () => {
   }, [readingState, isScreenReaderEnabled, navigation]);
 
   const startCieAndroid = useCallback(
-    async (useCieUat: boolean) => {
+    async (env: CieEnv) => {
       cieManager
         .start()
         .then(async () => {
@@ -355,7 +356,7 @@ const CieCardReaderScreen = () => {
           await cieManager.setPin(ciePin);
           cieManager.setAuthenticationUrl(cieAuthorizationUri);
           cieManager.enableLog(isDevEnv);
-          cieManager.setCustomIdpUrl(useCieUat ? getCieUatEndpoint() : null);
+          cieManager.setCustomIdpUrl(getCieIdpUrl(env));
           await cieManager.startListeningNFC();
           setReadingState(ReadingState.waiting_card);
         })
@@ -373,13 +374,13 @@ const CieCardReaderScreen = () => {
   );
 
   const startCieiOS = useCallback(
-    async (useCieUat: boolean) => {
+    async (env: CieEnv) => {
       cieManager.removeAllListeners();
       cieManager.onEvent(event => void handleCieEvent(event));
       cieManager.onError(handleCieError);
       cieManager.onSuccess(handleCieSuccess);
       cieManager.enableLog(isDevEnv);
-      cieManager.setCustomIdpUrl(useCieUat ? getCieUatEndpoint() : null);
+      cieManager.setCustomIdpUrl(getCieIdpUrl(env));
       await cieManager.setPin(ciePin);
       cieManager.setAuthenticationUrl(cieAuthorizationUri);
       cieManager
@@ -430,7 +431,7 @@ const CieCardReaderScreen = () => {
       ios: startCieiOS,
       default: startCieAndroid
     });
-    void startCie(isCieUatEnabled);
+    void startCie(cieEnv);
 
     return () => {
       void cieManager.stopListeningNFC().catch(() => {
@@ -438,7 +439,7 @@ const CieCardReaderScreen = () => {
       });
       cieManager.removeAllListeners();
     };
-    // startCie functions and isCieUatEnabled are stable after mount;
+    // startCie functions and cieEnv are stable after mount;
     // this effect intentionally mirrors componentDidMount/componentWillUnmount.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -469,7 +470,7 @@ const CieCardReaderScreen = () => {
         <View>
           <IOButton
             label={I18n.t("authentication.cie.nfc.retry")}
-            onPress={() => void startCieiOS(isCieUatEnabled)}
+            onPress={() => void startCieiOS(cieEnv)}
             variant="solid"
           />
         </View>
