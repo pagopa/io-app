@@ -124,9 +124,7 @@ continuare
       <View>
         <View
           accessibilityLabel="Step 1; Apri “Impostazioni”"
-          accessible={false}
-          importantForAccessibility="yes"
-          screenReaderFocusable={true}
+          accessible={true}
           style={
             {
               "marginHorizontal": -24,
@@ -223,9 +221,7 @@ continuare
       <View>
         <View
           accessibilityLabel="Step 2; Cerca la funzionalità “NFC”"
-          accessible={false}
-          importantForAccessibility="yes"
-          screenReaderFocusable={true}
+          accessible={true}
           style={
             {
               "marginHorizontal": -24,
@@ -322,9 +318,7 @@ continuare
       <View>
         <View
           accessibilityLabel="Step 3; Attiva la funzionalità"
-          accessible={false}
-          importantForAccessibility="yes"
-          screenReaderFocusable={true}
+          accessible={true}
           style={
             {
               "marginHorizontal": -24,
