@@ -1,4 +1,4 @@
-import { act, fireEvent, render } from "@testing-library/react-native";
+import { act, fireEvent, render, within } from "@testing-library/react-native";
 import { AccessibilityInfo, Alert } from "react-native";
 
 import { renderWithExperimentalEnabledContextProvider } from "../../../utils/testing";
@@ -149,7 +149,10 @@ describe("Banner accessibility", () => {
       title: "Banner title",
       content: "Banner content"
     }
-  ])("separates text from the CTA with $name", ({ title, content }) => {
+  ])("separates text from the CTA with $name", async ({ title, content }) => {
+    jest
+      .mocked(AccessibilityInfo.isScreenReaderEnabled)
+      .mockResolvedValue(true);
     const { getByRole, getAllByRole } = render(
       <Banner
         action="Action text"
@@ -160,12 +163,13 @@ describe("Banner accessibility", () => {
         title={title}
       />
     );
+    await act(() => Promise.resolve());
 
-    expect(
-      getByRole("text", {
-        name: [title, content].filter(Boolean).join(" ")
-      })
-    ).toBeOnTheScreen();
+    const text = getByRole("text", {
+      name: [title, content].filter(Boolean).join(" ")
+    });
+    expect(text).toBeOnTheScreen();
+    expect(within(text).queryByRole("button")).toBeNull();
     expect(getAllByRole("text")).toHaveLength(1);
     expect(getAllByRole("button")).toHaveLength(1);
     expect(getByRole("button", { name: "Action text" })).toBeOnTheScreen();
@@ -194,22 +198,32 @@ describe("Banner accessibility", () => {
     );
   });
 
-  it("exposes static content as text without an action", () => {
-    const { getByRole, queryByRole } = render(
-      <Banner
-        accessibilityHint="Banner hint"
-        color="neutral"
-        content="Banner content"
-        pictogramName="charity"
-        title="Banner title"
-      />
-    );
+  test.each([
+    { name: "enabled", enabled: true },
+    { name: "disabled", enabled: false }
+  ])(
+    "keeps banners without CTA static with the screen reader $name",
+    async ({ enabled }) => {
+      jest
+        .mocked(AccessibilityInfo.isScreenReaderEnabled)
+        .mockResolvedValue(enabled);
+      const { getByRole, queryByRole } = render(
+        <Banner
+          accessibilityHint="Banner hint"
+          color="neutral"
+          content="Banner content"
+          pictogramName="charity"
+          title="Banner title"
+        />
+      );
+      await act(() => Promise.resolve());
 
-    expect(
-      getByRole("text", { name: "Banner title Banner content" })
-    ).toHaveProp("accessibilityHint", "Banner hint");
-    expect(queryByRole("button")).toBeNull();
-  });
+      expect(
+        getByRole("text", { name: "Banner title Banner content" })
+      ).toHaveProp("accessibilityHint", "Banner hint");
+      expect(queryByRole("button")).toBeNull();
+    }
+  );
 
   it("activates the CTA and close button independently and preserves full-banner taps", () => {
     const onPress = jest.fn();

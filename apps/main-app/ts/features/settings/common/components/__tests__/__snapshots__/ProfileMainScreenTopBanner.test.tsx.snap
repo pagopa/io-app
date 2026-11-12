@@ -154,64 +154,64 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
               Vuoi modificare il carattere usato per i testi in app?
             </Text>
           </View>
-          <View
-            accessibilityLabel="Modifica stile carattere"
-            accessibilityRole="button"
-            accessibilityState={
-              {
-                "busy": undefined,
-                "checked": undefined,
-                "disabled": undefined,
-                "expanded": undefined,
-                "selected": undefined,
-              }
+        </View>
+        <View
+          accessibilityLabel="Modifica stile carattere"
+          accessibilityRole="button"
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
             }
-            accessibilityValue={
-              {
-                "max": undefined,
-                "min": undefined,
-                "now": undefined,
-                "text": undefined,
-              }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
             }
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+        >
+          <Text
+            accessibilityElementsHidden={true}
+            accessible={false}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            importantForAccessibility="no-hide-descendants"
+            maxFontSizeMultiplier={1.5}
+            numberOfLines={1}
+            style={
+              [
+                {},
+                {
+                  "color": "#0B3EE3",
+                  "fontFamily": "Titillio",
+                  "fontSize": 16,
+                  "fontStyle": "normal",
+                  "fontWeight": "600",
+                  "lineHeight": undefined,
+                },
+              ]
+            }
           >
-            <Text
-              accessibilityElementsHidden={true}
-              accessible={false}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
-              importantForAccessibility="no-hide-descendants"
-              maxFontSizeMultiplier={1.5}
-              numberOfLines={1}
-              style={
-                [
-                  {},
-                  {
-                    "color": "#0B3EE3",
-                    "fontFamily": "Titillio",
-                    "fontSize": 16,
-                    "fontStyle": "normal",
-                    "fontWeight": "600",
-                    "lineHeight": undefined,
-                  },
-                ]
-              }
-            >
-              Modifica stile carattere
-            </Text>
-          </View>
+            Modifica stile carattere
+          </Text>
         </View>
       </View>
       <View
