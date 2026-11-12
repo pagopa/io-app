@@ -1175,6 +1175,11 @@
           "action": "Inizia",
           "description": "Usa la tua Patente digitale anche come documento di riconoscimento, in modo facile e sicuro!",
           "title": "Dimostra chi sei col tuo dispositivo"
+        },
+        "upgrade_from_expired": {
+          "action": "Inizia",
+          "description": "Continua a usare i tuoi documenti su IO e aggiungine di nuovi, con funzionalità più avanzate.",
+          "title": "Attiva IT-Wallet per non perdere i tuoi documenti"
         }
       },
       "feedback": {
@@ -1883,6 +1888,7 @@
               "documents": {
                 "action": "Inizia",
                 "expired": "Conferma la tua identità con CIE o SPID per continuare a usare Documenti su IO senza limitazioni.",
+                "expiredUpgrade": "Per continuare a usare e aggiungere documenti digitali devi attivare il nuovo portafoglio IT-Wallet.",
                 "expiring": "Conferma la tua identità con CIE o SPID entro il {{date}} per continuare a usare Documenti su IO senza limitazioni.",
                 "offline": "Torna online e conferma la tua identità con CIE o SPID per continuare a usare Documenti su IO senza limitazioni.",
                 "valid": "L'ultima verifica è del {{date}}."

@@ -1,7 +1,7 @@
 import {
   BodySmall,
   H3,
-  IOColors,
+  IOColorsLegacy,
   useIOTheme,
   VSpacer
 } from "@io-app/design-system";
@@ -87,7 +87,7 @@ const FiscalCodeScreen = () => {
           accessible
           style={[
             styles.card,
-            { borderColor: IOColors[theme["cardBorder-default"]] }
+            { borderColor: IOColorsLegacy[theme["cardBorder-default"]] }
           ]}
           testID="barcode-box"
         >
@@ -95,7 +95,7 @@ const FiscalCodeScreen = () => {
           <Barcode
             background={"transparent"}
             height={80}
-            lineColor={IOColors[theme["textHeading-default"]]}
+            lineColor={IOColorsLegacy[theme["textHeading-default"]]}
             value={fiscalCode}
             width={1.3}
           />

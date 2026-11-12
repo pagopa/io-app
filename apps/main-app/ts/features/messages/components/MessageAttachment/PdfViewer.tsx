@@ -1,4 +1,4 @@
-import { IOColors } from "@io-app/design-system";
+import { IOColorsLegacy } from "@io-app/design-system";
 import I18n from "i18next";
 import { ComponentProps, useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -9,7 +9,7 @@ import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay"
 const styles = StyleSheet.create({
   pdf: {
     flex: 1,
-    backgroundColor: IOColors["grey-700"]
+    backgroundColor: IOColorsLegacy["grey-700"]
   }
 });
 

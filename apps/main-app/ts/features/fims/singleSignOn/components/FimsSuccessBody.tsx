@@ -10,9 +10,9 @@ import {
   HStack,
   Icon,
   IOButton,
-  IOColors,
+  IOColorsLegacy,
+  IODimensions,
   IOMarkdownLite,
-  IOVisualCostants,
   ListItemHeader,
   VSpacer
 } from "@io-app/design-system";
@@ -158,7 +158,7 @@ export const FimsFlowSuccessBody = ({
 
         <FimsPrivacyInfo privacyUrl={privacyUrl} />
 
-        <VSpacer size={32} />
+        <VSpacer size={IODimensions.padding.screen.end} />
       </ContentWrapper>
       {BottomSheet.bottomSheet}
     </ForceScrollDownView>
@@ -181,15 +181,15 @@ const generateBottomSheetProps = (privacyUrl: string): BSPropType => ({
 
 const styles = StyleSheet.create({
   outlineContainer: {
-    borderWidth: 1,
+    borderWidth: IODimensions.stroke.default,
     padding: 8,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 8,
-    borderColor: hexToRgba(IOColors.black, 0.1),
+    borderRadius: IODimensions.radius.avatar.small,
+    borderColor: hexToRgba(IOColorsLegacy.black, 0.1),
     borderCurve: "continuous",
-    backgroundColor: IOColors.white,
-    width: IOVisualCostants.avatarSizeSmall,
-    height: IOVisualCostants.avatarSizeSmall
+    backgroundColor: IOColorsLegacy.white,
+    width: IODimensions.size.avatar.small,
+    height: IODimensions.size.avatar.small
   }
 });

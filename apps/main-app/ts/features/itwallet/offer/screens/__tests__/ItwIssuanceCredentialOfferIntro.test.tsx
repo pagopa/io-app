@@ -1,3 +1,4 @@
+import { IOColors } from "@io-app/design-system";
 import { createStackNavigator } from "@react-navigation/stack";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
@@ -10,6 +11,7 @@ import { startupLoadSuccess } from "../../../../../store/actions/startup";
 import { appReducer } from "../../../../../store/reducers";
 import { StartupStatusEnum } from "../../../../../store/reducers/startup";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { findAllByStyle, withDarkTheme } from "../../../../../utils/testColors";
 import { reproduceSequence } from "../../../../../utils/tests";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as itwCommonSelectors from "../../../common/store/selectors";
@@ -328,6 +330,21 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
       type: "confirm-credential-offer"
     });
   });
+
+  it("draws the introduction box border with the dark stroke token in dark mode", () => {
+    jest
+      .spyOn(catalogSelectors, "itwCredentialIntroContentSelector")
+      .mockReturnValue(() => "Introduction content");
+
+    const { toJSON } = renderComponent(jest.fn(), jest.fn(), "dark");
+
+    expect(
+      findAllByStyle(toJSON(), {
+        borderColor: IOColors.dark.stroke.default,
+        borderWidth: 1
+      })
+    ).toHaveLength(1);
+  });
 });
 
 const renderComponent = (
@@ -338,7 +355,8 @@ const renderComponent = (
     params:
       | ItwParamsList[typeof ITW_ROUTES.IDENTIFICATION.MODE_SELECTION]
       | undefined
-  ) => void = jest.fn()
+  ) => void = jest.fn(),
+  theme: "dark" | "light" = "light"
 ) => {
   const sequenceOfActions: ReadonlyArray<Action> = [
     applicationChangeState("active"),
@@ -354,7 +372,11 @@ const renderComponent = (
     () => (
       <Stack.Navigator screenOptions={{ animation: "none" }}>
         <Stack.Screen
-          component={ItwIssuanceCredentialOfferIntroScreen}
+          component={
+            theme === "dark"
+              ? withDarkTheme(ItwIssuanceCredentialOfferIntroScreen)
+              : ItwIssuanceCredentialOfferIntroScreen
+          }
           initialParams={{ itwCredentialOfferUri: T_CREDENTIAL_OFFER_URI }}
           name={ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER_INTRO}
         />

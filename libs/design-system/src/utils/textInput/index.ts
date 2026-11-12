@@ -1,7 +1,8 @@
 import { ComponentProps } from "react";
 import { TextInputProps } from "react-native";
 
-import { TextInputBase } from "../../components/textInput/TextInputBase";
+import type { TextInputBase } from "../../components/textInput/TextInputBase";
+
 import { InputType } from "../types";
 
 export type RNTextInputProps = Pick<

@@ -2,14 +2,15 @@ import { ComponentProps, ReactNode, useCallback } from "react";
 import { GestureResponderEvent, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { useIOTheme } from "../../context";
-import { IOListItemStyles, IOListItemVisualParams } from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
-import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Icon } from "../icons";
+import { HSpacer } from "../layout";
 import { BodySmall, H6 } from "../typography";
+import { IOListItemStyles } from "./styles";
 
 export type ListItemNavAlert = Pick<
   ComponentProps<typeof Pressable>,
@@ -31,7 +32,7 @@ export const ListItemNavAlert = ({
   accessibilityHint,
   testID
 }: ListItemNavAlert) => {
-  const theme = useIOTheme();
+  const listItemColors = useIOColors().component.listItem;
   const { onPressIn, onPressOut, scaleAnimatedStyle, backgroundAnimatedStyle } =
     useListItemAnimation();
 
@@ -42,7 +43,6 @@ export const ListItemNavAlert = ({
     },
     [onPress]
   );
-  const { dynamicFontScale, spacingScaleMultiplier } = useIOFontDynamicScale();
 
   const componentLabelToAccessibility = typeof label === "string" ? label : "";
   const componentDescriptionToAccessibility =
@@ -56,7 +56,7 @@ export const ListItemNavAlert = ({
     <>
       {/* Let developer using a custom component (e.g: skeleton) */}
       {typeof label === "string" ? (
-        <H6 color={theme["textBody-default"]}>{label}</H6>
+        <H6 color={listItemColors.foreground.label}>{label}</H6>
       ) : (
         label
       )}
@@ -64,7 +64,10 @@ export const ListItemNavAlert = ({
       {description && (
         <>
           {typeof description === "string" ? (
-            <BodySmall color={theme.errorText} weight="Semibold">
+            <BodySmall
+              color={listItemColors.foreground.error}
+              weight="Semibold"
+            >
               {description}
             </BodySmall>
           ) : (
@@ -75,7 +78,7 @@ export const ListItemNavAlert = ({
     </>
   );
 
-  const iconColor = theme["interactiveElem-default"];
+  const iconColor = listItemColors.foreground.action.primary;
 
   return (
     <Pressable
@@ -95,31 +98,29 @@ export const ListItemNavAlert = ({
         style={[IOListItemStyles.listItem, backgroundAnimatedStyle]}
       >
         <Animated.View
-          style={[
-            IOListItemStyles.listItemInner,
-            {
-              columnGap:
-                IOListItemVisualParams.iconMargin *
-                dynamicFontScale *
-                spacingScaleMultiplier
-            },
-            scaleAnimatedStyle
-          ]}
+          style={[IOListItemStyles.listItemInner, scaleAnimatedStyle]}
         >
           {!withoutIcon && (
-            <Icon
-              allowFontScaling
-              color={theme.errorIcon}
-              name="errorFilled"
-              size={IOListItemVisualParams.iconSize}
-            />
+            <>
+              <Icon
+                allowFontScaling
+                color={listItemColors.foreground.error}
+                name="errorFilled"
+                size={IODimensions.size.icon.listItem}
+              />
+              <HSpacer
+                allowScaleSpacing
+                size={IODimensions.gap.listItem.default.leading}
+              />
+            </>
           )}
           <View style={{ flex: 1 }}>{listItemNavAlertContent}</View>
+          {/* No gap: the chevron glyph is drawn against the right edge of its box */}
           <Icon
             allowFontScaling
             color={iconColor}
             name="chevronRightListItem"
-            size={IOListItemVisualParams.chevronSize}
+            size={IODimensions.size.icon.chevron}
           />
         </Animated.View>
       </Animated.View>
