@@ -41,28 +41,25 @@ const IdPayInitiativeDiscountSettingsComponent = (props: Props) => {
     );
   };
 
-  const instrumentsSettingsButton = (() => {
-    const { nInstr } = initiative;
-    const methodCountString = I18n.t(
-      `idpay.initiative.details.initiativeDetailsScreen.configured.settings.methods`,
-      {
-        count: nInstr
-      }
-    );
-    return (
-      <ListItemNav
-        accessibilityLabel={`${I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
-        )}
+  const methodCountString = I18n.t(
+    "idpay.initiative.details.initiativeDetailsScreen.configured.settings.methods",
+    {
+      count: initiative.nInstr
+    }
+  );
+  const instrumentsSettingsButton = (
+    <ListItemNav
+      accessibilityLabel={`${I18n.t(
+        "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
+      )}
          ${methodCountString}`}
-        description={methodCountString}
-        onPress={() => navigateToInstrumentsConfiguration(initiative)}
-        value={I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
-        )}
-      />
-    );
-  })();
+      description={methodCountString}
+      label={I18n.t(
+        "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
+      )}
+      onPress={() => navigateToInstrumentsConfiguration(initiative)}
+    />
+  );
 
   if (!isIdPayCodeCieEnabled) {
     return undefined;

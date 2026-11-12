@@ -5,13 +5,13 @@ import {
   HeaderSecondLevel,
   hexToRgba,
   IOButton,
-  IOColors,
-  IOVisualCostants,
+  IOColorsLegacy,
+  IODimensions,
   VSpacer,
   VStack
 } from "@io-app/design-system";
 import I18n from "i18next";
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import Animated, {
   LinearTransition,
@@ -28,8 +28,8 @@ import {
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { useMaxBrightness } from "../../../../../utils/brightness.ts";
 import { ItwBrandedBox } from "../../../common/components/ItwBrandedBox.tsx";
+import { isItwProximityNfcEnabledSelector } from "../../../common/store/selectors";
 import { itwIsBannerVisibleSelector } from "../../../common/store/selectors/banners.ts";
-import { isItwProximityNfcMinAppVersionSupportedSelector } from "../../../common/store/selectors/remoteConfig.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import {
   trackItwProximityNfcStart,
@@ -39,7 +39,7 @@ import { ItwProximityQrCode as ItwProximityQrCodeTracking } from "../analytics/t
 import { ItwProximityQrCodeImage } from "../components/ItwProximityQrCodeImage.tsx";
 import { ItwProximityQrCodeInfoBanner } from "../components/ItwProximityQrCodeInfoBanner.tsx";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
-import { selectFailure, selectIsLoading } from "../machine/selectors.ts";
+import { selectFailure } from "../machine/selectors.ts";
 import { ItwProximityParamsList } from "../navigation/ItwProximityParamsList.ts";
 import { shouldShowExpiredProximityCredentialsBannerSelector } from "../store/selectors/credentials.ts";
 
@@ -63,7 +63,6 @@ export const ItwProximityPresentmentScreen = ({
   const safeAreaInsets = useSafeAreaInsets();
 
   const machineRef = ItwProximityMachineContext.useActorRef();
-  const isLoading = ItwProximityMachineContext.useSelector(selectIsLoading);
   const failure = ItwProximityMachineContext.useSelector(selectFailure);
 
   const shouldShowExpiredCredentialsBanner = useIOSelector(
@@ -73,18 +72,20 @@ export const ItwProximityPresentmentScreen = ({
     itwIsBannerVisibleSelector("proximity_qr_code_info")
   );
   const isNfcPresentmentSupported = useIOSelector(
-    isItwProximityNfcMinAppVersionSupportedSelector
+    isItwProximityNfcEnabledSelector
   );
 
   const isFailure = !!failure;
 
-  useDebugInfo({
-    isLoading,
-    failure,
-    // isPermissionsRequired,
-    // isBluetoothRequired,
-    shouldShowExpiredCredentialsBanner
-  });
+  useDebugInfo(
+    useMemo(
+      () => ({
+        failure,
+        shouldShowExpiredCredentialsBanner
+      }),
+      [failure, shouldShowExpiredCredentialsBanner]
+    )
+  );
 
   // Auto-start machine on mount.
   useEffect(() => {
@@ -100,6 +101,7 @@ export const ItwProximityPresentmentScreen = ({
       header: () => (
         <HeaderSecondLevel
           animatedRef={animatedScrollViewRef}
+          disablePressAnimation={true}
           enableDiscreteTransition={true}
           firstAction={{
             icon: "closeLarge",
@@ -137,7 +139,7 @@ export const ItwProximityPresentmentScreen = ({
     <IOScrollView
       animatedRef={animatedScrollViewRef}
       contentContainerStyle={{
-        marginTop: safeAreaInsets.top + IOVisualCostants.headerHeight
+        marginTop: safeAreaInsets.top + IODimensions.height.header
       }}
     >
       {shouldShowExpiredCredentialsBanner && (
@@ -218,7 +220,7 @@ const styles = StyleSheet.create({
     marginBottom: 24
   },
   qrCodeShadow: {
-    boxShadow: `0px 4px 32px ${hexToRgba(IOColors.black, 0.1)}`
+    boxShadow: `0px 4px 32px ${hexToRgba(IOColorsLegacy.black, 0.1)}`
   },
   nfcSection: {
     alignSelf: "center",

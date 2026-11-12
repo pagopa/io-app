@@ -1,12 +1,15 @@
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
+import { ComponentProps } from "react";
 import { BackHandler } from "react-native";
 import { createStore } from "redux";
 
+import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import * as hooks from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import {
   setFinishedActiveSessionLoginFlow,
   setRetryActiveSessionLogin
@@ -17,8 +20,11 @@ import {
   resetSpidLoginState,
   setSpidLoginInLoadingState
 } from "../../idp/store/actions";
-import AuthErrorScreen from "../screens/AuthErrorScreen";
+import AuthErrorScreen, {
+  AuthErrorScreenParams
+} from "../screens/AuthErrorScreen";
 
+const mockPopTo = jest.fn();
 const mockNavigate = jest.fn();
 const mockReplace = jest.fn();
 const mockDispatch = jest.fn();
@@ -36,20 +42,7 @@ jest.mock("../../../../../hooks/useDebugInfo", () => ({
   useDebugInfo: (data: unknown) => mockUseDebugInfo(data)
 }));
 
-const mockUseRoute = jest.fn();
-
-jest.mock("@react-navigation/native", () => {
-  const actualNav = jest.requireActual("@react-navigation/native");
-  return {
-    ...actualNav,
-    useRoute: () => mockUseRoute(),
-    useNavigation: () => ({
-      addListener: jest.fn(),
-      navigate: mockNavigate,
-      replace: mockReplace
-    })
-  };
-});
+const mockRouteParams = jest.fn<{ params: AuthErrorScreenParams }, []>();
 
 describe("AuthErrorScreen", () => {
   beforeEach(() => {
@@ -58,7 +51,7 @@ describe("AuthErrorScreen", () => {
 
   it("should forward the raw error code to useDebugInfo for a mapped error", () => {
     mockIsActiveSessionLogin(false);
-    mockUseRoute.mockReturnValue({
+    mockRouteParams.mockReturnValue({
       params: {
         errorCodeOrMessage: "25",
         authMethod: "SPID",
@@ -77,7 +70,7 @@ describe("AuthErrorScreen", () => {
 
   it("should forward the raw error code to useDebugInfo for an unmapped error", () => {
     mockIsActiveSessionLogin(false);
-    mockUseRoute.mockReturnValue({
+    mockRouteParams.mockReturnValue({
       params: {
         errorCodeOrMessage: "some_unmapped_raw_error",
         authMethod: "SPID",
@@ -101,7 +94,7 @@ describe("AuthErrorScreen", () => {
       code: -2,
       url: "https://example.com/authorize"
     };
-    mockUseRoute.mockReturnValue({
+    mockRouteParams.mockReturnValue({
       params: { authMethod: "CIE", authLevel: AUTH_LEVELS.L3, failureData }
     });
 
@@ -117,9 +110,9 @@ describe("AuthErrorScreen", () => {
 
   it("rendersCorrectly", () => {
     mockIsActiveSessionLogin(false);
-    mockUseRoute.mockReturnValue({
+    mockRouteParams.mockReturnValue({
       params: {
-        errorCodeOrMessage: 25,
+        errorCodeOrMessage: "25",
         authMethod: "SPID",
         authLevel: AUTH_LEVELS.L2
       }
@@ -139,9 +132,9 @@ describe("AuthErrorScreen", () => {
       "should dispatch setSpidLoginInLoadingState only for SPID ($authMethod)",
       ({ authMethod }) => {
         mockIsActiveSessionLogin(false);
-        mockUseRoute.mockReturnValue({
+        mockRouteParams.mockReturnValue({
           params: {
-            errorCodeOrMessage: 25,
+            errorCodeOrMessage: "25",
             authMethod,
             authLevel: AUTH_LEVELS.L2
           }
@@ -162,11 +155,11 @@ describe("AuthErrorScreen", () => {
       }
     );
 
-    it("should navigate to CIE_PIN_SCREEN for CIE", () => {
+    it("should pop to CIE_PIN_SCREEN for CIE", () => {
       mockIsActiveSessionLogin(false);
-      mockUseRoute.mockReturnValue({
+      mockRouteParams.mockReturnValue({
         params: {
-          errorCodeOrMessage: 25,
+          errorCodeOrMessage: "25",
           authMethod: "CIE",
           authLevel: AUTH_LEVELS.L2
         }
@@ -175,7 +168,7 @@ describe("AuthErrorScreen", () => {
       const { getByTestId } = renderComponent();
       fireEvent.press(getByTestId("retry-button-test-id"));
 
-      expect(mockNavigate).toHaveBeenCalledWith(
+      expect(mockPopTo).toHaveBeenCalledWith(
         AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
       );
       expect(mockReplace).not.toHaveBeenCalled();
@@ -183,9 +176,9 @@ describe("AuthErrorScreen", () => {
 
     it("should replace with CIE_ID_LOGIN for CIE_ID in a normal login", () => {
       mockIsActiveSessionLogin(false);
-      mockUseRoute.mockReturnValue({
+      mockRouteParams.mockReturnValue({
         params: {
-          errorCodeOrMessage: 25,
+          errorCodeOrMessage: "25",
           authMethod: "CIE_ID",
           authLevel: AUTH_LEVELS.L2
         }
@@ -197,14 +190,14 @@ describe("AuthErrorScreen", () => {
       expect(mockReplace).toHaveBeenCalledWith(
         AUTHENTICATION_ROUTES.CIE_ID_LOGIN
       );
-      expect(mockNavigate).not.toHaveBeenCalled();
+      expect(mockPopTo).not.toHaveBeenCalled();
     });
 
     it("should replace with CIE_ID_ACTIVE_SESSION_LOGIN for CIE_ID in an active session login", () => {
       mockIsActiveSessionLogin(true);
-      mockUseRoute.mockReturnValue({
+      mockRouteParams.mockReturnValue({
         params: {
-          errorCodeOrMessage: 25,
+          errorCodeOrMessage: "25",
           authMethod: "CIE_ID",
           authLevel: AUTH_LEVELS.L2
         }
@@ -219,11 +212,11 @@ describe("AuthErrorScreen", () => {
       );
     });
 
-    it("should navigate to IDP_SELECTION for SPID, regardless of active session", () => {
+    it("should pop to IDP_SELECTION for SPID, regardless of active session", () => {
       mockIsActiveSessionLogin(true);
-      mockUseRoute.mockReturnValue({
+      mockRouteParams.mockReturnValue({
         params: {
-          errorCodeOrMessage: 25,
+          errorCodeOrMessage: "25",
           authMethod: "SPID",
           authLevel: AUTH_LEVELS.L2
         }
@@ -233,7 +226,7 @@ describe("AuthErrorScreen", () => {
       fireEvent.press(getByTestId("retry-button-test-id"));
 
       expect(mockDispatch).toHaveBeenCalledWith(setRetryActiveSessionLogin());
-      expect(mockNavigate).toHaveBeenCalledWith(
+      expect(mockPopTo).toHaveBeenCalledWith(
         AUTHENTICATION_ROUTES.IDP_SELECTION
       );
       expect(mockReplace).not.toHaveBeenCalled();
@@ -241,11 +234,11 @@ describe("AuthErrorScreen", () => {
   });
 
   describe("onCancel", () => {
-    it("should navigate back to LANDING for a normal login", () => {
+    it("should pop to LANDING for a normal login", () => {
       mockIsActiveSessionLogin(false);
-      mockUseRoute.mockReturnValue({
+      mockRouteParams.mockReturnValue({
         params: {
-          errorCodeOrMessage: 25,
+          errorCodeOrMessage: "25",
           authMethod: "SPID",
           authLevel: AUTH_LEVELS.L2
         }
@@ -255,15 +248,15 @@ describe("AuthErrorScreen", () => {
       fireEvent.press(getByTestId("cancel-button-test-id"));
 
       expect(mockDispatch).toHaveBeenCalledWith(resetSpidLoginState());
-      expect(mockNavigate).toHaveBeenCalledTimes(1);
-      expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.LANDING);
+      expect(mockPopTo).toHaveBeenCalledTimes(1);
+      expect(mockPopTo).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.LANDING);
     });
 
     it("should navigate to the Messages home for an active session login", () => {
       mockIsActiveSessionLogin(true);
-      mockUseRoute.mockReturnValue({
+      mockRouteParams.mockReturnValue({
         params: {
-          errorCodeOrMessage: 25,
+          errorCodeOrMessage: "25",
           authMethod: "SPID",
           authLevel: AUTH_LEVELS.L2
         }
@@ -275,7 +268,10 @@ describe("AuthErrorScreen", () => {
       expect(mockDispatch).toHaveBeenCalledWith(
         setFinishedActiveSessionLoginFlow()
       );
-      expect(mockNavigate).toHaveBeenCalled();
+      expect(mockPopTo).toHaveBeenCalledWith(ROUTES.MAIN, {
+        screen: MESSAGES_ROUTES.MESSAGES_HOME
+      });
+      expect(mockNavigate).not.toHaveBeenCalled();
     });
   });
 
@@ -283,9 +279,9 @@ describe("AuthErrorScreen", () => {
     it("should consume the Android back press without navigating, so the user can leave only via Retry or Close", () => {
       const addEventListenerSpy = jest.spyOn(BackHandler, "addEventListener");
       mockIsActiveSessionLogin(false);
-      mockUseRoute.mockReturnValue({
+      mockRouteParams.mockReturnValue({
         params: {
-          errorCodeOrMessage: 25,
+          errorCodeOrMessage: "25",
           authMethod: "SPID",
           authLevel: AUTH_LEVELS.L2
         }
@@ -302,6 +298,7 @@ describe("AuthErrorScreen", () => {
         .some(handler => handler() === true);
 
       expect(isBackPressConsumed).toBe(true);
+      expect(mockPopTo).not.toHaveBeenCalled();
       expect(mockNavigate).not.toHaveBeenCalled();
       expect(mockReplace).not.toHaveBeenCalled();
     });
@@ -316,7 +313,22 @@ const renderComponent = () => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, initialState as any);
   return renderScreenWithNavigationStoreContext(
-    AuthErrorScreen,
+    (props: ComponentProps<typeof AuthErrorScreen>) => (
+      <AuthErrorScreen
+        {...props}
+        navigation={
+          {
+            popTo: mockPopTo,
+            navigate: mockNavigate,
+            replace: mockReplace
+          } as unknown as ComponentProps<typeof AuthErrorScreen>["navigation"]
+        }
+        route={{
+          ...props.route,
+          ...mockRouteParams()
+        }}
+      />
+    ),
     AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
     {},
     store

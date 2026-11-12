@@ -19,8 +19,8 @@ import {
 import Animated, { Easing, FadeIn, FadeOut } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { useIOTheme, useIOThemeContext } from "../../context";
-import { IOColors } from "../../core/IOColors";
+import { useIOColors, useIOThemeContext } from "../../context";
+import { IODimensions } from "../../core";
 import { IconButton } from "../buttons";
 import { Body, H6 } from "../typography";
 import { BottomArrow, LeftArrow, RightArrow, TopArrow } from "./Arrows";
@@ -108,7 +108,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: "100%",
     height: "100%",
-    backgroundColor: IOColors.black,
     zIndex: 997
   },
   childrenContainer: {
@@ -117,9 +116,8 @@ const styles = StyleSheet.create({
   },
   tooltipContainer: {
     position: "absolute",
-    paddingHorizontal: 16,
-    paddingVertical: 16,
-    borderRadius: 8,
+    padding: IODimensions.padding.tooltip,
+    borderRadius: IODimensions.radius.tooltip,
     zIndex: 2000,
     overflow: "visible"
   },
@@ -130,8 +128,9 @@ const styles = StyleSheet.create({
   },
   closeIcon: {
     position: "absolute",
-    right: 8,
-    top: 9 // It's been used `9` instead of `8` to fix accessibility focus order. In this way title is read before close icon.
+    right: IODimensions.offset.tooltip.close,
+    // One extra dp keeps the title before the close icon in the accessibility focus order
+    top: IODimensions.offset.tooltip.close + 1
   }
 });
 
@@ -176,10 +175,9 @@ export const Tooltip = ({
   );
 
   // Theme
-  const theme = useIOTheme();
+  const tooltipColors = useIOColors().component.tooltip;
   const { themeType } = useIOThemeContext();
   const backdropOpacity = themeType === "light" ? 0.4 : 0.8;
-  const tooltipBackground = IOColors[theme["appBackground-secondary"]];
 
   const Arrow = useMemo(
     () => ARROWS_BY_PLACEMENT[currentPlacement],
@@ -308,7 +306,11 @@ export const Tooltip = ({
             <View
               style={[
                 styles.backdrop,
-                { opacity: backdropOpacity, height: screenDimensions.height }
+                {
+                  backgroundColor: tooltipColors.backdrop,
+                  opacity: backdropOpacity,
+                  height: screenDimensions.height
+                }
               ]}
             />
           </Animated.View>
@@ -317,7 +319,7 @@ export const Tooltip = ({
           onLayout={handleTooltipOnLayout}
           style={[
             styles.tooltipContainer,
-            { backgroundColor: tooltipBackground },
+            { backgroundColor: tooltipColors.background },
             getTooltipCoords(
               currentPlacement,
               childrenCoords,
@@ -352,7 +354,7 @@ export const Tooltip = ({
             tooltipVisibility
           ]}
         >
-          <Arrow color={tooltipBackground} />
+          <Arrow color={tooltipColors.background} />
         </View>
       </Modal>
     </>

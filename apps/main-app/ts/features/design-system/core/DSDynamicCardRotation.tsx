@@ -1,4 +1,4 @@
-import { H6, hexToRgba, IOColors, VSpacer } from "@io-app/design-system";
+import { H6, IOColorPalette, VSpacer } from "@io-app/design-system";
 import {
   Canvas,
   Color,
@@ -38,6 +38,8 @@ import Animated, {
 } from "react-native-reanimated";
 import Svg, { Circle, Defs, RadialGradient, Stop } from "react-native-svg";
 
+import { ROTATION_SENSOR_CONFIG } from "../../../hooks/useRotationSensor";
+
 type CardSize = {
   height: LayoutRectangle["height"];
   width: LayoutRectangle["width"];
@@ -62,8 +64,8 @@ const visibleLightPercentage = 0.25;
 const cardAspectRatio: ViewStyle["aspectRatio"] = 7 / 4;
 const cardBorderRadius = 24;
 const cardBorderWidth = 1;
-const cardBorderColor: ColorValue = IOColors["hanPurple-500"];
-const cardBorderHighlighted: ColorValue = IOColors.white;
+const cardBorderColor: ColorValue = IOColorPalette.hanPurple[500];
+const cardBorderHighlighted: ColorValue = IOColorPalette.greyscale.white;
 const cardBorderOpacity = 0.65;
 // Drivers' License
 const cardGradient: Array<Color> = ["#F4ACD5", "#FCE6F2"];
@@ -83,7 +85,10 @@ const springConfig = {
 export const DSDynamicCardRotation = () => {
   /* On first render, store the current device orientation
   using quaternions */
-  const rotationSensor = useAnimatedSensor(SensorType.ROTATION);
+  const rotationSensor = useAnimatedSensor(
+    SensorType.ROTATION,
+    ROTATION_SENSOR_CONFIG
+  );
 
   // Store initial values on first sensor reading
   const initialRoll = useSharedValue<null | number>(null);
@@ -196,7 +201,7 @@ export const DSDynamicCardRotation = () => {
   // Inner card (border excluded)
   const CardInnerMask = () => (
     <RoundedRect
-      color={IOColors.black}
+      color={IOColorPalette.greyscale.black}
       height={(cardSize?.height ?? 0) - cardBorderWidth * 2}
       r={cardBorderRadius - cardBorderWidth}
       width={(cardSize?.width ?? 0) - cardBorderWidth * 2}
@@ -361,7 +366,7 @@ export const DSDynamicCardRotation = () => {
         }}
       >
         <RoundedRect
-          color={hexToRgba(IOColors["hanPurple-250"], 1)}
+          color={IOColorPalette.hanPurple[250]}
           height={cardSize?.height ?? 0}
           r={cardBorderRadius}
           width={cardSize?.width ?? 0}
@@ -418,7 +423,7 @@ const styles = StyleSheet.create({
     aspectRatio: cardAspectRatio,
     borderRadius: 24,
     borderCurve: "continuous",
-    backgroundColor: IOColors["hanPurple-250"]
+    backgroundColor: IOColorPalette.hanPurple[250]
   },
   debugInfo: {
     alignSelf: "flex-start",

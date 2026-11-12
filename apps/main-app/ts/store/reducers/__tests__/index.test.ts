@@ -44,6 +44,31 @@ describe("index", () => {
       undefined,
       applicationChangeState("active")
     );
+    it.each([
+      { name: "successful logout", action: logoutSuccess() },
+      {
+        name: "failed logout",
+        action: logoutFailure({ error: Error("") })
+      }
+    ])("should preserve tour state after $name", ({ action }) => {
+      const tourState = {
+        ...initialState.features.tour,
+        completed: ["wallet", "payments"],
+        _persist: { version: 0, rehydrated: true }
+      };
+      const testState = {
+        ...initialState,
+        features: {
+          ...initialState.features,
+          tour: tourState
+        }
+      };
+
+      const outputState = createRootReducer([])(testState, action);
+
+      expect(outputState.features.tour).toEqual(tourState);
+    });
+
     [logoutSuccess(), logoutFailure({ error: Error("") })].forEach(action =>
       it(`should remove 'registeredToken' and set 'tokenStatus' to 'unsent' when receiving an action of type '${action.type}'`, () => {
         const testState = {
@@ -95,7 +120,7 @@ describe("index", () => {
           features: {
             loginFeatures: {
               cieLogin: {
-                useUat: true,
+                cieEnv: "preprod",
                 cieIDSelectedSecurityLevel: "L3",
                 _persist: cieLoginPersist
               },
@@ -121,13 +146,15 @@ describe("index", () => {
         });
       });
 
-      it(`should keep 'cieLogin.useUat' and reset the other session related fields when receiving an action of type '${action.type}'`, () => {
+      it(`should keep 'cieLogin.cieEnv' and reset the other session related fields when receiving an action of type '${action.type}'`, () => {
         const outputState = createRootReducer([])(
           buildDeveloperConfigState(),
           action
         );
 
-        expect(outputState.features.loginFeatures.cieLogin.useUat).toBe(true);
+        expect(outputState.features.loginFeatures.cieLogin.cieEnv).toBe(
+          "preprod"
+        );
         expect(
           outputState.features.loginFeatures.cieLogin.cieIDSelectedSecurityLevel
         ).toBeUndefined();

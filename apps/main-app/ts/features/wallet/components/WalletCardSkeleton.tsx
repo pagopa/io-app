@@ -1,21 +1,15 @@
-import {
-  IOColors,
-  IOSkeleton,
-  useIOThemeContext,
-  VStack
-} from "@io-app/design-system";
+import { IODimensions, IOSkeleton, VStack } from "@io-app/design-system";
 import { StyleSheet, View } from "react-native";
 
+import { useFeatureColors } from "../../../hooks/useFeatureColors";
+import { walletColors } from "../colors";
 import { withWalletCardBaseComponent } from "./WalletCardBaseComponent";
 
 const WalletCardSkeleton = withWalletCardBaseComponent(() => {
-  const { themeType } = useIOThemeContext();
+  const colors = useFeatureColors(walletColors);
 
-  const cardColor =
-    themeType === "light" ? IOColors["grey-100"] : IOColors["grey-850"];
-
-  const skeletonColor =
-    themeType === "light" ? IOColors["grey-200"] : IOColors["grey-900"];
+  const cardColor = colors.cardSkeleton.background;
+  const skeletonColor = colors.cardSkeleton.bar;
 
   return (
     <View style={[styleSheet.card, { backgroundColor: cardColor }]}>
@@ -62,13 +56,13 @@ const borderColor = "#0000001F";
 const styleSheet = StyleSheet.create({
   card: {
     aspectRatio: 16 / 10,
-    borderRadius: 8,
-    borderWidth: 1,
+    borderRadius: IODimensions.radius.card,
+    borderWidth: IODimensions.stroke.default,
     borderColor,
     paddingTop: 4
   },
   wrapper: {
-    padding: 16,
+    padding: IODimensions.padding.card,
     flex: 1,
     justifyContent: "space-between"
   },

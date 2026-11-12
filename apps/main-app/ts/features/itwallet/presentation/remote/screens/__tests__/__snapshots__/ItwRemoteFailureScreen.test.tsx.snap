@@ -341,7 +341,8 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -543,7 +544,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                               }
                             />
                             <Text>
-                              Dopo aver confermato l'identità associata al tuo IT-Wallet ID potrai ripetere l'operazione.
+                              Dopo aver confermato l'identità associata al tuo IT-⁠Wallet ID potrai ripetere l'operazione.
                             </Text>
                             <View
                               style={
@@ -1019,6 +1020,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -1155,7 +1157,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                                     ]
                                   }
                                 >
-                                  Un ente risulta verificato dopo aver aderito al Sistema IT-Wallet, ovvero un sistema che impone rigidi requisiti di sicurezza.
+                                  Un ente risulta verificato dopo aver aderito al Sistema IT-⁠Wallet, ovvero un sistema che impone rigidi requisiti di sicurezza.
                                 </Text>
                               </View>
                             </View>
@@ -1172,6 +1174,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -1872,7 +1875,8 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -2278,6 +2282,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -2414,7 +2419,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                     ]
                                   }
                                 >
-                                  Un ente risulta verificato dopo aver aderito al Sistema IT-Wallet, ovvero un sistema che impone rigidi requisiti di sicurezza.
+                                  Un ente risulta verificato dopo aver aderito al Sistema IT-⁠Wallet, ovvero un sistema che impone rigidi requisiti di sicurezza.
                                 </Text>
                               </View>
                             </View>
@@ -2431,6 +2436,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -3131,7 +3137,8 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -3578,6 +3585,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -3714,7 +3722,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                     ]
                                   }
                                 >
-                                  Un ente risulta verificato dopo aver aderito al Sistema IT-Wallet, ovvero un sistema che impone rigidi requisiti di sicurezza.
+                                  Un ente risulta verificato dopo aver aderito al Sistema IT-⁠Wallet, ovvero un sistema che impone rigidi requisiti di sicurezza.
                                 </Text>
                               </View>
                             </View>
@@ -3731,6 +3739,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -4431,7 +4440,8 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -5042,6 +5052,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -5178,7 +5189,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
                                     ]
                                   }
                                 >
-                                  Un ente risulta verificato dopo aver aderito al Sistema IT-Wallet, ovvero un sistema che impone rigidi requisiti di sicurezza.
+                                  Un ente risulta verificato dopo aver aderito al Sistema IT-⁠Wallet, ovvero un sistema che impone rigidi requisiti di sicurezza.
                                 </Text>
                               </View>
                             </View>
@@ -5195,6 +5206,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -5598,7 +5610,8 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -5846,7 +5859,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                               }
                             />
                             <Text>
-                              È richiesta la verifica di Patente di guida, che non è presente nel tuo Portafoglio IT-Wallet.
+                              È richiesta la verifica di Patente di guida, che non è presente nel tuo Portafoglio IT-⁠Wallet.
                             </Text>
                             <View
                               style={
@@ -6397,6 +6410,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -6445,7 +6459,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                 ]
                               }
                             >
-                              I seguenti documenti non sono presenti nel tuo Portafoglio IT-Wallet.
+                              I seguenti documenti non sono presenti nel tuo Portafoglio IT-⁠Wallet.
                             </Text>
                             <View
                               style={
@@ -6456,7 +6470,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                             />
                             <View
                               accessibilityLabel="Patente di guida"
-                              accessible={true}
+                              accessible={false}
+                              importantForAccessibility="yes"
+                              screenReaderFocusable={true}
                               style={
                                 {
                                   "marginHorizontal": -24,
@@ -7181,7 +7197,8 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -7946,6 +7963,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -7994,7 +8012,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                 ]
                               }
                             >
-                              I seguenti documenti non sono presenti nel tuo Portafoglio IT-Wallet.
+                              I seguenti documenti non sono presenti nel tuo Portafoglio IT-⁠Wallet.
                             </Text>
                             <View
                               style={
@@ -8005,7 +8023,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                             />
                             <View
                               accessibilityLabel="Patente di guida"
-                              accessible={true}
+                              accessible={false}
+                              importantForAccessibility="yes"
+                              screenReaderFocusable={true}
                               style={
                                 {
                                   "marginHorizontal": -24,
@@ -8079,7 +8099,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                             />
                             <View
                               accessibilityLabel="Carta Europea della Disabilità"
-                              accessible={true}
+                              accessible={false}
+                              importantForAccessibility="yes"
+                              screenReaderFocusable={true}
                               style={
                                 {
                                   "marginHorizontal": -24,
@@ -8804,7 +8826,8 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_G
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -9612,6 +9635,7 @@ Genera un nuovo QR Code e riprova.
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -9748,7 +9772,7 @@ Genera un nuovo QR Code e riprova.
                                     ]
                                   }
                                 >
-                                  Un ente risulta verificato dopo aver aderito al Sistema IT-Wallet, ovvero un sistema che impone rigidi requisiti di sicurezza.
+                                  Un ente risulta verificato dopo aver aderito al Sistema IT-⁠Wallet, ovvero un sistema che impone rigidi requisiti di sicurezza.
                                 </Text>
                               </View>
                             </View>
@@ -9765,6 +9789,7 @@ Genera un nuovo QR Code e riprova.
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -10168,7 +10193,8 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -10874,6 +10900,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -11010,7 +11037,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                                     ]
                                   }
                                 >
-                                  Un ente risulta verificato dopo aver aderito al Sistema IT-Wallet, ovvero un sistema che impone rigidi requisiti di sicurezza.
+                                  Un ente risulta verificato dopo aver aderito al Sistema IT-⁠Wallet, ovvero un sistema che impone rigidi requisiti di sicurezza.
                                 </Text>
                               </View>
                             </View>
@@ -11027,6 +11054,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -11699,7 +11727,8 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -12405,6 +12434,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -12541,7 +12571,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                                     ]
                                   }
                                 >
-                                  Un ente risulta verificato dopo aver aderito al Sistema IT-Wallet, ovvero un sistema che impone rigidi requisiti di sicurezza.
+                                  Un ente risulta verificato dopo aver aderito al Sistema IT-⁠Wallet, ovvero un sistema che impone rigidi requisiti di sicurezza.
                                 </Text>
                               </View>
                             </View>
@@ -12558,6 +12588,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -12961,7 +12992,8 @@ exports[`ItwRemoteFailureScreen should render failure screen for WALLET_INACTIVE
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -13190,7 +13222,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for WALLET_INACTIVE
                                 ]
                               }
                             >
-                              Attiva IT-Wallet per 
+                              Attiva IT-⁠Wallet per 
 continuare
                             </Text>
                             <View
@@ -13201,7 +13233,7 @@ continuare
                               }
                             />
                             <Text>
-                              Per accedere ai servizi online è necessario attivare IT-Wallet utilizzando la tua Carta di Identità Elettronica (CIE) e il PIN.
+                              Per accedere ai servizi online è necessario attivare IT-⁠Wallet utilizzando la tua Carta di Identità Elettronica (CIE) e il PIN.
                             </Text>
                             <View
                               style={
@@ -13219,7 +13251,7 @@ continuare
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Attiva IT-Wallet"
+                                  accessibilityLabel="Attiva IT-⁠Wallet"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -13428,7 +13460,7 @@ continuare
                                           ]
                                         }
                                       >
-                                        Attiva IT-Wallet
+                                        Attiva IT-⁠Wallet
                                       </Text>
                                     </View>
                                   </View>
@@ -13677,6 +13709,7 @@ continuare
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -13813,7 +13846,7 @@ continuare
                                     ]
                                   }
                                 >
-                                  Un ente risulta verificato dopo aver aderito al Sistema IT-Wallet, ovvero un sistema che impone rigidi requisiti di sicurezza.
+                                  Un ente risulta verificato dopo aver aderito al Sistema IT-⁠Wallet, ovvero un sistema che impone rigidi requisiti di sicurezza.
                                 </Text>
                               </View>
                             </View>
@@ -13830,6 +13863,7 @@ continuare
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",

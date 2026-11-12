@@ -1,5 +1,7 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { waitFor } from "@testing-library/react-native";
 import _ from "lodash";
+import { createStore } from "redux";
 import {
   assign,
   createActor,
@@ -9,7 +11,10 @@ import {
   waitFor as waitForActor
 } from "xstate";
 
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
 import { idps } from "../../../../../utils/idps";
+import * as itwIoWallet from "../../../common/utils/itwIoWallet";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import {
   CredentialAccessToken,
@@ -17,10 +22,12 @@ import {
   CredentialMetadata,
   WalletInstanceAttestations
 } from "../../../common/utils/itwTypesUtils";
+import { itwFetchCredentialsCatalogue } from "../../../credentialsCatalogue/store/actions";
 import { CieWarningType } from "../../../identification/cie/utils/types";
 import { ItwTags } from "../../tags";
 import { itwCredentialUpgradeMachine } from "../../upgrade/machine";
 import { testEidIssuanceDeps } from "../../utils/testDeps";
+import { refreshCredentialsCatalogueAction } from "../actions";
 import {
   CreateWalletInstanceActorParams,
   GetWalletAttestationActorParams,
@@ -46,6 +53,7 @@ import {
 import { IssuanceFailureType } from "../failure";
 import { EidIssuanceMachineDeps } from "../input";
 import { ItwEidIssuanceMachine, itwEidIssuanceMachine } from "../machine";
+import { selectCanGoBackToL3Identification } from "../selectors";
 
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
@@ -145,6 +153,7 @@ const waitForSessionRefresh = jest.fn();
 const issuedEidMatchesAuthenticatedUser = jest.fn();
 const isSessionExpired = jest.fn();
 const hasValidWalletInstanceAttestation = jest.fn();
+const hasWalletInstanceForSpecs = jest.fn();
 const revokeWalletInstance = jest.fn();
 const isWalletValid = jest.fn();
 
@@ -247,6 +256,7 @@ describe("itwEidIssuanceMachine", () => {
       issuedEidMatchesAuthenticatedUser,
       isSessionExpired,
       hasValidWalletInstanceAttestation,
+      hasWalletInstanceForSpecs,
       isWalletValid
     }
   });
@@ -255,6 +265,7 @@ describe("itwEidIssuanceMachine", () => {
     jest.clearAllMocks();
     jest.resetAllMocks();
     jest.useFakeTimers();
+    hasWalletInstanceForSpecs.mockReturnValue(true);
     obtainStatusList.mockResolvedValue(undefined);
     obtainEidStatusList.mockImplementation(({ input }) =>
       Promise.resolve(input.eid)
@@ -408,6 +419,12 @@ describe("itwEidIssuanceMachine", () => {
     await waitFor(() =>
       expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance")
     );
+    expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
+      mode: "issuance",
+      level: "l2-fallback",
+      itwVersion: "1.0.0",
+      l2FallbackOrigin: { credentialType: undefined }
+    });
 
     actor.send({ type: "accept-tos" });
 
@@ -1195,6 +1212,73 @@ describe("itwEidIssuanceMachine", () => {
     // is never called in this path (it only fires on entry when credentialType is set)
     expect(storeWalletActivationFeedbackBannerData).not.toHaveBeenCalled();
   });
+
+  test.each([
+    {
+      name: "credential-triggered issuance",
+      upgrade: false,
+      credentialType: "mDL"
+    },
+    { name: "credential upgrade", upgrade: true, credentialType: "mDL" },
+    { name: "standalone activation", upgrade: false, credentialType: undefined }
+  ])(
+    "refreshes the catalogue without blocking success after $name",
+    async ({ upgrade, credentialType }) => {
+      const store = createStore(appReducer);
+      store.dispatch(applicationChangeState("active"));
+      const deps = testEidIssuanceDeps({ store });
+      const machine = mockedMachine.provide({
+        actions: {
+          refreshCredentialsCatalogue: refreshCredentialsCatalogueAction
+        },
+        actors: {
+          credentialUpgradeMachine: itwCredentialUpgradeMachine.provide({
+            actors: {
+              loadContext: fromPromise(async () => ({
+                integrityKeyTag: T_INTEGRITY_KEY,
+                pid: T_EID_REQUEST_OUTPUT.credential,
+                walletInstanceAttestation: { jwt: T_WIA }
+              }))
+            },
+            guards: { hasMoreCredentials: () => false }
+          })
+        }
+      });
+      const actor = createActor(machine, {
+        input: { deps },
+        snapshot: machine.resolveState({
+          value: { Issuance: "DisplayingPreview" },
+          context: {
+            ...InitialContext,
+            deps,
+            mode: upgrade ? "upgrade" : "issuance",
+            level: "l2-fallback",
+            credentialType,
+            credentialsToUpgrade: upgrade
+              ? [ItwStoredCredentialsMocks.mdl]
+              : [],
+            eid: T_EID_REQUEST_OUTPUT.credential
+          }
+        })
+      });
+      const dispatch = jest.spyOn(store, "dispatch");
+      actor.start();
+      actor.send({ type: "add-to-wallet" });
+      await waitForActor(actor, snapshot => snapshot.matches("Success"));
+      expect(actor.getSnapshot().hasTag(ItwTags.Loading)).toBe(false);
+      expect(dispatch).toHaveBeenCalledTimes(1);
+      expect(dispatch).toHaveBeenCalledWith(
+        itwFetchCredentialsCatalogue.request()
+      );
+      expect(
+        pot.isLoading(
+          store.getState().features.itWallet.credentialsCatalogue.catalogue
+        )
+      ).toBe(true);
+      expect(navigateToSuccessScreen).toHaveBeenCalled();
+      actor.stop();
+    }
+  );
 
   it("Should store banner data on entering Success when EID activation was triggered by a credential request", async () => {
     storeEidCredentialActor.mockResolvedValue(undefined);
@@ -2104,6 +2188,130 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "back" });
 
     expect(actor.getSnapshot().value).toStrictEqual("IpzsPrivacyAcceptance");
+  });
+
+  describe("L2 fallback from L3 identification", () => {
+    const T_L3_CREDENTIAL_TYPE = "education_degree";
+    const T_L2_CREDENTIAL_TYPE = "mDL";
+
+    const createL3IdentificationActor = () => {
+      const initialSnapshot: MachineSnapshot = createActor(
+        itwEidIssuanceMachine,
+        { input: { deps: T_DEPS } }
+      ).getSnapshot();
+
+      const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+        value: { UserIdentification: "Identification" },
+        context: {
+          mode: "issuance",
+          level: "l3",
+          itwVersion: "1.4.6",
+          credentialType: T_L3_CREDENTIAL_TYPE
+        }
+      } as MachineSnapshot);
+
+      const actor = createActor(mockedMachine, {
+        snapshot,
+        input: { deps: T_DEPS }
+      });
+      actor.start();
+      return actor;
+    };
+
+    it("Should keep the L3 origin when restarting as L2 fallback from the L3 identification", () => {
+      const actor = createL3IdentificationActor();
+
+      actor.send({
+        type: "restart",
+        mode: "issuance",
+        level: "l2-fallback",
+        credentialType: T_L2_CREDENTIAL_TYPE
+      });
+
+      expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
+      expect(navigateToTosScreen).toHaveBeenCalledTimes(1);
+      expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
+        mode: "issuance",
+        level: "l2-fallback",
+        itwVersion: "1.0.0",
+        credentialType: T_L2_CREDENTIAL_TYPE,
+        l2FallbackOrigin: { credentialType: T_L3_CREDENTIAL_TYPE }
+      });
+      expect(selectCanGoBackToL3Identification(actor.getSnapshot())).toBe(true);
+    });
+
+    it("Should restore the L3 identification when closing the L2 fallback ToS reached from the L3 identification", () => {
+      const actor = createL3IdentificationActor();
+
+      actor.send({
+        type: "restart",
+        mode: "issuance",
+        level: "l2-fallback",
+        credentialType: T_L2_CREDENTIAL_TYPE
+      });
+      navigateToIdentificationScreen.mockClear();
+      actor.send({ type: "close" });
+
+      expect(actor.getSnapshot().value).toStrictEqual({
+        UserIdentification: "Identification"
+      });
+      expect(navigateToIdentificationScreen).toHaveBeenCalled();
+      expect(closeIssuance).not.toHaveBeenCalled();
+      expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
+        mode: "issuance",
+        level: "l3",
+        itwVersion: "1.4.6",
+        credentialType: T_L3_CREDENTIAL_TYPE,
+        l2FallbackOrigin: undefined
+      });
+    });
+
+    it("Should ignore the generic back event in the L2 fallback ToS", () => {
+      const actor = createL3IdentificationActor();
+
+      actor.send({ type: "restart", mode: "issuance", level: "l2-fallback" });
+      // Sent by the navigator when the L3 screens are removed from the stack
+      actor.send({ type: "back" });
+
+      expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
+      expect(actor.getSnapshot().context.level).toBe("l2-fallback");
+    });
+
+    it("Should not go back to the L3 identification once the L2 fallback ToS are accepted", () => {
+      verifyTrustFederation.mockImplementation(() => new Promise(_.noop));
+      const actor = createL3IdentificationActor();
+
+      actor.send({ type: "restart", mode: "issuance", level: "l2-fallback" });
+      actor.send({ type: "accept-tos" });
+
+      expect(actor.getSnapshot().context.l2FallbackOrigin).toBeUndefined();
+      expect(selectCanGoBackToL3Identification(actor.getSnapshot())).toBe(
+        false
+      );
+    });
+
+    it("Should not go back to the L3 identification when the L2 fallback started from scratch", () => {
+      const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
+      actor.start();
+
+      actor.send({ type: "start", mode: "issuance", level: "l2-fallback" });
+
+      expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
+      expect(selectCanGoBackToL3Identification(actor.getSnapshot())).toBe(
+        false
+      );
+    });
+
+    it("Should close the issuance when the L2 fallback ToS started from scratch are closed", () => {
+      const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
+      actor.start();
+
+      actor.send({ type: "start", mode: "issuance", level: "l2-fallback" });
+      actor.send({ type: "close" });
+
+      expect(actor.getSnapshot().value).toStrictEqual("Idle");
+      expect(closeIssuance).toHaveBeenCalledTimes(1);
+    });
   });
 
   it("should cleanup integrity key tag and fail when obtaining Wallet Instance Attestation fails", async () => {
@@ -3075,6 +3283,24 @@ describe("itwEidIssuanceMachine", () => {
     expect(createWalletInstance.mock.lastCall?.[0].input.isRenewal).toBe(true);
   });
 
+  it("Should re-create the Wallet Instance without an eID when it belongs to different specs", async () => {
+    onInit.mockImplementation(() => ({
+      integrityKeyTag: T_INTEGRITY_KEY,
+      walletInstanceAttestation: { jwt: T_WIA },
+      credentialsToUpgrade: {}
+    }));
+    hasWalletInstanceForSpecs.mockReturnValue(false);
+
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
+    actor.start();
+    actor.send({ type: "start", mode: "issuance", level: "l3" });
+    actor.send({ type: "accept-tos" });
+
+    await waitForActor(actor, s => s.matches("WalletInstanceCreation"));
+    expect(createWalletInstance).toHaveBeenCalledTimes(1);
+    expect(createWalletInstance.mock.lastCall?.[0].input.isRenewal).toBe(false);
+  });
+
   it("Should NOT re-create the Wallet Instance in the regular flow (no upgrade)", async () => {
     onInit.mockImplementation(() => ({
       integrityKeyTag: T_INTEGRITY_KEY,
@@ -3318,5 +3544,38 @@ describe("itwEidIssuanceMachine credential trigger", () => {
     });
 
     expect(actor.getSnapshot().context.credentialOfferUri).toBe(expected);
+  });
+
+  test.each([
+    {
+      name: "keeps the offer when the SDK supports credential offers",
+      isSupported: true,
+      expected: T_CREDENTIAL_OFFER_URI
+    },
+    {
+      name: "drops the offer when the SDK does not support credential offers",
+      isSupported: false,
+      expected: undefined
+    }
+  ])("$name", ({ isSupported, expected }) => {
+    const getIoWalletSpy = jest
+      .spyOn(itwIoWallet, "getIoWallet")
+      .mockReturnValue({ CredentialsOffer: { isSupported } } as never);
+
+    const actor = createActor(mockedMachine, { input: { deps: T_DEPS } });
+    actor.start();
+
+    actor.send({
+      type: "start",
+      mode: "issuance",
+      level: "l3",
+      credentialType: "MDL",
+      credentialOfferUri: T_CREDENTIAL_OFFER_URI
+    });
+
+    expect(getIoWalletSpy).toHaveBeenCalledWith("1.4.6");
+    expect(actor.getSnapshot().context.credentialOfferUri).toBe(expected);
+
+    getIoWalletSpy.mockRestore();
   });
 });

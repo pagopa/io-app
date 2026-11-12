@@ -1,8 +1,9 @@
-import { ListItemHeader, VStack } from "@io-app/design-system";
+import { ListItemHeader } from "@io-app/design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
+import { shallowEqual } from "react-redux";
 
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -21,17 +22,21 @@ import { ItwL2EngagementBanner } from "../../common/components/ItwL2EngagementBa
 import { ItwWalletReadyBanner } from "../../common/components/ItwWalletReadyBanner";
 import { useItwStatusIconColor } from "../../common/hooks/useItwStatusIconColor.ts";
 import {
-  itwShouldHideEidLifecycleAlert,
   itwShouldRenderL2EngagementBannerSelector,
-  itwShouldRenderNewItWalletSelector,
-  itwShouldRenderUpgradeBannerSelector
+  itwShouldRenderNewItWalletSelector
 } from "../../common/store/selectors";
-import { ItwJwtCredentialStatus } from "../../common/utils/itwTypesUtils.ts";
+import {
+  itwShouldHideEidLifecycleAlert,
+  itwShouldRenderNonDismissibleUpgradeBannerSelector,
+  itwShouldRenderUpgradeBannerSelector
+} from "../../common/store/selectors/upgrade";
+import { ItwEidStatus } from "../../common/utils/itwTypesUtils.ts";
 import {
   itwCredentialsEidExpirationSelector,
   itwCredentialsEidStatusSelector
 } from "../../credentials/store/selectors";
 import { ItwDiscoveryBanner } from "../../discovery/components/ItwDiscoveryBanner.tsx";
+import { ItwNonDismissibleUpgradeBanner } from "../../discovery/components/ItwNonDismissibleUpgradeBanner.tsx";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { useItwGuidedTour } from "../../tour/hooks/useItwGuidedTour.ts";
 import {
@@ -40,9 +45,10 @@ import {
 } from "../../tour/utils/constants.ts";
 import { ItwWalletIdCard } from "./ItwWalletIdCard.tsx";
 
-const LIFECYCLE_STATUS: Array<ItwJwtCredentialStatus> = [
+const LIFECYCLE_STATUS: Array<ItwEidStatus> = [
   "jwtExpiring",
-  "jwtExpired"
+  "jwtExpired",
+  "invalid"
 ];
 
 export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
@@ -53,14 +59,20 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const shouldRenderUpgradeBanner = useIOSelector(
     itwShouldRenderUpgradeBannerSelector
   );
+  const shouldRenderNonDismissibleUpgradeBanner = useIOSelector(
+    itwShouldRenderNonDismissibleUpgradeBannerSelector
+  );
   const shouldRenderL2EngagementBanner = useIOSelector(
     itwShouldRenderL2EngagementBannerSelector
   );
   const isItWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
-  const cards = useIOSelector(state =>
-    selectWalletCardsByCategory(state, "itw")
+  // Cards of other categories rebuild this array even when ITW cards are unchanged
+  const cards = useIOSelector(
+    state => selectWalletCardsByCategory(state, "itw"),
+    shallowEqual
   );
+  const hasCards = cards.length > 0;
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
   const eidExpiration = useIOSelector(itwCredentialsEidExpirationSelector);
   const isEidExpired = eidStatus === "jwtExpired";
@@ -95,6 +107,21 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   );
 
   const sectionHeader = useMemo((): React.ReactElement => {
+    if (isNewItwRenderable) {
+      return (
+        <>
+          <ListItemHeader
+            label={I18n.t("features.wallet.cards.categories.itw")}
+            testID={"walletCardsCategoryItwIdCardHeaderTestID"}
+          />
+          {/* IT-Wallet renders the PID card below the header */}
+          <View style={styles.cardsWrapper}>
+            <ItwWalletIdCard isStacked={hasCards} />
+          </View>
+        </>
+      );
+    }
+
     const eidInfoProps = !isItWalletValid
       ? {
           endElement: {
@@ -115,20 +142,6 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
         }
       : {};
 
-    if (isNewItwRenderable) {
-      return (
-        <>
-          <ListItemHeader
-            label={I18n.t("features.wallet.cards.categories.itw")}
-            testID={"walletCardsCategoryItwIdCardHeaderTestID"}
-          />
-          {/* IT-Wallet renders the PID card below the header */}
-          <View style={styles.cardsWrapper}>
-            <ItwWalletIdCard isStacked={cards.length > 0} />
-          </View>
-        </>
-      );
-    }
     return (
       <ListItemHeader
         {...eidInfoProps}
@@ -137,33 +150,48 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
       />
     );
   }, [
-    cards,
+    hasCards,
     eidInfoBottomSheet.present,
     iconColor,
     isItWalletValid,
     isNewItwRenderable
   ]);
 
-  return (
-    <View>
-      <VStack space={16}>
-        {!shouldHideEidAlert && (
-          <ItwEidLifecycleAlert
-            currentScreenName={currentScreenName}
-            lifecycleStatus={LIFECYCLE_STATUS}
-            navigation={navigation}
-          />
-        )}
-      </VStack>
+  const eidLifecycleAlert = shouldHideEidAlert ? null : (
+    <ItwEidLifecycleAlert
+      currentScreenName={currentScreenName}
+      lifecycleStatus={LIFECYCLE_STATUS}
+      navigation={navigation}
+    />
+  );
 
-      {sectionHeader}
+  return (
+    // Not flattened on Android: TalkBack would otherwise sort the section
+    // children together with the rest of the wallet, announcing the header
+    // after the cards
+    <View collapsable={false} testID="itwWalletCardsSectionTestID">
+      {/* With IT-Wallet the lifecycle alert must be displayed above the header. */}
+      {isNewItwRenderable ? (
+        <>
+          {eidLifecycleAlert}
+          {sectionHeader}
+        </>
+      ) : (
+        <>
+          {sectionHeader}
+          {eidLifecycleAlert}
+        </>
+      )}
 
       <View style={[styles.cardsWrapper, { gap: 16 }]}>
         {shouldRenderUpgradeBanner && (
-          <ItwDiscoveryBanner flow="wallet" style={{ marginHorizontal: 8 }} />
+          <ItwDiscoveryBanner flow="wallet" style={styles.bannerWrapper} />
+        )}
+        {shouldRenderNonDismissibleUpgradeBanner && (
+          <ItwNonDismissibleUpgradeBanner style={styles.bannerWrapper} />
         )}
 
-        {cards.length > 0 && (
+        {hasCards && (
           <GuidedTour
             description={I18n.t(
               "features.itWallet.tour.credentials.description"
@@ -193,7 +221,7 @@ const styles = StyleSheet.create({
   cardsWrapper: {
     marginHorizontal: -8
   },
-  bannersWrapper: {
+  bannerWrapper: {
     marginHorizontal: 8
   }
 });

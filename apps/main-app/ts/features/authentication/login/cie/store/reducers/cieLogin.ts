@@ -13,21 +13,21 @@ import { Action } from "../../../../../../store/actions/types";
 import { isDevEnv } from "../../../../../../utils/environment";
 import { consolidateActiveSessionLoginData } from "../../../../activeSessionLogin/store/actions";
 import { AuthLevel } from "../../../../common/utils";
+import { CIE_ENVS, CieEnv } from "../../utils";
 import {
   cieIDDisableTourGuide,
   cieIDSetSelectedSecurityLevel,
-  cieLoginDisableUat,
-  cieLoginEnableUat
+  setCieEnv
 } from "../actions";
 
 export type CieLoginState = {
+  cieEnv: CieEnv;
   cieIDSelectedSecurityLevel?: AuthLevel;
   isCieIDTourGuideEnabled: boolean;
-  useUat: boolean;
 };
 
-export const cieLoginInitialState = {
-  useUat: false,
+export const cieLoginInitialState: CieLoginState = {
+  cieEnv: CIE_ENVS.PROD,
   isCieIDTourGuideEnabled: true
 };
 
@@ -46,20 +46,15 @@ const cieLoginReducer = (
         ...state,
         cieIDSelectedSecurityLevel: action.payload
       };
-    case getType(cieLoginDisableUat):
-      return {
-        ...state,
-        useUat: false
-      };
-    case getType(cieLoginEnableUat):
-      return {
-        ...state,
-        useUat: true
-      };
     case getType(consolidateActiveSessionLoginData):
       return {
         ...state,
         cieIDSelectedSecurityLevel: action.payload.cieIDSelectedSecurityLevel
+      };
+    case getType(setCieEnv):
+      return {
+        ...state,
+        cieEnv: action.payload
       };
     default:
       return state;

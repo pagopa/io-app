@@ -8,18 +8,18 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
 import {
+  itwAreAllCredentialsExpiredSelector,
   itwCredentialsEidSelector,
   itwCredentialsEidStatusSelector
 } from "../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { useItwEidInvalidBottomSheet } from "../hooks/useItwEidInvalidBottomSheet";
 import { useItwEidLifecycleAlertTracking } from "../hooks/useItwEidLifecycleAlertTracking";
-import {
-  CredentialMetadata,
-  ItwJwtCredentialStatus
-} from "../utils/itwTypesUtils";
+import { itwIsL3UpgradeOfferedSelector } from "../store/selectors/upgrade";
+import { CredentialMetadata, ItwEidStatus } from "../utils/itwTypesUtils";
 
-const defaultLifecycleStatus: Array<ItwJwtCredentialStatus> = [
+const defaultLifecycleStatus: Array<ItwEidStatus> = [
   "valid",
   "jwtExpiring",
   "jwtExpired"
@@ -32,7 +32,7 @@ type Props = {
    */
   currentScreenName?: string;
   /** The eID statuses that will render the alert. */
-  lifecycleStatus?: Array<ItwJwtCredentialStatus>;
+  lifecycleStatus?: Array<ItwEidStatus>;
   navigation: ReturnType<typeof useIONavigation>;
   skipViewTracking?: boolean;
 };
@@ -47,7 +47,11 @@ export const ItwEidLifecycleAlert = ({
   const eid = useIOSelector(itwCredentialsEidSelector);
   const isItw = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const maybeEidStatus = useIOSelector(itwCredentialsEidStatusSelector);
+  const areAllCredentialsExpired = useIOSelector(
+    itwAreAllCredentialsExpiredSelector
+  );
   const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
+  const isUpgradeAvailable = useIOSelector(itwIsL3UpgradeOfferedSelector);
   const isOffline = offlineAccessReason !== undefined;
 
   const { trackAlertTap } = useItwEidLifecycleAlertTracking({
@@ -59,8 +63,7 @@ export const ItwEidLifecycleAlert = ({
     isOffline
   });
 
-  const startEidReissuing = () => {
-    trackAlertTap();
+  const navigateToEidReissuing = () =>
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
       params: {
@@ -68,7 +71,22 @@ export const ItwEidLifecycleAlert = ({
         level: isItw ? "l3" : "l2"
       }
     });
+
+  const navigateToItwDiscoveryScreen = () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.DISCOVERY.INFO,
+      params: { level: "l3" }
+    });
   };
+
+  const startEidReissuing = () => {
+    trackAlertTap();
+    navigateToEidReissuing();
+  };
+
+  const eidInvalidBottomSheet = useItwEidInvalidBottomSheet(
+    navigateToEidReissuing
+  );
 
   const Content = ({
     eid,
@@ -76,12 +94,12 @@ export const ItwEidLifecycleAlert = ({
     isItwCredential
   }: {
     eid: CredentialMetadata;
-    eidStatus: ItwJwtCredentialStatus;
+    eidStatus: ItwEidStatus;
     isItwCredential: boolean;
   }) => {
     const alertProps = useMemo<ComponentProps<typeof Alert>>(() => {
       const eIDAlertPropsMap: Record<
-        ItwJwtCredentialStatus,
+        ItwEidStatus,
         ComponentProps<typeof Alert>
       > = {
         valid: {
@@ -119,17 +137,49 @@ export const ItwEidLifecycleAlert = ({
           testID: "itwEidLifecycleAlertTestID_jwtExpired",
           variant: "error",
           content: I18n.t(
-            isItwCredential
-              ? "features.itWallet.presentation.bottomSheets.eidInfo.alert.itw.expired"
-              : "features.itWallet.presentation.bottomSheets.eidInfo.alert.documents.expired"
+            isUpgradeAvailable
+              ? "features.itWallet.presentation.bottomSheets.eidInfo.alert.documents.expiredUpgrade"
+              : isItwCredential
+                ? "features.itWallet.presentation.bottomSheets.eidInfo.alert.itw.expired"
+                : "features.itWallet.presentation.bottomSheets.eidInfo.alert.documents.expired"
           ),
           action: I18n.t(
             isItwCredential
               ? "features.itWallet.presentation.bottomSheets.eidInfo.alert.itw.action"
               : "features.itWallet.presentation.bottomSheets.eidInfo.alert.documents.action"
           ),
-          onPress: startEidReissuing
-        }
+          onPress: isUpgradeAvailable
+            ? navigateToItwDiscoveryScreen
+            : startEidReissuing
+        },
+        invalid: areAllCredentialsExpired
+          ? {
+              testID: "itwEidLifecycleAlertTestID_invalid",
+              variant: "error",
+              content: I18n.t(
+                "features.itWallet.presentation.bottomSheets.eidInvalid.alert.allExpired.content"
+              ),
+              action: I18n.t(
+                "features.itWallet.presentation.bottomSheets.eidInvalid.alert.allExpired.action"
+              ),
+              onPress: startEidReissuing
+            }
+          : {
+              testID: "itwEidLifecycleAlertTestID_invalid",
+              variant: "error",
+              content: I18n.t(
+                "features.itWallet.presentation.bottomSheets.eidInvalid.alert.content"
+              ),
+              action: I18n.t(
+                currentScreenName === ITW_ROUTES.PRESENTATION.PID_DETAIL
+                  ? "features.itWallet.presentation.bottomSheets.eidInvalid.alert.action.detail"
+                  : "features.itWallet.presentation.bottomSheets.eidInvalid.alert.action.wallet"
+              ),
+              onPress: () => {
+                trackAlertTap();
+                eidInvalidBottomSheet.present();
+              }
+            }
       };
 
       if (offlineAccessReason !== undefined && !isItwCredential) {
@@ -147,7 +197,11 @@ export const ItwEidLifecycleAlert = ({
       return baseProps;
     }, [eidStatus, eid.jwt.issuedAt, eid.jwt.expiration, isItwCredential]);
 
-    if (!lifecycleStatus.includes(eidStatus)) {
+    if (
+      !lifecycleStatus.includes(eidStatus) ||
+      // The invalid status copy refers to IT-Wallet ID only
+      (eidStatus === "invalid" && !isItwCredential)
+    ) {
       return null;
     }
 
@@ -163,6 +217,9 @@ export const ItwEidLifecycleAlert = ({
   }
 
   return (
-    <Content eid={eid} eidStatus={maybeEidStatus} isItwCredential={isItw} />
+    <>
+      <Content eid={eid} eidStatus={maybeEidStatus} isItwCredential={isItw} />
+      {maybeEidStatus === "invalid" && eidInvalidBottomSheet.bottomSheet}
+    </>
   );
 };

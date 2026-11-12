@@ -4,7 +4,7 @@ import {
   Body,
   ContentWrapper,
   H6,
-  IOColors,
+  IOColorsLegacy,
   ListItemNav
 } from "@io-app/design-system";
 import I18n from "i18next";
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     flexShrink: 1
   },
   highlightYes: {
-    backgroundColor: IOColors["turquoise-150"]
+    backgroundColor: IOColorsLegacy["turquoise-150"]
   }
 });
 
@@ -39,16 +39,7 @@ export function MerchantSearchResultListItem({
     <ContentWrapper>
       <ListItemNav
         accessibilityLabel={item.name}
-        onPress={() => {
-          navigation.navigate(CGN_ROUTES.DETAILS.MAIN, {
-            screen: CGN_ROUTES.DETAILS.MERCHANTS.DETAIL,
-            params: {
-              merchantID: item.id
-            }
-          });
-          Keyboard.dismiss();
-        }}
-        value={
+        label={
           <View
             style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
@@ -80,6 +71,15 @@ export function MerchantSearchResultListItem({
             )}
           </View>
         }
+        onPress={() => {
+          navigation.navigate(CGN_ROUTES.DETAILS.MAIN, {
+            screen: CGN_ROUTES.DETAILS.MERCHANTS.DETAIL,
+            params: {
+              merchantID: item.id
+            }
+          });
+          Keyboard.dismiss();
+        }}
       />
     </ContentWrapper>
   );

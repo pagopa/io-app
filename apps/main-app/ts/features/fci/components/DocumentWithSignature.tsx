@@ -6,9 +6,9 @@ import {
   H5,
   HSpacer,
   IconButton,
-  IOColors,
-  IOSpacing,
-  IOSpacingScale,
+  IOColorsLegacy,
+  IODimensions,
+  IODimensionScale,
   useFooterActionsMeasurements,
   useIOTheme,
   VSpacer
@@ -47,7 +47,7 @@ type Props = WithTestID<{
 const styles = StyleSheet.create({
   pdf: {
     flex: 1,
-    backgroundColor: IOColors["grey-700"]
+    backgroundColor: IOColorsLegacy["grey-700"]
   },
   headerTitle: {
     flex: 1,
@@ -65,7 +65,7 @@ const DocumentWithSignature = (props: Props) => {
   const dispatch = useIODispatch();
   const onContinuePress = () => props.onClose();
 
-  const extraFooterActionsMargin: IOSpacingScale = 16;
+  const extraFooterActionsMargin: IODimensionScale = 16;
 
   const theme = useIOTheme();
 
@@ -207,7 +207,7 @@ const DocumentWithSignature = (props: Props) => {
       edges={["top", "left", "right"]}
       style={{
         flex: 1,
-        backgroundColor: IOColors[theme["appBackground-primary"]]
+        backgroundColor: IOColorsLegacy[theme["appBackground-primary"]]
       }}
       testID={"FciDocumentsScreenTestID"}
     >
@@ -245,7 +245,7 @@ const DocumentWithSignature = (props: Props) => {
           flex: 1,
           marginBottom:
             footerActionsMeasurements.safeBottomAreaHeight -
-            IOSpacing.screenEndMargin +
+            IODimensions.padding.screen.end +
             extraFooterActionsMargin
         }}
       >

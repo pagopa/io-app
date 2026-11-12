@@ -11,9 +11,8 @@ placeholder — can read the same attributes.
 import { TextProps, TextStyle } from "react-native";
 
 import { IOFontFamily, IOFontSize, IOFontWeight } from "../utils/fonts";
-import { IOColors, IOTheme } from "./IOColors";
 
-export type IOTypographicStyle = IOTypographicAttributes & IOTypographicColor;
+export type IOTypographicStyle = IOTypographicAttributes;
 
 /**
  * Visual attributes of a typographic style. The keys mirror the `IOText` props,
@@ -42,55 +41,37 @@ type IOTypographicAttributes = {
   weight: IOFontWeight;
 };
 
-/**
- * Chromatic default of a style, applied when no `color` prop is set. It's a
- * theme token for every style but `ButtonText`, which pins a static value.
- */
-type IOTypographicColor =
-  | { color: IOColors; colorToken?: never }
-  | { color?: never; colorToken: keyof IOTheme };
-
-/* Default color for any text rendered as a link, whatever its style */
-export const IOTypographicLinkColorToken: keyof IOTheme =
-  "interactiveElem-default";
-
 export const IOTypography = {
   hero: {
-    colorToken: "textHeading-default",
     lineHeight: 48,
     size: 32,
     weight: "Semibold"
   },
   h1: {
-    colorToken: "textHeading-default",
     dynamicTypeRamp: "largeTitle",
     lineHeight: 42,
     size: 28,
     weight: "Semibold"
   },
   h2: {
-    colorToken: "textHeading-default",
     dynamicTypeRamp: "title1",
     lineHeight: 34,
     size: 26,
     weight: "Semibold"
   },
   h3: {
-    colorToken: "textHeading-default",
     dynamicTypeRamp: "title2",
     lineHeight: 33,
     size: 22,
     weight: "Semibold"
   },
   h4: {
-    colorToken: "textHeading-default",
     dynamicTypeRamp: "title3",
     lineHeight: 24,
     size: 20,
     weight: "Semibold"
   },
   h5: {
-    colorToken: "textHeading-default",
     dynamicTypeRamp: "subheadline",
     lineHeight: 16,
     size: 14,
@@ -98,7 +79,6 @@ export const IOTypography = {
     weight: "Semibold"
   },
   h6: {
-    colorToken: "textHeading-default",
     dynamicTypeRamp: "headline",
     legacySize: 17,
     lineHeight: 24,
@@ -106,21 +86,18 @@ export const IOTypography = {
     weight: "Semibold"
   },
   body: {
-    colorToken: "textBody-tertiary",
     dynamicTypeRamp: "body",
     lineHeight: 24,
     size: 16,
     weight: "Regular"
   },
   bodySmall: {
-    colorToken: "textBody-tertiary",
     dynamicTypeRamp: "footnote",
     lineHeight: 21,
     size: 14,
     weight: "Regular"
   },
   bodyMonospace: {
-    colorToken: "textBody-tertiary",
     dynamicTypeRamp: "body",
     font: "FiraCode",
     lineHeight: 24,
@@ -129,41 +106,33 @@ export const IOTypography = {
     weight: "Medium"
   },
   labelMini: {
-    colorToken: "textBody-tertiary",
     dynamicTypeRamp: "footnote",
     lineHeight: 18,
     size: 12,
     weight: "Semibold"
   },
   caption: {
-    colorToken: "textBody-default",
     dynamicTypeRamp: "caption1",
     size: 12,
     textStyle: { letterSpacing: 0.5, textTransform: "uppercase" },
     weight: "Regular"
   },
   buttonText: {
-    /* Static value, and not a theme token: `IOButton` and `SearchInput`
-       animate this color through Reanimated, which needs a `ColorValue` */
-    color: "white",
     lineHeight: 20,
     size: 16,
     weight: "Semibold"
   },
   mdH1: {
-    colorToken: "textHeading-default",
     lineHeight: 24,
     size: 20,
     weight: "Semibold"
   },
   mdH2: {
-    colorToken: "textHeading-default",
     lineHeight: 24,
     size: 18,
     weight: "Semibold"
   },
   mdH3: {
-    colorToken: "textHeading-default",
     lineHeight: 24,
     size: 16,
     weight: "Semibold"

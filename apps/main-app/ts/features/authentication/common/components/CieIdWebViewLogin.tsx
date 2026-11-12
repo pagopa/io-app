@@ -1,17 +1,21 @@
 import { memo, useCallback, useState } from "react";
 import { StyleSheet } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import WebView, { type WebViewNavigation } from "react-native-webview";
 import {
   WebViewErrorEvent,
   WebViewHttpErrorEvent
 } from "react-native-webview/lib/WebViewTypes";
 
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { useIOStore } from "../../../../store/hooks";
 import { useOneIdentityLoginSource } from "../../../lollipop/hooks/useOneIdentityLoginSource";
 import { trackLoginOIConfigurationError } from "../../common/analytics";
 import { LoadingOverlay } from "../../login/cie/shared/LoadingSpinnerOverlay";
-import { getCieIdpId, isAuthenticationUrl } from "../../login/cie/utils";
+import {
+  CieEnv,
+  getCieIdpId,
+  isAuthenticationUrl
+} from "../../login/cie/utils";
 import { useCieIdApp } from "../hooks/useCieIdApp";
 import { oneIdentityAllowedCieOriginsSelector } from "../store/selectors/remoteConfig";
 import {
@@ -58,16 +62,16 @@ export type CieIdWebViewLoginEvent =
   | { type: "CANCEL" };
 
 export type CieIdWebViewLoginProps = {
+  /** The CIE environment to authenticate against. */
+  cieEnv: CieEnv;
   /** The login flow this WebView is part of; defaults to a first-time login. */
   flow?: LoginType;
-  /** Indicates whether the environment is UAT. */
-  isUat: boolean;
   /** Callback invoked for various authentication-related events. */
   onEvent: (event: CieIdWebViewLoginEvent) => void;
 };
 
 export const CieIdWebViewLogin = memo(
-  ({ flow = LOGIN_TYPES.AUTH, isUat, onEvent }: CieIdWebViewLoginProps) => {
+  ({ flow = LOGIN_TYPES.AUTH, cieEnv, onEvent }: CieIdWebViewLoginProps) => {
     const [authenticatedUrl, setAuthenticatedUrl] = useState<null | string>(
       null
     );
@@ -108,7 +112,7 @@ export const CieIdWebViewLogin = memo(
     const { startCieIdApp } = useCieIdApp({
       onFailure: handleLoginFailure,
       onSuccess: handleAuthenticationSuccess,
-      useUat: isUat
+      cieEnv
     });
 
     const handleFailure = useCallback(
@@ -124,7 +128,7 @@ export const CieIdWebViewLogin = memo(
     const { loginSourceState, shouldBlockUrlNavigationWhileCheckingLollipop } =
       useOneIdentityLoginSource({
         flow,
-        idpId: getCieIdpId(isUat),
+        idpId: getCieIdpId(cieEnv),
         onFailure: handleFailure,
         minAuthLevel: AUTH_LEVELS.L2
       });
@@ -196,44 +200,50 @@ export const CieIdWebViewLogin = memo(
       onEvent({ type: "CANCEL" });
     }, [onEvent]);
 
-    if (
-      loginSourceState.status === "reserving-public-key" ||
-      loginSourceState.status === "verifying-assertion-ref" ||
-      loginSourceState.status === "following-redirects"
-    ) {
-      return <LoadingOverlay onCancel={handleCancel} />;
-    }
-
     if (loginSourceState.status === "failure") {
       return null;
     }
 
-    const webviewSource = authenticatedUrl
-      ? { uri: authenticatedUrl }
-      : loginSourceState.webviewSource;
+    // The overlay covers the waits before the WebView has a source. The
+    // assertion-ref check is local and takes a few milliseconds, so the overlay
+    // stays off meanwhile to avoid a flash, and the WebView stays mounted: a new
+    // incognito instance would lose the OneIdentity session cookie.
+    const isLoading =
+      loginSourceState.status === "reserving-public-key" ||
+      loginSourceState.status === "following-redirects";
+
+    const webviewSource = isLoading
+      ? undefined
+      : authenticatedUrl
+        ? { uri: authenticatedUrl }
+        : loginSourceState.webviewSource;
 
     return (
-      <SafeAreaView edges={["bottom"]} style={styles.container}>
-        <WebView
-          onError={handleError}
-          onHttpError={handleError}
-          onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
-          originWhitelist={originSchemasWhiteList}
-          renderLoading={() => <LoadingOverlay onCancel={handleCancel} />}
-          source={webviewSource}
-          startInLoadingState={true}
-          testID="cie-id-webview"
-          userAgent={defaultUserAgent}
-        />
-      </SafeAreaView>
+      <LoadingSpinnerOverlay isLoading={isLoading} onCancel={handleCancel}>
+        {webviewSource && (
+          <WebView
+            androidCameraAccessDisabled
+            androidMicrophoneAccessDisabled
+            incognito
+            onError={handleError}
+            onHttpError={handleError}
+            onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
+            originWhitelist={originSchemasWhiteList}
+            renderLoading={() => <LoadingOverlay onCancel={handleCancel} />}
+            source={webviewSource}
+            startInLoadingState={true}
+            style={styles.container}
+            testID="cie-id-webview"
+            userAgent={defaultUserAgent}
+          />
+        )}
+      </LoadingSpinnerOverlay>
     );
   }
 );
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
-    marginHorizontal: 16
+    flex: 1
   }
 });

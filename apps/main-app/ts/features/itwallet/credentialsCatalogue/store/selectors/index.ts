@@ -5,8 +5,10 @@ import { createSelector } from "reselect";
 import { Locales } from "../../../../../i18n";
 import { persistedPreferencesSelector } from "../../../../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { itwIsDiscoverMoreCEDLocallyEnabledSelector } from "../../../common/store/selectors/preferences";
 import {
   itwHiddenCredentialsSelector,
+  itwIsDiscoverMoreCEDRemotelyEnabledSelector,
   itwNewCredentialsSelector,
   itwPinnedCredentialsSelector
 } from "../../../common/store/selectors/remoteConfig";
@@ -106,8 +108,23 @@ export const itwCredentialsCatalogueByTypesSelector = createSelector(
 export const itwIsCredentialsCatalogueLoading = (state: GlobalState) =>
   pot.isLoading(state.features.itWallet.credentialsCatalogue.catalogue);
 
+/** Whether catalogue data or its locale bundles are still being fetched. */
+export const itwIsCredentialsCataloguePending = (state: GlobalState) => {
+  const { catalogue, translations } =
+    state.features.itWallet.credentialsCatalogue;
+  return pot.isLoading(catalogue) || pot.isLoading(translations);
+};
+
 export const itwIsCredentialsCatalogueUnavailable = (state: GlobalState) =>
   pot.isNone(state.features.itWallet.credentialsCatalogue.catalogue);
+
+/**
+ * Return whether to show or not the CTA in the CED detail page to discover more
+ * CED opportunities
+ */
+export const itwDiscoverMoreCEDSelector = (state: GlobalState) =>
+  itwIsDiscoverMoreCEDLocallyEnabledSelector(state) ||
+  itwIsDiscoverMoreCEDRemotelyEnabledSelector(state);
 
 /**
  * Select the raw catalogue translations pot (all locales). Only populated for

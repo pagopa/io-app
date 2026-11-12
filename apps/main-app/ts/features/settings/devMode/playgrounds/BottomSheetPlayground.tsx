@@ -3,7 +3,7 @@ import {
   FooterActions,
   H4,
   IOButton,
-  IOColors,
+  IOColorsLegacy,
   useFooterActionsMeasurements,
   useIOTheme,
   VStack
@@ -66,7 +66,7 @@ export const BottomSheetPlayground = () => {
       style={[
         StyleSheet.absoluteFill,
         styles.surface,
-        { backgroundColor: IOColors[theme["appBackground-primary"]] }
+        { backgroundColor: IOColorsLegacy[theme["appBackground-primary"]] }
       ]}
     />
   );

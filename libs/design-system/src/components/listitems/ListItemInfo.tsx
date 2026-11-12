@@ -2,8 +2,8 @@ import { ComponentProps, ReactNode } from "react";
 import { AccessibilityRole, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { useIOTheme } from "../../context";
-import { IOListItemStyles, IOListItemVisualParams } from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions } from "../../core";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
@@ -14,6 +14,7 @@ import { Icon, IOIcons, IOIconSizeScale } from "../icons";
 import { VSpacer } from "../layout";
 import { IOLogoPaymentType } from "../logos";
 import { BodySmall, H6 } from "../typography";
+import { IOListItemStyles } from "./styles";
 
 export type ListItemInfo = GraphicProps &
   InteractiveProps &
@@ -110,7 +111,7 @@ const ListItemInfoContent = ({
   hasInteractiveElements: boolean;
   listItemAccessibilityLabel?: string;
 }) => {
-  const theme = useIOTheme();
+  const listItemColors = useIOColors().component.listItem;
   const { hugeFontEnabled } = useIOFontDynamicScale();
 
   return (
@@ -118,9 +119,9 @@ const ListItemInfoContent = ({
       {icon && !hugeFontEnabled && (
         <Icon
           allowFontScaling
-          color={theme["icon-decorative"]}
+          color={listItemColors.foreground.icon}
           name={icon}
-          size={IOListItemVisualParams.iconSize}
+          size={IODimensions.size.icon.listItem}
         />
       )}
 
@@ -136,27 +137,34 @@ const ListItemInfoContent = ({
           accessibilityLabel={
             hasInteractiveElements ? listItemAccessibilityLabel : undefined
           }
-          accessible={hasInteractiveElements}
+          accessible={false}
           importantForAccessibility={
             hasInteractiveElements ? "yes" : "no-hide-descendants"
           }
+          screenReaderFocusable={hasInteractiveElements ? true : undefined}
           style={{ flexDirection: reversed ? "column-reverse" : "column" }}
         >
           {topElement?.type === "badge" && (
             <View style={{ alignSelf: "flex-start" }}>
               <Badge {...topElement.componentProps} />
-              <VSpacer size={4} />
+              <VSpacer size={IODimensions.gap.listItem.default.topElement} />
             </View>
           )}
 
           {label && (
-            <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
+            <BodySmall
+              color={listItemColors.foreground.description}
+              weight="Regular"
+            >
               {label}
             </BodySmall>
           )}
 
           {typeof value === "string" ? (
-            <H6 color={theme["textBody-default"]} numberOfLines={numberOfLines}>
+            <H6
+              color={listItemColors.foreground.label}
+              numberOfLines={numberOfLines}
+            >
               {value}
             </H6>
           ) : (
@@ -303,7 +311,7 @@ export const ListItemInfo = ({
               IOListItemStyles.listItemInner,
               {
                 columnGap:
-                  IOListItemVisualParams.iconMargin *
+                  IODimensions.gap.listItem.default.leading *
                   dynamicFontScale *
                   spacingScaleMultiplier
               },
@@ -323,7 +331,9 @@ export const ListItemInfo = ({
         hasInteractiveElements ? undefined : listItemAccessibilityLabel
       }
       accessibilityRole={hasInteractiveElements ? undefined : accessibilityRole}
-      accessible={!hasInteractiveElements}
+      accessible={false}
+      importantForAccessibility={hasInteractiveElements ? undefined : "yes"}
+      screenReaderFocusable={hasInteractiveElements ? undefined : true}
       style={IOListItemStyles.listItem}
       testID={testID}
     >
@@ -332,7 +342,7 @@ export const ListItemInfo = ({
           IOListItemStyles.listItemInner,
           {
             columnGap:
-              IOListItemVisualParams.iconMargin *
+              IODimensions.gap.listItem.default.leading *
               dynamicFontScale *
               spacingScaleMultiplier
           }

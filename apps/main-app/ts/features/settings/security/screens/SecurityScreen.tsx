@@ -157,9 +157,9 @@ const SecurityScreen = (): ReactElement => {
         {/* Ask for verification and reset unlock code */}
         <ListItemNav
           description={I18n.t("identification.unlockCode.reset.subtitle")}
+          label={I18n.t("identification.unlockCode.reset.button_short")}
           onPress={requestIdentificationAndResetPin}
           testID="reset-unlock-code"
-          value={I18n.t("identification.unlockCode.reset.button_short")}
         />
         {isIdPayCieCodeEnabled && (
           /* Reset IDPay code */
@@ -168,9 +168,9 @@ const SecurityScreen = (): ReactElement => {
             <ListItemNav
               accessibilityLabel={I18n.t("idpay.code.reset.title")}
               description={I18n.t("idpay.code.reset.body")}
+              label={I18n.t("idpay.code.reset.title")}
               onPress={idPayCodeHandler}
               testID="reset-idpay-code"
-              value={I18n.t("idpay.code.reset.title")}
             />
           </>
         )}
@@ -197,9 +197,9 @@ const SecurityScreen = (): ReactElement => {
             <Divider />
             <ListItemNav
               description={I18n.t("FIMS.history.profileCTA.subTitle")}
+              label={I18n.t("FIMS.history.profileCTA.title")}
               onPress={fimsHistoryHandler}
               testID="fims-history"
-              value={I18n.t("FIMS.history.profileCTA.title")}
             />
           </>
         )}

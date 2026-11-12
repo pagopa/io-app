@@ -52,113 +52,113 @@ const IdPayInitiativeRefundSettingsComponent = (props: Props) => {
     );
   };
 
-  const instrumentsSettingsButton =
-    initiative === undefined ? (
-      <ListItemNav
-        accessibilityLabel={I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
-        )}
-        description={
-          <IOSkeleton height={21} radius={4} shape="rectangle" width={100} />
-        }
-        onPress={() => null}
-        value={I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
-        )}
-      />
-    ) : (
-      (() => {
-        const { initiativeId, nInstr, status } = initiative;
-        // between ListItemNav and ListItemNavAlert, ListItemNavAlert is the least inclusive one
-        const methodCountString = I18n.t(
-          `idpay.initiative.details.initiativeDetailsScreen.configured.settings.methods`,
-          {
-            count: nInstr
-          }
-        );
-        const listItemOptions: ListItemNavAlert = {
-          value: I18n.t(
-            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
-          ),
-          description: methodCountString,
-
-          onPress: () => navigateToInstrumentsConfiguration(initiativeId),
-          accessibilityLabel: `${I18n.t(
+  const renderInstrumentsSettingsButton = () => {
+    if (initiative === undefined) {
+      return (
+        <ListItemNav
+          accessibilityLabel={I18n.t(
             "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
           )}
-          ${methodCountString}`
-        };
-        const areActionsRequired =
-          status === InitiativeStatusEnum.NOT_REFUNDABLE_ONLY_IBAN ||
-          status === InitiativeStatusEnum.NOT_REFUNDABLE;
-        return areActionsRequired ? (
-          <ListItemNavAlert
-            {...listItemOptions}
-            accessibilityLabel={`${
-              listItemOptions.accessibilityLabel
-            }, ${I18n.t(
-              "idpay.initiative.details.initiativeDetailsScreen.configured.settings.actionsRequired"
-            )}`}
-            description={I18n.t(
-              "idpay.initiative.details.initiativeDetailsScreen.configured.settings.actionsRequired"
-            )}
-          />
-        ) : (
-          <ListItemNav {...listItemOptions} />
-        );
-      })()
-    );
+          description={
+            <IOSkeleton height={21} radius={4} shape="rectangle" width={100} />
+          }
+          label={I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
+          )}
+          onPress={() => null}
+        />
+      );
+    }
 
-  const ibanSettingsButton =
-    initiative === undefined ? (
-      <ListItemNav
-        accessibilityLabel={`${I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
-        )}, ${I18n.t("global.remoteStates.loading")}`}
-        description={
-          <IOSkeleton height={21} radius={4} shape="rectangle" width={270} />
-        }
-        onPress={() => null}
-        value={I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
+    const { initiativeId, nInstr, status } = initiative;
+    // between ListItemNav and ListItemNavAlert, ListItemNavAlert is the least inclusive one
+    const methodCountString = I18n.t(
+      "idpay.initiative.details.initiativeDetailsScreen.configured.settings.methods",
+      {
+        count: nInstr
+      }
+    );
+    const listItemOptions: ListItemNavAlert = {
+      label: I18n.t(
+        "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
+      ),
+      description: methodCountString,
+
+      onPress: () => navigateToInstrumentsConfiguration(initiativeId),
+      accessibilityLabel: `${I18n.t(
+        "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
+      )}
+          ${methodCountString}`
+    };
+    const areActionsRequired =
+      status === InitiativeStatusEnum.NOT_REFUNDABLE_ONLY_IBAN ||
+      status === InitiativeStatusEnum.NOT_REFUNDABLE;
+    return areActionsRequired ? (
+      <ListItemNavAlert
+        {...listItemOptions}
+        accessibilityLabel={`${listItemOptions.accessibilityLabel}, ${I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.settings.actionsRequired"
+        )}`}
+        description={I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.settings.actionsRequired"
         )}
       />
     ) : (
-      (() => {
-        const { initiativeId, iban, status } = initiative;
-        const listItemOptions: ListItemNavAlert = {
-          value: I18n.t(
-            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
-          ),
-          description: iban,
-          onPress: () => navigateToIbanConfiguration(initiativeId),
-          accessibilityLabel: I18n.t(
-            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
-          )
-        };
-        const areActionsRequired =
-          status === InitiativeStatusEnum.NOT_REFUNDABLE_ONLY_INSTRUMENT ||
-          status === InitiativeStatusEnum.NOT_REFUNDABLE;
-        return areActionsRequired ? (
-          <ListItemNavAlert
-            {...listItemOptions}
-            accessibilityLabel={`${
-              listItemOptions.accessibilityLabel
-            }, ${I18n.t(
-              "idpay.initiative.details.initiativeDetailsScreen.configured.settings.actionsRequired"
-            )}`}
-            description={I18n.t(
-              "idpay.initiative.details.initiativeDetailsScreen.configured.settings.actionsRequired"
-            )}
-          />
-        ) : (
-          <ListItemNav
-            {...listItemOptions}
-            accessibilityLabel={`${listItemOptions.accessibilityLabel} , ${listItemOptions.description}`}
-          />
-        );
-      })()
+      <ListItemNav {...listItemOptions} />
     );
+  };
+  const instrumentsSettingsButton = renderInstrumentsSettingsButton();
+
+  const renderIbanSettingsButton = () => {
+    if (initiative === undefined) {
+      return (
+        <ListItemNav
+          accessibilityLabel={`${I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
+          )}, ${I18n.t("global.remoteStates.loading")}`}
+          description={
+            <IOSkeleton height={21} radius={4} shape="rectangle" width={270} />
+          }
+          label={I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
+          )}
+          onPress={() => null}
+        />
+      );
+    }
+
+    const { initiativeId, iban, status } = initiative;
+    const listItemOptions: ListItemNavAlert = {
+      label: I18n.t(
+        "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
+      ),
+      description: iban,
+      onPress: () => navigateToIbanConfiguration(initiativeId),
+      accessibilityLabel: I18n.t(
+        "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
+      )
+    };
+    const areActionsRequired =
+      status === InitiativeStatusEnum.NOT_REFUNDABLE_ONLY_INSTRUMENT ||
+      status === InitiativeStatusEnum.NOT_REFUNDABLE;
+    return areActionsRequired ? (
+      <ListItemNavAlert
+        {...listItemOptions}
+        accessibilityLabel={`${listItemOptions.accessibilityLabel}, ${I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.settings.actionsRequired"
+        )}`}
+        description={I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.settings.actionsRequired"
+        )}
+      />
+    ) : (
+      <ListItemNav
+        {...listItemOptions}
+        accessibilityLabel={`${listItemOptions.accessibilityLabel} , ${listItemOptions.description}`}
+      />
+    );
+  };
+  const ibanSettingsButton = renderIbanSettingsButton();
 
   return (
     <View testID={"IDPayDetailsSettingsTestID"}>
