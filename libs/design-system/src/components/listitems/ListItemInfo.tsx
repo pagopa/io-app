@@ -2,13 +2,12 @@ import { ComponentProps, ReactNode } from "react";
 import { AccessibilityRole, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { useIOTheme } from "../../context";
+import { useIOTheme, useSwitchAccessEnabled } from "../../context";
 import { IOListItemStyles, IOListItemVisualParams } from "../../core";
 import { useListItemAnimation } from "../../hooks";
 import {
   useIOFontDynamicScale,
-  useScreenReaderEnabled,
-  useSwitchAccessEnabled
+  useScreenReaderEnabled
 } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
