@@ -35,6 +35,19 @@ describe("MessageList", () => {
     jest.restoreAllMocks();
     mockAccessibilityInfo(false);
   });
+  test.each([
+    { name: "inbox", category: "INBOX" as const },
+    { name: "archive", category: "ARCHIVE" as const }
+  ])(
+    "automatically insets the $name list above the native tab bar",
+    ({ name, category }) => {
+      const { getByTestId } = renderComponent(category);
+      expect(
+        getByTestId(`message_list_${name}`).props.contentInsetAdjustmentBehavior
+      ).toBe("automatic");
+    }
+  );
+
   it("should dispatch 'loadNextPageMessages.request' when output from 'getLoadNextPageMessagesActionIfNeeded' is not undefined", () => {
     const expectedCategory: MessageListCategory = "INBOX";
     const expectedAction = loadNextPageMessages.request({

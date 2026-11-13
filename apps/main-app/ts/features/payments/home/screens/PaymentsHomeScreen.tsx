@@ -3,6 +3,8 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useState } from "react";
+import { Platform } from "react-native";
+import { useBottomTabBarHeight } from "react-native-bottom-tabs";
 import Animated, {
   LinearTransition,
   useAnimatedRef
@@ -37,6 +39,7 @@ import {
 const PaymentsHomeScreen = () => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
+  const tabBarHeight = useBottomTabBarHeight();
 
   const isLoading = useIOSelector(isPaymentsSectionLoadingSelector);
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
@@ -126,9 +129,11 @@ const PaymentsHomeScreen = () => {
     return (
       <IOScrollView
         animatedRef={scrollViewContentRef}
+        bottomInset={Platform.OS === "ios" ? tabBarHeight : undefined}
         contentContainerStyle={{
           flexGrow: 1
         }}
+        contentInsetAdjustmentBehavior="automatic"
         includeContentMargins={false}
         refreshControlProps={{
           refreshing: isRefreshing,
@@ -160,7 +165,8 @@ const PaymentsHomeScreen = () => {
           : undefined
       }
       animatedRef={scrollViewContentRef}
-      excludeSafeAreaMargins={true}
+      bottomInset={Platform.OS === "ios" ? tabBarHeight : undefined}
+      contentInsetAdjustmentBehavior="automatic"
       includeContentMargins={false}
       refreshControlProps={{
         refreshing: isRefreshing,
