@@ -15,6 +15,7 @@ import {
   fciUpdateDocumentSignaturesRequest
 } from "../../store/actions";
 import trackFciAction, {
+  trackFciNoSignatureBottomsheetOpen,
   trackFciPollingFailureScreenView,
   trackFciSignatureRequestStatus
 } from "../index";
@@ -417,6 +418,29 @@ describe("index", () => {
           total_doc_count: 2,
           environment: "test",
           auth_security_level: "L3"
+        })
+      );
+    });
+  });
+
+  describe("trackFciNoSignatureBottomsheetOpen", () => {
+    const mixpanelTrackSpy = jest
+      .spyOn(mixpanelModule, "mixpanelTrack")
+      .mockImplementation();
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it("should track the FCI_SIGN_ALL_BOTTOMSHEET screen view event", () => {
+      trackFciNoSignatureBottomsheetOpen();
+
+      expect(mixpanelTrackSpy).toHaveBeenCalledTimes(1);
+      expect(mixpanelTrackSpy).toHaveBeenCalledWith(
+        "FCI_SIGN_ALL_BOTTOMSHEET",
+        expect.objectContaining({
+          event_category: "UX",
+          event_type: "screen_view"
         })
       );
     });
