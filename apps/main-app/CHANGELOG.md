@@ -1,3 +1,35 @@
+## 3.43.0-rc.11 (2026-11-13)
+
+### Features
+
+- [[IEG-3311](https://pagopa.atlassian.net/browse/IEG-3311)] Add CGN featured opportunities ([#8866](https://github.com/pagopa/io-app/pull/8866))
+- **IT-Wallet:** [[SIW-5404](https://pagopa.atlassian.net/browse/SIW-5404)] Add verified image handling and logo integration for credentials AS ([#8806](https://github.com/pagopa/io-app/pull/8806))
+- **IT-Wallet:** [[SIW-5498](https://pagopa.atlassian.net/browse/SIW-5498)] Track IT-Wallet activation engagement ([#8871](https://github.com/pagopa/io-app/pull/8871))
+
+### Bug Fixes
+
+- **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] correct IT-Wallet credential colors ([#8881](https://github.com/pagopa/io-app/pull/8881))
+- **IT-Wallet:** [[SIW-5469](https://pagopa.atlassian.net/browse/SIW-5469)] resolve Android BLE error code 2 ([#8878](https://github.com/pagopa/io-app/pull/8878))
+
+### Chores
+
+- [[IEL-912](https://pagopa.atlassian.net/browse/IEL-912)] Added FCI_SIGN_ALL_BOTTOMSHEET event tracking ([#8851](https://github.com/pagopa/io-app/pull/8851))
+- [[IEL-972](https://pagopa.atlassian.net/browse/IEL-972)] Added no-cache and no-store on FCI polling request ([#8846](https://github.com/pagopa/io-app/pull/8846))
+- Update translations from Lokalise ([#8882](https://github.com/pagopa/io-app/pull/8882))
+- [[IEL-927](https://pagopa.atlassian.net/browse/IEL-927)] Added CTA label to IDPay onboarding "beforeContinue" notice ([#8865](https://github.com/pagopa/io-app/pull/8865))
+- [[IOPLT-2153](https://pagopa.atlassian.net/browse/IOPLT-2153)] Migrate `@pagopa/io-react-native-http-client` to `@io-app/expo-http-client` ([#8849](https://github.com/pagopa/io-app/pull/8849))
+
+### ❤️ Thank You
+
+- Alessandro Dell'Oste @adelloste
+- Angelo Sanfilippo
+- Cristiano Tofani
+- DavideOnano @DavideOnano
+- Fabio Bombardi @shadowsheep1
+- Federico Mastrini @mastro993
+- Pawel @soixdev91
+- Riccardo Sacco @riccardosacco99
+
 ## 3.43.0-rc.10 (2026-11-12)
 
 ### Features
