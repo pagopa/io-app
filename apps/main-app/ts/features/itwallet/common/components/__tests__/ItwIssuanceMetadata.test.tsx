@@ -2,7 +2,7 @@ import { ListItemInfo } from "@io-app/design-system";
 import { act, waitFor } from "@testing-library/react-native";
 import { Buffer } from "buffer";
 import I18n from "i18next";
-import { Image } from "react-native";
+import { Dimensions, Image } from "react-native";
 import { Path, Svg } from "react-native-svg";
 import { SvgCssUri } from "react-native-svg/css";
 import configureMockStore from "redux-mock-store";
@@ -96,10 +96,28 @@ describe("ItwIssuanceMetadata", () => {
       format: "svg",
       isPreview: false,
       validHash: false
+    },
+    {
+      name: "PNG detail with large text",
+      format: "png",
+      isPreview: false,
+      validHash: true,
+      hugeFontEnabled: true
+    },
+    {
+      name: "SVG preview with large text",
+      format: "svg",
+      isPreview: true,
+      validHash: true,
+      hugeFontEnabled: true
     }
   ])(
     "shows only a verified wallet logo in $name",
-    async ({ format, isPreview, validHash }) => {
+    async ({ format, isPreview, validHash, hugeFontEnabled = false }) => {
+      jest.spyOn(Dimensions, "get").mockReturnValue({
+        ...Dimensions.get("window"),
+        fontScale: hugeFontEnabled ? 2 : 1
+      });
       const isSvg = format === "svg";
       const logoHash = isSvg ? svgLogoHash : datasetLogoHash;
       const logoBase64 = isSvg ? svgLogoBase64 : datasetLogoBase64;
@@ -143,6 +161,7 @@ describe("ItwIssuanceMetadata", () => {
       const response = await fetchCredentialsCatalogue(env, "1.4.6");
 
       const {
+        UNSAFE_getAllByType,
         UNSAFE_getByType,
         UNSAFE_queryByType,
         getByText,
@@ -152,8 +171,17 @@ describe("ItwIssuanceMetadata", () => {
       expect(fetchAndParseCatalogue).toHaveBeenCalledWith(
         env.WALLET_TA_BASE_URL
       );
+      const verifiedUri = `data:${contentType};base64,${logoBase64}`;
       if (validHash) {
-        const verifiedUri = `data:${contentType};base64,${logoBase64}`;
+        await waitFor(() =>
+          expect(
+            UNSAFE_getAllByType(ListItemInfo).some(
+              item => item.props.imageSource?.uri === verifiedUri
+            )
+          ).toBe(true)
+        );
+      }
+      if (validHash && !hugeFontEnabled) {
         if (isSvg) {
           await waitFor(() =>
             expect(
