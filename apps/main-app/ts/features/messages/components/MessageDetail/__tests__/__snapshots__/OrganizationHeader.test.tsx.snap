@@ -490,6 +490,7 @@ exports[`OrganizationHeader component should match the snapshot for a TPM denomi
                                     "width": "100%",
                                   }
                                 }
+                                testID="avatar_image"
                               />
                             </View>
                           </View>
@@ -978,6 +979,7 @@ exports[`OrganizationHeader component should match the snapshot for a non third-
                                     "width": "100%",
                                   }
                                 }
+                                testID="avatar_image"
                               />
                             </View>
                           </View>

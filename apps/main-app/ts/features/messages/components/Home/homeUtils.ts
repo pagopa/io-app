@@ -1,7 +1,5 @@
-import { TagEnum } from "@io-app/api-types/generated/definitions/communication/MessageCategoryPN";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
-import { StyleSheet } from "react-native";
 import { ActionType } from "typesafe-actions";
 
 import { maximumItemsFromAPI, pageSize } from "../../../../config";
@@ -21,7 +19,6 @@ import {
   reloadAllMessages
 } from "../../store/actions";
 import {
-  isPaymentMessageWithPaidNoticeSelector,
   messagePagePotFromCategorySelector,
   shownMessageCategorySelector
 } from "../../store/reducers/allPaginated";
@@ -30,17 +27,6 @@ import { areMessageSagasRegisteredSelector } from "../../store/reducers/messageS
 import { UIMessage } from "../../types";
 import { MessageListCategory } from "../../types/messageListCategory";
 import { convertReceivedDateToAccessible } from "../../utils/convertDateToWordDistance";
-import {
-  ListItemMessageEnhancedHeight,
-  ListItemMessageStandardHeight
-} from "./DS/ListItemMessage";
-import { SkeletonHeight } from "./DS/ListItemMessageSkeleton";
-
-export type LayoutInfo = {
-  index: number;
-  length: number;
-  offset: number;
-};
 
 export const minDelayBetweenNavigationMilliseconds = 750;
 export const nextPageLoadingWaitMillisecondsGenerator = () => 2000;
@@ -62,11 +48,6 @@ export const getInitialReloadAllMessagesActionIfNeeded = (
   return isMessagePagePotNone
     ? initialReloadAllMessagesFromCategory(shownCategory, false)
     : undefined;
-};
-
-export const getMessagesViewPagerInitialPageIndex = (state: GlobalState) => {
-  const messageCategory = shownMessageCategorySelector(state);
-  return messageListCategoryToViewPageIndex(messageCategory);
 };
 
 export const messageListCategoryToViewPageIndex = (
@@ -249,36 +230,6 @@ const isDoingAnAsyncOperationOnMessages = (state: GlobalState) => {
     isLoadingOrUpdating(allPaginated.inbox.data) ||
     isLoadingOrUpdating(allPaginated.archive.data)
   );
-};
-
-export const generateMessageListLayoutInfo = (
-  loadingList: ReadonlyArray<number>,
-  messageList: ReadonlyArray<UIMessage> | undefined,
-  state: GlobalState
-) => {
-  if (!messageList) {
-    return loadingList.map((_, index) => ({
-      index,
-      length: SkeletonHeight,
-      offset: index * SkeletonHeight
-    }));
-  }
-  return messageList.reduce<Array<LayoutInfo>>((acc, message, index) => {
-    const shouldShowBadge =
-      message.category.tag === TagEnum.PN ||
-      isPaymentMessageWithPaidNoticeSelector(state, message.category);
-
-    const listItemHeight = shouldShowBadge
-      ? ListItemMessageEnhancedHeight
-      : ListItemMessageStandardHeight;
-    const prev = acc[index - 1];
-
-    const verticalOffset = prev
-      ? prev.offset + prev.length + StyleSheet.hairlineWidth
-      : 0;
-
-    return [...acc, { index, length: listItemHeight, offset: verticalOffset }];
-  }, []);
 };
 
 export const trackMessagePageOnFocusEventIfAllowed = (state: GlobalState) => {

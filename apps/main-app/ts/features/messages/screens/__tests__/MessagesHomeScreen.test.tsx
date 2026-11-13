@@ -8,10 +8,9 @@ import * as engagementHook from "../../../pushNotifications/hooks/useEngagementS
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 import { MessagesHomeScreen } from "../MessagesHomeScreen";
 
-jest.mock("../../components/Home/PagerViewContainer");
+jest.mock("../../components/Home/MessagesListContainer");
 jest.mock("../../components/Home/Preconditions");
 jest.mock("../../components/Home/SecuritySuggestions");
-jest.mock("../../components/Home/TabNavigationContainer");
 jest.mock("../../components/Home/Toasts");
 
 describe("MessagesHomeScreen", () => {
