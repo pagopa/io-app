@@ -2,12 +2,13 @@ import { IOColorsLegacy, useIOTheme } from "@io-app/design-system";
 import CookieManager from "@react-native-cookies/cookies";
 import I18n from "i18next";
 import {
-  createRef,
+  ComponentRef,
   Dispatch,
   ReactElement,
   SetStateAction,
   useCallback,
   useEffect,
+  useRef,
   useState
 } from "react";
 import { Platform, View } from "react-native";
@@ -162,7 +163,7 @@ const CieWebView = (props: Props) => {
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
   const hashedFiscalCode = useIOSelector(hashedProfileFiscalCodeSelector);
 
-  const webView = createRef<WebView>();
+  const webViewRef = useRef<ComponentRef<typeof WebView>>(null);
   const { onSuccess } = props;
 
   const handleOnError = useCallback(
@@ -197,7 +198,7 @@ const CieWebView = (props: Props) => {
       url.indexOf("authnRequestString") !== -1
     ) {
       // avoid redirect and follow the 'happy path'
-      if (webView.current !== null) {
+      if (webViewRef.current !== null) {
         setInternalState(state => generateFoundAuthUrlState(url, state));
       }
       return false;
@@ -231,8 +232,8 @@ const CieWebView = (props: Props) => {
       handleOnError(new Error(eventTitle));
     }
     // inject JS on every page load end
-    if (injectJs && webView.current) {
-      webView.current.injectJavaScript(closeInjectedScript(injectJs));
+    if (injectJs) {
+      webViewRef.current?.injectJavaScript(closeInjectedScript(injectJs));
     }
   };
 
@@ -320,7 +321,7 @@ const CieWebView = (props: Props) => {
               onHttpError={handleOnError}
               onLoadEnd={handleOnLoadEnd}
               onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
-              ref={webView}
+              ref={webViewRef}
               source={{ uri: requestInfo.url } as WebViewSource}
               testID="webview"
               userAgent={defaultUserAgent}

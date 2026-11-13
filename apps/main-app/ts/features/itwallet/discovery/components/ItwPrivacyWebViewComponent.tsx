@@ -1,5 +1,5 @@
 import { useIOColors, useIOFontDynamicScale } from "@io-app/design-system";
-import { useEffect, useRef, useState } from "react";
+import { ComponentRef, useEffect, useRef, useState } from "react";
 import { Platform } from "react-native";
 import WebView from "react-native-webview";
 import {
@@ -18,7 +18,7 @@ type Props = {
 
 const ItwPrivacyWebViewComponent = ({ source, onLoadEnd, onError }: Props) => {
   const [contentHeight, setContentHeight] = useState<number>(0);
-  const webViewRef = useRef<WebView>(null);
+  const webViewRef = useRef<ComponentRef<typeof WebView>>(null);
   const { dynamicFontScale } = useIOFontDynamicScale();
   const colors = useIOColors();
   const backgroundColor = colors.background.default;

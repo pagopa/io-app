@@ -1,5 +1,5 @@
 import I18n from "i18next";
-import { createRef, useEffect, useState } from "react";
+import { ComponentRef, useEffect, useRef, useState } from "react";
 import WebView from "react-native-webview";
 import {
   WebViewErrorEvent,
@@ -23,15 +23,13 @@ const WebviewComponent = ({ source, playgroundEnabled }: Props) => {
   const [loading, setLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
-  const ref = createRef<WebView>();
+  const webViewRef = useRef<ComponentRef<typeof WebView>>(null);
 
   const handleReload = () => {
     setHasError(false);
     setLoading(true);
-    if (ref.current) {
-      ref.current.reload();
-      ref.current.clearCache?.(true);
-    }
+    webViewRef.current?.reload();
+    webViewRef.current?.clearCache(true);
   };
 
   useEffect(
@@ -87,7 +85,7 @@ const WebviewComponent = ({ source, playgroundEnabled }: Props) => {
             onError={handleError}
             onHttpError={handleError}
             onLoadEnd={() => setLoading(false)}
-            ref={ref}
+            ref={webViewRef}
             source={source}
             style={{ flex: 1 }}
             testID="webview"
