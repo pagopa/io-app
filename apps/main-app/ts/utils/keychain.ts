@@ -20,16 +20,25 @@ export async function deletePin(): Promise<boolean> {
 }
 
 /**
- * Returns the unlock code from the Keychain.
+ * Returns the unlock code from the Keychain, or `undefined` when there is no
+ * valid unlock code stored.
  *
- * The promise fails when there is no valid unlock code stored.
+ * Some Android devices can no longer decrypt the stored unlock code after an OS
+ * security update, because its Keystore key becomes unusable: in that case the
+ * unreadable entry and its key are removed, so that the user is asked to create
+ * a new unlock code instead of the app being stuck during startup.
  */
 export async function getPin(): Promise<PinString | undefined> {
-  const credentials = await Keychain.getGenericPassword();
-  if (typeof credentials !== "boolean" && credentials.password.length > 0) {
-    const decoded = PinString.decode(credentials.password);
-    return E.isRight(decoded) ? decoded.right : undefined;
-  } else {
+  try {
+    const credentials = await Keychain.getGenericPassword();
+    if (typeof credentials !== "boolean" && credentials.password.length > 0) {
+      const decoded = PinString.decode(credentials.password);
+      return E.isRight(decoded) ? decoded.right : undefined;
+    } else {
+      return undefined;
+    }
+  } catch {
+    await deletePin().catch(() => false);
     return undefined;
   }
 }
