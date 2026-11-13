@@ -2,15 +2,16 @@
 
 exports[`Test ToastNotification component - Experimental Enabled should match snapshot for props ({ message: 'Hello', icon: 'checkTick', variant: 'info' }) 1`] = `
 <View
-  accessibilityLabel="Hello"
-  accessibilityRole="alert"
-  accessible={true}
+  accessibilityElementsHidden={true}
+  accessible={false}
+  importantForAccessibility="no-hide-descendants"
   style={
     [
       {
         "alignItems": "center",
         "borderCurve": "continuous",
         "borderRadius": 8,
+        "borderWidth": 1,
         "flexDirection": "row",
         "justifyContent": "space-between",
         "padding": 16,
@@ -18,7 +19,6 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
       {
         "backgroundColor": "#E1F5FE",
         "borderColor": "rgba(33,92,118,0.5)",
-        "borderWidth": 1,
       },
     ]
   }
@@ -115,15 +115,16 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
 
 exports[`Test ToastNotification component - Experimental Enabled should match snapshot for props ({ message: 'Hello', variant: 'error' }) 1`] = `
 <View
-  accessibilityLabel="Hello"
-  accessibilityRole="alert"
-  accessible={true}
+  accessibilityElementsHidden={true}
+  accessible={false}
+  importantForAccessibility="no-hide-descendants"
   style={
     [
       {
         "alignItems": "center",
         "borderCurve": "continuous",
         "borderRadius": 8,
+        "borderWidth": 1,
         "flexDirection": "row",
         "justifyContent": "space-between",
         "padding": 16,
@@ -131,7 +132,6 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
       {
         "backgroundColor": "#FFD9D9",
         "borderColor": "rgba(93,19,19,0.5)",
-        "borderWidth": 1,
       },
     ]
   }
@@ -163,15 +163,16 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
 
 exports[`Test ToastNotification component - Experimental Enabled should match snapshot for props ({ message: 'Hello', variant: 'info' }) 1`] = `
 <View
-  accessibilityLabel="Hello"
-  accessibilityRole="alert"
-  accessible={true}
+  accessibilityElementsHidden={true}
+  accessible={false}
+  importantForAccessibility="no-hide-descendants"
   style={
     [
       {
         "alignItems": "center",
         "borderCurve": "continuous",
         "borderRadius": 8,
+        "borderWidth": 1,
         "flexDirection": "row",
         "justifyContent": "space-between",
         "padding": 16,
@@ -179,7 +180,6 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
       {
         "backgroundColor": "#E1F5FE",
         "borderColor": "rgba(33,92,118,0.5)",
-        "borderWidth": 1,
       },
     ]
   }
@@ -211,15 +211,16 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
 
 exports[`Test ToastNotification component - Experimental Enabled should match snapshot for props ({ message: 'Hello', variant: 'success' }) 1`] = `
 <View
-  accessibilityLabel="Hello"
-  accessibilityRole="alert"
-  accessible={true}
+  accessibilityElementsHidden={true}
+  accessible={false}
+  importantForAccessibility="no-hide-descendants"
   style={
     [
       {
         "alignItems": "center",
         "borderCurve": "continuous",
         "borderRadius": 8,
+        "borderWidth": 1,
         "flexDirection": "row",
         "justifyContent": "space-between",
         "padding": 16,
@@ -227,7 +228,6 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
       {
         "backgroundColor": "#E1F4E1",
         "borderColor": "rgba(34,64,33,0.5)",
-        "borderWidth": 1,
       },
     ]
   }
@@ -259,15 +259,16 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
 
 exports[`Test ToastNotification component - Experimental Enabled should match snapshot for props ({ message: 'Hello', variant: 'warning' }) 1`] = `
 <View
-  accessibilityLabel="Hello"
-  accessibilityRole="alert"
-  accessible={true}
+  accessibilityElementsHidden={true}
+  accessible={false}
+  importantForAccessibility="no-hide-descendants"
   style={
     [
       {
         "alignItems": "center",
         "borderCurve": "continuous",
         "borderRadius": 8,
+        "borderWidth": 1,
         "flexDirection": "row",
         "justifyContent": "space-between",
         "padding": 16,
@@ -275,7 +276,6 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
       {
         "backgroundColor": "#FFF5DA",
         "borderColor": "rgba(97,76,21,0.5)",
-        "borderWidth": 1,
       },
     ]
   }
@@ -307,15 +307,16 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
 
 exports[`Test ToastNotification component should match snapshot for props ({ message: 'Hello', icon: 'checkTick', variant: 'info' }) 1`] = `
 <View
-  accessibilityLabel="Hello"
-  accessibilityRole="alert"
-  accessible={true}
+  accessibilityElementsHidden={true}
+  accessible={false}
+  importantForAccessibility="no-hide-descendants"
   style={
     [
       {
         "alignItems": "center",
         "borderCurve": "continuous",
         "borderRadius": 8,
+        "borderWidth": 1,
         "flexDirection": "row",
         "justifyContent": "space-between",
         "padding": 16,
@@ -323,7 +324,6 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
       {
         "backgroundColor": "#E1F5FE",
         "borderColor": "rgba(33,92,118,0.5)",
-        "borderWidth": 1,
       },
     ]
   }
@@ -420,15 +420,16 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
 
 exports[`Test ToastNotification component should match snapshot for props ({ message: 'Hello', variant: 'error' }) 1`] = `
 <View
-  accessibilityLabel="Hello"
-  accessibilityRole="alert"
-  accessible={true}
+  accessibilityElementsHidden={true}
+  accessible={false}
+  importantForAccessibility="no-hide-descendants"
   style={
     [
       {
         "alignItems": "center",
         "borderCurve": "continuous",
         "borderRadius": 8,
+        "borderWidth": 1,
         "flexDirection": "row",
         "justifyContent": "space-between",
         "padding": 16,
@@ -436,7 +437,6 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
       {
         "backgroundColor": "#FFD9D9",
         "borderColor": "rgba(93,19,19,0.5)",
-        "borderWidth": 1,
       },
     ]
   }
@@ -468,15 +468,16 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
 
 exports[`Test ToastNotification component should match snapshot for props ({ message: 'Hello', variant: 'info' }) 1`] = `
 <View
-  accessibilityLabel="Hello"
-  accessibilityRole="alert"
-  accessible={true}
+  accessibilityElementsHidden={true}
+  accessible={false}
+  importantForAccessibility="no-hide-descendants"
   style={
     [
       {
         "alignItems": "center",
         "borderCurve": "continuous",
         "borderRadius": 8,
+        "borderWidth": 1,
         "flexDirection": "row",
         "justifyContent": "space-between",
         "padding": 16,
@@ -484,7 +485,6 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
       {
         "backgroundColor": "#E1F5FE",
         "borderColor": "rgba(33,92,118,0.5)",
-        "borderWidth": 1,
       },
     ]
   }
@@ -516,15 +516,16 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
 
 exports[`Test ToastNotification component should match snapshot for props ({ message: 'Hello', variant: 'success' }) 1`] = `
 <View
-  accessibilityLabel="Hello"
-  accessibilityRole="alert"
-  accessible={true}
+  accessibilityElementsHidden={true}
+  accessible={false}
+  importantForAccessibility="no-hide-descendants"
   style={
     [
       {
         "alignItems": "center",
         "borderCurve": "continuous",
         "borderRadius": 8,
+        "borderWidth": 1,
         "flexDirection": "row",
         "justifyContent": "space-between",
         "padding": 16,
@@ -532,7 +533,6 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
       {
         "backgroundColor": "#E1F4E1",
         "borderColor": "rgba(34,64,33,0.5)",
-        "borderWidth": 1,
       },
     ]
   }
@@ -564,15 +564,16 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
 
 exports[`Test ToastNotification component should match snapshot for props ({ message: 'Hello', variant: 'warning' }) 1`] = `
 <View
-  accessibilityLabel="Hello"
-  accessibilityRole="alert"
-  accessible={true}
+  accessibilityElementsHidden={true}
+  accessible={false}
+  importantForAccessibility="no-hide-descendants"
   style={
     [
       {
         "alignItems": "center",
         "borderCurve": "continuous",
         "borderRadius": 8,
+        "borderWidth": 1,
         "flexDirection": "row",
         "justifyContent": "space-between",
         "padding": 16,
@@ -580,7 +581,6 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
       {
         "backgroundColor": "#FFF5DA",
         "borderColor": "rgba(97,76,21,0.5)",
-        "borderWidth": 1,
       },
     ]
   }

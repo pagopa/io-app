@@ -5964,7 +5964,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -5982,7 +5981,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -6808,7 +6806,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -6826,7 +6823,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -7652,7 +7648,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -7670,7 +7665,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -8496,7 +8490,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -8514,7 +8507,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -9340,7 +9332,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -9358,7 +9349,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -10184,7 +10174,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -10202,7 +10191,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -11028,7 +11016,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -11046,7 +11033,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -11872,7 +11858,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -11890,7 +11875,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -12716,7 +12700,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -12734,7 +12717,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -13560,7 +13542,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -13578,7 +13559,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -13818,7 +13798,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -13836,7 +13815,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -14662,7 +14640,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -14680,7 +14657,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -14920,7 +14896,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -14938,7 +14913,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -15764,7 +15738,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -15782,7 +15755,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -16022,7 +15994,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -16040,7 +16011,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -16866,7 +16836,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -16884,7 +16853,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -17124,7 +17092,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -17142,7 +17109,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -17968,7 +17934,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -17986,7 +17951,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -18226,7 +18190,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -18244,7 +18207,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -19070,7 +19032,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -19088,7 +19049,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -19328,7 +19288,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -19346,7 +19305,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -20172,7 +20130,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -20190,7 +20147,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -20430,7 +20386,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -20448,7 +20403,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -21274,7 +21228,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -21292,7 +21245,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -21532,7 +21484,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -21550,7 +21501,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -22376,7 +22326,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -22394,7 +22343,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -22634,7 +22582,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
@@ -22652,7 +22599,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderColor": "#E8EBF1",
                                       "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,

@@ -38,14 +38,10 @@ import {
 import { IdpCIE_ID } from "../../hooks/useNavigateToLoginMethod";
 import { LoadingOverlay } from "../shared/LoadingSpinnerOverlay";
 import {
-  cieIDSelectedSecurityLevelSelector,
-  isCieLoginUatEnabledSelector
+  cieEnvSelector,
+  cieIDSelectedSecurityLevelSelector
 } from "../store/selectors";
-import {
-  getCieIdEnvironment,
-  getCieIDLoginUri,
-  isAuthenticationUrl
-} from "../utils";
+import { getCieIDLoginUri, isAuthenticationUrl } from "../utils";
 import {
   CIE_ID_ERROR,
   CIE_ID_ERROR_MESSAGE,
@@ -64,14 +60,14 @@ const CieIdLoginScreen = ({ navigation }: CieIdLoginScreenProps) => {
   const [authenticatedUrl, setAuthenticatedUrl] = useState<null | string>(null);
   const loggedInAuth = useIOSelector(loggedInAuthSelector, _isEqual);
   const apiLoginUrlPrefix = useIOSelector(remoteApiLoginUrlPrefixSelector);
-  const isUat = useIOSelector(isCieLoginUatEnabledSelector);
+  const cieEnv = useIOSelector(cieEnvSelector);
   // cieIDSelectedSecurityLevel is always set before this screen is reached
   // (navigateToCieIdLoginScreen dispatches it synchronously before navigating);
   // the fallback only satisfies the type, since the reducer marks it optional.
   // L2 matches navigateToCieIdLoginScreen's own default for the same value
   const spidLevel =
     useIOSelector(cieIDSelectedSecurityLevelSelector) ?? AUTH_LEVELS.L2;
-  const loginUri = getCieIDLoginUri(spidLevel, isUat, apiLoginUrlPrefix);
+  const loginUri = getCieIDLoginUri(spidLevel, cieEnv, apiLoginUrlPrefix);
   const [isLoadingWebView, setIsLoadingWebView] = useState(true);
 
   const navigateToCieIdAuthenticationError = useCallback(() => {
@@ -207,11 +203,11 @@ const CieIdLoginScreen = ({ navigation }: CieIdLoginScreenProps) => {
               checkIfUrlIsWhitelisted(result.url);
             }
           },
-          getCieIdEnvironment(isUat)
+          cieEnv
         );
       }
     },
-    [handleLoginFailure, isUat, checkIfUrlIsWhitelisted]
+    [handleLoginFailure, cieEnv, checkIfUrlIsWhitelisted]
   );
 
   const handleOnShouldStartLoadWithRequest = (

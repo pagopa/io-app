@@ -6,13 +6,13 @@ exports[`Test Avatar Components - Experimental Enabled Avatar Snapshot 1`] = `
   style={
     [
       {
-        "borderColor": "rgba(14,15,19,0.1)",
         "borderCurve": "continuous",
         "borderWidth": 1,
         "overflow": "hidden",
       },
       {
         "backgroundColor": "#FFFFFF",
+        "borderColor": "#E8EBF1",
         "borderRadius": 8,
         "height": 44,
         "padding": 6,
@@ -25,11 +25,11 @@ exports[`Test Avatar Components - Experimental Enabled Avatar Snapshot 1`] = `
     style={
       [
         {
-          "backgroundColor": "#FFFFFF",
           "borderCurve": "continuous",
           "overflow": "hidden",
         },
         {
+          "backgroundColor": "#FFFFFF",
           "borderRadius": 2,
         },
       ]
@@ -62,13 +62,13 @@ exports[`Test Avatar Components - Experimental Enabled AvatarSearch Snapshot 1`]
   style={
     [
       {
-        "borderColor": "rgba(14,15,19,0.1)",
         "borderCurve": "continuous",
         "borderWidth": 1,
         "overflow": "hidden",
       },
       {
         "backgroundColor": "#FFFFFF",
+        "borderColor": "#E8EBF1",
         "borderRadius": 8,
         "height": 44,
         "padding": 6,
@@ -81,11 +81,11 @@ exports[`Test Avatar Components - Experimental Enabled AvatarSearch Snapshot 1`]
     style={
       [
         {
-          "backgroundColor": "#FFFFFF",
           "borderCurve": "continuous",
           "overflow": "hidden",
         },
         {
+          "backgroundColor": "#FFFFFF",
           "borderRadius": 2,
         },
       ]
@@ -116,13 +116,13 @@ exports[`Test Avatar Components Avatar Snapshot 1`] = `
   style={
     [
       {
-        "borderColor": "rgba(14,15,19,0.1)",
         "borderCurve": "continuous",
         "borderWidth": 1,
         "overflow": "hidden",
       },
       {
         "backgroundColor": "#FFFFFF",
+        "borderColor": "#E8EBF1",
         "borderRadius": 8,
         "height": 44,
         "padding": 6,
@@ -135,11 +135,11 @@ exports[`Test Avatar Components Avatar Snapshot 1`] = `
     style={
       [
         {
-          "backgroundColor": "#FFFFFF",
           "borderCurve": "continuous",
           "overflow": "hidden",
         },
         {
+          "backgroundColor": "#FFFFFF",
           "borderRadius": 2,
         },
       ]
@@ -172,13 +172,13 @@ exports[`Test Avatar Components AvatarSearch Snapshot 1`] = `
   style={
     [
       {
-        "borderColor": "rgba(14,15,19,0.1)",
         "borderCurve": "continuous",
         "borderWidth": 1,
         "overflow": "hidden",
       },
       {
         "backgroundColor": "#FFFFFF",
+        "borderColor": "#E8EBF1",
         "borderRadius": 8,
         "height": 44,
         "padding": 6,
@@ -191,11 +191,11 @@ exports[`Test Avatar Components AvatarSearch Snapshot 1`] = `
     style={
       [
         {
-          "backgroundColor": "#FFFFFF",
           "borderCurve": "continuous",
           "overflow": "hidden",
         },
         {
+          "backgroundColor": "#FFFFFF",
           "borderRadius": 2,
         },
       ]

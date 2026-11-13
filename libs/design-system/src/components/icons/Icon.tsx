@@ -2,8 +2,8 @@ import { Component } from "react";
 import { ColorValue } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { IOColors } from "../../core/IOColors";
-import { IODimensions } from "../../core/tokens";
+import { IOColorsLegacy } from "../../core/IOColorsLegacy";
+import { IODimensions, IOTokenColor } from "../../core/tokens";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 /* Icons */
 import IconAbacus from "./svg/IconAbacus";
@@ -437,7 +437,8 @@ export type IOIconsProps = {
   accessibilityLabel?: string;
   accessible?: boolean;
   allowFontScaling?: boolean;
-  color?: IOColors;
+  /* Legacy names are deprecated: pass a token from `useIOColors` */
+  color?: IOColorsLegacy | IOTokenColor;
   name: IOIcons;
   size?: "100%" | IOIconSizeScale | IOIconSizeScaleCheckbox;
   testID?: string;
@@ -445,7 +446,7 @@ export type IOIconsProps = {
 
 /*
 Static icon component. Use it when you need an ion that doesn't
-change its color values. It accepts `IOColors` values only.
+change its color values. It accepts `IOColorsLegacy` names or color tokens.
 */
 export const Icon = ({
   name,
@@ -471,7 +472,11 @@ export const Icon = ({
       accessibilityElementsHidden={!isAccessible}
       accessibilityLabel={accessibilityLabel}
       accessible={isAccessible}
-      color={IOColors[color]}
+      color={
+        color in IOColorsLegacy
+          ? IOColorsLegacy[color as IOColorsLegacy]
+          : color
+      }
       importantForAccessibility={isAccessible ? "auto" : "no-hide-descendants"}
       pointerEvents="none"
       size={iconSize}
@@ -494,7 +499,7 @@ type IOAnimatedIconsProps = {
 
 export const AnimatedIcon = ({
   name,
-  color = IOColors["grey-700"],
+  color = IOColorsLegacy["grey-700"],
   size = 24,
   accessible = false,
   allowFontScaling = false,
