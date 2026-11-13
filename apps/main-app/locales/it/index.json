@@ -988,6 +988,12 @@
       "title": "Questo servizio non è più attivo su IO"
     },
     "itWallet": {
+      "loginEngagement": {
+        "action": "Attiva IT-Wallet",
+        "description": "L’app IO è ora parte del sistema nazionale di portafogli digitali IT-Wallet: più documenti, con funzionalità evolute, sempre a portata di mano.",
+        "secondaryAction": "Non attivare",
+        "title": "È disponibile per te il nuovo portafoglio IT-Wallet"
+      },
       "card": {
         "digital": "Versione digitale",
         "status": {

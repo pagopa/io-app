@@ -1,6 +1,8 @@
-import { render } from "@testing-library/react-native";
+import { isSwitchAccessEnabled } from "@io-app/expo-switch-access";
+import { render, waitFor } from "@testing-library/react-native";
 import { Alert } from "react-native";
 
+import { IOSwitchAccessContextProvider } from "../../../context";
 import { renderWithExperimentalEnabledContextProvider } from "../../../utils/testing";
 import { ListItemAction } from "../ListItemAction";
 import { ListItemInfo } from "../ListItemInfo";
@@ -16,17 +18,16 @@ const onButtonPress = () => {
 };
 
 describe("Test List Item Components", () => {
-  it("keeps informational content out of keyboard focus", () => {
+  it("exposes informational content as one accessible item", () => {
     const { getByLabelText } = render(
       <ListItemInfo accessibilityLabel="Information" value="Value" />
     );
 
     const information = getByLabelText("Information");
-    expect(information).toHaveProp("accessible", false);
-    expect(information).toHaveProp("screenReaderFocusable", true);
+    expect(information).toHaveProp("accessible", true);
   });
 
-  it("keeps end actions separate from informational content", () => {
+  it("exposes information and end actions as separate accessible items", () => {
     const { getByLabelText } = render(
       <ListItemInfo
         accessibilityLabel="Information"
@@ -38,8 +39,26 @@ describe("Test List Item Components", () => {
       />
     );
 
-    expect(getByLabelText("Information")).toHaveProp("accessible", false);
+    expect(getByLabelText("Information")).toHaveProp("accessible", true);
+    expect(getByLabelText("Information")).toHaveProp(
+      "screenReaderFocusable",
+      true
+    );
     expect(getByLabelText("Action")).toHaveProp("accessibilityRole", "button");
+  });
+
+  it("hides informational content while Switch Access is enabled", async () => {
+    jest.mocked(isSwitchAccessEnabled).mockResolvedValueOnce(true);
+
+    const { queryByLabelText } = render(
+      <IOSwitchAccessContextProvider>
+        <ListItemInfo accessibilityLabel="Information" value="Value" />
+      </IOSwitchAccessContextProvider>
+    );
+
+    await waitFor(() => {
+      expect(queryByLabelText("Information")).toBeNull();
+    });
   });
 
   it("ListItemInfo Snapshot", () => {

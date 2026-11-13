@@ -61,3 +61,7 @@ export const itwWalletActivationFeedbackBannerDataSelector = (
 export const itwIsDiscoverMoreCEDLocallyEnabledSelector = (
   state: GlobalState
 ) => state.features.itWallet.preferences.isDiscoverMoreCEDEnabled ?? false;
+
+/** Returns whether the What's New engagement screen is locally enabled. */
+export const itwIsWhatsNewLocallyEnabledSelector = (state: GlobalState) =>
+  state.features.itWallet.preferences.isWhatsNewLocallyEnabled ?? false;

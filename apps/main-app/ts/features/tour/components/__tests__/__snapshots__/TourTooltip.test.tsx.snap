@@ -109,11 +109,11 @@ exports[`TourTooltip snapshot matches snapshot for first step 1`] = `
         {
           "borderCurve": "continuous",
           "borderRadius": 8,
-          "boxShadow": "0px 2px 8px rgba(14,15,19,0.15)",
           "padding": 16,
         },
         {
           "backgroundColor": "#F4F5F8",
+          "boxShadow": "0px 2px 8px rgba(14,15,19,0.1)",
         },
       ]
     }
@@ -1025,11 +1025,11 @@ exports[`TourTooltip snapshot matches snapshot for last step 1`] = `
         {
           "borderCurve": "continuous",
           "borderRadius": 8,
-          "boxShadow": "0px 2px 8px rgba(14,15,19,0.15)",
           "padding": 16,
         },
         {
           "backgroundColor": "#F4F5F8",
+          "boxShadow": "0px 2px 8px rgba(14,15,19,0.1)",
         },
       ]
     }

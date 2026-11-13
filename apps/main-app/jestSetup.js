@@ -138,6 +138,10 @@ jest.mock("@io-app/expo-nfc-antenna-info", () => ({
   isHceSupported: jest.fn()
 }));
 
+jest.mock("@io-app/expo-switch-access", () => ({
+  isSwitchAccessEnabled: () => Promise.resolve(false)
+}));
+
 jest.mock("@io-app/login-utils", () => ({
   getRedirects: jest.fn()
 }));
