@@ -10,7 +10,7 @@ import { Fragment } from "react";
 import { AccessibilityInfo, StyleSheet, View } from "react-native";
 import Animated, { useAnimatedStyle } from "react-native-reanimated";
 
-import { getCredentialCardConfig } from "../../../../common/components/ItwCredentialCard/config";
+import { useCredentialCardConfig } from "../../../../common/components/ItwCredentialCard/config";
 import { ItwCredentialClaimsCard } from "../../../../common/components/ItwCredentialClaimsCard";
 import { useItwCredentialName } from "../../../../common/hooks/useItwCredentialName";
 import { ClaimDisplayFormat } from "../../../../common/utils/itwClaimsUtils";
@@ -78,7 +78,7 @@ export const ItwClaimsSelector = ({
   });
 
   const title = useItwCredentialName(credentialType);
-  const { background } = getCredentialCardConfig(credentialType, themeType);
+  const { background } = useCredentialCardConfig(credentialType, themeType);
 
   const onItemPress = () => {
     toggleAccordion();
