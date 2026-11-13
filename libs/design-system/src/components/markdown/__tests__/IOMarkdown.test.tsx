@@ -1,6 +1,6 @@
-import { fireEvent, render } from "@testing-library/react-native";
+import { fireEvent, render, within } from "@testing-library/react-native";
 import { ComponentProps } from "react";
-import { Linking } from "react-native";
+import { Linking, Platform } from "react-native";
 
 import { IOThemeContextProvider } from "../../../context";
 import { IOColorsLegacy, IOThemeLight } from "../../../core";
@@ -235,6 +235,68 @@ describe("IOMarkdown", () => {
   /* ─── Lists ─── */
 
   describe("Lists", () => {
+    describe.each(["android", "ios"] as const)(
+      "bullet-announcements on %s",
+      platform => {
+        beforeEach(() => {
+          jest.replaceProperty(Platform, "OS", platform);
+        });
+
+        afterEach(() => {
+          jest.restoreAllMocks();
+        });
+
+        it("keeps ordered markers unchanged at every nesting level", () => {
+          const { getByText } = renderComponent({
+            content: "1. Parent\n    1. Nested\n        1. Item"
+          });
+
+          ["1.", "i.", "a."].forEach(marker => {
+            expect(getByText(marker)).toHaveAccessibleName(marker);
+            expect(getByText(marker).props.accessibilityLabel).toBeUndefined();
+          });
+        });
+
+        it.each([
+          {
+            name: "first-level",
+            content: "- Item",
+            marker: "\u2022"
+          },
+          {
+            name: "second-level",
+            content: "1. Parent\n    - Item",
+            marker: "\u25E6"
+          },
+          {
+            name: "third-level",
+            content: "1. Parent\n    1. Nested\n        - Item",
+            marker: "\u25B8"
+          }
+        ])(
+          "preserves the visual $name marker and exposes the platform-specific bullet",
+          ({ content, marker }) => {
+            const { UNSAFE_getAllByProps } = renderComponent({
+              content
+            });
+            const accessibleMarker = platform === "android" ? "\u2022" : marker;
+            const rows = UNSAFE_getAllByProps({ accessible: true }).filter(
+              node =>
+                typeof node.type === "string" &&
+                node.props.style?.flexDirection === "row"
+            );
+
+            const row = rows[rows.length - 1];
+            expect(within(row).getByText(marker)).toHaveAccessibleName(
+              accessibleMarker
+            );
+            expect(row).toHaveTextContent(`${marker}Item`);
+            expect(row.props.accessibilityLabel).toBeUndefined();
+          }
+        );
+      }
+    );
+
     it("renders unordered list items with bullets", () => {
       const content = `- Item one\n- Item two\n- Item three`;
       const { getByText, getAllByText } = renderComponent({ content });
@@ -273,10 +335,127 @@ describe("IOMarkdown", () => {
       expect(getAllByText("\u25E6").length).toBe(1);
     });
 
-    it("renders list with accessibilityRole 'list'", () => {
-      const content = `- Item one\n- Item two`;
-      const { getAllByRole } = renderComponent({ content });
-      expect(getAllByRole("list").length).toBeGreaterThanOrEqual(1);
+    it.each([
+      {
+        name: "unordered",
+        content: "- Item one\n- Item two",
+        labels: ["\u2022 Item one", "\u2022 Item two"]
+      },
+      {
+        name: "ordered",
+        content: "1. Item one\n2. Item two",
+        labels: ["1. Item one", "2. Item two"]
+      },
+      {
+        name: "nested unordered",
+        content: "- Item one\n    - Nested item\n- Item two",
+        labels: ["\u2022 Item one", "\u25E6 Nested item", "\u2022 Item two"]
+      },
+      {
+        name: "nested ordered",
+        content: "1. Item one\n    1. Nested item\n2. Item two",
+        labels: ["1. Item one", "i. Nested item", "2. Item two"]
+      },
+      {
+        name: "deeply nested mixed",
+        content:
+          "- Item one\n    1. Nested item\n        - Third level item\n- Item two",
+        labels: [
+          "\u2022 Item one",
+          "i. Nested item",
+          "\u25B8 Third level item",
+          "\u2022 Item two"
+        ]
+      },
+      {
+        name: "ordered with nested bullets and formatting",
+        content: `1. **Graphic Design**
+    - Lorem ipsum dolor sit amet
+    - Consectetur adipiscing elit
+2. **Typography**
+    - Vivamus lacinia odio vitae vestibulum
+    - Cras venenatis euismod malesuada
+3. **Web Development**
+    - *Frontend*: HTML, CSS, JavaScript
+    - *Backend*: Python, Ruby, Node.js`,
+        labels: [
+          "1. Graphic Design",
+          "\u25E6 Lorem ipsum dolor sit amet",
+          "\u25E6 Consectetur adipiscing elit",
+          "2. Typography",
+          "\u25E6 Vivamus lacinia odio vitae vestibulum",
+          "\u25E6 Cras venenatis euismod malesuada",
+          "3. Web Development",
+          "\u25E6 Frontend: HTML, CSS, JavaScript",
+          "\u25E6 Backend: Python, Ruby, Node.js"
+        ]
+      }
+    ])(
+      "groups $name markers and text in accessible rows without an accessible list container",
+      ({ content, labels }) => {
+        const { UNSAFE_getAllByProps, getByText, getAllByText } =
+          renderComponent({
+            content
+          });
+        const lists = UNSAFE_getAllByProps({ accessibilityRole: "list" });
+
+        expect(lists.length).toBeGreaterThanOrEqual(1);
+        lists.forEach(list => {
+          expect(list.props.accessible).toBe(false);
+        });
+        const rows = UNSAFE_getAllByProps({ accessible: true }).filter(
+          node =>
+            typeof node.type === "string" &&
+            node.props.style?.flexDirection === "row"
+        );
+        expect(rows).toHaveLength(labels.length);
+        rows.forEach((row, index) => {
+          const [marker, ...text] = labels[index].split(" ");
+          expect(row.props.style.flexDirection).toBe("row");
+          expect(row.props.accessibilityLabel).toBeUndefined();
+          expect(
+            row.findAll(node => node.props.accessibilityRole === "list")
+          ).toHaveLength(0);
+          expect(row).toHaveAccessibleName(`${marker}${text.join(" ")}`);
+          expect(getByText(text.join(" "))).toBeOnTheScreen();
+          getAllByText(marker).forEach(element => {
+            expect(element.props.accessibilityElementsHidden).toBeUndefined();
+            expect(element.props.importantForAccessibility).toBeUndefined();
+          });
+        });
+      }
+    );
+
+    it("preserves paragraphs and nested lists in their original reading order", () => {
+      const { getAllByText } = renderComponent({
+        content: `- Parent
+
+  Before nesting
+
+  - Nested bullet
+
+  After nesting
+
+  1. Nested number
+
+- Second parent`
+      });
+      const paragraphs = [
+        "Parent",
+        "Before nesting",
+        "Nested bullet",
+        "After nesting",
+        "Nested number",
+        "Second parent"
+      ];
+      const elements = getAllByText(
+        /^(Parent|Before nesting|Nested bullet|After nesting|Nested number|Second parent)$/
+      );
+
+      expect(elements).toHaveLength(paragraphs.length);
+      elements.forEach((element, index) => {
+        expect(element).toHaveTextContent(paragraphs[index]);
+      });
     });
 
     it("renders bold text inside list items", () => {
