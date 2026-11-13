@@ -1,5 +1,5 @@
 import { Consent } from "@io-app/api-types/generated/definitions/fims_sso/Consent";
-import { HttpClientSuccessResponse } from "@io-app/expo-http-client";
+import { HttpClientSuccessResponse } from "@pagopa/io-react-native-http-client";
 import {
   ActionType,
   createAsyncAction,

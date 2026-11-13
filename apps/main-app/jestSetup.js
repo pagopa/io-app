@@ -146,23 +146,6 @@ jest.mock("@io-app/login-utils", () => ({
   getRedirects: jest.fn()
 }));
 
-jest.mock("@io-app/expo-http-client/src/ExpoHttpClientModule", () => ({
-  __esModule: true,
-  default: {
-    cancelAllRunningRequests: jest.fn().mockResolvedValue(undefined),
-    cancelRequestWithId: jest.fn().mockResolvedValue(undefined),
-    deallocate: jest.fn().mockResolvedValue(undefined),
-    nativeRequest: jest.fn().mockResolvedValue({
-      type: "success",
-      status: 200,
-      body: "",
-      headers: {}
-    }),
-    removeAllCookiesForDomain: jest.fn().mockResolvedValue(undefined),
-    setCookieForDomain: jest.fn().mockResolvedValue(undefined)
-  }
-}));
-
 /* `@expo/ui` renders SwiftUI views, which cannot run under the Jest environment.
    The `react-native` preset resolves the `.ios` implementations by default, so
    every platform-branched component would otherwise pull in the native views. */
@@ -284,6 +267,7 @@ jest.mock("react-native/Libraries/TurboModule/TurboModuleRegistry", () => {
     getEnforcing: name => {
       // List of TurboModules libraries to mock.
       const modulesToMock = [
+        "IoReactNativeHttpClient",
         "RNDocumentPicker",
         "RNCWebViewModule",
         "AppState"

@@ -664,6 +664,9 @@
       },
       "merchantsList": {
         "a11yTitle": "Categoria: {{categoryName}}",
+        "featuredOpportunities": {
+          "title": "In evidenza"
+        },
         "categoriesList": {
           "bottomSheet": {
             "content": "Per agevolare la ricerca e migliorare la tua esperienza, abbiamo organizzato le categorie in base alla frequenza di utilizzo. Questa informazione non è legata al tuo profilo, ma si basa su dati complessivi di tutti gli utenti che utilizzano Carta Giovani Nazionale e hanno acconsentito al trattamento dei dati.",
@@ -3779,7 +3782,7 @@
       },
       "beforeContinue": {
         "requestBonus": "Richiedi il bonus",
-        "text": "Premendo 'Richiedi il bonus' dichiari di aver letto, compreso e accettato l'[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni d'uso]({{tosUrl}})."
+        "adviseText": "Premendo \"{{ctaText}}\" dichiari di aver letto, compreso e accettato l'[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni d'uso]({{tosUrl}})."
       },
       "boolPrerequisites": {
         "emptyValueError": "Seleziona un’opzione per continuare",

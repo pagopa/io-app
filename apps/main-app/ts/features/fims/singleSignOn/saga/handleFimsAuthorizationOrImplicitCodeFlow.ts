@@ -4,7 +4,7 @@ import {
   HttpClientSuccessResponse,
   isCancelledFailure,
   nativeRequest
-} from "@io-app/expo-http-client";
+} from "@pagopa/io-react-native-http-client";
 import { openAuthSessionAsync } from "expo-web-browser";
 import * as E from "fp-ts/lib/Either";
 import { Parser as HTMLParser2 } from "htmlparser2";
