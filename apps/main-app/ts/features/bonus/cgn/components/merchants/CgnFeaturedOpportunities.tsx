@@ -133,7 +133,9 @@ export const CgnFeaturedOpportunities = ({
   return (
     <View testID="CgnFeaturedOpportunities">
       <View style={{ paddingHorizontal: IODimensions.padding.screen.default }}>
-        <H6>{I18n.t("bonus.cgn.merchantsList.featuredOpportunities.title")}</H6>
+        <H6 accessibilityRole="header">
+          {I18n.t("bonus.cgn.merchantsList.featuredOpportunities.title")}
+        </H6>
       </View>
       <VSpacer size={CARD_SPACING} />
       <FlatList
