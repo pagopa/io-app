@@ -2,11 +2,12 @@ import {
   HeaderActionProps,
   HStack,
   IconButton,
-  IOColors,
-  IOVisualCostants,
+  IODimensions,
   LoadingSpinner,
   TabItem,
-  TabNavigation
+  TabNavigation,
+  useIOColors,
+  withAlpha
 } from "@io-app/design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import {
@@ -111,6 +112,7 @@ const BarcodeScanBaseScreenComponent = ({
   hideHelpButton,
   barcodeAnalyticsFlow
 }: Props) => {
+  const colors = useIOColors();
   const isFocused = useIsFocused();
   const insets = useSafeAreaInsets();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -259,8 +261,8 @@ const BarcodeScanBaseScreenComponent = ({
   const HeaderTransparent = () => (
     <View
       style={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault,
-        height: IOVisualCostants.headerHeight,
+        paddingHorizontal: IODimensions.padding.screen.default,
+        height: IODimensions.height.header,
         flexGrow: 1,
         flexDirection: "row",
         alignItems: "center",
@@ -277,10 +279,22 @@ const BarcodeScanBaseScreenComponent = ({
   );
 
   return (
-    <View style={[styles.screen, { paddingBottom: insets.bottom }]}>
+    <View
+      style={[
+        styles.screen,
+        {
+          backgroundColor: colors.background.camera,
+          paddingBottom: insets.bottom
+        }
+      ]}
+    >
       <View style={styles.cameraContainer}>{cameraView}</View>
       <View style={styles.navigationContainer}>
-        <TabNavigation color="dark" selectedIndex={0} tabAlignment="stretch">
+        <TabNavigation
+          color="contrast"
+          selectedIndex={0}
+          tabAlignment="stretch"
+        >
           <TabItem
             accessibilityLabel={I18n.t("barcodeScan.tabs.a11y.scan")}
             label={I18n.t("barcodeScan.tabs.scan")}
@@ -302,7 +316,10 @@ const BarcodeScanBaseScreenComponent = ({
         </TabNavigation>
       </View>
       <LinearGradient
-        colors={["#03134480", "#03134400"]}
+        colors={[
+          withAlpha(colors.background.camera, 0.5),
+          withAlpha(colors.background.camera, 0)
+        ]}
         style={styles.headerContainer}
       >
         <SafeAreaView>
@@ -316,8 +333,7 @@ const BarcodeScanBaseScreenComponent = ({
 
 const styles = StyleSheet.create({
   screen: {
-    flex: 1,
-    backgroundColor: IOColors["blueIO-850"]
+    flex: 1
   },
   headerContainer: {
     flex: 1,

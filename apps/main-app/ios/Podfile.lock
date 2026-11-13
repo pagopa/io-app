@@ -125,6 +125,8 @@ PODS:
     - ExpoModulesCore
   - ExpoStoreReview (55.0.18):
     - ExpoModulesCore
+  - ExpoSwitchAccess (1.0.0):
+    - ExpoModulesCore
   - ExpoTaskManager (55.0.16):
     - ExpoModulesCore
     - UMAppLoader
@@ -198,7 +200,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - IoReactNativeIso18013 (0.9.0):
+  - IoReactNativeIso18013 (0.9.1):
     - boost
     - DoubleConversion
     - fast_float
@@ -3865,6 +3867,7 @@ DEPENDENCIES:
   - ExpoScreenCapture (from `../../../node_modules/expo-screen-capture/ios`)
   - ExpoSharing (from `../../../node_modules/expo-sharing/ios`)
   - ExpoStoreReview (from `../../../node_modules/expo-store-review/ios`)
+  - ExpoSwitchAccess (from `../../../libs/expo-switch-access/ios`)
   - ExpoTaskManager (from `../../../node_modules/expo-task-manager/ios`)
   - "ExpoUI (from `../../../node_modules/@expo/ui/ios`)"
   - ExpoWebBrowser (from `../../../node_modules/expo-web-browser/ios`)
@@ -4074,6 +4077,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/expo-sharing/ios"
   ExpoStoreReview:
     :path: "../../../node_modules/expo-store-review/ios"
+  ExpoSwitchAccess:
+    :path: "../../../libs/expo-switch-access/ios"
   ExpoTaskManager:
     :path: "../../../node_modules/expo-task-manager/ios"
   ExpoUI:
@@ -4351,6 +4356,7 @@ SPEC CHECKSUMS:
   ExpoScreenCapture: aefcd749919380ee0b4d59bb60c1a150aac201c6
   ExpoSharing: 40cd8fd65209bc35adc710ff7e42dd35913d2a0f
   ExpoStoreReview: 660b3f001bc09d41a3f3c277b1e0f10337bf9ea8
+  ExpoSwitchAccess: a6de797b1cfcafd0bf15c8d927007b3afd30d1f2
   ExpoTaskManager: a288a5a5eab33009b1fb7a413ba47ef7eac23fba
   ExpoUI: 3d10642147c44f94a4557f1defe2efd3244349af
   ExpoWebBrowser: 93992534927ba810f67e3171f6acf862c7098674
@@ -4361,7 +4367,7 @@ SPEC CHECKSUMS:
   hermes-engine: a2a9fc7160af80292783f30b771f14a477f29712
   IoReactNativeCie: d30d9055f74cfc1fd00c8583316c6321abdb7794
   IoReactNativeHttpClient: bc2f2838fe9f959375d4d7e0419b11ebf27af379
-  IoReactNativeIso18013: 7f153ea0db4055d00c8de7a4d74a3d548697fd97
+  IoReactNativeIso18013: 4ebc9584dfe22422a31de80c2571c2c00ed4f61b
   jail-monkey: 9298d04aa09f8c9cdcf04e7bf597ea423b52b5bf
   JOSESwift: 7784b1b844194d0f534eb6ac4fba5af683bccc79
   Mixpanel-swift: de454db5987bf6f601106520a44663fc556e8cfa

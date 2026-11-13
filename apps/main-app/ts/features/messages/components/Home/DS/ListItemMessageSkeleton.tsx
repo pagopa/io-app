@@ -1,8 +1,4 @@
-import {
-  IOSkeleton,
-  IOVisualCostants,
-  WithTestID
-} from "@io-app/design-system";
+import { IODimensions, IOSkeleton, WithTestID } from "@io-app/design-system";
 import { StyleSheet, View } from "react-native";
 
 import { ListItemMessageStandardHeight } from "./ListItemMessage";
@@ -40,9 +36,9 @@ export const ListItemMessageSkeleton = ({
   <View accessibilityLabel={accessibilityLabel} style={styles.container}>
     <View style={{ justifyContent: "center" }}>
       <IOSkeleton
-        radius={IOVisualCostants.avatarRadiusSizeSmall}
+        radius={IODimensions.radius.avatar.small}
         shape="square"
-        size={IOVisualCostants.avatarSizeSmall}
+        size={IODimensions.size.avatar.small}
       />
     </View>
     <View style={styles.textContainer}>
@@ -50,7 +46,7 @@ export const ListItemMessageSkeleton = ({
         <View style={{ flex: 1 }}>
           <IOSkeleton
             height={16}
-            radius={IOVisualCostants.avatarRadiusSizeSmall}
+            radius={IODimensions.radius.avatar.small}
             shape="rectangle"
             width="100%"
           />
@@ -58,7 +54,7 @@ export const ListItemMessageSkeleton = ({
         <View style={styles.timeContainer}>
           <IOSkeleton
             height={16}
-            radius={IOVisualCostants.avatarRadiusSizeSmall}
+            radius={IODimensions.radius.avatar.small}
             shape="rectangle"
             width="100%"
           />
@@ -67,7 +63,7 @@ export const ListItemMessageSkeleton = ({
       <View style={styles.textRow1Container}>
         <IOSkeleton
           height={8}
-          radius={IOVisualCostants.avatarRadiusSizeSmall}
+          radius={IODimensions.radius.avatar.small}
           shape="rectangle"
           width="100%"
         />
@@ -75,7 +71,7 @@ export const ListItemMessageSkeleton = ({
       <View style={styles.textRow2Container}>
         <IOSkeleton
           height={8}
-          radius={IOVisualCostants.avatarRadiusSizeSmall}
+          radius={IODimensions.radius.avatar.small}
           shape="rectangle"
           width="100%"
         />

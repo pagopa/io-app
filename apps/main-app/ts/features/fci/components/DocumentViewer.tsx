@@ -1,8 +1,8 @@
 import {
   FooterActions,
   FooterActionsInline,
-  IOColors,
-  IOToast
+  IOToast,
+  useIOColors
 } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as S from "fp-ts/lib/string";
@@ -26,8 +26,7 @@ import LoadingComponent from "./LoadingComponent";
 
 const styles = StyleSheet.create({
   pdf: {
-    flex: 1,
-    backgroundColor: IOColors["grey-700"]
+    flex: 1
   }
 });
 
@@ -103,6 +102,7 @@ type Props = {
 };
 
 export const DocumentViewer = (props: Props): ReactElement => {
+  const colors = useIOColors();
   const [isError, setIsError] = useState(false);
   const documentUrl = props.documentUrl;
   const dispatch = useIODispatch();
@@ -140,7 +140,7 @@ export const DocumentViewer = (props: Props): ReactElement => {
             }}
             onLoadComplete={() => trackFciTosDocPreviewSuccess()}
             source={{ uri: fciDownloadPath, cache: true }}
-            style={styles.pdf}
+            style={[styles.pdf, { backgroundColor: colors.surface.document }]}
           />
           {renderFooter(documentUrl, fciDownloadPath)}
         </>

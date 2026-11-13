@@ -6,11 +6,10 @@ import {
   H5,
   HSpacer,
   IconButton,
-  IOColors,
-  IOSpacing,
-  IOSpacingScale,
+  IODimensions,
+  IODimensionScale,
   useFooterActionsMeasurements,
-  useIOTheme,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -46,8 +45,7 @@ type Props = WithTestID<{
 
 const styles = StyleSheet.create({
   pdf: {
-    flex: 1,
-    backgroundColor: IOColors["grey-700"]
+    flex: 1
   },
   headerTitle: {
     flex: 1,
@@ -65,9 +63,9 @@ const DocumentWithSignature = (props: Props) => {
   const dispatch = useIODispatch();
   const onContinuePress = () => props.onClose();
 
-  const extraFooterActionsMargin: IOSpacingScale = 16;
+  const extraFooterActionsMargin: IODimensionScale = 16;
 
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   const { footerActionsMeasurements, handleFooterActionsMeasurements } =
     useFooterActionsMeasurements();
@@ -132,10 +130,10 @@ const DocumentWithSignature = (props: Props) => {
         source={{
           uri: document
         }}
-        style={styles.pdf}
+        style={[styles.pdf, { backgroundColor: colors.surface.document }]}
       />
     ),
-    [props.onError, totalPages]
+    [colors, props.onError, totalPages]
   );
 
   /**
@@ -207,7 +205,7 @@ const DocumentWithSignature = (props: Props) => {
       edges={["top", "left", "right"]}
       style={{
         flex: 1,
-        backgroundColor: IOColors[theme["appBackground-primary"]]
+        backgroundColor: colors.background.default
       }}
       testID={"FciDocumentsScreenTestID"}
     >
@@ -245,7 +243,7 @@ const DocumentWithSignature = (props: Props) => {
           flex: 1,
           marginBottom:
             footerActionsMeasurements.safeBottomAreaHeight -
-            IOSpacing.screenEndMargin +
+            IODimensions.padding.screen.end +
             extraFooterActionsMargin
         }}
       >

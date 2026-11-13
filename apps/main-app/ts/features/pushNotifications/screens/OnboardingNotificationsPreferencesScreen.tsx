@@ -3,16 +3,15 @@ import { ReminderStatusEnum } from "@io-app/api-types/generated/definitions/iden
 import {
   Body,
   ContentWrapper,
+  FooterActions,
+  FooterActionsMeasurements,
   H1,
-  IOButton,
-  IOStyles,
   useIOToast,
   VSpacer
 } from "@io-app/design-system";
 import I18n from "i18next";
 import { useEffect, useState } from "react";
-import { ScrollView, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { ScrollView } from "react-native";
 
 import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
@@ -45,11 +44,15 @@ type Props = IOStackNavigationRouteProps<
 
 export const OnboardingNotificationsPreferencesScreen = (props: Props) => {
   const dispatch = useIODispatch();
-  const safeAreaInsets = useSafeAreaInsets();
   const toast = useIOToast();
 
   const [previewEnabled, setPreviewEnabled] = useState(true);
   const [remindersEnabled, setRemindersEnabled] = useState(true);
+  const [footerActionsMeasurements, setFooterActionsMeasurements] =
+    useState<FooterActionsMeasurements>({
+      actionBlockHeight: 0,
+      safeBottomAreaHeight: 0
+    });
 
   const isError = useIOSelector(profileHasErrorSelector);
   const isUpdating = useIOSelector(profileIsUpdatingSelector);
@@ -111,7 +114,12 @@ export const OnboardingNotificationsPreferencesScreen = (props: Props) => {
 
   return (
     <>
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingBottom: footerActionsMeasurements.safeBottomAreaHeight
+        }}
+      >
         <ContentWrapper>
           <H1 accessibilityRole="header">
             {I18n.t("profile.preferences.notifications.title")}
@@ -131,22 +139,17 @@ export const OnboardingNotificationsPreferencesScreen = (props: Props) => {
           />
         </ContentWrapper>
       </ScrollView>
-      <View
-        style={[
-          IOStyles.footer,
-          {
-            paddingBottom: safeAreaInsets.bottom + IOStyles.footer.paddingBottom
+      <FooterActions
+        actions={{
+          type: "SingleButton",
+          primary: {
+            label: I18n.t("onboarding.notifications.continue"),
+            loading: isUpdating,
+            onPress: upsertPreferences
           }
-        ]}
-      >
-        <IOButton
-          fullWidth
-          label={I18n.t("onboarding.notifications.continue")}
-          loading={isUpdating}
-          onPress={upsertPreferences}
-          variant="solid"
-        />
-      </View>
+        }}
+        onMeasure={setFooterActionsMeasurements}
+      />
     </>
   );
 };

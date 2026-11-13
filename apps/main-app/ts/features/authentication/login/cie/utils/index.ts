@@ -1,34 +1,45 @@
-import { CieIdEnvironment } from "@pagopa/io-react-native-cieid";
 import { Platform } from "react-native";
 
 import { cieLoginFlowWithDevServerEnabled } from "../../../../../config";
 import { isDevEnv } from "../../../../../utils/environment";
 import { AuthLevel, SPID_AUTH_LEVEL_MAP } from "../../../common/utils";
 
+export const CIE_ENVS = {
+  PROD: "production",
+  PREPROD: "preprod"
+} as const;
+
+export type CieEnv = (typeof CIE_ENVS)[keyof typeof CIE_ENVS];
+
 export const cieFlowForDevServerEnabled =
   isDevEnv && cieLoginFlowWithDevServerEnabled;
 
-const CIE_IDP_ID_MAP: Record<"prod" | "uat", string> = {
-  prod: "https://idserver.servizicie.interno.gov.it/idp/profile/SAML2/POST/SSO",
-  uat: "https://preproduzione.idserver.servizicie.interno.gov.it/idp/profile/SAML2/POST/SSO"
+const CIE_IDP_ID_MAP: Record<CieEnv, string> = {
+  production:
+    "https://idserver.servizicie.interno.gov.it/idp/profile/SAML2/POST/SSO",
+  preprod:
+    "https://preproduzione.idserver.servizicie.interno.gov.it/idp/profile/SAML2/POST/SSO"
 };
 
-/** Returns the CIE Identity Provider ID based on the UAT flag. */
-export const getCieIdpId = (useUat: boolean) =>
-  useUat ? CIE_IDP_ID_MAP.uat : CIE_IDP_ID_MAP.prod;
+const CIE_ENTITY_ID_MAP: Record<CieEnv, string> = {
+  production: "xx_servizicie",
+  preprod: "xx_servizicie_coll"
+};
 
-/** Maps the CIE login UAT flag to the CieID app environment to open. */
-export const getCieIdEnvironment = (isUat: boolean): CieIdEnvironment =>
-  isUat ? "preprod" : "production";
+/** Returns the CIE Identity Provider ID for the given CIE environment. */
+export const getCieIdpId = (cieEnv: CieEnv) => CIE_IDP_ID_MAP[cieEnv];
+
+/** Returns the CIE entity ID for the given CIE environment. */
+export const getCieEntityId = (cieEnv: CieEnv) => CIE_ENTITY_ID_MAP[cieEnv];
 
 export const getCieIDLoginUri = (
   authLevel: AuthLevel,
-  isUat: boolean,
+  cieEnv: CieEnv,
   apiLoginUrlPrefix: string
 ) =>
-  `${apiLoginUrlPrefix}/api/auth/v1/login?entityID=${
-    isUat ? "xx_servizicie_coll" : "xx_servizicie"
-  }&authLevel=${SPID_AUTH_LEVEL_MAP[authLevel]}`;
+  `${apiLoginUrlPrefix}/api/auth/v1/login?entityID=${getCieEntityId(
+    cieEnv
+  )}&authLevel=${SPID_AUTH_LEVEL_MAP[authLevel]}`;
 
 /**
  * Checks if the given `url` must be handed over to the CieID app to
