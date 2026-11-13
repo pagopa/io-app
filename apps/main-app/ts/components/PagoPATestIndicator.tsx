@@ -1,8 +1,8 @@
-import { hexToRgba, Icon, IOColorsLegacy } from "@io-app/design-system";
+import { Icon, IOColorPalette, withAlpha } from "@io-app/design-system";
 import { StyleSheet, Text, View } from "react-native";
 
-const debugItemBgColor = hexToRgba(IOColorsLegacy.white, 0.4);
-const debugItemBorderColor = hexToRgba(IOColorsLegacy.black, 0.1);
+const debugItemBgColor = withAlpha(IOColorPalette.greyscale.white, 0.4);
+const debugItemBorderColor = withAlpha(IOColorPalette.greyscale.black, 0.1);
 
 const styles = StyleSheet.create({
   indicatoWrapper: {
@@ -20,11 +20,15 @@ const styles = StyleSheet.create({
 
 const PagoPATestIndicator = () => (
   <View style={styles.indicatoWrapper}>
-    <Icon color="grey-850" name="productPagoPA" size={20} />
+    <Icon
+      color={IOColorPalette.greyscale[850]}
+      name="productPagoPA"
+      size={20}
+    />
     <Text
       style={{
         fontSize: 8,
-        color: IOColorsLegacy["grey-850"],
+        color: IOColorPalette.greyscale[850],
         marginLeft: 4,
         textTransform: "uppercase"
       }}

@@ -7,9 +7,15 @@ import {
 } from "../../../common/utils/itwTypesUtils";
 import { itwCredentialsStore } from "../../../credentials/store/actions";
 import { itwAllStoredCredentialsSelector } from "../../../credentials/store/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import { trackItwCredentialStatusUpdateFailure } from "../../analytics";
 import { updateCredentialsStatusSaga } from "../updateCredentialsStatusSaga";
 
 const mockGetStatus = jest.fn();
+
+jest.mock("../../analytics", () => ({
+  trackItwCredentialStatusUpdateFailure: jest.fn()
+}));
 
 jest.mock("../../../common/utils/itwIoWallet", () => ({
   getIoWallet: jest.fn(() => ({
@@ -56,6 +62,7 @@ const makeCredential = (): CredentialMetadata => {
 
 describe("updateCredentialsStatusSaga", () => {
   beforeEach(() => {
+    jest.clearAllMocks();
     mockGetStatus.mockReset();
   });
 
@@ -85,12 +92,15 @@ describe("updateCredentialsStatusSaga", () => {
       .next()
       .select(itwAllStoredCredentialsSelector)
       .next([credential, credentialWithoutStatusList])
+      .select(itwLifecycleIsITWalletValidSelector)
+      .next(true)
       .next([statusList])
       .put(itwCredentialsStore([updatedCredential]))
       .next()
       .isDone();
 
     expect(mockGetStatus).toHaveBeenCalledWith(statusList.status_list, 1);
+    expect(trackItwCredentialStatusUpdateFailure).not.toHaveBeenCalled();
   });
 
   it("does not dispatch when the cached status does not change validity", () => {
@@ -104,50 +114,66 @@ describe("updateCredentialsStatusSaga", () => {
       .next()
       .select(itwAllStoredCredentialsSelector)
       .next([credential])
+      .select(itwLifecycleIsITWalletValidSelector)
+      .next(true)
       .next([makeStatusList()])
       .next()
       .isDone();
   });
 
-  it("skips credentials whose status cannot be read and updates the others", () => {
-    const credential = makeCredential();
-    const otherValidity: CredentialValidity = {
-      type: "status_list",
-      status: "valid",
-      rawStatus: "0x00",
-      statusList: { idx: 2, uri: URI }
-    };
-    const otherCredential = {
-      ...credential,
-      credentialId: "credential-2",
-      validity: otherValidity
-    };
-    mockGetStatus
-      .mockImplementationOnce(() => {
-        throw new Error("Unsupported credential status bit: 0x04");
-      })
-      .mockReturnValueOnce({ status: "SUSPENDED", rawStatus: "0x02" });
+  it.each([
+    { name: "IT Wallet", isItwL3: true, expected: "ITW_PG_V3" },
+    { name: "Documenti su IO", isItwL3: false, expected: "ITW_PG_V2" }
+  ])(
+    "tracks a failure for $name and updates the other credentials",
+    ({ isItwL3, expected }) => {
+      const credential = makeCredential();
+      const otherValidity: CredentialValidity = {
+        type: "status_list",
+        status: "valid",
+        rawStatus: "0x00",
+        statusList: { idx: 2, uri: URI }
+      };
+      const otherCredential = {
+        ...credential,
+        credentialId: "credential-2",
+        validity: otherValidity
+      };
+      mockGetStatus
+        .mockImplementationOnce(() => {
+          throw new Error("Unsupported credential status bit: 0x04");
+        })
+        .mockReturnValueOnce({ status: "SUSPENDED", rawStatus: "0x02" });
 
-    testSaga(updateCredentialsStatusSaga, { itwVersion: "1.4.6" })
-      .next()
-      .select(itwAllStoredCredentialsSelector)
-      .next([credential, otherCredential])
-      .next([makeStatusList(), makeStatusList()])
-      .put(
-        itwCredentialsStore([
-          {
-            ...otherCredential,
-            validity: {
-              ...otherValidity,
-              status: "suspended",
-              rawStatus: "0x02"
+      testSaga(updateCredentialsStatusSaga, { itwVersion: "1.4.6" })
+        .next()
+        .select(itwAllStoredCredentialsSelector)
+        .next([credential, otherCredential])
+        .select(itwLifecycleIsITWalletValidSelector)
+        .next(isItwL3)
+        .next([makeStatusList(), makeStatusList()])
+        .put(
+          itwCredentialsStore([
+            {
+              ...otherCredential,
+              validity: {
+                ...otherValidity,
+                status: "suspended",
+                rawStatus: "0x02"
+              }
             }
-          }
-        ])
-      )
-      .next()
-      .isDone();
-  });
+          ])
+        )
+        .next()
+        .isDone();
+
+      expect(trackItwCredentialStatusUpdateFailure).toHaveBeenCalledTimes(1);
+      expect(trackItwCredentialStatusUpdateFailure).toHaveBeenCalledWith(
+        expected,
+        new Error("Unsupported credential status bit: 0x04")
+      );
+    }
+  );
 
   it("skips credentials whose status list is not cached", () => {
     const credential = makeCredential();
@@ -156,7 +182,11 @@ describe("updateCredentialsStatusSaga", () => {
       .next()
       .select(itwAllStoredCredentialsSelector)
       .next([credential])
+      .select(itwLifecycleIsITWalletValidSelector)
+      .next(true)
       .next([undefined])
       .isDone();
+
+    expect(trackItwCredentialStatusUpdateFailure).not.toHaveBeenCalled();
   });
 });

@@ -1,59 +1,35 @@
 import { CommonActions } from "@react-navigation/native";
-import { call, put, select } from "typed-redux-saga/macro";
+import { SagaIterator } from "redux-saga";
+import { call } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
 import NavigationService from "../../../../navigation/NavigationService";
-import {
-  executeWorkUnit,
-  withFailureHandling,
-  withResetNavigationStack
-} from "../../../../sagas/workUnit";
-import { isLoggedIn } from "../../../authentication/common/store/utils/guards";
-import ZENDESK_ROUTES from "../../navigation/routes";
-import {
-  getZendeskToken,
-  zendeskSupportBack,
-  zendeskSupportCancel,
-  zendeskSupportCompleted,
-  zendeskSupportFailure,
-  zendeskSupportStart
-} from "../../store/actions";
+import ROUTES from "../../../../navigation/routes";
+import { zendeskSupportStart } from "../../store/actions";
+import { zendeskSupportWorker } from "./zendeskSupportWorker";
 
 export function* zendeskSupport(
   zendeskStart: ActionType<typeof zendeskSupportStart>
-) {
-  yield* call(withFailureHandling, () =>
-    withResetNavigationStack(() => zendeskSupportWorkUnit(zendeskStart))
-  );
-}
+): SagaIterator {
+  const navigator = yield* call(NavigationService.getNavigator);
+  const initialState = navigator.current?.getRootState();
 
-function* zendeskSupportWorkUnit(
-  zendeskStart: ActionType<typeof zendeskSupportStart>
-) {
-  const isLoggedinUser = yield* select(s => isLoggedIn(s.authentication));
-  const needToNavigateInAskPermissionScreen = Object.values(
-    zendeskStart.payload.assistanceType
-  ).some(Boolean);
+  const result = yield* call(zendeskSupportWorker, zendeskStart);
 
-  if (needToNavigateInAskPermissionScreen && isLoggedinUser) {
-    yield* put(getZendeskToken.request());
+  if (initialState !== undefined) {
+    yield* resetNavigationTo(initialState);
   }
 
-  return yield* call(executeWorkUnit, {
-    startScreenNavigation: () => {
-      NavigationService.dispatchNavigationAction(
-        CommonActions.navigate(ZENDESK_ROUTES.MAIN, {
-          screen: needToNavigateInAskPermissionScreen
-            ? ZENDESK_ROUTES.ASK_PERMISSIONS
-            : ZENDESK_ROUTES.HELP_CENTER,
-          params: zendeskStart.payload
-        })
-      );
-    },
-    startScreenName: ZENDESK_ROUTES.HELP_CENTER,
-    complete: zendeskSupportCompleted,
-    back: zendeskSupportBack,
-    cancel: zendeskSupportCancel,
-    failure: zendeskSupportFailure
-  });
+  if (result === "failure") {
+    yield* call(NavigationService.navigate, ROUTES.WORKUNIT_GENERIC_FAILURE);
+  }
+
+  return result;
+}
+
+function* resetNavigationTo(state: Parameters<typeof CommonActions.reset>[0]) {
+  yield* call(
+    NavigationService.dispatchNavigationAction,
+    CommonActions.reset(state)
+  );
 }

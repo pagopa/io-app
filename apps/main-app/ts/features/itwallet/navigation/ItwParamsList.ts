@@ -27,6 +27,7 @@ export type ItwParamsList = ItwPlaygroundParamsList & {
     | ItwDiscoveryInfoScreenNavigationParams
     | undefined;
   [ITW_ROUTES.DISCOVERY.IPZS_PRIVACY]: undefined;
+  [ITW_ROUTES.ENGAGEMENT]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE.ACTIVATE_NFC]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE.AUTH_SCREEN]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE.CAN_SCREEN]: undefined;

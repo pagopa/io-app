@@ -7,10 +7,13 @@ import {
 } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { useIOColors } from "../../context";
+import { useIOColors, useSwitchAccessEnabled } from "../../context";
 import { IODimensions } from "../../core";
 import { useListItemAnimation } from "../../hooks";
-import { useIOFontDynamicScale } from "../../utils/accessibility";
+import {
+  useIOFontDynamicScale,
+  useScreenReaderEnabled
+} from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { AvatarSearch } from "../avatar";
 import { Badge } from "../badge";
@@ -71,6 +74,25 @@ type InteractiveProps = Pick<
 
 const PAYMENT_LOGO_SIZE: IOIconSizeScale = 24;
 
+const getContainerAccessibilityProps = (
+  hasInteractiveElements: boolean,
+  hideFromSwitchAccess: boolean,
+  accessibilityLabel: string,
+  accessibilityRole?: AccessibilityRole
+): Partial<ComponentProps<typeof View>> => {
+  if (hasInteractiveElements) {
+    return { accessible: false };
+  }
+  if (hideFromSwitchAccess) {
+    return {
+      accessibilityElementsHidden: true,
+      accessible: false,
+      importantForAccessibility: "no-hide-descendants"
+    };
+  }
+  return { accessibilityLabel, accessibilityRole, accessible: true };
+};
+
 const EndElementComponent = ({ type, componentProps }: EndElementProps) => {
   switch (type) {
     case "badge":
@@ -108,6 +130,7 @@ const ListItemInfoContent = ({
   endElement,
   imageSource,
   hasInteractiveElements,
+  hideFromSwitchAccess,
   listItemAccessibilityLabel
 }: Pick<
   ListItemInfo,
@@ -122,12 +145,14 @@ const ListItemInfoContent = ({
   | "value"
 > & {
   hasInteractiveElements: boolean;
+  hideFromSwitchAccess: boolean;
   listItemAccessibilityLabel?: string;
 }) => {
   const listItemColors = useIOColors().component.listItem;
   const { hugeFontEnabled } = useIOFontDynamicScale();
   const [failedImageSource, setFailedImageSource] =
     useState<ImageSourcePropType>();
+  const isContentAccessible = hasInteractiveElements && !hideFromSwitchAccess;
 
   return (
     <>
@@ -149,12 +174,13 @@ const ListItemInfoContent = ({
 
       <View style={{ flex: 1 }}>
         <View
+          accessibilityElementsHidden={!isContentAccessible}
           accessibilityLabel={
-            hasInteractiveElements ? listItemAccessibilityLabel : undefined
+            isContentAccessible ? listItemAccessibilityLabel : undefined
           }
-          accessible={false}
+          accessible={isContentAccessible}
           importantForAccessibility={
-            hasInteractiveElements ? "yes" : "no-hide-descendants"
+            isContentAccessible ? "yes" : "no-hide-descendants"
           }
           screenReaderFocusable={hasInteractiveElements ? true : undefined}
           style={{ flexDirection: reversed ? "column-reverse" : "column" }}
@@ -263,6 +289,9 @@ export const ListItemInfo = ({
   testID
 }: ListItemInfo) => {
   const { dynamicFontScale, spacingScaleMultiplier } = useIOFontDynamicScale();
+  const switchAccessEnabled = useSwitchAccessEnabled();
+  const screenReaderEnabled = useScreenReaderEnabled();
+  const hideFromSwitchAccess = switchAccessEnabled && !screenReaderEnabled;
 
   const { onPressIn, onPressOut, scaleAnimatedStyle, backgroundAnimatedStyle } =
     useListItemAnimation();
@@ -316,16 +345,21 @@ export const ListItemInfo = ({
     endElement,
     imageSource,
     hasInteractiveElements,
-    listItemAccessibilityLabel
+    listItemAccessibilityLabel,
+    hideFromSwitchAccess
   } as const;
 
   if (onLongPress) {
     return (
       <Pressable
         accessibilityActions={accessibilityActions}
+        accessibilityElementsHidden={hideFromSwitchAccess}
         accessibilityLabel={listItemAccessibilityLabel}
         accessibilityRole="button"
-        accessible
+        accessible={!hideFromSwitchAccess}
+        importantForAccessibility={
+          hideFromSwitchAccess ? "no-hide-descendants" : "auto"
+        }
         onAccessibilityAction={onAccessibilityAction}
         onLongPress={onLongPress}
         onPressIn={onPressIn}
@@ -357,13 +391,12 @@ export const ListItemInfo = ({
 
   return (
     <View
-      accessibilityLabel={
-        hasInteractiveElements ? undefined : listItemAccessibilityLabel
-      }
-      accessibilityRole={hasInteractiveElements ? undefined : accessibilityRole}
-      accessible={false}
-      importantForAccessibility={hasInteractiveElements ? undefined : "yes"}
-      screenReaderFocusable={hasInteractiveElements ? undefined : true}
+      {...getContainerAccessibilityProps(
+        hasInteractiveElements,
+        hideFromSwitchAccess,
+        listItemAccessibilityLabel,
+        accessibilityRole
+      )}
       style={IOListItemStyles.listItem}
       testID={testID}
     >

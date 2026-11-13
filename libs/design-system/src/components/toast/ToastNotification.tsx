@@ -14,9 +14,9 @@ const ToastNotification = ({ message, variant, icon }: Props) => {
 
   return (
     <View
-      accessibilityLabel={message}
-      accessibilityRole={"alert"}
-      accessible={true}
+      accessibilityElementsHidden
+      accessible={false}
+      importantForAccessibility="no-hide-descendants"
       style={[
         styles.toast,
         {
