@@ -94,6 +94,7 @@ export const trackFciSignatureGenericFailure = (reason: string) =>
 export const trackFciSignatureRequestStatus = (
   params:
     | {
+        authSecurityLevel: string;
         environment: string;
         expiresAt: Date;
         status: SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE;
@@ -123,7 +124,8 @@ export const trackFciSignatureRequestStatus = (
       trackFciDocOpening(
         params.expiresAt,
         params.totalDocCount,
-        params.environment
+        params.environment,
+        params.authSecurityLevel
       );
       break;
     default:
@@ -144,14 +146,16 @@ export const trackFciSignatureDetailFailureAction = (
 export const trackFciDocOpening = (
   expire_date: SignatureRequestDetailView["expires_at"],
   total_doc_count: number,
-  environment: string
+  environment: string,
+  auth_security_level: string
 ) =>
   mixpanelTrack(
     "FCI_DOC_OPENING",
     buildEventProperties("UX", "action", {
       expire_date,
       total_doc_count,
-      environment
+      environment,
+      auth_security_level
     })
   );
 
@@ -365,7 +369,7 @@ export const trackFciAppUpdateRequested = () =>
   );
 
 const trackFciAction =
-  (environment: string) =>
+  (environment: string, authSecurityLevel: string) =>
   (action: Action): void => {
     switch (action.type) {
       case getType(fciClearStateRequest):
@@ -376,10 +380,7 @@ const trackFciAction =
       case getType(fciPollFilledDocument.cancel):
       case getType(fciPollFilledDocument.request):
       case getType(fciPollFilledDocument.success):
-      case getType(fciSignatureRequestFromId.request):
-      case getType(fciSignatureRequestFromId.success):
       case getType(fciSigningRequest.request):
-      case getType(fciStartRequest):
       case getType(fciUpdateDocumentSignaturesRequest):
         return mixpanelTrack(
           action.type,
@@ -395,6 +396,16 @@ const trackFciAction =
           buildEventProperties("KO", undefined, {
             reason: getNetworkErrorMessage(action.payload),
             environment
+          })
+        );
+      case getType(fciSignatureRequestFromId.request):
+      case getType(fciSignatureRequestFromId.success):
+      case getType(fciStartRequest):
+        return mixpanelTrack(
+          action.type,
+          buildEventProperties("TECH", undefined, {
+            environment,
+            auth_security_level: authSecurityLevel
           })
         );
       case getType(fciSigningRequest.success):
