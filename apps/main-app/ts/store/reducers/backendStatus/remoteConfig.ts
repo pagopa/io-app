@@ -84,10 +84,9 @@ export const cgnMerchantsModalSelector = createSelector(
 export const cgnFeaturedOpportunitiesSelector = createSelector(
   remoteConfigSelector,
   remoteConfig => {
-    const featuredOpportunities =
-      remoteConfig._tag === "Some"
-        ? remoteConfig.value.cgn?.featured_opportunities
-        : undefined;
+    const featuredOpportunities = O.isSome(remoteConfig)
+      ? remoteConfig.value.cgn?.featured_opportunities
+      : undefined;
     return featuredOpportunities &&
       isMinAppVersionSupported(O.some(featuredOpportunities))
       ? featuredOpportunities.opportunities
