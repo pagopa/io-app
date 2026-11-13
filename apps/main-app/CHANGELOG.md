@@ -1,3 +1,7 @@
+## 3.44.0-rc.0 (2026-11-13)
+
+This was a version bump only for @io-app/main-app to align it with other projects, there were no code changes.
+
 ## 3.43.0-rc.11 (2026-11-13)
 
 ### Features
