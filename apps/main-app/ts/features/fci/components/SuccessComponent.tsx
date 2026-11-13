@@ -4,7 +4,8 @@ import { useIsFocused } from "@react-navigation/native";
 import I18n from "i18next";
 import { useEffect, useMemo } from "react";
 
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { authSecurityLevelHandler } from "../../../mixpanelConfig/mixpanelPropertyUtils";
+import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import {
   trackFciSignatureExpired,
   trackFciSignatureRequestStatus
@@ -22,6 +23,7 @@ const SuccessComponent = (props: {
   const status = props.signatureRequest.status;
   const fciDocuments = useIOSelector(fciSignatureDetailDocumentsSelector);
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
+  const store = useIOStore();
   const dispatch = useIODispatch();
 
   const isFocused = useIsFocused();
@@ -63,7 +65,8 @@ const SuccessComponent = (props: {
         status,
         expiresAt: expires_at_effect,
         totalDocCount: fciDocuments.length,
-        environment: fciEnvironment
+        environment: fciEnvironment,
+        authSecurityLevel: authSecurityLevelHandler(store.getState())
       });
       dispatch(fciStartRequest());
     } else {
@@ -77,7 +80,8 @@ const SuccessComponent = (props: {
     isFocused,
     isExpiredDocument,
     props.signatureRequest.expires_at,
-    status
+    status,
+    store
   ]);
 
   // if the user (signer) has not signed and the request is expired

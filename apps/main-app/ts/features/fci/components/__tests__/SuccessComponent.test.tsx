@@ -4,10 +4,12 @@ import { Provider } from "react-redux";
 import { createStore, Store } from "redux";
 import configureMockStore from "redux-mock-store";
 
+import * as mixpanelPropertyUtils from "../../../../mixpanelConfig/mixpanelPropertyUtils";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import * as analytics from "../../analytics";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { fciStartRequest } from "../../store/actions";
 import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
@@ -32,6 +34,29 @@ describe("Test SuccessComponent", () => {
     const component = renderComponent(props, store);
     expect(component).toBeTruthy();
     expect(store.getActions()).toEqual([fciStartRequest()]);
+  });
+  it("with a signature request status WAIT_FOR_SIGNATURE should track the status with the current auth security level", () => {
+    jest
+      .spyOn(mixpanelPropertyUtils, "authSecurityLevelHandler")
+      .mockReturnValue("L3");
+    const trackSpy = jest
+      .spyOn(analytics, "trackFciSignatureRequestStatus")
+      .mockImplementation();
+    const mockStore = configureMockStore<GlobalState>();
+    const store: ReturnType<typeof mockStore> = mockStore(globalState);
+
+    renderComponent(
+      { signatureRequest: mockSignatureRequestDetailView },
+      store
+    );
+
+    expect(trackSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        status: SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE,
+        authSecurityLevel: "L3"
+      })
+    );
+    jest.restoreAllMocks();
   });
   it("with a signature request EXPIRED and a signature status equal to WAIT_FOR_SIGNATURE should render the right Error component", () => {
     const now = new Date();
