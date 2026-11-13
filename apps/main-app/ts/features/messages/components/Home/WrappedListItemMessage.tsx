@@ -61,6 +61,7 @@ export const WrappedListItemMessage = ({
   const isSelected = useIOSelector(state =>
     isMessageScheduledForArchivingSelector(state, message.id)
   );
+  const isProcessing = useIOSelector(isArchivingInProcessingModeSelector);
 
   const messageCategoryTag = message.category.tag;
   const avatarDouble = messageCategoryTag === PaymentTagEnum.PAYMENT;
@@ -195,9 +196,13 @@ export const WrappedListItemMessage = ({
       formattedDate={messageDate}
       isRead={isRead}
       messageTitle={messageTitle}
-      // Accessibility label is not announced if the onLonPress
+      // Accessibility label is not announced if the onLongPress
       // event is triggered, so we have to force the announcement
-      onLongPress={() => toggleScheduledMessageArchivingCallback(true)}
+      onLongPress={
+        isInboxOrArchiveSource(source) && !isProcessing
+          ? () => toggleScheduledMessageArchivingCallback(true)
+          : undefined
+      }
       onPress={onPressCallback}
       organizationName={organizationName}
       selected={isSelected}
