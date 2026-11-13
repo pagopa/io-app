@@ -1,4 +1,4 @@
-import { isCancelledFailure } from "@io-app/expo-http-client";
+import { isCancelledFailure } from "@pagopa/io-react-native-http-client";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 
