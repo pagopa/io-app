@@ -664,9 +664,6 @@
       },
       "merchantsList": {
         "a11yTitle": "Categoria: {{categoryName}}",
-        "featuredOpportunities": {
-          "title": "In evidenza"
-        },
         "categoriesList": {
           "bottomSheet": {
             "content": "Per agevolare la ricerca e migliorare la tua esperienza, abbiamo organizzato le categorie in base alla frequenza di utilizzo. Questa informazione non è legata al tuo profilo, ma si basa su dati complessivi di tutti gli utenti che utilizzano Carta Giovani Nazionale e hanno acconsentito al trattamento dei dati.",
@@ -680,6 +677,9 @@
           }
         },
         "discountOf": "Sconto del {{discount}}%",
+        "featuredOpportunities": {
+          "title": "In evidenza"
+        },
         "filter": {
           "categories": "Categorie"
         },
@@ -991,12 +991,6 @@
       "title": "Questo servizio non è più attivo su IO"
     },
     "itWallet": {
-      "loginEngagement": {
-        "action": "Attiva IT-Wallet",
-        "description": "L’app IO è ora parte del sistema nazionale di portafogli digitali IT-Wallet: più documenti, con funzionalità evolute, sempre a portata di mano.",
-        "secondaryAction": "Non attivare",
-        "title": "È disponibile per te il nuovo portafoglio IT-Wallet"
-      },
       "card": {
         "digital": "Versione digitale",
         "status": {
@@ -1032,8 +1026,8 @@
       "discovery": {
         "alreadyActive": {
           "action": "Vai al Portafoglio",
-          "content": "Continua ad aggiungere le versioni digitali dei tuoi documenti al Portafoglio.",
-          "title": "Documenti su IO è già attiva"
+          "content": "Inizia o continua ad aggiungere le versioni digitali dei tuoi documenti!",
+          "title": "La funzionalità documenti digitali è già attiva sul tuo Portafoglio"
         },
         "banner": {
           "home": {
@@ -1135,7 +1129,7 @@
               "1": "Nuovi documenti digitali ufficiali, solo sull’app IO",
               "2": "La tua Patente su IO è valida come documento di riconoscimento",
               "3": "Ti basta il tuo telefono per dimostrare la tua identità",
-              "4": "Potrai accedere in pochi tocchi ai servizi digitali della PA",
+              "4": "Potrai presto accedere in pochi tocchi a servizi digitali pubblici e privati",
               "5": "Un aiuto nel tuo quotidiano, sempre a portata di mano"
             },
             "privacyAndTos": "Premendo **Continua** dichiari di aver preso visione dell'[Informativa Privacy]({{privacyUrl}}) e accetti i [Termini e Condizioni d'uso]({{tosUrl}}).",
@@ -1177,18 +1171,18 @@
         },
         "upgrade_empty": {
           "action": "Inizia",
-          "description": "Scopri le funzionalità evolute dei documenti digitali su IO.",
+          "description": "Attivalo ora e scopri le funzionalità evolute dei tuoi documenti digitali su IO.",
           "title": "Il tuo Portafoglio è ora parte di IT-Wallet"
-        },
-        "upgrade_with_mdl": {
-          "action": "Inizia",
-          "description": "Usa la tua Patente digitale anche come documento di riconoscimento, in modo facile e sicuro!",
-          "title": "Dimostra chi sei col tuo dispositivo"
         },
         "upgrade_from_expired": {
           "action": "Inizia",
           "description": "Continua a usare i tuoi documenti su IO e aggiungine di nuovi, con funzionalità più avanzate.",
           "title": "Attiva IT-Wallet per non perdere i tuoi documenti"
+        },
+        "upgrade_with_mdl": {
+          "action": "Inizia",
+          "description": "Usa la tua Patente digitale anche come documento di riconoscimento, in modo facile e sicuro!",
+          "title": "Dimostra chi sei col tuo dispositivo"
         }
       },
       "feedback": {
@@ -1719,6 +1713,12 @@
           "secondaryAction": "Non ora"
         }
       },
+      "loginEngagement": {
+        "action": "Attiva IT-Wallet",
+        "description": "L’app IO è ora parte del sistema nazionale di portafogli digitali IT-Wallet: più documenti, con funzionalità evolute, sempre a portata di mano.",
+        "secondaryAction": "Non attivare",
+        "title": "È disponibile per te il nuovo portafoglio IT-Wallet"
+      },
       "modal": {
         "credentialUpgrade": {
           "content": "Non è stato possibile aggiornare il documento automaticamente.\n\nPremi ‘Aggiorna il documento digitale’ per continuare a usarlo senza limitazioni.",
@@ -1963,9 +1963,9 @@
         },
         "credentialDetails": {
           "actions": {
+            "discoverOpportunities": "Scopri le opportunità",
             "hideClaimValues": "Nascondi gli attributi del documento",
             "openIPatente": "Vai al saldo punti patente",
-            "discoverOpportunities": "Scopri le opportunità",
             "removeFromWallet": "Rimuovi dal Portafoglio",
             "requestAssistance": "Qualcosa non torna?",
             "updateDigitalCredential": "Aggiorna il documento digitale"
@@ -2060,7 +2060,7 @@
             }
           },
           "listItemHeader": "Dati del tuo IT-Wallet ID",
-          "listItemHeaderHideValues": "Nascondi dati del tuo IT-Wallet ID",
+          "listItemHeaderHideValues": "Nascondi dati del tuo IT-⁠Wallet ID",
           "listItemHeaderShowValues": "Mostra dati del tuo IT-Wallet ID"
         },
         "missingCredentials": {
@@ -2115,7 +2115,7 @@
             "permissions": {
               "actions": {
                 "primary": "Apri impostazioni",
-                "secondary": "Continua"
+                "secondary": "L'ho già fatto"
               },
               "alert": {
                 "message": "Vai a Impostazioni e modifica le preferenze, poi riprova.",
@@ -2487,7 +2487,7 @@
           "primaryAction": "Chiudi",
           "secondaryAction": "Scopri di più",
           "subtitle": "Questo dispositivo non ha i requisiti di sicurezza necessari per il suo funzionamento.",
-          "title": "Il tuo dispositivo non supporta IT Wallet"
+          "title": "Il tuo dispositivo non supporta IT-Wallet"
         }
       },
       "verifiableCredentials": {
