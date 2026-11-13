@@ -16,7 +16,7 @@ import { contramap } from "fp-ts/lib/Ord";
 
 import { getProblemJson } from "../../../payloads/error";
 import {
-  generateMerchantsAll,
+  merchantsAll,
   offlineMerchants,
   onlineMerchants
 } from "../../../payloads/features/cgn/merchants";
@@ -29,8 +29,6 @@ export const cgnMerchantsRouter = Router();
 const MERCHANTS_PREFIX = "/api/cgn-search/v1";
 
 const addPrefix = (path: string) => `${MERCHANTS_PREFIX}${path}`;
-
-const merchantsAll = generateMerchantsAll();
 
 const filterMerchants = <T extends OfflineMerchant | OnlineMerchant>(
   merchants: ReadonlyArray<T>,

@@ -7,7 +7,6 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
       {
         "alignItems": "center",
         "borderBottomWidth": 0,
-        "boxShadow": "0px 4px 8px rgba(14,15,19,0.1)",
         "flexDirection": "row",
         "paddingBottom": 14,
         "paddingTop": 12,
@@ -17,6 +16,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
       {
         "backgroundColor": "#FFFFFF",
         "borderColor": "#D2D6E3",
+        "boxShadow": "0px 4px 8px rgba(14,15,19,0.1)",
       },
     ]
   }

@@ -1,7 +1,15 @@
 import { fireEvent, render } from "@testing-library/react-native";
 
+import { withStore } from "../../../../../../../utils/jest/withStore";
+import { useCredentialCardConfig } from "../../../../../common/components/ItwCredentialCard/config";
 import { ClaimDisplayFormat } from "../../../../../common/utils/itwClaimsUtils";
 import { ItwClaimsSelector } from "../index";
+
+jest.mock("../../../../../common/components/ItwCredentialCard/config", () => ({
+  useCredentialCardConfig: jest.fn(() => ({
+    background: { colors: ["#123456"] }
+  }))
+}));
 
 jest.mock("../../../../../common/hooks/useItwCredentialName", () => ({
   useItwCredentialName: (credentialType: string) =>
@@ -61,6 +69,8 @@ jest.mock("@io-app/design-system/src/hooks/useAccordionAnimation", () => ({
   })
 }));
 
+const ItwClaimsSelectorWithStore = withStore(ItwClaimsSelector);
+
 describe("ItwClaimsSelector", () => {
   const items: Array<ClaimDisplayFormat> = [
     { id: "name", label: "Name", value: "Mario Rossi" },
@@ -69,7 +79,7 @@ describe("ItwClaimsSelector", () => {
 
   it("renders credential claims", () => {
     const component = render(
-      <ItwClaimsSelector
+      <ItwClaimsSelectorWithStore
         accessibilityLabel="claims-selector"
         credentialType="PersonIdentificationData"
         items={items}
@@ -83,7 +93,7 @@ describe("ItwClaimsSelector", () => {
 
   it("renders the credential name resolved from the catalogue as title", () => {
     const component = render(
-      <ItwClaimsSelector
+      <ItwClaimsSelectorWithStore
         accessibilityLabel="claims-selector"
         credentialType="education_diploma"
         items={items}
@@ -95,10 +105,24 @@ describe("ItwClaimsSelector", () => {
     ).toBeTruthy();
   });
 
+  it("uses the credential card config hook for the claims card background", () => {
+    render(
+      <ItwClaimsSelectorWithStore
+        credentialType="PersonIdentificationData"
+        items={items}
+      />
+    );
+
+    expect(useCredentialCardConfig).toHaveBeenCalledWith(
+      "PersonIdentificationData",
+      expect.any(String)
+    );
+  });
+
   it("calls onToggle when the accordion header is pressed", () => {
     const onToggle = jest.fn();
     const component = render(
-      <ItwClaimsSelector
+      <ItwClaimsSelectorWithStore
         accessibilityLabel="claims-selector"
         credentialType="PersonIdentificationData"
         items={items}

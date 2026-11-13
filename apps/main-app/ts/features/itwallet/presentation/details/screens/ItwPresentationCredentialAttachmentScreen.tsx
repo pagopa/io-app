@@ -1,7 +1,7 @@
 import {
   FooterActions,
   FooterActionsMeasurements,
-  IOColorsLegacy,
+  useIOColors,
   useIOToast
 } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
@@ -61,6 +61,7 @@ const INVALID_SPACES_AND_DOTS_REGEX = /^[\s.]+|[\s.]+$/g;
 export const ItwPresentationCredentialAttachmentScreen = ({
   route
 }: ScreenProps) => {
+  const colors = useIOColors();
   const toast = useIOToast();
   const isL3Credential = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
@@ -150,7 +151,10 @@ export const ItwPresentationCredentialAttachmentScreen = ({
           uri: attachmentData.uri,
           cache: true
         }}
-        style={styles.pdfContainer}
+        style={[
+          styles.pdfContainer,
+          { backgroundColor: colors.surface.document }
+        ]}
       />
       <FooterActions
         actions={{
@@ -209,8 +213,6 @@ const getFileNameWithExtension = (
 
 const styles = StyleSheet.create({
   pdfContainer: {
-    flexGrow: 1,
-    // TODO: Dark mode: Replace with theme values
-    backgroundColor: IOColorsLegacy["grey-700"]
+    flexGrow: 1
   }
 });

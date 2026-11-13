@@ -1,4 +1,4 @@
-import { IOColorsLegacy, IOSkeleton } from "@io-app/design-system";
+import { IOColors, IOSkeleton } from "@io-app/design-system";
 import { memo, useMemo } from "react";
 import { useWindowDimensions, View } from "react-native";
 import QRCode, { QRCodeProps } from "react-native-qrcode-svg";
@@ -29,8 +29,9 @@ const defaultAccessibilityLabel = "QR Code";
 const QrCodeImage = ({
   value,
   size = 200,
-  color = IOColorsLegacy.black,
-  backgroundColor = IOColorsLegacy.white,
+  // Dark on light in both modes, for scanners: `inverted` flips it
+  color = IOColors.light.foreground.default,
+  backgroundColor = IOColors.light.background.default,
   inverted = false,
   correctionLevel = "H",
   accessibilityLabel = defaultAccessibilityLabel,
