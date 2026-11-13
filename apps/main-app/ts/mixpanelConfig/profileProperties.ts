@@ -18,7 +18,8 @@ import { tosVersionSelector } from "../features/settings/common/store/selectors/
 import { getPeople, isMixpanelInstanceInitialized } from "../mixpanel.ts";
 import {
   fontPreferenceSelector,
-  themePreferenceSelector
+  themePreferenceSelector,
+  uiLanguageSelector
 } from "../store/reducers/persistedPreferences.ts";
 import { GlobalState } from "../store/reducers/types";
 import { trackAppCaughtError } from "../utils/analytics.ts";
@@ -30,6 +31,7 @@ import {
   cgnStatusHandler,
   loginMethodHandler,
   loginSessionConfigHandler,
+  messageLanguageHandler,
   mixpanelOptInHandler,
   MixpanelOptInTrackingType,
   notificationConfigurationHandler,
@@ -51,6 +53,8 @@ type ProfileProperties = {
   NOTIFICATION_CONFIGURATION: NotificationPreferenceConfiguration;
   NOTIFICATION_PERMISSION: NotificationPermissionType;
   NOTIFICATION_TOKEN: NotificationTokenType;
+  PROFILE_LANGUAGE_MESSAGE: string;
+  PROFILE_LANGUAGE_UI: string;
   SAVED_PAYMENT_METHOD: number;
   SEND_STATUS: PNServiceStatus;
   SERVICE_CONFIGURATION: ServiceConfigurationTrackingType;
@@ -89,6 +93,8 @@ export const updateMixpanelProfileProperties = async (
     const TOS_ACCEPTED_VERSION = tosVersionHandler(state);
     const TRACKING = mixpanelOptInHandler(state);
     const WELFARE_STATUS = welfareStatusHandler(state);
+    const PROFILE_LANGUAGE_UI = uiLanguageSelector(state);
+    const PROFILE_LANGUAGE_MESSAGE = messageLanguageHandler(state);
 
     const profilePropertiesObject: ProfileProperties = {
       BIOMETRIC_TECHNOLOGY,
@@ -107,7 +113,9 @@ export const updateMixpanelProfileProperties = async (
       SERVICE_CONFIGURATION,
       TOS_ACCEPTED_VERSION,
       TRACKING,
-      WELFARE_STATUS
+      WELFARE_STATUS,
+      PROFILE_LANGUAGE_UI,
+      PROFILE_LANGUAGE_MESSAGE
     };
 
     if (forceUpdateFor) {

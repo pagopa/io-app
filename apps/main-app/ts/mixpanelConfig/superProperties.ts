@@ -14,6 +14,7 @@ import {
   isMixpanelInstanceInitialized,
   registerSuperProperties
 } from "../mixpanel.ts";
+import { uiLanguageSelector } from "../store/reducers/persistedPreferences";
 import { GlobalState } from "../store/reducers/types";
 import { isScreenReaderEnabled } from "../utils/accessibility";
 import { trackAppCaughtError } from "../utils/analytics.ts";
@@ -31,6 +32,7 @@ import {
   loginFlowIsOneIdentityHandler,
   loginMethodHandler,
   loginSessionConfigHandler,
+  messageLanguageHandler,
   notificationConfigurationHandler,
   paymentMethodsHandler,
   Property,
@@ -52,6 +54,8 @@ type SuperProperties = {
   fontScale: number;
   isScreenLockSet: boolean;
   isScreenReaderEnabled: boolean;
+  LANGUAGE_MESSAGE: string;
+  LANGUAGE_UI: string;
   LOGIN_FLOW_IS_OI: boolean;
   LOGIN_METHOD: string;
   LOGIN_SESSION: LoginSessionDuration;
@@ -86,6 +90,8 @@ export const updateMixpanelSuperProperties = async (
     const CDC_STATUS = cdcStatusHandler(state);
     const WELFARE_STATUS = welfareStatusHandler(state);
     const CONNECTION_STATUS = offlineStatusHandler(state);
+    const LANGUAGE_UI = uiLanguageSelector(state);
+    const LANGUAGE_MESSAGE = messageLanguageHandler(state);
 
     const superPropertiesObject: SuperProperties = {
       isScreenReaderEnabled: screenReaderEnabled,
@@ -106,7 +112,9 @@ export const updateMixpanelSuperProperties = async (
       CGN_STATUS,
       CDC_STATUS,
       WELFARE_STATUS,
-      CONNECTION_STATUS
+      CONNECTION_STATUS,
+      LANGUAGE_UI,
+      LANGUAGE_MESSAGE
     };
 
     if (forceUpdateFor) {

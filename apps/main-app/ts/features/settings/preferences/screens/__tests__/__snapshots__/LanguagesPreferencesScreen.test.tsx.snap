@@ -878,7 +878,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                   accessibilityState={
                                     {
                                       "busy": undefined,
-                                      "checked": false,
+                                      "checked": true,
                                       "disabled": false,
                                       "expanded": undefined,
                                       "selected": undefined,
@@ -1103,10 +1103,10 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                               jestAnimatedStyle={
                                                 {
                                                   "value": {
-                                                    "opacity": 0,
+                                                    "opacity": 1,
                                                     "transform": [
                                                       {
-                                                        "scale": 0.5,
+                                                        "scale": 1,
                                                       },
                                                     ],
                                                   },
@@ -1145,16 +1145,81 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                                     "backgroundColor": "#0B3EE3",
                                                   },
                                                   {
-                                                    "opacity": 0,
+                                                    "opacity": 1,
                                                     "transform": [
                                                       {
-                                                        "scale": 0.5,
+                                                        "scale": 1,
                                                       },
                                                     ],
                                                   },
                                                 ]
                                               }
                                             />
+                                            <View>
+                                              <RNSVGSvgView
+                                                align="xMidYMid"
+                                                bbHeight={36}
+                                                bbWidth={36}
+                                                focusable={false}
+                                                height={36}
+                                                meetOrSlice={0}
+                                                minX={0}
+                                                minY={0}
+                                                style={
+                                                  [
+                                                    {
+                                                      "backgroundColor": "transparent",
+                                                      "borderWidth": 0,
+                                                    },
+                                                    {
+                                                      "flex": 0,
+                                                      "height": 36,
+                                                      "width": 36,
+                                                    },
+                                                  ]
+                                                }
+                                                vbHeight={24}
+                                                vbWidth={24}
+                                                width={36}
+                                              >
+                                                <RNSVGGroup
+                                                  fill={
+                                                    {
+                                                      "payload": 4278190080,
+                                                      "type": 0,
+                                                    }
+                                                  }
+                                                >
+                                                  <RNSVGPath
+                                                    d="m7 12 4 4 7-7"
+                                                    fill={null}
+                                                    onSvgLayout={[Function]}
+                                                    propList={
+                                                      [
+                                                        "fill",
+                                                        "stroke",
+                                                        "strokeWidth",
+                                                        "strokeDasharray",
+                                                        "strokeDashoffset",
+                                                        "strokeLinecap",
+                                                        "strokeLinejoin",
+                                                      ]
+                                                    }
+                                                    stroke={
+                                                      {
+                                                        "payload": 4294967295,
+                                                        "type": 0,
+                                                      }
+                                                    }
+                                                    strokeDasharray={null}
+                                                    strokeDashoffset={null}
+                                                    strokeLinecap={1}
+                                                    strokeLinejoin={1}
+                                                    strokeWidth={2}
+                                                  />
+                                                </RNSVGGroup>
+                                              </RNSVGSvgView>
+                                            </View>
                                           </View>
                                         </View>
                                       </View>

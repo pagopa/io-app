@@ -20,13 +20,16 @@ import {
 } from "../features/settings/common/analytics";
 import {
   profileNotificationSettingsSelector,
+  profileSelector,
   profileServicePreferencesModeSelector
 } from "../features/settings/common/store/selectors";
 import {
   selectWalletCardsByType,
   selectWalletPlaceholderCards
 } from "../features/wallet/store/selectors";
+import { Locales } from "../i18n";
 import { GlobalState } from "../store/reducers/types";
+import { fromPreferredLanguageToLocale } from "../utils/locale";
 import { isMixpanelEnabled } from "./../store/reducers/persistedPreferences";
 
 export type Property<K, T extends keyof K> = {
@@ -111,6 +114,17 @@ export const welfareStatusHandler = (
 ): ReadonlyArray<string> => {
   const idPayCards = selectWalletCardsByType(state, "idPay");
   return idPayCards.map(card => card.name);
+};
+
+export const messageLanguageHandler = (state: GlobalState): Locales => {
+  const profile = profileSelector(state);
+  const preferredLanguage = pot.isSome(profile)
+    ? profile.value.preferred_languages?.[0]
+    : undefined;
+
+  return preferredLanguage
+    ? fromPreferredLanguageToLocale(preferredLanguage)
+    : "it";
 };
 
 export const cdcStatusHandler = (state: GlobalState): number => {
