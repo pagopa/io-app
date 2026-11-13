@@ -1,11 +1,18 @@
+import { IOColors } from "@io-app/design-system";
+import { act } from "@testing-library/react-native";
 import I18n from "i18next";
 import { createStore } from "redux";
 import { createActor, StateFrom } from "xstate";
 
+import * as appParamsList from "../../../../../../navigation/params/AppParamsList";
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import {
+  findAllByStyle,
+  withDarkTheme
+} from "../../../../../../utils/testColors";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import * as remoteConfig from "../../../../common/store/selectors/remoteConfig";
 import { testProximityDeps } from "../../../../machine/utils/testDeps";
@@ -29,11 +36,15 @@ jest.mock("../../analytics", () => ({
   trackItwProximityQrCode: jest.fn()
 }));
 
+const mockQRCode = jest.fn();
 jest.mock("react-native-qrcode-skia", () => {
   const React = jest.requireActual("react");
   return {
     __esModule: true,
-    default: () => React.createElement("View", { testID: "qrcode" })
+    default: (props: unknown) => {
+      mockQRCode(props);
+      return React.createElement("View", { testID: "qrcode" });
+    }
   };
 });
 
@@ -77,6 +88,23 @@ describe("ItwProximityPresentmentScreen", () => {
       )
     ).toBeTruthy();
     expect(component).toMatchSnapshot();
+  });
+
+  it("should pass stable shape and logo props so QRCode does not regenerate its path", () => {
+    const options = {
+      machineState: "displayQrCode",
+      qrCodeString: "mock-qr-code-string"
+    } as const;
+    renderComponent(options, { source: "WALLET_HOME" });
+    renderComponent(options, { source: "WALLET_HOME" });
+
+    const [first, last] = [
+      mockQRCode.mock.calls[0][0],
+      mockQRCode.mock.calls.at(-1)[0]
+    ];
+    expect(mockQRCode.mock.calls.length).toBeGreaterThan(1);
+    expect(last.shapeOptions).toBe(first.shapeOptions);
+    expect(last.logo).toBe(first.logo);
   });
 
   it("should render error state when QR code generation fails", () => {
@@ -193,6 +221,47 @@ describe("ItwProximityPresentmentScreen", () => {
       ).toBeTruthy();
     }
   );
+
+  it("should use the dark neutral banner background for the error box in dark mode", () => {
+    const { toJSON } = renderComponent(
+      { machineState: "error" },
+      { source: "WALLET_HOME" },
+      "dark"
+    );
+
+    expect(
+      findAllByStyle(toJSON(), {
+        aspectRatio: 1,
+        backgroundColor: IOColors.dark.component.banner.background.neutral
+      })
+    ).toHaveLength(1);
+  });
+
+  it("should render the QR code only after the modal transition ends", () => {
+    const parentNavigation = { addListener: jest.fn() };
+    const navigation = new Proxy(
+      { getParent: () => parentNavigation } as Record<PropertyKey, unknown>,
+      { get: (target, prop) => target[prop] ?? jest.fn() }
+    );
+    jest
+      .spyOn(appParamsList, "useIONavigation")
+      .mockReturnValue(navigation as any);
+
+    const component = renderComponent(
+      { machineState: "displayQrCode", qrCodeString: "mock-qr-code-string" },
+      { source: "WALLET_HOME" }
+    );
+    expect(component.queryByTestId("qrcode")).toBeNull();
+    expect(component.getByTestId("qrCodeStaticSkeleton")).toBeTruthy();
+
+    const [[event, onTransitionEnd]] = parentNavigation.addListener.mock.calls;
+    expect(event).toBe("transitionEnd");
+    act(() => {
+      onTransitionEnd();
+    });
+
+    expect(component.getByTestId("qrcode")).toBeTruthy();
+  });
 });
 
 type RenderOptions =
@@ -202,7 +271,8 @@ type RenderOptions =
 
 const renderComponent = (
   options: RenderOptions,
-  routeParams: ItwProximityPresentmentScreenNavigationParams
+  routeParams: ItwProximityPresentmentScreenNavigationParams,
+  theme: "dark" | "light" = "light"
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, initialState as any);
@@ -228,15 +298,17 @@ const renderComponent = (
     params: routeParams
   };
 
+  const Component = () => (
+    <ItwProximityMachineContext.Provider options={{ snapshot }}>
+      <ItwProximityPresentmentScreen
+        navigation={mockNavigation}
+        route={route}
+      />
+    </ItwProximityMachineContext.Provider>
+  );
+
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    () => (
-      <ItwProximityMachineContext.Provider options={{ snapshot }}>
-        <ItwProximityPresentmentScreen
-          navigation={mockNavigation}
-          route={route}
-        />
-      </ItwProximityMachineContext.Provider>
-    ),
+    theme === "dark" ? withDarkTheme(Component) : Component,
     ITW_PROXIMITY_ROUTES.PRESENTMENT,
     {},
     store

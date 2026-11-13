@@ -228,7 +228,7 @@ const generateMerchantDetail = (
   }
 };
 
-export const generateMerchantsAll = (): ReadonlyArray<Merchant> => {
+const generateMerchantsAll = (): ReadonlyArray<Merchant> => {
   const merchants: ReadonlyArray<OfflineMerchant | OnlineMerchant> = [
     ...onlineMerchants.items,
     ...offlineMerchants.items
@@ -236,3 +236,5 @@ export const generateMerchantsAll = (): ReadonlyArray<Merchant> => {
 
   return merchants.map(m => generateMerchantDetail(m));
 };
+
+export const merchantsAll = generateMerchantsAll();

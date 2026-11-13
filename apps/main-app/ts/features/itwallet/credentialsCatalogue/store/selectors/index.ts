@@ -5,8 +5,10 @@ import { createSelector } from "reselect";
 import { Locales } from "../../../../../i18n";
 import { persistedPreferencesSelector } from "../../../../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { itwIsDiscoverMoreCEDLocallyEnabledSelector } from "../../../common/store/selectors/preferences";
 import {
   itwHiddenCredentialsSelector,
+  itwIsDiscoverMoreCEDRemotelyEnabledSelector,
   itwNewCredentialsSelector,
   itwPinnedCredentialsSelector
 } from "../../../common/store/selectors/remoteConfig";
@@ -106,6 +108,13 @@ export const itwCredentialsCatalogueByTypesSelector = createSelector(
 export const itwIsCredentialsCatalogueLoading = (state: GlobalState) =>
   pot.isLoading(state.features.itWallet.credentialsCatalogue.catalogue);
 
+/** Whether catalogue data or its locale bundles are still being fetched. */
+export const itwIsCredentialsCataloguePending = (state: GlobalState) => {
+  const { catalogue, translations } =
+    state.features.itWallet.credentialsCatalogue;
+  return pot.isLoading(catalogue) || pot.isLoading(translations);
+};
+
 export const itwIsCredentialsCatalogueUnavailable = (state: GlobalState) =>
   pot.isNone(state.features.itWallet.credentialsCatalogue.catalogue);
 
@@ -114,7 +123,8 @@ export const itwIsCredentialsCatalogueUnavailable = (state: GlobalState) =>
  * CED opportunities
  */
 export const itwDiscoverMoreCEDSelector = (state: GlobalState) =>
-  state.features.itWallet.preferences.isDiscoverMoreCEDEnabled ?? false;
+  itwIsDiscoverMoreCEDLocallyEnabledSelector(state) ||
+  itwIsDiscoverMoreCEDRemotelyEnabledSelector(state);
 
 /**
  * Select the raw catalogue translations pot (all locales). Only populated for
@@ -318,4 +328,11 @@ export const itwAuthenticSourceContactsSelector =
       return;
     }
     return catalogue[credentialType].authentic_sources.at(0)?.contacts;
+  };
+
+export const itwAuthenticSourceSelector =
+  (credentialType: string) => (state: GlobalState) => {
+    const catalogue = itwCredentialsCatalogueByTypesSelector(state);
+    const credential = catalogue?.[credentialType];
+    return credential?.authentic_sources.at(0);
   };

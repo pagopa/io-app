@@ -1,8 +1,14 @@
+import { IOColors } from "@io-app/design-system";
 import React from "react";
+import { processColor } from "react-native";
 import { createStore } from "redux";
 
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
+import {
+  findAllNodes,
+  withDarkTheme
+} from "../../../../../../utils/testColors";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import CieCardReadingAnimation, {
@@ -66,10 +72,29 @@ describe("CieCardReadingAnimation", () => {
     const wrapper = getByTestId("circular-progress-100");
     expect(wrapper).toBeTruthy();
   });
+
+  it.each([
+    { name: "waiting", readingState: ReadingState.waiting_card },
+    { name: "error", readingState: ReadingState.error }
+  ])(
+    "draws the $name track with the dark stroke token in dark mode",
+    ({ readingState }) => {
+      const { toJSON } = renderComponent({ readingState }, "dark");
+      const [track] = findAllNodes(
+        toJSON(),
+        node => node.type === "RNSVGCircle"
+      );
+      expect(track.props.stroke).toEqual({
+        type: 0,
+        payload: processColor(IOColors.dark.stroke.default)
+      });
+    }
+  );
 });
 
 const renderComponent = (
-  propsOverride?: Partial<React.ComponentProps<typeof CieCardReadingAnimation>>
+  propsOverride?: Partial<React.ComponentProps<typeof CieCardReadingAnimation>>,
+  theme: "dark" | "light" = "light"
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, initialState as any);
@@ -79,8 +104,10 @@ const renderComponent = (
     ...propsOverride
   };
 
+  const Component = () => <CieCardReadingAnimation {...props} />;
+
   return renderScreenWithNavigationStoreContext(
-    () => <CieCardReadingAnimation {...props} />,
+    theme === "dark" ? withDarkTheme(Component) : Component,
     AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN,
     {},
     store

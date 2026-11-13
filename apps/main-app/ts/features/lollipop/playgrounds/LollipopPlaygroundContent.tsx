@@ -3,7 +3,7 @@ import {
   CheckboxLabel,
   HSpacer,
   IOButton,
-  IOColors,
+  IOColorPalette,
   VSpacer
 } from "@io-app/design-system";
 import { useState } from "react";
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     height: 120,
     borderRadius: 8,
-    borderColor: IOColors["grey-450"]
+    borderColor: IOColorPalette.greyscale[450]
   },
   column: {
     flexDirection: "column",

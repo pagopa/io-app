@@ -664,6 +664,9 @@
       },
       "merchantsList": {
         "a11yTitle": "Categoria: {{categoryName}}",
+        "featuredOpportunities": {
+          "title": "In evidenza"
+        },
         "categoriesList": {
           "bottomSheet": {
             "content": "Per agevolare la ricerca e migliorare la tua esperienza, abbiamo organizzato le categorie in base alla frequenza di utilizzo. Questa informazione non è legata al tuo profilo, ma si basa su dati complessivi di tutti gli utenti che utilizzano Carta Giovani Nazionale e hanno acconsentito al trattamento dei dati.",
@@ -988,6 +991,12 @@
       "title": "Questo servizio non è più attivo su IO"
     },
     "itWallet": {
+      "loginEngagement": {
+        "action": "Attiva IT-Wallet",
+        "description": "L’app IO è ora parte del sistema nazionale di portafogli digitali IT-Wallet: più documenti, con funzionalità evolute, sempre a portata di mano.",
+        "secondaryAction": "Non attivare",
+        "title": "È disponibile per te il nuovo portafoglio IT-Wallet"
+      },
       "card": {
         "digital": "Versione digitale",
         "status": {
@@ -1175,6 +1184,11 @@
           "action": "Inizia",
           "description": "Usa la tua Patente digitale anche come documento di riconoscimento, in modo facile e sicuro!",
           "title": "Dimostra chi sei col tuo dispositivo"
+        },
+        "upgrade_from_expired": {
+          "action": "Inizia",
+          "description": "Continua a usare i tuoi documenti su IO e aggiungine di nuovi, con funzionalità più avanzate.",
+          "title": "Attiva IT-Wallet per non perdere i tuoi documenti"
         }
       },
       "feedback": {
@@ -1883,6 +1897,7 @@
               "documents": {
                 "action": "Inizia",
                 "expired": "Conferma la tua identità con CIE o SPID per continuare a usare Documenti su IO senza limitazioni.",
+                "expiredUpgrade": "Per continuare a usare e aggiungere documenti digitali devi attivare il nuovo portafoglio IT-Wallet.",
                 "expiring": "Conferma la tua identità con CIE o SPID entro il {{date}} per continuare a usare Documenti su IO senza limitazioni.",
                 "offline": "Torna online e conferma la tua identità con CIE o SPID per continuare a usare Documenti su IO senza limitazioni.",
                 "valid": "L'ultima verifica è del {{date}}."
@@ -3767,7 +3782,7 @@
       },
       "beforeContinue": {
         "requestBonus": "Richiedi il bonus",
-        "text": "Premendo 'Richiedi il bonus' dichiari di aver letto, compreso e accettato l'[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni d'uso]({{tosUrl}})."
+        "adviseText": "Premendo \"{{ctaText}}\" dichiari di aver letto, compreso e accettato l'[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni d'uso]({{tosUrl}})."
       },
       "boolPrerequisites": {
         "emptyValueError": "Seleziona un’opzione per continuare",

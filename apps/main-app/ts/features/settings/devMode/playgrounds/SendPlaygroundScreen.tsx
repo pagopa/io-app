@@ -2,7 +2,7 @@ import {
   Body,
   Divider,
   IOButton,
-  IOColors,
+  IOColorPalette,
   ListItemHeader,
   ListItemInfo,
   ListItemInfoCopy,
@@ -53,13 +53,15 @@ export const SendPlaygroundScreen = () => {
   const [requestBody, setRequestBody] = useState<string>("");
 
   const darkModeEnabled = Appearance.getColorScheme() === "dark";
-  const bodyTextColor = darkModeEnabled ? IOColors.white : IOColors["grey-850"];
+  const bodyTextColor = darkModeEnabled
+    ? IOColorPalette.greyscale.white
+    : IOColorPalette.greyscale[850];
   const bodyBorderColor = darkModeEnabled
-    ? IOColors["grey-850"]
-    : IOColors["grey-200"];
+    ? IOColorPalette.greyscale[850]
+    : IOColorPalette.greyscale[200];
   const placeholderTextColor = darkModeEnabled
-    ? IOColors["grey-450"]
-    : IOColors["grey-650"];
+    ? IOColorPalette.greyscale[450]
+    : IOColorPalette.greyscale[650];
 
   const errorReasonOrUndefined = useIOSelector(sendLollipopLambdaErrorReason);
   const isSagaLoading = useIOSelector(isSendLollipopLambdaLoading);

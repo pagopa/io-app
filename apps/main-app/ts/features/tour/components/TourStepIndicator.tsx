@@ -1,4 +1,4 @@
-import { IOColors, useIOTheme } from "@io-app/design-system";
+import { useIOColors } from "@io-app/design-system";
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
@@ -16,9 +16,7 @@ type Props = {
 };
 
 export const TourStepIndicator = ({ stepIndex, totalSteps }: Props) => {
-  const theme = useIOTheme();
-  const activeColor = IOColors[theme["interactiveElem-default"]];
-  const defaultColor = IOColors[theme["icon-default"]];
+  const colors = useIOColors();
 
   return (
     <View
@@ -39,9 +37,11 @@ export const TourStepIndicator = ({ stepIndex, totalSteps }: Props) => {
               {
                 width: isActive ? ACTIVE_WIDTH : DOT_SIZE,
                 height: isActive ? ACTIVE_HEIGHT : DOT_SIZE,
-                backgroundColor: isActive ? activeColor : TRANSPARENT,
+                backgroundColor: isActive
+                  ? colors.foreground.accent
+                  : TRANSPARENT,
                 borderWidth: isActive ? 0 : 1,
-                borderColor: isActive ? TRANSPARENT : defaultColor,
+                borderColor: isActive ? TRANSPARENT : colors.stroke.inactive,
                 transitionProperty: ["width", "height", "backgroundColor"],
                 transitionDuration: TRANSITION_DURATION
               }
