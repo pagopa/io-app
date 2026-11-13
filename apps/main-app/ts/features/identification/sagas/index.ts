@@ -81,7 +81,7 @@ function* startAndHandleIdentificationResult(
   identificationRequestAction: ActionType<typeof identificationRequest>
 ) {
   const pin: SagaCallReturnType<typeof getPin> = yield* call(getPin);
-  if (pin == null) {
+  if (pin === undefined) {
     return;
   }
   yield* put(
