@@ -61,17 +61,6 @@ jest.mock("react-native-webview", () => {
 });
 
 describe(CieIdLoginScreen, () => {
-  beforeEach(() => {
-    // Stub the lollipop hook by default: the real one updates state asynchronously
-    // after render, which triggers "not wrapped in act(...)" warnings in tests
-    // that don't await it. Tests needing a specific hook return override this spy.
-    jest.spyOn(loginHooks, "useLollipopLoginSource").mockReturnValue({
-      lollipopCheckStatus: { status: "none" },
-      retryLollipopLogin: jest.fn(),
-      shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(),
-      webviewSource: undefined
-    });
-  });
   afterEach(() => {
     jest.restoreAllMocks();
     jest.clearAllMocks();
