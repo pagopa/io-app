@@ -3,10 +3,9 @@ import {
   BodySmall,
   H6,
   HeaderSecondLevel,
-  hexToRgba,
   IOButton,
-  IOColorsLegacy,
   IODimensions,
+  useIOColors,
   VSpacer,
   VStack
 } from "@io-app/design-system";
@@ -55,6 +54,7 @@ type ItwProximityPresentmentScreenProps = IOStackNavigationRouteProps<
 export const ItwProximityPresentmentScreen = ({
   route
 }: ItwProximityPresentmentScreenProps) => {
+  const colors = useIOColors();
   const { source } = route.params;
 
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
@@ -163,7 +163,7 @@ export const ItwProximityPresentmentScreen = ({
 
       <ItwBrandedBox
         backgroundVariant={"gradient"}
-        style={styles.qrCodeShadow}
+        style={{ boxShadow: `0px 4px 32px ${colors.surface.shadow}` }}
         variant={isFailure ? "error" : "default"}
       >
         <VStack space={16}>
@@ -218,9 +218,6 @@ export const ItwProximityPresentmentScreen = ({
 const styles = StyleSheet.create({
   expiredBanner: {
     marginBottom: 24
-  },
-  qrCodeShadow: {
-    boxShadow: `0px 4px 32px ${hexToRgba(IOColorsLegacy.black, 0.1)}`
   },
   nfcSection: {
     alignSelf: "center",

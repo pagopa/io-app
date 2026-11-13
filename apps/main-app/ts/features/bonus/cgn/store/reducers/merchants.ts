@@ -23,6 +23,7 @@ import {
   cgnSearchMerchants,
   cgnSelectedMerchant,
   resetMerchantDiscountCode,
+  selectFeaturedOpportunity,
   selectMerchantDiscount,
   setMerchantDiscountCode
 } from "../actions/merchants";
@@ -45,6 +46,41 @@ const INITIAL_STATE: CgnMerchantsState = {
   selectedMerchant: remoteUndefined,
   selectedDiscount: remoteUndefined,
   selectedDiscountCode: undefined
+};
+
+const selectedDiscountReducer = (
+  state: CgnMerchantsState,
+  action: Action
+): CgnMerchantsState => {
+  switch (action.type) {
+    // Reset discount code
+    case getType(resetMerchantDiscountCode):
+      return {
+        ...state,
+        selectedDiscountCode: undefined
+      };
+    // Featured selection: merchant, discount and discount code in one step
+    case getType(selectFeaturedOpportunity):
+      return {
+        ...state,
+        selectedMerchant: remoteReady(action.payload.merchant),
+        selectedDiscount: remoteReady(action.payload.discount),
+        selectedDiscountCode: undefined
+      };
+    // Selected Discount detail
+    case getType(selectMerchantDiscount):
+      return {
+        ...state,
+        selectedDiscount: remoteReady(action.payload)
+      };
+    // Set discount code
+    case getType(setMerchantDiscountCode):
+      return {
+        ...state,
+        selectedDiscountCode: action.payload
+      };
+  }
+  return state;
 };
 
 const reducer = (
@@ -136,26 +172,8 @@ const reducer = (
         ...state,
         selectedMerchant: remoteReady(action.payload)
       };
-    // Reset discount code
-    case getType(resetMerchantDiscountCode):
-      return {
-        ...state,
-        selectedDiscountCode: undefined
-      };
-    // Selected Discount detail
-    case getType(selectMerchantDiscount):
-      return {
-        ...state,
-        selectedDiscount: remoteReady(action.payload)
-      };
-    // Set discount code
-    case getType(setMerchantDiscountCode):
-      return {
-        ...state,
-        selectedDiscountCode: action.payload
-      };
   }
-  return state;
+  return selectedDiscountReducer(state, action);
 };
 
 export default reducer;

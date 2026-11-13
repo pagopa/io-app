@@ -43,6 +43,7 @@ import { ItwIssuanceEidResultScreen } from "../issuance/screens/ItwIssuanceEidRe
 import { ItwIssuanceUpcomingCredentialScreen } from "../issuance/screens/ItwIssuanceUpcomingCredentialScreen";
 import { ItwIdentityNotMatchingScreen } from "../lifecycle/screens/ItwIdentityNotMatchingScreen.tsx";
 import { ItwLifecycleWalletRevocationScreen } from "../lifecycle/screens/ItwLifecycleWalletRevocationScreen.tsx";
+import { ItwEngagementScreen } from "../loginEngagement/screens/ItwEngagementScreen";
 import {
   ItwCredentialIssuanceMachineContext,
   ItwCredentialIssuanceMachineProvider
@@ -109,6 +110,11 @@ const InnerNavigator = memo(() => {
         freezeOnBlur: true
       }}
     >
+      <Stack.Screen
+        component={ItwEngagementScreen}
+        name={ITW_ROUTES.ENGAGEMENT}
+        options={hiddenHeader}
+      />
       <Stack.Screen
         component={WalletCardOnboardingScreen}
         name={ITW_ROUTES.ONBOARDING}

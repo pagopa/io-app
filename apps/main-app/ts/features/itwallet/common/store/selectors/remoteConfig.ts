@@ -160,6 +160,24 @@ export const isItwProximityNfcMinAppVersionSupportedSelector = createSelector(
 );
 
 /**
+ * Returns whether the current app version meets the minimum required to show
+ * the IT-Wallet What's New (login engagement) screen.
+ */
+export const isItwWhatsNewMinAppVersionSupportedSelector = createSelector(
+  itwRemoteConfigSelector,
+  ({ whats_new }): boolean => {
+    const version = whats_new?.min_app_version;
+    if (!version) {
+      return false;
+    }
+    return isVersionSupported(
+      Platform.OS === "ios" ? version.ios : version.android,
+      getAppVersion()
+    );
+  }
+);
+
+/**
  * Return the credential types that are pinned at the top of the catalogue list.
  * The order of the array determines the display order.
  */
