@@ -1,5 +1,6 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import React from "react";
+import { AccessibilityInfo, Platform } from "react-native";
 
 import { NumberPad } from "../NumberPad";
 
@@ -39,16 +40,36 @@ describe("NumberPad", () => {
     expect(mockOnBiometricPress).not.toHaveBeenCalled();
   });
   it("Should properly call onDeletePress without side effects", () => {
+    jest.spyOn(Platform, "select").mockReturnValue(true);
     const { getByLabelText } = renderNumberPad();
     const deleteButton = getByLabelText("delete");
     const reactCreatElement = jest.spyOn(React, "createElement");
+    const announceForAccessibility = jest.spyOn(
+      AccessibilityInfo,
+      "announceForAccessibility"
+    );
 
     fireEvent.press(deleteButton);
 
     expect(mockOnDelete).toHaveBeenCalledTimes(1);
+    expect(announceForAccessibility).toHaveBeenCalledWith(
+      "Punto elenco eliminato"
+    );
     expect(reactCreatElement).not.toHaveBeenCalled();
     expect(mockOnNumberPress).not.toHaveBeenCalled();
     expect(mockOnBiometricPress).not.toHaveBeenCalled();
+  });
+  it("Should not announce a number when deleting from an empty value", () => {
+    const { getByLabelText } = renderNumberPad("");
+    const announceForAccessibility = jest.spyOn(
+      AccessibilityInfo,
+      "announceForAccessibility"
+    );
+
+    fireEvent.press(getByLabelText("delete"));
+
+    expect(announceForAccessibility).not.toHaveBeenCalled();
+    expect(mockOnDelete).toHaveBeenCalledTimes(1);
   });
   it("Should properly call onBiometricPress without side effects", () => {
     const { getByLabelText } = renderNumberPad();
@@ -62,17 +83,50 @@ describe("NumberPad", () => {
     expect(mockOnNumberPress).not.toHaveBeenCalled();
     expect(mockOnDelete).not.toHaveBeenCalled();
   });
+  it("Should not announce the number separately from its button label", () => {
+    const { getByText } = renderNumberPad();
+    const announceForAccessibility = jest.spyOn(
+      AccessibilityInfo,
+      "announceForAccessibility"
+    );
+
+    fireEvent.press(getByText("1"));
+
+    expect(announceForAccessibility).not.toHaveBeenCalled();
+  });
+  it("Should announce the PIN digit count on iOS when it changes", () => {
+    jest.spyOn(Platform, "select").mockReturnValue(true);
+    const { rerender } = renderNumberPad("0 di 6 valori inseriti");
+    const announceForAccessibility = jest.spyOn(
+      AccessibilityInfo,
+      "announceForAccessibility"
+    );
+
+    rerender(createNumberPad("1 di 6 valori inseriti"));
+
+    expect(announceForAccessibility).toHaveBeenCalledWith(
+      "1 di 6 valori inseriti"
+    );
+  });
 });
 
-function renderNumberPad() {
-  return render(
+function createNumberPad(accessibilityValueText?: string) {
+  return (
     <NumberPad
+      accessibilityValueText={accessibilityValueText}
       biometricAccessibilityLabel="touch id trigger"
       biometricType="TOUCH_ID"
+      deleteAccessibilityAnnouncement={
+        accessibilityValueText ? "Punto elenco eliminato" : undefined
+      }
       deleteAccessibilityLabel="delete"
       onBiometricPress={mockOnBiometricPress}
       onDeletePress={mockOnDelete}
       onNumberPress={mockOnNumberPress}
     />
   );
+}
+
+function renderNumberPad(accessibilityValueText = "1 di 6 valori inseriti") {
+  return render(createNumberPad(accessibilityValueText));
 }
