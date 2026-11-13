@@ -341,7 +341,8 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.none 1`] = `
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -874,7 +875,8 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -2286,7 +2288,8 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, empty data
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -3147,7 +3150,8 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, empty
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -4008,7 +4012,8 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, emp
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -4869,7 +4874,8 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, em
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -5730,7 +5736,8 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.none 1`] = `
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -6263,7 +6270,8 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -7675,7 +7683,8 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, empty data
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -8536,7 +8545,8 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, empty
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -9397,7 +9407,8 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, emp
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -10258,7 +10269,8 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, em
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]

@@ -6,7 +6,7 @@ import {
   BodySmall,
   HStack,
   IconButton,
-  IOColors,
+  IOColorPalette,
   IOText,
   useIOToast
 } from "@io-app/design-system";
@@ -59,7 +59,7 @@ export const DebugPrettyPrint = ({
     return (
       <View pointerEvents="box-only" style={styles.content}>
         <IOText
-          color={"grey-700"}
+          color={IOColorPalette.greyscale[700]}
           font="FiraCode"
           lineHeight={18}
           size={12}
@@ -94,7 +94,7 @@ export const DebugPrettyPrint = ({
     <WithDebugEnabled>
       <View style={styles.container} testID="DebugPrettyPrintTestID">
         <View style={styles.header}>
-          <BodySmall color="white" weight="Semibold">
+          <BodySmall color={IOColorPalette.greyscale.white} weight="Semibold">
             {title}
           </BodySmall>
           <HStack space={16}>
@@ -138,14 +138,14 @@ const styles = StyleSheet.create({
     marginVertical: 4
   },
   header: {
-    backgroundColor: IOColors["error-600"],
+    backgroundColor: IOColorPalette.red[600],
     padding: 12,
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between"
   },
   content: {
-    backgroundColor: IOColors["grey-50"],
+    backgroundColor: IOColorPalette.greyscale[50],
     padding: 8
   }
 });

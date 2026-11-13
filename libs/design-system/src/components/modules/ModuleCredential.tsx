@@ -6,13 +6,8 @@ import {
   StyleSheet
 } from "react-native";
 
-import { useIOTheme } from "../../context";
-import {
-  IOListItemVisualParams,
-  IOSelectionListItemVisualParams,
-  IOSpacer,
-  IOVisualCostants
-} from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions, IOTypography } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
@@ -69,22 +64,25 @@ const ModuleContent = ({
   Pick<ImageProps, "icon" | "image"> & {
     endComponent: ReactNode;
   }) => {
-  const theme = useIOTheme();
+  const moduleColors = useIOColors().component.module;
   const { hugeFontEnabled } = useIOFontDynamicScale();
 
   return (
-    <HStack space={8} style={{ alignItems: "center" }}>
+    <HStack
+      space={IODimensions.gap.module.trailing}
+      style={{ alignItems: "center" }}
+    >
       <HStack
-        space={IOVisualCostants.iconMargin as IOSpacer}
+        space={IODimensions.gap.module.leading}
         style={{ flexGrow: 1, flexShrink: 1, alignItems: "center" }}
       >
         {/* Graphical assets */}
         {icon && !hugeFontEnabled ? (
           <Icon
             allowFontScaling
-            color={theme["icon-decorative"]}
+            color={moduleColors.foreground.icon.decorative}
             name={icon}
-            size={IOSelectionListItemVisualParams.iconSize}
+            size={IODimensions.size.icon.module.default}
           />
         ) : (
           image != null && (
@@ -97,7 +95,7 @@ const ModuleContent = ({
         )}
 
         <BodySmall
-          color={theme["interactiveElem-default"]}
+          color={moduleColors.foreground.action}
           numberOfLines={2}
           style={{ flexShrink: 1 }}
           weight="Semibold"
@@ -120,7 +118,7 @@ const ModuleCredentialContent = ({
   isFetching,
   ...pressableProps
 }: WithTestID<ModuleCredentialProps>) => {
-  const theme = useIOTheme();
+  const moduleColors = useIOColors().component.module;
 
   const endComponent = useMemo(() => {
     const activityIndicatorTestID = testID
@@ -135,20 +133,21 @@ const ModuleCredentialContent = ({
         {onPress &&
           (isFetching ? (
             <>
-              <HSpacer size={8} />
+              {/* The chevron glyph has built-in side bearing, the spinner does not */}
+              <HSpacer size={IODimensions.gap.module.trailing} />
               <LoadingSpinner testID={activityIndicatorTestID} />
             </>
           ) : (
             <Icon
-              color={theme["interactiveElem-default"]}
+              color={moduleColors.foreground.icon.action}
               name="chevronRightListItem"
-              size={IOListItemVisualParams.chevronSize}
+              size={IODimensions.size.icon.chevron}
               testID={chevronTestID}
             />
           ))}
       </HStack>
     ) : null;
-  }, [testID, theme, isFetching, badge, onPress]);
+  }, [testID, moduleColors, isFetching, badge, onPress]);
 
   return onPress ? (
     <PressableModuleBase {...pressableProps} onPress={onPress} testID={testID}>
@@ -179,15 +178,29 @@ const ModuleCredentialSkeleton = ({
     accessibilityState={{ busy: true }}
     accessible={true}
     endBlock={
-      <IOSkeleton height={24} radius={16} shape="rectangle" width={64} />
+      <IOSkeleton
+        height={IODimensions.height.badge}
+        radius={IODimensions.radius.badge}
+        shape="rectangle"
+        width={64}
+      />
     }
     startBlock={
       <HStack
-        space={IOVisualCostants.iconMargin as IOSpacer}
-        style={{ alignItems: "center" }}
+        space={IODimensions.gap.module.leading}
+        style={{ alignItems: "center", flexGrow: 1, flexShrink: 1 }}
       >
-        <IOSkeleton radius={8} shape="square" size={24} />
-        <IOSkeleton height={16} radius={8} shape="rectangle" width={96} />
+        <IOSkeleton
+          radius={IODimensions.radius.skeleton.graphic}
+          shape="square"
+          size={IODimensions.size.icon.module.default}
+        />
+        <IOSkeleton
+          height={IOTypography.bodySmall.size}
+          radius={IODimensions.radius.skeleton.text}
+          shape="rectangle"
+          width="40%"
+        />
       </HStack>
     }
   />
@@ -195,8 +208,8 @@ const ModuleCredentialSkeleton = ({
 
 const styles = StyleSheet.create({
   image: {
-    width: IOSelectionListItemVisualParams.iconSize,
-    height: IOSelectionListItemVisualParams.iconSize,
+    width: IODimensions.size.icon.module.default,
+    height: IODimensions.size.icon.module.default,
     resizeMode: "contain"
   }
 });

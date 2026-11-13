@@ -1,22 +1,17 @@
-import {
-  HStack,
-  IOColors,
-  IOText,
-  Tag,
-  useIOThemeContext
-} from "@io-app/design-system";
+import { HStack, IOText, Tag } from "@io-app/design-system";
 import Color from "color";
 import I18n from "i18next";
 import { memo, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 
+import { useFeatureColors } from "../../../../../hooks/useFeatureColors";
 import { useIOSelector } from "../../../../../store/hooks";
 import { fontPreferenceSelector } from "../../../../../store/reducers/persistedPreferences";
+import { itwColors } from "../../../colors";
 import { useItwDisplayCredentialStatus } from "../../../presentation/details/hooks/useItwDisplayCredentialStatus";
 import { useItwCredentialName } from "../../hooks/useItwCredentialName";
 import { itwShouldUpgradeCredentialSelector } from "../../store/selectors";
 import {
-  useBorderColorByStatus,
   useTagPropsByStatus,
   validCredentialStatuses
 } from "../../utils/itwCredentialUtils";
@@ -64,12 +59,11 @@ export const ItwCredentialCard = memo(
     const needsItwUpgrade = useIOSelector(
       itwShouldUpgradeCredentialSelector(credentialType, issuedAt)
     );
-    const { themeType, theme } = useIOThemeContext();
     const status = useItwDisplayCredentialStatus(
       credentialStatus,
       credentialType
     );
-    const borderColorByStatus = useBorderColorByStatus();
+    const { credentialCard: colors } = useFeatureColors(itwColors);
     const cardConfig = useCredentialCardConfig(credentialType);
     const credentialName = useItwCredentialName(credentialType);
     const tagPropsByStatus = useTagPropsByStatus();
@@ -86,21 +80,15 @@ export const ItwCredentialCard = memo(
       return tagPropsByStatus[status];
     }, [status, needsItwUpgrade, tagPropsByStatus]);
 
-    const borderColor = useMemo<string>(() => {
-      if (needsItwUpgrade) {
-        return IOColors["error-600"];
-      }
-
-      return borderColorByStatus[status];
-    }, [status, needsItwUpgrade, borderColorByStatus]);
-
-    const appBackgroundColor = IOColors[theme["appBackground-primary"]];
+    const borderColor = needsItwUpgrade
+      ? colors.upgradePendingBorder
+      : colors.border[status];
 
     return (
       <View
         style={[
           styles.cardWrapper,
-          status === "valid" && { boxShadow: `0 0 0 2px ${appBackgroundColor}` }
+          status === "valid" && { boxShadow: `0 0 0 2px ${colors.ring}` }
         ]}
       >
         <View style={styles.cardContainer}>
@@ -145,10 +133,7 @@ export const ItwCredentialCard = memo(
               style={[
                 StyleSheet.absoluteFill,
                 styles.statusOverlay,
-                {
-                  backgroundColor:
-                    themeType === "light" ? IOColors.white : IOColors.black
-                }
+                { backgroundColor: colors.fadedOverlay }
               ]}
             />
           )}
@@ -182,7 +167,7 @@ const LegacyCredentialCard = ({
   const theme = getLegacyThemeColorByCredentialType(credentialType);
   const credentialName = useItwCredentialName(credentialType);
   const tagPropsByStatus = useTagPropsByStatus();
-  const borderColorByStatus = useBorderColorByStatus();
+  const { credentialCard: colors } = useFeatureColors(itwColors);
 
   const statusTagProps = useMemo<Tag | undefined>(() => {
     if (needsItwUpgrade) {
@@ -195,13 +180,9 @@ const LegacyCredentialCard = ({
     return tagPropsByStatus[status];
   }, [status, needsItwUpgrade, tagPropsByStatus]);
 
-  const borderColor = useMemo<string>(() => {
-    if (needsItwUpgrade) {
-      return IOColors["error-600"];
-    }
-
-    return borderColorByStatus[status];
-  }, [status, needsItwUpgrade, borderColorByStatus]);
+  const borderColor = needsItwUpgrade
+    ? colors.upgradePendingBorder
+    : colors.border[status];
 
   const { titleColor, titleOpacity, colorScheme } = useMemo<
     StyleProps & { colorScheme: CardColorScheme }

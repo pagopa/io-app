@@ -1,4 +1,4 @@
-import { IOAppMargin, WithTestID } from "@io-app/design-system";
+import { IOScreenPadding, WithTestID } from "@io-app/design-system";
 import {
   JSXElementConstructor,
   ReactElement,
@@ -36,7 +36,7 @@ type Props<T> = Pick<
   /** The array used to build the carousel items. */
   data: Array<T>;
   /** The horizontal space between carousel items. */
-  itemsGap?: 0 | IOAppMargin;
+  itemsGap?: 0 | IOScreenPadding;
   /** The number of items displayed simultaneously. */
   itemsPerTime?: number;
 };

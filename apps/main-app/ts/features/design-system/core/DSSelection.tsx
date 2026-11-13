@@ -4,7 +4,6 @@ import {
   Divider,
   H4,
   HSpacer,
-  IOColors,
   ListItemCheckbox,
   ListItemRadioWithAmount,
   ListItemSwitch,
@@ -12,7 +11,6 @@ import {
   RadioGroup,
   RadioItem,
   Switch,
-  useIOTheme,
   VStack
 } from "@io-app/design-system";
 import { ComponentProps, useState } from "react";
@@ -26,47 +24,44 @@ const sectionMargin = 40;
 const componentMargin = 32;
 const componentInnerMargin = 8;
 
-export const DSSelection = () => {
-  const theme = useIOTheme();
-  return (
-    <DesignSystemScreen title={"Selection"}>
-      <VStack space={sectionMargin}>
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Checkbox</H4>
-          <VStack space={componentMargin}>
-            {/* CheckboxLabel */}
-            {renderCheckboxLabel()}
-            {/* ListItemCheckbox */}
-            {renderListItemCheckbox()}
-          </VStack>
-        </VStack>
-
-        {/* MessageCheckbox */}
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Checkbox (Messages)</H4>
-          <MessageCheckboxShowroom />
-        </VStack>
-
-        {/* RadioListItem */}
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Radio</H4>
-          <RadioListItemsShowroom />
-        </VStack>
-
-        {/* Switch */}
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Switch</H4>
-          <VStack space={componentMargin}>
-            {/* Switch */}
-            <SwitchShowroom />
-            {/* ListItemSwitch */}
-            <ListItemSwitchShowroom />
-          </VStack>
+export const DSSelection = () => (
+  <DesignSystemScreen title={"Selection"}>
+    <VStack space={sectionMargin}>
+      <VStack space={sectionTitleMargin}>
+        <H4>Checkbox</H4>
+        <VStack space={componentMargin}>
+          {/* CheckboxLabel */}
+          {renderCheckboxLabel()}
+          {/* ListItemCheckbox */}
+          {renderListItemCheckbox()}
         </VStack>
       </VStack>
-    </DesignSystemScreen>
-  );
-};
+
+      {/* MessageCheckbox */}
+      <VStack space={sectionTitleMargin}>
+        <H4>Checkbox (Messages)</H4>
+        <MessageCheckboxShowroom />
+      </VStack>
+
+      {/* RadioListItem */}
+      <VStack space={sectionTitleMargin}>
+        <H4>Radio</H4>
+        <RadioListItemsShowroom />
+      </VStack>
+
+      {/* Switch */}
+      <VStack space={sectionTitleMargin}>
+        <H4>Switch</H4>
+        <VStack space={componentMargin}>
+          {/* Switch */}
+          <SwitchShowroom />
+          {/* ListItemSwitch */}
+          <ListItemSwitchShowroom />
+        </VStack>
+      </VStack>
+    </VStack>
+  </DesignSystemScreen>
+);
 
 const renderCheckboxLabel = () => (
   <VStack space={componentMargin}>
@@ -174,10 +169,10 @@ const mockRadioItems = (): ReadonlyArray<RadioItem<string>> => [
   {
     label: "Let's try with JSX description",
     description: (
-      <BodySmall color="grey-700" weight="Regular">
+      <BodySmall weight="Regular">
         Ti contatteranno solo i servizi che hanno qualcosa di importante da
         dirti.{" "}
-        <Text style={{ color: IOColors["grey-700"], fontWeight: "600" }}>
+        <Text style={{ fontWeight: "600" }}>
           Potrai sempre disattivare le comunicazioni che non ti interessano.
         </Text>
       </BodySmall>

@@ -1,14 +1,13 @@
 import {
-  IOColors,
+  IODimensions,
   IOIcons,
-  IOVisualCostants,
   TabItem,
   TabNavigation,
   VSpacer
 } from "@io-app/design-system";
 import I18n from "i18next";
 import { useEffect, useMemo, useState } from "react";
-import { Platform, RefreshControl, View } from "react-native";
+import { RefreshControl, View } from "react-native";
 import Animated, {
   useAnimatedRef,
   useAnimatedScrollHandler,
@@ -127,7 +126,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
     (refreshControlProps?.refreshing ?? false) && isPullRefresh;
   const contentContainerPaddingBottom = ListFooterComponentStyle
     ? 0
-    : IOVisualCostants.appMarginDefault + bottom;
+    : IODimensions.padding.screen.default + bottom;
 
   useEffect(() => {
     isRefreshingSharedValue.value = isRefreshing ? 1 : 0;
@@ -202,7 +201,8 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
       ref={animatedFlatListRef}
       refreshControl={
         <RefreshControl
-          tintColor={Platform.OS === "ios" ? "transparent" : IOColors.black}
+          // Hides the native spinner: `CgnAnimatedHeader` draws its own
+          tintColor="transparent"
           {...refreshControlProps}
           onRefresh={() => {
             refreshControlProps.onRefresh();

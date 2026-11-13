@@ -256,10 +256,10 @@ export function createRootReducer(
                 },
                 cieLogin: {
                   ...cieLoginInitialState,
+                  cieEnv: state.features.loginFeatures.cieLogin.cieEnv,
                   isCieIDTourGuideEnabled:
                     state.features.loginFeatures.cieLogin
                       .isCieIDTourGuideEnabled,
-                  useUat: state.features.loginFeatures.cieLogin.useUat,
                   _persist: state.features.loginFeatures.cieLogin._persist
                 },
                 loginConfig: {
@@ -304,6 +304,9 @@ export function createRootReducer(
               },
               services: {
                 ...state.features.services
+              },
+              tour: {
+                ...state.features.tour
               },
               _persist: state.features._persist
             },

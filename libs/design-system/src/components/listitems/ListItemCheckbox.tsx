@@ -2,12 +2,8 @@ import { ComponentProps, useState } from "react";
 import { Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { useIOTheme } from "../../context";
-import {
-  IOSelectionListItemStyles,
-  IOSelectionListItemVisualParams,
-  IOSelectionTickVisualParams
-} from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions, IOOpacity } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
@@ -15,6 +11,13 @@ import { Checkbox } from "../checkbox/Checkbox";
 import { Icon, IOIcons } from "../icons";
 import { HSpacer, VSpacer } from "../layout";
 import { BodySmall, H6 } from "../typography";
+import { IOSelectionListItemStyles } from "./styles";
+
+type ListItemCheckboxProps = Pick<
+  ComponentProps<typeof Pressable>,
+  "accessibilityHint" | "accessibilityLabel" | "disabled" | "onPress"
+> &
+  Props;
 
 type Props = {
   description?: string;
@@ -23,14 +26,6 @@ type Props = {
   onValueChange?: (newValue: boolean) => void;
   selected?: boolean;
 };
-
-const DISABLED_OPACITY = 0.5;
-
-type ListItemCheckboxProps = Pick<
-  ComponentProps<typeof Pressable>,
-  "accessibilityHint" | "accessibilityLabel" | "disabled" | "onPress"
-> &
-  Props;
 
 /**
  * With the automatic state management that uses a {@link AnimatedCheckBox} The
@@ -57,8 +52,7 @@ export const ListItemCheckbox = ({
   const { onPressIn, onPressOut, scaleAnimatedStyle, backgroundAnimatedStyle } =
     useListItemAnimation();
 
-  // Theme
-  const theme = useIOTheme();
+  const listItemColors = useIOColors().component.listItem;
 
   // Accessibility
   // Comma = Small pause when announcing content
@@ -98,7 +92,7 @@ export const ListItemCheckbox = ({
         style={[
           IOSelectionListItemStyles.listItem,
           backgroundAnimatedStyle,
-          { opacity: disabled ? DISABLED_OPACITY : 1 }
+          { opacity: disabled ? IOOpacity.disabled : 1 }
         ]}
       >
         <Animated.View style={scaleAnimatedStyle}>
@@ -108,7 +102,7 @@ export const ListItemCheckbox = ({
                 flexDirection: "row",
                 flexShrink: 1,
                 columnGap:
-                  IOSelectionListItemVisualParams.iconMargin *
+                  IODimensions.gap.selection.leading *
                   dynamicFontScale *
                   spacingScaleMultiplier
               }}
@@ -116,16 +110,19 @@ export const ListItemCheckbox = ({
               {icon && !hugeFontEnabled && (
                 <Icon
                   allowFontScaling
-                  color={theme["icon-decorative"]}
+                  color={listItemColors.foreground.icon}
                   name={icon}
-                  size={IOSelectionListItemVisualParams.iconSize}
+                  size={IODimensions.size.icon.selection}
                 />
               )}
-              <H6 color={theme["textBody-default"]} style={{ flexShrink: 1 }}>
+              <H6
+                color={listItemColors.foreground.label}
+                style={{ flexShrink: 1 }}
+              >
                 {label}
               </H6>
             </View>
-            <HSpacer size={8} />
+            <HSpacer size={IODimensions.gap.selection.control} />
             <View
               accessibilityElementsHidden
               importantForAccessibility="no-hide-descendants"
@@ -133,16 +130,17 @@ export const ListItemCheckbox = ({
             >
               <Checkbox
                 checked={selected ?? toggleValue}
-                size={IOSelectionTickVisualParams.size * dynamicFontScale}
+                size={IODimensions.size.selection.control * dynamicFontScale}
               />
             </View>
           </View>
           {description && (
             <View>
-              <VSpacer
-                size={IOSelectionListItemVisualParams.descriptionMargin}
-              />
-              <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
+              <VSpacer size={IODimensions.gap.selection.description} />
+              <BodySmall
+                color={listItemColors.foreground.description}
+                weight="Regular"
+              >
                 {description}
               </BodySmall>
             </View>

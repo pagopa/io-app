@@ -3,9 +3,8 @@ import {
   FooterActions,
   H4,
   IOButton,
-  IOColors,
   useFooterActionsMeasurements,
-  useIOTheme,
+  useIOColors,
   VStack
 } from "@io-app/design-system";
 import { ModalBottomSheet } from "@swmansion/react-native-bottom-sheet";
@@ -47,7 +46,7 @@ const PERCENT_DETENT_RATIO = 0.6;
  * overlays the navigation header.
  */
 export const BottomSheetPlayground = () => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const frame = useSafeAreaFrame();
 
   const [modalIndex, setModalIndex] = useState(CLOSED_INDEX);
@@ -66,7 +65,7 @@ export const BottomSheetPlayground = () => {
       style={[
         StyleSheet.absoluteFill,
         styles.surface,
-        { backgroundColor: IOColors[theme["appBackground-primary"]] }
+        { backgroundColor: colors.background.default }
       ]}
     />
   );
