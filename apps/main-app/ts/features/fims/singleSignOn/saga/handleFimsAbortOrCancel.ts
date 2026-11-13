@@ -2,7 +2,7 @@ import {
   cancelAllRunningRequests,
   isFailureResponse,
   nativeRequest
-} from "@io-app/expo-http-client";
+} from "@pagopa/io-react-native-http-client";
 import { call, select } from "typed-redux-saga/macro";
 
 import { oidcProviderDomainSelector } from "../../../../store/reducers/backendStatus/remoteConfig";

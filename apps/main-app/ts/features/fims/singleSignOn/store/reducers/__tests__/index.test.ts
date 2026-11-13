@@ -3,7 +3,7 @@ import {
   TypeEnum
 } from "@io-app/api-types/generated/definitions/fims_sso/Consent";
 import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
-import { HttpClientSuccessResponse } from "@io-app/expo-http-client";
+import { HttpClientSuccessResponse } from "@pagopa/io-react-native-http-client";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 
