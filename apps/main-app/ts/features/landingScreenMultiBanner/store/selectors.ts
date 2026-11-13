@@ -11,18 +11,29 @@ import {
 export const localBannerVisibilitySelector = (state: GlobalState) =>
   state.features.landingBanners;
 
-type StructuredSelectorOutput = {
-  [key in LandingScreenBannerId]: boolean;
-};
+export type LandingScreenBannerToRender =
+  | { id: LandingScreenBannerId; type: "banner" }
+  | { type: "loading" }
+  | { type: "none" };
+
+type StructuredSelectorOutput = Partial<Record<LandingScreenBannerId, boolean>>;
+
+const NO_BANNER: LandingScreenBannerToRender = { type: "none" };
+const LOADING_BANNER: LandingScreenBannerToRender = { type: "loading" };
 
 //    unify them so that we have a single selector,
-//    which returns a map like { bannerId: renderable(T/F) }
+//    which returns a map like { bannerId: renderable(T/F/undefined) }
 const unifiedRenderabilitySelectors = createStructuredSelector<
   GlobalState,
   StructuredSelectorOutput
 >(renderabilitySelectorsFromBannerMap(landingScreenBannerMap));
 
-//  add that as a dependency to the main selector, in order to avoid unnecessary reruns
+/**
+ * Picks the first renderable banner following the remote priority order. While
+ * a higher priority banner renderability is still unknown (`undefined`), it
+ * returns `loading` so that the lower priority one is not shown and then
+ * swapped out.
+ */
 export const landingScreenBannerToRenderSelector = createSelector(
   [
     landingScreenBannerOrderSelector,
@@ -33,13 +44,24 @@ export const landingScreenBannerToRenderSelector = createSelector(
     backendBannerOrder,
     isLocalEnabledById,
     isRenderableById
-  ): LandingScreenBannerId | undefined => {
-    const availableBanners = backendBannerOrder.filter(
+  ): LandingScreenBannerToRender => {
+    const enabledBanners = backendBannerOrder.filter(
       (id): id is LandingScreenBannerId =>
-        isLocalEnabledById[id as LandingScreenBannerId] === true &&
-        isRenderableById[id as LandingScreenBannerId] === true
+        isLocalEnabledById[id as LandingScreenBannerId] === true
     );
-    return availableBanners[0]; // id || undefined
+    const bannerIndex = enabledBanners.findIndex(
+      id => isRenderableById[id] === true
+    );
+    if (bannerIndex === -1) {
+      return NO_BANNER;
+    }
+    const isHigherPriorityBannerLoading = enabledBanners
+      .slice(0, bannerIndex)
+      // ids unknown to the banner map (e.g. removed banners) are ignored
+      .some(id => id in isRenderableById && isRenderableById[id] === undefined);
+    return isHigherPriorityBannerLoading
+      ? LOADING_BANNER
+      : { type: "banner", id: enabledBanners[bannerIndex] };
   }
 );
 
