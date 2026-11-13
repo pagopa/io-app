@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`ITW remote config persist shape should freeze ItwConfig [review persist compatibility and migrate breaking changes before updating the snapshot] 1`] = `
+exports[`ITW remote config persist shape should freeze ItwConfig [if this test fails, add a persist migration before updating the snapshot] 1`] = `
 [
   {
     "enabled": "boolean",

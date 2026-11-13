@@ -34,11 +34,9 @@ import { cgnCategoriesSaga } from "./networking/categories/cgnCategoriesSaga";
 import { cgnGetInformationSaga } from "./networking/details/getCgnInformationSaga";
 import { getEycaActivationStatusSaga } from "./networking/eyca/activation/getEycaActivationStatus";
 import { handleGetEycaStatus } from "./networking/eyca/details/getEycaStatus";
+import { cgnFeaturedOpportunitiesSaga } from "./networking/merchants/cgnFeaturedOpportunitiesSaga";
 import { cgnGetMerchantsCountSaga } from "./networking/merchants/cgnGetMerchantsCountSaga";
-import {
-  cgnFeaturedOpportunitiesSaga,
-  cgnMerchantDetailUntilCancelled
-} from "./networking/merchants/cgnMerchantDetail";
+import { cgnMerchantDetailUntilCancelled } from "./networking/merchants/cgnMerchantDetailUntilCancelled";
 import { cgnOfflineMerchantsSaga } from "./networking/merchants/cgnOfflineMerchantsSaga";
 import { cgnOnlineMerchantsSaga } from "./networking/merchants/cgnOnlineMerchantsSaga";
 import { cgnSearchMerchantsSaga } from "./networking/merchants/cgnSearchMerchantsSaga";

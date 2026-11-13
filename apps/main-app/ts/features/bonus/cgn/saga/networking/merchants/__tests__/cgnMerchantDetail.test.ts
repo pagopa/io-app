@@ -15,11 +15,9 @@ import {
   cgnSelectedMerchant,
   selectFeaturedOpportunity
 } from "../../../../store/actions/merchants";
-import {
-  cgnFeaturedOpportunitiesSaga,
-  cgnMerchantDetail,
-  cgnMerchantDetailUntilCancelled
-} from "../cgnMerchantDetail";
+import { cgnFeaturedOpportunitiesSaga } from "../cgnFeaturedOpportunitiesSaga";
+import { cgnMerchantDetail } from "../cgnMerchantDetail";
+import { cgnMerchantDetailUntilCancelled } from "../cgnMerchantDetailUntilCancelled";
 
 const merchant: Merchant = {
   id: "12345" as NonEmptyString,

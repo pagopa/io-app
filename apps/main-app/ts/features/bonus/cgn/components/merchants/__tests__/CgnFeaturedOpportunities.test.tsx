@@ -24,35 +24,82 @@ const makeOpportunity = (index: number): ResolvedCgnFeaturedOpportunity => ({
 describe("CgnFeaturedOpportunities", () => {
   afterEach(() => jest.restoreAllMocks());
 
-  it("renders nothing when there are no opportunities", () => {
-    const { queryByTestId } = render(
-      <CgnFeaturedOpportunities onSelect={jest.fn()} opportunities={[]} />
-    );
+  test.each([
+    {
+      name: "no configured opportunities",
+      isLoading: false,
+      hasConfiguredOpportunities: false,
+      showSkeleton: false
+    },
+    {
+      name: "loading without configured opportunities",
+      isLoading: true,
+      hasConfiguredOpportunities: false,
+      showSkeleton: false
+    },
+    {
+      name: "loading configured opportunities",
+      isLoading: true,
+      hasConfiguredOpportunities: true,
+      showSkeleton: true
+    },
+    {
+      name: "no available configured opportunities",
+      isLoading: false,
+      hasConfiguredOpportunities: true,
+      showSkeleton: false
+    }
+  ])(
+    "handles $name",
+    ({ isLoading, hasConfiguredOpportunities, showSkeleton }) => {
+      const { queryByTestId } = render(
+        <CgnFeaturedOpportunities
+          hasConfiguredOpportunities={hasConfiguredOpportunities}
+          isLoading={isLoading}
+          onSelect={jest.fn()}
+          opportunities={[]}
+        />
+      );
 
-    expect(queryByTestId("CgnFeaturedOpportunities")).toBeNull();
-  });
+      expect(queryByTestId("CgnFeaturedOpportunities")).toBeNull();
+      expect(!!queryByTestId("CgnFeaturedOpportunitiesSkeleton")).toBe(
+        showSkeleton
+      );
+    }
+  );
 
-  it("renders the section title and the opportunities", () => {
-    const { getByTestId, getByText } = render(
-      <CgnFeaturedOpportunities
-        onSelect={jest.fn()}
-        opportunities={[makeOpportunity(1)]}
-      />
-    );
+  test.each([
+    { name: "loaded", isLoading: false },
+    { name: "refreshing", isLoading: true }
+  ])(
+    "renders the section title and the opportunities when $name",
+    ({ isLoading }) => {
+      const { getByTestId, getByText, queryByTestId } = render(
+        <CgnFeaturedOpportunities
+          hasConfiguredOpportunities
+          isLoading={isLoading}
+          onSelect={jest.fn()}
+          opportunities={[makeOpportunity(1)]}
+        />
+      );
 
-    expect(getByTestId("CgnFeaturedOpportunities")).toBeTruthy();
-    expect(
-      getByText(I18n.t("bonus.cgn.merchantsList.featuredOpportunities.title"))
-    ).toBeTruthy();
-    expect(getByText("Partner 1")).toBeTruthy();
-    expect(getByText("Description 1")).toBeTruthy();
-  });
+      expect(getByTestId("CgnFeaturedOpportunities")).toBeTruthy();
+      expect(queryByTestId("CgnFeaturedOpportunitiesSkeleton")).toBeNull();
+      expect(
+        getByText(I18n.t("bonus.cgn.merchantsList.featuredOpportunities.title"))
+      ).toBeTruthy();
+      expect(getByText("Partner 1")).toBeTruthy();
+      expect(getByText("Description 1")).toBeTruthy();
+    }
+  );
 
   it("renders at most 3 opportunities", () => {
     const opportunities = [1, 2, 3, 4, 5].map(makeOpportunity);
 
     const { getByText, queryByText } = render(
       <CgnFeaturedOpportunities
+        hasConfiguredOpportunities
+        isLoading={false}
         onSelect={jest.fn()}
         opportunities={opportunities}
       />
@@ -85,6 +132,8 @@ describe("CgnFeaturedOpportunities", () => {
     };
     const { getByText, getByRole } = render(
       <CgnFeaturedOpportunities
+        hasConfiguredOpportunities
+        isLoading={false}
         onSelect={onSelect}
         opportunities={[resolvedOpportunity]}
       />
@@ -100,6 +149,8 @@ describe("CgnFeaturedOpportunities", () => {
     const opportunity = makeOpportunity(1);
     const { getByLabelText } = render(
       <CgnFeaturedOpportunities
+        hasConfiguredOpportunities
+        isLoading={false}
         onSelect={onSelect}
         opportunities={[opportunity]}
       />

@@ -23,10 +23,7 @@ import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { cgnFeaturedOpportunitiesSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import CgnAnimatedHeader from "../../components/CgnAnimatedHeader";
-import {
-  CgnFeaturedOpportunities,
-  CgnFeaturedOpportunitiesSkeleton
-} from "../../components/merchants/CgnFeaturedOpportunities";
+import { CgnFeaturedOpportunities } from "../../components/merchants/CgnFeaturedOpportunities";
 import { useDisableRootNavigatorGesture } from "../../hooks/useDisableRootNavigatorGesture";
 import CGN_ROUTES from "../../navigation/routes";
 import {
@@ -209,29 +206,19 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
           </TabNavigation>
         </View>
         <VSpacer size={16} />
-        {isCategoriesTabSelected &&
-          (featuredOpportunities.length > 0 ? (
-            <View testID="CgnFeaturedOpportunitiesSection">
-              <CgnFeaturedOpportunities
-                onSelect={opportunity => {
-                  dispatch(selectFeaturedOpportunity(opportunity));
-                  navigate(CGN_ROUTES.DETAILS.MAIN, {
-                    screen: CGN_ROUTES.DETAILS.MERCHANTS.DISCOUNT
-                  });
-                }}
-                opportunities={featuredOpportunities}
-              />
-              <VSpacer size={16} />
-            </View>
-          ) : (
-            isFeaturedOpportunitiesLoading &&
-            featuredReferences.length > 0 && (
-              <>
-                <CgnFeaturedOpportunitiesSkeleton />
-                <VSpacer size={16} />
-              </>
-            )
-          ))}
+        {isCategoriesTabSelected && (
+          <CgnFeaturedOpportunities
+            hasConfiguredOpportunities={featuredReferences.length > 0}
+            isLoading={isFeaturedOpportunitiesLoading}
+            onSelect={opportunity => {
+              dispatch(selectFeaturedOpportunity(opportunity));
+              navigate(CGN_ROUTES.DETAILS.MAIN, {
+                screen: CGN_ROUTES.DETAILS.MERCHANTS.DISCOUNT
+              });
+            }}
+            opportunities={featuredOpportunities}
+          />
+        )}
       </>
     ),
     // eslint-disable-next-line react-hooks/exhaustive-deps

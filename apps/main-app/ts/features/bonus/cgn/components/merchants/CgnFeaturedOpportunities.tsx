@@ -99,7 +99,7 @@ const FeaturedOpportunityCard = ({
   );
 };
 
-export const CgnFeaturedOpportunitiesSkeleton = () => (
+const CgnFeaturedOpportunitiesSkeleton = () => (
   <View
     style={{ paddingHorizontal: IODimensions.padding.screen.default }}
     testID="CgnFeaturedOpportunitiesSkeleton"
@@ -116,9 +116,13 @@ export const CgnFeaturedOpportunitiesSkeleton = () => (
 );
 
 export const CgnFeaturedOpportunities = ({
+  hasConfiguredOpportunities,
+  isLoading,
   opportunities,
   onSelect
 }: {
+  hasConfiguredOpportunities: boolean;
+  isLoading: boolean;
   onSelect: (opportunity: ResolvedCgnFeaturedOpportunity) => void;
   opportunities: ReadonlyArray<ResolvedCgnFeaturedOpportunity>;
 }) => {
@@ -127,35 +131,47 @@ export const CgnFeaturedOpportunities = ({
   const items = opportunities.slice(0, CGN_FEATURED_OPPORTUNITIES_MAX_ITEMS);
 
   if (items.length === 0) {
-    return null;
+    return isLoading && hasConfiguredOpportunities ? (
+      <>
+        <CgnFeaturedOpportunitiesSkeleton />
+        <VSpacer size={16} />
+      </>
+    ) : null;
   }
 
   return (
-    <View testID="CgnFeaturedOpportunities">
-      <View style={{ paddingHorizontal: IODimensions.padding.screen.default }}>
-        <H6 accessibilityRole="header">
-          {I18n.t("bonus.cgn.merchantsList.featuredOpportunities.title")}
-        </H6>
+    <View testID="CgnFeaturedOpportunitiesSection">
+      <View testID="CgnFeaturedOpportunities">
+        <View
+          style={{ paddingHorizontal: IODimensions.padding.screen.default }}
+        >
+          <H6 accessibilityRole="header">
+            {I18n.t("bonus.cgn.merchantsList.featuredOpportunities.title")}
+          </H6>
+        </View>
+        <VSpacer size={CARD_SPACING} />
+        <FlatList
+          contentContainerStyle={{
+            paddingHorizontal: IODimensions.padding.screen.default
+          }}
+          data={items}
+          horizontal
+          ItemSeparatorComponent={() => (
+            <View style={{ width: CARD_SPACING }} />
+          )}
+          keyExtractor={item => `${item.merchant.id}-${item.discount.id}`}
+          renderItem={({ item }) => (
+            <FeaturedOpportunityCard
+              cardWidth={cardWidth}
+              onSelect={onSelect}
+              opportunity={item}
+            />
+          )}
+          showsHorizontalScrollIndicator={false}
+          snapToInterval={cardWidth + CARD_SPACING}
+        />
       </View>
-      <VSpacer size={CARD_SPACING} />
-      <FlatList
-        contentContainerStyle={{
-          paddingHorizontal: IODimensions.padding.screen.default
-        }}
-        data={items}
-        horizontal
-        ItemSeparatorComponent={() => <View style={{ width: CARD_SPACING }} />}
-        keyExtractor={item => `${item.merchant.id}-${item.discount.id}`}
-        renderItem={({ item }) => (
-          <FeaturedOpportunityCard
-            cardWidth={cardWidth}
-            onSelect={onSelect}
-            opportunity={item}
-          />
-        )}
-        showsHorizontalScrollIndicator={false}
-        snapToInterval={cardWidth + CARD_SPACING}
-      />
+      <VSpacer size={16} />
     </View>
   );
 };
