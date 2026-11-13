@@ -1,8 +1,6 @@
 import {
-  IOBadgeHSpacing,
-  IOBadgeRadius,
-  IOBadgeVSpacing,
-  IOColors,
+  IOColorPalette,
+  IODimensions,
   makeFontStyleObject
 } from "@io-app/design-system";
 import Color from "color";
@@ -158,15 +156,16 @@ const styles = StyleSheet.create({
       }
     }),
     borderCurve: "continuous",
-    borderRadius: IOBadgeRadius,
-    paddingHorizontal: IOBadgeHSpacing,
-    paddingVertical: IOBadgeVSpacing,
-    paddingEnd: IOBadgeHSpacing + 8,
-    marginEnd: -IOBadgeHSpacing
+    borderRadius: IODimensions.radius.badge,
+    paddingHorizontal: IODimensions.padding.badge.horizontal,
+    paddingVertical: IODimensions.padding.badge.vertical,
+    paddingEnd: IODimensions.padding.badge.horizontal + 8,
+    marginEnd: -IODimensions.padding.badge.horizontal
   },
   faded: {
     ...StyleSheet.absoluteFill,
-    backgroundColor: IOColors.white,
+    // Card artwork: same in both modes
+    backgroundColor: IOColorPalette.greyscale.white,
     opacity: 0.6,
     zIndex: 10
   }

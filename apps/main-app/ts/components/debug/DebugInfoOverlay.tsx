@@ -1,10 +1,10 @@
 import {
-  hexToRgba,
   HStack,
-  IOColors,
+  IOColorPalette,
   IOText,
-  useIOTheme,
-  VStack
+  useIOColors,
+  VStack,
+  withAlpha
 } from "@io-app/design-system";
 import { useState } from "react";
 import { Platform, Pressable, StyleSheet, View } from "react-native";
@@ -20,8 +20,8 @@ import PagoPATestIndicator from "../PagoPATestIndicator";
 import { DebugDataIndicator } from "./DebugDataIndicator";
 import { DebugDataOverlay } from "./DebugDataOverlay";
 
-const debugItemBgColor = hexToRgba(IOColors.white, 0.4);
-const debugItemBorderColor = hexToRgba(IOColors.black, 0.1);
+const debugItemBgColor = withAlpha(IOColorPalette.greyscale.white, 0.4);
+const debugItemBorderColor = withAlpha(IOColorPalette.greyscale.black, 0.1);
 
 const styles = StyleSheet.create({
   versionContainer: {
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
 });
 
 const DebugInfoOverlay = () => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const appVersion = getAppVersion();
   const [showRootName, setShowRootName] = useState(true);
   const [isDebugDataVisibile, showDebugData] = useState(false);
@@ -80,7 +80,7 @@ const DebugInfoOverlay = () => {
               style={styles.versionTextWrapper}
             >
               <IOText
-                color={theme["textBody-secondary"]}
+                color={colors.text.content.secondary}
                 font="TitilliumSansPro"
                 lineHeight={16}
                 size={12}
@@ -100,7 +100,7 @@ const DebugInfoOverlay = () => {
               style={styles.routeText}
             >
               <IOText
-                color={theme["textBody-secondary"]}
+                color={colors.text.content.secondary}
                 font="TitilliumSansPro"
                 lineHeight={16}
                 size={12}
@@ -137,13 +137,13 @@ const ItwPreIndicator = () => {
       style={[
         styles.versionTextWrapper,
         {
-          backgroundColor: hexToRgba(IOColors["error-500"], 0.4),
-          borderColor: hexToRgba(IOColors["error-850"], 0.1)
+          backgroundColor: withAlpha(IOColorPalette.red[500], 0.4),
+          borderColor: withAlpha(IOColorPalette.red[850], 0.1)
         }
       ]}
     >
       <IOText
-        color={"error-850"}
+        color={IOColorPalette.red[850]}
         font="TitilliumSansPro"
         lineHeight={16}
         size={12}

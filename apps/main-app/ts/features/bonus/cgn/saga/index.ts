@@ -18,6 +18,7 @@ import {
 } from "../store/actions/eyca/activation";
 import { cgnEycaStatus } from "../store/actions/eyca/details";
 import {
+  cgnFeaturedOpportunities,
   cgnMerchantsCount,
   cgnOfflineMerchants,
   cgnOnlineMerchants,
@@ -33,8 +34,9 @@ import { cgnCategoriesSaga } from "./networking/categories/cgnCategoriesSaga";
 import { cgnGetInformationSaga } from "./networking/details/getCgnInformationSaga";
 import { getEycaActivationStatusSaga } from "./networking/eyca/activation/getEycaActivationStatus";
 import { handleGetEycaStatus } from "./networking/eyca/details/getEycaStatus";
+import { cgnFeaturedOpportunitiesSaga } from "./networking/merchants/cgnFeaturedOpportunitiesSaga";
 import { cgnGetMerchantsCountSaga } from "./networking/merchants/cgnGetMerchantsCountSaga";
-import { cgnMerchantDetail } from "./networking/merchants/cgnMerchantDetail";
+import { cgnMerchantDetailUntilCancelled } from "./networking/merchants/cgnMerchantDetailUntilCancelled";
 import { cgnOfflineMerchantsSaga } from "./networking/merchants/cgnOfflineMerchantsSaga";
 import { cgnOnlineMerchantsSaga } from "./networking/merchants/cgnOnlineMerchantsSaga";
 import { cgnSearchMerchantsSaga } from "./networking/merchants/cgnSearchMerchantsSaga";
@@ -139,10 +141,17 @@ export function* watchBonusCgnSaga(bearerToken: string): SagaIterator {
     backendCgnMerchants.getOnlineMerchants
   );
 
+  // CGN Featured Opportunities
+  yield* takeLatest(
+    getType(cgnFeaturedOpportunities.request),
+    cgnFeaturedOpportunitiesSaga,
+    backendCgnMerchants.getMerchant
+  );
+
   // CGN get selected Merchant detail
   yield* takeLatest(
     getType(cgnSelectedMerchant.request),
-    cgnMerchantDetail,
+    cgnMerchantDetailUntilCancelled,
     backendCgnMerchants.getMerchant
   );
 

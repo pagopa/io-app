@@ -4,6 +4,7 @@ import * as TE from "fp-ts/lib/TaskEither";
 import { QRCodeScanResult } from "rn-qr-generator";
 
 import { GlobalState } from "../../../../store/reducers/types";
+import * as itWalletEnvSelectors from "../../../itwallet/common/store/selectors/environment";
 import { BarcodeFailure } from "../../types/failure";
 import { barcodeDetectionTask } from "../barcodeDetectionTask";
 import { imageDecodingTask } from "../imageDecodingTask";
@@ -25,6 +26,9 @@ describe("imageDecodingTask", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     jest.useFakeTimers();
+    jest
+      .spyOn(itWalletEnvSelectors, "selectItwSpecsVersion")
+      .mockReturnValue("1.4.6");
   });
 
   it("should return UNEXPECTED error if detection fails", async () => {

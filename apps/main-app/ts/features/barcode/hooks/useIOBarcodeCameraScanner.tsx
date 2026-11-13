@@ -1,4 +1,4 @@
-import { IOColors, LoadingSpinner } from "@io-app/design-system";
+import { LoadingSpinner, useIOColors } from "@io-app/design-system";
 import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
@@ -147,6 +147,7 @@ export const useIOBarcodeCameraScanner = ({
   barcodeTypes,
   isLoading = false
 }: IOBarcodeCameraScannerConfiguration): IOBarcodeCameraScanner => {
+  const colors = useIOColors();
   const store = useIOStore();
   const acceptedFormats = useMemo<Array<IOBarcodeFormat>>(
     () => barcodeFormats || ["QR_CODE", "DATA_MATRIX"],
@@ -246,7 +247,13 @@ export const useIOBarcodeCameraScanner = ({
 
   /** Component that renders camera and marker */
   const cameraComponent = (
-    <View style={styles.cameraContainer} testID="BarcodeScannerCameraTestID">
+    <View
+      style={[
+        styles.cameraContainer,
+        { backgroundColor: colors.background.camera }
+      ]}
+      testID="BarcodeScannerCameraTestID"
+    >
       {device && (
         <Camera
           audio={false}
@@ -295,8 +302,7 @@ const styles = StyleSheet.create({
   cameraContainer: {
     position: "relative",
     width: "100%",
-    height: "100%",
-    backgroundColor: IOColors.black
+    height: "100%"
   },
   camera: {
     position: "absolute",

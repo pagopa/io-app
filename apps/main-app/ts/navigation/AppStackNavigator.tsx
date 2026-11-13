@@ -1,4 +1,8 @@
-import { IOColors, useIOTheme, useIOThemeContext } from "@io-app/design-system";
+import {
+  IOColorsLegacy,
+  useIOTheme,
+  useIOThemeContext
+} from "@io-app/design-system";
 import {
   LinkingOptions,
   NavigationContainer,
@@ -208,7 +212,7 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
     >
       <FocusAwareStatusBar
         animated
-        backgroundColor={IOColors[theme["appBackground-primary"]]}
+        backgroundColor={IOColorsLegacy[theme["appBackground-primary"]]}
         barStyle={themeType === "dark" ? "light-content" : "dark-content"}
       />
       {props.children}

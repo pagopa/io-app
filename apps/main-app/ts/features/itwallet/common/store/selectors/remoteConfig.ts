@@ -1,6 +1,8 @@
+import * as O from "fp-ts/lib/Option";
 import { Platform } from "react-native";
 import { createSelector } from "reselect";
 
+import { isMinAppVersionSupported } from "../../../../../store/reducers/featureFlagWithMinAppVersionStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   getAppVersion,
@@ -158,6 +160,24 @@ export const isItwProximityNfcMinAppVersionSupportedSelector = createSelector(
 );
 
 /**
+ * Returns whether the current app version meets the minimum required to show
+ * the IT-Wallet What's New (login engagement) screen.
+ */
+export const isItwWhatsNewMinAppVersionSupportedSelector = createSelector(
+  itwRemoteConfigSelector,
+  ({ whats_new }): boolean => {
+    const version = whats_new?.min_app_version;
+    if (!version) {
+      return false;
+    }
+    return isVersionSupported(
+      Platform.OS === "ios" ? version.ios : version.android,
+      getAppVersion()
+    );
+  }
+);
+
+/**
  * Return the credential types that are pinned at the top of the catalogue list.
  * The order of the array determines the display order.
  */
@@ -187,4 +207,14 @@ export const itwHiddenCredentialsSelector = createSelector(
 export const itwShowcaseUrlSelector = createSelector(
   itwRemoteConfigSelector,
   ({ showcase_url }): string | undefined => showcase_url
+);
+
+/**
+ * Returns whether CED opportunities are remotely enabled. A `0.*`
+ * min_app_version disables the feature.
+ */
+export const itwIsDiscoverMoreCEDRemotelyEnabledSelector = createSelector(
+  itwRemoteConfigSelector,
+  ({ discover_more_ced }): boolean =>
+    isMinAppVersionSupported(O.fromNullable(discover_more_ced))
 );

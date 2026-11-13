@@ -3,8 +3,8 @@ import {
   Avatar,
   Body,
   BodySmall,
-  IOColors,
-  IOSpacingScale,
+  IOColorsLegacy,
+  IODimensionScale,
   useIOTheme
 } from "@io-app/design-system";
 import I18n from "i18next";
@@ -27,7 +27,7 @@ export type OrganizationHeaderProps = {
   thirdPartySenderDenomination?: string;
 };
 
-const ITEM_PADDING_VERTICAL: IOSpacingScale = 6;
+const ITEM_PADDING_VERTICAL: IODimensionScale = 6;
 
 const styles = StyleSheet.create({
   item: {
@@ -89,7 +89,10 @@ export const OrganizationHeader = ({
 
   return (
     <View
-      style={[styles.item, { borderColor: IOColors[theme["divider-default"]] }]}
+      style={[
+        styles.item,
+        { borderColor: IOColorsLegacy[theme["divider-default"]] }
+      ]}
       testID="organization-header"
     >
       <View style={{ flex: 1 }}>

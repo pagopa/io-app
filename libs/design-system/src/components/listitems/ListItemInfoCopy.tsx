@@ -2,14 +2,15 @@ import { ComponentProps, ReactNode, useCallback } from "react";
 import { GestureResponderEvent, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { useIOTheme } from "../../context";
-import { IOListItemStyles, IOListItemVisualParams } from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Icon, IOIcons } from "../icons";
 import { BodySmall, H6 } from "../typography";
+import { IOListItemStyles } from "./styles";
 
 export type ListItemInfoCopy = Pick<
   ComponentProps<typeof Pressable>,
@@ -33,7 +34,7 @@ export const ListItemInfoCopy = ({
   accessibilityHint,
   testID
 }: ListItemInfoCopy) => {
-  const theme = useIOTheme();
+  const listItemColors = useIOColors().component.listItem;
   const { onPressIn, onPressOut, scaleAnimatedStyle, backgroundAnimatedStyle } =
     useListItemAnimation();
 
@@ -53,11 +54,11 @@ export const ListItemInfoCopy = ({
   const listItemAccessibilityLabel =
     accessibilityLabel || `${label}; ${componentValueToAccessibility}`;
 
-  const foregroundColor = theme["interactiveElem-default"];
+  const foregroundColor = listItemColors.foreground.action.primary;
 
   const listItemInfoCopyContent = (
     <>
-      <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
+      <BodySmall color={listItemColors.foreground.description} weight="Regular">
         {label}
       </BodySmall>
       {/* Let developer using a custom component (e.g: skeleton) */}
@@ -93,7 +94,7 @@ export const ListItemInfoCopy = ({
             IOListItemStyles.listItemInner,
             {
               columnGap:
-                IOListItemVisualParams.iconMargin *
+                IODimensions.gap.listItem.default.leading *
                 dynamicFontScale *
                 spacingScaleMultiplier
             },
@@ -103,9 +104,9 @@ export const ListItemInfoCopy = ({
           {icon && !hugeFontEnabled && (
             <Icon
               allowFontScaling
-              color={theme["icon-decorative"]}
+              color={listItemColors.foreground.icon}
               name={icon}
-              size={IOListItemVisualParams.iconSize}
+              size={IODimensions.size.icon.listItem}
             />
           )}
           <View style={{ flex: 1 }}>{listItemInfoCopyContent}</View>
@@ -113,7 +114,7 @@ export const ListItemInfoCopy = ({
             allowFontScaling
             color={foregroundColor}
             name="copy"
-            size={IOListItemVisualParams.chevronSize}
+            size={IODimensions.size.icon.chevron}
           />
         </Animated.View>
       </Animated.View>

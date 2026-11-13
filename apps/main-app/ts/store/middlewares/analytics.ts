@@ -45,6 +45,7 @@ import {
 } from "../../features/settings/common/store/actions/userDataProcessing";
 import trackZendesk from "../../features/zendesk/analytics/index";
 import { isMixpanelInstanceInitialized, mixpanelTrack } from "../../mixpanel";
+import { authSecurityLevelHandler } from "../../mixpanelConfig/mixpanelPropertyUtils";
 import { buildEventProperties } from "../../utils/analytics";
 import { isTestEnv } from "../../utils/environment";
 import {
@@ -199,7 +200,10 @@ export const actionTracking =
       void updateOfflineAccessReason(action);
 
       const fciEnvironment = fciEnvironmentSelector(middleware.getState());
-      void trackFciAction(fciEnvironment)(action);
+      // Read from the store at tracking time: the AUTH_SECURITY_LEVEL super
+      // property is refreshed only on profile load, so it can be stale
+      const authSecurityLevel = authSecurityLevelHandler(middleware.getState());
+      void trackFciAction(fciEnvironment, authSecurityLevel)(action);
     }
     // This dispatches the action towards the redux store
     const result = next(action);

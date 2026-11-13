@@ -655,9 +655,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                           >
                             <View
                               accessibilityLabel="Vai su "Impostazioni""
-                              accessible={false}
-                              importantForAccessibility="yes"
-                              screenReaderFocusable={true}
+                              accessible={true}
                               style={
                                 {
                                   "marginHorizontal": -24,
@@ -688,6 +686,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                   }
                                 >
                                   <View
+                                    accessibilityElementsHidden={true}
                                     accessible={false}
                                     importantForAccessibility="no-hide-descendants"
                                     style={
@@ -757,9 +756,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                           >
                             <View
                               accessibilityLabel="Seleziona "Notifiche""
-                              accessible={false}
-                              importantForAccessibility="yes"
-                              screenReaderFocusable={true}
+                              accessible={true}
                               style={
                                 {
                                   "marginHorizontal": -24,
@@ -790,6 +787,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                   }
                                 >
                                   <View
+                                    accessibilityElementsHidden={true}
                                     accessible={false}
                                     importantForAccessibility="no-hide-descendants"
                                     style={
@@ -859,9 +857,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                           >
                             <View
                               accessibilityLabel="Attiva "Consenti notifiche""
-                              accessible={false}
-                              importantForAccessibility="yes"
-                              screenReaderFocusable={true}
+                              accessible={true}
                               style={
                                 {
                                   "marginHorizontal": -24,
@@ -892,6 +888,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                                   }
                                 >
                                   <View
+                                    accessibilityElementsHidden={true}
                                     accessible={false}
                                     importantForAccessibility="no-hide-descendants"
                                     style={
@@ -970,7 +967,6 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                               "bottom": 0,
                               "position": "absolute",
                             },
-                            false,
                             undefined,
                           ]
                         }
@@ -984,7 +980,6 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                               "bottom": 0,
                               "position": "absolute",
                             },
-                            false,
                             undefined,
                           ]
                         }

@@ -10,14 +10,13 @@ import {
 } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { useIOTheme } from "../../context";
+import { useIOColors } from "../../context";
+import { IODimensions } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useErrorShakeAnimation } from "../../utils/hooks/useErrorShakeAnimation";
 import { VSpacer } from "../layout";
 import { BodySmall } from "../typography";
 import { BoxedInput } from "./BoxedInput";
-
-const OTP_ITEMS_GAP = 8;
 
 export type OTPInputAccessibilityValueText = (params: {
   length: number;
@@ -84,7 +83,7 @@ export const OTPInput = ({
   const [hasError, setHasError] = useState(false);
   const isSecret = props.secret === true;
 
-  const theme = useIOTheme();
+  const otpInputColors = useIOColors().component.otpInput;
 
   const { translate, animatedStyle, shakeAnimation } = useErrorShakeAnimation();
 
@@ -200,7 +199,7 @@ export const OTPInput = ({
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
-            columnGap: OTP_ITEMS_GAP,
+            columnGap: IODimensions.gap.otpInput.items,
             flexGrow: 1,
             zIndex: 10
           }}
@@ -221,10 +220,10 @@ export const OTPInput = ({
           ))}
         </View>
       </Pressable>
-      <VSpacer size={4} />
+      <VSpacer size={IODimensions.gap.otpInput.error} />
       {hasError && errorMessage && (
         <BodySmall
-          color={theme.errorText}
+          color={otpInputColors.helper.error}
           style={{ textAlign: "center" }}
           weight="Semibold"
         >
