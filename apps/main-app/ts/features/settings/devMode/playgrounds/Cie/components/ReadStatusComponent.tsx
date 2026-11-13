@@ -1,10 +1,10 @@
 import {
-  IOColorsLegacy,
+  IOColorPalette,
   IOPictograms,
   IOText,
   Pictogram
 } from "@io-app/design-system";
-import { Platform, StyleSheet } from "react-native";
+import { ColorValue, Platform, StyleSheet } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 
 import { CircularProgress } from "../../../../../../components/ui/CircularProgress";
@@ -17,11 +17,11 @@ const pictogramMap: Record<ReadStatus, IOPictograms> = {
   error: "fatalError"
 };
 
-const statusColorMap: Record<ReadStatus, IOColorsLegacy> = {
-  idle: "blueIO-500",
-  reading: "blueIO-500",
-  success: "success-500",
-  error: "error-500"
+const statusColorMap: Record<ReadStatus, ColorValue> = {
+  idle: IOColorPalette.blueIO[500],
+  reading: IOColorPalette.blueIO[500],
+  success: IOColorPalette.green[500],
+  error: IOColorPalette.red[500]
 };
 
 type ReadStatusComponentProps = {
@@ -40,8 +40,8 @@ export const ReadStatusComponent = ({
       progress={progress * 100}
       radius={125}
       size={250}
-      strokeBgColor={IOColorsLegacy["grey-100"]}
-      strokeColor={IOColorsLegacy[statusColorMap[status]]}
+      strokeBgColor={IOColorPalette.greyscale[100]}
+      strokeColor={statusColorMap[status]}
       strokeWidth={8}
     >
       <>
@@ -49,7 +49,12 @@ export const ReadStatusComponent = ({
           <Pictogram name={pictogramMap[status]} size={180} />
         </Animated.View>
         {status === "reading" && step && (
-          <IOText color="black" font="FiraCode" size={12} weight="Bold">
+          <IOText
+            color={IOColorPalette.greyscale.black}
+            font="FiraCode"
+            size={12}
+            weight="Bold"
+          >
             {step}
           </IOText>
         )}

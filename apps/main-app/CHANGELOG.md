@@ -1,3 +1,34 @@
+## 3.43.0-rc.10 (2026-11-12)
+
+### Features
+
+- [[SIW-5483](https://pagopa.atlassian.net/browse/SIW-5483)] Add IT-Wallet What's New login engagement screen ([#8867](https://github.com/pagopa/io-app/pull/8867))
+
+### Bug Fixes
+
+- [[IOAS-163](https://pagopa.atlassian.net/browse/IOAS-163)] message calendar reminder fix ([#8747](https://github.com/pagopa/io-app/pull/8747))
+- [[IOCOM-3384](https://pagopa.atlassian.net/browse/IOCOM-3384)] expo-notifications missing sound ([#8835](https://github.com/pagopa/io-app/pull/8835))
+- [[IOPLT-2246](https://pagopa.atlassian.net/browse/IOPLT-2246)] Android haptic feedback status checker ([#8823](https://github.com/pagopa/io-app/pull/8823))
+- **IT-Wallet:** [[SIW-5435](https://pagopa.atlassian.net/browse/SIW-5435)] Discovery banner and eID lifecycle alert visibility and copy ([#8837](https://github.com/pagopa/io-app/pull/8837))
+- **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] keep proximity transport open for termination ([#8870](https://github.com/pagopa/io-app/pull/8870))
+
+### Chores
+
+- [[IOPLT-2193](https://pagopa.atlassian.net/browse/IOPLT-2193)] Adjust switch access order for `ListItem` component ([#8757](https://github.com/pagopa/io-app/pull/8757))
+- [[IOPLT-2213](https://pagopa.atlassian.net/browse/IOPLT-2213)] Improve `Banner` component a11y ([#8800](https://github.com/pagopa/io-app/pull/8800))
+- **IT-Wallet:** [[SIW-5384](https://pagopa.atlassian.net/browse/SIW-5384)] Use SDK flag for credential offer support ([#8857](https://github.com/pagopa/io-app/pull/8857))
+- **IT-Wallet:** [[SIW-5366](https://pagopa.atlassian.net/browse/SIW-5366)] Track credential status update failures for analytics purposes ([#8873](https://github.com/pagopa/io-app/pull/8873))
+
+### ❤️ Thank You
+
+- Alessandro Dell'Oste @adelloste
+- DavideOnano @DavideOnano
+- Emanuele Dall'Ara @LeleDallas
+- Federico Mastrini @mastro993
+- Gianluca Spada
+- Martino Cesari Tomba @forrest57
+- MonicaRungi-EY
+
 ## 3.43.0-rc.9 (2026-11-11)
 
 ### Bug Fixes

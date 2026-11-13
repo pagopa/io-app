@@ -1,5 +1,4 @@
 import {
-  IOColorsLegacy,
   IODimensions,
   IOIcons,
   TabItem,
@@ -8,7 +7,7 @@ import {
 } from "@io-app/design-system";
 import I18n from "i18next";
 import { useEffect, useMemo, useState } from "react";
-import { Platform, RefreshControl, View } from "react-native";
+import { RefreshControl, View } from "react-native";
 import Animated, {
   useAnimatedRef,
   useAnimatedScrollHandler,
@@ -202,9 +201,8 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
       ref={animatedFlatListRef}
       refreshControl={
         <RefreshControl
-          tintColor={
-            Platform.OS === "ios" ? "transparent" : IOColorsLegacy.black
-          }
+          // Hides the native spinner: `CgnAnimatedHeader` draws its own
+          tintColor="transparent"
           {...refreshControlProps}
           onRefresh={() => {
             refreshControlProps.onRefresh();

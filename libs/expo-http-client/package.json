@@ -1,0 +1,34 @@
+{
+  "name": "@io-app/expo-http-client",
+  "version": "2.0.0",
+  "description": "Expo module exposing a native HTTP client (Alamofire on iOS, Ktor on Android) for io-app",
+  "private": true,
+  "main": "index.ts",
+  "types": "index.ts",
+  "react-native": "index.ts",
+  "source": "index.ts",
+  "files": [
+    "index.ts",
+    "src",
+    "mocks",
+    "android",
+    "ios",
+    "expo-module.config.json",
+    "!**/__tests__"
+  ],
+  "scripts": {
+    "tsc-noemit": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "expo": "*",
+    "react-native": "*"
+  },
+  "devDependencies": {
+    "@types/jest": "catalog:",
+    "expo": "^55.0.8",
+    "oxlint": "catalog:",
+    "oxlint-tsgolint": "catalog:",
+    "react-native": "catalog:",
+    "typescript": "catalog:"
+  }
+}
