@@ -1,14 +1,22 @@
+import { useFocusEffect } from "@react-navigation/native";
 import { useEffect } from "react";
 
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import { setSecurityAdviceReadyToShow } from "../../../authentication/fastLogin/store/actions/securityAdviceActions";
+import {
+  trackItwActivationModalDialog,
+  trackItwActivationModalDialogActivationStart,
+  trackItwActivationModalDialogDismissed
+} from "../../analytics";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwEngagementScreenContent } from "../components/ItwEngagementScreenContent";
 
 export const ItwEngagementScreen = () => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
+
+  useFocusEffect(trackItwActivationModalDialog);
 
   // Any dismissal (button, back, gesture) hands over to the security advice
   useEffect(
@@ -23,7 +31,8 @@ export const ItwEngagementScreen = () => {
 
   return (
     <ItwEngagementScreenContent
-      onActivate={() =>
+      onActivate={() => {
+        trackItwActivationModalDialogActivationStart();
         navigation.navigate(ITW_ROUTES.MAIN, {
           state: {
             routes: [
@@ -33,9 +42,12 @@ export const ItwEngagementScreen = () => {
               }
             ]
           }
-        })
-      }
-      onDismiss={() => navigation.goBack()}
+        });
+      }}
+      onDismiss={() => {
+        trackItwActivationModalDialogDismissed();
+        navigation.goBack();
+      }}
     />
   );
 };
