@@ -55,7 +55,7 @@
     "@pagopa/io-react-native-cieid": "0.5.2",
     "@pagopa/io-react-native-crypto": "^1.2.5",
     "@pagopa/io-react-native-integrity": "1.0.0",
-    "@pagopa/io-react-native-iso18013": "0.9.0",
+    "@pagopa/io-react-native-iso18013": "0.9.1",
     "@pagopa/io-react-native-jwt": "^2.2.5",
     "@pagopa/io-react-native-secure-storage": "^0.2.1",
     "@pagopa/io-react-native-wallet": "3.9.1",
