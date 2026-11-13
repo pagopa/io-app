@@ -1,8 +1,6 @@
 import { InitiativeDTO } from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
-import { IOSkeleton, ListItemHeader, ListItemNav } from "@io-app/design-system";
+import { ListItemHeader, ListItemNav } from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/core";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { View } from "react-native";
 
@@ -43,46 +41,24 @@ const IdPayInitiativeDiscountSettingsComponent = (props: Props) => {
     );
   };
 
-  const instrumentsSettingsButton = pipe(
-    initiative,
-    O.fromNullable,
-    O.fold(
-      () => (
-        <ListItemNav
-          accessibilityLabel={I18n.t(
-            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
-          )}
-          description={
-            <IOSkeleton height={21} radius={4} shape="rectangle" width={100} />
-          }
-          label={I18n.t(
-            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
-          )}
-          onPress={() => null}
-        />
-      ),
-      ({ nInstr }) => {
-        const methodCountString = I18n.t(
-          `idpay.initiative.details.initiativeDetailsScreen.configured.settings.methods`,
-          {
-            count: nInstr
-          }
-        );
-        return (
-          <ListItemNav
-            accessibilityLabel={`${I18n.t(
-              "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
-            )}
+  const methodCountString = I18n.t(
+    "idpay.initiative.details.initiativeDetailsScreen.configured.settings.methods",
+    {
+      count: initiative.nInstr
+    }
+  );
+  const instrumentsSettingsButton = (
+    <ListItemNav
+      accessibilityLabel={`${I18n.t(
+        "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
+      )}
          ${methodCountString}`}
-            description={methodCountString}
-            label={I18n.t(
-              "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
-            )}
-            onPress={() => navigateToInstrumentsConfiguration(initiative)}
-          />
-        );
-      }
-    )
+      description={methodCountString}
+      label={I18n.t(
+        "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
+      )}
+      onPress={() => navigateToInstrumentsConfiguration(initiative)}
+    />
   );
 
   if (!isIdPayCodeCieEnabled) {

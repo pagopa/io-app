@@ -6,7 +6,7 @@ import {
   CodeEnum,
   TransactionErrorDTO
 } from "@io-app/api-types/generated/definitions/idpay/TransactionErrorDTO";
-import * as E from "fp-ts/lib/Either";
+import { err, ok } from "neverthrow";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
@@ -52,7 +52,7 @@ describe("handleGenerateBarcode test", () => {
         }),
         idPayGenerateBarcode.request({ initiativeId })
       )
-      .next(E.right({ status: 201, value: mock201 }))
+      .next(ok({ status: 201, value: mock201 }))
       .put(idPayGenerateBarcode.success(mock201))
       .next()
       .isDone();
@@ -76,7 +76,7 @@ describe("handleGenerateBarcode test", () => {
         }),
         idPayGenerateBarcode.request({ initiativeId })
       )
-      .next(E.right({ status: 401, value: mockError }))
+      .next(ok({ status: 401, value: mockError }))
       .put(
         idPayGenerateBarcode.failure({
           initiativeId,
@@ -104,7 +104,7 @@ describe("handleGenerateBarcode test", () => {
         }),
         idPayGenerateBarcode.request({ initiativeId })
       )
-      .next(E.left([]))
+      .next(err([]))
       .put(
         idPayGenerateBarcode.failure({
           initiativeId,

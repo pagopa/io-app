@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
 
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -23,11 +22,11 @@ export const idPayBarcodeByInitiativeIdSelector = createSelector(
 export const idPayBarcodeSecondsTillExpireSelector = createSelector(
   idPayBarcodeByInitiativeIdSelector,
   getInitiative => (initiativeId: string) =>
-    pipe(
+    pot.getOrElse(
       pot.map(getInitiative(initiativeId), barcode =>
         calculateIdPayBarcodeSecondsToExpire(barcode)
       ),
-      seconds => pot.getOrElse(seconds, 0)
+      0
     )
 );
 

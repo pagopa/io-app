@@ -2,7 +2,7 @@ import { PreferredLanguageEnum } from "@io-app/api-types/generated/definitions/i
 import { OperationDTO } from "@io-app/api-types/generated/definitions/idpay/OperationDTO";
 import { StatusEnum } from "@io-app/api-types/generated/definitions/idpay/TransactionDetailDTO";
 import { OperationTypeEnum as TransactionOperationType } from "@io-app/api-types/generated/definitions/idpay/TransactionOperationDTO";
-import * as E from "fp-ts/lib/Either";
+import { ok } from "neverthrow";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
@@ -47,7 +47,7 @@ describe("idpayTimelineDetailsGet", () => {
           getTimelineDetail(mockPayload),
           idpayTimelineDetailsGet.request(mockPayload)
         )
-        .next(E.right({ status: 200, value: mockResponseSuccess }))
+        .next(ok({ status: 200, value: mockResponseSuccess }))
         .put(idpayTimelineDetailsGet.success(mockResponseSuccess))
         .next()
         .isDone();
@@ -75,7 +75,7 @@ describe("idpayTimelineDetailsGet", () => {
           idpayTimelineDetailsGet.request(mockPayload)
         )
         .next(
-          E.right({
+          ok({
             status: statusCode,
             value: { code: statusCode, message: "error" }
           })

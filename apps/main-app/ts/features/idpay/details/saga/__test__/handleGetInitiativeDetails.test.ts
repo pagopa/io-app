@@ -3,7 +3,7 @@ import {
   InitiativeDTO,
   StatusEnum as InitiativeStatusEnum
 } from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
-import * as E from "fp-ts/lib/Either";
+import { ok } from "neverthrow";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
@@ -42,7 +42,7 @@ describe("idpayInitiativeGet", () => {
           }),
           idpayInitiativeGet.request({ initiativeId })
         )
-        .next(E.right({ status: 200, value: initiative }))
+        .next(ok({ status: 200, value: initiative }))
         .put(idpayInitiativeGet.success(initiative))
         .next()
         .isDone();
@@ -72,7 +72,7 @@ describe("idpayInitiativeGet", () => {
           idpayInitiativeGet.request({ initiativeId })
         )
         .next(
-          E.right({
+          ok({
             status: statusCode,
             value: { code: statusCode, message: "error" }
           })

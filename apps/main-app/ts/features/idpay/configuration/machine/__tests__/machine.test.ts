@@ -14,7 +14,6 @@ import {
 } from "@io-app/api-types/generated/definitions/idpay/InstrumentDTO";
 import { TypeEnum } from "@io-app/api-types/generated/definitions/pagopa/Wallet";
 import { waitFor } from "@testing-library/react-native";
-import * as O from "fp-ts/lib/Option";
 import { createActor, fromCallback, fromPromise } from "xstate";
 
 import { Wallet } from "../../../../../types/pagopa";
@@ -172,7 +171,7 @@ describe("IDPay configuration machine", () => {
     await waitFor(() => expect(getInitiative).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
-      initiative: O.some(T_REFUNDABLE_INITIATIVE_DTO)
+      initiative: T_REFUNDABLE_INITIATIVE_DTO
     });
 
     await waitFor(() =>
@@ -228,7 +227,7 @@ describe("IDPay configuration machine", () => {
 
     expect(actor.getSnapshot().value).toEqual("DisplayingConfigurationIntro");
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
-      initiative: O.some(T_NOT_REFUNDABLE_INITIATIVE_DTO)
+      initiative: T_NOT_REFUNDABLE_INITIATIVE_DTO
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 

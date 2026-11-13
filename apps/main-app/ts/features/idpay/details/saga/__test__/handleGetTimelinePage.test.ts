@@ -5,7 +5,6 @@ import {
   OperationTypeEnum,
   StatusEnum
 } from "@io-app/api-types/generated/definitions/idpay/TransactionOperationDTO";
-import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
@@ -73,7 +72,10 @@ describe("handleGetTimelinePage", () => {
     idpayTimelinePageGet.success
   )} with the timeline and page number`, () => {
     startSaga()
-      .next(E.right({ status: 200, value: mockResponseSuccess }))
+      .next({
+        _tag: "Right",
+        right: { status: 200, value: mockResponseSuccess }
+      })
       .put(
         idpayTimelinePageGet.success({
           timeline: mockResponseSuccess,
@@ -88,7 +90,7 @@ describe("handleGetTimelinePage", () => {
     idpayTimelinePageGet.failure
   )} with a DECODE_ERROR when the response cannot be decoded`, () => {
     startSaga()
-      .next(E.left(validationErrors))
+      .next({ _tag: "Left", left: validationErrors })
       .put(
         idpayTimelinePageGet.failure({
           kind: "generic",
@@ -112,7 +114,10 @@ describe("handleGetTimelinePage", () => {
     )} with a $reason on status $name`,
     ({ status, reason }) => {
       startSaga()
-        .next(E.right({ status, value: { code: status, message: "error" } }))
+        .next({
+          _tag: "Right",
+          right: { status, value: { code: status, message: "error" } }
+        })
         .put(
           idpayTimelinePageGet.failure({
             kind: "generic",

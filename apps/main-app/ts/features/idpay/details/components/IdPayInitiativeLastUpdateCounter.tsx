@@ -1,6 +1,4 @@
 import { BodySmall, IOSkeleton } from "@io-app/design-system";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
 
@@ -17,12 +15,9 @@ const IdPayInitiativeLastUpdateCounter = (props: Props) => {
     );
   }
 
-  const lastUpdateString = pipe(
-    props.lastUpdateDate,
-    O.fromNullable,
-    O.map(date => format(date, "DD MMMM YYYY, HH:mm")),
-    O.toUndefined
-  );
+  const lastUpdateString = props.lastUpdateDate
+    ? format(props.lastUpdateDate, "DD MMMM YYYY, HH:mm")
+    : undefined;
 
   if (!lastUpdateString) {
     return null;

@@ -11,14 +11,13 @@ import {
 } from "@io-app/design-system";
 import { useRoute } from "@react-navigation/core";
 import { RouteProp } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useRef } from "react";
 import { View } from "react-native";
 
 import { IOListViewWithLargeHeader } from "../../../../components/ui/IOListViewWithLargeHeader";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { getFullLocale } from "../../../../utils/locale";
 import { useIdPayTimelineDetailsBottomSheet } from "../../timeline/components/IdPayTimelineDetailsBottomSheet";
 import { IdPayTimelineOperationListItem } from "../components/IdPayTimelineOperationListItem";
 import { useInitiativeTimelineFetcher } from "../hooks/useInitiativeTimelineFetcher";
@@ -80,20 +79,16 @@ export const IdPayOperationsListScreen = () => {
   const showOperationDetailsBottomSheet = (operation: OperationListDTO) =>
     detailsBottomSheet.present(operation);
 
-  const lastUpdateComponent = pipe(
-    lastUpdate,
-    O.fromNullable,
-    O.map(date =>
-      new Intl.DateTimeFormat("it", {
+  const lastUpdateComponent = lastUpdate ? (
+    <Body weight="Semibold">
+      {new Intl.DateTimeFormat(getFullLocale(), {
         year: "numeric",
         month: "long",
         day: "2-digit"
-      }).format(date)
-    ),
-    O.fold(
-      () => <IOSkeleton height={18} radius={4} shape="rectangle" width={70} />,
-      dateString => <Body weight="Semibold">{dateString}</Body>
-    )
+      }).format(lastUpdate)}
+    </Body>
+  ) : (
+    <IOSkeleton height={18} radius={4} shape="rectangle" width={70} />
   );
 
   return (

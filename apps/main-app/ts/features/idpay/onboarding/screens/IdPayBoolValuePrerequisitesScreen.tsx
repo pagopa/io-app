@@ -6,8 +6,6 @@ import {
   ListItemSwitch,
   VSpacer
 } from "@io-app/design-system";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { View } from "react-native";
 
@@ -35,11 +33,7 @@ const IdPayBoolValuePrerequisitesScreen = () => {
 
   const initiative = useSelector(selectInitiative);
 
-  const initiativeId = pipe(
-    initiative,
-    O.map(i => i.initiativeId),
-    O.getOrElse(() => "")
-  );
+  const initiativeId = initiative?.initiativeId ?? "";
 
   const isLoading = useSelector(isLoadingSelector);
 

@@ -5,8 +5,6 @@ import {
   VSpacer
 } from "@io-app/design-system";
 import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { ComponentProps, useCallback, useEffect, useState } from "react";
 
@@ -80,15 +78,12 @@ export const IdPayInstrumentsEnrollmentScreen = () => {
   );
 
   useEffect(() => {
-    pipe(
-      failure,
-      O.filter(
-        failure =>
-          failure === InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE ||
-          failure === InitiativeFailureType.INSTRUMENT_DELETE_FAILURE
-      ),
-      O.map(() => setStagedWalletId(undefined))
-    );
+    if (
+      failure === InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE ||
+      failure === InitiativeFailureType.INSTRUMENT_DELETE_FAILURE
+    ) {
+      setStagedWalletId(undefined);
+    }
   }, [failure]);
 
   const handleBackPress = () => machine.send({ type: "back" });
@@ -200,11 +195,7 @@ export const IdPayInstrumentsEnrollmentScreen = () => {
     }
   };
 
-  const initiativeName = pipe(
-    initiativeDetails,
-    O.map(i => i.initiativeName),
-    O.toUndefined
-  );
+  const initiativeName = initiativeDetails?.initiativeName;
 
   return (
     <IOScrollViewWithLargeHeader

@@ -4,8 +4,6 @@ import {
 } from "@io-app/api-types/generated/definitions/idpay/InitiativesStatusDTO";
 import { Badge, Divider, ListItemSwitch } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { Fragment, useCallback } from "react";
 
@@ -82,23 +80,14 @@ const IdPayInitiativeListItemSwitch = ({
   const isActive = pot.getOrElse(isInitiativeActive, false);
   const isLoading = pot.isLoading(isInitiativeActive);
 
-  const badge = pipe(
-    O.some(status),
-    O.chain(O.fromNullable),
-    O.filter(
-      status =>
-        status === StatusEnum.PENDING_ENROLLMENT_REQUEST ||
-        status === StatusEnum.PENDING_DEACTIVATION_REQUEST
-    ),
-    O.fold(
-      () => undefined,
-      () =>
-        ({
+  const badge =
+    status === StatusEnum.PENDING_ENROLLMENT_REQUEST ||
+    status === StatusEnum.PENDING_DEACTIVATION_REQUEST
+      ? ({
           text: I18n.t(`idpay.wallet.initiativePairing.pendingStatus`),
           variant: "default"
-        }) as Badge
-    )
-  );
+        } as Badge)
+      : undefined;
 
   return (
     <ListItemSwitch
