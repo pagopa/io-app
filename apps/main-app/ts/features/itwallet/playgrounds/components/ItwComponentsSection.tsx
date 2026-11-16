@@ -2,14 +2,15 @@ import {
   Body,
   ListItemHeader,
   ListItemSwitch,
-  useIOTheme,
+  useIOColors,
   VStack
 } from "@io-app/design-system";
-import { Canvas } from "@shopify/react-native-skia";
+import { Canvas, Rect } from "@shopify/react-native-skia";
 import I18n from "i18next";
 import { useState } from "react";
 import { Alert, useWindowDimensions, View } from "react-native";
 
+import { RotationSensor } from "../../../../components/RotationSensor";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { DSComponentViewerBox } from "../../../design-system/components/DSComponentViewerBox";
 import { ItwBrandedBox } from "../../common/components/ItwBrandedBox";
@@ -50,11 +51,18 @@ const ItwWalletBrandSection = () => {
               key={variant}
               style={{ width: width - marginHorizontal * 2, height: 50 }}
             >
-              <ItwBrandedSkiaGradient
-                height={50}
-                variant={variant as any}
-                width={width - marginHorizontal * 2}
-              />
+              <RotationSensor enabled>
+                {roll => (
+                  <Rect height={50} width={width - marginHorizontal * 2}>
+                    <ItwBrandedSkiaGradient
+                      height={50}
+                      roll={roll}
+                      variant={variant as any}
+                      width={width - marginHorizontal * 2}
+                    />
+                  </Rect>
+                )}
+              </RotationSensor>
             </Canvas>
           </DSComponentViewerBox>
         ))}
@@ -192,7 +200,7 @@ const ItwSkeumorphicCredentialItem = ({
 };
 
 export const ItwClaimsListSection = () => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   const mock = [
     {
@@ -222,7 +230,10 @@ export const ItwClaimsListSection = () => {
       }}
     >
       <ListItemHeader
-        iconColor={theme["icon-default"]}
+        accessibilityLabel={`${I18n.t(
+          "features.itWallet.issuance.credentialAuth.requiredClaims"
+        )}, ${I18n.t("features.itWallet.issuance.credentialAuth.verified")}`}
+        iconColor={colors.icon.default}
         iconName="security"
         label={I18n.t(
           "features.itWallet.issuance.credentialAuth.requiredClaims"

@@ -2,15 +2,8 @@ import { ComponentProps, ReactNode } from "react";
 import { GestureResponderEvent, Image, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { useIOTheme } from "../../context";
-import {
-  IOColors,
-  IOListItemStyles,
-  IOListItemVisualParams,
-  IOSelectionListItemVisualParams,
-  IOSpacer,
-  IOVisualCostants
-} from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions, IORoleColor } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
@@ -21,6 +14,7 @@ import { Icon, IOIcons } from "../icons";
 import { HSpacer, VSpacer } from "../layout";
 import { LoadingSpinner } from "../loadingSpinner";
 import { BodySmall, Caption, H6 } from "../typography";
+import { IOListItemStyles } from "./styles";
 
 export type ListItemNav = ListItemNavGraphicProps & ListItemNavPartialProps;
 
@@ -34,7 +28,8 @@ export type ListItemNavGraphicProps =
   | {
       avatarProps?: never;
       icon: IOIcons;
-      iconColor?: IOColors;
+      /* A semantic token: it has a value in both modes */
+      iconColor?: IORoleColor<"foreground">;
       paymentLogoUri?: never;
     }
   | {
@@ -57,12 +52,12 @@ type ListItemNavPartialProps = WithTestID<
   > & {
     description?: ReactNode | string;
     hideChevron?: boolean;
+    label: ReactNode | string;
     loading?: boolean;
-    /** The maximum number of lines to display for the value. */
+    /** The maximum number of lines to display for the label. */
     numberOfLines?: number;
     onPress: (event: GestureResponderEvent) => void;
     topElement?: ListItemTopElementProps;
-    value: ReactNode | string;
   }
 >;
 
@@ -77,7 +72,7 @@ type ListItemTopElementProps =
     };
 
 export const ListItemNav = ({
-  value,
+  label,
   description,
   onPress,
   icon,
@@ -94,10 +89,9 @@ export const ListItemNav = ({
 }: ListItemNav) => {
   const { onPressIn, onPressOut, scaleAnimatedStyle, backgroundAnimatedStyle } =
     useListItemAnimation();
-  const theme = useIOTheme();
+  const listItemColors = useIOColors().component.listItem;
 
-  const defaultIconColor = iconColor ?? theme["icon-decorative"];
-  const interactiveColor = theme["interactiveElem-default"];
+  const defaultIconColor = iconColor ?? listItemColors.foreground.icon;
 
   const { dynamicFontScale, hugeFontEnabled } = useIOFontDynamicScale();
 
@@ -110,7 +104,7 @@ export const ListItemNav = ({
               <View style={{ alignSelf: "flex-start" }}>
                 <Badge {...topElement.badgeProps} />
               </View>
-              <VSpacer size={8} />
+              <VSpacer size={IODimensions.gap.listItem.default.topElement} />
             </>
           )}
           {topElement.dateValue && (
@@ -118,33 +112,39 @@ export const ListItemNav = ({
               <View style={{ alignSelf: "flex-start", flexDirection: "row" }}>
                 <Icon
                   allowFontScaling
-                  color={theme["icon-decorative"]}
+                  color={listItemColors.foreground.icon}
                   name="calendar"
-                  size={16}
+                  size={IODimensions.size.icon.caption}
                 />
-                <HSpacer size={4} />
-                <Caption color={theme["textBody-tertiary"]}>
+                <HSpacer size={IODimensions.gap.listItem.default.caption} />
+                <Caption color={listItemColors.foreground.caption}>
                   {topElement.dateValue}
                 </Caption>
               </View>
-              <VSpacer size={4} />
+              <VSpacer size={IODimensions.gap.listItem.default.topElement} />
             </>
           )}
         </>
       )}
       {/* Let developer using a custom component (e.g: skeleton) */}
-      {typeof value === "string" ? (
-        <H6 color={theme["textBody-default"]} numberOfLines={numberOfLines}>
-          {value}
+      {typeof label === "string" ? (
+        <H6
+          color={listItemColors.foreground.label}
+          numberOfLines={numberOfLines}
+        >
+          {label}
         </H6>
       ) : (
-        value
+        label
       )}
       {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions -- ReactNode: "" and false mean nothing to render */}
       {description && (
         <>
           {typeof description === "string" ? (
-            <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
+            <BodySmall
+              color={listItemColors.foreground.description}
+              weight="Regular"
+            >
               {description}
             </BodySmall>
           ) : (
@@ -192,11 +192,11 @@ export const ListItemNav = ({
                 allowFontScaling
                 color={defaultIconColor}
                 name={icon}
-                size={IOListItemVisualParams.iconSize}
+                size={IODimensions.size.icon.listItem}
               />
               <HSpacer
                 allowScaleSpacing
-                size={IOVisualCostants.iconMargin as IOSpacer}
+                size={IODimensions.gap.listItem.default.leading}
               />
             </>
           )}
@@ -206,15 +206,13 @@ export const ListItemNav = ({
                 accessibilityIgnoresInvertColors
                 source={{ uri: paymentLogoUri }}
                 style={{
-                  width:
-                    IOSelectionListItemVisualParams.iconSize * dynamicFontScale,
-                  height:
-                    IOSelectionListItemVisualParams.iconSize * dynamicFontScale
+                  width: IODimensions.size.icon.listItem * dynamicFontScale,
+                  height: IODimensions.size.icon.listItem * dynamicFontScale
                 }}
               />
               <HSpacer
                 allowScaleSpacing
-                size={IOVisualCostants.iconMargin as IOSpacer}
+                size={IODimensions.gap.listItem.default.leading}
               />
             </>
           )}
@@ -223,7 +221,7 @@ export const ListItemNav = ({
               <Avatar size="small" {...avatar} />
               <HSpacer
                 allowScaleSpacing
-                size={IOVisualCostants.iconMargin as IOSpacer}
+                size={IODimensions.gap.listItem.default.leading}
               />
             </>
           )}
@@ -231,13 +229,15 @@ export const ListItemNav = ({
           <View style={{ flexGrow: 1, flexShrink: 1 }}>
             {listItemNavContent}
           </View>
-          {loading && <LoadingSpinner color={IOColors[interactiveColor]} />}
+          {loading && (
+            <LoadingSpinner color={listItemColors.foreground.action.primary} />
+          )}
           {!loading && !hideChevron && (
             <Icon
               allowFontScaling
-              color={interactiveColor}
+              color={listItemColors.foreground.action.primary}
               name="chevronRightListItem"
-              size={IOListItemVisualParams.chevronSize}
+              size={IODimensions.size.icon.chevron}
             />
           )}
         </Animated.View>

@@ -1,3 +1,14 @@
+jest.mock("@io-app/expo-crypto", () => ({
+  ...jest.requireActual("../../libs/expo-crypto/Crypto.types"),
+  generate: jest.fn(),
+  getPublicKey: jest.fn(),
+  getPublicKeyFixed: jest.fn(),
+  deleteKey: jest.fn(),
+  sign: jest.fn(),
+  isKeyStrongboxBacked: jest.fn(),
+  verifyCertificateChain: jest.fn()
+}));
+
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* globals jest, require, global */
 /** Set up of the testing environment */
@@ -83,6 +94,7 @@ jest.mock("@react-native-cookies/cookies", () => jest.fn());
 jest.mock("expo-sharing", () => ({ shareAsync: jest.fn() }));
 jest.mock("expo-clipboard", () => mockClipboard);
 jest.mock("expo-calendar", () => ({
+  EntityTypes: { EVENT: "event", REMINDER: "reminder" },
   getCalendarsAsync: jest.fn().mockResolvedValue([]),
   getEventsAsync: jest.fn().mockResolvedValue([])
 }));
@@ -109,12 +121,19 @@ jest.mock("@io-app/expo-navigation-bar-manager", () => ({
 // Mock DeviceInfo for version checks
 jest.mock("@io-app/expo-device-internal", () => ({
   getUniqueIdSync: jest.fn(() => "SOME-UNIQUE-ID"),
-  isDisplayZoomed: jest.fn(() => false)
+  isDisplayZoomed: jest.fn(() => false),
+  isHapticFeedbackEnabled: jest.fn(() => true)
 }));
 
 jest.mock("expo-store-review", () => ({
   isAvailableAsync: jest.fn().mockResolvedValue(true),
   requestReview: jest.fn().mockResolvedValue(undefined)
+}));
+
+jest.mock("expo-web-browser", () => ({
+  openAuthSessionAsync: jest
+    .fn()
+    .mockResolvedValue(Promise.resolve({ type: "opened" }))
 }));
 
 jest.mock("expo-linear-gradient", () => ({
@@ -128,6 +147,31 @@ jest.mock("@io-app/expo-pdf-high-res-generator", () => ({
 jest.mock("@io-app/expo-nfc-antenna-info", () => ({
   getNfcAntennaInfo: jest.fn(),
   isHceSupported: jest.fn()
+}));
+
+jest.mock("@io-app/expo-switch-access", () => ({
+  isSwitchAccessEnabled: () => Promise.resolve(false)
+}));
+
+jest.mock("@io-app/login-utils", () => ({
+  getRedirects: jest.fn()
+}));
+
+jest.mock("@io-app/expo-http-client/src/ExpoHttpClientModule", () => ({
+  __esModule: true,
+  default: {
+    cancelAllRunningRequests: jest.fn().mockResolvedValue(undefined),
+    cancelRequestWithId: jest.fn().mockResolvedValue(undefined),
+    deallocate: jest.fn().mockResolvedValue(undefined),
+    nativeRequest: jest.fn().mockResolvedValue({
+      type: "success",
+      status: 200,
+      body: "",
+      headers: {}
+    }),
+    removeAllCookiesForDomain: jest.fn().mockResolvedValue(undefined),
+    setCookieForDomain: jest.fn().mockResolvedValue(undefined)
+  }
 }));
 
 /* `@expo/ui` renders SwiftUI views, which cannot run under the Jest environment.
@@ -251,7 +295,6 @@ jest.mock("react-native/Libraries/TurboModule/TurboModuleRegistry", () => {
     getEnforcing: name => {
       // List of TurboModules libraries to mock.
       const modulesToMock = [
-        "IoReactNativeHttpClient",
         "RNDocumentPicker",
         "RNCWebViewModule",
         "AppState"
@@ -306,6 +349,11 @@ jest.mock("react-native-vision-camera", () => ({
 jest
   .spyOn(AccessibilityInfo, "isBoldTextEnabled")
   .mockImplementation(() => Promise.resolve(false));
+
+// Plain function (not a jest mock) so it survives `resetAllMocks` and
+// `restoreAllMocks`: the patched stack `CardContainer` calls it on every mount.
+// eslint-disable-next-line functional/immutable-data
+AccessibilityInfo.isScreenReaderEnabled = () => Promise.resolve(false);
 
 /** NefInfo's `fetch` method mock */
 jest.mock("@react-native-community/netinfo", () => ({

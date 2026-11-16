@@ -1,9 +1,10 @@
-import { IconButtonSolid, VSpacer } from "@io-app/design-system";
+import { BodySmall, Icon, useIOTheme, VStack } from "@io-app/design-system";
 import { useIsFocused } from "@react-navigation/native";
 import {
   Image,
   ImageProps,
   ImageSourcePropType,
+  Pressable,
   StyleSheet,
   View
 } from "react-native";
@@ -27,7 +28,8 @@ type Props = Omit<ImageProps, "source"> & {
 };
 
 /**
- * Renders a GIF with accessible play and stop controls.
+ * Renders a GIF whose entire area is an accessible play and stop button. Only
+ * stopped playback shows a play overlay over the faded first frame.
  *
  * Playback stops after `maxDurationMs`. Reduced motion keeps the static image
  * visible and disables playback. The content unmounts while its screen is not
@@ -54,49 +56,56 @@ const FocusedGifImage = ({
   style,
   ...imageProps
 }: Props) => {
+  const theme = useIOTheme();
   const reduceMotion = useReducedMotion();
   const { imageKey, isPlaying, togglePlayback } = useAnimationPlayback({
     autoPlay,
     maxDurationMs,
     reduceMotion
   });
+  const showPlayOverlay = !isPlaying && !reduceMotion;
+  const image = (
+    <Image
+      {...imageProps}
+      accessibilityIgnoresInvertColors={accessibilityIgnoresInvertColors}
+      key={imageKey}
+      source={isPlaying ? source : staticSource}
+      style={[styles.image, style, showPlayOverlay && styles.pausedImage]}
+    />
+  );
+
+  if (reduceMotion) {
+    return image;
+  }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.imageWrapper}>
-        <Image
-          {...imageProps}
-          accessibilityIgnoresInvertColors={accessibilityIgnoresInvertColors}
-          key={imageKey}
-          source={isPlaying ? source : staticSource}
-          style={[styles.image, style]}
-        />
+    <Pressable
+      accessibilityLabel={
+        isPlaying ? pauseAccessibilityLabel : playAccessibilityLabel
+      }
+      accessibilityRole="button"
+      accessible
+      onPress={togglePlayback}
+      style={styles.container}
+    >
+      <View
+        accessibilityElementsHidden
+        importantForAccessibility="no-hide-descendants"
+        style={styles.container}
+      >
+        {image}
+        {showPlayOverlay && (
+          <VStack space={8} style={styles.playOverlay}>
+            <BodySmall>{playAccessibilityLabel}</BodySmall>
+            <Icon color={theme["interactiveElem-default"]} name="play" />
+          </VStack>
+        )}
       </View>
-      {!reduceMotion && (
-        <>
-          <VSpacer size={16} />
-          <View style={styles.buttonContainer}>
-            <IconButtonSolid
-              accessibilityLabel={
-                isPlaying ? pauseAccessibilityLabel : playAccessibilityLabel
-              }
-              color="primary"
-              icon={isPlaying ? "stop" : "play"}
-              onPress={togglePlayback}
-            />
-          </View>
-        </>
-      )}
-    </View>
+    </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    width: "100%"
-  },
   container: {
     flex: 1
   },
@@ -104,8 +113,14 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%"
   },
-  imageWrapper: {
-    flex: 1,
-    width: "100%"
+  pausedImage: {
+    // Keep the first frame at 10% opacity behind the play overlay.
+    opacity: 0.1
+  },
+  playOverlay: {
+    position: "absolute",
+    inset: 0,
+    alignItems: "center",
+    justifyContent: "center"
   }
 });

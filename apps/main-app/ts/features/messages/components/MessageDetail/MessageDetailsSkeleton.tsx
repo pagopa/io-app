@@ -1,11 +1,10 @@
 import {
   ContentWrapper,
-  IOColors,
+  IODimensions,
+  IODimensionScale,
   IOSkeleton,
-  IOSpacingScale,
   IOTypography,
-  IOVisualCostants,
-  useIOTheme,
+  useIOColors,
   VStack
 } from "@io-app/design-system";
 import I18n from "i18next";
@@ -15,7 +14,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { LoadingSkeleton } from "../../../../components/ui/LoadingSkeleton";
 
 const SKELETON_RADIUS = 4;
-const SENDER_PADDING_VERTICAL: IOSpacingScale = 6;
+const SENDER_PADDING_VERTICAL: IODimensionScale = 6;
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
@@ -31,14 +30,11 @@ const styles = StyleSheet.create({
 });
 
 export const MessageDetailsSkeleton = () => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <View
-      style={[
-        styles.container,
-        { backgroundColor: IOColors[theme["appBackground-primary"]] }
-      ]}
+      style={[styles.container, { backgroundColor: colors.background.default }]}
       testID="message-details-skeleton"
     >
       <SafeAreaView edges={["bottom"]} style={styles.container}>
@@ -80,7 +76,7 @@ export const MessageDetailsSkeleton = () => {
                     <View
                       style={[
                         styles.sender,
-                        { borderColor: IOColors[theme["divider-default"]] }
+                        { borderColor: colors.stroke.divider }
                       ]}
                     >
                       <View style={styles.senderInfo}>
@@ -98,9 +94,9 @@ export const MessageDetailsSkeleton = () => {
                         />
                       </View>
                       <IOSkeleton
-                        radius={IOVisualCostants.avatarRadiusSizeSmall}
+                        radius={IODimensions.radius.avatar.small}
                         shape="square"
-                        size={IOVisualCostants.avatarSizeSmall}
+                        size={IODimensions.size.avatar.small}
                       />
                     </View>
                   </VStack>

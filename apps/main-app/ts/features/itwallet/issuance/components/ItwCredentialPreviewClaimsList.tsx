@@ -26,7 +26,13 @@ const ItwCredentialPreviewClaimsList = ({
   releaserVisible = true
 }: ItwCredentialClaimsListProps) => {
   const claims = parseClaims(data.parsedCredential, {
-    exclude: [WellKnownClaim.unique_id, WellKnownClaim.link_qr_code]
+    exclude: [
+      WellKnownClaim.unique_id,
+      WellKnownClaim.link_qr_code,
+      // Keep the claim when the releaser metadata is hidden, otherwise it
+      // would not be displayed at all
+      ...(releaserVisible ? [WellKnownClaim.issuing_authority] : [])
+    ]
   });
   const { credentialType } = data;
 

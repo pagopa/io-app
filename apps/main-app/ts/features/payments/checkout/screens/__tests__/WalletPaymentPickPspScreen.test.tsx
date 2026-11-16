@@ -20,6 +20,7 @@ jest.mock("../../analytics");
 jest.mock("../../../../../utils/hooks/bottomSheet");
 
 const mockNavigation = {
+  addListener: jest.fn(),
   navigate: jest.fn(),
   setOptions: jest.fn()
 };

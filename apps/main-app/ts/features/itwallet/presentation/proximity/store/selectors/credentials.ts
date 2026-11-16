@@ -7,7 +7,7 @@ import { CredentialType } from "../../../../common/utils/itwMocksUtils";
 import {
   CredentialFormat,
   CredentialMetadata,
-  ItwJwtCredentialStatus,
+  ItwEidStatus,
   MdocSupportedCredentialConfiguration
 } from "../../../../common/utils/itwTypesUtils";
 import {
@@ -129,10 +129,7 @@ export const shouldShowExpiredProximityCredentialsBannerSelector =
   createSelector(
     itwCredentialsEidStatusSelector,
     itwPresentableCredentialsByDocTypeSelector,
-    (
-      pidStatus: ItwJwtCredentialStatus | undefined,
-      presentableCredentialsByDocType
-    ) =>
+    (pidStatus: ItwEidStatus | undefined, presentableCredentialsByDocType) =>
       pidStatus === "jwtExpired" &&
       areAllPresentableCredentialsExpired(presentableCredentialsByDocType)
   );

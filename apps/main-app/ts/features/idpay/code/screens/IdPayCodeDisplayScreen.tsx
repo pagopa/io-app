@@ -2,7 +2,7 @@ import {
   Banner,
   Body,
   H3,
-  IOColors,
+  IOColorsLegacy,
   IOMarkdownLite,
   useIOTheme,
   VSpacer,
@@ -120,7 +120,7 @@ const CodeDisplayComponent = ({ code }: { code: string }) => {
           key={index}
           style={[
             styles.codeDigit,
-            { borderColor: IOColors[theme["textInputBorder-default"]] }
+            { borderColor: IOColorsLegacy[theme["textInputBorder-default"]] }
           ]}
           testID={`idPayCodeDigit${index}TestID`}
         >

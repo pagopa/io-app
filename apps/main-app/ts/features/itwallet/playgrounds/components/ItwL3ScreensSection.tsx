@@ -25,59 +25,59 @@ export const ItwL3ScreensSection = () => {
       <ListItemHeader label="IT Wallet (L3) screens" />
       <ListItemNav
         description="Navigate to the PID detail screen"
+        label="IT-Wallet ID (PID)"
         onPress={() =>
           navigation.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.PRESENTATION.PID_DETAIL
           })
         }
-        value="IT-Wallet ID (PID)"
       />
       <ListItemNav
         description="Navigate to the Driving License detail screen"
+        label="Driving License L3"
         onPress={() => handleCredentialPress("mdl")}
-        value="Driving License L3"
       />
       {isItwValid && (
         <ListItemNav
           description="Navigate to the EHIC detail screen"
+          label="EU Health Insurance Card L3"
           onPress={() => handleCredentialPress("ts")}
-          value="EU Health Insurance Card L3"
         />
       )}
       <ListItemNav
         description="Navigate to the Disability Card detail screen"
+        label="Disability Card L3"
         onPress={() => handleCredentialPress("dc")}
-        value="Disability Card L3"
       />
       <ListItemNav
         description="Navigate to the Proof of Age detail screen"
+        label="Proof of Age"
         onPress={() => handleCredentialPress("proofOfAge")}
-        value="Proof of Age"
       />
       <ListItemNav
         description="Navigate to the Education Degree detail screen"
+        label="Education Degree L3"
         onPress={() => handleCredentialPress("ed")}
-        value="Education Degree L3"
       />
       <ListItemNav
         description="Navigate to the Education Enrollment detail screen"
+        label="Education Enrollment L3"
         onPress={() => handleCredentialPress("ee")}
-        value="Education Enrollment L3"
       />
       <ListItemNav
         description="Navigate to the Residency detail screen"
+        label="Residency L3"
         onPress={() => handleCredentialPress("res")}
-        value="Residency L3"
       />
       <ListItemNav
         description="Navigate to the Education Diploma detail screen"
+        label="Education Diploma L3"
         onPress={() => handleCredentialPress("edip")}
-        value="Education Diploma L3"
       />
       <ListItemNav
         description="Navigate to the Education Attendance detail screen"
+        label="Education Attendance L3"
         onPress={() => handleCredentialPress("edat")}
-        value="Education Attendance L3"
       />
     </View>
   );

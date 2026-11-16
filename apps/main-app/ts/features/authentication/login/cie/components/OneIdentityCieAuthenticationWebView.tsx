@@ -18,7 +18,10 @@ import { useIOSelector } from "../../../../../store/hooks";
 import { trackLoginError } from "../../../../../utils/analytics";
 import { useOneIdentityLoginSource } from "../../../../lollipop/hooks/useOneIdentityLoginSource";
 import { trackLoginOIConfigurationError } from "../../../common/analytics";
-import { oneIdentityCieNativeRedirectsEnabledSelector } from "../../../common/store/selectors/remoteConfig";
+import {
+  oneIdentityCieAndroidClearSessionCookiesEnabledSelector,
+  oneIdentityCieNativeRedirectsEnabledSelector
+} from "../../../common/store/selectors/remoteConfig";
 import {
   AUTH_LEVELS,
   isOneIdentityErrorUrl,
@@ -30,7 +33,7 @@ import {
   getWebViewFailureData,
   LoginFailureData
 } from "../../../common/utils/loginErrorDebugInfo";
-import { isCieLoginUatEnabledSelector } from "../store/selectors";
+import { cieEnvSelector } from "../store/selectors";
 import { getCieIdpId } from "../utils";
 
 /**
@@ -75,9 +78,12 @@ export const OneIdentityCieAuthenticationWebView = ({
 }: OneIdentityCieAuthenticationWebViewProps) => {
   const navigation = useIONavigation();
 
-  const useUat = useIOSelector(isCieLoginUatEnabledSelector);
+  const cieEnv = useIOSelector(cieEnvSelector);
   const followRedirectsNatively = useIOSelector(
     oneIdentityCieNativeRedirectsEnabledSelector
+  );
+  const isAndroidClearSessionCookiesEnabled = useIOSelector(
+    oneIdentityCieAndroidClearSessionCookiesEnabledSelector
   );
 
   const [webViewState, setWebViewState] = useState<WebViewState>({
@@ -94,9 +100,13 @@ export const OneIdentityCieAuthenticationWebView = ({
     shouldBlockUrlNavigationWhileCheckingLollipop,
     generateLoginSource
   } = useOneIdentityLoginSource({
+    // On Android, session cookies left by a previous CIE login can invalidate
+    // the IDP session: same fix as the legacy flow (IOPID-389, #4755)
+    clearSessionCookies:
+      Platform.OS === "android" && isAndroidClearSessionCookiesEnabled,
     flow,
     followRedirectsNatively,
-    idpId: getCieIdpId(useUat),
+    idpId: getCieIdpId(cieEnv),
     onFailure: handleFailure,
     minAuthLevel: AUTH_LEVELS.L3
   });
@@ -223,7 +233,8 @@ export const OneIdentityCieAuthenticationWebView = ({
           accessibilityLabel: I18n.t("global.buttons.cancel"),
           onPress: handleCancel
         }}
-        title={I18n.t("authentication.errors.network.title")}
+        subtitle={I18n.t("authentication.auth_errors.generic.subtitle")}
+        title={I18n.t("authentication.auth_errors.generic.title")}
       />
     );
   }

@@ -80,7 +80,7 @@ export const IdentificationNumberPad = (
           onValidate={onPinValidated}
           onValueChange={onCodeInputValueChange}
           value={value}
-          variant={numberPadVariant}
+          variant={numberPadVariant === "primary" ? "neutral" : "contrast"}
         />
       </View>
       {isDevEnv && (

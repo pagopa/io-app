@@ -150,7 +150,7 @@ export const IdPayIbanEnrollmentScreen = () => {
           items={Array.from(ibanList, el => ({
             ...el,
             id: el.iban,
-            value: el.iban,
+            label: el.iban,
             description: el.description
           }))}
           key="check_income"

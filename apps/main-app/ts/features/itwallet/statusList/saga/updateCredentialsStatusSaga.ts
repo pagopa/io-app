@@ -1,5 +1,6 @@
 import { all, call, put, select } from "typed-redux-saga/macro";
 
+import { getMixPanelCredential } from "../../analytics/utils";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
 import {
   CredentialMetadata,
@@ -7,6 +8,8 @@ import {
 } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { itwAllStoredCredentialsSelector } from "../../credentials/store/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { trackItwCredentialStatusUpdateFailure } from "../analytics";
 import { StatusListRepository } from "../utils/repository";
 import { StatusListContext } from "../utils/types";
 
@@ -28,6 +31,7 @@ export function* updateCredentialsStatusSaga({
   }
 
   const allCredentials = yield* select(itwAllStoredCredentialsSelector);
+  const isItwL3 = yield* select(itwLifecycleIsITWalletValidSelector);
   const credentials = allCredentials.filter(hasStatusListValidity);
 
   const statusLists = yield* all(
@@ -41,20 +45,28 @@ export function* updateCredentialsStatusSaga({
       return [];
     }
 
-    const { status, rawStatus } = statusListApi.getStatus(
-      statusList.status_list,
-      credential.validity.statusList.idx
-    );
-    const nextValidity = {
-      ...credential.validity,
-      rawStatus,
-      status: status.toLowerCase()
-    };
+    try {
+      const { status, rawStatus } = statusListApi.getStatus(
+        statusList.status_list,
+        credential.validity.statusList.idx
+      );
+      const nextValidity = {
+        ...credential.validity,
+        rawStatus,
+        status: status.toLowerCase()
+      };
 
-    return nextValidity.status !== credential.validity.status ||
-      nextValidity.rawStatus !== credential.validity.rawStatus
-      ? [{ ...credential, validity: nextValidity }]
-      : [];
+      return nextValidity.status !== credential.validity.status ||
+        nextValidity.rawStatus !== credential.validity.rawStatus
+        ? [{ ...credential, validity: nextValidity }]
+        : [];
+    } catch (error) {
+      trackItwCredentialStatusUpdateFailure(
+        getMixPanelCredential(credential.credentialType, isItwL3),
+        error
+      );
+      return [];
+    }
   });
 
   if (updatedCredentials.length > 0) {

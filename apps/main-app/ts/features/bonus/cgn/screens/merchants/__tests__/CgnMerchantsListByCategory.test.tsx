@@ -43,7 +43,7 @@ jest.mock("../../../components/merchants/CgnMerchantListSkeleton", () => ({
 
 jest.mock("@react-navigation/native", () => ({
   ...jest.requireActual("@react-navigation/native"),
-  useNavigation: () => ({ navigate: mockNavigate })
+  useNavigation: () => ({ addListener: jest.fn(), navigate: mockNavigate })
 }));
 
 const mockDispatch = jest.fn();

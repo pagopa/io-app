@@ -8,14 +8,19 @@ import {
   itwClearCredentialUpgradeFailed,
   itwClearWalletActivationFeedbackBannerData,
   itwDisableItwActivation,
+  itwResetEngagementScreenShown,
   itwSetAuthLevel,
   itwSetClaimValuesHidden,
   itwSetCredentialUpgradeFailed,
+  itwSetDiscoverMoreCEDEnabled,
+  itwSetEngagementScreenShown,
   itwSetFiscalCodeWhitelisted,
   itwSetIdentificationMode,
   itwSetL2Fallback,
   itwSetPidReissuingSurveyHidden,
+  itwSetProximityNfcLocallyEnabled,
   itwSetWalletActivationFeedbackBannerData,
+  itwSetWhatsNewLocallyEnabled,
   ItwWalletActivationFeedbackBannerData
 } from "../actions/preferences";
 
@@ -26,8 +31,11 @@ export type ItwPreferencesState = {
   claimValuesHidden?: boolean;
   // Credential that failed to upgrade by type
   credentialUpgradeFailed?: ReadonlyArray<CredentialMetadata["credentialType"]>;
+  engagementScreenShownByUser?: Readonly<Record<string, true>>;
   // Indicates the identification mode used for the user
   identificationMode?: IdentificationContext["mode"];
+  // Indicates whether the CED discover more feature is enabled
+  isDiscoverMoreCEDEnabled?: boolean;
   // Indicates whether the fiscal code is whitelisted for L3 features
   isFiscalCodeWhitelisted?: boolean;
   // Indicates whether the IT-Wallet activation should be disabled
@@ -41,6 +49,10 @@ export type ItwPreferencesState = {
   // Indicates whether the bottom sheet survey is visible when the user quits
   // the reissuing flow only for the first time
   isPidReissuingSurveyHidden?: boolean;
+  // Local feature flag enabling NFC engagement in the Proximity presentation
+  isProximityNfcLocallyEnabled?: boolean;
+  // Local feature flag enabling the What's New engagement screen
+  isWhatsNewLocallyEnabled?: boolean;
   // Set when a credential is successfully added together with an IT Wallet eID activation.
   // Holds the data needed to render the credential success survey banner in WALLET_HOME;
   walletActivationFeedbackBannerData?: ItwWalletActivationFeedbackBannerData;
@@ -60,7 +72,6 @@ const reducer = (
           type => type !== action.payload
         )
       };
-
     case getType(itwClearWalletActivationFeedbackBannerData): {
       const { walletActivationFeedbackBannerData: _, ...rest } = state;
       return rest;
@@ -79,19 +90,29 @@ const reducer = (
       // - isFiscalCodeWhitelisted: avoids to have the value undefined after a wallet reset
       // - isItwActivationDisabled: should persist across wallet resets
       // - isL2Fallback: preserves the restricted experience during reissuance
+      // - isProximityNfcLocallyEnabled, isWhatsNewLocallyEnabled: local feature flags
       const {
         claimValuesHidden,
+        engagementScreenShownByUser,
         isFiscalCodeWhitelisted,
         isItwActivationDisabled,
-        isL2Fallback
+        isL2Fallback,
+        isProximityNfcLocallyEnabled,
+        isWhatsNewLocallyEnabled
       } = state;
       return {
         ...itwPreferencesInitialState,
         claimValuesHidden,
+        engagementScreenShownByUser,
         isFiscalCodeWhitelisted,
         isItwActivationDisabled,
-        isL2Fallback
+        isL2Fallback,
+        isProximityNfcLocallyEnabled,
+        isWhatsNewLocallyEnabled
       };
+
+    case getType(itwResetEngagementScreenShown):
+      return { ...state, engagementScreenShownByUser: undefined };
 
     case getType(itwSetAuthLevel): {
       return {
@@ -110,6 +131,22 @@ const reducer = (
       return {
         ...state,
         credentialUpgradeFailed: action.payload
+      };
+
+    case getType(itwSetDiscoverMoreCEDEnabled): {
+      return {
+        ...state,
+        isDiscoverMoreCEDEnabled: action.payload
+      };
+    }
+
+    case getType(itwSetEngagementScreenShown):
+      return {
+        ...state,
+        engagementScreenShownByUser: {
+          ...state.engagementScreenShownByUser,
+          [action.payload]: true
+        }
       };
 
     case getType(itwSetFiscalCodeWhitelisted): {
@@ -136,12 +173,18 @@ const reducer = (
       };
     }
 
+    case getType(itwSetProximityNfcLocallyEnabled):
+      return { ...state, isProximityNfcLocallyEnabled: action.payload };
+
     case getType(itwSetWalletActivationFeedbackBannerData): {
       return {
         ...state,
         walletActivationFeedbackBannerData: action.payload
       };
     }
+
+    case getType(itwSetWhatsNewLocallyEnabled):
+      return { ...state, isWhatsNewLocallyEnabled: action.payload };
 
     default:
       return state;

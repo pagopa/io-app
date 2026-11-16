@@ -57,7 +57,6 @@ exports[`CieIdMethodModule When isL3 is false and isReissuance mode is false ren
       [
         {
           "alignItems": "center",
-          "borderColor": "#E8EBF1",
           "borderCurve": "continuous",
           "borderRadius": 8,
           "borderWidth": 1,
@@ -69,14 +68,12 @@ exports[`CieIdMethodModule When isL3 is false and isReissuance mode is false ren
         {
           "borderColor": "#E8EBF1",
         },
-        false,
       ]
     }
     style={
       [
         {
           "alignItems": "center",
-          "borderColor": "#E8EBF1",
           "borderCurve": "continuous",
           "borderRadius": 8,
           "borderWidth": 1,
@@ -88,7 +85,6 @@ exports[`CieIdMethodModule When isL3 is false and isReissuance mode is false ren
         {
           "borderColor": "#E8EBF1",
         },
-        false,
         {
           "transform": [
             {
@@ -128,7 +124,7 @@ exports[`CieIdMethodModule When isL3 is false and isReissuance mode is false ren
               "display": "flex",
               "flexDirection": "column",
               "flexShrink": 1,
-              "gap": 8,
+              "gap": 4,
             }
           }
         >
@@ -301,7 +297,6 @@ exports[`CieIdMethodModule When isL3 is false and isReissuance mode is true rend
       [
         {
           "alignItems": "center",
-          "borderColor": "#E8EBF1",
           "borderCurve": "continuous",
           "borderRadius": 8,
           "borderWidth": 1,
@@ -313,14 +308,12 @@ exports[`CieIdMethodModule When isL3 is false and isReissuance mode is true rend
         {
           "borderColor": "#E8EBF1",
         },
-        false,
       ]
     }
     style={
       [
         {
           "alignItems": "center",
-          "borderColor": "#E8EBF1",
           "borderCurve": "continuous",
           "borderRadius": 8,
           "borderWidth": 1,
@@ -332,7 +325,6 @@ exports[`CieIdMethodModule When isL3 is false and isReissuance mode is true rend
         {
           "borderColor": "#E8EBF1",
         },
-        false,
         {
           "transform": [
             {
@@ -372,7 +364,7 @@ exports[`CieIdMethodModule When isL3 is false and isReissuance mode is true rend
               "display": "flex",
               "flexDirection": "column",
               "flexShrink": 1,
-              "gap": 8,
+              "gap": 4,
             }
           }
         >
@@ -545,7 +537,6 @@ exports[`CieIdMethodModule When isL3 is true and isReissuance mode is false rend
       [
         {
           "alignItems": "center",
-          "borderColor": "#E8EBF1",
           "borderCurve": "continuous",
           "borderRadius": 8,
           "borderWidth": 1,
@@ -557,14 +548,12 @@ exports[`CieIdMethodModule When isL3 is true and isReissuance mode is false rend
         {
           "borderColor": "#E8EBF1",
         },
-        false,
       ]
     }
     style={
       [
         {
           "alignItems": "center",
-          "borderColor": "#E8EBF1",
           "borderCurve": "continuous",
           "borderRadius": 8,
           "borderWidth": 1,
@@ -576,7 +565,6 @@ exports[`CieIdMethodModule When isL3 is true and isReissuance mode is false rend
         {
           "borderColor": "#E8EBF1",
         },
-        false,
         {
           "transform": [
             {
@@ -616,7 +604,7 @@ exports[`CieIdMethodModule When isL3 is true and isReissuance mode is false rend
               "display": "flex",
               "flexDirection": "column",
               "flexShrink": 1,
-              "gap": 8,
+              "gap": 4,
             }
           }
         >
@@ -789,7 +777,6 @@ exports[`CieIdMethodModule When isL3 is true and isReissuance mode is true rende
       [
         {
           "alignItems": "center",
-          "borderColor": "#E8EBF1",
           "borderCurve": "continuous",
           "borderRadius": 8,
           "borderWidth": 1,
@@ -801,14 +788,12 @@ exports[`CieIdMethodModule When isL3 is true and isReissuance mode is true rende
         {
           "borderColor": "#E8EBF1",
         },
-        false,
       ]
     }
     style={
       [
         {
           "alignItems": "center",
-          "borderColor": "#E8EBF1",
           "borderCurve": "continuous",
           "borderRadius": 8,
           "borderWidth": 1,
@@ -820,7 +805,6 @@ exports[`CieIdMethodModule When isL3 is true and isReissuance mode is true rende
         {
           "borderColor": "#E8EBF1",
         },
-        false,
         {
           "transform": [
             {
@@ -860,7 +844,7 @@ exports[`CieIdMethodModule When isL3 is true and isReissuance mode is true rende
               "display": "flex",
               "flexDirection": "column",
               "flexShrink": 1,
-              "gap": 8,
+              "gap": 4,
             }
           }
         >

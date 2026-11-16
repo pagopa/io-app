@@ -1,3 +1,6 @@
+import { useNavigation } from "@react-navigation/native";
+
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { ItwDiscoveryInfoScreenNavigationParams } from "../discovery/screens/ItwDiscoveryInfoScreen";
 import { ItwCieInternalAuthAndMrtdScreenParams } from "../identification/cie/screens/ItwCieInternalAuthAndMrtdScreen.tsx";
 import { ItwIdentificationCieWarningScreenNavigationParams } from "../identification/cie/screens/ItwIdentificationCieWarningScreen.tsx";
@@ -24,6 +27,7 @@ export type ItwParamsList = ItwPlaygroundParamsList & {
     | ItwDiscoveryInfoScreenNavigationParams
     | undefined;
   [ITW_ROUTES.DISCOVERY.IPZS_PRIVACY]: undefined;
+  [ITW_ROUTES.ENGAGEMENT]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE.ACTIVATE_NFC]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE.AUTH_SCREEN]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE.CAN_SCREEN]: undefined;
@@ -94,3 +98,10 @@ export type ItwParamsList = ItwPlaygroundParamsList & {
   [ITW_ROUTES.SETTINGS]: undefined;
   [ITW_ROUTES.WALLET_REVOCATION_SCREEN]: undefined;
 };
+
+/**
+ * Typed navigation for screens inside the ITW stack: allows in-stack actions
+ * (e.g. `replace`, `popTo`) on ITW routes while still reaching root routes.
+ */
+export const useItwNavigation = () =>
+  useNavigation<IOStackNavigationProp<ItwParamsList>>();

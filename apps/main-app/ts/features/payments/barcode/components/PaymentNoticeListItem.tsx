@@ -34,10 +34,10 @@ const PaymentNoticeListItem = ({
 
   return (
     <ListItemTransaction
+      description={organizationFiscalCode}
+      label={paymentNoticeNumber}
       onPress={onPress}
       showChevron
-      subtitle={organizationFiscalCode}
-      title={paymentNoticeNumber}
       transaction={{
         amount: amountString,
         amountAccessibilityLabel:

@@ -8,7 +8,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import CieExpiredOrInvalidScreen from "../CieExpiredOrInvalidScreen";
 
-const mockNavigate = jest.fn();
+const mockPopToTop = jest.fn();
 
 jest.mock("../../../../../../navigation/params/AppParamsList", () => {
   const actual = jest.requireActual(
@@ -17,7 +17,7 @@ jest.mock("../../../../../../navigation/params/AppParamsList", () => {
   return {
     ...actual,
     useIONavigation: () => ({
-      navigate: mockNavigate
+      popToTop: mockPopToTop
     })
   };
 });
@@ -44,13 +44,11 @@ describe("CieExpiredOrInvalidScreen", () => {
     expect(getByText(I18n.t("global.buttons.close"))).toBeTruthy();
   });
 
-  it("should navigate to LANDING screen when pressing close", () => {
+  it("should pop to top when pressing close", () => {
     const { getByText } = renderComponent();
     fireEvent.press(getByText(I18n.t("global.buttons.close")));
 
-    expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.LANDING
-    });
+    expect(mockPopToTop).toHaveBeenCalledTimes(1);
   });
 });
 

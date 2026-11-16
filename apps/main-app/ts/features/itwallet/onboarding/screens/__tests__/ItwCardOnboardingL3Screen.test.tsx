@@ -3,7 +3,6 @@ import I18n from "i18next";
 import configureMockStore from "redux-mock-store";
 import { createActor } from "xstate";
 
-import * as appParamsList from "../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -14,7 +13,11 @@ import * as envSelectors from "../../../common/store/selectors/environment";
 import * as preferencesSelectors from "../../../common/store/selectors/preferences";
 import * as remoteConfigSelectors from "../../../common/store/selectors/remoteConfig";
 import { EnvType } from "../../../common/utils/environment";
-import { CredentialType } from "../../../common/utils/itwMocksUtils";
+import {
+  CredentialType,
+  ItwCredentialsCatalogueMock
+} from "../../../common/utils/itwMocksUtils";
+import { itwFetchCredentialsCatalogue } from "../../../credentialsCatalogue/store/actions";
 import * as catalogueSelectors from "../../../credentialsCatalogue/store/selectors";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
@@ -23,13 +26,29 @@ import { testCredentialIssuanceDeps } from "../../../machine/utils/testDeps";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwCardOnboardingL3Screen } from "../ItwCardOnboardingL3Screen";
 
+// The list of obtainable credentials is built from the catalogue
+const initialState = appReducer(
+  appReducer(undefined, applicationChangeState("active")),
+  itwFetchCredentialsCatalogue.success(ItwCredentialsCatalogueMock)
+);
+
+const mockReplace = jest.fn();
+const mockNavigate = jest.fn();
+
+jest.mock("@react-navigation/native", () => {
+  const actual = jest.requireActual("@react-navigation/native");
+  return {
+    ...actual,
+    useNavigation: () => ({
+      ...actual.useNavigation(),
+      replace: mockReplace,
+      navigate: mockNavigate
+    })
+  };
+});
+
 describe("ItwCardOnboardingL3Screen", () => {
-  const replaceMock = jest.fn();
-  const navigateMock = jest.fn();
-  const fallbackState = appReducer(
-    appReducer(undefined, applicationChangeState("active")),
-    itwSetL2Fallback(true)
-  );
+  const fallbackState = appReducer(initialState, itwSetL2Fallback(true));
   const restrictedTypes = [
     CredentialType.DRIVING_LICENSE,
     CredentialType.EUROPEAN_DISABILITY_CARD,
@@ -72,11 +91,6 @@ describe("ItwCardOnboardingL3Screen", () => {
       .mockReturnValue(false);
 
     jest.spyOn(envSelectors, "selectItwEnv").mockReturnValue("prod" as EnvType);
-
-    jest.spyOn(appParamsList, "useIONavigation").mockReturnValue({
-      replace: replaceMock,
-      navigate: navigateMock
-    } as any);
   });
 
   afterEach(() => {
@@ -145,9 +159,7 @@ describe("ItwCardOnboardingL3Screen", () => {
 
     fireEvent.press(button);
 
-    expect(replaceMock).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.L2_ONBOARDING
-    });
+    expect(mockReplace).toHaveBeenCalledWith(ITW_ROUTES.L2_ONBOARDING);
   });
 
   it("shows the upgrade banner after the three L2 documents for a missing CIE/PIN fallback", () => {
@@ -176,7 +188,7 @@ describe("ItwCardOnboardingL3Screen", () => {
     ).toBeNull();
     expect(queryByTestId("restricted-action-testID")).toBeNull();
     fireEvent.press(getByTestId("itwL2FallbackUpgradeBannerTestID"));
-    expect(navigateMock).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
+    expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
       params: { level: "l3" }
     });
@@ -243,7 +255,7 @@ describe("ItwCardOnboardingL3Screen", () => {
       .mockReturnValue(false);
     const { getByTestId } = renderComponent({ page: 0 }, fallbackState);
     fireEvent.press(getByTestId("itwL2FallbackUpgradeBannerTestID"));
-    expect(navigateMock).not.toHaveBeenCalled();
+    expect(mockNavigate).not.toHaveBeenCalled();
   });
 
   it("issues fallback documents directly instead of restarting L3 activation", () => {
@@ -264,7 +276,7 @@ describe("ItwCardOnboardingL3Screen", () => {
       credentialType: CredentialType.DRIVING_LICENSE,
       mode: "issuance"
     });
-    expect(navigateMock).not.toHaveBeenCalled();
+    expect(mockNavigate).not.toHaveBeenCalled();
   });
 
   test.each([
@@ -295,7 +307,7 @@ describe("ItwCardOnboardingL3Screen", () => {
 
 const renderComponent = (
   params?: undefined | { page?: number },
-  globalState = appReducer(undefined, applicationChangeState("active"))
+  globalState = initialState
 ) => {
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(globalState);

@@ -69,17 +69,7 @@ export const ItwL2FallbackComponent = ({ credentialType }: Props) => {
       fallback_reason: "nfc_not_supported"
     });
 
-    navigation.reset({
-      index: 1,
-      routes: [
-        {
-          name: ROUTES.MAIN,
-          params: {
-            screen: ROUTES.WALLET_HOME
-          }
-        }
-      ]
-    });
+    navigation.popTo(ROUTES.MAIN, { screen: ROUTES.WALLET_HOME, params: {} });
   }, [navigation]);
 
   const action: OperationResultScreenContentProps["action"] = {

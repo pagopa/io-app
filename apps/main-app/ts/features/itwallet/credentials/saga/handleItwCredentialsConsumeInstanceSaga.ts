@@ -1,4 +1,4 @@
-import { deleteKey } from "@pagopa/io-react-native-crypto";
+import { deleteKey } from "@io-app/expo-crypto";
 import { call, put, select } from "typed-redux-saga/macro";
 
 import { walletRemoveCards } from "../../../wallet/store/actions/cards";

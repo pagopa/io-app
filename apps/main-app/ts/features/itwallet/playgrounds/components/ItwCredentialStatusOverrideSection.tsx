@@ -37,7 +37,7 @@ const CredentialStatusPicker = ({
   const statusItems: ReadonlyArray<RadioItem<ItwCredentialStatus>> =
     getAvailableStatusOverrides(credentialType).map(status => ({
       id: status,
-      value: status
+      label: status
     }));
 
   return (
@@ -119,8 +119,8 @@ export const ItwCredentialStatusOverrideSection = () => {
           <ListItemNav
             description={getCredentialStatus(credential)}
             key={credentialType}
+            label={credentialType}
             onPress={() => handlePress(credentialType)}
-            value={credentialType}
           />
         ))}
       </View>

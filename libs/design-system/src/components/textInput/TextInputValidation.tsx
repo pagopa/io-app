@@ -10,8 +10,8 @@ import {
 import { AccessibilityInfo, TextInput, View } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { useIOTheme } from "../../context";
-import { IOColors } from "../../core/IOColors";
+import { useIOColors } from "../../context";
+import { IOTokenColor } from "../../core";
 import {
   enterTransitionInputIcon,
   exitTransitionInputIcon
@@ -25,10 +25,12 @@ export type ValidationWithOptions = { errorMessage: string; isValid: boolean };
 
 type TextInputValidationProps = Omit<
   ComponentProps<typeof TextInputBase>,
-  "bottomMessageColor" | "isPassword" | "ref" | "rightElement" | "status"
+  "isPassword" | "ref" | "rightElement" | "status"
 > & {
   /** A string that will be read by screen readers when the field is not valid. */
   accessibilityErrorLabel?: string;
+  /** A string that will be read by screen readers when the field is valid. */
+  accessibilityValidLabel?: string;
   /**
    * In case of a dynamic `errorMessage`, use the `onValidate` function with a
    * `ValidationWithOptions` object as the return value to ensure that screen
@@ -79,10 +81,11 @@ export const TextInputValidation = ({
   onFocus,
   validationMode = "onBlur",
   accessibilityErrorLabel,
+  accessibilityValidLabel,
   ref,
   ...props
 }: TextInputValidationProps) => {
-  const theme = useIOTheme();
+  const textInputColors = useIOColors().component.textInput;
   const [isValid, setIsValid] = useState<boolean | undefined>(undefined);
   const [errMessage, setErrMessage] = useState(errorMessage);
 
@@ -142,26 +145,21 @@ export const TextInputValidation = ({
     [isValid, errMessage, bottomMessage]
   );
 
-  const labelErrorColor: IOColors | undefined = useMemo(
-    () => (isValid === false && errMessage ? theme.errorText : undefined),
-    [isValid, errMessage, theme.errorText]
-  );
-
   const feedbackIconAttrMap: Record<
     string,
-    { color: IOColors; name: IOIcons }
+    { color: IOTokenColor; name: IOIcons }
   > = useMemo(
     () => ({
       valid: {
         name: "success",
-        color: theme.successIcon
+        color: textInputColors.icon.success
       },
       notValid: {
         name: "errorFilled",
-        color: theme.errorIcon
+        color: textInputColors.icon.error
       }
     }),
-    [theme]
+    [textInputColors]
   );
 
   const feedbackIcon = useMemo(() => {
@@ -186,8 +184,14 @@ export const TextInputValidation = ({
   return (
     <TextInputBase
       {...props}
+      accessibilityLabel={`${props.accessibilityLabel}${
+        isValid === false && errMessage
+          ? `. ${accessibilityErrorLabel ?? errMessage}`
+          : isValid === true
+            ? `. ${accessibilityValidLabel}`
+            : ""
+      }`}
       bottomMessage={labelError}
-      bottomMessageColor={labelErrorColor}
       inputRef={inputRef}
       onBlur={onBlurHandler}
       onFocus={onFocusHandler}

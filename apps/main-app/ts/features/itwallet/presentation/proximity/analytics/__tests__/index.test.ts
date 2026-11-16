@@ -43,13 +43,13 @@ describe("proximity analytics", () => {
     },
     {
       name: "trackItwProximityStart with nfc flow",
-      track: () => trackItwProximityStart({ proximity_flow: "nfc" }),
+      track: () => trackItwProximityStart({ proximity_flow: "nfc_ble" }),
       eventName: ITW_PROXIMITY_TECH_EVENTS.ITW_PROXIMITY_START,
       properties: {
         event_category: "TECH",
         event_type: undefined,
         flow: undefined,
-        proximity_flow: "nfc"
+        proximity_flow: "nfc_ble"
       }
     },
     {
@@ -64,13 +64,13 @@ describe("proximity analytics", () => {
     },
     {
       name: "trackItwProximityDataShare",
-      track: () => trackItwProximityDataShare({ proximity_flow: "nfc" }),
+      track: () => trackItwProximityDataShare({ proximity_flow: "nfc_ble" }),
       eventName: ITW_PROXIMITY_SCREENVIEW_EVENTS.ITW_PROXIMITY_DATA_SHARE,
       properties: {
         event_category: "UX",
         event_type: "screen_view",
         flow: undefined,
-        proximity_flow: "nfc"
+        proximity_flow: "nfc_ble"
       }
     },
     {
@@ -88,13 +88,13 @@ describe("proximity analytics", () => {
     {
       name: "trackItwProximityContinuePresentation",
       track: () =>
-        trackItwProximityContinuePresentation({ proximity_flow: "nfc" }),
+        trackItwProximityContinuePresentation({ proximity_flow: "nfc_ble" }),
       eventName: ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_UX_CONVERSION,
       properties: {
         event_category: "UX",
         event_type: "action",
         flow: undefined,
-        proximity_flow: "nfc"
+        proximity_flow: "nfc_ble"
       }
     },
     {
@@ -152,7 +152,7 @@ describe("proximity analytics", () => {
       name: "trackItwProximityRPGenericFailure with nfc flow",
       track: () =>
         trackItwProximityRPGenericFailure({
-          proximity_flow: "nfc",
+          proximity_flow: "nfc_ble",
           proximity_sharing_status: "post",
           reason: "reason",
           type: "RELYING_PARTY_GENERIC"
@@ -162,7 +162,7 @@ describe("proximity analytics", () => {
         event_category: "KO",
         event_type: "screen_view",
         flow: undefined,
-        proximity_flow: "nfc",
+        proximity_flow: "nfc_ble",
         proximity_sharing_status: "post",
         reason: "reason",
         type: "RELYING_PARTY_GENERIC"
@@ -191,7 +191,7 @@ describe("proximity analytics", () => {
       track: () =>
         trackItwProximityUnexpectedFailure({
           origin: "origin",
-          proximity_flow: "nfc",
+          proximity_flow: "nfc_ble",
           reason: "reason",
           type: "UNEXPECTED"
         }),
@@ -201,7 +201,7 @@ describe("proximity analytics", () => {
         event_type: "screen_view",
         flow: undefined,
         origin: "origin",
-        proximity_flow: "nfc",
+        proximity_flow: "nfc_ble",
         reason: "reason",
         type: "UNEXPECTED"
       }
@@ -227,14 +227,16 @@ describe("proximity analytics", () => {
     {
       name: "trackItwProximityMandatoryCredentialMissing with nfc flow",
       track: () =>
-        trackItwProximityMandatoryCredentialMissing({ proximity_flow: "nfc" }),
+        trackItwProximityMandatoryCredentialMissing({
+          proximity_flow: "nfc_ble"
+        }),
       eventName:
         ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_MANDATORY_CREDENTIAL_MISSING,
       properties: {
         event_category: "KO",
         event_type: "screen_view",
         flow: undefined,
-        proximity_flow: "nfc"
+        proximity_flow: "nfc_ble"
       }
     },
     {

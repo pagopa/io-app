@@ -1,7 +1,7 @@
 import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import {
   ContentWrapper,
-  IOColors,
+  IOColorsLegacy,
   useIOTheme,
   VSpacer
 } from "@io-app/design-system";
@@ -115,7 +115,7 @@ export const MessageDetailsFooter = ({
       style={{
         paddingBottom: "75%",
         marginBottom: "-75%",
-        backgroundColor: IOColors[theme["appBackground-secondary"]]
+        backgroundColor: IOColorsLegacy[theme["appBackground-secondary"]]
       }}
     >
       <VSpacer size={16} />

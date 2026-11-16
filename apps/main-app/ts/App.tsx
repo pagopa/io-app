@@ -2,6 +2,7 @@ import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import {
   IODSExperimentalContextProvider,
   IONewTypefaceContextProvider,
+  IOSwitchAccessContextProvider,
   IOThemeContextProvider,
   ToastProvider
 } from "@io-app/design-system";
@@ -33,36 +34,38 @@ const App = (): JSX.Element => (
     <KeyboardProvider>
       <SafeAreaProvider>
         <IODSExperimentalContextProvider>
-          <IONewTypefaceContextProvider>
-            <IOThemeContextProvider theme={"light"}>
-              <ToastProvider>
-                <Provider store={store}>
-                  <PersistGate loading={undefined} persistor={persistor}>
-                    <TourProvider>
-                      <IOAlertVisibleContextProvider>
-                        <BottomSheetModalProvider>
-                          <LightModalProvider>
-                            <AppFeedbackProvider>
-                              <StatusMessages>
-                                {/*
-                                  Software Mansion bottom-sheet portal host.
-                                  Mounted above the navigators so modal sheets
-                                  overlay the navigation header.
-                                */}
-                                <BottomSheetProvider>
-                                  <RootContainer store={store} />
-                                </BottomSheetProvider>
-                              </StatusMessages>
-                            </AppFeedbackProvider>
-                          </LightModalProvider>
-                        </BottomSheetModalProvider>
-                      </IOAlertVisibleContextProvider>
-                    </TourProvider>
-                  </PersistGate>
-                </Provider>
-              </ToastProvider>
-            </IOThemeContextProvider>
-          </IONewTypefaceContextProvider>
+          <IOSwitchAccessContextProvider>
+            <IONewTypefaceContextProvider>
+              <IOThemeContextProvider theme={"light"}>
+                <ToastProvider>
+                  <Provider store={store}>
+                    <PersistGate loading={undefined} persistor={persistor}>
+                      <TourProvider>
+                        <IOAlertVisibleContextProvider>
+                          <BottomSheetModalProvider>
+                            <LightModalProvider>
+                              <AppFeedbackProvider>
+                                <StatusMessages>
+                                  {/*
+                                    Software Mansion bottom-sheet portal host.
+                                    Mounted above the navigators so modal sheets
+                                    overlay the navigation header.
+                                  */}
+                                  <BottomSheetProvider>
+                                    <RootContainer store={store} />
+                                  </BottomSheetProvider>
+                                </StatusMessages>
+                              </AppFeedbackProvider>
+                            </LightModalProvider>
+                          </BottomSheetModalProvider>
+                        </IOAlertVisibleContextProvider>
+                      </TourProvider>
+                    </PersistGate>
+                  </Provider>
+                </ToastProvider>
+              </IOThemeContextProvider>
+            </IONewTypefaceContextProvider>
+          </IOSwitchAccessContextProvider>
         </IODSExperimentalContextProvider>
       </SafeAreaProvider>
     </KeyboardProvider>

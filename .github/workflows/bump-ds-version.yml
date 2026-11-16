@@ -1,0 +1,34 @@
+name: Bump Design System Version
+on:
+  workflow_dispatch:
+    inputs:
+      releaseLevel:
+        description: Version to bump
+        required: true
+        type: choice
+        default: minor
+        options:
+          - major
+          - minor
+          - patch
+permissions:
+  contents: write
+  actions: read
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+          ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
+      - uses: ./.github/actions/setup-pnpm
+      - name: Install dependencies
+        run: pnpm install
+      - name: Bump Design System Version
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          pnpm nx run io-app-design-system:release ${{ github.event.inputs.releaseLevel }}

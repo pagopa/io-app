@@ -8,17 +8,12 @@ import {
 } from "react-native";
 import { SvgProps } from "react-native-svg";
 
-import { useIOTheme } from "../../context";
-import {
-  IOColors,
-  IOListItemVisualParams,
-  IOSpacer,
-  IOVisualCostants
-} from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions, IORoleColor, IOTypography } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
-import { Icon, IOIcons, IOIconSizeScale } from "../icons";
+import { Icon, IOIcons } from "../icons";
 import { HStack, VStack } from "../layout";
 import { LoadingSpinner } from "../loadingSpinner";
 import { IOSkeleton } from "../skeleton";
@@ -31,7 +26,8 @@ import {
 type BaseProps = ImageProps &
   PressableModuleBaseProps & {
     badge?: Badge;
-    iconColor?: IOColors;
+    /* A semantic token: it has a value in both modes */
+    iconColor?: IORoleColor<"foreground">;
     isFetching?: boolean;
     isLoading?: false;
     rightIcon?: IOIcons;
@@ -56,10 +52,8 @@ type ModuleNavigationAltProps = BaseProps | LoadingProps;
 export const ModuleNavigationAlt = (
   props: WithTestID<ModuleNavigationAltProps>
 ) => {
-  const theme = useIOTheme();
+  const moduleColors = useIOColors().component.module;
   const { hugeFontEnabled } = useIOFontDynamicScale();
-
-  const graphicWrapperSize: IOIconSizeScale = 48;
 
   if (props.isLoading) {
     return (
@@ -72,7 +66,7 @@ export const ModuleNavigationAlt = (
   const {
     testID,
     icon,
-    iconColor = theme["interactiveElem-default"],
+    iconColor = moduleColors.foreground.icon.action,
     image,
     title,
     subtitle,
@@ -84,7 +78,11 @@ export const ModuleNavigationAlt = (
   } = props;
 
   const iconComponent = icon && (
-    <Icon color={iconColor} name={icon} size={32} />
+    <Icon
+      color={iconColor}
+      name={icon}
+      size={IODimensions.size.icon.module.large}
+    />
   );
 
   const imageComponent = () => {
@@ -118,9 +116,9 @@ export const ModuleNavigationAlt = (
     if (onPress) {
       return (
         <Icon
-          color={theme["interactiveElem-default"]}
+          color={moduleColors.foreground.icon.action}
           name={rightIcon ?? "chevronRightListItem"}
-          size={IOListItemVisualParams.chevronSize}
+          size={IODimensions.size.icon.chevron}
           testID={testID ? `${testID}_icon` : undefined}
         />
       );
@@ -130,9 +128,12 @@ export const ModuleNavigationAlt = (
 
   return (
     <PressableModuleBase {...pressableProps} onPress={onPress} testID={testID}>
-      <HStack space={8} style={{ alignItems: "center" }}>
+      <HStack
+        space={IODimensions.gap.module.trailing}
+        style={{ alignItems: "center" }}
+      >
         <HStack
-          space={IOVisualCostants.iconMargin as IOSpacer}
+          space={IODimensions.gap.module.leading}
           style={{ alignItems: "center", flexGrow: 1, flexShrink: 1 }}
         >
           {!hugeFontEnabled && (
@@ -140,19 +141,22 @@ export const ModuleNavigationAlt = (
               style={{
                 alignItems: "center",
                 justifyContent: "center",
-                width: graphicWrapperSize,
-                height: graphicWrapperSize
+                width: IODimensions.size.module.graphic,
+                height: IODimensions.size.module.graphic
               }}
             >
               {iconComponent ?? imageComponent()}
             </View>
           )}
 
-          <VStack space={8} style={{ flexShrink: 1, alignItems: "flex-start" }}>
+          <VStack
+            space={IODimensions.gap.module.topElement}
+            style={{ flexShrink: 1, alignItems: "flex-start" }}
+          >
             {badge ? <Badge {...badge} /> : null}
             <View>
               <BodySmall
-                color={theme["interactiveElem-default"]}
+                color={moduleColors.foreground.action}
                 numberOfLines={2}
                 style={{ flexShrink: 1 }}
                 weight="Semibold"
@@ -160,7 +164,10 @@ export const ModuleNavigationAlt = (
                 {title}
               </BodySmall>
               {subtitle && (
-                <LabelMini color={theme["textBody-tertiary"]} weight="Regular">
+                <LabelMini
+                  color={moduleColors.foreground.description}
+                  weight="Regular"
+                >
                   {subtitle}
                 </LabelMini>
               )}
@@ -180,19 +187,32 @@ const ModuleNavigationAltSkeleton = ({
     accessibilityLabel={loadingAccessibilityLabel}
     accessibilityState={{ busy: true }}
     accessible={true}
-    endBlock={
-      <IOSkeleton height={24} radius={16} shape="rectangle" width={64} />
-    }
     startBlock={
       <HStack
-        space={IOVisualCostants.iconMargin as IOSpacer}
-        style={{ alignItems: "center" }}
+        space={IODimensions.gap.module.leading}
+        style={{ alignItems: "center", flexGrow: 1, flexShrink: 1 }}
       >
-        <IOSkeleton radius={8} shape="square" size={32} />
-        <VStack space={4}>
-          <IOSkeleton height={12} radius={8} shape="rectangle" width={52} />
-          <IOSkeleton height={16} radius={8} shape="rectangle" width={96} />
-          <IOSkeleton height={12} radius={8} shape="rectangle" width={160} />
+        <IOSkeleton
+          radius={IODimensions.radius.skeleton.graphic}
+          shape="square"
+          size={IODimensions.size.module.graphic}
+        />
+        <VStack
+          space={IODimensions.gap.skeleton.items}
+          style={{ flexGrow: 1, flexShrink: 1 }}
+        >
+          <IOSkeleton
+            height={IOTypography.bodySmall.size}
+            radius={IODimensions.radius.skeleton.text}
+            shape="rectangle"
+            width="40%"
+          />
+          <IOSkeleton
+            height={IOTypography.labelMini.size}
+            radius={IODimensions.radius.skeleton.text}
+            shape="rectangle"
+            width="65%"
+          />
         </VStack>
       </HStack>
     }
@@ -201,8 +221,8 @@ const ModuleNavigationAltSkeleton = ({
 
 const styles = StyleSheet.create({
   image: {
-    width: "100%",
-    height: "auto",
+    width: IODimensions.size.module.graphic,
+    height: IODimensions.size.module.graphic,
     resizeMode: "contain"
   }
 });

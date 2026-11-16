@@ -4,7 +4,7 @@ import {
   H6,
   HStack,
   Icon,
-  IOColors,
+  IOColorsLegacy,
   useIOTheme
 } from "@io-app/design-system";
 import I18n from "i18next";
@@ -25,7 +25,7 @@ type ItwRequiredClaimsListProps = {
 const ItwRequiredClaimsList = ({ items }: ItwRequiredClaimsListProps) => {
   const theme = useIOTheme();
 
-  const backgroundColor = IOColors[theme["appBackground-secondary"]];
+  const backgroundColor = IOColorsLegacy[theme["appBackground-secondary"]];
 
   return (
     <View style={[styles.container, { backgroundColor }]}>

@@ -138,10 +138,10 @@ const ReceiptListItemTransaction = memo(
         <ListItemTransaction
           accessibilityLabel={accessibilityLabel}
           accessible
+          description={datetime}
+          label={recipient}
           onPress={onPress}
           paymentLogoIcon={transactionLogo}
-          subtitle={datetime}
-          title={recipient}
           transaction={{
             amount: amountText,
             amountAccessibilityLabel: accessibleAmountText

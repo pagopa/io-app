@@ -3,7 +3,7 @@ import {
   Banner,
   ContentWrapper,
   Divider,
-  IOVisualCostants,
+  IODimensions,
   ListItemNav,
   useIOToast,
   VSpacer
@@ -83,6 +83,7 @@ const ZendeskChooseSubCategory = (props: Props) => {
     item: subCategory
   }: ListRenderItemInfo<ZendeskSubCategory>) => (
     <ListItemNav
+      label={subCategory.description[locale]}
       onPress={() => {
         selectedSubcategory(subCategory);
         // Set sub-category as custom field
@@ -92,7 +93,6 @@ const ZendeskChooseSubCategory = (props: Props) => {
         });
       }}
       testID={subCategory.value}
-      value={subCategory.description[locale]}
     />
   );
 
@@ -135,7 +135,7 @@ const ZendeskChooseSubCategory = (props: Props) => {
       )}
       <FlatList
         contentContainerStyle={{
-          paddingHorizontal: IOVisualCostants.appMarginDefault
+          paddingHorizontal: IODimensions.padding.screen.default
         }}
         data={subCategories}
         ItemSeparatorComponent={Divider}

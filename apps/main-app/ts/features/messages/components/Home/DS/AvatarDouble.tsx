@@ -1,11 +1,4 @@
-import {
-  hexToRgba,
-  Icon,
-  IOColors,
-  IOSpacingScale,
-  IOVisualCostants,
-  useIOTheme
-} from "@io-app/design-system";
+import { Icon, IODimensions, useIOColors } from "@io-app/design-system";
 import { useCallback, useRef, useState } from "react";
 import {
   Image,
@@ -21,27 +14,23 @@ type AvatarDoubleProps = {
   backgroundLogoUri?: ImageSourcePropType;
 };
 
-const avatarContainerSize = 30;
-const avatarDoubleRadiusSizeSmall = 6;
-const internalSpaceDefaultSize = 3;
-const internalSpacePlaceholderDefaultSize: IOSpacingScale = 6;
-const avatarBorderLightMode = hexToRgba(IOColors.black, 0.1);
+const avatarSize = IODimensions.size.avatar.xsmall;
+const avatarRadius = IODimensions.radius.avatar.xsmall;
+const avatarPadding = IODimensions.padding.avatar.xsmall;
 
 const styles = StyleSheet.create({
   topContainer: {
-    height: IOVisualCostants.avatarSizeSmall,
-    width: IOVisualCostants.avatarSizeSmall
+    height: IODimensions.size.avatar.small,
+    width: IODimensions.size.avatar.small
   },
   avatarWrapper: {
     overflow: "hidden",
-    borderColor: avatarBorderLightMode,
-    borderWidth: 1,
+    borderWidth: IODimensions.stroke.default,
     borderCurve: "continuous",
     position: "absolute"
   },
   avatarInnerWrapper: {
     overflow: "hidden",
-    backgroundColor: IOColors.white,
     borderCurve: "continuous"
   },
   avatarImage: {
@@ -78,7 +67,7 @@ const getImageState = (backgroundLogoUri?: ImageSourcePropType) => {
  * @returns
  */
 export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const indexValue = useRef<number>(0);
 
   const imageInitialState = useCallback(
@@ -108,15 +97,18 @@ export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
         style={[
           styles.avatarWrapper,
           {
-            height: avatarContainerSize,
-            width: avatarContainerSize,
-            borderRadius: avatarDoubleRadiusSizeSmall,
+            height: avatarSize,
+            width: avatarSize,
+            borderRadius: avatarRadius,
+            borderColor: colors.component.avatar.border,
             backgroundColor:
-              imageSource === undefined ? IOColors["grey-50"] : IOColors.white,
+              imageSource === undefined
+                ? colors.component.avatar.background.placeholder
+                : colors.component.avatar.background.logo,
             padding:
               imageSource === undefined
-                ? internalSpacePlaceholderDefaultSize
-                : internalSpaceDefaultSize,
+                ? avatarPadding.placeholder
+                : avatarPadding.logo,
             bottom: 0,
             right: 0
           }
@@ -124,7 +116,7 @@ export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
       >
         {imageSource === undefined ? (
           <Icon
-            color={theme["icon-decorative"]}
+            color={colors.component.avatar.icon}
             name="institution"
             size={"100%"}
           />
@@ -133,8 +125,8 @@ export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
             style={[
               styles.avatarInnerWrapper,
               {
-                borderRadius:
-                  avatarDoubleRadiusSizeSmall - internalSpaceDefaultSize
+                backgroundColor: colors.component.avatar.background.logo,
+                borderRadius: avatarRadius - avatarPadding.logo
               }
             ]}
           >
@@ -152,11 +144,14 @@ export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
         style={[
           styles.avatarWrapper,
           {
-            height: avatarContainerSize,
-            width: avatarContainerSize,
-            borderRadius: avatarDoubleRadiusSizeSmall,
+            height: avatarSize,
+            width: avatarSize,
+            borderRadius: avatarRadius,
+            borderColor: colors.component.avatar.border,
             backgroundColor:
-              imageSource === undefined ? IOColors["grey-50"] : IOColors.white,
+              imageSource === undefined
+                ? colors.component.avatar.background.placeholder
+                : colors.component.avatar.background.logo,
             padding: 0,
             justifyContent: "center",
             alignItems: "center"
@@ -167,8 +162,8 @@ export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
           style={[
             styles.avatarInnerWrapper,
             {
-              borderRadius:
-                avatarDoubleRadiusSizeSmall - internalSpaceDefaultSize
+              backgroundColor: colors.component.avatar.background.logo,
+              borderRadius: avatarRadius - avatarPadding.logo
             }
           ]}
         >

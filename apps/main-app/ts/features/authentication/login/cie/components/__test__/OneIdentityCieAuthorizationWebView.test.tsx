@@ -24,14 +24,14 @@ jest.mock("../../../../common/components/CieWebViewLogin", () => ({
   CieWebViewLogin: jest.fn(() => null)
 }));
 
-const mockNavigate = jest.fn();
+const mockPopTo = jest.fn();
 const mockReplace = jest.fn();
 jest.mock("@react-navigation/native", () => {
   const actualNav = jest.requireActual("@react-navigation/native");
   return {
     ...actualNav,
     useNavigation: () => ({
-      navigate: mockNavigate,
+      popTo: mockPopTo,
       replace: mockReplace
     })
   };
@@ -292,7 +292,7 @@ describe("OneIdentityActiveSessionLoginCieAuthorizationWebView", () => {
     expect(mockDispatch).toHaveBeenCalledWith(
       setFinishedActiveSessionLoginFlow()
     );
-    expect(mockNavigate).toHaveBeenCalledWith(ROUTES.MAIN, {
+    expect(mockPopTo).toHaveBeenCalledWith(ROUTES.MAIN, {
       screen: MESSAGES_ROUTES.MESSAGES_HOME
     });
   });

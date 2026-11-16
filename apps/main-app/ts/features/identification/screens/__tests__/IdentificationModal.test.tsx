@@ -46,9 +46,10 @@ describe("IdentificationModal", () => {
   );
 
   it("should render the modal when identification is started", () => {
-    const { getByText, getByTestId } = renderComponent(store);
+    const { getByRole, getByText, getByTestId } = renderComponent(store);
 
     expect(getByTestId("identification-modal")).toBeTruthy();
+    expect(getByRole("header")).toBeTruthy();
     expect(getByText("Ciao!")).toBeTruthy();
   });
 

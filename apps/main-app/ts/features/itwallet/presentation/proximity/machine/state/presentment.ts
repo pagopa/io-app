@@ -90,16 +90,17 @@ export const presentmentState = itwProximityMachineSetup.createStateConfig({
       },
       {
         actions: [
-          enqueueActions(({ context, enqueue }) => {
-            if (!context.grantedConsentKey) {
-              enqueue("trackProximityStart");
-            }
-          }),
           assign(({ event }) => ({
             proximityDetails: event.proximityDetails,
             verifierRequest: event.verifierRequest,
             retrievalMethod: event.retrievalMethod
-          }))
+          })),
+          // Track after the assign so proximity_flow reflects the retrieval method
+          enqueueActions(({ context, enqueue }) => {
+            if (!context.grantedConsentKey) {
+              enqueue("trackProximityStart");
+            }
+          })
         ],
         target: "Presentment.EvaluatingConsent"
       }
@@ -317,6 +318,31 @@ export const presentmentState = itwProximityMachineSetup.createStateConfig({
               reason: undefined
             }
           })),
+          target: "#itwProximityMachine.Presentment.TerminatingForConsentDenial"
+        }
+      }
+    },
+    TerminatingForConsentDenial: {
+      description:
+        "Send the session-termination signal before leaving the proximity communication lifecycle",
+      always: {
+        guard: "hasTerminatedSession",
+        target: "#itwProximityMachine.Failure"
+      },
+      on: {
+        "device-disconnected": {},
+        "device-error": {},
+        "device-document-request-received": {}
+      },
+      invoke: {
+        id: "terminateSession",
+        src: "terminateSession",
+        onDone: {
+          actions: "markSessionTerminated",
+          target: "#itwProximityMachine.Failure"
+        },
+        onError: {
+          actions: "markSessionTerminated",
           target: "#itwProximityMachine.Failure"
         }
       }

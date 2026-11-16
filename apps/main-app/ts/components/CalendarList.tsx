@@ -24,7 +24,7 @@ const getCalendarsByAccount = (
             ...acc,
             {
               id: calendar.id,
-              value: convertLocalCalendarName(calendar.title),
+              label: convertLocalCalendarName(calendar.title),
               description: calendar.source.name
             }
           ]
@@ -62,5 +62,5 @@ const loadingCalendars: Array<RadioItem<string>> = A.makeBy(5, index => ({
   id: index.toString(),
   disabled: true,
   loadingProps: { skeletonDescription: true, state: true },
-  value: ""
+  label: ""
 }));

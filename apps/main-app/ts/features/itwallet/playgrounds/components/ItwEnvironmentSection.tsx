@@ -41,7 +41,7 @@ export const ItwEnvironmentSection = () => {
   };
   const envRadioItems = (): ReadonlyArray<RadioItem<EnvType>> => [
     {
-      value: I18n.t(
+      label: I18n.t(
         "features.itWallet.playgrounds.environment.toggle.pre.value"
       ),
       description: I18n.t(
@@ -50,7 +50,7 @@ export const ItwEnvironmentSection = () => {
       id: "pre"
     },
     {
-      value: I18n.t(
+      label: I18n.t(
         "features.itWallet.playgrounds.environment.toggle.prod.value"
       ),
       description: I18n.t(

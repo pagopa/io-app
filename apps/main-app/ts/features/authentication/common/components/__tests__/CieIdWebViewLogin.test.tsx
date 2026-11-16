@@ -8,12 +8,18 @@ import { CieIdWebViewLogin as CieIdWebViewLoginComponent } from "../CieIdWebView
 
 const CieIdWebViewLogin = withStore(CieIdWebViewLoginComponent);
 
+const mockWebViewMount = jest.fn();
+
 jest.mock("react-native-webview", () => {
-  const { forwardRef: reactForwardRef } = jest.requireActual("react");
+  const { forwardRef: reactForwardRef, useEffect: reactUseEffect } =
+    jest.requireActual("react");
   const { View } = jest.requireActual("react-native");
-  const WebView = reactForwardRef((props: object, ref: unknown) => (
-    <View ref={ref as never} {...props} />
-  ));
+  const WebView = reactForwardRef((props: object, ref: unknown) => {
+    reactUseEffect(() => {
+      mockWebViewMount();
+    }, []);
+    return <View ref={ref as never} {...props} />;
+  });
   return {
     WebView,
     default: WebView,
@@ -67,7 +73,7 @@ describe("CieIdWebViewLogin", () => {
       const errorUrl =
         "https://dev.oneid.pagopa.it/login/error?error_code=GENERIC_HTML_ERROR";
       const { getByTestId } = render(
-        <CieIdWebViewLogin flow={flow} isUat={false} onEvent={onEvent} />
+        <CieIdWebViewLogin cieEnv="production" flow={flow} onEvent={onEvent} />
       );
       const webview = getByTestId("cie-id-webview");
 
@@ -83,26 +89,99 @@ describe("CieIdWebViewLogin", () => {
   );
 
   describe("conditional rendering", () => {
-    it.each(["reserving-public-key", "verifying-assertion-ref"] as const)(
-      "should render the loading overlay and no WebView when status is %s",
-      status => {
-        mockUseOneIdentityLoginSource({
-          loginSourceState:
-            status === "reserving-public-key"
-              ? { status: "reserving-public-key" }
-              : {
-                  status: "verifying-assertion-ref",
-                  url: "https://example.com"
-                }
-        });
+    it.each([
+      { name: "reserving-public-key", status: "reserving-public-key" as const },
+      { name: "following-redirects", status: "following-redirects" as const }
+    ])(
+      "should render the loading overlay and no WebView when status is $name",
+      ({ status }) => {
+        mockUseOneIdentityLoginSource({ loginSourceState: { status } });
 
-        const { queryByTestId } = render(
-          <CieIdWebViewLogin isUat={false} onEvent={onEvent} />
+        const { getByTestId, queryByTestId } = render(
+          <CieIdWebViewLogin cieEnv="production" onEvent={onEvent} />
         );
 
+        expect(getByTestId("refreshIndicator")).toBeTruthy();
         expect(queryByTestId("cie-id-webview")).toBeNull();
       }
     );
+
+    it("should render a loading indicator in the WebView's renderLoading content", () => {
+      mockUseOneIdentityLoginSource();
+
+      const { getByTestId } = render(
+        <CieIdWebViewLogin cieEnv="production" onEvent={onEvent} />
+      );
+
+      const webview = getByTestId("cie-id-webview");
+      const { getByTestId: getByTestIdInLoading } = render(
+        webview.props.renderLoading()
+      );
+
+      expect(getByTestIdInLoading("refreshIndicator")).toBeTruthy();
+    });
+
+    it("should keep the WebView mounted, without the loading overlay, while verifying the assertion-ref", () => {
+      const webviewSource = { uri: "https://example.com/authorize" };
+      mockUseOneIdentityLoginSource({
+        loginSourceState: {
+          status: "verifying-assertion-ref",
+          url: "https://idserver.example.com/sso?SAMLRequest=abc",
+          webviewSource
+        }
+      });
+
+      const { getByTestId, queryByTestId } = render(
+        <CieIdWebViewLogin cieEnv="production" onEvent={onEvent} />
+      );
+
+      expect(queryByTestId("refreshIndicator")).toBeNull();
+      expect(getByTestId("cie-id-webview").props.source).toEqual(webviewSource);
+    });
+
+    it("should keep the same WebView instance from the /authorize request to the IDP SSO page", () => {
+      const authorizeSource = { uri: "https://example.com/authorize" };
+      const ssoUrl = "https://idserver.example.com/sso?SAMLRequest=abc";
+      // A new `onEvent` on every step bypasses `memo`, so that the component
+      // re-renders and reads the new mocked login source state
+      const renderStep = () => (
+        <CieIdWebViewLogin cieEnv="production" onEvent={e => onEvent(e)} />
+      );
+
+      mockUseOneIdentityLoginSource({
+        loginSourceState: {
+          status: "one-identity-authorize",
+          webviewSource: authorizeSource
+        }
+      });
+      const { getByTestId, queryByTestId, rerender } = render(renderStep());
+
+      mockUseOneIdentityLoginSource({
+        loginSourceState: {
+          status: "verifying-assertion-ref",
+          url: ssoUrl,
+          webviewSource: authorizeSource
+        }
+      });
+      rerender(renderStep());
+      expect(getByTestId("cie-id-webview").props.source).toEqual(
+        authorizeSource
+      );
+
+      mockUseOneIdentityLoginSource({
+        loginSourceState: {
+          status: "assertion-ref-verified",
+          webviewSource: { uri: ssoUrl }
+        }
+      });
+      rerender(renderStep());
+      expect(queryByTestId("refreshIndicator")).toBeNull();
+      expect(getByTestId("cie-id-webview").props.source).toEqual({
+        uri: ssoUrl
+      });
+
+      expect(mockWebViewMount).toHaveBeenCalledTimes(1);
+    });
 
     it("should render nothing when status is failure", () => {
       mockUseOneIdentityLoginSource({
@@ -110,7 +189,7 @@ describe("CieIdWebViewLogin", () => {
       });
 
       const { queryByTestId } = render(
-        <CieIdWebViewLogin isUat={false} onEvent={onEvent} />
+        <CieIdWebViewLogin cieEnv="production" onEvent={onEvent} />
       );
 
       expect(queryByTestId("cie-id-webview")).toBeNull();
@@ -125,13 +204,24 @@ describe("CieIdWebViewLogin", () => {
         });
 
         const { getByTestId } = render(
-          <CieIdWebViewLogin isUat={false} onEvent={onEvent} />
+          <CieIdWebViewLogin cieEnv="production" onEvent={onEvent} />
         );
 
         const webview = getByTestId("cie-id-webview");
         expect(webview.props.source).toEqual(webviewSource);
       }
     );
+
+    it("should render the WebView in incognito mode", () => {
+      mockUseOneIdentityLoginSource();
+
+      const { getByTestId } = render(
+        <CieIdWebViewLogin cieEnv="production" onEvent={onEvent} />
+      );
+
+      const webview = getByTestId("cie-id-webview");
+      expect(webview.props.incognito).toBe(true);
+    });
   });
 
   describe("onError / onHttpError", () => {
@@ -140,7 +230,7 @@ describe("CieIdWebViewLogin", () => {
     });
 
     it("should call onEvent with ONE_IDENTITY_LOGIN_FAILURE and the failure data when the login source fails", () => {
-      render(<CieIdWebViewLogin isUat={false} onEvent={onEvent} />);
+      render(<CieIdWebViewLogin cieEnv="production" onEvent={onEvent} />);
       const { onFailure } = jest.mocked(
         useOneIdentityLoginSourceModule.useOneIdentityLoginSource
       ).mock.calls[0][0];
@@ -159,7 +249,7 @@ describe("CieIdWebViewLogin", () => {
 
     it("should call onEvent with WEBVIEW_ERROR when there is a WebViewErrorEvent", () => {
       const { getByTestId } = render(
-        <CieIdWebViewLogin isUat={false} onEvent={onEvent} />
+        <CieIdWebViewLogin cieEnv="production" onEvent={onEvent} />
       );
 
       const webview = getByTestId("cie-id-webview");
@@ -185,7 +275,7 @@ describe("CieIdWebViewLogin", () => {
 
     it("should call onEvent with WEBVIEW_HTTP_ERROR when there is a WebViewHttpErrorEvent", () => {
       const { getByTestId } = render(
-        <CieIdWebViewLogin isUat={false} onEvent={onEvent} />
+        <CieIdWebViewLogin cieEnv="production" onEvent={onEvent} />
       );
 
       const webview = getByTestId("cie-id-webview");
@@ -219,7 +309,7 @@ describe("CieIdWebViewLogin", () => {
       mockShouldBlockUrlNavigationWhileCheckingLollipop.mockReturnValue(true);
 
       const { getByTestId } = render(
-        <CieIdWebViewLogin isUat={false} onEvent={onEvent} />
+        <CieIdWebViewLogin cieEnv="production" onEvent={onEvent} />
       );
 
       const webview = getByTestId("cie-id-webview");
@@ -234,7 +324,7 @@ describe("CieIdWebViewLogin", () => {
 
     it("should start the CieID app when the URL is an authentication URL", () => {
       const { getByTestId } = render(
-        <CieIdWebViewLogin isUat={false} onEvent={onEvent} />
+        <CieIdWebViewLogin cieEnv="production" onEvent={onEvent} />
       );
 
       const webview = getByTestId("cie-id-webview");
@@ -249,7 +339,7 @@ describe("CieIdWebViewLogin", () => {
 
     it("should call onEvent with LOGIN_SUCCESS on a successful login URL", () => {
       const { getByTestId } = render(
-        <CieIdWebViewLogin isUat={false} onEvent={onEvent} />
+        <CieIdWebViewLogin cieEnv="production" onEvent={onEvent} />
       );
 
       const webview = getByTestId("cie-id-webview");
@@ -269,7 +359,7 @@ describe("CieIdWebViewLogin", () => {
 
     it("should call onEvent with LOGIN_FAILURE on a failed login URL", () => {
       const { getByTestId } = render(
-        <CieIdWebViewLogin isUat={false} onEvent={onEvent} />
+        <CieIdWebViewLogin cieEnv="production" onEvent={onEvent} />
       );
 
       const webview = getByTestId("cie-id-webview");
@@ -299,7 +389,7 @@ describe("CieIdWebViewLogin", () => {
     });
 
     it("should call onEvent with INVALID_URL when the CieID app returns an untrusted URL", () => {
-      render(<CieIdWebViewLogin isUat={false} onEvent={onEvent} />);
+      render(<CieIdWebViewLogin cieEnv="production" onEvent={onEvent} />);
 
       const { onSuccess } = jest.mocked(useCieIdAppModule.useCieIdApp).mock
         .calls[0][0];
@@ -313,7 +403,7 @@ describe("CieIdWebViewLogin", () => {
     });
 
     it("should call onEvent with LOGIN_FAILURE when the CieID app fails", () => {
-      render(<CieIdWebViewLogin isUat={false} onEvent={onEvent} />);
+      render(<CieIdWebViewLogin cieEnv="production" onEvent={onEvent} />);
 
       const { onFailure } = jest.mocked(useCieIdAppModule.useCieIdApp).mock
         .calls[0][0];
@@ -338,7 +428,7 @@ describe("CieIdWebViewLogin", () => {
       });
 
       const { getByTestId } = render(
-        <CieIdWebViewLogin isUat={false} onEvent={onEvent} />
+        <CieIdWebViewLogin cieEnv="production" onEvent={onEvent} />
       );
 
       fireEvent.press(getByTestId("loadingSpinnerOverlayCancelButton"));

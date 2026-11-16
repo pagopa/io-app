@@ -19,7 +19,7 @@ import {
 } from "../../../common/utils";
 import { AUTH_ERRORS } from "../../../common/utils/authError";
 import { CANCELLED_LOGIN_FAILURE_DATA } from "../../../common/utils/loginErrorDebugInfo";
-import { isCieLoginUatEnabledSelector } from "../../../login/cie/store/selectors";
+import { cieEnvSelector } from "../../../login/cie/store/selectors";
 import { IdpCIE_ID } from "../../../login/hooks/useNavigateToLoginMethod";
 import {
   activeSessionLoginFailure,
@@ -38,7 +38,7 @@ type OneIdentityActiveSessionCieIdLoginScreenProps =
 export const OneIdentityActiveSessionCieIdLoginScreen = ({
   navigation
 }: OneIdentityActiveSessionCieIdLoginScreenProps) => {
-  const isUat = useIOSelector(isCieLoginUatEnabledSelector);
+  const cieEnv = useIOSelector(cieEnvSelector);
   // cieIDSelectedSecurityLevel is always set before this screen is reached
   // (navigateToCieIdLoginScreen dispatches it synchronously before navigating);
   // the fallback only satisfies the type, since the reducer marks it optional.
@@ -147,8 +147,8 @@ export const OneIdentityActiveSessionCieIdLoginScreen = ({
 
   return (
     <CieIdWebViewLogin
+      cieEnv={cieEnv}
       flow={LOGIN_TYPES.REAUTH}
-      isUat={isUat}
       onEvent={handleEvent}
     />
   );

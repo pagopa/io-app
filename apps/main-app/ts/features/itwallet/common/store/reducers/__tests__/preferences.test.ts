@@ -4,12 +4,16 @@ import { ItwStoredCredentialsMocks } from "../../../utils/itwMocksUtils";
 import {
   itwClearCredentialUpgradeFailed,
   itwClearWalletActivationFeedbackBannerData,
+  itwResetEngagementScreenShown,
   itwSetAuthLevel,
   itwSetClaimValuesHidden,
   itwSetCredentialUpgradeFailed,
+  itwSetEngagementScreenShown,
   itwSetIdentificationMode,
   itwSetL2Fallback,
+  itwSetProximityNfcLocallyEnabled,
   itwSetWalletActivationFeedbackBannerData,
+  itwSetWhatsNewLocallyEnabled,
   ItwWalletActivationFeedbackBannerData
 } from "../../actions/preferences";
 import reducer, {
@@ -56,6 +60,27 @@ describe("IT Wallet preferences reducer", () => {
     });
   });
 
+  it("keeps engagement history for each user across wallet resets", () => {
+    const firstUserState = reducer(
+      INITIAL_STATE,
+      itwSetEngagementScreenShown("first-user")
+    );
+    const secondUserState = reducer(
+      firstUserState,
+      itwSetEngagementScreenShown("second-user")
+    );
+
+    expect(
+      reducer(secondUserState, itwLifecycleStoresReset())
+        .engagementScreenShownByUser
+    ).toEqual({ "first-user": true, "second-user": true });
+
+    expect(
+      reducer(secondUserState, itwResetEngagementScreenShown())
+        .engagementScreenShownByUser
+    ).toBeUndefined();
+  });
+
   it("should handle itwSetIdentificationMode action", () => {
     const action = itwSetIdentificationMode("cieId");
     const newState = reducer(INITIAL_STATE, action);
@@ -80,6 +105,22 @@ describe("IT Wallet preferences reducer", () => {
   it("preserves fallback provenance through wallet resets for reissuance", () => {
     const state = reducer({ isL2Fallback: true }, itwLifecycleStoresReset());
     expect(state.isL2Fallback).toBe(true);
+  });
+
+  it("preserves the local proximity NFC flag through wallet resets", () => {
+    const state = reducer(
+      reducer(INITIAL_STATE, itwSetProximityNfcLocallyEnabled(true)),
+      itwLifecycleStoresReset()
+    );
+    expect(state.isProximityNfcLocallyEnabled).toBe(true);
+  });
+
+  it("preserves the local What's New flag through wallet resets", () => {
+    const state = reducer(
+      reducer(INITIAL_STATE, itwSetWhatsNewLocallyEnabled(true)),
+      itwLifecycleStoresReset()
+    );
+    expect(state.isWhatsNewLocallyEnabled).toBe(true);
   });
 
   it("should handle itwSetClaimValuesHidden action", () => {

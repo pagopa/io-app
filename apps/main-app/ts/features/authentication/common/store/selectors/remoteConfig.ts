@@ -49,6 +49,19 @@ export const oneIdentityCieNativeRedirectsEnabledSelector = (
   state: GlobalState
 ) => oneIdentityRemoteConfigSelector(state)?.cieNativeRedirectsEnabled ?? false;
 
+/**
+ * Whether the OneIdentity CIE + PIN login on Android removes the WebView
+ * session cookies before every login attempt.
+ *
+ * Defaults to `false` (cookies kept) if the remote configuration is not yet
+ * loaded or if the field is missing.
+ */
+export const oneIdentityCieAndroidClearSessionCookiesEnabledSelector = (
+  state: GlobalState
+) =>
+  oneIdentityRemoteConfigSelector(state)
+    ?.cieAndroidClearSessionCookiesEnabled ?? false;
+
 type OneIdentityEnvConfig = {
   idpFriendlyNamesUrl: string;
   idpsUrl: string;

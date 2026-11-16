@@ -137,7 +137,7 @@ describe("MessageContentNavigator", () => {
       .map(([props]) => props)
       .find(props => props.initialRouteName === MESSAGES_ROUTES.MESSAGE_DETAIL);
     expect(contentNavigatorProps?.screenOptions).toMatchObject({
-      animationEnabled: false
+      animation: "none"
     });
   });
 });

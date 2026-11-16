@@ -1,8 +1,9 @@
 import {
   ContentWrapper,
   H2,
-  IOColors,
+  IOColorsLegacy,
   IOMarkdown,
+  useIOTheme,
   VSpacer
 } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
@@ -13,6 +14,7 @@ import { Image, StyleSheet, View } from "react-native";
 import type { CredentialIssuanceMode } from "../../machine/credential/context";
 
 import introHeroSource from "../../../../../img/features/itWallet/issuance/intro_hero.png";
+import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
@@ -54,6 +56,8 @@ export const ItwIssuanceCredentialIntroductionScreen = (props: ScreenProps) => {
 
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const eidMachineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const isLoading =
+    ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
   const machineCredentialType =
     ItwCredentialIssuanceMachineContext.useSelector(selectCredentialType);
 
@@ -93,6 +97,10 @@ export const ItwIssuanceCredentialIntroductionScreen = (props: ScreenProps) => {
     }, [credentialType, machineRef, mode])
   );
 
+  if (isLoading) {
+    return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
+  }
+
   // A missing credential type should never happen at this point
   return machineCredentialType ? (
     <ContentView credentialType={machineCredentialType} />
@@ -106,6 +114,7 @@ type ContentViewProps = {
 };
 
 export const ContentView = ({ credentialType }: ContentViewProps) => {
+  const theme = useIOTheme();
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isLoading =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
@@ -149,7 +158,12 @@ export const ContentView = ({ credentialType }: ContentViewProps) => {
       <ContentWrapper style={{ marginTop: 24 }}>
         <H2>{credentialName}</H2>
         <VSpacer size={16} />
-        <View style={styles.contentBox}>
+        <View
+          style={[
+            styles.contentBox,
+            { borderColor: IOColorsLegacy[theme["cardBorder-default"]] }
+          ]}
+        >
           <IOMarkdown content={markdownContent} />
         </View>
       </ContentWrapper>
@@ -169,7 +183,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderColor: IOColors["grey-100"]
+    paddingVertical: 8
   }
 });

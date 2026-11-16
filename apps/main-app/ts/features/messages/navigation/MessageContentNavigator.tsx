@@ -36,7 +36,7 @@ export const MessageContentNavigator = ({
   <Stack.Navigator
     initialRouteName={contentRouteName(message)}
     screenOptions={{
-      animationEnabled: false,
+      animation: "none",
       headerMode: "screen"
     }}
   >

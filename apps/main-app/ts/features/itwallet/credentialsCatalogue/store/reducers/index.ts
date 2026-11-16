@@ -9,17 +9,11 @@ import {
 } from "../../../common/utils/itwCredentialsCatalogueUtils";
 import {
   itwFetchCatalogueTranslations,
-  itwFetchCredentialsCatalogue,
-  itwSetCatalogueEnabledForCredentialsList
+  itwFetchCredentialsCatalogue
 } from "../actions";
 
 export type ItwCredentialsCatalogueState = {
   catalogue: pot.Pot<DigitalCredentialsCatalogue, NetworkError>;
-  /**
-   * Use the credentials catalogue as the source of truth for displaying the
-   * list of obtainable credentials, ignoring any hardcoded value.
-   */
-  isEnabledForCredentialsList: boolean;
   /**
    * Locale bundles fetched from the catalogue's localization endpoints. Only
    * populated for IT-Wallet spec v1.3.3. Keyed by locale code (e.g. "it"), then
@@ -29,7 +23,6 @@ export type ItwCredentialsCatalogueState = {
 };
 
 export const itwCredentialsCatalogueState: ItwCredentialsCatalogueState = {
-  isEnabledForCredentialsList: false,
   catalogue: pot.none,
   translations: pot.none
 };
@@ -69,12 +62,6 @@ const reducer = (
         ...state,
         catalogue: pot.some(action.payload)
       };
-    case getType(itwSetCatalogueEnabledForCredentialsList):
-      return {
-        ...state,
-        isEnabledForCredentialsList: action.payload
-      };
-
     default:
       return state;
   }

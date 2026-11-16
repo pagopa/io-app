@@ -875,6 +875,10 @@ describe("itwProximityMachine", () => {
       actor.getSnapshot().matches({ Presentment: "SendingDocuments" })
     ).toBe(true);
     expect(trackProximityStart).toHaveBeenCalledTimes(1);
+    // The retrieval method must be in context when tracking, to derive proximity_flow
+    expect(trackProximityStart.mock.calls[0][0].context.retrievalMethod).toBe(
+      "nfc"
+    );
     actor.stop();
   });
 
@@ -1018,10 +1022,67 @@ describe("itwProximityMachine", () => {
     expect(terminateSession).toHaveBeenCalledTimes(1);
   });
 
-  it("close from ClaimsDisclosure terminates the session and shows the consent denied failure", () => {
+  it("close from ClaimsDisclosure terminates the session before showing the consent denied failure", async () => {
+    const resolveTermination = jest.fn<void, []>();
+    terminateSession.mockReturnValue(
+      new Promise<void>(resolve => {
+        resolveTermination.mockImplementation(() => resolve());
+      })
+    );
     const actor = createActor(mockedMachine, {
       input: { deps: T_DEPS },
       snapshot: makeSnapshot({ Presentment: "ClaimsDisclosure" })
+    });
+
+    actor.start();
+    actor.send({ type: "close" });
+
+    expect(
+      actor
+        .getSnapshot()
+        .matches({ Presentment: "TerminatingForConsentDenial" })
+    ).toBe(true);
+    expect(actor.getSnapshot().context.failure?.type).toBe(
+      ProximityFailureType.CONSENT_DENIED
+    );
+    expect(actor.getSnapshot().hasTag(ItwPresentationTags.Loading)).toBe(false);
+    expect(navigateToFailureScreen).not.toHaveBeenCalled();
+    expect(terminateSession).toHaveBeenCalledTimes(1);
+    expect(closeProximity).not.toHaveBeenCalled();
+
+    actor.send({ type: "device-disconnected" });
+    actor.send({ type: "device-error", error: new Error("device error") });
+    actor.send({
+      type: "device-document-request-received",
+      proximityDetails: T_PROXIMITY_DETAILS,
+      verifierRequest: T_VERIFIER_REQUEST,
+      retrievalMethod: "ble"
+    });
+    expect(
+      actor
+        .getSnapshot()
+        .matches({ Presentment: "TerminatingForConsentDenial" })
+    ).toBe(true);
+    expect(actor.getSnapshot().context.failure?.type).toBe(
+      ProximityFailureType.CONSENT_DENIED
+    );
+
+    resolveTermination();
+    await waitFor(actor, snapshot => snapshot.matches("Failure"));
+
+    expect(actor.getSnapshot().context.sessionTerminated).toBe(true);
+    expect(navigateToFailureScreen).toHaveBeenCalledTimes(1);
+    expect(terminateSession).toHaveBeenCalledTimes(1);
+    actor.stop();
+  });
+
+  it("does not terminate again when NFC consent teardown already ended the session", () => {
+    const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
+      snapshot: makeSnapshot(
+        { Presentment: "ClaimsDisclosure" },
+        { retrievalMethod: "nfc", sessionTerminated: true }
+      )
     });
 
     actor.start();
@@ -1031,9 +1092,28 @@ describe("itwProximityMachine", () => {
     expect(actor.getSnapshot().context.failure?.type).toBe(
       ProximityFailureType.CONSENT_DENIED
     );
+    expect(terminateSession).not.toHaveBeenCalled();
     expect(navigateToFailureScreen).toHaveBeenCalledTimes(1);
+    actor.stop();
+  });
+
+  it("shows the consent denied failure when termination fails", async () => {
+    terminateSession.mockRejectedValueOnce(new Error("termination failed"));
+    const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
+      snapshot: makeSnapshot({ Presentment: "ClaimsDisclosure" })
+    });
+
+    actor.start();
+    actor.send({ type: "close" });
+    await waitFor(actor, snapshot => snapshot.matches("Failure"));
+
+    expect(actor.getSnapshot().context.failure?.type).toBe(
+      ProximityFailureType.CONSENT_DENIED
+    );
+    expect(actor.getSnapshot().context.sessionTerminated).toBe(true);
     expect(terminateSession).toHaveBeenCalledTimes(1);
-    expect(closeProximity).not.toHaveBeenCalled();
+    actor.stop();
   });
 
   it("holder-consent with NFC retrieval moves to StoreConsent", () => {

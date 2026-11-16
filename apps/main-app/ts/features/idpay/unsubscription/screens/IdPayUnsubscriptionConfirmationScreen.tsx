@@ -169,8 +169,8 @@ const IdPayUnsubscriptionConfirmationScreen = () => {
         <ListItemCheckbox
           description={item.subtitle}
           key={index}
+          label={item.title}
           onValueChange={value => checks.setValue(index, value)}
-          value={item.title}
         />
       ))}
     </IOScrollViewWithLargeHeader>

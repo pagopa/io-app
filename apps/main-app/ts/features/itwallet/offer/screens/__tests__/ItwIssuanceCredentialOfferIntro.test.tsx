@@ -1,3 +1,4 @@
+import { IOColors } from "@io-app/design-system";
 import { createStackNavigator } from "@react-navigation/stack";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
@@ -10,6 +11,7 @@ import { startupLoadSuccess } from "../../../../../store/actions/startup";
 import { appReducer } from "../../../../../store/reducers";
 import { StartupStatusEnum } from "../../../../../store/reducers/startup";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { findAllByStyle, withDarkTheme } from "../../../../../utils/testColors";
 import { reproduceSequence } from "../../../../../utils/tests";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as itwCommonSelectors from "../../../common/store/selectors";
@@ -146,6 +148,7 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
     expect(onDiscoveryParams).toHaveBeenCalledWith({
       animationEnabled: false,
       credentialType: T_CREDENTIAL_TYPE,
+      credentialOfferUri: T_CREDENTIAL_OFFER_URI,
       level: "l3"
     });
   });
@@ -219,6 +222,30 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
       expect(trackItwUpgradeL3Mandatory).not.toHaveBeenCalled();
     }
   );
+
+  it("forwards the credential offer to the eID reissuance so it can be resumed afterwards", () => {
+    jest
+      .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
+      .mockReturnValue("jwtExpired");
+
+    const onModeSelectionParams = jest.fn();
+    const { getByText } = renderComponent(jest.fn(), onModeSelectionParams);
+
+    fireEvent.press(
+      getByText(
+        I18n.t("features.itWallet.issuance.confirmIdentity.primaryAction")
+      )
+    );
+
+    expect(machineSend).toHaveBeenCalledWith({ type: "close" });
+    expect(onModeSelectionParams).toHaveBeenCalledWith({
+      animationEnabled: false,
+      credentialType: T_CREDENTIAL_TYPE,
+      credentialOfferUri: T_CREDENTIAL_OFFER_URI,
+      eidReissuing: true,
+      level: "l3"
+    });
+  });
 
   it("auto-confirms the offer when the credential is not in the wallet and there is no introduction content", () => {
     const { queryByText } = renderComponent(jest.fn());
@@ -303,12 +330,33 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
       type: "confirm-credential-offer"
     });
   });
+
+  it("draws the introduction box border with the dark stroke token in dark mode", () => {
+    jest
+      .spyOn(catalogSelectors, "itwCredentialIntroContentSelector")
+      .mockReturnValue(() => "Introduction content");
+
+    const { toJSON } = renderComponent(jest.fn(), jest.fn(), "dark");
+
+    expect(
+      findAllByStyle(toJSON(), {
+        borderColor: IOColors.dark.stroke.default,
+        borderWidth: 1
+      })
+    ).toHaveLength(1);
+  });
 });
 
 const renderComponent = (
   onDiscoveryParams: (
     params: ItwParamsList[typeof ITW_ROUTES.DISCOVERY.INFO] | undefined
-  ) => void
+  ) => void,
+  onModeSelectionParams: (
+    params:
+      | ItwParamsList[typeof ITW_ROUTES.IDENTIFICATION.MODE_SELECTION]
+      | undefined
+  ) => void = jest.fn(),
+  theme: "dark" | "light" = "light"
 ) => {
   const sequenceOfActions: ReadonlyArray<Action> = [
     applicationChangeState("active"),
@@ -322,9 +370,13 @@ const renderComponent = (
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
-      <Stack.Navigator screenOptions={{ animationEnabled: false }}>
+      <Stack.Navigator screenOptions={{ animation: "none" }}>
         <Stack.Screen
-          component={ItwIssuanceCredentialOfferIntroScreen}
+          component={
+            theme === "dark"
+              ? withDarkTheme(ItwIssuanceCredentialOfferIntroScreen)
+              : ItwIssuanceCredentialOfferIntroScreen
+          }
           initialParams={{ itwCredentialOfferUri: T_CREDENTIAL_OFFER_URI }}
           name={ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER_INTRO}
         />
@@ -332,6 +384,12 @@ const renderComponent = (
           {({ route }) => {
             onDiscoveryParams(route.params);
             return <Text testID="DiscoveryInfoScreenTestID" />;
+          }}
+        </Stack.Screen>
+        <Stack.Screen name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION}>
+          {({ route }) => {
+            onModeSelectionParams(route.params);
+            return <Text testID="ModeSelectionScreenTestID" />;
           }}
         </Stack.Screen>
       </Stack.Navigator>

@@ -1,4 +1,5 @@
 import { OtpCode } from "@io-app/api-types/generated/definitions/cgn/OtpCode";
+import { IOColors } from "@io-app/design-system";
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 
@@ -6,15 +7,24 @@ import { remoteReady } from "../../../../../../common/model/RemoteValue";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import {
+  findAllByStyle,
+  withDarkTheme
+} from "../../../../../../utils/testColors";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import CGN_ROUTES from "../../../navigation/routes";
 import CgnDiscountCodeScreen from "../CgnDiscountCodeScreen";
 
-const renderComponent = (state: GlobalState) => {
+const renderComponent = (
+  state: GlobalState,
+  theme: "dark" | "light" = "light"
+) => {
   const store = createStore(appReducer, state as any);
 
   return renderScreenWithNavigationStoreContext(
-    CgnDiscountCodeScreen,
+    theme === "dark"
+      ? withDarkTheme(CgnDiscountCodeScreen)
+      : CgnDiscountCodeScreen,
     CGN_ROUTES.DETAILS.MERCHANTS.DISCOUNT_CODE,
     {},
     store
@@ -30,6 +40,7 @@ jest.mock("@react-navigation/native", () => ({
     "@react-navigation/native"
   ),
   useNavigation: () => ({
+    addListener: jest.fn(),
     navigate: mockNavigate,
     pop: mockPop,
     setOptions: mockSetOptions
@@ -95,5 +106,37 @@ describe("CgnDiscountCodeScreen", () => {
     fireEvent.press(generateButton);
 
     expect(mockNavigate).not.toHaveBeenCalled();
+  });
+
+  it("should draw the code box border with the dark stroke token in dark mode", () => {
+    const state: GlobalState = {
+      ...defaultState,
+      bonus: {
+        ...defaultState.bonus,
+        cgn: {
+          ...defaultState.bonus.cgn,
+          merchants: {
+            ...defaultState.bonus.cgn.merchants,
+            selectedDiscountCode: "ABC123"
+          },
+          otp: {
+            ...defaultState.bonus.cgn.otp,
+            data: remoteReady({
+              code: "123456" as OtpCode,
+              expires_at: new Date(Date.now() + 60_000),
+              ttl: 60
+            })
+          }
+        }
+      }
+    };
+    const { toJSON } = renderComponent(state, "dark");
+
+    expect(
+      findAllByStyle(toJSON(), {
+        borderColor: IOColors.dark.stroke.default,
+        borderWidth: 1
+      })
+    ).toHaveLength(1);
   });
 });

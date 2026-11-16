@@ -2,9 +2,9 @@ import { ServiceId } from "@io-app/api-types/generated/definitions/services/Serv
 import { ServiceMinified } from "@io-app/api-types/generated/definitions/services/ServiceMinified";
 import {
   Divider,
-  IOColors,
+  IOColorsLegacy,
+  IODimensions,
   IOToast,
-  IOVisualCostants,
   ListItemNav,
   useIOTheme,
   VSpacer
@@ -92,7 +92,7 @@ export const InstitutionServicesScreen = ({
 
   const headerConfig = useMemo<HeaderSecondLevelHookProps>(
     () => ({
-      backgroundColor: IOColors[theme["appBackground-secondary"]],
+      backgroundColor: IOColorsLegacy[theme["appBackground-secondary"]],
       goBack,
       headerShown: !!data || !isError,
       enableDiscreteTransition: true,
@@ -137,8 +137,8 @@ export const InstitutionServicesScreen = ({
       return (
         <ListItemNav
           accessibilityLabel={accessibilityLabel}
+          label={item.name}
           onPress={() => navigateToServiceDetails(item)}
-          value={item.name}
         />
       );
     },
@@ -197,7 +197,7 @@ export const InstitutionServicesScreen = ({
       contentContainerStyle={{
         flexGrow: 1,
         paddingBottom: insets.bottom,
-        paddingHorizontal: IOVisualCostants.appMarginDefault
+        paddingHorizontal: IODimensions.padding.screen.default
       }}
       data={data?.services}
       ItemSeparatorComponent={Divider}
@@ -206,7 +206,7 @@ export const InstitutionServicesScreen = ({
       ListHeaderComponent={ListHeaderComponent}
       ListHeaderComponentStyle={{
         marginBottom: 16,
-        marginHorizontal: -IOVisualCostants.appMarginDefault
+        marginHorizontal: -IODimensions.padding.screen.default
       }}
       onEndReached={handleEndReached}
       onEndReachedThreshold={0.1}

@@ -1,8 +1,14 @@
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  createStackNavigator,
+  TransitionPresets
+} from "@react-navigation/stack";
 import { ComponentType, memo } from "react";
 
 import { useIOSelector } from "../../../store/hooks";
-import { isGestureEnabled } from "../../../utils/navigation";
+import {
+  isBackNavigationAction,
+  isGestureEnabled
+} from "../../../utils/navigation";
 import { ItwGenericErrorContent } from "../common/components/ItwGenericErrorContent";
 import { isItwEnabledSelector } from "../common/store/selectors/remoteConfig";
 import { ItwDiscoveryInfoFallbackComponent } from "../discovery/components/ItwDiscoveryInfoFallbackComponent.tsx";
@@ -37,6 +43,7 @@ import { ItwIssuanceEidResultScreen } from "../issuance/screens/ItwIssuanceEidRe
 import { ItwIssuanceUpcomingCredentialScreen } from "../issuance/screens/ItwIssuanceUpcomingCredentialScreen";
 import { ItwIdentityNotMatchingScreen } from "../lifecycle/screens/ItwIdentityNotMatchingScreen.tsx";
 import { ItwLifecycleWalletRevocationScreen } from "../lifecycle/screens/ItwLifecycleWalletRevocationScreen.tsx";
+import { ItwEngagementScreen } from "../loginEngagement/screens/ItwEngagementScreen";
 import {
   ItwCredentialIssuanceMachineContext,
   ItwCredentialIssuanceMachineProvider
@@ -88,16 +95,26 @@ const InnerNavigator = memo(() => {
     <Stack.Navigator
       initialRouteName={ITW_ROUTES.OFFLINE.WALLET}
       screenListeners={{
-        beforeRemove: () => {
-          // Read more on https://reactnavigation.org/docs/preventing-going-back/
-          // Whenever we have a back navigation action we send a "back" event to the machine.
+        beforeRemove: ({ data }) => {
+          if (!isBackNavigationAction(data.action)) {
+            return;
+          }
           // Since the back event is accepted only by specific states, we can safely send a back event to each machine
           eidIssuanceMachineRef.send({ type: "back" });
           credentialIssuanceMachineRef.send({ type: "back" });
         }
       }}
-      screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
+      screenOptions={{
+        gestureEnabled: isGestureEnabled,
+        headerMode: "screen",
+        freezeOnBlur: true
+      }}
     >
+      <Stack.Screen
+        component={ItwEngagementScreen}
+        name={ITW_ROUTES.ENGAGEMENT}
+        options={hiddenHeader}
+      />
       <Stack.Screen
         component={WalletCardOnboardingScreen}
         name={ITW_ROUTES.ONBOARDING}
@@ -145,7 +162,8 @@ const InnerNavigator = memo(() => {
         name={ITW_ROUTES.DISCOVERY.INFO}
         options={({ route }) => ({
           ...hiddenHeader,
-          animationEnabled: route.params?.animationEnabled
+          animation:
+            route.params?.animationEnabled === false ? "none" : undefined
         })}
       />
       <Stack.Screen
@@ -155,14 +173,15 @@ const InnerNavigator = memo(() => {
       <Stack.Screen
         component={withItwEnabled(ItwAlreadyActiveScreen)}
         name={ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN}
-        options={{ ...hiddenHeader, animationEnabled: false }}
+        options={{ ...hiddenHeader, animation: "none" }}
       />
       {/* IDENTIFICATION */}
       <Stack.Screen
         component={ItwIdentificationModeSelectionScreen}
         name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION}
         options={({ route }) => ({
-          animationEnabled: route.params.animationEnabled
+          animation:
+            route.params.animationEnabled === false ? "none" : undefined
         })}
       />
       <Stack.Screen
@@ -231,7 +250,8 @@ const InnerNavigator = memo(() => {
         name={ITW_ROUTES.ISSUANCE.CREDENTIAL_INTRODUCTION}
         options={({ route }) => ({
           ...hiddenHeader,
-          animationEnabled: route.params?.animationEnabled
+          animation:
+            route.params?.animationEnabled === false ? "none" : undefined
         })}
       />
       <Stack.Screen
@@ -239,7 +259,8 @@ const InnerNavigator = memo(() => {
         name={ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER}
         options={({ route }) => ({
           ...hiddenHeader,
-          animationEnabled: route.params?.animationEnabled
+          animation:
+            route.params?.animationEnabled === false ? "none" : undefined
         })}
       />
       <Stack.Screen
@@ -303,7 +324,7 @@ const InnerNavigator = memo(() => {
         name={ITW_ROUTES.PRESENTATION.CREDENTIAL_CARD_MODAL}
         options={{
           gestureEnabled: false,
-          presentation: "transparentModal"
+          ...TransitionPresets.ModalSlideFromBottomIOS
         }}
       />
       <Stack.Screen
@@ -317,6 +338,7 @@ const InnerNavigator = memo(() => {
       <Stack.Screen
         component={ItwPresentationPidDetailScreen}
         name={ITW_ROUTES.PRESENTATION.PID_DETAIL}
+        options={hiddenHeader}
       />
       {/* LIFECYCLE */}
       <Stack.Screen

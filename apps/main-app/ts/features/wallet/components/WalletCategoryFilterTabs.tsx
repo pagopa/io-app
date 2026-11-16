@@ -1,8 +1,4 @@
-import {
-  IOVisualCostants,
-  TabItem,
-  TabNavigation
-} from "@io-app/design-system";
+import { IODimensions, TabItem, TabNavigation } from "@io-app/design-system";
 import I18n from "i18next";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
@@ -95,8 +91,8 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: 8,
     paddingBottom: 8,
-    marginHorizontal: -IOVisualCostants.appMarginDefault * 2,
-    paddingHorizontal: IOVisualCostants.appMarginDefault
+    marginHorizontal: -IODimensions.padding.screen.default * 2,
+    paddingHorizontal: IODimensions.padding.screen.default
   }
 });
 

@@ -1,5 +1,5 @@
 import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
-import { IOColors, useIOTheme } from "@io-app/design-system";
+import { IOColorsLegacy, useIOTheme } from "@io-app/design-system";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
@@ -25,7 +25,7 @@ export const ServiceDetailsScreenPn = ({
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
 
   useHeaderSecondLevel({
-    backgroundColor: IOColors[theme["appBackground-secondary"]],
+    backgroundColor: IOColorsLegacy[theme["appBackground-secondary"]],
     enableDiscreteTransition: true,
     animatedRef: animatedScrollViewRef,
     supportRequest: true,

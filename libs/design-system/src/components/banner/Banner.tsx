@@ -1,5 +1,6 @@
-import { Ref } from "react";
+import { Ref, useEffect, useState } from "react";
 import {
+  AccessibilityInfo,
   AccessibilityRole,
   GestureResponderEvent,
   Pressable,
@@ -9,25 +10,18 @@ import {
 } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { useIOTheme, useIOThemeContext } from "../../context";
-import { IOBannerBigSpacing, IOBannerRadius, IOTypography } from "../../core";
-import { hexToRgba, IOColors } from "../../core/IOColors";
+import { useIOColors } from "../../context";
+import { IODimensions, IOTypography } from "../../core";
 import { useScaleAnimation } from "../../hooks";
 import { WithTestID } from "../../utils/types";
 import { IconButton } from "../buttons";
-import { VSpacer } from "../layout";
-import {
-  IOPictogramsBleed,
-  IOPictogramSizeScale,
-  PictogramBleed
-} from "../pictograms";
+import { VStack } from "../layout";
+import { IOPictogramsBleed, PictogramBleed } from "../pictograms";
 import { BodySmall, H6, IOText } from "../typography";
 
 /* Styles */
-const sizePictogram: IOPictogramSizeScale = 80;
-const closeButtonDistanceFromEdge = 10;
 const closeButtonOpacity = 0.6;
-const bannerPadding = IOBannerBigSpacing;
+const bannerPadding = IODimensions.padding.banner;
 
 const styles = StyleSheet.create({
   container: {
@@ -35,7 +29,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     alignContent: "center",
     padding: bannerPadding,
-    borderRadius: IOBannerRadius,
+    borderRadius: IODimensions.radius.banner,
     borderCurve: "continuous"
   },
   bleedPictogram: {
@@ -43,8 +37,8 @@ const styles = StyleSheet.create({
   },
   closeIconButton: {
     position: "absolute",
-    right: closeButtonDistanceFromEdge,
-    top: closeButtonDistanceFromEdge,
+    right: IODimensions.offset.banner.close,
+    top: IODimensions.offset.banner.close,
     opacity: closeButtonOpacity
   }
 });
@@ -109,22 +103,6 @@ export const bannerBackgroundColours: Array<BaseBannerProps["color"]> = [
   "turquoise"
 ];
 
-const mapBackgroundColorLightMode: Record<
-  NonNullable<BaseBannerProps["color"]>,
-  IOColors
-> = {
-  neutral: "grey-50",
-  turquoise: "turquoise-50"
-};
-
-const mapBackgroundColorDarkMode: Record<
-  NonNullable<BaseBannerProps["color"]>,
-  IOColors
-> = {
-  neutral: "grey-50",
-  turquoise: "turquoise-300"
-};
-
 export const Banner = ({
   color,
   pictogramName,
@@ -140,66 +118,87 @@ export const Banner = ({
   ref: viewRef,
   testID
 }: Banner) => {
+  const [screenReaderEnabled, setScreenReaderEnabled] = useState(false);
+
+  useEffect(() => {
+    const initialQuery = new AbortController();
+    const subscription = AccessibilityInfo.addEventListener(
+      "screenReaderChanged",
+      enabled => {
+        initialQuery.abort();
+        setScreenReaderEnabled(enabled);
+      }
+    );
+    void AccessibilityInfo.isScreenReaderEnabled().then(enabled => {
+      if (!initialQuery.signal.aborted) {
+        setScreenReaderEnabled(enabled);
+      }
+    });
+
+    return () => {
+      initialQuery.abort();
+      subscription.remove();
+    };
+  }, []);
+
   const { onPressIn, onPressOut, scaleAnimatedStyle } =
     useScaleAnimation("medium");
-  const { themeType } = useIOThemeContext();
-  const theme = useIOTheme();
-
-  // Dynamic colors
-  const colorTitle: IOColors =
-    themeType === "dark" ? "grey-50" : theme["textHeading-default"];
-  const colorCloseButton: IconButton["color"] =
-    themeType === "dark" ? "contrast" : "neutral";
-  const colorMainButton =
-    themeType === "dark" ? "blueIO-200" : theme["interactiveElem-default"];
+  const bannerColors = useIOColors().component.banner;
 
   const dynamicContainerStyles: ViewStyle = {
-    backgroundColor:
-      themeType === "dark"
-        ? hexToRgba(IOColors[mapBackgroundColorDarkMode[color]], 0.1)
-        : IOColors[mapBackgroundColorLightMode[color]]
+    backgroundColor: bannerColors.background[color]
   };
 
-  /* Generates a complete fallbackAccessibilityLabel by concatenating the title, content, and action
-   if they are present. */
-  const fallbackAccessibilityLabel = [title, content, action]
-    .filter(Boolean)
-    .join(" ");
+  const fallbackAccessibilityLabel = [title, content].filter(Boolean).join(" ");
 
   const renderMainBlock = () => (
     <>
       <View
-        accessibilityHint={accessibilityHint}
-        // A11y related props
-        accessibilityLabel={accessibilityLabel ?? fallbackAccessibilityLabel}
-        accessibilityRole={action !== undefined ? accessibilityRole : "text"}
-        accessible={true}
-        style={{ flex: 1, alignSelf: "center", gap: 4 }}
+        style={{
+          flex: 1,
+          alignSelf: "center",
+          gap: IODimensions.gap.banner.description
+        }}
       >
-        {title && <H6 color={colorTitle}>{title}</H6>}
-        {content && (
-          <BodySmall color={theme["textBody-tertiary"]} weight={"Regular"}>
-            {content}
-          </BodySmall>
-        )}
+        <View
+          accessibilityHint={action ? undefined : accessibilityHint}
+          accessibilityLabel={accessibilityLabel ?? fallbackAccessibilityLabel}
+          accessibilityRole="text"
+          accessible={true}
+          style={{ gap: IODimensions.gap.banner.description }}
+        >
+          <VStack space={IODimensions.gap.banner.description}>
+            {title && (
+              <H6 accessible={false} color={bannerColors.foreground.title}>
+                {title}
+              </H6>
+            )}
+            {content && (
+              <BodySmall
+                accessible={false}
+                color={bannerColors.foreground.content}
+                weight={"Regular"}
+              >
+                {content}
+              </BodySmall>
+            )}
+          </VStack>
+        </View>
         {action && (
-          /* Disable pointer events to avoid
-             pressed state on the button */
           <Pressable
-            accessibilityElementsHidden
+            accessibilityHint={accessibilityHint}
             accessibilityLabel={action}
-            accessibilityRole="button"
+            accessibilityRole={accessibilityRole}
             accessible={true}
-            importantForAccessibility="no-hide-descendants"
             onPress={onPress}
-            pointerEvents="none"
+            onPressIn={onPressIn}
+            onPressOut={onPressOut}
           >
-            <VSpacer size={8} />
             <IOText
               accessibilityElementsHidden={true}
               // A11y
               accessible={false}
-              color={colorMainButton}
+              color={bannerColors.foreground.action}
               ellipsizeMode="tail"
               importantForAccessibility="no-hide-descendants"
               numberOfLines={1}
@@ -212,13 +211,16 @@ export const Banner = ({
         )}
       </View>
       <View style={[styles.bleedPictogram, { alignSelf: "center" }]}>
-        <PictogramBleed name={pictogramName} size={sizePictogram} />
+        <PictogramBleed
+          name={pictogramName}
+          size={IODimensions.size.pictogram.banner}
+        />
       </View>
       {onClose && labelClose && (
         <View style={styles.closeIconButton}>
           <IconButton
             accessibilityLabel={labelClose}
-            color={colorCloseButton}
+            color={bannerColors.closeButton}
             icon="closeSmall"
             onPress={onClose}
           />
@@ -227,12 +229,16 @@ export const Banner = ({
     </>
   );
 
+  const BannerContainer = screenReaderEnabled ? View : Pressable;
+
   const PressableButton = () => (
-    <Pressable
+    <BannerContainer
       accessible={false}
-      onPress={onPress}
-      onPressIn={onPressIn}
-      onPressOut={onPressOut}
+      focusable={false}
+      importantForAccessibility="no"
+      onPress={screenReaderEnabled ? undefined : onPress}
+      onPressIn={screenReaderEnabled ? undefined : onPressIn}
+      onPressOut={screenReaderEnabled ? undefined : onPressOut}
       ref={viewRef}
       testID={testID}
     >
@@ -241,7 +247,7 @@ export const Banner = ({
       >
         {renderMainBlock()}
       </Animated.View>
-    </Pressable>
+    </BannerContainer>
   );
 
   const StaticComponent = () => (

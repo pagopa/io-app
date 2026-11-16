@@ -89,7 +89,7 @@ const CalendarsListContainer = ({
     (data: ReadonlyArray<Calendar.Calendar>) =>
       data.map((item: Calendar.Calendar) => ({
         id: item.id,
-        value: item.title,
+        label: item.title,
         disabled: !item.allowsModifications
       })),
     []

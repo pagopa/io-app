@@ -209,7 +209,7 @@ const renderComponent = async (consents: ProximityConsents) => {
   const Navigator = () => (
     <Stack.Navigator
       screenListeners={({ route }) => ({ focus: () => onFocus(route.name) })}
-      screenOptions={{ animationEnabled: false, headerShown: false }}
+      screenOptions={{ animation: "none", headerShown: false }}
     >
       <Stack.Screen component={WalletScreen} name={ITW_ROUTES.OFFLINE.WALLET} />
       <Stack.Screen

@@ -40,10 +40,11 @@ describe("useCieIdWebViewLoginNavigation", () => {
       reason: "some reason"
     });
 
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_ERROR,
-      params: { failureData: { reason: "some reason" } }
-    });
+    expect(mockDispatch).toHaveBeenCalledWith(
+      StackActions.replace(AUTHENTICATION_ROUTES.CIE_ID_ERROR, {
+        failureData: { reason: "some reason" }
+      })
+    );
   });
 
   it("navigateToCieIdAuthUrlError should replace with CIE_ID_INCORRECT_URL and the url param", () => {
@@ -53,10 +54,11 @@ describe("useCieIdWebViewLoginNavigation", () => {
 
     result.current.navigateToCieIdAuthUrlError("https://untrusted.example.com");
 
-    expect(mockReplace).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL,
-      params: { url: "https://untrusted.example.com" }
-    });
+    expect(mockDispatch).toHaveBeenCalledWith(
+      StackActions.replace(AUTHENTICATION_ROUTES.CIE_ID_INCORRECT_URL, {
+        url: "https://untrusted.example.com"
+      })
+    );
   });
 
   it("navigateToAuthErrorScreen should dispatch a replace to AUTH_ERROR_SCREEN with the CIE_ID context parameters", () => {

@@ -1,7 +1,6 @@
 import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
-import I18n from "i18next";
 import { memo, useCallback, useMemo, useRef } from "react";
-import { Linking, StyleSheet, View } from "react-native";
+import { Linking } from "react-native";
 import { WebView } from "react-native-webview";
 import {
   WebViewErrorEvent,
@@ -9,7 +8,7 @@ import {
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
 
-import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { trackLoginError } from "../../../../utils/analytics";
@@ -22,6 +21,7 @@ import { getUrlBasepath } from "../../../../utils/url";
 import { useOneIdentityLoginSource } from "../../../lollipop/hooks/useOneIdentityLoginSource";
 import { trackSpidLoginIntent } from "../../activeSessionLogin/screens/analytics";
 import { trackLoginOIConfigurationError } from "../../common/analytics";
+import { LoadingOverlay } from "../../login/cie/shared/LoadingSpinnerOverlay";
 import { getSpidErrorCodeDescription } from "../../login/idp/utils/spidErrorCode";
 import { useOneIdentityPosteIDApp2AppEducational } from "../hooks/useOneIdentityPosteIDApp2AppEducational";
 import { idpLoginUrlChanged } from "../store/actions";
@@ -215,45 +215,48 @@ export const IdpWebViewLogin = memo(
       [dispatch]
     );
 
-    if (
-      loginSourceState.status === "reserving-public-key" ||
-      loginSourceState.status === "verifying-assertion-ref" ||
-      loginSourceState.status === "following-redirects"
-    ) {
-      return <IdpWebViewLoginLoading />;
-    }
-
     if (loginSourceState.status === "failure") {
       return null;
     }
 
+    // The overlay covers the waits before the WebView has a source. The
+    // assertion-ref check is local and takes a few milliseconds, so the overlay
+    // stays off meanwhile to avoid a flash, and the WebView stays mounted: a new
+    // incognito instance would lose the OneIdentity session cookie.
+    const isLoading =
+      loginSourceState.status === "reserving-public-key" ||
+      loginSourceState.status === "following-redirects";
+
+    const webviewSource = isLoading
+      ? undefined
+      : loginSourceState.webviewSource;
+
     return (
-      <View style={{ flex: 1 }}>
-        <WebView
-          androidCameraAccessDisabled
-          androidMicrophoneAccessDisabled
-          cacheEnabled={false}
-          onError={handleError}
-          onHttpError={handleError}
-          onLoad={presentOncePosteIdBottomSheet}
-          onNavigationStateChange={handleNavigationStateChange}
-          onShouldStartLoadWithRequest={handleShouldStartLoading}
-          originWhitelist={originSchemasWhiteList}
-          renderLoading={IdpWebViewLoginLoading}
-          source={loginSourceState.webviewSource}
-          startInLoadingState={true}
-          testID="webview-idp-login-screen"
-          textZoom={100}
-          userAgent={defaultUserAgent}
-        />
-        {posteIdBottomSheet}
-      </View>
+      <LoadingSpinnerOverlay isLoading={isLoading}>
+        {webviewSource && (
+          <>
+            <WebView
+              androidCameraAccessDisabled
+              androidMicrophoneAccessDisabled
+              cacheEnabled={false}
+              incognito
+              onError={handleError}
+              onHttpError={handleError}
+              onLoad={presentOncePosteIdBottomSheet}
+              onNavigationStateChange={handleNavigationStateChange}
+              onShouldStartLoadWithRequest={handleShouldStartLoading}
+              originWhitelist={originSchemasWhiteList}
+              renderLoading={() => <LoadingOverlay />}
+              source={webviewSource}
+              startInLoadingState={true}
+              testID="webview-idp-login-screen"
+              textZoom={100}
+              userAgent={defaultUserAgent}
+            />
+            {posteIdBottomSheet}
+          </>
+        )}
+      </LoadingSpinnerOverlay>
     );
   }
-);
-
-const IdpWebViewLoginLoading = () => (
-  <View style={StyleSheet.absoluteFill}>
-    <LoadingScreenContent title={I18n.t("global.genericWaiting")} />
-  </View>
 );

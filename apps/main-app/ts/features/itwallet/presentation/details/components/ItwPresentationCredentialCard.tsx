@@ -1,6 +1,6 @@
 import {
   ContentWrapper,
-  IOSpacingScale,
+  IODimensionScale,
   VSpacer,
   VStack
 } from "@io-app/design-system";
@@ -13,7 +13,7 @@ import { getMixPanelCredential } from "../../../analytics/utils/index.ts";
 import { ItwSkeumorphicCard } from "../../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../../common/components/ItwSkeumorphicCard/FlipGestureDetector.tsx";
 import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
-import { useThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
+import { getLegacyThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
 import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
@@ -62,14 +62,18 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
     });
   };
 
-  const { backgroundColor } = useThemeColorByCredentialType(
+  const { backgroundColor } = getLegacyThemeColorByCredentialType(
     credential.credentialType
   );
 
   return (
     <VStack space={8}>
       <CardContainer backgroundColor={backgroundColor}>
-        <FlipGestureDetector isFlipped={isFlipped} setIsFlipped={setIsFlipped}>
+        <FlipGestureDetector
+          direction="leftright"
+          isFlipped={isFlipped}
+          setIsFlipped={setIsFlipped}
+        >
           <ItwSkeumorphicCard
             credential={credential}
             isFlipped={isFlipped}
@@ -104,7 +108,7 @@ const CardContainer = ({
   </View>
 );
 
-const cardPaddingHorizontal: IOSpacingScale = 16;
+const cardPaddingHorizontal: IODimensionScale = 16;
 
 const styles = StyleSheet.create({
   cardContainer: {

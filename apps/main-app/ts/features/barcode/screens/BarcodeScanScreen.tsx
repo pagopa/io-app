@@ -3,6 +3,7 @@ import {
   IOToast,
   ListItemNav,
   triggerHaptic,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
@@ -50,6 +51,7 @@ import {
 import { getIOBarcodesByType } from "../utils/getBarcodesByType";
 
 const BarcodeScanScreen = () => {
+  const colors = useIOColors();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const openDeepLink = useOpenDeepLink();
   const isIdPayEnabledInScanScreen = useIOSelector(
@@ -75,13 +77,12 @@ const BarcodeScanScreen = () => {
     format => (format === "DATA_MATRIX" ? dataMatrixPosteEnabled : true)
   );
 
-  const barcodeTypes: Array<IOBarcodeType> = IO_BARCODE_ALL_TYPES.filter(
-    type =>
-      type === "IDPAY"
-        ? isIdPayEnabledInScanScreen
-        : type === "SEND"
-          ? isSendEnabled
-          : true
+  const barcodeTypes: Array<IOBarcodeType> = IO_BARCODE_ALL_TYPES.filter(type =>
+    type === "IDPAY"
+      ? isIdPayEnabledInScanScreen
+      : type === "SEND"
+        ? isSendEnabled
+        : true
   );
 
   /**
@@ -247,16 +248,16 @@ const BarcodeScanScreen = () => {
       <ListItemNav
         accessibilityLabel={I18n.t("barcodeScan.manual.notice")}
         icon="productPagoPA"
-        iconColor="blueItalia-500"
+        iconColor={colors.icon.pagopa}
+        label={I18n.t("barcodeScan.manual.notice")}
         onPress={handlePagoPACodeInput}
-        value={I18n.t("barcodeScan.manual.notice")}
       />
       <Divider />
       <ListItemNav
         accessibilityLabel={I18n.t("barcodeScan.manual.authorize")}
         icon="gallery"
+        label={I18n.t("barcodeScan.manual.authorize")}
         onPress={handleIdPayPaymentCodeInput}
-        value={I18n.t("barcodeScan.manual.authorize")}
       />
       <VSpacer size={16} />
     </View>

@@ -154,6 +154,7 @@ describe("OneIdentity reserve", () => {
 
     expect(response.status).toBe(200);
     expect(response.body).toStrictEqual({
+      acr_values: "https://www.spid.gov.it/SpidL2",
       authorization_endpoint: expect.stringMatching(
         new RegExp(`^http://.+${authorizePath}$`)
       ),
@@ -164,6 +165,17 @@ describe("OneIdentity reserve", () => {
       ),
       state: expect.any(String)
     });
+  });
+
+  it("should return the acr_values of the requested min_auth_level", async () => {
+    const { encodedPublicKey } = await generateLollipopKey();
+
+    const response = await request
+      .post(addApiAuthV1Prefix("/reserve"))
+      .send({ lollipop_pub_key: encodedPublicKey, min_auth_level: "SpidL3" });
+
+    expect(response.status).toBe(200);
+    expect(response.body.acr_values).toBe("https://www.spid.gov.it/SpidL3");
   });
 
   it.each([

@@ -1,6 +1,8 @@
-import { render } from "@testing-library/react-native";
-import { Alert } from "react-native";
+import { isSwitchAccessEnabled } from "@io-app/expo-switch-access";
+import { fireEvent, render, waitFor } from "@testing-library/react-native";
+import { Alert, Image, View } from "react-native";
 
+import { IOSwitchAccessContextProvider } from "../../../context";
 import { renderWithExperimentalEnabledContextProvider } from "../../../utils/testing";
 import { ListItemAction } from "../ListItemAction";
 import { ListItemInfo } from "../ListItemInfo";
@@ -16,6 +18,127 @@ const onButtonPress = () => {
 };
 
 describe("Test List Item Components", () => {
+  it.each([
+    { name: "plain content", withAction: false, withLongPress: false },
+    { name: "an end action", withAction: true, withLongPress: false },
+    { name: "long press", withAction: true, withLongPress: true }
+  ])(
+    "displays a decorative image with $name",
+    ({ withAction, withLongPress }) => {
+      const imageSource = { uri: "https://example.com/image.png" };
+      const onPress = jest.fn();
+      const {
+        UNSAFE_getByType,
+        UNSAFE_getAllByType,
+        UNSAFE_queryByType,
+        getByText,
+        getByLabelText
+      } = render(
+        <ListItemInfo
+          accessibilityLabel="Information"
+          endElement={
+            withAction
+              ? {
+                  type: "iconButton",
+                  componentProps: {
+                    icon: "info",
+                    accessibilityLabel: "Details",
+                    onPress
+                  }
+                }
+              : undefined
+          }
+          imageSource={imageSource}
+          label="Label"
+          onLongPress={withLongPress ? onButtonPress : undefined}
+          value="Value"
+        />
+      );
+
+      const image = UNSAFE_getByType(Image);
+      expect(image.props.source).toEqual(imageSource);
+      expect(
+        UNSAFE_getAllByType(View).some(
+          view =>
+            view.props.importantForAccessibility === "no-hide-descendants" &&
+            view.findAllByType(Image).length === 1
+        )
+      ).toBe(true);
+      expect(getByText("Label", { includeHiddenElements: true })).toBeTruthy();
+      expect(getByText("Value", { includeHiddenElements: true })).toBeTruthy();
+      if (withAction) {
+        fireEvent.press(getByLabelText("Details"));
+        expect(onPress).toHaveBeenCalledTimes(1);
+      }
+
+      fireEvent(image, "error");
+      expect(UNSAFE_queryByType(Image)).toBeNull();
+      expect(getByText("Value", { includeHiddenElements: true })).toBeTruthy();
+      if (withAction) {
+        fireEvent.press(getByLabelText("Details"));
+        expect(onPress).toHaveBeenCalledTimes(2);
+      }
+    }
+  );
+
+  it("displays a new image after a previous source failed", () => {
+    const { UNSAFE_getByType, rerender } = render(
+      <ListItemInfo
+        imageSource={{ uri: "https://example.com/old.png" }}
+        value="Value"
+      />
+    );
+    fireEvent(UNSAFE_getByType(Image), "error");
+
+    const imageSource = { uri: "https://example.com/new.png" };
+    rerender(<ListItemInfo imageSource={imageSource} value="Value" />);
+
+    expect(UNSAFE_getByType(Image).props.source).toEqual(imageSource);
+  });
+
+  it("exposes informational content as one accessible item", () => {
+    const { getByLabelText } = render(
+      <ListItemInfo accessibilityLabel="Information" value="Value" />
+    );
+
+    const information = getByLabelText("Information");
+    expect(information).toHaveProp("accessible", true);
+  });
+
+  it("exposes information and end actions as separate accessible items", () => {
+    const { getByLabelText } = render(
+      <ListItemInfo
+        accessibilityLabel="Information"
+        endElement={{
+          type: "buttonLink",
+          componentProps: { label: "Action", onPress: onButtonPress }
+        }}
+        value="Value"
+      />
+    );
+
+    expect(getByLabelText("Information")).toHaveProp("accessible", true);
+    expect(getByLabelText("Information")).toHaveProp(
+      "screenReaderFocusable",
+      true
+    );
+    expect(getByLabelText("Action")).toHaveProp("accessibilityRole", "button");
+  });
+
+  it("hides informational content while Switch Access is enabled", async () => {
+    jest.mocked(isSwitchAccessEnabled).mockResolvedValueOnce(true);
+
+    const { queryByLabelText } = render(
+      <IOSwitchAccessContextProvider>
+        <ListItemInfo accessibilityLabel="Information" value="Value" />
+      </IOSwitchAccessContextProvider>
+    );
+
+    await waitFor(() => {
+      expect(queryByLabelText("Information")).toBeNull();
+    });
+  });
+
   it("ListItemInfo Snapshot", () => {
     const { toJSON } = render(
       <ListItemInfo
@@ -41,8 +164,8 @@ describe("Test List Item Components", () => {
     const { toJSON } = render(
       <ListItemNav
         accessibilityLabel={"accessibilityLabel"}
+        label={"testValue"}
         onPress={onButtonPress}
-        value={"testValue"}
       />
     );
     expect(toJSON()).toMatchSnapshot();
@@ -51,8 +174,8 @@ describe("Test List Item Components", () => {
     const { toJSON } = render(
       <ListItemNavAlert
         accessibilityLabel={"accessibilityLabel"}
+        label={"testValue"}
         onPress={onButtonPress}
-        value={"testValue"}
       />
     );
     expect(toJSON()).toMatchSnapshot();
@@ -71,10 +194,10 @@ describe("Test List Item Components", () => {
   it("ListItemTransaction Snapshot", () => {
     const { toJSON } = render(
       <ListItemTransaction
+        description="subtitle"
         isLoading={true}
+        label="TITLE"
         onPress={onButtonPress}
-        subtitle="subtitle"
-        title="TITLE"
         transaction={{
           amount: "€ 1.000,00",
           amountAccessibilityLabel: "€ 1.000,00"
@@ -135,8 +258,8 @@ describe("Test List Item Components - Experimental Enabled", () => {
     const { toJSON } = renderWithExperimentalEnabledContextProvider(
       <ListItemNav
         accessibilityLabel={"accessibilityLabel"}
+        label={"testValue"}
         onPress={onButtonPress}
-        value={"testValue"}
       />
     );
     expect(toJSON()).toMatchSnapshot();
@@ -145,8 +268,8 @@ describe("Test List Item Components - Experimental Enabled", () => {
     const { toJSON } = renderWithExperimentalEnabledContextProvider(
       <ListItemNavAlert
         accessibilityLabel={"accessibilityLabel"}
+        label={"testValue"}
         onPress={onButtonPress}
-        value={"testValue"}
       />
     );
     expect(toJSON()).toMatchSnapshot();
@@ -165,10 +288,10 @@ describe("Test List Item Components - Experimental Enabled", () => {
   it("ListItemTransaction Snapshot", () => {
     const { toJSON } = renderWithExperimentalEnabledContextProvider(
       <ListItemTransaction
+        description="subtitle"
         isLoading={true}
+        label="TITLE"
         onPress={onButtonPress}
-        subtitle="subtitle"
-        title="TITLE"
         transaction={{
           amount: "€ 1.000,00",
           amountAccessibilityLabel: "€ 1.000,00"

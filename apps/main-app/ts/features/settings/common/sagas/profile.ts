@@ -37,6 +37,7 @@ import { readablePrivacyReport } from "../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { cgnDetails } from "../../../bonus/cgn/store/actions/details";
 import { cgnDetailSelector } from "../../../bonus/cgn/store/reducers/details";
+import { paymentsResetPagoPaPlatformSessionTokenAction } from "../../../payments/common/store/actions";
 import { tosConfigSelector } from "../../../tos/store/selectors";
 import { trackProfileLoadSuccess } from "../analytics";
 import {
@@ -425,6 +426,10 @@ function* handleProfileChangesSaga(
     if (item[0](value, newValue)) {
       yield* call(item[1], newValue);
     }
+  }
+
+  if (value.email !== newValue.email) {
+    yield* put(paymentsResetPagoPaPlatformSessionTokenAction());
   }
 }
 

@@ -5,14 +5,18 @@ import Security
 final class LegacyDeviceIdentityStorage: DeviceIdentityStorage {
   private static let identityKey = "deviceUID"
 
-  // Match the legacy query, including accessibility and the default access group.
-  private var keychainQuery: [String: Any] {
+  private var itemQuery: [String: Any] {
     [
       kSecClass as String: kSecClassGenericPassword,
       kSecAttrAccount as String: Self.identityKey,
-      kSecAttrService as String: Self.identityKey,
-      kSecAttrAccessible as String: kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
+      kSecAttrService as String: Self.identityKey
     ]
+  }
+
+  private var keychainQuery: [String: Any] {
+    itemQuery.merging(
+      [kSecAttrAccessible as String: kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly]
+    ) { _, new in new }
   }
 
   func readKeychain() throws -> String? {
@@ -48,9 +52,10 @@ final class LegacyDeviceIdentityStorage: DeviceIdentityStorage {
   func writeKeychain(_ value: String) throws {
     var query = keychainQuery
     query[kSecValueData as String] = Data(value.utf8)
-    let status = SecItemAdd(query as CFDictionary, nil)
-    if status == errSecDuplicateItem, try readKeychain() == value {
-      return
+    var status = SecItemAdd(query as CFDictionary, nil)
+    if status == errSecDuplicateItem {
+      SecItemDelete(itemQuery as CFDictionary)
+      status = SecItemAdd(query as CFDictionary, nil)
     }
     guard status == errSecSuccess else {
       throw DeviceIdentityStorageException(status)

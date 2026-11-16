@@ -3,7 +3,7 @@ import {
   Badge,
   H3,
   HStack,
-  IOVisualCostants,
+  IODimensions,
   VSpacer
 } from "@io-app/design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
@@ -11,8 +11,9 @@ import I18n from "i18next";
 import { useEffect, useRef } from "react";
 import { View } from "react-native";
 
+import { useFeatureColors } from "../../../../../../hooks/useFeatureColors";
 import { setAccessibilityFocus } from "../../../../../../utils/accessibility";
-import { useCgnStyle } from "../../../hooks/useCgnStyle";
+import { cgnColors } from "../../../colors";
 import { CategoryTag } from "../ModuleCgnDiscount";
 import { isValidDiscount, normalizedDiscountPercentage } from "../utils";
 
@@ -31,16 +32,16 @@ export const CgnDiscountHeader = ({
     setAccessibilityFocus(ref, 400 as Millisecond);
   }, [ref]);
 
-  const { header: headerStyle } = useCgnStyle();
+  const colors = useFeatureColors(cgnColors);
 
   const { backgroundColor, foreground } = isNew
-    ? headerStyle.new
-    : headerStyle.default;
+    ? colors.discountHeader.new
+    : colors.discountHeader.default;
 
   return (
     <View
       style={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault,
+        paddingHorizontal: IODimensions.padding.screen.default,
         backgroundColor,
         paddingBottom: 24
       }}

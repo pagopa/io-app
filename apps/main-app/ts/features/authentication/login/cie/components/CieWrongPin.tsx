@@ -1,3 +1,4 @@
+import { StackActions } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback } from "react";
 import { Linking } from "react-native";
@@ -19,9 +20,9 @@ export const CieWrongPin = ({ remainingCount }: CieWrongPinProps) => {
   const { navigateToAuthenticationScreen } = useActiveSessionLoginNavigation();
 
   const navigateToCiePinScreen = useCallback(() => {
-    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
-    });
+    navigation.dispatch(
+      StackActions.popTo(AUTHENTICATION_ROUTES.CIE_PIN_SCREEN)
+    );
   }, [navigation]);
 
   const retryAction: OperationResultScreenContentProps["action"] = {

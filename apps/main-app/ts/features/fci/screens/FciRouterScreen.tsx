@@ -18,6 +18,7 @@ import {
   NetworkError
 } from "../../../utils/errors";
 import {
+  trackFciAppUpdateRequested,
   trackFciSignatureDetailFailureAction,
   trackFciSignatureGenericFailure,
   trackFciSignatureMismatch
@@ -127,7 +128,14 @@ const FciSignatureScreen = (
 ) => {
   const requiresUpdate = useAppRequiredUpdate("fci");
   if (requiresUpdate) {
-    return <UpdateAppAlert />;
+    return (
+      <UpdateAppAlert
+        mixPanelTracking={{
+          onLanding: trackFciAppUpdateRequested,
+          onConfirm: () => undefined
+        }}
+      />
+    );
   }
   return <FciSignatureScreenComponent {...props} />;
 };

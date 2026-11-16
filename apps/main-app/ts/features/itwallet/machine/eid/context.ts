@@ -55,6 +55,13 @@ export type Context = {
   authenticationContext: AuthenticationContext | undefined;
   /** CIE capabilities and NFC status. */
   cieContext: CieContext | undefined;
+  /**
+   * The credential offer URI (deeplink/QR code) that triggered the eID issuance
+   * flow. When set, the credential issuance must resume from the credential
+   * offer instead of the catalogue, so the credential is attributed to the
+   * third-party channel.
+   */
+  credentialOfferUri: string | undefined;
   /** The credentials that need to be upgraded to the new format. */
   credentialsToUpgrade: ReadonlyArray<CredentialMetadata>;
   /** The credential type that triggered the eID issuance flow. */
@@ -86,6 +93,13 @@ export type Context = {
   itwVersion: ItwVersion;
   /** An optional dictionary of Key Attestations generated for the issuance. */
   keyAttestations?: Record<string, string>;
+  /**
+   * Set when the user switches from IT-Wallet (L3) identification to Documenti
+   * su IO because they do not have a CIE. It keeps the L3 credential type, so
+   * the user can go back from the Documenti su IO landing to the L3
+   * identification mode selection.
+   */
+  l2FallbackOrigin: undefined | { credentialType: string | undefined };
   /**
    * The level of eID issuance, which determines the authentication methods
    * allowed and the eID level that will be issued: Documenti su IO (L2) or IT
@@ -176,6 +190,8 @@ export const InitialContext: Omit<Context, "deps"> = {
   credentialsToUpgrade: [],
   failedCredentials: undefined,
   credentialType: undefined,
+  l2FallbackOrigin: undefined,
+  credentialOfferUri: undefined,
   accessToken: undefined,
   walletInstanceStatusList: undefined
 };

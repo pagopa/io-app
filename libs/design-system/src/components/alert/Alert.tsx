@@ -1,6 +1,5 @@
 import { JSX, Ref } from "react";
 import {
-  ColorValue,
   GestureResponderEvent,
   Pressable,
   View,
@@ -8,21 +7,17 @@ import {
 } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { useIOThemeContext } from "../../context";
-import { IOVisualCostants } from "../../core";
-import { hexToRgba, IOColors } from "../../core/IOColors";
-import { IOAlertRadius } from "../../core/IOShapes";
-import { IOAlertSpacing, IOSpacer } from "../../core/IOSpacing";
+import { useIOColors } from "../../context";
+import { IODimensions } from "../../core";
 import { useScaleAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
-import { Icon, IOIcons, IOIconSizeScale } from "../icons";
+import { Icon, IOIcons } from "../icons";
 import { HStack, VStack } from "../layout";
 import { Body, ButtonText } from "../typography";
 
-const ICON_SIZE: IOIconSizeScale = 24;
-
-const [padding, paddingFullWidth] = IOAlertSpacing;
+const { default: padding, fullWidth: paddingFullWidth } =
+  IODimensions.padding.alert;
 
 type AlertActionProps =
   | {
@@ -45,66 +40,13 @@ type AlertProps = WithTestID<{
 
 type AlertType = AlertActionProps & AlertProps;
 
-type VariantStates = {
-  background: ColorValue;
-  foreground: IOColors;
-  icon: IOIcons;
-};
-
 // COMPONENT CONFIGURATION
 
-const mapVariantStatesLightMode: Record<
-  NonNullable<AlertType["variant"]>,
-  VariantStates
-> = {
-  error: {
-    icon: "errorFilled",
-    background: IOColors["error-100"],
-    foreground: "error-850"
-  },
-  warning: {
-    icon: "warningFilled",
-    background: IOColors["warning-100"],
-    foreground: "warning-850"
-  },
-  info: {
-    icon: "infoFilled",
-    background: IOColors["info-100"],
-    foreground: "info-850"
-  },
-  success: {
-    icon: "success",
-    background: IOColors["success-100"],
-    foreground: "success-850"
-  }
-};
-
-const bgOpacityDarkMode = 0.2;
-
-const mapVariantStatesDarkMode: Record<
-  NonNullable<AlertType["variant"]>,
-  VariantStates
-> = {
-  error: {
-    icon: "errorFilled",
-    background: hexToRgba(IOColors["error-400"], bgOpacityDarkMode),
-    foreground: "error-100"
-  },
-  warning: {
-    icon: "warningFilled",
-    background: hexToRgba(IOColors["warning-400"], bgOpacityDarkMode),
-    foreground: "warning-100"
-  },
-  info: {
-    icon: "infoFilled",
-    background: hexToRgba(IOColors["info-400"], bgOpacityDarkMode),
-    foreground: "info-100"
-  },
-  success: {
-    icon: "success",
-    background: hexToRgba(IOColors["success-400"], bgOpacityDarkMode),
-    foreground: "success-100"
-  }
+const variantIcons: Record<NonNullable<AlertType["variant"]>, IOIcons> = {
+  error: "errorFilled",
+  warning: "warningFilled",
+  info: "infoFilled",
+  success: "success"
 };
 
 export const Alert = ({
@@ -120,30 +62,27 @@ export const Alert = ({
   const { onPressIn, onPressOut, scaleAnimatedStyle } =
     useScaleAnimation("medium");
   const { dynamicFontScale, spacingScaleMultiplier } = useIOFontDynamicScale();
-  const { themeType } = useIOThemeContext();
+  const colors = useIOColors();
+  const alertColors = colors.component.alert[variant];
 
   const paddingDefaultVariant: ViewStyle = {
     padding,
-    borderRadius: IOAlertRadius * dynamicFontScale * spacingScaleMultiplier,
+    borderRadius:
+      IODimensions.radius.alert * dynamicFontScale * spacingScaleMultiplier,
     borderCurve: "continuous"
   };
-
-  const mapVariantStates =
-    themeType === "light"
-      ? mapVariantStatesLightMode
-      : mapVariantStatesDarkMode;
 
   const renderMainBlock = () => (
     <HStack
       allowScaleSpacing
-      space={IOVisualCostants.iconMargin as IOSpacer}
+      space={IODimensions.gap.alert.leading}
       style={{ alignItems: "center" }}
     >
       <Icon
         allowFontScaling
-        color={mapVariantStates[variant].foreground}
-        name={mapVariantStates[variant].icon}
-        size={ICON_SIZE}
+        color={alertColors.foreground}
+        name={variantIcons[variant]}
+        size={IODimensions.size.icon.alert}
       />
       {/* Sadly we don't have specific alignments style for text
       in React Native, like `text-box-trim` for CSS. So we
@@ -156,17 +95,17 @@ export const Alert = ({
           flex: 1
         }}
       >
-        <VStack allowScaleSpacing space={8}>
+        <VStack allowScaleSpacing space={IODimensions.gap.alert.action}>
           <Body
             accessibilityRole="text"
-            color={mapVariantStates[variant].foreground}
+            color={alertColors.foreground}
             weight={"Regular"}
           >
             {content}
           </Body>
           {action && (
             <ButtonText
-              color={mapVariantStates[variant].foreground}
+              color={alertColors.foreground}
               ellipsizeMode="tail"
               numberOfLines={1}
             >
@@ -186,7 +125,7 @@ export const Alert = ({
       ref={viewRef}
       style={[
         fullWidth ? { padding: paddingFullWidth } : paddingDefaultVariant,
-        { backgroundColor: mapVariantStates[variant].background }
+        { backgroundColor: alertColors.background }
       ]}
       testID={testID}
     >
@@ -210,7 +149,7 @@ export const Alert = ({
       <Animated.View
         style={[
           fullWidth ? { padding: paddingFullWidth } : paddingDefaultVariant,
-          { backgroundColor: mapVariantStates[variant].background },
+          { backgroundColor: alertColors.background },
           // Disable pressed animation when component is full width
           !fullWidth && scaleAnimatedStyle
         ]}

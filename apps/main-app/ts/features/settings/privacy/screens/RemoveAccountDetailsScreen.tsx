@@ -2,7 +2,7 @@ import {
   ContentWrapper,
   H6,
   IOButton,
-  IOVisualCostants,
+  IODimensions,
   RadioGroup,
   RadioItem,
   TextInput,
@@ -16,11 +16,11 @@ import {
   memo,
   useCallback,
   useEffect,
-  useMemo,
   useRef,
   useState
 } from "react";
 import { AccessibilityInfo, Alert, Keyboard, View } from "react-native";
+import { KeyboardStickyView } from "react-native-keyboard-controller";
 import {
   SafeAreaView,
   useSafeAreaInsets
@@ -62,7 +62,7 @@ const FooterButton = memo(
         ref={buttonRef}
         style={{
           marginBottom:
-            bottom === 0 ? IOVisualCostants.appMarginDefault : bottom
+            bottom === 0 ? IODimensions.padding.screen.default : bottom
         }}
       >
         <ContentWrapper>
@@ -223,59 +223,28 @@ const RemoveAccountDetails = () => {
   const textInputRef = useRef<ComponentRef<typeof TextInput>>(null);
   useInputFocus(textInputRef);
 
-  const otherMotivationInput = useMemo(() => {
-    if (isOtherMotivation) {
-      return (
-        <>
-          <VSpacer />
-          <TextInput
-            accessibilityLabel={I18n.t(
-              "profile.main.privacy.removeAccount.details.labelOpenAnswer"
-            )}
-            inputRef={textInputRef}
-            onBlur={() => setAccessibilityFocus(buttonRef)}
-            onChangeText={setOtherMotivation}
-            placeholder={I18n.t(
-              "profile.main.privacy.removeAccount.details.labelOpenAnswer"
-            )}
-            textInputProps={{
-              inputMode: "text",
-              returnKeyType: "done",
-              keyboardType: "default"
-            }}
-            value={otherMotivation}
-          />
-        </>
-      );
-    }
-    return null;
-  }, [isOtherMotivation, otherMotivation]);
-
   const motivationItems: ReadonlyArray<RadioItem<RemoveAccountMotivationEnum>> =
-    useMemo(
-      () => [
-        {
-          value: I18n.t("profile.main.privacy.removeAccount.details.answer_1"),
-          id: RemoveAccountMotivationEnum.NOT_UTILS
-        },
-        {
-          value: I18n.t("profile.main.privacy.removeAccount.details.answer_2"),
-          id: RemoveAccountMotivationEnum.NOT_SAFE
-        },
-        {
-          value: I18n.t("profile.main.privacy.removeAccount.details.answer_3"),
-          id: RemoveAccountMotivationEnum.NEVER_USED
-        },
-        {
-          value: I18n.t("profile.main.privacy.removeAccount.details.answer_4"),
-          id: RemoveAccountMotivationEnum.OTHERS
-        }
-      ],
-      []
-    );
+    [
+      {
+        label: I18n.t("profile.main.privacy.removeAccount.details.answer_1"),
+        id: RemoveAccountMotivationEnum.NOT_UTILS
+      },
+      {
+        label: I18n.t("profile.main.privacy.removeAccount.details.answer_2"),
+        id: RemoveAccountMotivationEnum.NOT_SAFE
+      },
+      {
+        label: I18n.t("profile.main.privacy.removeAccount.details.answer_3"),
+        id: RemoveAccountMotivationEnum.NEVER_USED
+      },
+      {
+        label: I18n.t("profile.main.privacy.removeAccount.details.answer_4"),
+        id: RemoveAccountMotivationEnum.OTHERS
+      }
+    ];
 
   return (
-    <>
+    <KeyboardStickyView offset={{ closed: 0 }} style={{ flex: 1 }}>
       <IOScrollViewWithLargeHeader
         description={I18n.t("profile.main.privacy.removeAccount.details.body")}
         ignoreAccessibilityCheck
@@ -296,12 +265,33 @@ const RemoveAccountDetails = () => {
               selectedItem={selectedMotivation}
               type="radioListItem"
             />
-            {otherMotivationInput}
+            {isOtherMotivation && (
+              <>
+                <VSpacer />
+                <TextInput
+                  accessibilityLabel={I18n.t(
+                    "profile.main.privacy.removeAccount.details.labelOpenAnswer"
+                  )}
+                  inputRef={textInputRef}
+                  onBlur={() => setAccessibilityFocus(buttonRef)}
+                  onChangeText={setOtherMotivation}
+                  placeholder={I18n.t(
+                    "profile.main.privacy.removeAccount.details.labelOpenAnswer"
+                  )}
+                  textInputProps={{
+                    inputMode: "text",
+                    returnKeyType: "done",
+                    keyboardType: "default"
+                  }}
+                  value={otherMotivation}
+                />
+              </>
+            )}
           </ContentWrapper>
         </SafeAreaView>
       </IOScrollViewWithLargeHeader>
       <FooterButton isLoading={isLoading} onPress={handleContinuePress} />
-    </>
+    </KeyboardStickyView>
   );
 };
 

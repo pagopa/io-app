@@ -27,6 +27,7 @@ import { appReducer } from "../../../../../store/reducers";
 import { isDifferentFiscalCodeSelector } from "../../../../../store/reducers/crossSessions";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { getAppVersion } from "../../../../../utils/appVersion";
+import { paymentsResetPagoPaPlatformSessionTokenAction } from "../../../../payments/common/store/actions";
 import {
   loadBonusBeforeRemoveAccount,
   profileLoadFailure,
@@ -354,5 +355,41 @@ describe("profile", () => {
         .returns(O.some(mockProfile))
         .run();
     });
+  });
+
+  describe("handleProfileChangesSaga", () => {
+    it("should reset the pagoPA platform session token when the email changes", () =>
+      expectSaga(
+        profileSagaTestable!.handleProfileChangesSaga,
+        profileUpsert.success({
+          value: mockProfile,
+          newValue: {
+            ...mockProfile,
+            email: "new@email.com" as EmailAddress
+          }
+        })
+      )
+        .put(paymentsResetPagoPaPlatformSessionTokenAction())
+        .run());
+
+    it.each([
+      {
+        name: "the email is unchanged",
+        newValue: { ...mockProfile, is_inbox_enabled: false }
+      },
+      {
+        name: "the profile is identical",
+        newValue: mockProfile
+      }
+    ])(
+      "should not reset the pagoPA platform session token when $name",
+      ({ newValue }) =>
+        expectSaga(
+          profileSagaTestable!.handleProfileChangesSaga,
+          profileUpsert.success({ value: mockProfile, newValue })
+        )
+          .not.put(paymentsResetPagoPaPlatformSessionTokenAction())
+          .run()
+    );
   });
 });

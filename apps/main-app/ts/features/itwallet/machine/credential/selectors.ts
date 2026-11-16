@@ -47,6 +47,3 @@ export const selectFailure = (snapshot: MachineSnapshot) =>
 
 export const selectResolvedCredentialOffer = (snapshot: MachineSnapshot) =>
   snapshot.context.resolvedCredentialOffer;
-
-export const selectHasResolvedCredentialOffer = (snapshot: MachineSnapshot) =>
-  snapshot.context.resolvedCredentialOffer !== undefined;

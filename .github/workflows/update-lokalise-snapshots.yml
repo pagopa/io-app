@@ -4,6 +4,7 @@ on:
   pull_request:
     types:
       - opened
+      - synchronize
     paths:
       - "apps/main-app/locales/**"
 
@@ -27,6 +28,9 @@ jobs:
 
       - name: Setup pnpm and install dependencies
         uses: ./.github/actions/setup-pnpm
+
+      - name: Generate API types
+        run: pnpm nx run main-app:generate
 
       - name: Update snapshots
         run: pnpm nx run main-app:test --configuration=ci --updateSnapshot

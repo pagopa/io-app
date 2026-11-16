@@ -41,6 +41,9 @@ const every90Days = () =>
     "features.itWallet.identification.modeSelection.frequency.every90Days"
   );
 
+const T_CREDENTIAL_OFFER_URI =
+  "openid-credential-offer://?credential_offer_uri=https://issuer.example/offer";
+
 describe("ItwIdentificationModeSelectionScreen", () => {
   beforeEach(() => {
     jest
@@ -156,7 +159,8 @@ describe("ItwIdentificationModeSelectionScreen", () => {
       await waitFor(() =>
         expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
           screen: ITW_ROUTES.DISCOVERY.INFO,
-          params: { level: "l2-fallback" }
+          params: { level: "l2-fallback" },
+          pop: true
         })
       );
     }
@@ -185,8 +189,38 @@ describe("ItwIdentificationModeSelectionScreen", () => {
           params: {
             type: "card",
             routeName: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION
-          }
+          },
+          pop: true
         })
+      );
+    }
+  );
+
+  it.each([
+    {
+      name: "Doc su IO credential",
+      credentialType: CredentialType.DRIVING_LICENSE
+    },
+    { name: "L3 credential", credentialType: CredentialType.EDUCATION_DEGREE }
+  ])(
+    "does not forward the credential offer of a $name to the fallback issuance",
+    ({ credentialType }) => {
+      const { getByTestId } = renderComponent(
+        "issuance",
+        "l3",
+        credentialType,
+        T_CREDENTIAL_OFFER_URI
+      );
+
+      fireEvent.press(getByTestId("noCieButtonTestID"));
+
+      expect(mockNavigateToTos).toHaveBeenCalledWith(
+        expect.objectContaining({
+          context: expect.objectContaining({
+            credentialOfferUri: undefined
+          })
+        }),
+        undefined
       );
     }
   );
@@ -239,7 +273,8 @@ describe("ItwIdentificationModeSelectionScreen", () => {
 const renderComponent = (
   mode: EidIssuanceMode,
   level: EidIssuanceLevel,
-  credentialType?: string
+  credentialType?: string,
+  credentialOfferUri?: string
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
@@ -276,6 +311,7 @@ const renderComponent = (
         mode,
         level,
         credentialType,
+        credentialOfferUri,
         cieContext: {
           isNFCEnabled: true,
           isCIEAuthenticationSupported: true

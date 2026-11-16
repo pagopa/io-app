@@ -1,10 +1,12 @@
+import { StackActions } from "@react-navigation/native";
 import { fireEvent, render } from "@testing-library/react-native";
 import I18n from "i18next";
 import { Linking } from "react-native";
 
+import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import { CieWrongPin } from "../CieWrongPin";
 
-const mockNavigate = jest.fn();
+const mockDispatch = jest.fn();
 const mockNavigateToAuthenticationScreen = jest.fn();
 
 jest.mock("@react-navigation/native", () => ({
@@ -12,7 +14,7 @@ jest.mock("@react-navigation/native", () => ({
     "@react-navigation/native"
   ),
   useNavigation: () => ({
-    navigate: mockNavigate
+    dispatch: mockDispatch
   })
 }));
 
@@ -67,9 +69,9 @@ describe("CieWrongPin", () => {
     );
 
     fireEvent.press(getByText(I18n.t("global.buttons.retry")));
-    expect(mockNavigate).toHaveBeenCalledWith("AUTHENTICATION", {
-      screen: "CIE_PIN_SCREEN"
-    });
+    expect(mockDispatch).toHaveBeenCalledWith(
+      StackActions.popTo(AUTHENTICATION_ROUTES.CIE_PIN_SCREEN)
+    );
   });
 
   it("should render the first-attempt content with retry and close actions when remainingCount is 2", () => {
@@ -80,9 +82,9 @@ describe("CieWrongPin", () => {
     ).toBeTruthy();
 
     fireEvent.press(getByText(I18n.t("global.buttons.retry")));
-    expect(mockNavigate).toHaveBeenCalledWith("AUTHENTICATION", {
-      screen: "CIE_PIN_SCREEN"
-    });
+    expect(mockDispatch).toHaveBeenCalledWith(
+      StackActions.popTo(AUTHENTICATION_ROUTES.CIE_PIN_SCREEN)
+    );
 
     fireEvent.press(getByText(I18n.t("global.buttons.close")));
     expect(mockNavigateToAuthenticationScreen).toHaveBeenCalled();

@@ -163,6 +163,8 @@ Each feature lives under `ts/features/<feature>/` and must follow the [documente
 
 This project uses the [Conventional Commits](https://www.conventionalcommits.org/) specification.
 
+Versioning and changelog generation use the Nx Release groups configured in `nx.json`. App release cycles are started by the existing release workflow; the design system release can be started with `pnpm --filter @pagopa/io-app-design-system release`. The design system release prompts for a version and creates its GitHub release; registry publishing remains automated from that release.
+
 **Format:** `type(scope): short description`
 
 | Type       | When to use                                             |

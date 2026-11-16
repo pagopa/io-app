@@ -2,8 +2,9 @@ import {
   ContentWrapper,
   ForceScrollDownView,
   H2,
+  IOMarkdownLite,
   ListItemHeader,
-  useIOTheme,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
@@ -13,6 +14,7 @@ import { useCallback, useRef } from "react";
 import type { CredentialIssuanceMode } from "../../machine/credential/context";
 
 import IOMarkdown from "../../../../components/IOMarkdown";
+import { handleOpenLink } from "../../../../components/IOMarkdown/renderRules";
 import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -34,7 +36,6 @@ import { itwIpzsItwalletPrivacyUrlSelector } from "../../common/store/selectors/
 import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import { ISSUER_MOCK_NAME } from "../../common/utils/itwMocksUtils";
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
-import { generateItwIOMarkdownRules } from "../../common/utils/markdown";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
@@ -144,7 +145,7 @@ const ContentView = ({
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isIssuing =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsIssuing);
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const eidCredentialName = useItwCredentialName(eid.credentialType);
   const credentialName = useItwCredentialName(credentialType);
 
@@ -240,7 +241,10 @@ const ContentView = ({
         />
         <VSpacer size={24} />
         <ListItemHeader
-          iconColor={theme["icon-default"]}
+          accessibilityLabel={`${I18n.t(
+            "features.itWallet.issuance.credentialAuth.requiredClaims"
+          )}, ${I18n.t("features.itWallet.issuance.credentialAuth.verified")}`}
+          iconColor={colors.icon.default}
           iconName="security"
           label={I18n.t(
             "features.itWallet.issuance.credentialAuth.requiredClaims"
@@ -248,13 +252,14 @@ const ContentView = ({
         />
         <ItwRequestedClaimsList items={requiredClaims} />
         <VSpacer size={32} />
-        <IOMarkdown
+        <IOMarkdownLite
           content={I18n.t("features.itWallet.issuance.credentialAuth.tos", {
             privacyUrl: ipzsPrivacyUrl
           })}
-          rules={generateItwIOMarkdownRules({
-            linkCallback: trackOpenItwTos
-          })}
+          onLinkPress={url => {
+            handleOpenLink(url);
+            trackOpenItwTos();
+          }}
         />
       </ContentWrapper>
     </ForceScrollDownView>

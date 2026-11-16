@@ -1,3 +1,4 @@
+import { fireEvent, screen } from "@testing-library/react-native";
 import { constUndefined } from "fp-ts/lib/function";
 import { createStore } from "redux";
 
@@ -78,14 +79,29 @@ describe("PreconditionsContent", () => {
     const component = renderComponent();
     expect(component.toJSON()).toMatchSnapshot();
   });
+  it("should render the markdown and open internal links through the given 'linkTo'", () => {
+    jest
+      .spyOn(messagePreconditions, "preconditionsContentSelector")
+      .mockImplementation(_ => "content");
+    jest
+      .spyOn(messagePreconditions, "preconditionsContentMarkdownSelector")
+      .mockImplementation(_ => "[Open messages](ioit://main/messages)");
+    const linkTo = jest.fn();
+    renderComponent(linkTo);
+
+    fireEvent.press(screen.getByText("Open messages"));
+
+    expect(linkTo).toHaveBeenCalledTimes(1);
+    expect(linkTo).toHaveBeenCalledWith("/main/messages");
+  });
 });
 
-const renderComponent = () => {
+const renderComponent = (linkTo: (path: string) => void = jest.fn()) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, initialState as any);
 
   return renderScreenWithNavigationStoreContext(
-    () => <PreconditionsContent footerHeight={84} />,
+    () => <PreconditionsContent footerHeight={84} linkTo={linkTo} />,
     MESSAGES_ROUTES.MESSAGES_HOME,
     {},
     store

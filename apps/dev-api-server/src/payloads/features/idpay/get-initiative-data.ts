@@ -22,7 +22,7 @@ const createRandomInitiativeDataDTO = (): InitiativeDataDTO => ({
     width: 850,
     height: 480
   }),
-  logoURL: faker.image.urlLoremFlickr({ width: 480, height: 480 })
+  logoURL: faker.image.url({ width: 480, height: 480 })
 });
 
 const initiativeData: {

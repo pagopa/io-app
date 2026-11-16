@@ -1,0 +1,16 @@
+diff --git a/lib/module/BaseNavigationContainer.js b/lib/module/BaseNavigationContainer.js
+index 6571d7345f3ee28ece07f6f0a3a186e396680373..5e2f41a71944e087b3957d6fa22538f0229aeb0f 100644
+--- a/lib/module/BaseNavigationContainer.js
++++ b/lib/module/BaseNavigationContainer.js
+@@ -251,7 +251,10 @@ export const BaseNavigationContainer = /*#__PURE__*/React.forwardRef(function Ba
+   }, [state, isReady, emitter]);
+   React.useEffect(() => {
+     const hydratedState = getRootState();
+-    if (process.env.NODE_ENV !== 'production') {
++    // Walking the whole navigation state tree on every state change is expensive
++    // for apps with many deeply nested navigators. Off by default; set this
++    // global to true before mounting NavigationContainer to enable the checks.
++    if (process.env.NODE_ENV !== 'production' && global.__IO_NAV_SERIALIZABILITY_CHECK_ENABLED__) {
+       if (hydratedState !== undefined) {
+         const serializableResult = checkSerializable(hydratedState);
+         if (!serializableResult.serializable) {

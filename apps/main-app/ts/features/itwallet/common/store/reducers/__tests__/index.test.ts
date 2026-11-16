@@ -352,4 +352,25 @@ describe("itWalletReducer migrations", () => {
       }
     });
   });
+
+  it("should migrate the store to version 20: remove isEnabledForCredentialsList flag", async () => {
+    const previousState = {
+      _persist: { version: 19, rehydrated: false },
+      credentialsCatalogue: {
+        catalogue: pot.none,
+        isEnabledForCredentialsList: true,
+        translations: pot.none
+      }
+    };
+
+    const newState = await migrate(previousState, 20);
+
+    expect(newState).toEqual({
+      _persist: { version: 19, rehydrated: false },
+      credentialsCatalogue: {
+        catalogue: pot.none,
+        translations: pot.none
+      }
+    });
+  });
 });

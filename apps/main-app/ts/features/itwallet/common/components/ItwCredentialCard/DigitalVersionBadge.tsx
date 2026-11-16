@@ -1,29 +1,16 @@
 import {
-  IOBadgeHSpacing,
-  IOBadgeRadius,
-  IOBadgeVSpacing,
-  IOColors,
+  IOColorPalette,
+  IODimensions,
   makeFontStyleObject
 } from "@io-app/design-system";
-import {
-  Canvas,
-  LinearGradient,
-  RoundedRect,
-  vec
-} from "@shopify/react-native-skia";
 import Color from "color";
 import I18n from "i18next";
-import { memo, useState } from "react";
-import {
-  LayoutChangeEvent,
-  Platform,
-  StyleSheet,
-  Text,
-  View
-} from "react-native";
+import { memo } from "react";
+import { Platform, StyleSheet, Text, View } from "react-native";
 
 import { useIOSelector } from "../../../../../store/hooks";
 import { fontPreferenceSelector } from "../../../../../store/reducers/persistedPreferences";
+import { getCardBackgroundImage } from "./backgroundUtils";
 import { CardColorScheme } from "./types";
 
 type CredentialTypesProps = {
@@ -36,38 +23,41 @@ type DigitalVersionBadgeProps = {
   credentialType: string;
 };
 
+/** Gradient badges go from left to right */
+const BADGE_GRADIENT_ANGLE = 90;
+
+const colorPropsByCredentialType: Record<string, CredentialTypesProps> = {
+  mDL: {
+    foreground: "#5E303E",
+    background: "#FADCF5"
+  },
+  EuropeanDisabilityCard: {
+    foreground: "#01527F",
+    background: "#E8EEF4"
+  },
+  EuropeanHealthInsuranceCard: {
+    foreground: "#032D5C",
+    background: "#ABD8F2"
+  },
+  education_degree: {
+    foreground: "#403C36",
+    background: ["#ECECEC", "#F2F1CE"]
+  },
+  education_enrollment: {
+    foreground: "#403C36",
+    background: ["#ECECEC", "#E0F2CE"]
+  },
+  residency: {
+    foreground: "#403C36",
+    background: ["#ECECEC", "#F2E4CE"]
+  }
+};
+
 const getColorPropsByScheme = (
   credentialType: string,
   colorScheme: CardColorScheme
 ) => {
-  const mapCredentialTypes: Record<string, CredentialTypesProps> = {
-    mDL: {
-      foreground: "#5E303E",
-      background: "#FADCF5"
-    },
-    EuropeanDisabilityCard: {
-      foreground: "#01527F",
-      background: "#E8EEF4"
-    },
-    EuropeanHealthInsuranceCard: {
-      foreground: "#032D5C",
-      background: "#ABD8F2"
-    },
-    education_degree: {
-      foreground: "#403C36",
-      background: ["#ECECEC", "#F2F1CE"]
-    },
-    education_enrollment: {
-      foreground: "#403C36",
-      background: ["#ECECEC", "#E0F2CE"]
-    },
-    residency: {
-      foreground: "#403C36",
-      background: ["#ECECEC", "#F2E4CE"]
-    }
-  };
-
-  const baseColorProps = mapCredentialTypes[credentialType];
+  const baseColorProps = colorPropsByCredentialType[credentialType];
   if (!baseColorProps) {
     return;
   }
@@ -95,10 +85,6 @@ const DigitalVersionBadge = ({
   colorScheme = "default"
 }: DigitalVersionBadgeProps) => {
   const typefacePreference = useIOSelector(fontPreferenceSelector);
-  const [layout, setLayout] = useState<null | {
-    height: number;
-    width: number;
-  }>(null);
 
   const colorProps = getColorPropsByScheme(credentialType, colorScheme);
 
@@ -108,41 +94,23 @@ const DigitalVersionBadge = ({
   }
 
   const { background, foreground } = colorProps;
-  const isGradient = Array.isArray(background);
-
-  const handleLayout = (event: LayoutChangeEvent) => {
-    const { width, height } = event.nativeEvent.layout;
-    setLayout({ width, height });
-  };
 
   return (
     <View style={styles.wrapper}>
       <View
-        onLayout={handleLayout}
         style={[
           styles.badge,
-          {
-            backgroundColor: isGradient ? undefined : background
-          }
+          Array.isArray(background)
+            ? {
+                experimental_backgroundImage: getCardBackgroundImage({
+                  type: "linear",
+                  angle: BADGE_GRADIENT_ANGLE,
+                  colors: background
+                })
+              }
+            : { backgroundColor: background }
         ]}
       >
-        {isGradient && layout && (
-          <Canvas style={styles.gradientCanvas}>
-            <RoundedRect
-              height={layout.height}
-              r={IOBadgeRadius}
-              width={layout.width}
-              x={0}
-              y={0}
-            >
-              <LinearGradient
-                colors={background}
-                end={vec(layout.width, 0)}
-                start={vec(0, 0)}
-              />
-            </RoundedRect>
-          </Canvas>
-        )}
         {colorScheme !== "default" && <View style={styles.faded} />}
         <Text
           ellipsizeMode="tail"
@@ -188,21 +156,18 @@ const styles = StyleSheet.create({
       }
     }),
     borderCurve: "continuous",
-    borderRadius: IOBadgeRadius,
-    paddingHorizontal: IOBadgeHSpacing,
-    paddingVertical: IOBadgeVSpacing,
-    paddingEnd: IOBadgeHSpacing + 8,
-    marginEnd: -IOBadgeHSpacing
+    borderRadius: IODimensions.radius.badge,
+    paddingHorizontal: IODimensions.padding.badge.horizontal,
+    paddingVertical: IODimensions.padding.badge.vertical,
+    paddingEnd: IODimensions.padding.badge.horizontal + 8,
+    marginEnd: -IODimensions.padding.badge.horizontal
   },
   faded: {
     ...StyleSheet.absoluteFill,
-    backgroundColor: IOColors.white,
+    // Card artwork: same in both modes
+    backgroundColor: IOColorPalette.greyscale.white,
     opacity: 0.6,
     zIndex: 10
-  },
-  gradientCanvas: {
-    ...StyleSheet.absoluteFill,
-    zIndex: 0
   }
 });
 
