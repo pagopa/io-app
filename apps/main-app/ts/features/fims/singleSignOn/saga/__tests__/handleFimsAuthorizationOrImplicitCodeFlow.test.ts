@@ -1,4 +1,4 @@
-import { HttpClientSuccessResponse } from "@pagopa/io-react-native-http-client";
+import { HttpClientSuccessResponse } from "@io-app/expo-http-client";
 import * as LoginUtils from "expo-web-browser";
 import { testSaga } from "redux-saga-test-plan";
 
