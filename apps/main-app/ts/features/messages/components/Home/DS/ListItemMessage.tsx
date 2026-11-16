@@ -25,6 +25,7 @@ import Animated from "react-native-reanimated";
 import Svg, { Circle } from "react-native-svg";
 
 import { useFeatureColors } from "../../../../../hooks/useFeatureColors";
+import { isAndroid } from "../../../../../utils/platform";
 import { messagesColors } from "../../../colors";
 import { AvatarDouble } from "./AvatarDouble";
 
@@ -66,13 +67,14 @@ const styles = StyleSheet.create({
 
 export type ListItemMessageProps = Pick<
   ComponentProps<typeof Pressable>,
-  "accessibilityLabel" | "accessibilityRole" | "onLongPress" | "onPress"
+  "accessibilityLabel" | "accessibilityRole" | "onPress"
 > &
   WithTestID<{
     avatarDouble?: boolean;
     formattedDate: string;
     isRead: boolean;
     messageTitle: string;
+    onLongPress?: () => void;
     organizationName: string;
     selected?: boolean;
     serviceLogos?: ImageSourcePropType;
@@ -117,6 +119,14 @@ export const ListItemMessage = ({
   const { onPressIn, onPressOut, scaleAnimatedStyle, backgroundAnimatedStyle } =
     useListItemAnimation();
 
+  const longPressActionLabel = I18n.t(
+    selected
+      ? "messages.accessibility.message.deselectAction"
+      : "messages.accessibility.message.selectAction"
+  );
+  // iOS Fabric displays the name; Android needs "longpress" for native long-click.
+  const longPressActionName = isAndroid ? "longpress" : longPressActionLabel;
+
   const handleOnPress = useCallback(
     (event: GestureResponderEvent) => {
       if (onPress) {
@@ -133,9 +143,23 @@ export const ListItemMessage = ({
 
   return (
     <Pressable
+      accessibilityActions={
+        onLongPress
+          ? [{ name: longPressActionName, label: longPressActionLabel }]
+          : undefined
+      }
       accessibilityLabel={accessibilityLabel}
       accessibilityRole={accessibilityRole || "button"}
       accessible={true}
+      onAccessibilityAction={
+        onLongPress
+          ? event => {
+              if (event.nativeEvent.actionName === longPressActionName) {
+                onLongPress();
+              }
+            }
+          : undefined
+      }
       onLongPress={onLongPress}
       onPress={handleOnPress}
       onPressIn={onPressIn}
