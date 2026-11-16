@@ -1,6 +1,6 @@
 import { AccessToken } from "@io-app/api-types/generated/definitions/session_manager/AccessToken";
 import { PasswordLogin } from "@io-app/api-types/generated/definitions/session_manager/PasswordLogin";
-import { PublicKey } from "@pagopa/io-react-native-crypto";
+import { PublicKey } from "@io-app/expo-crypto";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { BasicResponseType } from "@pagopa/ts-commons/lib/requests";
 import * as E from "fp-ts/lib/Either";
