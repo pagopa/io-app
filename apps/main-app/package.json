@@ -1,6 +1,6 @@
 {
   "name": "@io-app/main-app",
-  "version": "3.43.0-rc.10",
+  "version": "3.44.0-rc.0",
   "private": true,
   "scripts": {
     "start": "expo start",
@@ -45,6 +45,7 @@
     "@io-app/api-types": "workspace:*",
     "@io-app/login-utils": "workspace:*",
     "@io-app/design-system": "workspace:@pagopa/io-app-design-system@*",
+    "@io-app/expo-crypto": "workspace:*",
     "@io-app/expo-navigation-bar-manager": "workspace:*",
     "@io-app/expo-device-internal": "workspace:*",
     "@io-app/expo-http-client": "workspace:*",
@@ -238,6 +239,13 @@
   },
   "engines": {
     "node": ">=20"
+  },
+  "expo": {
+    "autolinking": {
+      "exclude": [
+        "@pagopa/io-react-native-crypto"
+      ]
+    }
   },
   "react-native": {
     "path": "path-browserify"
