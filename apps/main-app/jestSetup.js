@@ -83,6 +83,7 @@ jest.mock("@react-native-cookies/cookies", () => jest.fn());
 jest.mock("expo-sharing", () => ({ shareAsync: jest.fn() }));
 jest.mock("expo-clipboard", () => mockClipboard);
 jest.mock("expo-calendar", () => ({
+  EntityTypes: { EVENT: "event", REMINDER: "reminder" },
   getCalendarsAsync: jest.fn().mockResolvedValue([]),
   getEventsAsync: jest.fn().mockResolvedValue([])
 }));
@@ -135,6 +136,10 @@ jest.mock("@io-app/expo-pdf-high-res-generator", () => ({
 jest.mock("@io-app/expo-nfc-antenna-info", () => ({
   getNfcAntennaInfo: jest.fn(),
   isHceSupported: jest.fn()
+}));
+
+jest.mock("@io-app/expo-switch-access", () => ({
+  isSwitchAccessEnabled: () => Promise.resolve(false)
 }));
 
 jest.mock("@io-app/login-utils", () => ({

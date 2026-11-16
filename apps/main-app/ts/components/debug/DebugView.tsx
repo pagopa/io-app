@@ -1,5 +1,5 @@
 import {
-  IOColorsLegacy,
+  IOColorPalette,
   IODimensions,
   ListItemHeader
 } from "@io-app/design-system";
@@ -27,7 +27,7 @@ export const DebugView = ({
       style={{
         paddingHorizontal: 24,
         paddingBottom: 12,
-        backgroundColor: IOColorsLegacy["grey-100"],
+        backgroundColor: IOColorPalette.greyscale[100],
         marginHorizontal: ignoreHorizontalMargins
           ? -IODimensions.padding.screen.default
           : 0

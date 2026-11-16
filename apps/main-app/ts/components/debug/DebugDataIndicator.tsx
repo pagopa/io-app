@@ -1,9 +1,9 @@
 import {
-  hexToRgba,
   HStack,
   Icon,
-  IOColorsLegacy,
-  IOText
+  IOColorPalette,
+  IOText,
+  withAlpha
 } from "@io-app/design-system";
 import _ from "lodash";
 import { Pressable, StyleSheet } from "react-native";
@@ -31,9 +31,9 @@ export const DebugDataIndicator = (props: DebugDataIndicatorProps) => {
       style={styles.wrapper}
     >
       <HStack space={4} style={{ alignItems: "center" }}>
-        <Icon color="warning-850" name="ladybug" size={16} />
+        <Icon color={IOColorPalette.yellow[850]} name="ladybug" size={16} />
         <IOText
-          color="warning-850"
+          color={IOColorPalette.yellow[850]}
           font={"TitilliumSansPro"}
           size={14}
           style={{
@@ -49,8 +49,8 @@ export const DebugDataIndicator = (props: DebugDataIndicatorProps) => {
   );
 };
 
-const debugItemBgColor = hexToRgba(IOColorsLegacy["warning-500"], 0.4);
-const debugItemBorderColor = hexToRgba(IOColorsLegacy["warning-850"], 0.1);
+const debugItemBgColor = withAlpha(IOColorPalette.yellow[500], 0.4);
+const debugItemBorderColor = withAlpha(IOColorPalette.yellow[850], 0.1);
 
 const styles = StyleSheet.create({
   wrapper: {

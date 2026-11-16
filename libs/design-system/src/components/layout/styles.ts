@@ -1,11 +1,11 @@
 import { BoxShadowValue } from "react-native";
 
-import { IOColorPalette, withAlpha } from "../../core/tokens";
+import { light } from "../../core/tokens/colors/semantic";
 
 /** Shared footer `boxShadow` */
 export const footerBoxShadow = {
   offsetX: 0,
   offsetY: 0,
   blurRadius: 32,
-  color: withAlpha(IOColorPalette.greyscale.black, 0.1)
+  color: light.surface.shadow
 } satisfies BoxShadowValue;

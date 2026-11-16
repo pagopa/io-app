@@ -507,9 +507,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         </View>
                         <View
                           accessibilityLabel="Luogo di Nascita Nascosto"
-                          accessible={false}
-                          importantForAccessibility="yes"
-                          screenReaderFocusable={true}
+                          accessible={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -540,6 +538,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
+                                accessibilityElementsHidden={true}
                                 accessible={false}
                                 importantForAccessibility="no-hide-descendants"
                                 style={
@@ -603,9 +602,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Numero identificativo dell'istituzione (TEAM) Nascosto"
-                          accessible={false}
-                          importantForAccessibility="yes"
-                          screenReaderFocusable={true}
+                          accessible={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -636,6 +633,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
+                                accessibilityElementsHidden={true}
                                 accessible={false}
                                 importantForAccessibility="no-hide-descendants"
                                 style={
@@ -699,9 +697,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Data di Nascita Nascosto"
-                          accessible={false}
-                          importantForAccessibility="yes"
-                          screenReaderFocusable={true}
+                          accessible={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -732,6 +728,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
+                                accessibilityElementsHidden={true}
                                 accessible={false}
                                 importantForAccessibility="no-hide-descendants"
                                 style={
@@ -795,9 +792,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Provincia Nascosto"
-                          accessible={false}
-                          importantForAccessibility="yes"
-                          screenReaderFocusable={true}
+                          accessible={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -828,6 +823,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
+                                accessibilityElementsHidden={true}
                                 accessible={false}
                                 importantForAccessibility="no-hide-descendants"
                                 style={
@@ -891,9 +887,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Nazione Nascosto"
-                          accessible={false}
-                          importantForAccessibility="yes"
-                          screenReaderFocusable={true}
+                          accessible={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -924,6 +918,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
+                                accessibilityElementsHidden={true}
                                 accessible={false}
                                 importantForAccessibility="no-hide-descendants"
                                 style={
@@ -987,9 +982,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Sesso Nascosto"
-                          accessible={false}
-                          importantForAccessibility="yes"
-                          screenReaderFocusable={true}
+                          accessible={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -1020,6 +1013,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
+                                accessibilityElementsHidden={true}
                                 accessible={false}
                                 importantForAccessibility="no-hide-descendants"
                                 style={
@@ -1083,9 +1077,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Data di Scadenza Nascosto"
-                          accessible={false}
-                          importantForAccessibility="yes"
-                          screenReaderFocusable={true}
+                          accessible={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -1116,6 +1108,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
+                                accessibilityElementsHidden={true}
                                 accessible={false}
                                 importantForAccessibility="no-hide-descendants"
                                 style={
@@ -1179,9 +1172,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Numero identificativo della tessera (TEAM) Nascosto"
-                          accessible={false}
-                          importantForAccessibility="yes"
-                          screenReaderFocusable={true}
+                          accessible={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -1212,6 +1203,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
+                                accessibilityElementsHidden={true}
                                 accessible={false}
                                 importantForAccessibility="no-hide-descendants"
                                 style={
@@ -1275,9 +1267,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Nome Nascosto"
-                          accessible={false}
-                          importantForAccessibility="yes"
-                          screenReaderFocusable={true}
+                          accessible={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -1308,6 +1298,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
+                                accessibilityElementsHidden={true}
                                 accessible={false}
                                 importantForAccessibility="no-hide-descendants"
                                 style={
@@ -1371,9 +1362,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Codice Fiscale Nascosto"
-                          accessible={false}
-                          importantForAccessibility="yes"
-                          screenReaderFocusable={true}
+                          accessible={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -1404,6 +1393,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
+                                accessibilityElementsHidden={true}
                                 accessible={false}
                                 importantForAccessibility="no-hide-descendants"
                                 style={
@@ -1467,9 +1457,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         />
                         <View
                           accessibilityLabel="Cognome Nascosto"
-                          accessible={false}
-                          importantForAccessibility="yes"
-                          screenReaderFocusable={true}
+                          accessible={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -1500,6 +1488,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
+                                accessibilityElementsHidden={true}
                                 accessible={false}
                                 importantForAccessibility="no-hide-descendants"
                                 style={
@@ -1593,8 +1582,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
+                                accessibilityElementsHidden={false}
                                 accessibilityLabel="Emissione versione digitale Istituto Poligrafico e Zecca di Stato"
-                                accessible={false}
+                                accessible={true}
                                 importantForAccessibility="yes"
                                 screenReaderFocusable={true}
                                 style={
@@ -2426,9 +2416,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                         </View>
                         <View
                           accessibilityLabel="Luogo di Nascita Rome (IT)"
-                          accessible={false}
-                          importantForAccessibility="yes"
-                          screenReaderFocusable={true}
+                          accessible={true}
                           style={
                             {
                               "marginHorizontal": -24,
@@ -2459,6 +2447,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
+                                accessibilityElementsHidden={true}
                                 accessible={false}
                                 importantForAccessibility="no-hide-descendants"
                                 style={
@@ -2521,6 +2510,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
+                          accessibilityElementsHidden={false}
                           accessibilityLabel="Numero identificativo dell'istituzione (TEAM) 500001"
                           accessibilityRole="button"
                           accessibilityState={
@@ -2543,6 +2533,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           accessible={true}
                           collapsable={false}
                           focusable={true}
+                          importantForAccessibility="auto"
                           onBlur={[Function]}
                           onClick={[Function]}
                           onFocus={[Function]}
@@ -2648,6 +2639,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 }
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   accessible={false}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
@@ -2711,6 +2703,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
+                          accessibilityElementsHidden={false}
                           accessibilityLabel="Data di Nascita; 06/01/1991"
                           accessibilityRole="button"
                           accessibilityState={
@@ -2733,6 +2726,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           accessible={true}
                           collapsable={false}
                           focusable={true}
+                          importantForAccessibility="auto"
                           onBlur={[Function]}
                           onClick={[Function]}
                           onFocus={[Function]}
@@ -2838,6 +2832,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 }
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   accessible={false}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
@@ -2901,6 +2896,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
+                          accessibilityElementsHidden={false}
                           accessibilityLabel="Provincia Rome"
                           accessibilityRole="button"
                           accessibilityState={
@@ -2923,6 +2919,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           accessible={true}
                           collapsable={false}
                           focusable={true}
+                          importantForAccessibility="auto"
                           onBlur={[Function]}
                           onClick={[Function]}
                           onFocus={[Function]}
@@ -3028,6 +3025,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 }
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   accessible={false}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
@@ -3091,6 +3089,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
+                          accessibilityElementsHidden={false}
                           accessibilityLabel="Nazione IT"
                           accessibilityRole="button"
                           accessibilityState={
@@ -3113,6 +3112,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           accessible={true}
                           collapsable={false}
                           focusable={true}
+                          importantForAccessibility="auto"
                           onBlur={[Function]}
                           onClick={[Function]}
                           onFocus={[Function]}
@@ -3218,6 +3218,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 }
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   accessible={false}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
@@ -3281,6 +3282,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
+                          accessibilityElementsHidden={false}
                           accessibilityLabel="Sesso M"
                           accessibilityRole="button"
                           accessibilityState={
@@ -3303,6 +3305,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           accessible={true}
                           collapsable={false}
                           focusable={true}
+                          importantForAccessibility="auto"
                           onBlur={[Function]}
                           onClick={[Function]}
                           onFocus={[Function]}
@@ -3408,6 +3411,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 }
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   accessible={false}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
@@ -3471,6 +3475,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
+                          accessibilityElementsHidden={false}
                           accessibilityLabel="Data di Scadenza; 22/02/2025; Scaduta"
                           accessibilityRole="button"
                           accessibilityState={
@@ -3493,6 +3498,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           accessible={true}
                           collapsable={false}
                           focusable={true}
+                          importantForAccessibility="auto"
                           onBlur={[Function]}
                           onClick={[Function]}
                           onFocus={[Function]}
@@ -3598,6 +3604,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 }
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   accessible={false}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
@@ -3715,6 +3722,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
+                          accessibilityElementsHidden={false}
                           accessibilityLabel="Numero identificativo della tessera (TEAM) 80380000000000000001"
                           accessibilityRole="button"
                           accessibilityState={
@@ -3737,6 +3745,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           accessible={true}
                           collapsable={false}
                           focusable={true}
+                          importantForAccessibility="auto"
                           onBlur={[Function]}
                           onClick={[Function]}
                           onFocus={[Function]}
@@ -3842,6 +3851,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 }
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   accessible={false}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
@@ -3905,6 +3915,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
+                          accessibilityElementsHidden={false}
                           accessibilityLabel="Nome Casimira"
                           accessibilityRole="button"
                           accessibilityState={
@@ -3927,6 +3938,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           accessible={true}
                           collapsable={false}
                           focusable={true}
+                          importantForAccessibility="auto"
                           onBlur={[Function]}
                           onClick={[Function]}
                           onFocus={[Function]}
@@ -4032,6 +4044,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 }
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   accessible={false}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
@@ -4095,6 +4108,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
+                          accessibilityElementsHidden={false}
                           accessibilityLabel="Codice Fiscale RSSMRA80A10H501A"
                           accessibilityRole="button"
                           accessibilityState={
@@ -4117,6 +4131,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           accessible={true}
                           collapsable={false}
                           focusable={true}
+                          importantForAccessibility="auto"
                           onBlur={[Function]}
                           onClick={[Function]}
                           onFocus={[Function]}
@@ -4222,6 +4237,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 }
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   accessible={false}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
@@ -4285,6 +4301,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
+                          accessibilityElementsHidden={false}
                           accessibilityLabel="Cognome Savoia"
                           accessibilityRole="button"
                           accessibilityState={
@@ -4307,6 +4324,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           accessible={true}
                           collapsable={false}
                           focusable={true}
+                          importantForAccessibility="auto"
                           onBlur={[Function]}
                           onClick={[Function]}
                           onFocus={[Function]}
@@ -4412,6 +4430,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                 }
                               >
                                 <View
+                                  accessibilityElementsHidden={true}
                                   accessible={false}
                                   importantForAccessibility="no-hide-descendants"
                                   style={
@@ -4506,8 +4525,9 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                               }
                             >
                               <View
+                                accessibilityElementsHidden={false}
                                 accessibilityLabel="Emissione versione digitale Istituto Poligrafico e Zecca di Stato"
-                                accessible={false}
+                                accessible={true}
                                 importantForAccessibility="yes"
                                 screenReaderFocusable={true}
                                 style={
