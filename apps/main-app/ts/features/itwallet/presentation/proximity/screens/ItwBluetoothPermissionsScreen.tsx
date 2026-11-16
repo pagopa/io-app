@@ -9,7 +9,6 @@ import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel"
 import { openAppSettings } from "../../../../../utils/appSettings";
 import {
   trackItwProximityBluetoothAccess,
-  trackItwProximityBluetoothAccessClose,
   trackItwProximityBluetoothAccessDenied,
   trackItwProximityBluetoothAccessGoToSettings
 } from "../analytics";
@@ -19,26 +18,19 @@ import { checkBluetoothPermissions } from "../utils/ble";
 export const ItwBluetoothPermissionsScreen = () => {
   const machineRef = ItwProximityMachineContext.useActorRef();
 
-  // If the user granted the permission from settings, going back continues the
-  // flow, otherwise it closes the proximity flow
-  const handleBack = async () => {
-    if (await checkBluetoothPermissions()) {
-      machineRef.send({ type: "continue" });
-      return;
-    }
-    trackItwProximityBluetoothAccessClose();
-    machineRef.send({ type: "close" });
-  };
+  // The machine continues the flow if the user has meanwhile granted the permission from
+  // settings, otherwise it closes the proximity flow
+  const handleBack = () => machineRef.send({ type: "back" });
 
   useHeaderSecondLevel({
     title: "",
-    goBack: () => void handleBack()
+    goBack: handleBack
   });
 
   // On Android the back gesture/button would otherwise pop this screen and
   // land on the presentment screen with an empty QR code
   useHardwareBackButtonWhenFocused(() => {
-    void handleBack();
+    handleBack();
     return true;
   });
 

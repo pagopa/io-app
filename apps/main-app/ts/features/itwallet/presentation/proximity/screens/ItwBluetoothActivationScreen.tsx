@@ -8,7 +8,6 @@ import { useHardwareBackButtonWhenFocused } from "../../../../../hooks/useHardwa
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import {
   trackItwProximityBluetoothActivation,
-  trackItwProximityBluetoothActivationClose,
   trackItwProximityBluetoothActivationGoToSettings,
   trackItwProximityBluetoothNotActivated
 } from "../analytics";
@@ -21,26 +20,19 @@ import {
 export const ItwBluetoothActivationScreen = () => {
   const machineRef = ItwProximityMachineContext.useActorRef();
 
-  // If the user enabled Bluetooth from settings, going back continues the flow
-  // to the QR code, otherwise it closes the proximity flow
-  const handleBack = async () => {
-    if (await checkBluetoothActivation()) {
-      machineRef.send({ type: "continue" });
-      return;
-    }
-    trackItwProximityBluetoothActivationClose();
-    machineRef.send({ type: "close" });
-  };
+  // The machine continues the flow if the user has meanwhile enabled Bluetooth from
+  // settings, otherwise it closes the proximity flow
+  const handleBack = () => machineRef.send({ type: "back" });
 
   useHeaderSecondLevel({
     title: "",
-    goBack: () => void handleBack()
+    goBack: handleBack
   });
 
   // On Android the back gesture/button would otherwise pop this screen and
   // land on the presentment screen with an empty QR code
   useHardwareBackButtonWhenFocused(() => {
-    void handleBack();
+    handleBack();
     return true;
   });
 
