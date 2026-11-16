@@ -1,28 +1,25 @@
 import { ComponentProps, useState } from "react";
 import { Pressable, View } from "react-native";
 
-import { useIOTheme } from "../../context";
-import { IOSelectionTickVisualParams, IOSpacingScale } from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions, IOOpacity } from "../../core";
 import { triggerHaptic } from "../../functions/haptic-feedback/hapticFeedback";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { HStack } from "../layout";
 import { H6 } from "../typography/H6";
 import { Checkbox } from "./Checkbox";
 
-type Props = {
-  label: string;
-  // dispatch the new value after the checkbox changes state
-  onValueChange?: (newValue: boolean) => void;
-};
-
-const DISABLED_OPACITY = 0.5;
-const CHECKBOX_MARGIN: IOSpacingScale = 8;
-
 // disabled: the component is no longer touchable
 // onPress:
 type OwnProps = Pick<ComponentProps<typeof Checkbox>, "checked" | "disabled"> &
   Pick<ComponentProps<typeof Pressable>, "onPress"> &
   Props;
+
+type Props = {
+  label: string;
+  // dispatch the new value after the checkbox changes state
+  onValueChange?: (newValue: boolean) => void;
+};
 
 /**
  * A checkbox with the automatic state management that uses a {@link Checkbox}
@@ -38,7 +35,7 @@ export const CheckboxLabel = ({
   disabled,
   onValueChange
 }: OwnProps) => {
-  const theme = useIOTheme();
+  const checkboxColors = useIOColors().component.checkbox;
   const { dynamicFontScale } = useIOFontDynamicScale();
 
   const [toggleValue, setToggleValue] = useState(checked ?? false);
@@ -65,13 +62,13 @@ export const CheckboxLabel = ({
       onPress={toggleCheckbox}
       style={{
         alignSelf: "flex-start",
-        opacity: disabled ? DISABLED_OPACITY : 1
+        opacity: disabled ? IOOpacity.disabled : 1
       }}
       testID="Checkbox"
     >
       <HStack
         allowScaleSpacing
-        space={CHECKBOX_MARGIN}
+        space={IODimensions.gap.selection.control}
         style={{ alignItems: "center", width: "100%" }}
       >
         <View
@@ -84,10 +81,10 @@ export const CheckboxLabel = ({
         >
           <Checkbox
             checked={checked ?? toggleValue}
-            size={IOSelectionTickVisualParams.size * dynamicFontScale}
+            size={IODimensions.size.selection.control * dynamicFontScale}
           />
         </View>
-        <H6 color={theme["textBody-default"]} style={{ flexShrink: 1 }}>
+        <H6 color={checkboxColors.label} style={{ flexShrink: 1 }}>
           {label}
         </H6>
       </HStack>

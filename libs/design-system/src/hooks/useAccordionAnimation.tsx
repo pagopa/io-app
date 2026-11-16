@@ -7,9 +7,7 @@ import {
   withSpring
 } from "react-native-reanimated";
 
-import { IOSpacingScale, IOSpringValues } from "../core";
-
-const accordionBodySpacing: IOSpacingScale = 16;
+import { IODimensions, IOSpringValues } from "../core";
 
 type Params = {
   defaultExpanded?: boolean;
@@ -107,7 +105,7 @@ const styles = StyleSheet.create({
   },
   accordionBodyContainer: {
     position: "absolute",
-    padding: accordionBodySpacing,
+    padding: IODimensions.padding.accordion,
     width: "100%",
     paddingTop: 0
   }

@@ -2,9 +2,9 @@ import {
   H4,
   HStack,
   IOButton,
-  IOColors,
-  IOVisualCostants,
-  Pictogram
+  IODimensions,
+  Pictogram,
+  useIOColors
 } from "@io-app/design-system";
 import I18n from "i18next";
 import { useMemo } from "react";
@@ -64,7 +64,12 @@ const IOsContent = () => {
       <View style={[styles.container, { marginTop: insets.top }]}>
         <HStack>
           <H4 style={styles.title}>{title} </H4>
-          {isSuccess ? <Pictogram name="success" size={120} /> : null}
+          {isSuccess ? (
+            <Pictogram
+              name="success"
+              size={IODimensions.size.pictogram.screen}
+            />
+          ) : null}
         </HStack>
       </View>
     </IOScrollView>
@@ -72,6 +77,7 @@ const IOsContent = () => {
 };
 
 const AndroidContent = () => {
+  const colors = useIOColors();
   const machineRef = ItwProximityMachineContext.useActorRef();
 
   const isLoading = ItwProximityMachineContext.useSelector(selectIsLoading);
@@ -106,8 +112,8 @@ const AndroidContent = () => {
           progress={isSuccess ? 100 : 0}
           radius={120}
           size={240}
-          strokeBgColor={IOColors["grey-200"]}
-          strokeColor={IOColors["blueIO-500"]}
+          strokeBgColor={colors.stroke.default}
+          strokeColor={colors.foreground.accent}
           strokeWidth={4}
         >
           <Pictogram
@@ -134,7 +140,7 @@ const AndroidContent = () => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: IOVisualCostants.headerHeight
+    paddingTop: IODimensions.height.header
   },
   title: {
     flex: 1,

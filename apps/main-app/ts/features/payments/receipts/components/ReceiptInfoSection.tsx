@@ -4,11 +4,10 @@ import {
   Alert,
   ContentWrapper,
   Divider,
-  IOColors,
+  IOColorsLegacy,
+  IODimensions,
   IOLogoPaymentType,
-  IORadiusScale,
   IOSkeleton,
-  IOVisualCostants,
   ListItemHeader,
   ListItemInfo,
   ListItemInfoCopy,
@@ -40,7 +39,7 @@ const ReceiptInfoSection = ({
   showUnavailableReceiptBanner
 }: Props) => {
   const theme = useIOTheme();
-  const backgroundColor = IOColors[theme["appBackground-primary"]];
+  const backgroundColor = IOColorsLegacy[theme["appBackground-primary"]];
 
   const transactionInfo = transaction?.infoNotice;
 
@@ -50,8 +49,8 @@ const ReceiptInfoSection = ({
       <ContentWrapper style={{ flexGrow: 1 }}>
         <ContentWrapper
           style={{
-            borderRadius: IORadiusScale["1"],
-            marginVertical: IOVisualCostants.appMarginDefault,
+            borderRadius: IODimensions.radius.default,
+            marginVertical: IODimensions.padding.screen.default,
             backgroundColor
           }}
         >

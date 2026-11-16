@@ -41,7 +41,8 @@
     "test": {
       "configurations": {
         "ci": {
-          "ci": true
+          "ci": true,
+          "passWithNoTests": true
         }
       }
     },

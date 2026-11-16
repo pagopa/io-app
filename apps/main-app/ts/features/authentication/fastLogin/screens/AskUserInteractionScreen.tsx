@@ -1,4 +1,4 @@
-import { IOColors, useIOTheme } from "@io-app/design-system";
+import { IOColorsLegacy, useIOTheme } from "@io-app/design-system";
 import { Modal } from "react-native";
 
 import {
@@ -13,7 +13,7 @@ const AskUserInteractionScreen = (props: OperationResultScreenContentProps) => {
   const theme = useIOTheme();
 
   return (
-    <Modal backdropColor={IOColors[theme["appBackground-primary"]]}>
+    <Modal backdropColor={IOColorsLegacy[theme["appBackground-primary"]]}>
       <OperationResultScreenContent {...props} />
     </Modal>
   );

@@ -5837,7 +5837,8 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                                   "alignItems": "stretch",
                                   "flexGrow": 1,
                                   "justifyContent": "center",
-                                  "padding": 24,
+                                  "paddingHorizontal": 32,
+                                  "paddingVertical": 24,
                                 },
                                 false,
                               ]

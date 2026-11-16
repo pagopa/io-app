@@ -1129,6 +1129,7 @@ exports[`SendAarCieCanInsertionScreen should match the snapshot 1`] = `
                         <Modal
                           accessible={false}
                           backdropComponent={[Function]}
+                          backgroundComponent={[Function]}
                           backgroundStyle={
                             {
                               "backgroundColor": "#FFFFFF",

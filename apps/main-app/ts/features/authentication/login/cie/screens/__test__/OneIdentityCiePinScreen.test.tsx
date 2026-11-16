@@ -133,13 +133,13 @@ describe("OneIdentityCiePinScreen", () => {
   });
 });
 
-function renderComponent(useUat = false) {
+function renderComponent(cieEnv = "production") {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const finalState = merge(undefined, initialState, {
     features: {
       loginFeatures: {
         cieLogin: {
-          useUat
+          cieEnv
         }
       }
     }

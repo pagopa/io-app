@@ -1,29 +1,11 @@
 import { Platform, StyleSheet, View, ViewStyle } from "react-native";
 
-import { useIOTheme } from "../../context";
-import {
-  IOColors,
-  IOSpacingScale,
-  IOTagHSpacing,
-  IOTagRadius,
-  IOTagVSpacing,
-  IOTheme,
-  IOThemeLight
-} from "../../core";
+import { useIOColors } from "../../context";
+import { IOColors, IODimensions } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
-import { Icon, IOIcons, IOIconSizeScale } from "../icons";
+import { Icon, IOIcons } from "../icons";
 import { IOText } from "../typography";
-
-const IconColorsMap: Record<string, keyof IOTheme> = {
-  primary: "interactiveElem-default",
-  warning: "warningIcon",
-  error: "errorIcon",
-  success: "successIcon",
-  info: "infoIcon",
-  grey: "icon-default",
-  lightGrey: "icon-decorative"
-};
 
 export type Tag = TextProps &
   WithTestID<
@@ -48,7 +30,14 @@ export type Tag = TextProps &
     allowFontScaling?: boolean;
   } & { forceLightMode?: boolean };
 
-type IconColorVariant = keyof typeof IconColorsMap;
+export type TagIconColor =
+  | "error"
+  | "grey"
+  | "info"
+  | "lightGrey"
+  | "primary"
+  | "success"
+  | "warning";
 
 type TextProps =
   | {
@@ -61,12 +50,9 @@ type TextProps =
     };
 
 type VariantProps = {
-  color: IconColorVariant;
+  color: TagIconColor;
   name: IOIcons;
 };
-
-const IOTagIconMargin: IOSpacingScale = 6;
-const IOTagIconSize: IOIconSizeScale = 16;
 
 const styles = StyleSheet.create({
   tag: {
@@ -80,15 +66,15 @@ const styles = StyleSheet.create({
       }
     }),
     overflow: "hidden",
-    borderWidth: 1,
+    borderWidth: IODimensions.stroke.default,
     borderCurve: "continuous"
   },
   tagStatic: {
-    borderRadius: IOTagRadius,
+    borderRadius: IODimensions.radius.tag,
     borderCurve: "continuous",
-    paddingHorizontal: IOTagHSpacing,
-    paddingVertical: IOTagVSpacing,
-    columnGap: IOTagIconMargin
+    paddingHorizontal: IODimensions.padding.tag.horizontal,
+    paddingVertical: IODimensions.padding.tag.vertical,
+    columnGap: IODimensions.gap.tag.leading
   },
   iconWrapper: {
     flexShrink: 0
@@ -155,24 +141,21 @@ export const Tag = ({
   allowFontScaling = true,
   forceLightMode = false
 }: Tag) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const { dynamicFontScale, spacingScaleMultiplier } = useIOFontDynamicScale();
 
   const variantProps = getVariantProps(variant, icon);
 
-  const borderColor = forceLightMode
-    ? IOColors[IOThemeLight["cardBorder-default"]]
-    : IOColors[theme["cardBorder-default"]];
-
-  const backgroundColor = forceLightMode
-    ? IOColors[IOThemeLight["appBackground-primary"]]
-    : IOColors[theme["appBackground-primary"]];
+  const tagColors = forceLightMode
+    ? IOColors.light.component.tag
+    : colors.component.tag;
 
   const tagDynamic: ViewStyle = {
-    paddingHorizontal: IOTagHSpacing * dynamicFontScale,
-    paddingVertical: IOTagVSpacing * dynamicFontScale,
-    columnGap: IOTagIconMargin * dynamicFontScale * spacingScaleMultiplier,
-    borderRadius: IOTagRadius * dynamicFontScale
+    paddingHorizontal: IODimensions.padding.tag.horizontal * dynamicFontScale,
+    paddingVertical: IODimensions.padding.tag.vertical * dynamicFontScale,
+    columnGap:
+      IODimensions.gap.tag.leading * dynamicFontScale * spacingScaleMultiplier,
+    borderRadius: IODimensions.radius.tag * dynamicFontScale
   };
 
   return (
@@ -180,7 +163,10 @@ export const Tag = ({
       style={[
         styles.tag,
         allowFontScaling ? tagDynamic : styles.tagStatic,
-        { borderColor, backgroundColor }
+        {
+          borderColor: tagColors.border.default,
+          backgroundColor: tagColors.background.default
+        }
       ]}
       testID={testID}
     >
@@ -190,24 +176,16 @@ export const Tag = ({
             accessibilityLabel={iconAccessibilityLabel}
             accessible={!!iconAccessibilityLabel}
             allowFontScaling={allowFontScaling}
-            color={
-              forceLightMode
-                ? IOThemeLight[IconColorsMap[variantProps.color]]
-                : theme[IconColorsMap[variantProps.color]]
-            }
+            color={tagColors.icon[variantProps.color]}
             name={variantProps.name}
-            size={IOTagIconSize}
+            size={IODimensions.size.icon.tag}
           />
         </View>
       )}
       {text && (
         <IOText
           allowFontScaling={allowFontScaling}
-          color={
-            forceLightMode
-              ? IOThemeLight["textBody-tertiary"]
-              : theme["textBody-tertiary"]
-          }
+          color={tagColors.foreground.default}
           ellipsizeMode="tail"
           lineHeight={16}
           numberOfLines={1}

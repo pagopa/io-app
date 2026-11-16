@@ -1,4 +1,4 @@
-import { Body, IOVisualCostants } from "@io-app/design-system";
+import { Body, IODimensions } from "@io-app/design-system";
 import { ScrollView } from "react-native";
 
 import { useScreenEndMargin } from "../../../hooks/useScreenEndMargin";
@@ -9,7 +9,7 @@ export const DSScreenEndMargin = () => {
   return (
     <ScrollView
       contentContainerStyle={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault,
+        paddingHorizontal: IODimensions.padding.screen.default,
         paddingBottom: screenEndMargin
       }}
     >

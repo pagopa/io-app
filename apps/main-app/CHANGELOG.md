@@ -1,3 +1,163 @@
+## 3.44.0-rc.0 (2026-11-13)
+
+This was a version bump only for @io-app/main-app to align it with other projects, there were no code changes.
+
+## 3.43.0-rc.11 (2026-11-13)
+
+### Features
+
+- [[IEG-3311](https://pagopa.atlassian.net/browse/IEG-3311)] Add CGN featured opportunities ([#8866](https://github.com/pagopa/io-app/pull/8866))
+- **IT-Wallet:** [[SIW-5404](https://pagopa.atlassian.net/browse/SIW-5404)] Add verified image handling and logo integration for credentials AS ([#8806](https://github.com/pagopa/io-app/pull/8806))
+- **IT-Wallet:** [[SIW-5498](https://pagopa.atlassian.net/browse/SIW-5498)] Track IT-Wallet activation engagement ([#8871](https://github.com/pagopa/io-app/pull/8871))
+
+### Bug Fixes
+
+- **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] correct IT-Wallet credential colors ([#8881](https://github.com/pagopa/io-app/pull/8881))
+- **IT-Wallet:** [[SIW-5469](https://pagopa.atlassian.net/browse/SIW-5469)] resolve Android BLE error code 2 ([#8878](https://github.com/pagopa/io-app/pull/8878))
+
+### Chores
+
+- [[IEL-912](https://pagopa.atlassian.net/browse/IEL-912)] Added FCI_SIGN_ALL_BOTTOMSHEET event tracking ([#8851](https://github.com/pagopa/io-app/pull/8851))
+- [[IEL-972](https://pagopa.atlassian.net/browse/IEL-972)] Added no-cache and no-store on FCI polling request ([#8846](https://github.com/pagopa/io-app/pull/8846))
+- Update translations from Lokalise ([#8882](https://github.com/pagopa/io-app/pull/8882))
+- [[IEL-927](https://pagopa.atlassian.net/browse/IEL-927)] Added CTA label to IDPay onboarding "beforeContinue" notice ([#8865](https://github.com/pagopa/io-app/pull/8865))
+- [[IOPLT-2153](https://pagopa.atlassian.net/browse/IOPLT-2153)] Migrate `@pagopa/io-react-native-http-client` to `@io-app/expo-http-client` ([#8849](https://github.com/pagopa/io-app/pull/8849))
+
+### ❤️ Thank You
+
+- Alessandro Dell'Oste @adelloste
+- Angelo Sanfilippo
+- Cristiano Tofani
+- DavideOnano @DavideOnano
+- Fabio Bombardi @shadowsheep1
+- Federico Mastrini @mastro993
+- Pawel @soixdev91
+- Riccardo Sacco @riccardosacco99
+
+## 3.43.0-rc.10 (2026-11-12)
+
+### Features
+
+- [[SIW-5483](https://pagopa.atlassian.net/browse/SIW-5483)] Add IT-Wallet What's New login engagement screen ([#8867](https://github.com/pagopa/io-app/pull/8867))
+
+### Bug Fixes
+
+- [[IOAS-163](https://pagopa.atlassian.net/browse/IOAS-163)] message calendar reminder fix ([#8747](https://github.com/pagopa/io-app/pull/8747))
+- [[IOCOM-3384](https://pagopa.atlassian.net/browse/IOCOM-3384)] expo-notifications missing sound ([#8835](https://github.com/pagopa/io-app/pull/8835))
+- [[IOPLT-2246](https://pagopa.atlassian.net/browse/IOPLT-2246)] Android haptic feedback status checker ([#8823](https://github.com/pagopa/io-app/pull/8823))
+- **IT-Wallet:** [[SIW-5435](https://pagopa.atlassian.net/browse/SIW-5435)] Discovery banner and eID lifecycle alert visibility and copy ([#8837](https://github.com/pagopa/io-app/pull/8837))
+- **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] keep proximity transport open for termination ([#8870](https://github.com/pagopa/io-app/pull/8870))
+
+### Chores
+
+- [[IOPLT-2193](https://pagopa.atlassian.net/browse/IOPLT-2193)] Adjust switch access order for `ListItem` component ([#8757](https://github.com/pagopa/io-app/pull/8757))
+- [[IOPLT-2213](https://pagopa.atlassian.net/browse/IOPLT-2213)] Improve `Banner` component a11y ([#8800](https://github.com/pagopa/io-app/pull/8800))
+- **IT-Wallet:** [[SIW-5384](https://pagopa.atlassian.net/browse/SIW-5384)] Use SDK flag for credential offer support ([#8857](https://github.com/pagopa/io-app/pull/8857))
+- **IT-Wallet:** [[SIW-5366](https://pagopa.atlassian.net/browse/SIW-5366)] Track credential status update failures for analytics purposes ([#8873](https://github.com/pagopa/io-app/pull/8873))
+
+### ❤️ Thank You
+
+- Alessandro Dell'Oste @adelloste
+- DavideOnano @DavideOnano
+- Emanuele Dall'Ara @LeleDallas
+- Federico Mastrini @mastro993
+- Gianluca Spada
+- Martino Cesari Tomba @forrest57
+- MonicaRungi-EY
+
+## 3.43.0-rc.9 (2026-11-11)
+
+### Bug Fixes
+
+- [[IOPLT-2268](https://pagopa.atlassian.net/browse/IOPLT-2268)] Fix components with missing dark mode support ([#8856](https://github.com/pagopa/io-app/pull/8856))
+- **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Keep tour guide state after logout ([#8862](https://github.com/pagopa/io-app/pull/8862))
+
+### Chores
+
+- **IT-Wallet:** [[SIW-5349](https://pagopa.atlassian.net/browse/SIW-5349)] Enhance Privacy web component accessibility ([#8855](https://github.com/pagopa/io-app/pull/8855))
+
+### ❤️ Thank You
+
+- Damiano Plebani
+- DavideOnano @DavideOnano
+- Federico Mastrini @mastro993
+
+## 3.43.0-rc.8 (2026-11-10)
+
+### Features
+
+- **IT-Wallet:** [[SIW-5464](https://pagopa.atlassian.net/browse/SIW-5464)] Remote FF for CED opportunities ([#8838](https://github.com/pagopa/io-app/pull/8838))
+
+### Bug Fixes
+
+- **IT-Wallet:** [[SIW-3834](https://pagopa.atlassian.net/browse/SIW-3834),[SIW-3818](https://pagopa.atlassian.net/browse/SIW-3818)] Enhance keyboard accessibility for privacy link in credential trust issuer screen ([#8847](https://github.com/pagopa/io-app/pull/8847))
+- [[IEL-740](https://pagopa.atlassian.net/browse/IEL-740)] Correct iOS bottom sheet keyboard focus order ([#8824](https://github.com/pagopa/io-app/pull/8824))
+
+### ❤️ Thank You
+
+- DavideOnano @DavideOnano
+- Emanuele Dall'Ara @LeleDallas
+- Fabio Bombardi @shadowsheep1
+- Martino Cesari Tomba @forrest57
+- Riccardo Sacco @riccardosacco99
+
+## 3.43.0-rc.7 (2026-11-09)
+
+### Bug Fixes
+
+- **IT-Wallet:** [[SIW-5353](https://pagopa.atlassian.net/browse/SIW-5353)] Announce wallet headers before cards ([#8843](https://github.com/pagopa/io-app/pull/8843))
+
+### Chores
+
+- **release:** 3.42.2-rc.0 ([#8858](https://github.com/pagopa/io-app/pull/8858))
+
+### ❤️ Thank You
+
+- Alessandro Dell'Oste @adelloste
+- MonicaRungi-EY
+
+## 3.42.2-rc.0 (2026-11-09)
+
+### Chores
+
+- [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Avoid startup crash when device ID lookup fails ([#8854](https://github.com/pagopa/io-app/pull/8854))
+
+### ❤️ Thank You
+
+- Alessandro Dell'Oste @adelloste
+
+## 3.43.0-rc.6 (2026-11-06)
+
+### Bug Fixes
+
+- **IT-Wallet:** [[SIW-5304](https://pagopa.atlassian.net/browse/SIW-5304)] Remove "expiring" label from non IT-Wallet documents ([#8783](https://github.com/pagopa/io-app/pull/8783))
+- [[IEG-3321](https://pagopa.atlassian.net/browse/IEG-3321)] Omit CGN banner calls based on FF ([#8848](https://github.com/pagopa/io-app/pull/8848))
+- **IT-Wallet:** [[SIW-5186](https://pagopa.atlassian.net/browse/SIW-5186)] Back from DocIO fallback landing to mode selection ([#8709](https://github.com/pagopa/io-app/pull/8709))
+
+### Chores
+
+- **release:** 3.42.1-rc.0 ([#8850](https://github.com/pagopa/io-app/pull/8850))
+- [[IOPLT-2266](https://pagopa.atlassian.net/browse/IOPLT-2266)] Bump `oxfmt` to `0.76` ([#8845](https://github.com/pagopa/io-app/pull/8845))
+- [[IOPLT-2109](https://pagopa.atlassian.net/browse/IOPLT-2109)] Update dev server `supertest` dependency ([#8641](https://github.com/pagopa/io-app/pull/8641))
+
+### ❤️ Thank You
+
+- Damiano Plebani
+- Emanuele Dall'Ara @LeleDallas
+- Federico Mastrini @mastro993
+- MonicaRungi-EY
+- Riccardo Sacco @riccardosacco99
+
+## 3.42.1-rc.0 (2026-11-06)
+
+### Bug Fixes
+
+- [[IEG-3321](https://pagopa.atlassian.net/browse/IEG-3321)] Omit CGN banner calls based on FF ([#8848](https://github.com/pagopa/io-app/pull/8848))
+
+### ❤️ Thank You
+
+- Emanuele Dall'Ara @LeleDallas
+
 ## 3.43.0-rc.5 (2026-11-05)
 
 ### Bug Fixes

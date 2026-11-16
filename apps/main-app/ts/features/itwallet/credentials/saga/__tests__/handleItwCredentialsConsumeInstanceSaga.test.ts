@@ -1,4 +1,4 @@
-import * as ioCrypto from "@pagopa/io-react-native-crypto";
+import * as ioCrypto from "@io-app/expo-crypto";
 import { expectSaga } from "redux-saga-test-plan";
 
 import { walletRemoveCards } from "../../../../wallet/store/actions/cards";
@@ -20,7 +20,6 @@ jest.mock("../../utils/vault", () => ({
 jest.mock("../../analytics", () => ({
   trackItwVaultCredentialRemoveFailed: jest.fn()
 }));
-jest.mock("@pagopa/io-react-native-crypto", () => ({ deleteKey: jest.fn() }));
 
 const mockVaultRemove = jest.mocked(CredentialsVault.remove);
 const mockDeleteKey = jest.mocked(ioCrypto.deleteKey);

@@ -1,4 +1,4 @@
-import { Banner, IOVisualCostants, VSpacer } from "@io-app/design-system";
+import { Banner, IODimensions, VSpacer } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
 import { useCallback } from "react";
@@ -82,7 +82,7 @@ const CgnDiscoveryBanner = ({ handleOnClose }: Props) => {
       exiting={FadeOut.duration(300)}
       layout={LinearTransition.duration(300)}
       style={{
-        marginHorizontal: IOVisualCostants.appMarginDefault
+        marginHorizontal: IODimensions.padding.screen.default
       }}
     >
       <VSpacer size={16} />

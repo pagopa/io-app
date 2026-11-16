@@ -1,4 +1,4 @@
-import { Ref, useCallback, useMemo } from "react";
+import { Ref, useCallback } from "react";
 import {
   GestureResponderEvent,
   Pressable,
@@ -13,8 +13,8 @@ import Animated, {
   withSpring
 } from "react-native-reanimated";
 
-import { useIOTheme } from "../../context";
-import { hexToRgba, IOColors, IOSpringValues } from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions, IOOpacity, IOSpringValues } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useScaleAnimation } from "../../hooks";
 import { WithTestID } from "../../utils/types";
@@ -25,7 +25,7 @@ export type TabItem = WithTestID<{
   accessibilityHint?: string;
   // Accessibility
   accessibilityLabel: string;
-  color?: ColorMode;
+  color?: TabItemColor;
   disabled?: boolean;
   // Icons
   icon?: IOIcons;
@@ -37,31 +37,14 @@ export type TabItem = WithTestID<{
   selected?: boolean;
 }>;
 
-type ColorMode = "dark" | "light";
-
-type ColorStates = {
-  background: {
-    default: string;
-    selected: string;
-  };
-  border: {
-    default: string;
-    selected: string;
-  };
-  foreground: {
-    default: IOColors;
-    disabled: IOColors;
-    selected: IOColors;
-  };
-};
+/* `contrast` on a dark or accent background */
+type TabItemColor = "contrast" | "primary";
 
 type TabItemState = "default" | "disabled" | "selected";
 
-const DISABLED_OPACITY = 0.5;
-
 const TabItem = ({
   label,
-  color = "light",
+  color = "primary",
   selected = false,
   accessibilityLabel,
   accessibilityHint,
@@ -74,58 +57,10 @@ const TabItem = ({
 }: TabItem) => {
   const { onPressIn, onPressOut, scaleAnimatedStyle } =
     useScaleAnimation("medium");
-  const theme = useIOTheme();
   const reducedMotion = useReducedMotion();
 
-  const mapColorStates: Record<
-    NonNullable<TabItem["color"]>,
-    ColorStates
-  > = useMemo(
-    () => ({
-      light: {
-        border: {
-          default: IOColors[theme["tab-item-border-default"]],
-          selected: hexToRgba(
-            IOColors[theme["tab-item-foreground-selected"]],
-            0.5
-          )
-        },
-        background: {
-          default: hexToRgba(
-            IOColors[theme["tab-item-background-selected"]],
-            0
-          ),
-          selected: hexToRgba(
-            IOColors[theme["tab-item-background-selected"]],
-            0.25
-          ),
-          pressed: IOColors[theme["appBackground-primary"]]
-        },
-        foreground: {
-          default: theme["tab-item-foreground-default"],
-          selected: theme["tab-item-foreground-selected"],
-          disabled: "grey-700"
-        }
-      },
-      dark: {
-        border: {
-          default: hexToRgba(IOColors.white, 0),
-          selected: IOColors.white
-        },
-        background: {
-          default: hexToRgba(IOColors.white, 0.1),
-          selected: IOColors.white,
-          pressed: IOColors.white
-        },
-        foreground: {
-          default: "white",
-          selected: "black",
-          disabled: "white"
-        }
-      }
-    }),
-    [theme]
-  );
+  const tabColors = useIOColors().component.tabItem[color];
+  const border = "border" in tabColors ? tabColors.border : undefined;
 
   const itemState: TabItemState = selected
     ? "selected"
@@ -133,7 +68,7 @@ const TabItem = ({
       ? "disabled"
       : "default";
 
-  const foregroundColor = mapColorStates[color].foreground[itemState];
+  const foregroundColor = tabColors.foreground[itemState];
 
   const selectedStateTransition = useDerivedValue(() =>
     withSpring(selected ? 1 : 0, IOSpringValues.selection)
@@ -144,19 +79,15 @@ const TabItem = ({
     backgroundColor: interpolateColor(
       selectedStateTransition.value,
       [0, 1],
-      [
-        mapColorStates[color].background.default,
-        mapColorStates[color].background.selected
-      ]
+      [tabColors.background.default, tabColors.background.selected]
     ),
-    borderColor: interpolateColor(
-      selectedStateTransition.value,
-      [0, 1],
-      [
-        mapColorStates[color].border.default,
-        mapColorStates[color].border.selected
-      ]
-    )
+    ...(border != null && {
+      borderColor: interpolateColor(
+        selectedStateTransition.value,
+        [0, 1],
+        [border.default, border.selected]
+      )
+    })
   }));
 
   const activeIcon = selected ? (iconSelected ?? icon) : icon;
@@ -188,14 +119,19 @@ const TabItem = ({
       <Animated.View
         style={[
           styles.container,
-          { columnGap: 4 },
+          { columnGap: IODimensions.gap.tab.icon },
+          border != null && { borderWidth: IODimensions.stroke.default },
           !disabled && !reducedMotion && scaleAnimatedStyle,
           animatedStyle,
-          disabled && { opacity: DISABLED_OPACITY }
+          disabled && { opacity: IOOpacity.disabled }
         ]}
       >
         {activeIcon && (
-          <Icon color={foregroundColor} name={activeIcon} size={16} />
+          <Icon
+            color={foregroundColor}
+            name={activeIcon}
+            size={IODimensions.size.icon.tab}
+          />
         )}
         <IOText color={foregroundColor} size={14} weight="Semibold">
           {label}
@@ -209,10 +145,9 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderWidth: 1,
-    borderRadius: 64,
+    paddingHorizontal: IODimensions.padding.tab.horizontal,
+    paddingVertical: IODimensions.padding.tab.vertical,
+    borderRadius: IODimensions.radius.tab,
     borderCurve: "continuous",
     justifyContent: "center",
     alignSelf: "flex-start"

@@ -94,6 +94,13 @@ export type Context = {
   /** An optional dictionary of Key Attestations generated for the issuance. */
   keyAttestations?: Record<string, string>;
   /**
+   * Set when the user switches from IT-Wallet (L3) identification to Documenti
+   * su IO because they do not have a CIE. It keeps the L3 credential type, so
+   * the user can go back from the Documenti su IO landing to the L3
+   * identification mode selection.
+   */
+  l2FallbackOrigin: undefined | { credentialType: string | undefined };
+  /**
    * The level of eID issuance, which determines the authentication methods
    * allowed and the eID level that will be issued: Documenti su IO (L2) or IT
    * Wallet (L2+, L3)
@@ -183,6 +190,7 @@ export const InitialContext: Omit<Context, "deps"> = {
   credentialsToUpgrade: [],
   failedCredentials: undefined,
   credentialType: undefined,
+  l2FallbackOrigin: undefined,
   credentialOfferUri: undefined,
   accessToken: undefined,
   walletInstanceStatusList: undefined

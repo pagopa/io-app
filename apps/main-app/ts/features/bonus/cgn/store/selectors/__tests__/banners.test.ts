@@ -8,10 +8,12 @@ import { appReducer } from "../../../../../../store/reducers";
 import { baseRawBackendStatus } from "../../../../../../store/reducers/__mock__/backendStatus";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { profileLoadSuccess } from "../../../../../settings/common/store/actions";
+import { closeCgnDiscoveryBanner } from "../../actions/banners";
 import { cgnDetails } from "../../actions/details";
 import {
   isCgnEligibleByAgeSelector,
-  isCgnEngagementBannerRenderableSelector
+  isCgnEngagementBannerRenderableSelector,
+  shouldFetchCgnDetailsSelector
 } from "../banners";
 
 const youngProfile = {
@@ -61,6 +63,39 @@ const mockBannerConfig = {
     "en-EN": "Desc test"
   }
 };
+
+describe("shouldFetchCgnDetailsSelector", () => {
+  beforeEach(() => {
+    MockDate.set("2026-01-01");
+  });
+
+  it("should return false when the engagement banner is disabled", () => {
+    const store = createTestStore();
+    store.dispatch(profileLoadSuccess(youngProfile));
+    expect(shouldFetchCgnDetailsSelector(store.getState())).toBe(false);
+  });
+
+  it("should return true when the engagement banner is enabled and eligible", () => {
+    const store = createTestStore();
+    store.dispatch(profileLoadSuccess(youngProfile));
+    store.dispatch(
+      backendStatusLoadSuccess({
+        ...baseRawBackendStatus,
+        config: {
+          ...baseRawBackendStatus.config,
+          cgn: {
+            ...baseRawBackendStatus.config.cgn,
+            show_cgn_engagement_banner: mockBannerConfig
+          }
+        }
+      })
+    );
+    expect(shouldFetchCgnDetailsSelector(store.getState())).toBe(true);
+
+    store.dispatch(closeCgnDiscoveryBanner());
+    expect(shouldFetchCgnDetailsSelector(store.getState())).toBe(false);
+  });
+});
 
 describe("isCgnEngagementBannerRenderableSelector", () => {
   beforeEach(() => {

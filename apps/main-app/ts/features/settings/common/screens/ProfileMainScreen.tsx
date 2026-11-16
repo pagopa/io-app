@@ -1,7 +1,7 @@
 import {
   ContentWrapper,
   Divider,
-  IOVisualCostants,
+  IODimensions,
   ListItemAction,
   ListItemNav,
   useIOToast,
@@ -259,7 +259,7 @@ const ProfileMainScreenFC = () => {
       <VSpacer size={16} />
       <FlatList
         contentContainerStyle={{
-          paddingHorizontal: IOVisualCostants.appMarginDefault
+          paddingHorizontal: IODimensions.padding.screen.default
         }}
         data={profileNavListItems}
         ItemSeparatorComponent={Divider}

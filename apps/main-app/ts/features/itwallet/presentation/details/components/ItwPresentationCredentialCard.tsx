@@ -1,6 +1,6 @@
 import {
   ContentWrapper,
-  IOSpacingScale,
+  IODimensionScale,
   VSpacer,
   VStack
 } from "@io-app/design-system";
@@ -108,7 +108,7 @@ const CardContainer = ({
   </View>
 );
 
-const cardPaddingHorizontal: IOSpacingScale = 16;
+const cardPaddingHorizontal: IODimensionScale = 16;
 
 const styles = StyleSheet.create({
   cardContainer: {

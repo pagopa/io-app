@@ -18,4 +18,5 @@ Before writing code, read `CODING_STANDARDS.md#general` and every other section 
 - Writing actions, reducers, selectors, sagas, or store access → `CODING_STANDARDS.md#redux-and-sagas`
 - Writing an XState machine → `CODING_STANDARDS.md#state-machines`
 - Building components or screens → `CODING_STANDARDS.md#ui`
+- Using or adding colors → `CODING_STANDARDS.md#colors`
 - Writing tests or fixing a bug → `CODING_STANDARDS.md#testing`

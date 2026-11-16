@@ -280,7 +280,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               <View
                                 style={
                                   {
-                                    "width": 32,
+                                    "width": 24,
                                   }
                                 }
                               />
@@ -927,7 +927,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               <View
                                 style={
                                   {
-                                    "width": 32,
+                                    "width": 24,
                                   }
                                 }
                               />
@@ -1574,7 +1574,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               <View
                                 style={
                                   {
-                                    "width": 32,
+                                    "width": 24,
                                   }
                                 }
                               />
@@ -7321,7 +7321,8 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -8211,7 +8212,8 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -9101,7 +9103,8 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -9991,7 +9994,8 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -10881,7 +10885,8 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -11771,7 +11776,8 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -12235,7 +12241,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                               <View
                                 style={
                                   {
-                                    "width": 32,
+                                    "width": 24,
                                   }
                                 }
                               />
@@ -12510,7 +12516,8 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -12974,7 +12981,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                               <View
                                 style={
                                   {
-                                    "width": 32,
+                                    "width": 24,
                                   }
                                 }
                               />
@@ -13249,7 +13256,8 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -13713,7 +13721,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                               <View
                                 style={
                                   {
-                                    "width": 32,
+                                    "width": 24,
                                   }
                                 }
                               />
@@ -13988,7 +13996,8 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]

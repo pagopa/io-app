@@ -526,7 +526,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                         "top": 0,
                                       },
                                       {
-                                        "borderRadius": 7.5,
+                                        "borderRadius": 9,
                                         "height": 36,
                                         "width": 36,
                                       },
@@ -564,7 +564,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                         "top": 0,
                                       },
                                       {
-                                        "borderRadius": 7.5,
+                                        "borderRadius": 9,
                                         "height": 36,
                                         "width": 36,
                                       },
@@ -582,7 +582,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                         "top": 0,
                                       },
                                       {
-                                        "borderRadius": 7.5,
+                                        "borderRadius": 9,
                                         "height": 36,
                                         "width": 36,
                                       },

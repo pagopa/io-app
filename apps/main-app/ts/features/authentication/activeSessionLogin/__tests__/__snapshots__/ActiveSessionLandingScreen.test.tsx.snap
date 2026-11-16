@@ -280,7 +280,7 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                               <View
                                 style={
                                   {
-                                    "width": 32,
+                                    "width": 24,
                                   }
                                 }
                               />
@@ -1480,7 +1480,6 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                       [
                                         {
                                           "alignItems": "center",
-                                          "borderColor": "#E8EBF1",
                                           "borderCurve": "continuous",
                                           "borderRadius": 8,
                                           "borderWidth": 1,
@@ -1492,14 +1491,12 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                         {
                                           "borderColor": "#E8EBF1",
                                         },
-                                        false,
                                       ]
                                     }
                                     style={
                                       [
                                         {
                                           "alignItems": "center",
-                                          "borderColor": "#E8EBF1",
                                           "borderCurve": "continuous",
                                           "borderRadius": 8,
                                           "borderWidth": 1,
@@ -1511,7 +1508,6 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                         {
                                           "borderColor": "#E8EBF1",
                                         },
-                                        false,
                                         {
                                           "transform": [
                                             {
@@ -1721,7 +1717,6 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                       [
                                         {
                                           "alignItems": "center",
-                                          "borderColor": "#E8EBF1",
                                           "borderCurve": "continuous",
                                           "borderRadius": 8,
                                           "borderWidth": 1,
@@ -1733,14 +1728,12 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                         {
                                           "borderColor": "#E8EBF1",
                                         },
-                                        false,
                                       ]
                                     }
                                     style={
                                       [
                                         {
                                           "alignItems": "center",
-                                          "borderColor": "#E8EBF1",
                                           "borderCurve": "continuous",
                                           "borderRadius": 8,
                                           "borderWidth": 1,
@@ -1752,7 +1745,6 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                         {
                                           "borderColor": "#E8EBF1",
                                         },
-                                        false,
                                         {
                                           "transform": [
                                             {
@@ -1917,7 +1909,8 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                   }
                                   accessible={false}
                                   collapsable={false}
-                                  focusable={true}
+                                  focusable={false}
+                                  importantForAccessibility="no"
                                   onBlur={[Function]}
                                   onClick={[Function]}
                                   onFocus={[Function]}
@@ -1986,9 +1979,6 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                     }
                                   >
                                     <View
-                                      accessibilityLabel="Non sai cosa scegliere? Ti diamo una mano"
-                                      accessibilityRole="button"
-                                      accessible={true}
                                       style={
                                         {
                                           "alignSelf": "center",
@@ -1997,28 +1987,49 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                         }
                                       }
                                     >
-                                      <Text
-                                        allowFontScaling={true}
-                                        dynamicTypeRamp="headline"
-                                        maxFontSizeMultiplier={1.5}
+                                      <View
+                                        accessibilityLabel="Non sai cosa scegliere?"
+                                        accessibilityRole="text"
+                                        accessible={true}
                                         style={
-                                          [
-                                            {},
-                                            {
-                                              "color": "#0E0F13",
-                                              "fontFamily": "Titillio",
-                                              "fontSize": 16,
-                                              "fontStyle": "normal",
-                                              "fontWeight": "600",
-                                              "lineHeight": 24,
-                                            },
-                                          ]
+                                          {
+                                            "gap": 4,
+                                          }
                                         }
                                       >
-                                        Non sai cosa scegliere?
-                                      </Text>
+                                        <View
+                                          style={
+                                            {
+                                              "display": "flex",
+                                              "flexDirection": "column",
+                                              "gap": 4,
+                                            }
+                                          }
+                                        >
+                                          <Text
+                                            accessible={false}
+                                            allowFontScaling={true}
+                                            dynamicTypeRamp="headline"
+                                            maxFontSizeMultiplier={1.5}
+                                            style={
+                                              [
+                                                {},
+                                                {
+                                                  "color": "#2B2E38",
+                                                  "fontFamily": "Titillio",
+                                                  "fontSize": 16,
+                                                  "fontStyle": "normal",
+                                                  "fontWeight": "600",
+                                                  "lineHeight": 24,
+                                                },
+                                              ]
+                                            }
+                                          >
+                                            Non sai cosa scegliere?
+                                          </Text>
+                                        </View>
+                                      </View>
                                       <View
-                                        accessibilityElementsHidden={true}
                                         accessibilityLabel="Ti diamo una mano"
                                         accessibilityRole="button"
                                         accessibilityState={
@@ -2041,7 +2052,6 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                         accessible={true}
                                         collapsable={false}
                                         focusable={true}
-                                        importantForAccessibility="no-hide-descendants"
                                         onBlur={[Function]}
                                         onClick={[Function]}
                                         onFocus={[Function]}
@@ -2051,15 +2061,7 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                         onResponderTerminate={[Function]}
                                         onResponderTerminationRequest={[Function]}
                                         onStartShouldSetResponder={[Function]}
-                                        pointerEvents="none"
                                       >
-                                        <View
-                                          style={
-                                            {
-                                              "height": 8,
-                                            }
-                                          }
-                                        />
                                         <Text
                                           accessibilityElementsHidden={true}
                                           accessible={false}

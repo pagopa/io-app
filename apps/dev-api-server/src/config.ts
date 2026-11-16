@@ -246,6 +246,7 @@ const defaultConfig: IoDevServerConfig = {
         isCgnEligible: true,
         isEycaEligible: true,
         allowRandomValues: true,
+        featuredOpportunitiesCount: 3,
         hangOnActivation: false
       },
       cdc: {
