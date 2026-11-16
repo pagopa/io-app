@@ -6,7 +6,7 @@ import {
   isCancelledFailure,
   nativeRequest,
   setCookie
-} from "@pagopa/io-react-native-http-client";
+} from "@io-app/expo-http-client";
 import { getCustomTabsSupportingBrowsersAsync } from "expo-web-browser";
 import * as E from "fp-ts/lib/Either";
 import { identity, pipe } from "fp-ts/lib/function";
@@ -64,12 +64,12 @@ export function* handleFimsGetConsentsList(
     Platform.OS === "android"
       ? yield* call(getCustomTabsSupportingBrowsersAsync)
       : undefined;
-  const debugMessage = `InApp Browser not supported`;
 
   if (
     Platform.OS === "android" &&
     customTabsSupportingBrowsers?.browserPackages.length === 0
   ) {
+    const debugMessage = `InApp Browser not supported`;
     yield* call(computeAndTrackAuthenticationError, debugMessage);
 
     yield* put(

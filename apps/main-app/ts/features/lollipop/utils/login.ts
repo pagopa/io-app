@@ -1,5 +1,5 @@
+import { PublicKey } from "@io-app/expo-crypto";
 import { getRedirects } from "@io-app/login-utils";
-import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { err, ok, Result, ResultAsync } from "neverthrow";
 import pako from "pako";
 import URLParse from "url-parse";
