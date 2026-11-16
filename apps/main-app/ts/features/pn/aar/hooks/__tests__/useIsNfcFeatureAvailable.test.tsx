@@ -1,9 +1,9 @@
-jest.mock("@pagopa/io-react-native-cie", () => ({
+jest.mock("@io-app/expo-cie", () => ({
   CieUtils: {
     hasNfcFeature: jest.fn()
   }
 }));
-import * as CIE_UTILS from "@pagopa/io-react-native-cie";
+import * as CIE_UTILS from "@io-app/expo-cie";
 import { renderHook, waitFor } from "@testing-library/react-native";
 
 import { useIsNfcFeatureAvailable } from "../useIsNfcFeatureAvailable";

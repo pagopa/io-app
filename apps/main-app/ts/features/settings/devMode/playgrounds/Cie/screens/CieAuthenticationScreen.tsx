@@ -4,7 +4,7 @@ import {
   OTPInput,
   VSpacer
 } from "@io-app/design-system";
-import { CieManager, NfcEvent } from "@pagopa/io-react-native-cie";
+import { CieManager, NfcEvent } from "@io-app/expo-cie";
 import { useHeaderHeight } from "@react-navigation/elements";
 import I18n from "i18next";
 import { createRef, useEffect, useState } from "react";
