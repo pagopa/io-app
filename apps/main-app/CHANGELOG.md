@@ -1,3 +1,18 @@
+## 3.44.0-rc.1 (2026-11-16)
+
+### Chores
+
+- [[IOPLT-2196](https://pagopa.atlassian.net/browse/IOPLT-2196)] Add missing `a11y` to `NumberPad` component ([#8764](https://github.com/pagopa/io-app/pull/8764))
+- [[IOPID-4272](https://pagopa.atlassian.net/browse/IOPID-4272)] Upgrade `react-native-webview` to `14.0.1` ([#8773](https://github.com/pagopa/io-app/pull/8773))
+- [[IOPLT-2153](https://pagopa.atlassian.net/browse/IOPLT-2153)] Reintroduce migration of `@pagopa/io-react-native-http-client` to `@io-app/expo-http-client` ([#8880](https://github.com/pagopa/io-app/pull/8880))
+
+### ❤️ Thank You
+
+- Alessandro Dell'Oste @adelloste
+- Andrea
+- Emanuele Dall'Ara @LeleDallas
+- Martino Cesari Tomba @forrest57
+
 ## 3.44.0-rc.0 (2026-11-13)
 
 This was a version bump only for @io-app/main-app to align it with other projects, there were no code changes.
