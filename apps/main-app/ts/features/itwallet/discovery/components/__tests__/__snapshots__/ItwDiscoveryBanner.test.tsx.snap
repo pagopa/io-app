@@ -3896,7 +3896,7 @@ exports[`ItwDiscoveryBanner snapshots should match snapshot for empty wallet ban
                     >
                       <View
                         accessibilityLabel="Il tuo Portafoglio è ora parte di IT-⁠Wallet
-Scopri le funzionalità evolute dei documenti digitali su IO.
+Attivalo ora e scopri le funzionalità evolute dei tuoi documenti digitali su IO.
 Inizia"
                         accessibilityRole="button"
                         accessible={true}
@@ -4205,7 +4205,7 @@ Inizia"
                                     ]
                                   }
                                 >
-                                  Scopri le funzionalità evolute dei documenti digitali su IO.
+                                  Attivalo ora e scopri le funzionalità evolute dei tuoi documenti digitali su IO.
                                 </Text>
                               </View>
                             </View>

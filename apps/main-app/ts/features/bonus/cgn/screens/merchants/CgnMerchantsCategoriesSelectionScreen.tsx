@@ -6,6 +6,7 @@ import {
   VSpacer
 } from "@io-app/design-system";
 import I18n from "i18next";
+import _ from "lodash";
 import { useEffect, useMemo, useState } from "react";
 import { RefreshControl, View } from "react-native";
 import Animated, {
@@ -18,9 +19,21 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { cgnFeaturedOpportunitiesSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import CgnAnimatedHeader from "../../components/CgnAnimatedHeader";
+import { CgnFeaturedOpportunities } from "../../components/merchants/CgnFeaturedOpportunities";
 import { useDisableRootNavigatorGesture } from "../../hooks/useDisableRootNavigatorGesture";
 import CGN_ROUTES from "../../navigation/routes";
+import {
+  cgnFeaturedOpportunities,
+  selectFeaturedOpportunity
+} from "../../store/actions/merchants";
+import {
+  isLoadingFeaturedOpportunitiesSelector,
+  resolvedCgnFeaturedOpportunitiesSelector
+} from "../../store/selectors/featuredOpportunities";
 import {
   CategoryRow,
   CgnMerchantCategoriesListScreen
@@ -49,6 +62,21 @@ const isCategoryRow = (item: CgnMerchantsListItem): item is CategoryRow =>
 
 const CgnMerchantsCategoriesSelectionScreen = () => {
   const { navigate } = useIONavigation();
+  const dispatch = useIODispatch();
+  const featuredReferences = useIOSelector(
+    cgnFeaturedOpportunitiesSelector,
+    _.isEqual
+  );
+  const featuredOpportunities = useIOSelector(
+    resolvedCgnFeaturedOpportunitiesSelector
+  );
+  const isFeaturedOpportunitiesLoading = useIOSelector(
+    isLoadingFeaturedOpportunitiesSelector
+  );
+
+  useOnFirstRender(() => {
+    dispatch(cgnFeaturedOpportunities.request(featuredReferences));
+  });
   useDisableRootNavigatorGesture();
   const { bottom } = useSafeAreaInsets();
   const [selectedTab, setSelectedTab] = useState<
@@ -69,6 +97,9 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
   const categoriesScreen = CgnMerchantCategoriesListScreen();
   const merchantsScreen = CgnMerchantsListScreen();
 
+  const isCategoriesTabSelected =
+    selectedTab === CgnMerchantsHomeTabRoutes.CGN_CATEGORIES;
+
   const {
     data,
     refreshControlProps,
@@ -76,10 +107,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
     ListFooterComponentStyle,
     ListEmptyComponent,
     ItemSeparatorComponent
-  } =
-    selectedTab === CgnMerchantsHomeTabRoutes.CGN_CATEGORIES
-      ? categoriesScreen
-      : merchantsScreen;
+  } = isCategoriesTabSelected ? categoriesScreen : merchantsScreen;
 
   const tabRoutesKeys = Object.keys(CgnMerchantsHomeTabRoutes);
 
@@ -178,10 +206,30 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
           </TabNavigation>
         </View>
         <VSpacer size={16} />
+        {isCategoriesTabSelected && (
+          <CgnFeaturedOpportunities
+            hasConfiguredOpportunities={featuredReferences.length > 0}
+            isLoading={isFeaturedOpportunitiesLoading}
+            onSelect={opportunity => {
+              dispatch(selectFeaturedOpportunity(opportunity));
+              navigate(CGN_ROUTES.DETAILS.MAIN, {
+                screen: CGN_ROUTES.DETAILS.MERCHANTS.DISCOUNT
+              });
+            }}
+            opportunities={featuredOpportunities}
+          />
+        )}
       </>
     ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [selectedTab]
+    [
+      dispatch,
+      featuredOpportunities,
+      featuredReferences,
+      isFeaturedOpportunitiesLoading,
+      navigate,
+      selectedTab
+    ]
   );
 
   return (
@@ -205,6 +253,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
           tintColor="transparent"
           {...refreshControlProps}
           onRefresh={() => {
+            dispatch(cgnFeaturedOpportunities.request(featuredReferences));
             refreshControlProps.onRefresh();
             setIsPullRefresh(true);
           }}

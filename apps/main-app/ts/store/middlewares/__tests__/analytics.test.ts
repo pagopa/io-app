@@ -37,6 +37,7 @@ import {
 } from "../../../features/settings/common/store/actions/userDataProcessing";
 import { ProfileError } from "../../../features/settings/common/store/types";
 import * as ZENDESKANALYTICS from "../../../features/zendesk/analytics/index";
+import * as MIXPANELPROPERTYUTILS from "../../../mixpanelConfig/mixpanelPropertyUtils";
 import {
   analyticsAuthenticationCompleted,
   analyticsAuthenticationStarted
@@ -488,6 +489,9 @@ describe("analytics", () => {
       jest
         .spyOn(FCIREDUCERS, "fciEnvironmentSelector")
         .mockImplementation(_state => "test");
+      jest
+        .spyOn(MIXPANELPROPERTYUTILS, "authSecurityLevelHandler")
+        .mockImplementation(_state => "L3");
 
       const spyOnMockedCgnAnalytics = jest
         .spyOn(CGNANALYTICS, "default")
@@ -497,7 +501,9 @@ describe("analytics", () => {
         .mockImplementation();
       const spyOnMockedFCIAnalytics = jest
         .spyOn(FCIANALYTICS, "default")
-        .mockImplementation(_env => (_action: Action) => undefined);
+        .mockImplementation(
+          (_env, _authSecurityLevel) => (_action: Action) => undefined
+        );
       const spyOnMockedMessagesAnalytics = jest
         .spyOn(MESSAGESANALYTICS, "trackMessagesActionsPostDispatch")
         .mockImplementation();
@@ -526,7 +532,7 @@ describe("analytics", () => {
       expect(spyOnMockedZendeskAnalytics).toHaveBeenCalledWith(mockedAction);
 
       expect(spyOnMockedFCIAnalytics).toHaveBeenCalledTimes(1);
-      expect(spyOnMockedFCIAnalytics).toHaveBeenCalledWith("test");
+      expect(spyOnMockedFCIAnalytics).toHaveBeenCalledWith("test", "L3");
 
       expect(spyOnMockedMessagesAnalytics).toHaveBeenCalledTimes(1);
       expect(spyOnMockedMessagesAnalytics).toHaveBeenCalledWith(
@@ -548,6 +554,9 @@ describe("analytics", () => {
       jest
         .spyOn(FCIREDUCERS, "fciEnvironmentSelector")
         .mockImplementation(_state => "test");
+      jest
+        .spyOn(MIXPANELPROPERTYUTILS, "authSecurityLevelHandler")
+        .mockImplementation(_state => "L3");
 
       const spyOnMockedCgnAnalytics = jest
         .spyOn(CGNANALYTICS, "default")
@@ -557,7 +566,9 @@ describe("analytics", () => {
         .mockImplementation();
       const spyOnMockedFCIAnalytics = jest
         .spyOn(FCIANALYTICS, "default")
-        .mockImplementation(_env => (_action: Action) => undefined);
+        .mockImplementation(
+          (_env, _authSecurityLevel) => (_action: Action) => undefined
+        );
       const spyOnMockedMessagesAnalytics = jest
         .spyOn(MESSAGESANALYTICS, "trackMessagesActionsPostDispatch")
         .mockImplementation();

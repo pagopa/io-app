@@ -89,7 +89,8 @@ const IdPayInitiativeDetailsScreenComponent = () => {
       () => null,
       ({ privacyLink, tcLink }) => (
         <IOMarkdown
-          content={I18n.t("idpay.onboarding.beforeContinue.text", {
+          content={I18n.t("idpay.onboarding.beforeContinue.adviseText", {
+            ctaText: I18n.t("idpay.onboarding.beforeContinue.requestBonus"),
             privacyUrl: privacyLink,
             tosUrl: tcLink
           })}

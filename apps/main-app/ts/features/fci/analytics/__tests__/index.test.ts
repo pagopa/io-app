@@ -14,12 +14,20 @@ import {
   fciStartRequest,
   fciUpdateDocumentSignaturesRequest
 } from "../../store/actions";
-import trackFciAction, { trackFciPollingFailureScreenView } from "../index";
+import trackFciAction, {
+  trackFciNoSignatureBottomsheetOpen,
+  trackFciPollingFailureScreenView,
+  trackFciSignatureRequestStatus
+} from "../index";
 
 describe("index", () => {
   describe("trackFciAction", () => {
     const environment = "test";
-    const trackFciActionWithEnv = trackFciAction(environment);
+    const authSecurityLevel = "L3";
+    const trackFciActionWithEnv = trackFciAction(
+      environment,
+      authSecurityLevel
+    );
 
     // Mock mixpanelTrack function
     const mixpanelTrackSpy = jest
@@ -39,7 +47,8 @@ describe("index", () => {
       expect(mixpanelTrackSpy.mock.calls[0][0]).toBe(action.type);
       expect(mixpanelTrackSpy.mock.calls[0][1]).toEqual({
         event_category: "TECH",
-        environment
+        environment,
+        auth_security_level: authSecurityLevel
       });
     });
 
@@ -53,7 +62,8 @@ describe("index", () => {
       expect(mixpanelTrackSpy.mock.calls[0][0]).toBe(action.type);
       expect(mixpanelTrackSpy.mock.calls[0][1]).toEqual({
         event_category: "TECH",
-        environment
+        environment,
+        auth_security_level: authSecurityLevel
       });
     });
 
@@ -82,7 +92,8 @@ describe("index", () => {
       expect(mixpanelTrackSpy.mock.calls[0][0]).toBe(action.type);
       expect(mixpanelTrackSpy.mock.calls[0][1]).toEqual({
         event_category: "TECH",
-        environment
+        environment,
+        auth_security_level: authSecurityLevel
       });
     });
 
@@ -378,5 +389,60 @@ describe("index", () => {
         );
       }
     );
+  });
+
+  describe("trackFciSignatureRequestStatus", () => {
+    const mixpanelTrackSpy = jest
+      .spyOn(mixpanelModule, "mixpanelTrack")
+      .mockImplementation();
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it("should track FCI_DOC_OPENING with auth_security_level when the request is waiting for signature", () => {
+      const expiresAt = new Date();
+      trackFciSignatureRequestStatus({
+        status: SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE,
+        expiresAt,
+        totalDocCount: 2,
+        environment: "test",
+        authSecurityLevel: "L3"
+      });
+
+      expect(mixpanelTrackSpy).toHaveBeenCalledTimes(1);
+      expect(mixpanelTrackSpy).toHaveBeenCalledWith(
+        "FCI_DOC_OPENING",
+        expect.objectContaining({
+          expire_date: expiresAt,
+          total_doc_count: 2,
+          environment: "test",
+          auth_security_level: "L3"
+        })
+      );
+    });
+  });
+
+  describe("trackFciNoSignatureBottomsheetOpen", () => {
+    const mixpanelTrackSpy = jest
+      .spyOn(mixpanelModule, "mixpanelTrack")
+      .mockImplementation();
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it("should track the FCI_SIGN_ALL_BOTTOMSHEET screen view event", () => {
+      trackFciNoSignatureBottomsheetOpen();
+
+      expect(mixpanelTrackSpy).toHaveBeenCalledTimes(1);
+      expect(mixpanelTrackSpy).toHaveBeenCalledWith(
+        "FCI_SIGN_ALL_BOTTOMSHEET",
+        expect.objectContaining({
+          event_category: "UX",
+          event_type: "screen_view"
+        })
+      );
+    });
   });
 });
