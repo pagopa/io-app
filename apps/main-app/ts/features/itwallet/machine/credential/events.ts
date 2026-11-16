@@ -11,6 +11,7 @@ export type CredentialIssuanceEvents =
   | ConfirmCredentialOffer
   | ConfirmTrustData
   | Continue
+  | CredentialsCatalogueReady
   | ErrorActorEvent
   | Retry
   | SelectCredential
@@ -45,6 +46,10 @@ type ConfirmTrustData = {
 
 type Continue = {
   type: "continue";
+};
+
+type CredentialsCatalogueReady = {
+  type: "credentials-catalogue-ready";
 };
 
 type Retry = {

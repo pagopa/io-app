@@ -1,5 +1,4 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import { LoginUtilsError } from "@pagopa/io-react-native-login-utils";
 import { err } from "neverthrow";
 
 import { AppDispatch } from "../../../../App";
@@ -22,18 +21,18 @@ jest.mock("../..", () => {
       .mockResolvedValue(jwkPublicKey as PublicKey)
   };
 });
-jest.mock("@pagopa/io-react-native-login-utils", () => ({
+jest.mock("@io-app/login-utils", () => ({
   getRedirects: jest.fn().mockRejectedValue({
-    userInfo: {
-      Error: "fake network error",
-      URL: "fake url",
-      StatusCode: 409,
-      Parameter: undefined
-    },
-    code: "409"
-  }),
-  isLoginUtilsError: (e: unknown) =>
-    (e as LoginUtilsError).userInfo !== undefined
+    message: JSON.stringify({
+      userInfo: {
+        Error: "fake network error",
+        URL: "fake url",
+        StatusCode: 409,
+        Parameter: undefined
+      }
+    }),
+    code: "NativeRedirectError"
+  })
 }));
 
 describe("Lollipop regenerate key, get redirects and verification", () => {
@@ -47,7 +46,19 @@ describe("Lollipop regenerate key, get redirects and verification", () => {
     );
 
     expect(result).toEqual(
-      err({ reason: expect.stringMatching(/409.*fake network error/) })
+      err({
+        reason: JSON.stringify({
+          message: JSON.stringify({
+            userInfo: {
+              Error: "fake network error",
+              URL: "fake url",
+              StatusCode: 409,
+              Parameter: undefined
+            }
+          }),
+          code: "NativeRedirectError"
+        })
+      })
     );
   });
 });

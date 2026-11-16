@@ -5,7 +5,7 @@ import { PaymentMethodResponse } from "@io-app/api-types/generated/definitions/p
  */
 import {
   Divider,
-  IOVisualCostants,
+  IODimensions,
   ListItemNav,
   VSpacer
 } from "@io-app/design-system";
@@ -74,7 +74,7 @@ const WalletOnboardingPaymentMethodsList = ({
   return (
     <FlatList
       contentContainerStyle={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault
+        paddingHorizontal: IODimensions.padding.screen.default
       }}
       data={paymentMethods}
       ItemSeparatorComponent={() => <Divider />}

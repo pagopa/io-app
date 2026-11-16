@@ -3,6 +3,7 @@ import { ITW_PROXIMITY_ROUTES } from "../presentation/proximity/navigation/route
 
 export const ITW_ROUTES = {
   MAIN: "ITW_MAIN" as const,
+  ENGAGEMENT: "ITW_ENGAGEMENT" as const,
   OFFLINE: {
     WALLET: "ITW_OFFLINE_WALLET"
   } as const,

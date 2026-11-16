@@ -1,7 +1,7 @@
 import {
   FooterActions,
   FooterActionsMeasurements,
-  IOColors,
+  IOColorsLegacy,
   useIOTheme
 } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -23,7 +23,7 @@ import { RECEIPT_DOCUMENT_TYPE_PREFIX } from "../utils";
 
 const ReceiptPreviewScreen = () => {
   const theme = useIOTheme();
-  const backgroundColor = IOColors[theme["appBackground-secondary"]];
+  const backgroundColor = IOColorsLegacy[theme["appBackground-secondary"]];
   const [footerActionsMeasurements, setFooterActionsMeasurements] =
     useState<FooterActionsMeasurements>({
       actionBlockHeight: 0,

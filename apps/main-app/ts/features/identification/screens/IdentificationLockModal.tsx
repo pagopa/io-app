@@ -2,8 +2,9 @@ import {
   BodySmall,
   ContentWrapper,
   H4,
-  IOColors,
+  IOColorsLegacy,
   Pictogram,
+  ProgressLoader,
   useIOTheme,
   VSpacer
 } from "@io-app/design-system";
@@ -16,7 +17,6 @@ import {
   CountdownProvider,
   useCountdown
 } from "../../../components/countdown/CountdownProvider";
-import { ProgressIndicator } from "../../../components/ui/ProgressIndicator";
 import { useIODispatch } from "../../../store/hooks";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { identificationHideLockModal } from "../store/actions";
@@ -53,7 +53,7 @@ const Countdown = (props: CountdownProps) => {
 
   return (
     <>
-      <ProgressIndicator progress={loaderValue} />
+      <ProgressLoader progress={loaderValue} />
       <VSpacer size={8} />
       <View style={{ flexDirection: "row" }}>
         <BodySmall weight="Regular">{waitMessageText}</BodySmall>
@@ -83,7 +83,7 @@ export const IdentificationLockModal = (props: Props) => {
         style={{
           flex: 1,
           justifyContent: "center",
-          backgroundColor: IOColors[theme["appBackground-primary"]]
+          backgroundColor: IOColorsLegacy[theme["appBackground-primary"]]
         }}
       >
         <ContentWrapper>

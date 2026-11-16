@@ -1,4 +1,4 @@
-import { Banner, IOVisualCostants } from "@io-app/design-system";
+import { Banner, IODimensions } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useRef } from "react";
@@ -63,7 +63,7 @@ export const PNActivationReminderBanner = ({ handleOnClose }: Props) => {
 
 const styles = StyleSheet.create({
   margins: {
-    marginHorizontal: IOVisualCostants.appMarginDefault,
+    marginHorizontal: IODimensions.padding.screen.default,
     marginVertical: 16
   }
 });

@@ -4,7 +4,7 @@ import {
   useIOToast,
   VSpacer
 } from "@io-app/design-system";
-import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
+import { openAuthSessionAsync } from "expo-web-browser";
 import I18n from "i18next";
 import {
   createContext,
@@ -64,7 +64,7 @@ export const AppFeedbackProvider = ({ children }: PropsWithChildren) => {
             label: I18n.t("appFeedback.bottomSheet.continue"),
             onPress: () => {
               if (surveyUrl) {
-                void openAuthenticationSession(surveyUrl, "");
+                void openAuthSessionAsync(surveyUrl);
               }
               setTopic(undefined);
               dismiss();
@@ -84,7 +84,11 @@ export const AppFeedbackProvider = ({ children }: PropsWithChildren) => {
   });
 
   useEffect(() => {
-    if (topic === undefined || !canAskFeedback) {
+    if (topic === undefined) {
+      return;
+    }
+    if (!canAskFeedback) {
+      setTopic(undefined);
       return;
     }
     if (appFeedbackEnabled) {
@@ -112,6 +116,7 @@ export const AppFeedbackProvider = ({ children }: PropsWithChildren) => {
       );
     } else {
       void requestAppReview();
+      setTopic(undefined);
     }
   }, [appFeedbackEnabled, canAskFeedback, dispatch, present, topic]);
 

@@ -15,6 +15,7 @@ import {
   itwIpzsItwalletPrivacyUrlSelector,
   itwIpzsPrivacyUrlSelector,
   itwIsActivationDisabledSelector,
+  itwIsDiscoverMoreCEDRemotelyEnabledSelector,
   itwIsIPatenteCtaEnabledSelector,
   itwNewCredentialsSelector,
   itwPinnedCredentialsSelector
@@ -305,3 +306,53 @@ describe("itwIpzsItwalletPrivacyUrlSelector", () => {
     ).toBe(url);
   });
 });
+
+describe.each(["ios", "android"] as const)(
+  "CED opportunities min app version on %s",
+  platform => {
+    beforeEach(() => {
+      jest.replaceProperty(Platform, "OS", platform);
+      jest.spyOn(appVersion, "getAppVersion").mockReturnValue("2.0.0.2");
+    });
+
+    afterEach(() => jest.restoreAllMocks());
+
+    test.each([
+      { name: "missing config", remoteConfig: {}, expected: false },
+      {
+        name: "missing minimum version",
+        remoteConfig: { discover_more_ced: {} },
+        expected: false
+      },
+      ...[
+        { name: "older app", version: "3.0.0.0", expected: false },
+        { name: "equal app", version: "2.0.0.2", expected: true },
+        { name: "newer app", version: "1.0.0.0", expected: true },
+        { name: "older build", version: "2.0.0.3", expected: false },
+        { name: "newer build", version: "2.0.0.1", expected: true },
+        { name: "disabled with 0", version: "0", expected: false },
+        { name: "disabled with 0.0", version: "0.0", expected: false },
+        { name: "disabled with 0.0.0.0", version: "0.0.0.0", expected: false }
+      ].map(({ name, version, expected }) => ({
+        name,
+        remoteConfig: {
+          discover_more_ced: { min_app_version: minAppVersion(version) }
+        },
+        expected
+      })),
+      {
+        name: "platform-specific minimum version",
+        remoteConfig: {
+          discover_more_ced: {
+            min_app_version: { ios: "1.0.0.0", android: "3.0.0.0" }
+          }
+        },
+        expected: platform === "ios"
+      }
+    ])("returns $expected for $name", ({ remoteConfig, expected }) => {
+      expect(
+        itwIsDiscoverMoreCEDRemotelyEnabledSelector(makeState(remoteConfig))
+      ).toBe(expected);
+    });
+  }
+);

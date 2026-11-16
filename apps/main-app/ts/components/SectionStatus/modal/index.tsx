@@ -1,5 +1,5 @@
 import { LevelEnum } from "@io-app/api-types/generated/definitions/content/SectionStatus";
-import { Alert, IOColors } from "@io-app/design-system";
+import { Alert, IOColorsLegacy } from "@io-app/design-system";
 import I18n from "i18next";
 import {
   ComponentProps,
@@ -35,7 +35,7 @@ type Props = {
 const statusVariantMap: Record<
   LevelEnum,
   {
-    background: IOColors;
+    background: IOColorsLegacy;
     variant: ComponentProps<typeof Alert>["variant"];
   }
 > = {
@@ -137,7 +137,7 @@ const ModalSectionStatusComponent = ({
     <View
       style={[
         {
-          backgroundColor: IOColors[background],
+          backgroundColor: IOColorsLegacy[background],
           paddingTop: top
         },
         sticky && {

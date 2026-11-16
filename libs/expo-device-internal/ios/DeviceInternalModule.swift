@@ -10,8 +10,8 @@ public final class DeviceInternalModule: Module {
   public func definition() -> ModuleDefinition {
     Name("DeviceInternal")
 
-    Function("getUniqueIdSync") { () throws -> String in
-      try self.resolver.getUniqueIdSync()
+    Function("getUniqueIdSync") { () -> String in
+      self.resolver.getUniqueIdSync()
     }
 
     Function("isDisplayZoomed") { () -> Bool in

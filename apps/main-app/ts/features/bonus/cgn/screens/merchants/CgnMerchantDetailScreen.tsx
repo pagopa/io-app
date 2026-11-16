@@ -4,9 +4,9 @@ import {
   ContentWrapper,
   Divider,
   H1,
+  IODimensions,
   IOSkeleton,
   IOToast,
-  IOVisualCostants,
   ListItemAction,
   ListItemHeader,
   ListItemInfo,
@@ -66,7 +66,7 @@ const CgnMerchantDetailScreen = () => {
   const paddingBottom: number = useMemo(
     () =>
       safeAreaInsets.bottom === 0
-        ? IOVisualCostants.appMarginDefault
+        ? IODimensions.padding.screen.default
         : safeAreaInsets.bottom,
     [safeAreaInsets]
   );
@@ -99,9 +99,7 @@ const CgnMerchantDetailScreen = () => {
   const getTitleHeight = (event: LayoutChangeEvent) => {
     const { height } = event.nativeEvent.layout;
     if (titleHeight === 0) {
-      setTitleHeight(
-        height - safeAreaInsets.top - IOVisualCostants.headerHeight
-      );
+      setTitleHeight(height - safeAreaInsets.top - IODimensions.height.header);
     }
   };
 

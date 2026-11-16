@@ -2,12 +2,14 @@ import { ToolEnum } from "@io-app/api-types/generated/definitions/content/Assist
 import { BackendStatus } from "@io-app/api-types/generated/definitions/content/BackendStatus";
 import { LevelEnum } from "@io-app/api-types/generated/definitions/content/SectionStatus";
 
+import { ioDevServerConfig } from "../config";
 import { baseRelyingPartyPath } from "../features/fims/services/relyingPartyService";
 import {
   sendOptInServiceId,
   sendServiceId
 } from "../features/pn/services/dataService";
 import { serverUrl } from "../utils/server";
+import { merchantsAll } from "./features/cgn/merchants";
 
 export const backendInfo = {
   min_app_version: { android: "1.27.0", ios: "1.27.0" },
@@ -54,6 +56,23 @@ export const backendStatus: BackendStatus = {
       show_cgn_categories_modal: {
         android: "5.0.0.0",
         ios: "5.0.0.0"
+      },
+      featured_opportunities: {
+        min_app_version: {
+          android: "1.0.0.0",
+          ios: "1.0.0.0"
+        },
+        opportunities: merchantsAll
+          .slice(
+            0,
+            ioDevServerConfig.features.bonus.cgn.featuredOpportunitiesCount
+          )
+          .flatMap(merchant =>
+            merchant.discounts.slice(0, 1).map(discount => ({
+              merchantId: merchant.id,
+              discountId: discount.id
+            }))
+          )
       },
       show_cgn_engagement_banner: {
         min_app_version: {
@@ -126,6 +145,13 @@ export const backendStatus: BackendStatus = {
           configuration_id: "cdc-onboarding",
           service_id: "01JV4M365CHAZN5C0FDR62DCVD",
           service_name: "Carta della Cultura - Onboarding"
+        },
+        {
+          configuration_id: "ced-opportunities",
+          service_id: "01KTXJ47AAJMZFRJPA4V4TX5D0",
+          organization_fiscal_code: "15376371009",
+          organization_name: "IO - L'app dei servizi pubblici",
+          service_name: "Carta Europea della Disabilità"
         }
       ],
       iOSCookieDisabledServiceIds: [
@@ -400,7 +426,10 @@ export const backendStatus: BackendStatus = {
         android: "2.66.0.0"
       },
       ipatente_cta_visible: true,
-      feedback_banner_visible: true
+      feedback_banner_visible: true,
+      discover_more_ced: {
+        min_app_version: { ios: "0.0.0.0", android: "0.0.0.0" }
+      }
     },
     landing_banners: {
       priority_order: [

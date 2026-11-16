@@ -5,8 +5,8 @@
 
 import {
   Dismissable,
-  IOColors,
-  IOVisualCostants,
+  IOColorsLegacy,
+  IODimensions,
   ToastNotification,
   useIOTheme
 } from "@io-app/design-system";
@@ -65,7 +65,7 @@ const UpdateAppModal: FC = () => {
   const theme = useIOTheme();
 
   return (
-    <Modal backdropColor={IOColors[theme["appBackground-primary"]]}>
+    <Modal backdropColor={IOColorsLegacy[theme["appBackground-primary"]]}>
       <OperationResultScreenContent
         action={{
           label: actionLabel,
@@ -102,8 +102,8 @@ const UpdateAppModal: FC = () => {
 const styles = StyleSheet.create({
   alertContainer: {
     position: "absolute",
-    right: IOVisualCostants.appMarginDefault,
-    left: IOVisualCostants.appMarginDefault,
+    right: IODimensions.padding.screen.default,
+    left: IODimensions.padding.screen.default,
     zIndex: 1000
   }
 });

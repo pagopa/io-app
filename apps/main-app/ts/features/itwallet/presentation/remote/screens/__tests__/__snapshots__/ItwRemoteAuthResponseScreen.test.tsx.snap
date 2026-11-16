@@ -341,7 +341,8 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when a redirect_uri i
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -1405,7 +1406,8 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when no redirect_uri 
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]

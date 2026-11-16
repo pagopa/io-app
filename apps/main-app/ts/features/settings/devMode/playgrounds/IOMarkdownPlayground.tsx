@@ -2,8 +2,8 @@ import {
   ContentWrapper,
   HSpacer,
   IconButton,
-  IOColors,
-  IOVisualCostants,
+  IOColorPalette,
+  IODimensions,
   ListItemSwitch,
   VSpacer
 } from "@io-app/design-system";
@@ -123,8 +123,8 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: IOColors["grey-200"],
-    backgroundColor: IOColors.white,
+    borderColor: IOColorPalette.greyscale[200],
+    backgroundColor: IOColorPalette.greyscale.white,
     maxHeight: 128
   }
 });
@@ -173,7 +173,7 @@ export const IOMarkdownPlayground = () => {
     <View style={{ flex: 1 }}>
       <ScrollView
         contentContainerStyle={{
-          paddingHorizontal: IOVisualCostants.appMarginDefault,
+          paddingHorizontal: IODimensions.padding.screen.default,
           flexGrow: 1
         }}
       >
@@ -219,7 +219,7 @@ export const IOMarkdownPlayground = () => {
                 multiline
                 onChangeText={setContent}
                 placeholder="Insert here your markdown"
-                placeholderTextColor={IOColors["grey-450"]}
+                placeholderTextColor={IOColorPalette.greyscale[450]}
                 style={styles.textInput}
                 value={content}
               />

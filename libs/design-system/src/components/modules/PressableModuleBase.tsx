@@ -2,30 +2,27 @@ import { ComponentProps, PropsWithChildren, useCallback } from "react";
 import { GestureResponderEvent, Pressable } from "react-native";
 import Animated, { useReducedMotion } from "react-native-reanimated";
 
-import { useIOTheme } from "../../context";
-import { IOColors, IOModuleIDPSavedVSpacing, IOModuleStyles } from "../../core";
+import { useIOColors } from "../../context";
 import { triggerHaptic } from "../../functions";
 import { useScaleAnimation } from "../../hooks";
 import { WithTestID } from "../../utils/types";
+import { IOModuleStyles } from "./styles";
 
 export type PressableModuleBaseProps = WithTestID<
   Pick<
     ComponentProps<typeof Pressable>,
     "accessibilityHint" | "accessibilityLabel" | "onPress"
-  > & {
-    withLooseSpacing?: boolean;
-  }
+  >
 >;
 
 export const PressableModuleBase = ({
   onPress,
-  withLooseSpacing = false,
   accessibilityLabel,
   accessibilityHint,
   testID,
   children
 }: PropsWithChildren<PressableModuleBaseProps>) => {
-  const theme = useIOTheme();
+  const moduleColors = useIOColors().component.module;
   const reducedMotion = useReducedMotion();
   const { onPressIn, onPressOut, scaleAnimatedStyle } = useScaleAnimation(
     reducedMotion ? "slight" : "medium"
@@ -61,8 +58,7 @@ export const PressableModuleBase = ({
       <Animated.View
         style={[
           IOModuleStyles.button,
-          { borderColor: IOColors[theme["cardBorder-default"]] },
-          withLooseSpacing && { paddingVertical: IOModuleIDPSavedVSpacing },
+          { borderColor: moduleColors.border },
           scaleAnimatedStyle
         ]}
       >

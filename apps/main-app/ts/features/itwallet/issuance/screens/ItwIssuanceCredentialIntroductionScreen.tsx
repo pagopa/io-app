@@ -1,7 +1,7 @@
 import {
   ContentWrapper,
   H2,
-  IOColors,
+  IOColorsLegacy,
   IOMarkdown,
   useIOTheme,
   VSpacer
@@ -14,6 +14,7 @@ import { Image, StyleSheet, View } from "react-native";
 import type { CredentialIssuanceMode } from "../../machine/credential/context";
 
 import introHeroSource from "../../../../../img/features/itWallet/issuance/intro_hero.png";
+import { LoadingScreenContent } from "../../../../components/screens/LoadingScreenContent";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
@@ -55,6 +56,8 @@ export const ItwIssuanceCredentialIntroductionScreen = (props: ScreenProps) => {
 
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const eidMachineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const isLoading =
+    ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
   const machineCredentialType =
     ItwCredentialIssuanceMachineContext.useSelector(selectCredentialType);
 
@@ -93,6 +96,10 @@ export const ItwIssuanceCredentialIntroductionScreen = (props: ScreenProps) => {
       }
     }, [credentialType, machineRef, mode])
   );
+
+  if (isLoading) {
+    return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
+  }
 
   // A missing credential type should never happen at this point
   return machineCredentialType ? (
@@ -154,7 +161,7 @@ export const ContentView = ({ credentialType }: ContentViewProps) => {
         <View
           style={[
             styles.contentBox,
-            { borderColor: IOColors[theme["cardBorder-default"]] }
+            { borderColor: IOColorsLegacy[theme["cardBorder-default"]] }
           ]}
         >
           <IOMarkdown content={markdownContent} />

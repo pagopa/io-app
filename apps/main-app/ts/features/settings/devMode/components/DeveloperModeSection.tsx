@@ -4,22 +4,19 @@ import {
   H2,
   IOButton,
   IOButtonBlockSpecificProps,
+  IODimensions,
   IOToast,
-  IOVisualCostants,
   ListItemHeader,
   ListItemInfoCopy,
   ListItemNav,
   ListItemSwitch,
-  useIOTheme,
   VSpacer
 } from "@io-app/design-system";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import I18n from "i18next";
-import { ComponentProps, useContext } from "react";
-import { Alert, FlatList, ListRenderItemInfo } from "react-native";
+import { ComponentProps } from "react";
+import { Alert, FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 
-import { AlertModal } from "../../../../components/ui/AlertModal";
-import { LightModalContext } from "../../../../components/ui/LightModal";
 import { isPlaygroundsEnabled } from "../../../../config";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { setDebugModeEnabled } from "../../../../store/actions/debug";
@@ -181,9 +178,7 @@ const DeveloperActionsSection = () => {
   return (
     <>
       <FlatList
-        contentContainerStyle={{
-          paddingHorizontal: IOVisualCostants.appMarginDefault
-        }}
+        contentContainerStyle={styles.listContent}
         data={filteredDevActionButtons}
         ItemSeparatorComponent={() => <VSpacer size={8} />}
         keyExtractor={(item: DevActionButton, index: number) =>
@@ -280,9 +275,7 @@ const DeveloperDataSection = () => {
 
   return (
     <FlatList
-      contentContainerStyle={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault
-      }}
+      contentContainerStyle={styles.listContent}
       data={filteredDevDataCopyListItems}
       ItemSeparatorComponent={() => <Divider />}
       keyExtractor={(item: DevDataCopyListItem, index: number) =>
@@ -456,9 +449,7 @@ const PlaygroundsSection = () => {
 
   return (
     <FlatList
-      contentContainerStyle={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault
-      }}
+      contentContainerStyle={styles.listContent}
       data={filteredPlaygroundsNavListItems}
       ItemSeparatorComponent={() => <Divider />}
       keyExtractor={(item: PlaygroundsNavListItem, index: number) =>
@@ -472,9 +463,9 @@ const PlaygroundsSection = () => {
 };
 
 const DeveloperTestEnvironmentSection = ({
-  handleShowModal
+  showRestartAlert
 }: {
-  handleShowModal: () => void;
+  showRestartAlert: () => void;
 }) => {
   const dispatch = useIODispatch();
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
@@ -502,7 +493,7 @@ const DeveloperTestEnvironmentSection = ({
                   isPagoPATestEnabled: enabled
                 })
               );
-              handleShowModal();
+              showRestartAlert();
             }
           }
         ],
@@ -514,13 +505,13 @@ const DeveloperTestEnvironmentSection = ({
           isPagoPATestEnabled: enabled
         })
       );
-      handleShowModal();
+      showRestartAlert();
     }
   };
 
   const onIdPayTestToggle = (enabled: boolean) => {
     dispatch(preferencesIdPayTestSetEnabled({ isIdPayTestEnabled: enabled }));
-    handleShowModal();
+    showRestartAlert();
   };
 
   const onActiveSessionLoginToggle = (enabled: boolean) => {
@@ -581,9 +572,7 @@ const DeveloperTestEnvironmentSection = ({
 
   return (
     <FlatList
-      contentContainerStyle={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault
-      }}
+      contentContainerStyle={styles.listContent}
       data={testEnvironmentsListItems}
       ItemSeparatorComponent={() => <Divider />}
       keyExtractor={(item: TestEnvironmentsListItem, index: number) =>
@@ -609,27 +598,23 @@ const DeveloperTestEnvironmentSection = ({
 };
 
 const DeveloperModeSection = () => {
-  const { showModal } = useContext(LightModalContext);
   const dispatch = useIODispatch();
   const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
 
-  const theme = useIOTheme();
-
-  const handleShowModal = () => {
-    showModal(
-      <AlertModal
-        message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
-      />
+  // No buttons: blocks until restart on Android; iOS always adds an OK button
+  const showRestartAlert = () =>
+    Alert.alert(
+      I18n.t("profile.main.pagoPaEnvironment.alertMessage"),
+      undefined,
+      [],
+      { cancelable: false }
     );
-  };
 
   return (
     <>
       <ContentWrapper testID="developerModeSection">
         <VSpacer size={24} />
-        <H2 color={theme["textHeading-default"]}>
-          {I18n.t("profile.main.developersSectionHeader")}
-        </H2>
+        <H2>{I18n.t("profile.main.developersSectionHeader")}</H2>
         <VSpacer size={8} />
 
         {/* Enable/Disable Developer Mode */}
@@ -651,7 +636,7 @@ const DeveloperModeSection = () => {
       <VSpacer size={24} />
 
       {/* Test Environments */}
-      <DeveloperTestEnvironmentSection handleShowModal={handleShowModal} />
+      <DeveloperTestEnvironmentSection showRestartAlert={showRestartAlert} />
 
       <VSpacer size={24} />
 
@@ -676,5 +661,11 @@ const DeveloperModeSection = () => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  listContent: {
+    paddingHorizontal: IODimensions.padding.screen.default
+  }
+});
 
 export default DeveloperModeSection;

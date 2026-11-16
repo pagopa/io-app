@@ -1,4 +1,4 @@
-import { Divider, IOVisualCostants, ListItemNav } from "@io-app/design-system";
+import { Divider, IODimensions, ListItemNav } from "@io-app/design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
@@ -175,7 +175,7 @@ const PreferencesScreen = () => {
     >
       <FlatList
         contentContainerStyle={{
-          paddingHorizontal: IOVisualCostants.appMarginDefault
+          paddingHorizontal: IODimensions.padding.screen.default
         }}
         data={preferencesNavListItems}
         ItemSeparatorComponent={() => <Divider />}

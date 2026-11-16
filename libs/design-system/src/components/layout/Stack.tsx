@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 import { View, ViewProps, ViewStyle } from "react-native";
 
-import { IOSpacer } from "../../core";
+import { IOSpace } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 
 type A11YRelatedProps = Pick<
@@ -21,14 +21,14 @@ type BaseStack = Stack & {
 type Stack = A11YRelatedProps &
   PropsWithChildren<{
     allowScaleSpacing?: boolean;
-    space?: 0 | IOSpacer;
+    space?: IOSpace;
     style?: AllowedStyleProps;
   }>;
 
 /**
  * Horizontal Stack component
  *
- * @param {IOSpacer} space
+ * @param {IOSpace} space
  */
 
 const Stack = ({
@@ -68,7 +68,7 @@ export const HStack = ({ children, ...props }: Stack) => (
 /**
  * Vertical Stack component
  *
- * @param {IOSpacer} space
+ * @param {IOSpace} space
  */
 
 export const VStack = ({ children, ...props }: Stack) => (

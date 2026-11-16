@@ -1,5 +1,11 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { Body, Icon, IOButton, IOColors, IOIcons } from "@io-app/design-system";
+import {
+  Body,
+  Icon,
+  IOButton,
+  IOIcons,
+  useIOColors
+} from "@io-app/design-system";
 import { memo } from "react";
 import { Appearance, StyleSheet, View } from "react-native";
 
@@ -36,10 +42,24 @@ const ItwRetryableQRCode = ({
   onRetry,
   ...qrCodeProps
 }: Props) => {
+  const colors = useIOColors();
+
   if (shouldRetry) {
     return (
-      <View style={[styles.retryBox, { width: qrCodeProps.size }]}>
-        <Icon color="grey-700" name={retryIcon} size={24} />
+      <View
+        style={[
+          styles.retryBox,
+          {
+            width: qrCodeProps.size,
+            backgroundColor: colors.component.banner.background.neutral
+          }
+        ]}
+      >
+        <Icon
+          color={colors.component.banner.foreground.content}
+          name={retryIcon}
+          size={24}
+        />
         <Body style={styles.retryDescription}>{retryDescription}</Body>
         {/* This margin top is set to avoid a visual glitch when loading state changes */}
         <View style={{ marginTop: isRetrying ? -4 : 0 }}>
@@ -61,7 +81,6 @@ const ItwRetryableQRCode = ({
 
 const styles = StyleSheet.create({
   retryBox: {
-    backgroundColor: IOColors["grey-50"],
     alignItems: "center",
     justifyContent: "center",
     aspectRatio: 1,
