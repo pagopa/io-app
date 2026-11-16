@@ -1,5 +1,13 @@
-import { ComponentProps, JSX, ReactNode, useCallback, useMemo } from "react";
-import { StyleSheet, View } from "react-native";
+import {
+  ComponentProps,
+  JSX,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef
+} from "react";
+import { AccessibilityInfo, StyleSheet, View } from "react-native";
 
 import { BiometricsValidType, Optional } from "../../utils/types";
 import { IconButton } from "../buttons";
@@ -30,6 +38,10 @@ type BiometricAuthProps =
     };
 
 type NumberPadProps = BiometricAuthProps & {
+  /** Localized text describing the current PIN digit count. */
+  accessibilityValueText?: string;
+  /** Localized announcement used when a PIN digit is deleted. */
+  deleteAccessibilityAnnouncement?: string;
   /**
    * This label will be read from ScreenReaders and give informations about
    * delete button.
@@ -81,11 +93,26 @@ export const NumberPad = ({
   variant = "contrast",
   biometricType,
   biometricAccessibilityLabel,
+  accessibilityValueText,
   deleteAccessibilityLabel,
+  deleteAccessibilityAnnouncement,
   onNumberPress,
   onBiometricPress,
   onDeletePress
 }: NumberPadProps): JSX.Element => {
+  const previousAccessibilityValueText = useRef(accessibilityValueText);
+
+  useEffect(() => {
+    if (previousAccessibilityValueText.current === accessibilityValueText) {
+      return;
+    }
+
+    previousAccessibilityValueText.current = accessibilityValueText;
+    if (accessibilityValueText) {
+      AccessibilityInfo.announceForAccessibility(accessibilityValueText);
+    }
+  }, [accessibilityValueText]);
+
   /** Renders the buttons row from a given array. */
 
   const renderButtonsRow = useCallback(
@@ -109,7 +136,14 @@ export const NumberPad = ({
                 accessibilityLabel={deleteAccessibilityLabel}
                 color={variant}
                 icon="cancel"
-                onPress={onDeletePress}
+                onPress={() => {
+                  if (deleteAccessibilityAnnouncement) {
+                    AccessibilityInfo.announceForAccessibility(
+                      deleteAccessibilityAnnouncement
+                    );
+                  }
+                  onDeletePress();
+                }}
               />
             </ButtonWrapper>
           );
@@ -133,6 +167,7 @@ export const NumberPad = ({
     [
       biometricAccessibilityLabel,
       biometricType,
+      deleteAccessibilityAnnouncement,
       deleteAccessibilityLabel,
       onBiometricPress,
       onDeletePress,
