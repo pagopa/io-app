@@ -27,7 +27,7 @@ import { fciPollFilledDocumentSettledSelector } from "../../store/reducers/fciPo
 // Polling frequency timeout
 const POLLING_FREQ_TIMEOUT = 2000 as Millisecond;
 
-// Polling time threshold (10 seconds)
+// Polling time threshold (20 seconds)
 // If the polling time exceeds this threshold, the polling is stopped
 const POLLING_TIME_THRESHOLD = (10 * 2000) as Millisecond;
 
@@ -103,7 +103,9 @@ export function* watchFciPollSaga(
   while (true) {
     try {
       yield* put(fciPollFilledDocument.request());
-      const response = yield* call(fetch, qtspFilledDocumentUrl);
+      const response = yield* call(fetch, qtspFilledDocumentUrl, {
+        headers: { "Cache-Control": "no-cache, no-store" }
+      });
       const responseStatus = response.status;
       if (responseStatus === 200) {
         yield* put(

@@ -1,4 +1,4 @@
-import { deleteKey, generate, PublicKey } from "@pagopa/io-react-native-crypto";
+import { deleteKey, generate, PublicKey } from "@io-app/expo-crypto";
 import URLParse from "url-parse";
 
 import { AppDispatch } from "../../App";
