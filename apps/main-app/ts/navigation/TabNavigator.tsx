@@ -45,7 +45,7 @@ export const MainTabNavigator = () => {
           parseInt(String(Platform.Version), 10) < LIQUID_GLASS_IOS_VERSION
         }
         labeled
-        minimizeBehavior="onScrollDown"
+        minimizeBehavior="never"
         scrollEdgeAppearance="opaque"
         tabBarActiveTintColor={colors.foreground.accent}
         tabBarHidden={!isArchivingDisabled}
