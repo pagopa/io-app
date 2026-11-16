@@ -1,5 +1,5 @@
+import { generate } from "@io-app/expo-crypto";
 import { getRedirects } from "@io-app/login-utils";
-import { generate } from "@pagopa/io-react-native-crypto";
 import { type CryptoContext } from "@pagopa/io-react-native-jwt";
 import {
   createCryptoContextFor,

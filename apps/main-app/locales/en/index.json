@@ -1023,8 +1023,8 @@
       "discovery": {
         "alreadyActive": {
           "action": "Go to the Wallet",
-          "content": "Continue adding digital versions of your documents to the Wallet.",
-          "title": "Documenti su IO is already up and running"
+          "content": "Start or continue adding digital versions of your documents!",
+          "title": "The digital documents feature is already active in your Wallet"
         },
         "banner": {
           "home": {
@@ -1126,7 +1126,7 @@
               "1": "New official digital documents, available only on the IO app",
               "2": "Your driving licence on IO is valid as proof of identity",
               "3": "All you need is your phone to prove your identity",
-              "4": "With just a few taps, you'll be able to access the government's digital services",
+              "4": "You’ll soon be able to access public and private digital services in just a few taps",
               "5": "Help for your everyday life, always at your fingertips"
             },
             "privacyAndTos": "By clicking **Continue**, you acknowledge that you have read the [Privacy Policy]({{privacyUrl}}) and agree to the [Terms and Conditions of Use]({{tosUrl}}).",
@@ -1168,8 +1168,13 @@
         },
         "upgrade_empty": {
           "action": "Get started",
-          "description": "Discover the advanced features of digital documents on IO.",
+          "description": "Activate it now and discover the advanced features of your digital documents on IO.",
           "title": "Your Wallet is now part of IT-Wallet"
+        },
+        "upgrade_from_expired": {
+          "action": "Start",
+          "description": "Continue using your documents on IO and add new ones, with more advanced features.",
+          "title": "Activate IT-Wallet so you don't lose access to your documents"
         },
         "upgrade_with_mdl": {
           "action": "Get started",
@@ -1232,6 +1237,7 @@
         "featureUnavailable": {
           "title": "Coming soon: This feature will be available shortly"
         },
+        "nestedClaimsDetailsTitle": "Details",
         "placeholders": {
           "claimNotAvailable": "Unrecognized attribute"
         },
@@ -1614,7 +1620,7 @@
             "reissuance": {
               "primaryAction": "OK, close",
               "subtitle": "You can now continue using Documenti su IO.",
-              "title": "Have you verified your identity?"
+              "title": "Your identity has been verified"
             },
             "secondaryAction": "Continue later",
             "subtitle": "You can now add your first document to the IO Wallet.",
@@ -1703,6 +1709,12 @@
           "primaryAction": "Get started",
           "secondaryAction": "Not now"
         }
+      },
+      "loginEngagement": {
+        "action": "Activate IT-Wallet",
+        "description": "The IO app is now part of the national digital wallet system, IT-Wallet: more documents, with advanced features, always at your fingertips.",
+        "secondaryAction": "Do not activate",
+        "title": "The new IT-Wallet is now available to you"
       },
       "modal": {
         "credentialUpgrade": {
@@ -1882,6 +1894,7 @@
               "documents": {
                 "action": "Get started",
                 "expired": "Verify your identity using your CIE or SPID to continue using \"Documenti su IO\" without restrictions.",
+                "expiredUpgrade": "To continue using and adding digital documents, you must activate the new IT-Wallet.",
                 "expiring": "Verify your identity using your CIE or SPID by {{date}} to continue using \"Documenti su IO\" without restrictions.",
                 "offline": "Go back online and verify your identity using CIE or SPID to continue using \"Documenti su IO\" without restrictions.",
                 "valid": "The most recent verification was conducted by {{date}}."
@@ -1947,6 +1960,7 @@
         },
         "credentialDetails": {
           "actions": {
+            "discoverOpportunities": "Discover the opportunities",
             "hideClaimValues": "Hide document properties",
             "openIPatente": "Go to your driver's license point balance",
             "removeFromWallet": "Remove from Wallet",
@@ -2098,7 +2112,7 @@
             "permissions": {
               "actions": {
                 "primary": "Open Settings",
-                "secondary": "Continue"
+                "secondary": "I've already done that"
               },
               "alert": {
                 "message": "Go to Settings and change your preferences, then try again.",
@@ -2470,7 +2484,7 @@
           "primaryAction": "Close",
           "secondaryAction": "Learn more",
           "subtitle": "This device does not meet the safety requirements necessary for its operation.",
-          "title": "Your device does not support IT Wallet"
+          "title": "Your device does not support IT-Wallet"
         }
       },
       "verifiableCredentials": {
