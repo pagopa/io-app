@@ -129,7 +129,7 @@ const PaymentsHomeScreen = () => {
     return (
       <IOScrollView
         animatedRef={scrollViewContentRef}
-        bottomInset={Platform.OS === "ios" ? tabBarHeight : undefined}
+        bottomInset={Platform.OS === "ios" ? tabBarHeight : 0}
         contentContainerStyle={{
           flexGrow: 1
         }}
@@ -165,7 +165,7 @@ const PaymentsHomeScreen = () => {
           : undefined
       }
       animatedRef={scrollViewContentRef}
-      bottomInset={Platform.OS === "ios" ? tabBarHeight : undefined}
+      bottomInset={Platform.OS === "ios" ? tabBarHeight : 0}
       contentInsetAdjustmentBehavior="automatic"
       includeContentMargins={false}
       refreshControlProps={{

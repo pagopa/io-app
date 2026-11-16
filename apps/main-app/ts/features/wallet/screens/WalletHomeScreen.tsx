@@ -225,7 +225,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
             : undefined
         }
         animatedRef={scrollViewContentRef}
-        bottomInset={Platform.OS === "ios" ? tabBarHeight : undefined}
+        bottomInset={Platform.OS === "ios" ? tabBarHeight : 0}
         centerContent={shouldRenderEmptyState}
         contentInsetAdjustmentBehavior="automatic"
         excludeSafeAreaMargins={true}

@@ -55,9 +55,13 @@ export const useFooterActionsMargin = (
      If not, or if you don't need safe area insets,
      add a default margin to prevent the button
      from sticking to the bottom. */
+  const nativeTabFooterGap =
+    Platform.OS === "android" && bottomInset === 0
+      ? 8
+      : IODimensions.padding.footer.bottom;
   const bottomMargin =
     bottomInset !== undefined
-      ? bottomInset + IODimensions.padding.footer.bottom
+      ? bottomInset + nativeTabFooterGap
       : !needSafeAreaMargin || excludeSafeAreaMargins
         ? IODimensions.padding.footer.bottom
         : insets.bottom + androidInsetMargin;
