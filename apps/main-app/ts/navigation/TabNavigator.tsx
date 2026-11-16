@@ -1,9 +1,5 @@
 import { createNativeBottomTabNavigator } from "@bottom-tabs/react-navigation";
-import {
-  IOColorsLegacy,
-  makeFontStyleObject,
-  useIOTheme
-} from "@io-app/design-system";
+import { makeFontStyleObject, useIOColors } from "@io-app/design-system";
 import I18n from "i18next";
 import { Platform } from "react-native";
 
@@ -26,7 +22,7 @@ const Tab = createNativeBottomTabNavigator<MainTabParamsList>();
 const LIQUID_GLASS_IOS_VERSION = 26;
 
 export const MainTabNavigator = () => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const navigation = useIONavigation();
 
   const startupLoaded = useIOSelector(isStartupLoaded);
@@ -43,6 +39,7 @@ export const MainTabNavigator = () => {
       loadingOpacity={1}
     >
       <Tab.Navigator
+        activeIndicatorColor={colors.surface.accent}
         disablePageAnimations={
           Platform.OS === "ios" &&
           parseInt(String(Platform.Version), 10) < LIQUID_GLASS_IOS_VERSION
@@ -50,11 +47,11 @@ export const MainTabNavigator = () => {
         labeled
         minimizeBehavior="onScrollDown"
         scrollEdgeAppearance="opaque"
-        tabBarActiveTintColor={IOColorsLegacy[theme["interactiveElem-default"]]}
+        tabBarActiveTintColor={colors.foreground.accent}
         tabBarHidden={!isArchivingDisabled}
-        tabBarInactiveTintColor={IOColorsLegacy[theme["textBody-tertiary"]]}
+        tabBarInactiveTintColor={colors.text.content.tertiary}
         tabBarStyle={{
-          backgroundColor: IOColorsLegacy[theme["appBackground-primary"]]
+          backgroundColor: colors.background.default
         }}
         tabLabelStyle={makeFontStyleObject(
           11,
