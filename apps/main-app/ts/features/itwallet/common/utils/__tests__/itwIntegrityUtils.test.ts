@@ -1,4 +1,4 @@
-import { sign } from "@pagopa/io-react-native-crypto";
+import { sign } from "@io-app/expo-crypto";
 import {
   generateHardwareSignatureWithAssertion,
   getAttestation,
@@ -29,7 +29,7 @@ jest.mock("@pagopa/io-react-native-integrity", () => ({
   requestIntegrityToken: jest.fn()
 }));
 
-jest.mock("@pagopa/io-react-native-crypto", () => ({
+jest.mock("@io-app/expo-crypto", () => ({
   sign: jest.fn()
 }));
 
@@ -292,8 +292,8 @@ describe("itwIntegrityUtils on iOS", () => {
   test.each([
     {
       name: "base64url byte strings",
-      decoded: { authenticatorData: "a-b_c", signature: "c2ln" },
-      expected: { authenticatorData: "a+b/c===", signature: "c2ln" }
+      decoded: { authenticatorData: "a-b_cw", signature: "c2ln" },
+      expected: { authenticatorData: "a+b/cw==", signature: "c2ln" }
     },
     {
       name: "base64 byte strings",
