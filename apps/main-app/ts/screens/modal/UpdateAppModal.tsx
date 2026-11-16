@@ -5,7 +5,7 @@
 
 import {
   Dismissable,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   ToastNotification,
   useIOTheme
@@ -65,7 +65,7 @@ const UpdateAppModal: FC = () => {
   const theme = useIOTheme();
 
   return (
-    <Modal backdropColor={IOColors[theme["appBackground-primary"]]}>
+    <Modal backdropColor={IOColorsLegacy[theme["appBackground-primary"]]}>
       <OperationResultScreenContent
         action={{
           label: actionLabel,

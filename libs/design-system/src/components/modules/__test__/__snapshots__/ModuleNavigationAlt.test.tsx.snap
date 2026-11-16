@@ -13,7 +13,6 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) Loading state 1`]
     [
       {
         "alignItems": "center",
-        "borderColor": "#E8EBF1",
         "borderCurve": "continuous",
         "borderRadius": 8,
         "borderWidth": 1,
@@ -299,7 +298,6 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) Title + Subtitle 
       [
         {
           "alignItems": "center",
-          "borderColor": "#E8EBF1",
           "borderCurve": "continuous",
           "borderRadius": 8,
           "borderWidth": 1,
@@ -317,7 +315,6 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) Title + Subtitle 
       [
         {
           "alignItems": "center",
-          "borderColor": "#E8EBF1",
           "borderCurve": "continuous",
           "borderRadius": 8,
           "borderWidth": 1,
@@ -550,7 +547,6 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) Title only + chev
       [
         {
           "alignItems": "center",
-          "borderColor": "#E8EBF1",
           "borderCurve": "continuous",
           "borderRadius": 8,
           "borderWidth": 1,
@@ -568,7 +564,6 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) Title only + chev
       [
         {
           "alignItems": "center",
-          "borderColor": "#E8EBF1",
           "borderCurve": "continuous",
           "borderRadius": 8,
           "borderWidth": 1,
@@ -839,7 +834,6 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) With Badge (badge
       [
         {
           "alignItems": "center",
-          "borderColor": "#E8EBF1",
           "borderCurve": "continuous",
           "borderRadius": 8,
           "borderWidth": 1,
@@ -857,7 +851,6 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) With Badge (badge
       [
         {
           "alignItems": "center",
-          "borderColor": "#E8EBF1",
           "borderCurve": "continuous",
           "borderRadius": 8,
           "borderWidth": 1,
@@ -998,7 +991,7 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) With Badge (badge
                   "paddingVertical": 4,
                 },
                 {
-                  "backgroundColor": "rgba(97,220,223,0.2)",
+                  "backgroundColor": "#DBF9FA",
                 },
               ]
             }
@@ -1012,7 +1005,7 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) With Badge (badge
                 [
                   {},
                   {
-                    "color": "#61DCDF",
+                    "color": "#003B3D",
                     "fontFamily": "Titillio",
                     "fontSize": 12,
                     "fontStyle": "normal",
@@ -1177,7 +1170,6 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) With Image (no ic
       [
         {
           "alignItems": "center",
-          "borderColor": "#E8EBF1",
           "borderCurve": "continuous",
           "borderRadius": 8,
           "borderWidth": 1,
@@ -1195,7 +1187,6 @@ exports[`ModuleNavigationAlt - Snapshot (Experimental Enabled) With Image (no ic
       [
         {
           "alignItems": "center",
-          "borderColor": "#E8EBF1",
           "borderCurve": "continuous",
           "borderRadius": 8,
           "borderWidth": 1,
@@ -1382,7 +1373,6 @@ exports[`ModuleNavigationAlt - Snapshot Loading state 1`] = `
     [
       {
         "alignItems": "center",
-        "borderColor": "#E8EBF1",
         "borderCurve": "continuous",
         "borderRadius": 8,
         "borderWidth": 1,
@@ -1668,7 +1658,6 @@ exports[`ModuleNavigationAlt - Snapshot Title + Subtitle 1`] = `
       [
         {
           "alignItems": "center",
-          "borderColor": "#E8EBF1",
           "borderCurve": "continuous",
           "borderRadius": 8,
           "borderWidth": 1,
@@ -1686,7 +1675,6 @@ exports[`ModuleNavigationAlt - Snapshot Title + Subtitle 1`] = `
       [
         {
           "alignItems": "center",
-          "borderColor": "#E8EBF1",
           "borderCurve": "continuous",
           "borderRadius": 8,
           "borderWidth": 1,
@@ -1919,7 +1907,6 @@ exports[`ModuleNavigationAlt - Snapshot Title only + chevron (onPress) 1`] = `
       [
         {
           "alignItems": "center",
-          "borderColor": "#E8EBF1",
           "borderCurve": "continuous",
           "borderRadius": 8,
           "borderWidth": 1,
@@ -1937,7 +1924,6 @@ exports[`ModuleNavigationAlt - Snapshot Title only + chevron (onPress) 1`] = `
       [
         {
           "alignItems": "center",
-          "borderColor": "#E8EBF1",
           "borderCurve": "continuous",
           "borderRadius": 8,
           "borderWidth": 1,
@@ -2208,7 +2194,6 @@ exports[`ModuleNavigationAlt - Snapshot With Badge (badge + chevron) 1`] = `
       [
         {
           "alignItems": "center",
-          "borderColor": "#E8EBF1",
           "borderCurve": "continuous",
           "borderRadius": 8,
           "borderWidth": 1,
@@ -2226,7 +2211,6 @@ exports[`ModuleNavigationAlt - Snapshot With Badge (badge + chevron) 1`] = `
       [
         {
           "alignItems": "center",
-          "borderColor": "#E8EBF1",
           "borderCurve": "continuous",
           "borderRadius": 8,
           "borderWidth": 1,
@@ -2367,7 +2351,7 @@ exports[`ModuleNavigationAlt - Snapshot With Badge (badge + chevron) 1`] = `
                   "paddingVertical": 4,
                 },
                 {
-                  "backgroundColor": "rgba(97,220,223,0.2)",
+                  "backgroundColor": "#DBF9FA",
                 },
               ]
             }
@@ -2381,7 +2365,7 @@ exports[`ModuleNavigationAlt - Snapshot With Badge (badge + chevron) 1`] = `
                 [
                   {},
                   {
-                    "color": "#61DCDF",
+                    "color": "#003B3D",
                     "fontFamily": "Titillio",
                     "fontSize": 12,
                     "fontStyle": "normal",
@@ -2546,7 +2530,6 @@ exports[`ModuleNavigationAlt - Snapshot With Image (no icon) + chevron (onPress)
       [
         {
           "alignItems": "center",
-          "borderColor": "#E8EBF1",
           "borderCurve": "continuous",
           "borderRadius": 8,
           "borderWidth": 1,
@@ -2564,7 +2547,6 @@ exports[`ModuleNavigationAlt - Snapshot With Image (no icon) + chevron (onPress)
       [
         {
           "alignItems": "center",
-          "borderColor": "#E8EBF1",
           "borderCurve": "continuous",
           "borderRadius": 8,
           "borderWidth": 1,

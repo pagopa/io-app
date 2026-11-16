@@ -1,6 +1,6 @@
 import {
   H3,
-  IOColors,
+  IOColorsLegacy,
   IOSkeleton,
   LabelMini,
   useIOTheme,
@@ -89,7 +89,7 @@ const BonusProgressBar = ({ progress }: BonusProgressBarProps) => {
   const theme = useIOTheme();
 
   const progressBarColor: ColorValue =
-    IOColors[theme["interactiveElem-default"]];
+    IOColorsLegacy[theme["interactiveElem-default"]];
 
   const width = useSharedValue(100);
   useEffect(() => {
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
   },
   progressBarContainer: {
     height: 4,
-    backgroundColor: IOColors.white,
+    backgroundColor: IOColorsLegacy.white,
     marginHorizontal: 16,
     borderRadius: 4,
     overflow: "hidden"

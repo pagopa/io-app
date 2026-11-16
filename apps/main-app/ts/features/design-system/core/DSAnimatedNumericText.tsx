@@ -2,12 +2,11 @@ import {
   H3,
   HStack,
   IOButton,
-  IOColors,
   IODimensions,
   IOText,
   IOTypography,
   LabelMini,
-  useIOTheme,
+  useIOColors,
   VStack
 } from "@io-app/design-system";
 import { useCallback, useEffect, useState } from "react";
@@ -46,7 +45,7 @@ const formatAsAmount = (cents: number) =>
   formatNumberCentsToAmount(cents, true, "right");
 
 export const DSAnimatedNumericText = () => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const [secondsLeft, setSecondsLeft] = useState(TOTAL_SECONDS);
   const [isRunning, setIsRunning] = useState(false);
   const [amountInCents, setAmountInCents] = useState(INITIAL_AMOUNT_IN_CENTS);
@@ -84,24 +83,19 @@ export const DSAnimatedNumericText = () => {
     <DesignSystemScreen title={"Animated numeric text"}>
       <VStack space={40}>
         <VStack space={TITLE_MARGIN}>
-          <H3 color={theme["textHeading-default"]}>Countdown</H3>
+          <H3>Countdown</H3>
           <VStack space={INNER_SPACING}>
             <View
               style={{
                 ...blockStyle,
-                borderColor: IOColors[theme["cardBorder-default"]]
+                borderColor: colors.stroke.default
               }}
             >
               <HStack space={16}>
                 <VStack space={4} style={halfStyle}>
-                  <LabelMini
-                    color={theme["textBody-tertiary"]}
-                    weight="Regular"
-                  >
-                    Baseline
-                  </LabelMini>
+                  <LabelMini weight="Regular">Baseline</LabelMini>
                   <IOText
-                    color={theme["textBody-default"]}
+                    color={colors.text.content.default}
                     size={h1.size}
                     style={{ opacity: 0.5 }}
                     weight={h1.weight}
@@ -110,15 +104,10 @@ export const DSAnimatedNumericText = () => {
                   </IOText>
                 </VStack>
                 <VStack space={4} style={halfStyle}>
-                  <LabelMini
-                    color={theme["textBody-tertiary"]}
-                    weight="Regular"
-                  >
-                    Animated
-                  </LabelMini>
+                  <LabelMini weight="Regular">Animated</LabelMini>
                   <AnimatedNumericText
                     accessibilityLabel={`${secondsLeft} seconds left`}
-                    color={theme["textBody-default"]}
+                    color={colors.text.content.default}
                     formatValue={formatAsTimer}
                     value={secondsLeft}
                   />
@@ -147,24 +136,19 @@ export const DSAnimatedNumericText = () => {
         </VStack>
 
         <VStack space={TITLE_MARGIN}>
-          <H3 color={theme["textHeading-default"]}>Currency</H3>
+          <H3>Currency</H3>
           <VStack space={INNER_SPACING}>
             <View
               style={{
                 ...blockStyle,
-                borderColor: IOColors[theme["cardBorder-default"]]
+                borderColor: colors.stroke.default
               }}
             >
               <HStack space={16}>
                 <VStack space={4} style={halfStyle}>
-                  <LabelMini
-                    color={theme["textBody-tertiary"]}
-                    weight="Regular"
-                  >
-                    Baseline
-                  </LabelMini>
+                  <LabelMini weight="Regular">Baseline</LabelMini>
                   <IOText
-                    color={theme["textBody-default"]}
+                    color={colors.text.content.default}
                     size={h1.size}
                     style={{ opacity: 0.5 }}
                     weight={h1.weight}
@@ -173,15 +157,10 @@ export const DSAnimatedNumericText = () => {
                   </IOText>
                 </VStack>
                 <VStack space={4} style={halfStyle}>
-                  <LabelMini
-                    color={theme["textBody-tertiary"]}
-                    weight="Regular"
-                  >
-                    Animated
-                  </LabelMini>
+                  <LabelMini weight="Regular">Animated</LabelMini>
                   <AnimatedNumericText
                     accessibilityLabel={formatAsAmount(amountInCents)}
-                    color={theme["textBody-default"]}
+                    color={colors.text.content.default}
                     countsDown={isAmountDecreasing}
                     formatValue={formatAsAmount}
                     value={amountInCents}

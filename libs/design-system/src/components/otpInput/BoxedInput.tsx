@@ -1,8 +1,8 @@
-import { memo, useMemo } from "react";
-import { StyleSheet, View, ViewStyle } from "react-native";
+import { memo } from "react";
+import { StyleSheet, View } from "react-native";
 
-import { useIOTheme } from "../../context";
-import { hexToRgba, IOColors, IODimensions } from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions, IOTokenColor } from "../../core";
 import { H6, IOText } from "../typography";
 
 const MAX_WIDTH = 48;
@@ -30,52 +30,52 @@ const styles = StyleSheet.create({
   }
 });
 
-const SecretValue = () => {
-  const theme = useIOTheme();
-  return (
-    <IOText
-      accessible={false}
-      color={theme["textHeading-default"]}
-      font="FiraCode"
-      lineHeight={33}
-      size={22}
-      weight="Semibold"
-    >
-      {"•"}
-    </IOText>
-  );
+const borderWidths: Record<Props["status"], number> = {
+  error: IODimensions.stroke.otpInput.default,
+  focus: IODimensions.stroke.otpInput.focused,
+  default: IODimensions.stroke.otpInput.default
 };
 
-export const BoxedInput = memo(({ status, value, secret }: Props) => {
-  const theme = useIOTheme();
+const SecretValue = ({ color }: { color: IOTokenColor }) => (
+  <IOText
+    accessible={false}
+    color={color}
+    font="FiraCode"
+    lineHeight={33}
+    size={22}
+    weight="Semibold"
+  >
+    {"•"}
+  </IOText>
+);
 
-  const statusStyle: Record<Props["status"], ViewStyle> = useMemo(
-    () => ({
-      error: {
-        borderWidth: IODimensions.stroke.otpInput.default,
-        borderColor: IOColors[theme["otpInputBorder-error"]],
-        backgroundColor: hexToRgba(
-          IOColors[theme["otpInputBorder-error"]],
-          0.15
-        )
-      },
-      focus: {
-        borderWidth: IODimensions.stroke.otpInput.focused,
-        borderColor: IOColors[theme["interactiveElem-default"]]
-      },
-      default: {
-        borderWidth: IODimensions.stroke.otpInput.default,
-        borderColor: IOColors[theme["otpInputBorder-default"]]
-      }
-    }),
-    [theme]
-  );
+export const BoxedInput = memo(({ status, value, secret }: Props) => {
+  const otpInputColors = useIOColors().component.otpInput;
+  const boxColors = otpInputColors.box[status];
+  const valueColor = otpInputColors.foreground;
 
   return (
     <View accessible={false} style={styles.boxWrapper}>
-      <View style={[styles.baseBox, statusStyle[status]]}>
+      <View
+        style={[
+          styles.baseBox,
+          {
+            borderWidth: borderWidths[status],
+            borderColor: boxColors.border,
+            ...("background" in boxColors && {
+              backgroundColor: boxColors.background
+            })
+          }
+        ]}
+      >
         {value &&
-          (secret ? <SecretValue /> : <H6 accessible={false}>{value}</H6>)}
+          (secret ? (
+            <SecretValue color={valueColor} />
+          ) : (
+            <H6 accessible={false} color={valueColor}>
+              {value}
+            </H6>
+          ))}
       </View>
     </View>
   );

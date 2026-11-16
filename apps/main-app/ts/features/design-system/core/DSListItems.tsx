@@ -4,6 +4,7 @@ import {
   H4,
   H6,
   Icon,
+  IOColorPalette,
   ListItemAction,
   ListItemHeader,
   ListItemInfo,
@@ -12,7 +13,6 @@ import {
   ListItemNavAlert,
   ListItemTransaction,
   ListItemTransactionLogo,
-  useIOTheme,
   VStack
 } from "@io-app/design-system";
 import I18n from "i18next";
@@ -45,57 +45,51 @@ const sectionTitleMargin = 16;
 const sectionMargin = 48;
 const componentMargin = 32;
 
-export const DSListItems = () => {
-  const theme = useIOTheme();
-
-  return (
-    <DesignSystemScreen title="List Items">
-      <VStack space={sectionMargin}>
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>ListItemNav</H4>
-          {renderListItemNav()}
-        </VStack>
-
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>ListItemMessage</H4>
-          {renderListItemMessage()}
-        </VStack>
-
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>ListItemInfoCopy</H4>
-          {renderListItemInfoCopy()}
-        </VStack>
-
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>ListItemInfo</H4>
-          {renderListItemInfo()}
-        </VStack>
-
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>ListItemHeader</H4>
-          {renderListItemHeader()}
-        </VStack>
-
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>ListItemAction</H4>
-          {renderListItemAction()}
-        </VStack>
-
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>
-            ListItemSearchInstitution
-          </H4>
-          {renderListItemSearchInstitution()}
-        </VStack>
-
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>ListItemTransaction</H4>
-          {renderListItemTransaction()}
-        </VStack>
+export const DSListItems = () => (
+  <DesignSystemScreen title="List Items">
+    <VStack space={sectionMargin}>
+      <VStack space={sectionTitleMargin}>
+        <H4>ListItemNav</H4>
+        {renderListItemNav()}
       </VStack>
-    </DesignSystemScreen>
-  );
-};
+
+      <VStack space={sectionTitleMargin}>
+        <H4>ListItemMessage</H4>
+        {renderListItemMessage()}
+      </VStack>
+
+      <VStack space={sectionTitleMargin}>
+        <H4>ListItemInfoCopy</H4>
+        {renderListItemInfoCopy()}
+      </VStack>
+
+      <VStack space={sectionTitleMargin}>
+        <H4>ListItemInfo</H4>
+        {renderListItemInfo()}
+      </VStack>
+
+      <VStack space={sectionTitleMargin}>
+        <H4>ListItemHeader</H4>
+        {renderListItemHeader()}
+      </VStack>
+
+      <VStack space={sectionTitleMargin}>
+        <H4>ListItemAction</H4>
+        {renderListItemAction()}
+      </VStack>
+
+      <VStack space={sectionTitleMargin}>
+        <H4>ListItemSearchInstitution</H4>
+        {renderListItemSearchInstitution()}
+      </VStack>
+
+      <VStack space={sectionTitleMargin}>
+        <H4>ListItemTransaction</H4>
+        {renderListItemTransaction()}
+      </VStack>
+    </VStack>
+  </DesignSystemScreen>
+);
 
 const renderListItemNav = () => (
   <VStack space={componentMargin}>
@@ -724,7 +718,7 @@ const renderListItemTransaction = () => (
         description="This one has a custom icon on the left"
         label="Custom icon"
         onPress={onButtonPress}
-        paymentLogoIcon={<Icon color="error-500" name="notice" />}
+        paymentLogoIcon={<Icon color={IOColorPalette.red[500]} name="notice" />}
         transaction={{
           amount: "",
           amountAccessibilityLabel: ""

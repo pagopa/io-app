@@ -212,8 +212,8 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "isUserLoggedIn": false,
     },
     "cieLogin": {
+      "cieEnv": "production",
       "isCieIDTourGuideEnabled": true,
-      "useUat": false,
     },
     "fastLogin": {
       "automaticSessionRefresh": {

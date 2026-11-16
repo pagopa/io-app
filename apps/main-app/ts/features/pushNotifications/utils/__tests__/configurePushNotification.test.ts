@@ -19,6 +19,7 @@ const {
   handleColdStartNotification,
   onNotificationResponse,
   onPushNotificationTokenReceived,
+  onPushNotificationTokenError,
   hasUserOptedInForAnalytics
 } = testable!;
 
@@ -29,7 +30,9 @@ jest.mock("expo-notifications", () => ({
   addPushTokenListener: getMockSubscription(),
   addNotificationReceivedListener: getMockSubscription(),
   addNotificationResponseReceivedListener: getMockSubscription(),
-  getDevicePushTokenAsync: jest.fn(),
+  getDevicePushTokenAsync: jest
+    .fn()
+    .mockResolvedValue({ type: "android", data: "token" }),
   getLastNotificationResponse: jest.fn(),
   clearLastNotificationResponse: jest.fn(),
   dismissNotificationAsync: jest.fn().mockResolvedValue(undefined),
@@ -111,8 +114,7 @@ describe("configurePushNotification", () => {
       ).toHaveBeenCalledWith(CHANNEL_ID, {
         name: CHANNEL_NAME,
         importance: mockedNotifications.AndroidImportance.HIGH,
-        vibrationPattern: [0, 250, 250, 250],
-        sound: "default"
+        vibrationPattern: [0, 250, 250, 250]
       });
     });
   });
@@ -162,6 +164,32 @@ describe("configurePushNotification", () => {
       expect(tokenSub.remove).toHaveBeenCalledTimes(1);
       expect(receivedSub.remove).toHaveBeenCalledTimes(1);
       expect(responseSub.remove).toHaveBeenCalledTimes(1);
+    });
+
+    it("tracks the error when the device push token fetch fails", async () => {
+      const error = new Error("SERVICE_NOT_AVAILABLE");
+      mockedNotifications.getDevicePushTokenAsync.mockRejectedValueOnce(error);
+
+      configurePushNotificationListeners(mockStore);
+      await new Promise(process.nextTick);
+
+      expect(APPANALYTICS.trackAppCaughtError).toHaveBeenCalledWith(
+        "getDevicePushTokenAsync",
+        expect.any(String),
+        expect.stringContaining("SERVICE_NOT_AVAILABLE")
+      );
+    });
+  });
+
+  describe("onPushNotificationTokenError", () => {
+    it("tracks the error as a caught app error", () => {
+      onPushNotificationTokenError("E_REGISTRATION_FAILED");
+
+      expect(APPANALYTICS.trackAppCaughtError).toHaveBeenCalledWith(
+        "getDevicePushTokenAsync",
+        expect.any(String),
+        "E_REGISTRATION_FAILED"
+      );
     });
   });
 
@@ -275,6 +303,22 @@ describe("configurePushNotification", () => {
         expect(unhandledForegroundNotificationIds.has(notifId)).toBe(false);
       }
     );
+
+    it("handles as foreground a notification received in foreground, regardless of when it is tapped", () => {
+      const notifId = "received-in-foreground-tapped-later-id";
+      getFunctionMock(mockedNotifications.addNotificationReceivedListener)({
+        request: { identifier: notifId }
+      } as Notifications.Notification);
+
+      notificationReceivedCallback(makeNotificationResponse(notifId));
+
+      expect(handleInteraction).toHaveBeenCalledWith(
+        expect.anything(),
+        true,
+        expect.anything(),
+        expect.any(Boolean)
+      );
+    });
   });
 
   describe("onNotificationResponse", () => {

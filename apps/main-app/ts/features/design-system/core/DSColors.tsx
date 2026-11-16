@@ -1,19 +1,14 @@
 import {
   H3,
   H6,
-  hexToRgba,
+  IOColorMode,
+  IOColorPalette,
   IOColors,
-  IOColorsExtra,
-  IOColorsNeutral,
-  IOColorsStatus,
-  IOColorsTints,
   IODimensions,
-  IOThemeDark,
-  IOThemeLight,
-  themeStatusColorsDarkMode,
-  themeStatusColorsLightMode,
-  useIOTheme,
-  VStack
+  IOOpacity,
+  useIOColors,
+  VStack,
+  withAlpha
 } from "@io-app/design-system";
 import { ColorValue, Dimensions, StyleSheet, Text, View } from "react-native";
 
@@ -24,10 +19,57 @@ const sectionTitleMargin = 16;
 const colorItemGutter = 32;
 const colorItemPadding = 8;
 const colorItemMargin = 16;
-const colorItemBorderLightMode = hexToRgba(IOColors.black, 0.1);
-const colorItemBorderDarkMode = hexToRgba(IOColors.white, 0.25);
+const colorItemBorderLightMode = withAlpha(IOColorPalette.greyscale.black, 0.1);
+const colorItemBorderDarkMode = withAlpha(IOColorPalette.greyscale.white, 0.25);
 
-const colorPillBg = hexToRgba(IOColors.black, 0.2);
+const colorPillBg = withAlpha(IOColorPalette.greyscale.black, 0.2);
+
+type Token = { path: string; value: string };
+
+/* `{ action: { primary: { default: "#…" } } }` → `action.primary.default` */
+const flattenTokens = (tokens: object, parent = ""): Array<Token> =>
+  Object.entries(tokens).flatMap(([key, value]) => {
+    const path = parent ? `${parent}.${key}` : key;
+    return typeof value === "string"
+      ? [{ path, value }]
+      : flattenTokens(value as object, path);
+  });
+
+/* As components draw them: disabled ones faded, `onAccent` and `action.inverse` ones on `background.accent` */
+const tokenRendering = (path: string) => ({
+  faded: path.endsWith(".disabled"),
+  onAccent:
+    path.split(".").includes("onAccent") || path.startsWith("action.inverse.")
+});
+
+/* Semantic groups of a mode, without the component tier */
+const semanticGroups = (mode: IOColorMode) =>
+  Object.entries(IOColors[mode]).filter(([group]) => group !== "component");
+
+const paletteNames = new Map(
+  Object.entries(IOColorPalette).flatMap(([hue, steps]) =>
+    Object.entries(steps).map(([step, hex]) => [
+      String(hex).toUpperCase(),
+      `${hue} ${step}`
+    ])
+  )
+);
+
+const toHex = (channel: string) =>
+  Number(channel).toString(16).padStart(2, "0").toUpperCase();
+
+/* The palette color behind a token value: `blueIO 200`, or `blueIO 200 · 20%` with alpha */
+const paletteReference = (value: string) => {
+  const rgba = /^rgba\((\d+),(\d+),(\d+),([\d.]+)\)$/.exec(value);
+  const hex = rgba
+    ? `#${rgba.slice(1, 4).map(toHex).join("")}`
+    : value.toUpperCase();
+  const name = paletteNames.get(hex);
+  if (name === undefined) {
+    return value;
+  }
+  return rgba ? `${name} · ${Math.round(Number(rgba[4]) * 100)}%` : name;
+};
 
 const styles = StyleSheet.create({
   colorItemsWrapper: {
@@ -53,10 +95,10 @@ const styles = StyleSheet.create({
     marginBottom: 12
   },
   smallCapsLightMode: {
-    color: IOColors["grey-700"]
+    color: IOColorPalette.greyscale[700]
   },
   smallCapsDarkMode: {
-    color: IOColors["grey-450"]
+    color: IOColorPalette.greyscale[450]
   },
   colorModeWrapper: {
     position: "absolute",
@@ -68,7 +110,7 @@ const styles = StyleSheet.create({
     right: 0,
     marginRight: IODimensions.padding.screen.default * -1,
     marginLeft: IODimensions.padding.screen.default * -1,
-    backgroundColor: IOColors.black,
+    backgroundColor: IOColorPalette.greyscale.black,
     borderTopLeftRadius: 24,
     borderBottomLeftRadius: 24
   },
@@ -76,7 +118,7 @@ const styles = StyleSheet.create({
     left: 0,
     marginRight: IODimensions.padding.screen.default * -1,
     marginLeft: IODimensions.padding.screen.default * -1,
-    backgroundColor: IOColors.white,
+    backgroundColor: IOColorPalette.greyscale.white,
     borderTopRightRadius: 24,
     borderBottomRightRadius: 24
   },
@@ -93,9 +135,14 @@ const styles = StyleSheet.create({
   colorItemDarkMode: {
     borderColor: colorItemBorderDarkMode
   },
+  accentBackdrop: {
+    padding: 4,
+    borderRadius: 8,
+    borderCurve: "continuous"
+  },
   colorPill: {
     overflow: "hidden",
-    color: IOColors.white,
+    color: IOColorPalette.greyscale.white,
     fontSize: 9,
     backgroundColor: colorPillBg,
     padding: 4,
@@ -104,26 +151,27 @@ const styles = StyleSheet.create({
 });
 
 type ColorThemeGroupProps = {
-  colorObjectDarkMode: Record<string, string>;
-  colorObjectLightMode: Record<string, string>;
   name: string;
+  tokensDarkMode: object;
+  tokensLightMode: object;
 };
 
 const ColorThemeGroup = ({
   name,
-  colorObjectLightMode,
-  colorObjectDarkMode
+  tokensLightMode,
+  tokensDarkMode
 }: ColorThemeGroupProps) => {
-  const theme = useIOTheme();
-
-  const colorArrayLightMode = Object.entries(colorObjectLightMode);
-  const colorArrayDarkMode = Object.entries(colorObjectDarkMode);
+  const tokensLight = flattenTokens(tokensLightMode);
+  /* `dark` defines every token of `light`: match them by path */
+  const valuesDark = new Map(
+    flattenTokens(tokensDarkMode).map(({ path, value }) => [path, value])
+  );
 
   const colorBoxMargin = 16;
 
   return (
     <VStack space={sectionTitleMargin}>
-      {name && <H6 color={theme["textHeading-default"]}>{name}</H6>}
+      <H6>{name}</H6>
       {/* Show the two different columns
       with both light and dark modes */}
       <View style={{ flexDirection: "row" }}>
@@ -133,61 +181,53 @@ const ColorThemeGroup = ({
           <View style={styles.colorWrapperBothModes}>
             <SmallCapsTitle title="Light mode" />
             <VStack space={colorBoxMargin}>
-              {Object.entries(colorObjectLightMode).map(
-                ([colorName, colorValue], i) => {
-                  const [, darkModeColorValue] = colorArrayDarkMode[i];
-                  const lightModeColorValue = colorValue;
-                  const isSameColorValue =
-                    lightModeColorValue === darkModeColorValue;
-                  return (
-                    <View
-                      key={`${colorName}-lightMode`}
-                      style={
-                        isSameColorValue && {
-                          width:
-                            Dimensions.get("window").width -
-                            IODimensions.padding.screen.default -
-                            colorItemGutter +
-                            colorItemPadding
-                        }
+              {tokensLight.map(({ path, value }) => {
+                const isSameColorValue = value === valuesDark.get(path);
+                return (
+                  <View
+                    key={`${path}-lightMode`}
+                    style={
+                      isSameColorValue && {
+                        width:
+                          Dimensions.get("window").width -
+                          IODimensions.padding.screen.default -
+                          colorItemGutter +
+                          colorItemPadding
                       }
-                    >
-                      <ColorBox
-                        color={colorValue}
-                        isThemeColor
-                        mode={"light"}
-                        name={colorName}
-                        themeVariable
-                      />
-                    </View>
-                  );
-                }
-              )}
+                    }
+                  >
+                    <ColorBox
+                      color={value}
+                      isThemeColor
+                      label={paletteReference(value)}
+                      mode="light"
+                      name={path}
+                      {...tokenRendering(path)}
+                    />
+                  </View>
+                );
+              })}
             </VStack>
           </View>
           <View style={styles.colorWrapperBothModes}>
             <SmallCapsTitle darkMode title="Dark mode" />
             <VStack space={colorBoxMargin}>
-              {Object.entries(colorObjectDarkMode).map(
-                ([colorName, colorValue], i) => {
-                  const [, lightModeColorValue] = colorArrayLightMode[i];
-                  const darkModeColorValue = colorValue;
-                  const isSameColorValue =
-                    lightModeColorValue === darkModeColorValue;
-
-                  return (
+              {tokensLight.map(({ path, value }) => {
+                const darkModeColorValue = valuesDark.get(path) ?? value;
+                return (
+                  <View key={`${path}-darkMode`}>
                     <ColorBox
-                      color={colorValue}
-                      ghostMode={isSameColorValue}
+                      color={darkModeColorValue}
+                      ghostMode={darkModeColorValue === value}
                       isThemeColor
-                      key={`${colorName}-darkMode`}
+                      label={paletteReference(darkModeColorValue)}
                       mode="dark"
-                      name={colorName}
-                      themeVariable
+                      name={path}
+                      {...tokenRendering(path)}
                     />
-                  );
-                }
-              )}
+                  </View>
+                );
+              })}
             </VStack>
           </View>
         </View>
@@ -201,59 +241,54 @@ type ColorGroupProps = {
   name: string;
 };
 
-const ColorGroup = ({ name, colorObject }: ColorGroupProps) => {
-  const theme = useIOTheme();
+/* `Object.entries` lists numeric keys first: `white` goes before the steps, `black` after */
+const stepRank = (step: string) =>
+  step === "white" ? -Infinity : step === "black" ? Infinity : Number(step);
 
-  return (
-    <VStack space={sectionTitleMargin}>
-      {name && <H6 color={theme["textHeading-default"]}>{name}</H6>}
+const ColorGroup = ({ name, colorObject }: ColorGroupProps) => (
+  <VStack space={sectionTitleMargin}>
+    <H6>{name}</H6>
 
-      <VStack space={colorItemMargin}>
-        {Object.entries(colorObject).map(([colorName, colorValue]) => (
+    <VStack space={colorItemMargin}>
+      {Object.entries(colorObject)
+        .sort(([a], [b]) => stepRank(a) - stepRank(b))
+        .map(([colorName, colorValue]) => (
           <ColorBox color={colorValue} key={colorName} name={colorName} />
         ))}
-      </VStack>
     </VStack>
-  );
-};
+  </VStack>
+);
 
 export const DSColors = () => {
-  const theme = useIOTheme();
+  const darkGroups = Object.fromEntries(semanticGroups("dark"));
 
   return (
     <DesignSystemScreen title={"Colors"}>
       <VStack space={macroSectionMargin}>
-        {/* COLOR SCALES */}
+        {/* PALETTE */}
         <VStack space={sectionTitleMargin}>
-          <H3 color={theme["textHeading-default"]}>Color scales</H3>
+          <H3>Palette</H3>
 
           <VStack space={32}>
-            {/* Neutrals */}
-            <ColorGroup colorObject={IOColorsNeutral} name="Neutrals" />
-            {/* Tints */}
-            <ColorGroup colorObject={IOColorsTints} name="Main tints" />
-            {/* Status */}
-            <ColorGroup colorObject={IOColorsStatus} name="Status" />
-            {/* Extra */}
-            <ColorGroup colorObject={IOColorsExtra} name="Extra" />
+            {Object.entries(IOColorPalette).map(([hue, steps]) => (
+              <ColorGroup colorObject={steps} key={hue} name={hue} />
+            ))}
           </VStack>
         </VStack>
 
-        {/* THEME */}
+        {/* SEMANTIC TOKENS */}
         <VStack space={sectionTitleMargin}>
-          <H3 color={theme["textHeading-default"]}>Theme</H3>
+          <H3>Semantic</H3>
 
           <VStack space={40}>
-            <ColorThemeGroup
-              colorObjectDarkMode={IOThemeDark}
-              colorObjectLightMode={IOThemeLight}
-              name="Main"
-            />
-            <ColorThemeGroup
-              colorObjectDarkMode={themeStatusColorsDarkMode}
-              colorObjectLightMode={themeStatusColorsLightMode}
-              name="Status"
-            />
+            {semanticGroups("light").map(([group, tokens]) => (
+              <ColorThemeGroup
+                key={group}
+                name={group}
+                tokensDarkMode={darkGroups[group]}
+                tokensLightMode={tokens}
+              />
+            ))}
           </VStack>
         </VStack>
       </VStack>
@@ -263,55 +298,68 @@ export const DSColors = () => {
 
 type ColorBoxProps = {
   color: ColorValue;
+  /* Drawn at the disabled opacity */
+  faded?: boolean;
   ghostMode?: boolean;
   isThemeColor?: boolean;
+  /* Text of the pill: the color value by default */
+  label?: string;
   mode?: "dark" | "light";
   name: string;
-  themeVariable?: boolean;
+  /* Drawn on `background.accent` */
+  onAccent?: boolean;
 };
 
 const ColorBox = ({
   name,
   color,
   isThemeColor = false,
+  label = String(color),
   mode = "light",
   ghostMode,
-  themeVariable
+  faded = false,
+  onAccent = false
 }: ColorBoxProps) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <View style={[styles.colorWrapper, ghostMode && { opacity: 0 }]}>
       <View
-        style={[
-          styles.colorItem,
-          mode === "dark"
-            ? styles.colorItemDarkMode
-            : styles.colorItemLightMode,
-          themeVariable
-            ? { backgroundColor: IOColors[color as IOColors] }
-            : { backgroundColor: color }
-        ]}
+        style={
+          onAccent && [
+            styles.accentBackdrop,
+            { backgroundColor: IOColors[mode].background.accent }
+          ]
+        }
       >
-        <Text style={styles.colorPill}>{color as string}</Text>
+        <View
+          style={[
+            styles.colorItem,
+            mode === "dark"
+              ? styles.colorItemDarkMode
+              : styles.colorItemLightMode,
+            { backgroundColor: color },
+            faded && { opacity: IOOpacity.disabled }
+          ]}
+        >
+          <Text style={styles.colorPill}>{label}</Text>
+        </View>
       </View>
 
-      {name && (
-        <Text
-          numberOfLines={1}
-          style={{
-            marginTop: 4,
-            fontSize: 10,
-            color: isThemeColor
-              ? mode === "dark"
-                ? IOColors["grey-450"]
-                : IOColors["grey-700"]
-              : IOColors[theme["textBody-tertiary"]]
-          }}
-        >
-          {name}
-        </Text>
-      )}
+      <Text
+        numberOfLines={1}
+        style={{
+          marginTop: 4,
+          fontSize: 10,
+          color: isThemeColor
+            ? mode === "dark"
+              ? IOColorPalette.greyscale[450]
+              : IOColorPalette.greyscale[700]
+            : colors.text.content.tertiary
+        }}
+      >
+        {name}
+      </Text>
     </View>
   );
 };

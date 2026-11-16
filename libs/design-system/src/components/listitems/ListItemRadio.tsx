@@ -2,12 +2,8 @@ import { ComponentProps, ReactNode, useState } from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { useIOTheme } from "../../context";
-import {
-  IODimensions,
-  IOSelectionListItemStyles,
-  IOTypography
-} from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions, IOOpacity, IOTypography } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
@@ -18,6 +14,7 @@ import { IOLogoPaymentType, LogoPayment } from "../logos";
 import { Radio } from "../radio/Radio";
 import { IOSkeleton } from "../skeleton";
 import { BodySmall, H6 } from "../typography";
+import { IOSelectionListItemStyles } from "./styles";
 
 type ListItemRadioGraphicProps =
   | { icon: IOIcons; paymentLogo?: never; uri?: never }
@@ -38,6 +35,12 @@ type ListItemRadioLoadingProps =
       state: true;
     };
 
+type ListItemRadioProps = Pick<
+  ComponentProps<typeof Pressable>,
+  "accessibilityHint" | "accessibilityLabel" | "disabled" | "onPress"
+> &
+  Props;
+
 type Props = WithTestID<{
   description?: ReactNode | string;
   label: string;
@@ -46,14 +49,6 @@ type Props = WithTestID<{
   selected: boolean;
   startImage?: ListItemRadioGraphicProps;
 }>;
-
-const DISABLED_OPACITY = 0.5;
-
-type ListItemRadioProps = Pick<
-  ComponentProps<typeof Pressable>,
-  "accessibilityHint" | "accessibilityLabel" | "disabled" | "onPress"
-> &
-  Props;
 
 const styles = StyleSheet.create({
   imageSize: {
@@ -88,7 +83,7 @@ export const ListItemRadio = ({
     useIOFontDynamicScale();
   const { onPressIn, onPressOut, scaleAnimatedStyle, backgroundAnimatedStyle } =
     useListItemAnimation();
-  const theme = useIOTheme();
+  const listItemColors = useIOColors().component.listItem;
 
   const toggleRadioItem = () => {
     triggerHaptic("impactLight");
@@ -98,7 +93,7 @@ export const ListItemRadio = ({
     }
   };
 
-  const disabledStyle = { opacity: disabled ? DISABLED_OPACITY : 1 };
+  const disabledStyle = { opacity: disabled ? IOOpacity.disabled : 1 };
 
   const SkeletonDescriptionLines = () => (
     <VStack space={IODimensions.gap.skeleton.items}>
@@ -226,7 +221,7 @@ export const ListItemRadio = ({
               {startImage?.icon && !hugeFontEnabled && (
                 <Icon
                   allowFontScaling
-                  color={theme["icon-decorative"]}
+                  color={listItemColors.foreground.icon}
                   name={startImage.icon}
                   size={IODimensions.size.icon.selection}
                 />
@@ -248,7 +243,10 @@ export const ListItemRadio = ({
                   />
                 </View>
               )}
-              <H6 color={theme["textBody-default"]} style={{ flexShrink: 1 }}>
+              <H6
+                color={listItemColors.foreground.label}
+                style={{ flexShrink: 1 }}
+              >
                 {label}
               </H6>
             </View>
@@ -268,7 +266,10 @@ export const ListItemRadio = ({
           {description && (
             <View>
               <VSpacer size={IODimensions.gap.selection.description} />
-              <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
+              <BodySmall
+                color={listItemColors.foreground.description}
+                weight="Regular"
+              >
                 {description}
               </BodySmall>
             </View>

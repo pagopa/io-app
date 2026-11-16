@@ -8,7 +8,6 @@ import {
   IODimensions,
   IOModuleStyles,
   Tag,
-  useIOTheme,
   useScaleAnimation,
   VStack
 } from "@io-app/design-system";
@@ -16,7 +15,8 @@ import I18n from "i18next";
 import { Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { useCgnStyle } from "../../hooks/useCgnStyle";
+import { useFeatureColors } from "../../../../../hooks/useFeatureColors";
+import { cgnColors } from "../../colors";
 import { getCategoryName, getCategorySpecs } from "../../utils/filters";
 import {
   isValidDiscount,
@@ -49,11 +49,10 @@ export const CategoryTag = ({ category }: CategoryTagProps) => {
 };
 
 export const ModuleCgnDiscount = ({ onPress, discount }: ModuleCgnDiscount) => {
-  const theme = useIOTheme();
+  const colors = useFeatureColors(cgnColors);
 
   const { onPressIn, onPressOut, scaleAnimatedStyle } =
     useScaleAnimation("medium");
-  const { module: moduleStyle } = useCgnStyle();
 
   const accessibilityLabel = moduleCGNaccessibilityLabel(discount);
 
@@ -70,7 +69,9 @@ export const ModuleCgnDiscount = ({ onPress, discount }: ModuleCgnDiscount) => {
       <Animated.View
         style={[
           IOModuleStyles.button,
-          discount.isNew ? moduleStyle.new : moduleStyle.default,
+          discount.isNew
+            ? colors.discountModule.new
+            : colors.discountModule.default,
           scaleAnimatedStyle
         ]}
       >
@@ -105,7 +106,7 @@ export const ModuleCgnDiscount = ({ onPress, discount }: ModuleCgnDiscount) => {
               </HStack>
             )}
 
-            <H6 color={theme["textHeading-secondary"]}>{discount.name}</H6>
+            <H6 color={colors.discountModule.title}>{discount.name}</H6>
             <HStack space={4} style={{ flexWrap: "wrap" }}>
               {discount.productCategories.map(categoryKey => (
                 <CategoryTag category={categoryKey} key={categoryKey} />
@@ -113,7 +114,7 @@ export const ModuleCgnDiscount = ({ onPress, discount }: ModuleCgnDiscount) => {
             </HStack>
           </VStack>
           <Icon
-            color={theme["interactiveElem-default"]}
+            color={colors.discountModule.chevron}
             name="chevronRightListItem"
             size={IODimensions.size.icon.chevron}
           />

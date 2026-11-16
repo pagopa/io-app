@@ -51,9 +51,10 @@ type NumberPadProps = BiometricAuthProps & {
    */
   onNumberPress: (value: number) => void;
   /**
-   * Used to choose the component color variant between `dark` and `light`.
+   * Used to choose the component color variant between `primary` and
+   * `contrast`.
    *
-   * The default value is `dark`.
+   * The default value is `contrast`.
    */
   variant?: ComponentProps<typeof NumberButton>["variant"];
 };
@@ -77,7 +78,7 @@ const mapIconSpecByBiometric: Record<
  * @returns {JSX.Element} The rendered numeric keyboard component.
  */
 export const NumberPad = ({
-  variant = "primary",
+  variant = "contrast",
   biometricType,
   biometricAccessibilityLabel,
   deleteAccessibilityLabel,
@@ -106,7 +107,7 @@ export const NumberPad = ({
             <ButtonWrapper key={item}>
               <IconButton
                 accessibilityLabel={deleteAccessibilityLabel}
-                color={variant === "primary" ? "contrast" : "primary"}
+                color={variant}
                 icon="cancel"
                 onPress={onDeletePress}
               />
@@ -118,7 +119,7 @@ export const NumberPad = ({
             <ButtonWrapper key={item}>
               <IconButton
                 accessibilityLabel={biometricAccessibilityLabel}
-                color={variant === "primary" ? "contrast" : "primary"}
+                color={variant}
                 icon={mapIconSpecByBiometric[biometricType].icon}
                 iconSize={mapIconSpecByBiometric[biometricType].size}
                 onPress={onBiometricPress}

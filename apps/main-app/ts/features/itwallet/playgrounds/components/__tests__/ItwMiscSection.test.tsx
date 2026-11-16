@@ -8,6 +8,11 @@ import * as appVersion from "../../../../../utils/appVersion";
 import { withStore } from "../../../../../utils/jest/withStore";
 import { ItwMiscSection } from "../ItwMiscSection";
 
+jest.mock("@react-navigation/native", () => ({
+  ...jest.requireActual("@react-navigation/native"),
+  useNavigation: () => ({ navigate: jest.fn() })
+}));
+
 afterEach(() => jest.restoreAllMocks());
 
 const TestComponent = withStore(() => {
