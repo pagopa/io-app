@@ -46,7 +46,7 @@ describe("WalletHomeScreen", () => {
 
   test.each([
     { name: "iOS", os: "ios" as const, expectedBottomInset: 83 },
-    { name: "Android", os: "android" as const, expectedBottomInset: undefined }
+    { name: "Android", os: "android" as const, expectedBottomInset: 0 }
   ])(
     "uses native tab geometry only on $name",
     ({ os, expectedBottomInset }) => {
