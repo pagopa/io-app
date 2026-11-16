@@ -161,7 +161,7 @@ type ItwPresentationCredentialDetailProps = {
 };
 
 const discoverMoreURL =
-  "iosso://https://api.ced.pagopa.it/api/ced-card/v1/fauth";
+  "iosso://https://api.ced.pagopa.it/api/ced-browser/v1/fauth";
 
 /** Component that renders the credential detail content. */
 export const ItwPresentationCredentialDetail = ({

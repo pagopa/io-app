@@ -1,8 +1,8 @@
 import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
 import {
   Divider,
+  IODimensions,
   IOToast,
-  IOVisualCostants,
   ListItemHeader,
   ListItemSwitch
 } from "@io-app/design-system";
@@ -155,7 +155,7 @@ export const ServiceDetailsPreferences = ({
   return (
     <FlatList
       contentContainerStyle={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault
+        paddingHorizontal: IODimensions.padding.screen.default
       }}
       data={filteredPreferenceListItems}
       ItemSeparatorComponent={() => <Divider />}

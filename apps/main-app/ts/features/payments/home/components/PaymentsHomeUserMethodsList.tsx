@@ -2,8 +2,8 @@ import { WalletInfo } from "@io-app/api-types/generated/definitions/pagopa/walle
 import {
   Banner,
   BannerErrorState,
+  IODimensions,
   IOToast,
-  IOVisualCostants,
   ListItemHeader,
   VSpacer
 } from "@io-app/design-system";
@@ -154,7 +154,7 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
     }
 
     return (
-      <View style={{ paddingVertical: IOVisualCostants.appMarginDefault }}>
+      <View style={{ paddingVertical: IODimensions.padding.screen.default }}>
         <Banner
           action={I18n.t("features.payments.methods.banner.action")}
           color="neutral"

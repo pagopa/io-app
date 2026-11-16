@@ -1,6 +1,7 @@
 import { PaymentInfoResponse } from "@io-app/api-types/generated/definitions/communication/PaymentInfoResponse";
 import { ThirdPartyAttachment } from "@io-app/api-types/generated/definitions/communication/ThirdPartyAttachment";
 import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
+import * as Calendar from "expo-calendar";
 import {
   ActionType,
   createAction,
@@ -299,7 +300,19 @@ export const setMessageSagasRegisteredAction = createStandardAction(
   "SET_MESSAGE_SAGAS_REGISTERED"
 )();
 
+export type AddCalendarEventRequestPayload = {
+  calendar: Calendar.Calendar;
+  dueDate: Date;
+  messageId: string;
+  title: string;
+};
+
+export const addCalendarEventRequest = createStandardAction(
+  "MESSAGES_ADD_CALENDAR_EVENT_REQUEST"
+)<AddCalendarEventRequestPayload>();
+
 export type MessagesActions = ActionType<
+  | typeof addCalendarEventRequest
   | typeof addUserSelectedPaymentRptId
   | typeof cancelGetMessageDataAction
   | typeof cancelPaymentStatusTracking

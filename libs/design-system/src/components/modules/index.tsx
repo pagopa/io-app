@@ -7,3 +7,4 @@ export * from "./ModuleNavigationAlt";
 export * from "./ModulePaymentNotice";
 export * from "./ModuleSummary";
 export * from "./PressableModuleBase";
+export * from "./styles";

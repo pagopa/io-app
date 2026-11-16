@@ -1,4 +1,4 @@
-import { ContentWrapper, IOVisualCostants } from "@io-app/design-system";
+import { ContentWrapper, IODimensions } from "@io-app/design-system";
 import { ReactNode } from "react";
 import { ScrollView, View } from "react-native";
 
@@ -16,7 +16,7 @@ export const DesignSystemScreen = ({ children, noMargin = false }: Props) => {
   return (
     <ScrollView
       contentContainerStyle={{
-        paddingTop: IOVisualCostants.appMarginDefault,
+        paddingTop: IODimensions.padding.screen.default,
         paddingBottom: screenEndMargin
       }}
     >

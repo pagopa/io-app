@@ -1,10 +1,13 @@
-import { waitFor } from "@testing-library/react-native";
+import { StackActions } from "@react-navigation/native";
+import { act, fireEvent, waitFor } from "@testing-library/react-native";
+import I18n from "i18next";
 import { createStore, Store } from "redux";
 
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import * as analytics from "../../analytics";
 import { FCI_ROUTES } from "../../navigation/routes";
 import {
   fciDownloadPreview,
@@ -15,6 +18,15 @@ import { FciNetworkError } from "../../utils/errors";
 import FciDocumentsScreen from "../valid/FciDocumentsScreen";
 
 const mockReplace = jest.fn();
+const mockDispatch = jest.fn();
+const mockPresentNoSignatureFieldsBs = jest.fn();
+
+jest.mock("../../hooks/useFciNoSignatureFields", () => ({
+  useFciNoSignatureFields: () => ({
+    present: mockPresentNoSignatureFieldsBs,
+    bottomSheet: null
+  })
+}));
 const mockShouldNeverCall = jest.fn();
 
 jest.mock("@react-navigation/native", () => {
@@ -27,19 +39,41 @@ jest.mock("@react-navigation/native", () => {
           if (prop === "replace") {
             return mockReplace;
           }
+          if (prop === "dispatch") {
+            return mockDispatch;
+          }
           return mockShouldNeverCall;
         }
       })
   };
 });
 
-const createTestStore = () => {
+const createTestStore = (signatureRequest = mockSignatureRequestDetailView) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store: Store<GlobalState> = createStore(appReducer, globalState as any);
-  store.dispatch(
-    fciSignatureRequestFromId.success({ ...mockSignatureRequestDetailView })
-  );
+  store.dispatch(fciSignatureRequestFromId.success({ ...signatureRequest }));
   return store;
+};
+
+const signatureRequestWithoutSignatureFields = {
+  ...mockSignatureRequestDetailView,
+  documents: mockSignatureRequestDetailView.documents.map(document => ({
+    ...document,
+    metadata: { ...document.metadata, signature_fields: [] }
+  }))
+};
+
+// The screen requests the preview on mount, so the download completes after
+const renderWithDownloadedDocument = (store: Store<GlobalState>) => {
+  const component = renderComponent(store);
+  act(() => {
+    store.dispatch(
+      fciDownloadPreview.success({
+        path: mockSignatureRequestDetailView.documents[0].url
+      })
+    );
+  });
+  return component;
 };
 
 describe("Test FciDocuments screen", () => {
@@ -67,6 +101,45 @@ describe("Test FciDocuments screen", () => {
         testComponent.getByTestId("FciDocumentsScreenTestID")
       ).not.toBeNull();
     });
+  });
+
+  it("should track the event and show the bottom sheet on continue when the document has no signature fields", () => {
+    const trackSpy = jest.spyOn(
+      analytics,
+      "trackFciNoSignatureBottomsheetOpen"
+    );
+    const store = createTestStore(signatureRequestWithoutSignatureFields);
+    const { getByText } = renderWithDownloadedDocument(store);
+
+    fireEvent.press(
+      getByText(I18n.t("features.fci.documents.footer.continue"))
+    );
+
+    expect(trackSpy).toHaveBeenCalledTimes(1);
+    expect(mockPresentNoSignatureFieldsBs).toHaveBeenCalledTimes(1);
+    expect(mockDispatch).not.toHaveBeenCalled();
+  });
+
+  it("should navigate to the signature fields without tracking the bottom sheet event when the document has signature fields", () => {
+    const trackSpy = jest.spyOn(
+      analytics,
+      "trackFciNoSignatureBottomsheetOpen"
+    );
+    const store = createTestStore();
+    const { getByText } = renderWithDownloadedDocument(store);
+
+    fireEvent.press(
+      getByText(I18n.t("features.fci.documents.footer.continue"))
+    );
+
+    expect(trackSpy).not.toHaveBeenCalled();
+    expect(mockPresentNoSignatureFieldsBs).not.toHaveBeenCalled();
+    expect(mockDispatch).toHaveBeenCalledWith(
+      StackActions.push(FCI_ROUTES.SIGNATURE_FIELDS, {
+        documentId: mockSignatureRequestDetailView.documents[0].id,
+        currentDoc: 0
+      })
+    );
   });
 
   type ErrorKindScenario = {

@@ -3,7 +3,7 @@ import {
   H2,
   IconButton,
   IOButton,
-  IOColors,
+  IOColorsLegacy,
   IOPictograms,
   Pictogram,
   ToastNotification,
@@ -265,7 +265,7 @@ export const IdentificationModal = () => {
   const NumberPad = memo(() => (
     <IdentificationNumberPad
       biometricsConfig={biometricsConfig}
-      numberPadVariant={"primary"}
+      numberPadVariant={"contrast"}
       pin={pin}
       pinValidation={onPinValidated}
     />
@@ -376,7 +376,7 @@ export const IdentificationModal = () => {
       <View
         style={[
           styles.contentWrapper,
-          { backgroundColor: IOColors[theme["appBackground-accent"]] }
+          { backgroundColor: IOColorsLegacy[theme["appBackground-accent"]] }
         ]}
       >
         {isValidatingTask && (

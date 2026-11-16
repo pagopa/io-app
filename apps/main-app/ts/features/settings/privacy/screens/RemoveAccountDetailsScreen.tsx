@@ -2,7 +2,7 @@ import {
   ContentWrapper,
   H6,
   IOButton,
-  IOVisualCostants,
+  IODimensions,
   RadioGroup,
   RadioItem,
   TextInput,
@@ -62,7 +62,7 @@ const FooterButton = memo(
         ref={buttonRef}
         style={{
           marginBottom:
-            bottom === 0 ? IOVisualCostants.appMarginDefault : bottom
+            bottom === 0 ? IODimensions.padding.screen.default : bottom
         }}
       >
         <ContentWrapper>

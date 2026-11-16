@@ -13,6 +13,7 @@ import {
   IOScrollView,
   IOScrollViewActions
 } from "../../../../../components/ui/IOScrollView";
+import { useFeatureColors } from "../../../../../hooks/useFeatureColors";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
@@ -20,9 +21,9 @@ import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { buildEventProperties } from "../../../../../utils/analytics";
 import { openWebUrl } from "../../../../../utils/url";
 import { profileSelector } from "../../../../settings/common/store/selectors";
+import { cgnColors } from "../../colors";
 import { CgnDiscountContent } from "../../components/merchants/discount/CgnDiscountContent";
 import { CgnDiscountHeader } from "../../components/merchants/discount/CgnDiscountHeader";
-import { useCgnStyle } from "../../hooks/useCgnStyle";
 import { CgnDetailsParamsList } from "../../navigation/params";
 import CGN_ROUTES from "../../navigation/routes";
 import { cgnCodeFromBucket } from "../../store/actions/bucket";
@@ -170,13 +171,11 @@ const CgnDiscountDetailScreen = () => {
     }
   };
 
-  const {
-    header: { default: defaultHeaderStyle, new: newHeaderStyle }
-  } = useCgnStyle();
+  const colors = useFeatureColors(cgnColors);
 
   const { backgroundColor } = discountDetails?.isNew
-    ? newHeaderStyle
-    : defaultHeaderStyle;
+    ? colors.discountHeader.new
+    : colors.discountHeader.default;
 
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
 

@@ -338,7 +338,6 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                               "bottom": 0,
                               "position": "absolute",
                             },
-                            false,
                             undefined,
                           ]
                         }
@@ -352,7 +351,6 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                               "bottom": 0,
                               "position": "absolute",
                             },
-                            false,
                             undefined,
                           ]
                         }
@@ -1555,7 +1553,6 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                               "bottom": 0,
                               "position": "absolute",
                             },
-                            false,
                             undefined,
                           ]
                         }
@@ -1569,7 +1566,6 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                               "bottom": 0,
                               "position": "absolute",
                             },
-                            false,
                             undefined,
                           ]
                         }

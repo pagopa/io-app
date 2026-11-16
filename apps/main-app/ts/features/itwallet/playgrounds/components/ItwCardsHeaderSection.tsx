@@ -1,8 +1,4 @@
-import {
-  IOVisualCostants,
-  ListItemHeader,
-  VStack
-} from "@io-app/design-system";
+import { IODimensions, ListItemHeader, VStack } from "@io-app/design-system";
 import { View } from "react-native";
 
 import { ItwCredentialDetailCard } from "../../common/components/ItwCredentialDetailCard";
@@ -33,7 +29,9 @@ export const ItwCardsHeaderSection = () => (
     {ALL_CREDENTIAL_TYPES.map(credentialType => (
       <View key={credentialType}>
         <ListItemHeader label={getCredentialNameFromType(credentialType)} />
-        <View style={{ marginHorizontal: -IOVisualCostants.appMarginDefault }}>
+        <View
+          style={{ marginHorizontal: -IODimensions.padding.screen.default }}
+        >
           <ItwCredentialDetailCard credentialType={credentialType}>
             <View style={{ height: 200 }} />
           </ItwCredentialDetailCard>

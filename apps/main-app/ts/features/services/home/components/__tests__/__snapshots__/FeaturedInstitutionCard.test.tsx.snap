@@ -401,9 +401,6 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderCurve": "continuous",
-                                  "borderRadius": 8,
-                                  "borderWidth": 1,
                                   "flexDirection": "row",
                                   "height": 72,
                                   "paddingHorizontal": 12,
@@ -412,6 +409,9 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                                 {
                                   "backgroundColor": "#F4F5F8",
                                   "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
                                 },
                                 undefined,
                               ]
@@ -438,13 +438,13 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                                   style={
                                     [
                                       {
-                                        "borderColor": "rgba(14,15,19,0.1)",
                                         "borderCurve": "continuous",
                                         "borderWidth": 1,
                                         "overflow": "hidden",
                                       },
                                       {
                                         "backgroundColor": "#FFFFFF",
+                                        "borderColor": "#E8EBF1",
                                         "borderRadius": 8,
                                         "height": 44,
                                         "padding": 6,
@@ -457,11 +457,11 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                                     style={
                                       [
                                         {
-                                          "backgroundColor": "#FFFFFF",
                                           "borderCurve": "continuous",
                                           "overflow": "hidden",
                                         },
                                         {
+                                          "backgroundColor": "#FFFFFF",
                                           "borderRadius": 2,
                                         },
                                       ]
@@ -938,9 +938,6 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                               [
                                 {
                                   "alignItems": "center",
-                                  "borderCurve": "continuous",
-                                  "borderRadius": 8,
-                                  "borderWidth": 1,
                                   "flexDirection": "row",
                                   "height": 72,
                                   "paddingHorizontal": 12,
@@ -949,6 +946,9 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                                 {
                                   "backgroundColor": "#F4F5F8",
                                   "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
                                 },
                                 {
                                   "backgroundColor": "#EEE8FC",
@@ -978,13 +978,13 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                                   style={
                                     [
                                       {
-                                        "borderColor": "rgba(14,15,19,0.1)",
                                         "borderCurve": "continuous",
                                         "borderWidth": 1,
                                         "overflow": "hidden",
                                       },
                                       {
                                         "backgroundColor": "#FFFFFF",
+                                        "borderColor": "#E8EBF1",
                                         "borderRadius": 8,
                                         "height": 44,
                                         "padding": 6,
@@ -997,11 +997,11 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                                     style={
                                       [
                                         {
-                                          "backgroundColor": "#FFFFFF",
                                           "borderCurve": "continuous",
                                           "overflow": "hidden",
                                         },
                                         {
+                                          "backgroundColor": "#FFFFFF",
                                           "borderRadius": 2,
                                         },
                                       ]

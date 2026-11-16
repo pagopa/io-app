@@ -3,8 +3,8 @@ import {
   BannerErrorState,
   Divider,
   IOButton,
+  IODimensions,
   IOToast,
-  IOVisualCostants,
   ListItemHeader,
   SearchInput,
   VSpacer,
@@ -192,7 +192,7 @@ export const InstitutionList = ({
     <Animated.FlatList
       contentContainerStyle={{
         flexGrow: 1,
-        paddingHorizontal: IOVisualCostants.appMarginDefault
+        paddingHorizontal: IODimensions.padding.screen.default
       }}
       data={data?.institutions}
       ItemSeparatorComponent={Divider}

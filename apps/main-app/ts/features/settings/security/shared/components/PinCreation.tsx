@@ -240,7 +240,7 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
             deleteAccessibilityLabel={I18n.t("global.buttons.delete")}
             onDeletePress={onDeletePress}
             onNumberPress={handlePinChange}
-            variant="neutral"
+            variant="primary"
           />
           <VSpacer />
           <View style={{ alignSelf: "center" }}>

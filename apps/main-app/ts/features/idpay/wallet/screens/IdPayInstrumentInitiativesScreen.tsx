@@ -1,10 +1,4 @@
-import {
-  H2,
-  H6,
-  HSpacer,
-  IOVisualCostants,
-  VSpacer
-} from "@io-app/design-system";
+import { H2, H6, HSpacer, IODimensions, VSpacer } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Route, useRoute } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
@@ -66,7 +60,7 @@ export const IdPayInstrumentInitiativesScreen = () => {
   return (
     <ScrollView
       contentContainerStyle={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault,
+        paddingHorizontal: IODimensions.padding.screen.default,
         flexGrow: 1
       }}
     >

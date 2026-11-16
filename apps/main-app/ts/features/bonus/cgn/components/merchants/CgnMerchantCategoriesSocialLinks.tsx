@@ -1,6 +1,6 @@
 import {
   ContentWrapper,
-  IOColors,
+  IOColorsLegacy,
   ListItemAction,
   useIOTheme,
   VSpacer
@@ -43,7 +43,7 @@ export const CgnMerchantCategoriesSocialLinks = () => {
   return (
     <View
       style={{
-        backgroundColor: IOColors[theme["appBackground-secondary"]],
+        backgroundColor: IOColorsLegacy[theme["appBackground-secondary"]],
         flexGrow: 1
       }}
       testID="CgnMerchantCategoriesSocialLinks"

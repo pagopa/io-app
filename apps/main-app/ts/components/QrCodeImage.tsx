@@ -29,8 +29,9 @@ const defaultAccessibilityLabel = "QR Code";
 const QrCodeImage = ({
   value,
   size = 200,
-  color = IOColors.black,
-  backgroundColor = IOColors.white,
+  // Dark on light in both modes, for scanners: `inverted` flips it
+  color = IOColors.light.foreground.default,
+  backgroundColor = IOColors.light.background.default,
   inverted = false,
   correctionLevel = "H",
   accessibilityLabel = defaultAccessibilityLabel,

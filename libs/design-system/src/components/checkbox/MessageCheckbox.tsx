@@ -9,11 +9,9 @@ import Animated, {
   withTiming
 } from "react-native-reanimated";
 
-import { useIOTheme } from "../../context";
+import { useIOColors } from "../../context";
 import { IOSpringValues } from "../../core/IOAnimations";
-import { IOColors } from "../../core/IOColors";
-import { IOSpacingScale } from "../../core/IOSpacing";
-import { IOVisualCostants } from "../../core/IOStyles";
+import { IODimensions, IODimensionScale } from "../../core/tokens";
 import { AnimatedTick } from "../common/AnimatedTick";
 
 type MessageCheckbox = Pick<PressableProps, "accessible" | "onPress"> & Props;
@@ -22,21 +20,21 @@ type Props = {
   checked?: boolean;
 };
 
-const internalSpacing: IOSpacingScale = 4;
+const internalSpacing: IODimensionScale = 4;
 
 const styles = StyleSheet.create({
   checkBoxWrapper: {
-    width: IOVisualCostants.avatarSizeSmall,
-    height: IOVisualCostants.avatarSizeSmall,
+    width: IODimensions.size.avatar.small,
+    height: IODimensions.size.avatar.small,
     padding: internalSpacing
   },
   checkBoxShape: {
     position: "absolute",
     left: 0,
     top: 0,
-    width: IOVisualCostants.avatarSizeSmall,
-    height: IOVisualCostants.avatarSizeSmall,
-    borderRadius: IOVisualCostants.avatarRadiusSizeSmall,
+    width: IODimensions.size.avatar.small,
+    height: IODimensions.size.avatar.small,
+    borderRadius: IODimensions.radius.avatar.small,
     borderCurve: "continuous"
   }
 });
@@ -50,13 +48,11 @@ export const MessageCheckbox = ({
   checked,
   onPress
 }: MessageCheckbox) => {
-  const theme = useIOTheme();
+  const checkboxColors = useIOColors().component.checkbox;
   const isChecked = !!checked;
 
   const shapeAnimationProgress = useSharedValue(checked ? 1 : 0);
   const tickAnimationProgress = useSharedValue(checked ? 1 : 0);
-
-  const backgroundColor = IOColors[theme["selection-background-on"]];
 
   useEffect(() => {
     shapeAnimationProgress.value = withSpring(
@@ -91,14 +87,14 @@ export const MessageCheckbox = ({
       <Animated.View
         style={[
           styles.checkBoxShape,
-          { backgroundColor },
+          { backgroundColor: checkboxColors.background },
           animatedCheckboxShape
         ]}
       />
       {isChecked && (
         <AnimatedTick
           progress={tickAnimationProgress}
-          stroke={IOColors[theme["selection-tick"]]}
+          stroke={checkboxColors.foreground}
           strokeWidth={1.5}
         />
       )}

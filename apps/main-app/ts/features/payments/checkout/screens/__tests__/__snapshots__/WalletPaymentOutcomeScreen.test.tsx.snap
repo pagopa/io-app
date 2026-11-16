@@ -554,7 +554,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -1494,6 +1495,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -2789,6 +2791,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -3429,7 +3432,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -4040,6 +4044,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -5335,6 +5340,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -5975,7 +5981,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -6382,6 +6389,7 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -7677,6 +7685,7 @@ Controlla di aver seguito correttamente le istruzioni della tua banca.
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -8317,7 +8326,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -8745,6 +8755,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -10040,6 +10051,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -10680,7 +10692,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -11123,6 +11136,7 @@ Per la tua sicurezza, hai a disposizione un tempo limitato per completare l’op
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -12418,6 +12432,7 @@ Per la tua sicurezza, hai a disposizione un tempo limitato per completare l’op
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -13058,7 +13073,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -13712,6 +13728,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -15007,6 +15024,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -15647,7 +15665,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -16607,6 +16626,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -17902,6 +17922,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -18542,7 +18563,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -18970,6 +18992,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -20265,6 +20288,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -20905,7 +20929,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -21283,6 +21308,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -22578,6 +22604,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -23218,7 +23245,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -23747,6 +23775,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -25042,6 +25071,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -25682,7 +25712,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -26253,6 +26284,7 @@ Probabilmente hai sforato i limiti di spesa previsti dalla tua banca.
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -27548,6 +27580,7 @@ Probabilmente hai sforato i limiti di spesa previsti dalla tua banca.
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -28188,7 +28221,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -28963,6 +28997,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -30258,6 +30293,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -30898,7 +30934,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -31552,6 +31589,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -32847,6 +32885,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -33487,7 +33526,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -34180,6 +34220,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -35475,6 +35516,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -36115,7 +36157,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -36767,6 +36810,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -38062,6 +38106,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -38702,7 +38747,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -39172,6 +39218,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -40467,6 +40514,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -41107,7 +41155,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -41549,6 +41598,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -42844,6 +42894,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -43484,7 +43535,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -44536,6 +44588,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -45831,6 +45884,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -46471,7 +46525,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -47328,6 +47383,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -48623,6 +48679,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -49263,7 +49320,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -49747,6 +49805,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -51042,6 +51101,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -51682,7 +51742,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -52817,6 +52878,7 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -54112,6 +54174,7 @@ Se il problema persiste, prova a usare un altro metodo o gestore del pagamento.
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -54752,7 +54815,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -55476,6 +55540,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -56771,6 +56836,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -57411,7 +57477,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -57839,6 +57906,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -59134,6 +59202,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -59774,7 +59843,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -60244,6 +60314,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -61539,6 +61610,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -62179,7 +62251,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -62621,6 +62694,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -63916,6 +63990,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -64556,7 +64631,8 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -65003,6 +65079,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",
@@ -66298,6 +66375,7 @@ exports[`WalletPaymentOutcomeScreen for all outcomes should render the WalletPay
                       <Modal
                         accessible={false}
                         backdropComponent={[Function]}
+                        backgroundComponent={[Function]}
                         backgroundStyle={
                           {
                             "backgroundColor": "#FFFFFF",

@@ -22,7 +22,7 @@ describe("IdentificationNumberPad", () => {
   const defaultProps: ComponentProps<typeof IdentificationNumberPad> = {
     pin: "123456",
     pinValidation: mockPinValidation,
-    numberPadVariant: "primary",
+    numberPadVariant: "contrast",
     biometricsConfig: mockBiometricConfig
   };
 

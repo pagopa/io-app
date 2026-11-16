@@ -1,8 +1,6 @@
 import {
   H4,
-  HStack,
   Icon,
-  IconContained,
   IOBiometricIcons,
   IOCategoryIcons,
   IOIcons,
@@ -12,14 +10,13 @@ import {
   IOProductIcons,
   IOSystemIcons,
   SVGIconProps,
-  useIOTheme,
+  useIOColors,
   VStack
 } from "@io-app/design-system";
 import { JSX, useCallback } from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet, View } from "react-native";
 
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DSIconViewerBox, iconItemGutter } from "../components/DSIconViewerBox";
 
 interface IconSetObject {
@@ -100,8 +97,8 @@ const keyExtractor = (item: string, index: number) =>
   item || `placeholder-${index}`;
 
 export const DSIcons = () => {
-  const theme = useIOTheme();
-  const iconColor = theme["icon-default"];
+  const colors = useIOColors();
+  const iconColor = colors.icon.default;
 
   const renderGeneralIconItem = useCallback(
     ({ item }: ListRenderItemInfo<string>) => (
@@ -141,13 +138,13 @@ export const DSIcons = () => {
 
         {/* Navigation */}
         <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Navigation</H4>
+          <H4>Navigation</H4>
           <View style={styles.itemsWrapper}>
             {Object.entries(IONavIcons).map(([iconItemName]) => (
               <DSIconViewerBox
                 image={
                   <Icon
-                    color={theme["icon-default"]}
+                    color={colors.icon.default}
                     name={iconItemName as IONavIcons}
                     size="100%"
                   />
@@ -162,13 +159,13 @@ export const DSIcons = () => {
 
         {/* Biometric */}
         <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Biometric</H4>
+          <H4>Biometric</H4>
           <View style={styles.itemsWrapper}>
             {Object.entries(IOBiometricIcons).map(([iconItemName]) => (
               <DSIconViewerBox
                 image={
                   <Icon
-                    color={theme["icon-default"]}
+                    color={colors.icon.default}
                     name={iconItemName as IOBiometricIcons}
                     size="100%"
                   />
@@ -183,13 +180,13 @@ export const DSIcons = () => {
 
         {/* Categories */}
         <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Categories</H4>
+          <H4>Categories</H4>
           <View style={styles.itemsWrapper}>
             {Object.entries(IOCategoryIcons).map(([iconItemName]) => (
               <DSIconViewerBox
                 image={
                   <Icon
-                    color={theme["icon-default"]}
+                    color={colors.icon.default}
                     name={iconItemName as IOCategoryIcons}
                     size="100%"
                   />
@@ -204,13 +201,13 @@ export const DSIcons = () => {
 
         {/* Product */}
         <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Product</H4>
+          <H4>Product</H4>
           <View style={styles.itemsWrapper}>
             {Object.entries(IOProductIcons).map(([iconItemName]) => (
               <DSIconViewerBox
                 image={
                   <Icon
-                    color={theme["icon-default"]}
+                    color={colors.icon.default}
                     name={iconItemName as IOProductIcons}
                     size="100%"
                   />
@@ -225,13 +222,13 @@ export const DSIcons = () => {
 
         {/* System */}
         <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>System</H4>
+          <H4>System</H4>
           <View style={styles.itemsWrapper}>
             {Object.entries(IOSystemIcons).map(([iconItemName]) => (
               <DSIconViewerBox
                 image={
                   <Icon
-                    color={theme["icon-default"]}
+                    color={colors.icon.default}
                     name={iconItemName as IOSystemIcons}
                     size="100%"
                   />
@@ -244,30 +241,15 @@ export const DSIcons = () => {
           </View>
         </VStack>
 
-        {/* IconContained */}
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>IconContained</H4>
-          <DSComponentViewerBox name="IconContained · Tonal variant, neutral color">
-            <HStack space={8}>
-              <IconContained color="neutral" icon="device" variant="tonal" />
-              <IconContained
-                color="neutral"
-                icon="institution"
-                variant="tonal"
-              />
-            </HStack>
-          </DSComponentViewerBox>
-        </VStack>
-
         {/* Sizes */}
         <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Sizes</H4>
+          <H4>Sizes</H4>
           <View style={styles.itemsWrapper}>
             {IOIconSizes.map(size => (
               <DSIconViewerBox
                 image={
                   <Icon
-                    color={theme["icon-default"]}
+                    color={colors.icon.default}
                     name="creditCard"
                     size={size}
                   />

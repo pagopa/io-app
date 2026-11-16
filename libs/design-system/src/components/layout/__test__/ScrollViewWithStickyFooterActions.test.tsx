@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Text, View } from "react-native";
 import { type Metrics, SafeAreaProvider } from "react-native-safe-area-context";
 
-import { IOSpacing } from "../../../core";
+import { IODimensions } from "../../../core";
 import { ScrollViewWithStickyFooterActions } from "../ScrollViewWithStickyFooterActions";
 
 /* The component and FooterActions read safe-area insets, so every case uses
@@ -76,7 +76,7 @@ describe("ScrollViewWithStickyFooterActions", () => {
       paddingBottom: metrics.insets.bottom
     });
     expect(getByTestId(endSpacerTestID)).toHaveStyle({
-      height: IOSpacing.screenEndMargin + metrics.insets.bottom
+      height: IODimensions.padding.screen.end + metrics.insets.bottom
     });
   });
 
@@ -87,10 +87,10 @@ describe("ScrollViewWithStickyFooterActions", () => {
     });
 
     expect(getByTestId(placeholderTestID)).toHaveStyle({
-      height: IOSpacing.screenEndMargin
+      height: IODimensions.padding.screen.end
     });
     expect(getByTestId(endSpacerTestID)).toHaveStyle({
-      height: IOSpacing.screenEndMargin + metrics.insets.bottom
+      height: IODimensions.padding.screen.end + metrics.insets.bottom
     });
     expect(queryByRole("button")).toBeNull();
     expect(onMeasure).toHaveBeenCalledWith({
@@ -134,7 +134,9 @@ describe("ScrollViewWithStickyFooterActions", () => {
     const actionBlockHeight = 48;
     const scrollViewHeight = 600;
     const placeholderHeight =
-      actionBlockHeight + metrics.insets.bottom + IOSpacing.screenEndMargin;
+      actionBlockHeight +
+      metrics.insets.bottom +
+      IODimensions.padding.screen.end;
     const placeholderY = 1000;
     const placeholderTopEdge =
       placeholderY - scrollViewHeight + placeholderHeight;
@@ -188,7 +190,7 @@ describe("ScrollViewWithStickyFooterActions", () => {
     const { getByTestId } = renderComponent({}, metricsWithoutInsets);
 
     expect(getByTestId(endSpacerTestID)).toHaveStyle({
-      height: IOSpacing.screenEndMargin
+      height: IODimensions.padding.screen.end
     });
   });
 });

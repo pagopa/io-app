@@ -22,16 +22,12 @@ import Animated, {
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { useIOTheme } from "../../context";
-import {
-  footerBoxShadow,
-  IOColors,
-  IOSpacing,
-  IOSpacingScale
-} from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions, IODimensionScale } from "../../core";
 import { FooterActions, FooterActionsMeasurements } from "./FooterActions";
+import { footerBoxShadow } from "./styles";
 
-const shadowTransitionDistance: IOSpacingScale = 24;
+const shadowTransitionDistance: IODimensionScale = 24;
 const defaultScrollEventThrottle = 8;
 
 export type ScrollViewWithStickyFooterActionsProps = {
@@ -70,20 +66,20 @@ export const ScrollViewWithStickyFooterActions = ({
   footerActionProps,
   scrollViewProps
 }: ScrollViewWithStickyFooterActionsProps) => {
-  const theme = useIOTheme();
+  const footerColors = useIOColors().component.footer;
   const { bottom: safeAreaBottom } = useSafeAreaInsets();
   const scrollY = useSharedValue(0);
   const [scrollViewHeight, setScrollViewHeight] = useState(0);
   const [footerHeight, setFooterHeight] = useState(0);
   const [placeholderY, setPlaceholderY] = useState<LayoutRectangle["y"]>(0);
   const { actions, onMeasure, transparent } = footerActionProps;
-  const placeholderHeight = actions ? footerHeight : IOSpacing.screenEndMargin;
+  const placeholderHeight = actions
+    ? footerHeight
+    : IODimensions.padding.screen.end;
 
   const placeholderTopEdge =
     placeholderY - scrollViewHeight + placeholderHeight;
-  const backgroundColor = transparent
-    ? "transparent"
-    : IOColors[theme["appBackground-primary"]];
+  const backgroundColor = transparent ? "transparent" : footerColors.background;
 
   const handleScroll = useAnimatedScrollHandler(({ contentOffset }) => {
     scrollY.set(contentOffset.y);
@@ -107,7 +103,7 @@ export const ScrollViewWithStickyFooterActions = ({
   const notifyActionsAbsent = useEffectEvent(() => {
     onMeasure?.({
       actionBlockHeight: 0,
-      safeBottomAreaHeight: IOSpacing.screenEndMargin
+      safeBottomAreaHeight: IODimensions.padding.screen.end
     });
   });
 
@@ -160,7 +156,7 @@ export const ScrollViewWithStickyFooterActions = ({
         />
         {afterPlaceholder}
         <View
-          style={{ height: IOSpacing.screenEndMargin + safeAreaBottom }}
+          style={{ height: IODimensions.padding.screen.end + safeAreaBottom }}
           testID="ScrollViewWithStickyFooterActionsEndSpacer"
         />
       </Animated.ScrollView>

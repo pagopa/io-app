@@ -9,7 +9,7 @@ import {
   Divider,
   FooterActions,
   H2,
-  IOVisualCostants,
+  IODimensions,
   ListItemHeader,
   useFooterActionsMeasurements,
   VSpacer
@@ -239,7 +239,7 @@ const FciSignatureFieldsScreen = () => {
   const renderSignatureFields = () => (
     <SectionList
       contentContainerStyle={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault
+        paddingHorizontal: IODimensions.padding.screen.default
       }}
       ItemSeparatorComponent={() => <Divider />}
       keyExtractor={(item, index) => `${item.clause.title}${index}`}

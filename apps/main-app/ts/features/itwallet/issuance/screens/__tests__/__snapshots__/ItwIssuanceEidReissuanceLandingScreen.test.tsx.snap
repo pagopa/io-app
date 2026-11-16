@@ -669,7 +669,8 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -1735,7 +1736,8 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -2801,7 +2803,8 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]
@@ -4122,7 +4125,8 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                 "alignItems": "stretch",
                                 "flexGrow": 1,
                                 "justifyContent": "center",
-                                "padding": 24,
+                                "paddingHorizontal": 32,
+                                "paddingVertical": 24,
                               },
                               false,
                             ]

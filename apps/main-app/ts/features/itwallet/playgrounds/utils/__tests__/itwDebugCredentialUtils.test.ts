@@ -1,6 +1,7 @@
 import MockDate from "mockdate";
 
 import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUtils";
+import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import {
   CredentialMetadata,
   CredentialValidity,
@@ -47,7 +48,8 @@ const baseCredential: CredentialMetadata = {
     }
   },
   spec_version: "1.4.6",
-  validity: baseValidity
+  validity: baseValidity,
+  verification: { assurance_level: "high", trust_framework: "it_cie" }
 };
 
 const statusAssertion: ParsedStatusAssertion = {
@@ -75,12 +77,16 @@ const statuses: ReadonlyArray<ItwCredentialStatus> = [
   "suspended",
   "expiring",
   "expired",
-  "jwtExpiring",
   "jwtExpired",
   "unknown"
 ];
 
-const transitions = statuses.flatMap(initialStatus =>
+const initialStatuses: ReadonlyArray<ItwCredentialStatus> = [
+  ...statuses,
+  "jwtExpiring"
+];
+
+const transitions = initialStatuses.flatMap(initialStatus =>
   statuses.map(targetStatus => ({
     initialStatus,
     name: `${initialStatus} → ${targetStatus}`,
@@ -133,6 +139,33 @@ describe("applyStatusToCredential", () => {
         statusList: baseValidity.statusList,
         type: "status_list"
       });
+    }
+  );
+
+  test.each([
+    { name: "IT-Wallet", credential: baseCredential },
+    { name: "legacy", credential: legacyCredential }
+  ])(
+    "keeps $name credentials valid during the digital expiration warning period",
+    ({ credential }) => {
+      const result = applyStatusToCredential(credential, "jwtExpiring");
+
+      expect(getCredentialStatus(result)).toBe("valid");
+    }
+  );
+
+  test.each(["valid", "jwtExpiring", "jwtExpired"] as const)(
+    "applies %s to the PID",
+    status => {
+      const pidCredential = {
+        ...baseCredential,
+        credentialType: CredentialType.PID,
+        parsedCredential: {}
+      };
+
+      const result = applyStatusToCredential(pidCredential, status);
+
+      expect(getCredentialStatus(result)).toBe(status);
     }
   );
 
