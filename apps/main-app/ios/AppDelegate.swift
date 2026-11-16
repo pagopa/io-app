@@ -28,12 +28,35 @@ class AppDelegate: ExpoAppDelegate {
 
     self.window = UIWindow(frame: UIScreen.main.bounds)
 
-    // Background launches may never connect a scene.
-    if application.applicationState == .background {
-      startReactNative(launchOptions: launchOptions)
-    }
-
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+  }
+
+  // With scenes, .background during didFinishLaunching does not identify a background launch.
+  // Start without a scene only when iOS actually delivers background work.
+  override func application(
+    _ application: UIApplication,
+    didReceiveRemoteNotification userInfo: [AnyHashable: Any],
+    fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
+  ) {
+    startReactNative(launchOptions: launchOptions)
+    super.application(application, didReceiveRemoteNotification: userInfo, fetchCompletionHandler: completionHandler)
+  }
+
+  override func application(
+    _ application: UIApplication,
+    performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
+  ) {
+    startReactNative(launchOptions: launchOptions)
+    super.application(application, performFetchWithCompletionHandler: completionHandler)
+  }
+
+  override func application(
+    _ application: UIApplication,
+    handleEventsForBackgroundURLSession identifier: String,
+    completionHandler: @escaping () -> Void
+  ) {
+    startReactNative(launchOptions: launchOptions)
+    super.application(application, handleEventsForBackgroundURLSession: identifier, completionHandler: completionHandler)
   }
 
   func startReactNative(launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
