@@ -37,6 +37,30 @@ export const bluetoothState = itwProximityMachineSetup.createStateConfig({
         },
         continue: {
           target: "CheckActivation"
+        },
+        back: {
+          target: "RecheckPermissions"
+        }
+      }
+    },
+    RecheckPermissions: {
+      description:
+        "On back, continue if the permissions were granted from settings, otherwise close the flow",
+      invoke: {
+        src: "verifyBluetoothPermissions",
+        onDone: [
+          {
+            guard: ({ event }) => event.output,
+            target: "CheckActivation"
+          },
+          {
+            actions: ["trackBluetoothAccessClose", "closeProximity"],
+            target: "#itwProximityMachine.Idle"
+          }
+        ],
+        onError: {
+          actions: ["trackBluetoothAccessClose", "closeProximity"],
+          target: "#itwProximityMachine.Idle"
         }
       }
     },
@@ -67,6 +91,30 @@ export const bluetoothState = itwProximityMachineSetup.createStateConfig({
         },
         continue: {
           target: "Completed"
+        },
+        back: {
+          target: "RecheckActivation"
+        }
+      }
+    },
+    RecheckActivation: {
+      description:
+        "On back, continue if Bluetooth was enabled from settings, otherwise close the flow",
+      invoke: {
+        src: "checkBluetoothActivation",
+        onDone: [
+          {
+            guard: ({ event }) => event.output,
+            target: "Completed"
+          },
+          {
+            actions: ["trackBluetoothActivationClose", "closeProximity"],
+            target: "#itwProximityMachine.Idle"
+          }
+        ],
+        onError: {
+          actions: ["trackBluetoothActivationClose", "closeProximity"],
+          target: "#itwProximityMachine.Idle"
         }
       }
     },
