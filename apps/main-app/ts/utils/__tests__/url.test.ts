@@ -99,6 +99,36 @@ describe("extractPathFromURL", () => {
       )
     ).toEqual(path);
   });
+
+  it.each([
+    [
+      "collapses repeated slashes in the path and keeps the query",
+      "https://continua.io.pagopa.it//itw//auth?a=1",
+      "/itw/auth?a=1"
+    ],
+    [
+      "collapses repeated slashes in the origin and path of an internal link",
+      "ioit:///services//service-detail?serviceId=1",
+      "services/service-detail?serviceId=1"
+    ],
+    [
+      "preserves double slashes inside the query string",
+      "https://continua.io.pagopa.it/itw/auth?client_id=openid_federation:https://example.org/rp&request_uri=https://example.org/req&state=abc",
+      "/itw/auth?client_id=openid_federation:https://example.org/rp&request_uri=https://example.org/req&state=abc"
+    ],
+    [
+      "keeps every '?' of a nested URL in the query",
+      "https://continua.io.pagopa.it/itw/auth?request_uri=https://rp/req?id=1&state=a",
+      "/itw/auth?request_uri=https://rp/req?id=1&state=a"
+    ]
+  ])("%s", (_, url, expected) => {
+    expect(
+      extractPathFromURL(
+        [IO_INTERNAL_LINK_PREFIX, IO_UNIVERSAL_LINK_PREFIX],
+        url
+      )
+    ).toEqual(expected);
+  });
 });
 
 describe("safeUrlParse", () => {

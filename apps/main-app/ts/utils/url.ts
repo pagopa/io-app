@@ -159,7 +159,12 @@ export function extractPathFromURL(
       "i"
     );
 
-    const normalizedURL = url.replace(/\/+/g, "/");
+    // Collapse multiple slashes only in the origin and path: the query string
+    // may legitimately contain "//" (e.g. nested "https://" URLs)
+    const [originAndPath, ...searchParams] = url.split("?");
+    const normalizedURL = originAndPath
+      .replace(/\/+/g, "/")
+      .concat(searchParams.length ? `?${searchParams.join("?")}` : "");
 
     if (prefixRegex.test(normalizedURL)) {
       return normalizedURL.replace(prefixRegex, "");
