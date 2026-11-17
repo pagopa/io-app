@@ -1,22 +1,20 @@
-import { useIOTheme } from "../../context";
+import { useIOColors } from "../../context";
 import { IOTypography } from "../../core";
 import { IOText, IOTextProps, TypographicStyleProps } from "./IOText";
 
-const {
-  bodyMonospace: { colorToken, ...bodyMonospaceStyle }
-} = IOTypography;
+const { bodyMonospace: bodyMonospaceStyle } = IOTypography;
 
 /** `BodyMonospace` typographic style */
 export const BodyMonospace = ({
   color: customColor,
   ...props
 }: TypographicStyleProps) => {
-  const theme = useIOTheme();
+  const typographyColors = useIOColors().component.typography;
 
   const BodyProps: IOTextProps = {
     ...props,
     ...bodyMonospaceStyle,
-    color: customColor ?? theme[colorToken]
+    color: customColor ?? typographyColors.bodyMonospace
   };
 
   return <IOText {...BodyProps}>{props.children}</IOText>;

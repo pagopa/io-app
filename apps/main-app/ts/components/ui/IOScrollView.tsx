@@ -3,7 +3,7 @@ import {
   hexToRgba,
   IOButton,
   IOButtonLinkSpecificProps,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   IODimensionScale,
   useIOTheme,
@@ -197,7 +197,8 @@ export const IOScrollView = ({
   /* GENERATE EASING GRADIENT
      Background color should be app main background
      (both light and dark themes) */
-  const APP_BG_COLOR: ColorValue = IOColors[theme["appBackground-primary"]];
+  const APP_BG_COLOR: ColorValue =
+    IOColorsLegacy[theme["appBackground-primary"]];
 
   const { colors, locations } = easeGradient({
     colorStops: {
@@ -354,7 +355,7 @@ export const IOScrollView = ({
             style={[
               styles.gradientContainer,
               debugMode && {
-                backgroundColor: hexToRgba(IOColors["error-500"], 0.15)
+                backgroundColor: hexToRgba(IOColorsLegacy["error-500"], 0.15)
               }
             ]}
           >
@@ -362,9 +363,9 @@ export const IOScrollView = ({
               style={[
                 opacityTransition,
                 debugMode && {
-                  borderTopColor: IOColors["error-500"],
+                  borderTopColor: IOColorsLegacy["error-500"],
                   borderTopWidth: 1,
-                  backgroundColor: hexToRgba(IOColors["error-500"], 0.4)
+                  backgroundColor: hexToRgba(IOColorsLegacy["error-500"], 0.4)
                 }
               ]}
             >

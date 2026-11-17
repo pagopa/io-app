@@ -9,7 +9,7 @@ import {
   HttpClientSuccessResponse,
   nativeRequest,
   removeAllCookiesForDomain
-} from "@pagopa/io-react-native-http-client";
+} from "@io-app/expo-http-client";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { StackActions } from "@react-navigation/native";
 import { expectSaga, testSaga } from "redux-saga-test-plan";
@@ -41,8 +41,8 @@ import {
   responseContentContainsJson
 } from "../sagaUtils";
 
-jest.mock("@pagopa/io-react-native-http-client", () => ({
-  ...jest.requireActual("@pagopa/io-react-native-http-client"),
+jest.mock("@io-app/expo-http-client", () => ({
+  ...jest.requireActual("@io-app/expo-http-client"),
   nativeRequest: jest.fn()
 }));
 

@@ -35,7 +35,8 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
     }
     accessible={false}
     collapsable={false}
-    focusable={true}
+    focusable={false}
+    importantForAccessibility="no"
     onBlur={[Function]}
     onClick={[Function]}
     onFocus={[Function]}
@@ -104,49 +105,57 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
       }
     >
       <View
-        accessibilityLabel="Vuoi modificare il carattere usato per i testi in app? Modifica stile carattere"
-        accessibilityRole="button"
-        accessible={true}
         style={
           {
             "alignSelf": "center",
             "flex": 1,
-            "gap": 12,
+            "gap": 4,
           }
         }
       >
         <View
+          accessibilityLabel="Vuoi modificare il carattere usato per i testi in app?"
+          accessibilityRole="text"
+          accessible={true}
           style={
             {
-              "display": "flex",
-              "flexDirection": "column",
               "gap": 4,
             }
           }
         >
-          <Text
-            allowFontScaling={true}
-            dynamicTypeRamp="headline"
-            maxFontSizeMultiplier={1.5}
+          <View
             style={
-              [
-                {},
-                {
-                  "color": "#0E0F13",
-                  "fontFamily": "Titillio",
-                  "fontSize": 16,
-                  "fontStyle": "normal",
-                  "fontWeight": "600",
-                  "lineHeight": 24,
-                },
-              ]
+              {
+                "display": "flex",
+                "flexDirection": "column",
+                "gap": 4,
+              }
             }
           >
-            Vuoi modificare il carattere usato per i testi in app?
-          </Text>
+            <Text
+              accessible={false}
+              allowFontScaling={true}
+              dynamicTypeRamp="headline"
+              maxFontSizeMultiplier={1.5}
+              style={
+                [
+                  {},
+                  {
+                    "color": "#2B2E38",
+                    "fontFamily": "Titillio",
+                    "fontSize": 16,
+                    "fontStyle": "normal",
+                    "fontWeight": "600",
+                    "lineHeight": 24,
+                  },
+                ]
+              }
+            >
+              Vuoi modificare il carattere usato per i testi in app?
+            </Text>
+          </View>
         </View>
         <View
-          accessibilityElementsHidden={true}
           accessibilityLabel="Modifica stile carattere"
           accessibilityRole="button"
           accessibilityState={
@@ -169,7 +178,6 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
           accessible={true}
           collapsable={false}
           focusable={true}
-          importantForAccessibility="no-hide-descendants"
           onBlur={[Function]}
           onClick={[Function]}
           onFocus={[Function]}
@@ -179,7 +187,6 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
           onResponderTerminate={[Function]}
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
-          pointerEvents="none"
         >
           <Text
             accessibilityElementsHidden={true}
@@ -591,7 +598,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
             "padding": 16,
           },
           {
-            "backgroundColor": "rgba(255,102,102,0.2)",
+            "backgroundColor": "#FFD9D9",
           },
         ]
       }
@@ -603,7 +610,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
             "padding": 16,
           },
           {
-            "backgroundColor": "rgba(255,102,102,0.2)",
+            "backgroundColor": "#FFD9D9",
           },
           {
             "transform": [
@@ -632,7 +639,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
           align="xMidYMid"
           bbHeight={36}
           bbWidth={36}
-          color="#FFD9D9"
+          color="#5D1313"
           focusable={false}
           height={36}
           importantForAccessibility="no-hide-descendants"
@@ -709,7 +716,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
                 [
                   {},
                   {
-                    "color": "#FFD9D9",
+                    "color": "#5D1313",
                     "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
@@ -730,7 +737,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
                 [
                   {},
                   {
-                    "color": "#FFD9D9",
+                    "color": "#5D1313",
                     "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",

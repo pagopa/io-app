@@ -1,8 +1,8 @@
 import {
   ContentWrapper,
   H2,
-  IOColors,
   IOMarkdown,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
@@ -83,6 +83,7 @@ type ContentViewProps = {
 
 const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
   const navigation = useItwNavigation();
+  const colors = useIOColors();
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const resolvedCredentialOffer =
     ItwCredentialIssuanceMachineContext.useSelector(
@@ -311,7 +312,9 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
         <H2>{title}</H2>
         <VSpacer size={16} />
         {introductionContent && (
-          <View style={styles.contentBox}>
+          <View
+            style={[styles.contentBox, { borderColor: colors.stroke.default }]}
+          >
             <IOMarkdown content={introductionContent} />
           </View>
         )}
@@ -332,8 +335,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderColor: IOColors["grey-100"]
+    paddingVertical: 8
   }
 });
 

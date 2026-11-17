@@ -1,8 +1,7 @@
 import {
   FooterActions,
-  IOColors,
   useFooterActionsMeasurements,
-  useIOTheme,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import { Fragment } from "react";
@@ -13,7 +12,7 @@ const onButtonPress = () => {
 };
 
 export const DSFooterActions = () => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   const { footerActionsMeasurements, handleFooterActionsMeasurements } =
     useFooterActionsMeasurements();
@@ -30,10 +29,12 @@ export const DSFooterActions = () => {
             <View
               style={[
                 styles.block,
-                { backgroundColor: IOColors[theme["appBackground-secondary"]] }
+                {
+                  backgroundColor: colors.surface.secondary
+                }
               ]}
             >
-              <Text style={{ color: IOColors[theme["textBody-tertiary"]] }}>
+              <Text style={{ color: colors.text.content.tertiary }}>
                 {`Block ${i}`}
               </Text>
             </View>

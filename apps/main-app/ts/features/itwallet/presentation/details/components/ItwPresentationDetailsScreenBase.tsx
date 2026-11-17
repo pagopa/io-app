@@ -79,19 +79,25 @@ const ItwPresentationDetailsScreenBase = ({
   });
 
   const check = (): IOScrollViewActions | undefined => {
+    const opportunitiesProps = isEnabled ? discoverMoreProps : undefined;
+
     if (!ctaProps) {
-      return undefined;
+      return opportunitiesProps
+        ? {
+            type: "SingleButton",
+            primary: {
+              label: opportunitiesProps.label,
+              onPress: opportunitiesProps.onPress
+            }
+          }
+        : undefined;
     }
 
-    if (!isEnabled) {
-      return { type: "SingleButton", primary: ctaProps };
-    }
-
-    return discoverMoreProps
+    return opportunitiesProps
       ? {
           type: "TwoButtons",
           primary: ctaProps,
-          secondary: discoverMoreProps
+          secondary: opportunitiesProps
         }
       : {
           type: "SingleButton",

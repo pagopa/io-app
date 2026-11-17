@@ -11,6 +11,7 @@ import {
 } from "../../analytics";
 import { getMixPanelCredential } from "../../analytics/utils";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { useItwAuthenticSourceLogo } from "../hooks/useItwAuthenticSourceLogo";
 import { useItwAuthSourceName } from "../hooks/useItwAuthSourceName";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
 import { itwIpzsItwalletPrivacyUrlSelector } from "../store/selectors/remoteConfig";
@@ -31,12 +32,14 @@ type ItwMetadataIssuanceListItemProps = {
   };
   isPreview?: boolean;
   label: string;
+  logoUri?: string;
   value: string;
 };
 
 const ItwMetadataIssuanceListItem = ({
   label,
   value,
+  logoUri,
   bottomSheet: bottomSheetProps,
   isPreview
 }: ItwMetadataIssuanceListItemProps) => {
@@ -73,6 +76,7 @@ const ItwMetadataIssuanceListItem = ({
       <ListItemInfo
         accessibilityLabel={`${label} ${value}`}
         endElement={endElement}
+        imageSource={logoUri ? { uri: logoUri } : undefined}
         label={label}
         value={value}
       />
@@ -112,7 +116,7 @@ export const ItwIssuanceMetadata = ({
     credential.credentialType,
     credential
   );
-
+  const authSourceLogo = useItwAuthenticSourceLogo(credential.credentialType);
   const releasedByPid =
     itwCredential && credential.credentialType === CredentialType.PID;
 
@@ -164,6 +168,7 @@ export const ItwIssuanceMetadata = ({
           label={I18n.t(
             "features.itWallet.verifiableCredentials.claims.authenticSource"
           )}
+          logoUri={authSourceLogo}
           value={authSource}
         />
       )}

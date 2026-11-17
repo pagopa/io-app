@@ -15,6 +15,7 @@ import * as ingressSelectors from "../../../ingress/store/selectors";
 import * as itwSelectors from "../../../itwallet/common/store/selectors";
 import * as itwBannersSelectors from "../../../itwallet/common/store/selectors/banners";
 import * as itwPreferencesSelectors from "../../../itwallet/common/store/selectors/preferences";
+import * as itwUpgradeSelectors from "../../../itwallet/common/store/selectors/upgrade";
 import {
   CredentialType,
   ItwStoredCredentialsMocks
@@ -265,7 +266,7 @@ describe("ItwWalletCardsContainer", () => {
       .mockReturnValue(true);
 
     jest
-      .spyOn(itwSelectors, "itwShouldRenderUpgradeBannerSelector")
+      .spyOn(itwUpgradeSelectors, "itwShouldRenderUpgradeBannerSelector")
       .mockReturnValue(true);
 
     jest

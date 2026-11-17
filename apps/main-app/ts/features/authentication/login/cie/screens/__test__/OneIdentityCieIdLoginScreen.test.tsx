@@ -194,7 +194,7 @@ const renderComponent = () => {
   return renderScreenWithNavigationStoreContext(
     OneIdentityCieIdLoginScreen,
     AUTHENTICATION_ROUTES.CIE_ID_LOGIN,
-    { spidLevel: AUTH_LEVELS.L2, isUat: false },
+    { spidLevel: AUTH_LEVELS.L2 },
     store
   );
 };

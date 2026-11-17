@@ -10,3 +10,4 @@ export * from "./ListItemRadioWithAmount";
 export * from "./ListItemSwitch";
 export * from "./ListItemTransaction";
 export * from "./PressableListItemBase";
+export { IOListItemStyles } from "./styles";

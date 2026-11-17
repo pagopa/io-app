@@ -322,7 +322,6 @@ exports[`should match snapshot (attachment with name, fetching, with bottom spac
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -983,7 +982,6 @@ exports[`should match snapshot (attachment with name, fetching, with bottom spac
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -1644,7 +1642,6 @@ exports[`should match snapshot (attachment with name, fetching, with bottom spac
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -2305,7 +2302,6 @@ exports[`should match snapshot (attachment with name, fetching, with bottom spac
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -2966,7 +2962,6 @@ exports[`should match snapshot (attachment with name, fetching, with bottom spac
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -3627,7 +3622,6 @@ exports[`should match snapshot (attachment with name, fetching, with bottom spac
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -4288,7 +4282,6 @@ exports[`should match snapshot (attachment with name, fetching, with bottom spac
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -4949,7 +4942,6 @@ exports[`should match snapshot (attachment with name, fetching, with bottom spac
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -5610,7 +5602,6 @@ exports[`should match snapshot (attachment with name, fetching, with bottom spac
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -6271,7 +6262,6 @@ exports[`should match snapshot (attachment with name, fetching, with bottom spac
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -6932,7 +6922,6 @@ exports[`should match snapshot (attachment with name, fetching, with bottom spac
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -7593,7 +7582,6 @@ exports[`should match snapshot (attachment with name, fetching, with bottom spac
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -8254,7 +8242,6 @@ exports[`should match snapshot (attachment with name, fetching, with bottom spac
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -8915,7 +8902,6 @@ exports[`should match snapshot (attachment with name, fetching, with bottom spac
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -9576,7 +9562,6 @@ exports[`should match snapshot (attachment with name, fetching, with bottom spac
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -10237,7 +10222,6 @@ exports[`should match snapshot (attachment with name, fetching, with bottom spac
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -10898,7 +10882,6 @@ exports[`should match snapshot (attachment with name, fetching, with bottom spac
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -11559,7 +11542,6 @@ exports[`should match snapshot (attachment with name, fetching, with bottom spac
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -12220,7 +12202,6 @@ exports[`should match snapshot (attachment with name, fetching, with bottom spac
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -12881,7 +12862,6 @@ exports[`should match snapshot (attachment with name, fetching, with bottom spac
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -13542,7 +13522,6 @@ exports[`should match snapshot (attachment with name, fetching, with bottom spac
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -14203,7 +14182,6 @@ exports[`should match snapshot (attachment with name, fetching, with bottom spac
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -14864,7 +14842,6 @@ exports[`should match snapshot (attachment with name, fetching, with bottom spac
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -15525,7 +15502,6 @@ exports[`should match snapshot (attachment with name, fetching, with bottom spac
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -16186,7 +16162,6 @@ exports[`should match snapshot (attachment with name, fetching, with bottom spac
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -16847,7 +16822,6 @@ exports[`should match snapshot (attachment with name, fetching, with bottom spac
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -17508,7 +17482,6 @@ exports[`should match snapshot (attachment with name, fetching, with bottom spac
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -18169,7 +18142,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -18823,7 +18795,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -19477,7 +19448,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -20131,7 +20101,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -20785,7 +20754,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -21439,7 +21407,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -22093,7 +22060,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -22747,7 +22713,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -23401,7 +23366,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -24055,7 +24019,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -24709,7 +24672,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -25363,7 +25325,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -26017,7 +25978,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -26671,7 +26631,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -27325,7 +27284,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -27979,7 +27937,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -28633,7 +28590,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -29287,7 +29243,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -29941,7 +29896,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -30595,7 +30549,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -31249,7 +31202,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -31903,7 +31855,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -32557,7 +32508,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -33211,7 +33161,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -33865,7 +33814,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -34519,7 +34467,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -35173,7 +35120,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -35827,7 +35773,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -36481,7 +36426,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -37135,7 +37079,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -37789,7 +37732,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -38443,7 +38385,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -39097,7 +39038,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -39751,7 +39691,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -40405,7 +40344,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -41059,7 +40997,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -41713,7 +41650,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -42367,7 +42303,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -43021,7 +42956,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -43675,7 +43609,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -44329,7 +44262,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -44983,7 +44915,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -45637,7 +45568,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -46291,7 +46221,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -46945,7 +46874,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -47599,7 +47527,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -48253,7 +48180,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -48907,7 +48833,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -49561,7 +49486,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -50215,7 +50139,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -50869,7 +50792,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -51523,7 +51445,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -52177,7 +52098,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -52831,7 +52751,6 @@ exports[`should match snapshot (attachment with name, fetching, without bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -53485,7 +53404,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -53996,7 +53914,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -54507,7 +54424,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -55018,7 +54934,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -55529,7 +55444,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -56040,7 +55954,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -56551,7 +56464,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -57062,7 +56974,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -57573,7 +57484,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -58135,7 +58045,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -58153,7 +58062,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -58722,7 +58630,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -58740,7 +58647,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -59309,7 +59215,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -59327,7 +59232,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -59896,7 +59800,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -59914,7 +59817,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -60483,7 +60385,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -60501,7 +60402,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -61070,7 +60970,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -61088,7 +60987,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -61657,7 +61555,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -61675,7 +61572,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -62244,7 +62140,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -62262,7 +62157,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -62831,7 +62725,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -62849,7 +62742,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -63418,7 +63310,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -63436,7 +63327,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -64005,7 +63895,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -64023,7 +63912,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -64592,7 +64480,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -64610,7 +64497,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -65179,7 +65065,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -65197,7 +65082,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -65766,7 +65650,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -65784,7 +65667,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -66353,7 +66235,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -66371,7 +66252,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -66940,7 +66820,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -66958,7 +66837,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -67527,7 +67405,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -67545,7 +67422,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -68114,7 +67990,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -68132,7 +68007,6 @@ exports[`should match snapshot (attachment with name, not fetching, with bottom 
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -68650,7 +68524,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -69154,7 +69027,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -69658,7 +69530,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -70162,7 +70033,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -70666,7 +70536,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -71170,7 +71039,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -71674,7 +71542,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -72178,7 +72045,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -72682,7 +72548,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -73186,7 +73051,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -73690,7 +73554,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -74194,7 +74057,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -74698,7 +74560,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -75202,7 +75063,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -75706,7 +75566,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -76210,7 +76069,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -76714,7 +76572,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -77218,7 +77075,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -77773,7 +77629,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -77791,7 +77646,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -78353,7 +78207,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -78371,7 +78224,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -78933,7 +78785,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -78951,7 +78802,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -79513,7 +79363,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -79531,7 +79380,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -80093,7 +79941,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -80111,7 +79958,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -80673,7 +80519,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -80691,7 +80536,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -81253,7 +81097,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -81271,7 +81114,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -81833,7 +81675,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -81851,7 +81692,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -82413,7 +82253,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -82431,7 +82270,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -82993,7 +82831,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -83011,7 +82848,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -83573,7 +83409,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -83591,7 +83426,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -84153,7 +83987,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -84171,7 +84004,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -84733,7 +84565,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -84751,7 +84582,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -85313,7 +85143,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -85331,7 +85160,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -85893,7 +85721,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -85911,7 +85738,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -86473,7 +86299,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -86491,7 +86316,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -87053,7 +86877,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -87071,7 +86894,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -87633,7 +87455,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -87651,7 +87472,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -88213,7 +88033,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -88231,7 +88050,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -88793,7 +88611,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -88811,7 +88628,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -89373,7 +89189,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -89391,7 +89206,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -89953,7 +89767,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -89971,7 +89784,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -90533,7 +90345,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -90551,7 +90362,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -91113,7 +90923,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -91131,7 +90940,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -91693,7 +91501,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -91711,7 +91518,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -92273,7 +92079,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -92291,7 +92096,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -92853,7 +92657,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -92871,7 +92674,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -93433,7 +93235,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -93451,7 +93252,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -94013,7 +93813,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -94031,7 +93830,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -94593,7 +94391,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -94611,7 +94408,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -95173,7 +94969,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -95191,7 +94986,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -95753,7 +95547,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -95771,7 +95564,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -96333,7 +96125,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -96351,7 +96142,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -96913,7 +96703,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -96931,7 +96720,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -97493,7 +97281,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -97511,7 +97298,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -98073,7 +97859,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -98091,7 +97876,6 @@ exports[`should match snapshot (attachment with name, not fetching, without bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -98602,7 +98386,6 @@ exports[`should match snapshot (attachment without name, fetching, with bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -99263,7 +99046,6 @@ exports[`should match snapshot (attachment without name, fetching, with bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -99924,7 +99706,6 @@ exports[`should match snapshot (attachment without name, fetching, with bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -100585,7 +100366,6 @@ exports[`should match snapshot (attachment without name, fetching, with bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -101246,7 +101026,6 @@ exports[`should match snapshot (attachment without name, fetching, with bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -101907,7 +101686,6 @@ exports[`should match snapshot (attachment without name, fetching, with bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -102568,7 +102346,6 @@ exports[`should match snapshot (attachment without name, fetching, with bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -103229,7 +103006,6 @@ exports[`should match snapshot (attachment without name, fetching, with bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -103890,7 +103666,6 @@ exports[`should match snapshot (attachment without name, fetching, with bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -104551,7 +104326,6 @@ exports[`should match snapshot (attachment without name, fetching, with bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -105212,7 +104986,6 @@ exports[`should match snapshot (attachment without name, fetching, with bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -105873,7 +105646,6 @@ exports[`should match snapshot (attachment without name, fetching, with bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -106534,7 +106306,6 @@ exports[`should match snapshot (attachment without name, fetching, with bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -107195,7 +106966,6 @@ exports[`should match snapshot (attachment without name, fetching, with bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -107856,7 +107626,6 @@ exports[`should match snapshot (attachment without name, fetching, with bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -108517,7 +108286,6 @@ exports[`should match snapshot (attachment without name, fetching, with bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -109178,7 +108946,6 @@ exports[`should match snapshot (attachment without name, fetching, with bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -109839,7 +109606,6 @@ exports[`should match snapshot (attachment without name, fetching, with bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -110500,7 +110266,6 @@ exports[`should match snapshot (attachment without name, fetching, with bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -111161,7 +110926,6 @@ exports[`should match snapshot (attachment without name, fetching, with bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -111822,7 +111586,6 @@ exports[`should match snapshot (attachment without name, fetching, with bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -112483,7 +112246,6 @@ exports[`should match snapshot (attachment without name, fetching, with bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -113144,7 +112906,6 @@ exports[`should match snapshot (attachment without name, fetching, with bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -113805,7 +113566,6 @@ exports[`should match snapshot (attachment without name, fetching, with bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -114466,7 +114226,6 @@ exports[`should match snapshot (attachment without name, fetching, with bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -115127,7 +114886,6 @@ exports[`should match snapshot (attachment without name, fetching, with bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -115788,7 +115546,6 @@ exports[`should match snapshot (attachment without name, fetching, with bottom s
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -116449,7 +116206,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -117103,7 +116859,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -117757,7 +117512,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -118411,7 +118165,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -119065,7 +118818,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -119719,7 +119471,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -120373,7 +120124,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -121027,7 +120777,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -121681,7 +121430,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -122335,7 +122083,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -122989,7 +122736,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -123643,7 +123389,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -124297,7 +124042,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -124951,7 +124695,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -125605,7 +125348,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -126259,7 +126001,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -126913,7 +126654,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -127567,7 +127307,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -128221,7 +127960,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -128875,7 +128613,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -129529,7 +129266,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -130183,7 +129919,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -130837,7 +130572,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -131491,7 +131225,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -132145,7 +131878,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -132799,7 +132531,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -133453,7 +133184,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -134107,7 +133837,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -134761,7 +134490,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -135415,7 +135143,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -136069,7 +135796,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -136723,7 +136449,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -137377,7 +137102,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -138031,7 +137755,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -138685,7 +138408,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -139339,7 +139061,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -139993,7 +139714,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -140647,7 +140367,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -141301,7 +141020,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -141955,7 +141673,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -142609,7 +142326,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -143263,7 +142979,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -143917,7 +143632,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -144571,7 +144285,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -145225,7 +144938,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -145879,7 +145591,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -146533,7 +146244,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -147187,7 +146897,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -147841,7 +147550,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -148495,7 +148203,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -149149,7 +148856,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -149803,7 +149509,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -150457,7 +150162,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -151111,7 +150815,6 @@ exports[`should match snapshot (attachment without name, fetching, without botto
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -151765,7 +151468,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -152276,7 +151978,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -152787,7 +152488,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -153298,7 +152998,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -153809,7 +153508,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -154320,7 +154018,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -154831,7 +154528,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -155342,7 +155038,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -155853,7 +155548,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -156415,7 +156109,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -156433,7 +156126,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -157002,7 +156694,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -157020,7 +156711,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -157589,7 +157279,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -157607,7 +157296,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -158176,7 +157864,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -158194,7 +157881,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -158763,7 +158449,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -158781,7 +158466,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -159350,7 +159034,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -159368,7 +159051,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -159937,7 +159619,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -159955,7 +159636,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -160524,7 +160204,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -160542,7 +160221,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -161111,7 +160789,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -161129,7 +160806,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -161698,7 +161374,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -161716,7 +161391,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -162285,7 +161959,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -162303,7 +161976,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -162872,7 +162544,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -162890,7 +162561,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -163459,7 +163129,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -163477,7 +163146,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -164046,7 +163714,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -164064,7 +163731,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -164633,7 +164299,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -164651,7 +164316,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -165220,7 +164884,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -165238,7 +164901,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -165807,7 +165469,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -165825,7 +165486,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -166394,7 +166054,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -166412,7 +166071,6 @@ exports[`should match snapshot (attachment without name, not fetching, with bott
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -166930,7 +166588,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -167434,7 +167091,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -167938,7 +167594,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -168442,7 +168097,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -168946,7 +168600,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -169450,7 +169103,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -169954,7 +169606,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -170458,7 +170109,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -170962,7 +170612,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -171466,7 +171115,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -171970,7 +171618,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -172474,7 +172121,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -172978,7 +172624,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -173482,7 +173127,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -173986,7 +173630,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -174490,7 +174133,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -174994,7 +174636,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -175498,7 +175139,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                           [
                             {
                               "alignItems": "center",
-                              "borderColor": "#E8EBF1",
                               "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
@@ -176053,7 +175693,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -176071,7 +175710,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -176633,7 +176271,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -176651,7 +176288,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -177213,7 +176849,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -177231,7 +176866,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -177793,7 +177427,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -177811,7 +177444,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -178373,7 +178005,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -178391,7 +178022,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -178953,7 +178583,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -178971,7 +178600,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -179533,7 +179161,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -179551,7 +179178,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -180113,7 +179739,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -180131,7 +179756,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -180693,7 +180317,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -180711,7 +180334,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -181273,7 +180895,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -181291,7 +180912,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -181853,7 +181473,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -181871,7 +181490,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -182433,7 +182051,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -182451,7 +182068,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -183013,7 +182629,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -183031,7 +182646,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -183593,7 +183207,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -183611,7 +183224,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -184173,7 +183785,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -184191,7 +183802,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -184753,7 +184363,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -184771,7 +184380,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -185333,7 +184941,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -185351,7 +184958,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -185913,7 +185519,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -185931,7 +185536,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -186493,7 +186097,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -186511,7 +186114,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -187073,7 +186675,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -187091,7 +186692,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -187653,7 +187253,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -187671,7 +187270,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -188233,7 +187831,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -188251,7 +187848,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -188813,7 +188409,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -188831,7 +188426,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -189393,7 +188987,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -189411,7 +189004,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -189973,7 +189565,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -189991,7 +189582,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -190553,7 +190143,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -190571,7 +190160,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -191133,7 +190721,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -191151,7 +190738,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -191713,7 +191299,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -191731,7 +191316,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -192293,7 +191877,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -192311,7 +191894,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -192873,7 +192455,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -192891,7 +192472,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -193453,7 +193033,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -193471,7 +193050,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -194033,7 +193611,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -194051,7 +193628,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -194613,7 +194189,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -194631,7 +194206,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -195193,7 +194767,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -195211,7 +194784,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -195773,7 +195345,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -195791,7 +195362,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -196353,7 +195923,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,
@@ -196371,7 +195940,6 @@ exports[`should match snapshot (attachment without name, not fetching, without b
                             [
                               {
                                 "alignItems": "center",
-                                "borderColor": "#E8EBF1",
                                 "borderCurve": "continuous",
                                 "borderRadius": 8,
                                 "borderWidth": 1,

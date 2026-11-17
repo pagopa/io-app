@@ -1,5 +1,7 @@
+import { IOColors } from "./colors";
 import { IODimensions } from "./dimensions";
 
+export * from "./colors";
 export * from "./dimensions";
 
 /**
@@ -9,5 +11,6 @@ export * from "./dimensions";
  * live under `core/tokens`.
  */
 export const IOTokens = {
-  dimension: IODimensions
+  dimension: IODimensions,
+  color: IOColors
 } as const;

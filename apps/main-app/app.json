@@ -1,12 +1,12 @@
 {
   "name": "IO",
   "displayName": "IO",
-  "version": "3.43.0",
+  "version": "3.44.0",
   "ios": {
-    "buildNumber": "7"
+    "buildNumber": "1"
   },
   "android": {
-    "version": "3.43.0.6",
-    "versionCode": 100155322
+    "version": "3.44.0.1",
+    "versionCode": 100155328
   }
 }

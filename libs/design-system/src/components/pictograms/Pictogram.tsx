@@ -1,9 +1,8 @@
-import { JSX, useMemo } from "react";
+import { JSX } from "react";
 import { ColorValue } from "react-native";
 
-import { useIOTheme } from "../../context";
-import { IOColors, IOThemeDark, IOThemeLight } from "../../core/IOColors";
-import { IODimensions } from "../../core/tokens";
+import { useIOColors } from "../../context";
+import { IOColors, IODimensions } from "../../core/tokens";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import PictogramAccessDenied from "./svg/PictogramAccessDenied";
 import PictogramActivate from "./svg/PictogramActivate";
@@ -77,7 +76,6 @@ import PictogramEventClose from "./svg/PictogramEventClose";
 import PictogramFatalError from "./svg/PictogramFatalError";
 import PictogramFeature from "./svg/PictogramFeature";
 import PictogramFeedback from "./svg/PictogramFeedback";
-import PictogramFingerprint from "./svg/PictogramFingerprint";
 import PictogramHello from "./svg/PictogramHello";
 import PictogramHelp from "./svg/PictogramHelp";
 import PictogramIdea from "./svg/PictogramIdea";
@@ -121,7 +119,6 @@ import PictogramTime from "./svg/PictogramTime";
 import PictogramTiming from "./svg/PictogramTiming";
 import PictogramUmbrella from "./svg/PictogramUmbrella";
 import PictogramUpdateOS from "./svg/PictogramUpdateOS";
-import PictogramWalletDoc from "./svg/PictogramWalletDoc";
 import PictogramWorkInProgress from "./svg/PictogramWorkInProgress";
 import { SVGPictogramProps } from "./types";
 
@@ -182,8 +179,6 @@ export const IOPictograms = {
   payments: PictogramPayments,
   workInProgress: PictogramWorkInProgress,
   smile: PictogramSmile,
-  fingerprint: PictogramFingerprint,
-  walletDoc: PictogramWalletDoc,
   emptyWallet: PictogramEmptyWallet,
   meterLimit: PictogramMeterLimit,
   savingMoney: PictogramSavingMoney,
@@ -216,11 +211,10 @@ export type IOPictogramsProps = {
   size?: "100%" | IOPictogramSizeScale;
 };
 
-type PictogramPalette = {
+export type PictogramPalette = {
   hands: ColorValue;
   main: ColorValue;
   secondary: ColorValue;
-  tertiary: ColorValue;
 };
 
 export const Pictogram = ({
@@ -230,7 +224,7 @@ export const Pictogram = ({
   allowFontScaling = false,
   ...props
 }: IOPictogramsProps) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const { dynamicFontScale, spacingScaleMultiplier } = useIOFontDynamicScale();
 
   const PictogramElement = IOPictograms[name];
@@ -240,26 +234,10 @@ export const Pictogram = ({
       ? size * dynamicFontScale * spacingScaleMultiplier
       : size;
 
-  const themeObj = useMemo(() => {
-    switch (pictogramStyle) {
-      case "dark-content":
-        return IOThemeLight;
-      case "default":
-        return theme;
-      case "light-content":
-        return IOThemeDark;
-    }
-  }, [pictogramStyle, theme]);
-
-  const colorValues: PictogramPalette = useMemo(
-    () => ({
-      hands: IOColors[themeObj["pictogram-hands"]],
-      main: IOColors[themeObj["pictogram-tint-main"]],
-      secondary: IOColors[themeObj["pictogram-tint-secondary"]],
-      tertiary: IOColors[themeObj["pictogram-tint-tertiary"]]
-    }),
-    [themeObj]
-  );
+  const colorValues: PictogramPalette =
+    pictogramStyle === "dark-content"
+      ? IOColors.light.component.pictogram.default
+      : colors.component.pictogram[pictogramStyle];
 
   return (
     <PictogramElement
@@ -386,7 +364,7 @@ export const PictogramBleed = ({
   allowFontScaling = false,
   ...props
 }: IOPictogramsProps) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const { dynamicFontScale, spacingScaleMultiplier } = useIOFontDynamicScale();
 
   const PictogramElement = IOPictogramsBleed[name as IOPictogramsBleed];
@@ -396,26 +374,10 @@ export const PictogramBleed = ({
       ? size * dynamicFontScale * spacingScaleMultiplier
       : size;
 
-  const themeObj = useMemo(() => {
-    switch (pictogramStyle) {
-      case "dark-content":
-        return IOThemeLight;
-      case "default":
-        return theme;
-      case "light-content":
-        return IOThemeDark;
-    }
-  }, [pictogramStyle, theme]);
-
-  const colorValues: PictogramPalette = useMemo(
-    () => ({
-      hands: IOColors[themeObj["pictogram-hands"]],
-      main: IOColors[themeObj["pictogram-tint-main"]],
-      secondary: IOColors[themeObj["pictogram-tint-secondary"]],
-      tertiary: IOColors[themeObj["pictogram-tint-tertiary"]]
-    }),
-    [themeObj]
-  );
+  const colorValues: PictogramPalette =
+    pictogramStyle === "dark-content"
+      ? IOColors.light.component.pictogram.default
+      : colors.component.pictogram[pictogramStyle];
 
   return (
     <PictogramElement
