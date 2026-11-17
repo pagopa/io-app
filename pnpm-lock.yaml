@@ -21444,7 +21444,7 @@ snapshots:
 
   expo-secure-store@55.0.16(expo@55.0.26):
     dependencies:
-      expo: 55.0.26(bcb58a91d04f10539236d86e17d0d1bd)
+      expo: 55.0.26(3682a58119468322fd2634c3efd68c49)
 
   expo-server@55.0.11: {}
 
