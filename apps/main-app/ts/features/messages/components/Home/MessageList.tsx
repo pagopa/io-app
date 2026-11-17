@@ -2,6 +2,7 @@ import { Divider } from "@io-app/design-system";
 import I18n from "i18next";
 import { Ref, useCallback, useMemo } from "react";
 import { FlatList, RefreshControl, StyleSheet } from "react-native";
+import Animated from "react-native-reanimated";
 import {
   useSafeAreaFrame,
   useSafeAreaInsets
@@ -13,6 +14,7 @@ import {
   useIOStore
 } from "../../../../store/hooks";
 import { LandingScreenBannerPicker } from "../../../landingScreenMultiBanner/components/LandingScreenBannerPicker";
+import { bannerLayoutTransition } from "../../../landingScreenMultiBanner/components/LandingScreenBannerTransition";
 import { trackPullToRefresh } from "../../analytics";
 import {
   messageListForCategorySelector,
@@ -38,6 +40,9 @@ import { WrappedListItemMessage } from "./WrappedListItemMessage";
 const styles = StyleSheet.create({
   contentContainer: {
     flexGrow: 1
+  },
+  header: {
+    zIndex: 1
   }
 });
 
@@ -109,16 +114,22 @@ export const MessageList = ({ ref, category }: MessageListProps) => {
     }
   }, [category, dispatch, store]);
   return (
-    <FlatList
+    <Animated.FlatList
       contentContainerStyle={styles.contentContainer}
       data={(messageList ?? loadingList) as Readonly<Array<number | UIMessage>>}
       getItemLayout={getItemLayoutCallback}
+      // Messages slide along with the landing banner height changes
+      itemLayoutAnimation={
+        category === "INBOX" ? bannerLayoutTransition : undefined
+      }
       ItemSeparatorComponent={messageList ? () => <Divider /> : undefined}
       ListEmptyComponent={<EmptyList category={category} />}
       ListFooterComponent={<Footer category={category} />}
       ListHeaderComponent={
         category === "INBOX" ? <LandingScreenBannerPicker /> : undefined
       }
+      // Keeps the growing banner above the messages sliding underneath
+      ListHeaderComponentStyle={styles.header}
       onEndReached={onEndReachedCallback}
       onEndReachedThreshold={0.1}
       ref={ref}
