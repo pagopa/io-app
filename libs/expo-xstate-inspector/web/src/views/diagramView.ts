@@ -1,12 +1,12 @@
-import type { DiagramRenderer } from "../renderers/mermaidRenderer.js";
-import type { InspectedActor } from "../types/inspector.js";
-import type { PanZoom } from "../widgets/panZoom.js";
-import type { createStateDetailsView } from "./stateDetailsView.js";
+import type { DiagramRenderer } from "../renderers/mermaidRenderer";
+import type { InspectedActor } from "../types/inspector";
+import type { PanZoom } from "../widgets/panZoom";
+import type { createStateDetailsView } from "./stateDetailsView";
 
-import { toNodeId } from "../builders/nodeIds.js";
-import { buildStateDiagram } from "../builders/stateDiagram.js";
-import { listStateNodes } from "../utils/stateNodes.js";
-import { markTakenEdges } from "../utils/svgEdges.js";
+import { toNodeId } from "../builders/nodeIds";
+import { buildStateDiagram } from "../builders/stateDiagram";
+import { listStateNodes } from "../utils/stateNodes";
+import { markTakenEdges } from "../utils/svgEdges";
 
 const STATE_ELEMENTS = "g.node, g.cluster";
 

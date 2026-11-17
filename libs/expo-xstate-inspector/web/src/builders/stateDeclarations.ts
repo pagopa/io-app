@@ -1,6 +1,6 @@
-import type { StateNodeConfig } from "../types/inspector.js";
+import type { StateNodeConfig } from "../types/inspector";
 
-import { escapeLabel, toNodeId } from "./nodeIds.js";
+import { escapeLabel, toNodeId } from "./nodeIds";
 
 const initialPath = (node: StateNodeConfig, path: Array<string>) => {
   const initial =

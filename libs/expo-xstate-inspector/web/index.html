@@ -2,58 +2,57 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>XState inspector</title>
-    <link
-      rel="icon"
-      type="image/png"
-      href="/_expo/plugins/@io-app/expo-xstate-inspector/favicon.png"
-    />
-    <!-- Absolute paths: Expo serves this page without a trailing slash. -->
-    <link
-      rel="stylesheet"
-      href="/_expo/plugins/@io-app/expo-xstate-inspector/styles/layout.css"
-    />
-    <link
-      rel="stylesheet"
-      href="/_expo/plugins/@io-app/expo-xstate-inspector/styles/components.css"
-    />
-    <link
-      rel="stylesheet"
-      href="/_expo/plugins/@io-app/expo-xstate-inspector/styles/jsonTree.css"
-    />
-    <link
-      rel="stylesheet"
-      href="/_expo/plugins/@io-app/expo-xstate-inspector/styles/table.css"
-    />
-    <link
-      rel="stylesheet"
-      href="/_expo/plugins/@io-app/expo-xstate-inspector/styles/diagram.css"
-    />
-    <script
-      type="module"
-      src="/_expo/plugins/@io-app/expo-xstate-inspector/scripts/main.js"
-    ></script>
+    <link rel="icon" type="image/png" href="./favicon.png" />
+    <script type="module" src="./src/main.ts"></script>
   </head>
   <body>
-    <aside>
-      <h3>Machines</h3>
-      <nav id="actors"></nav>
+    <aside
+      id="machine-list"
+      aria-label="Machines"
+      class="flex min-h-0 flex-col border-r border-divider bg-surface"
+    >
+      <div class="border-b border-divider px-4 py-2">
+        <h2 class="text-sm font-semibold">Machines</h2>
+      </div>
+      <nav
+        id="actors"
+        aria-label="Select a machine"
+        class="min-h-0 flex-1 space-y-2 overflow-y-auto p-3"
+      >
+        <p class="empty-state">
+          Your machines will appear here when the app connects.
+        </p>
+      </nav>
+      <p
+        class="border-t border-divider px-5 py-4 text-xs leading-relaxed text-muted"
+      >
+        Select a machine to inspect its states, context, and events.
+      </p>
     </aside>
-    <main id="diagram">
-      <div id="diagram-canvas">Waiting for the app…</div>
+    <main id="diagram" aria-label="Machine diagram">
+      <div id="diagram-canvas">
+        <p class="empty-state">Waiting for the app to connect...</p>
+      </div>
       <div id="zoom-controls" class="toolbar" role="toolbar" aria-label="Zoom">
-        <button data-zoom="out" title="Zoom out" aria-label="Zoom out">
-          −
-        </button>
-        <button data-zoom="in" title="Zoom in" aria-label="Zoom in">+</button>
-        <button data-zoom="fit" title="Fit (double-click)">Fit</button>
+        <button data-zoom="out" aria-label="Zoom out"></button>
+        <button data-zoom="in" aria-label="Zoom in"></button>
+        <button data-zoom="fit" aria-label="Fit diagram"></button>
         <button
           data-zoom="follow"
           aria-pressed="false"
-          title="Keep the active state centred. Zoom still works, panning does not."
+          aria-label="Follow active state"
+        ></button>
+      </div>
+      <div class="diagram-legend" aria-label="Diagram legend" data-no-pan>
+        <span
+          ><i class="legend-active" aria-hidden="true"></i>Active state</span
         >
-          Follow
-        </button>
+        <span
+          ><i class="legend-visited" aria-hidden="true"></i>Visited state</span
+        >
+        <span class="legend-hint">Drag to pan. Pinch to zoom.</span>
       </div>
       <aside
         id="state-details"
@@ -70,31 +69,68 @@
       aria-label="Resize panel"
     ></div>
     <section id="panel">
-      <nav id="tabs" role="tablist">
-        <button role="tab" aria-controls="state-tab" aria-selected="true">
+      <div class="border-b border-divider px-4 py-2">
+        <h2 class="text-sm font-semibold">Inspection</h2>
+      </div>
+      <nav id="tabs" role="tablist" aria-label="Inspection views">
+        <button
+          id="state-trigger"
+          role="tab"
+          aria-controls="state-tab"
+          aria-selected="true"
+        >
           State
         </button>
-        <button role="tab" aria-controls="context-tab" aria-selected="false">
+        <button
+          id="context-trigger"
+          role="tab"
+          aria-controls="context-tab"
+          aria-selected="false"
+        >
           Context
         </button>
-        <button role="tab" aria-controls="events-tab" aria-selected="false">
+        <button
+          id="events-trigger"
+          role="tab"
+          aria-controls="events-tab"
+          aria-selected="false"
+        >
           Events
         </button>
         <button
           role="tab"
+          id="child-actors-trigger"
           aria-controls="child-actors-tab"
           aria-selected="false"
         >
           Actors
         </button>
       </nav>
-      <div id="state-tab" role="tabpanel">
+      <div
+        id="state-tab"
+        role="tabpanel"
+        aria-labelledby="state-trigger"
+        tabindex="0"
+      >
         <div id="state"></div>
       </div>
-      <div id="context-tab" role="tabpanel" hidden>
+      <div
+        id="context-tab"
+        role="tabpanel"
+        aria-labelledby="context-trigger"
+        tabindex="0"
+        hidden
+      >
         <div id="context"></div>
       </div>
-      <div id="events-tab" class="table-panel" role="tabpanel" hidden>
+      <div
+        id="events-tab"
+        class="table-panel"
+        role="tabpanel"
+        aria-labelledby="events-trigger"
+        tabindex="0"
+        hidden
+      >
         <table class="data-table">
           <thead>
             <tr>
@@ -105,8 +141,16 @@
           </thead>
           <tbody id="events"></tbody>
         </table>
+        <p class="table-empty empty-state">No events received yet.</p>
       </div>
-      <div id="child-actors-tab" class="table-panel" role="tabpanel" hidden>
+      <div
+        id="child-actors-tab"
+        class="table-panel"
+        role="tabpanel"
+        aria-labelledby="child-actors-trigger"
+        tabindex="0"
+        hidden
+      >
         <table class="data-table">
           <thead>
             <tr>
@@ -117,6 +161,7 @@
           </thead>
           <tbody id="child-actors"></tbody>
         </table>
+        <p class="table-empty empty-state">No child actors to display.</p>
       </div>
     </section>
     <div id="mermaid-sandbox" aria-hidden="true"></div>

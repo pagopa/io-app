@@ -28,7 +28,7 @@ so the page contacts a third party and is not fully offline.
 2. `src/handlers/`, `src/serializers/`, and `src/registries/` prepare actor
    definitions, events, microsteps, and snapshots. The registry tracks running
    actors. `src/transports/` sends the messages through Expo dev tools.
-3. Expo serves the `web/` page. Its `web/src/` client receives the messages
+3. Vite bundles `web/` into `dist/`, which Expo serves. Its `web/src/` client receives the messages
    through the Expo development server, stores actor data in browser memory,
    and renders the views and Mermaid diagram.
 
@@ -44,9 +44,27 @@ pnpm install
 pnpm nx run main-app:start
 ```
 
-The package's `prepare` script compiles `web/src/` into the ignored
-`web/scripts/` directory during `pnpm install`. Run `pnpm install` again after
-changing the browser source.
+The package's `prepare` script runs Vite during `pnpm install`, bundling
+TypeScript, Tailwind CSS, and the app's Titillio fonts into the ignored `dist/`
+directory. After changing browser source or styles, rebuild with:
+
+```sh
+pnpm --filter @io-app/expo-xstate-inspector run prepare
+```
+
+The framework-free web UI mirrors the IO design system's semantic light/dark
+colors; it does not load React Native components. Tailwind and fonts are served
+locally, with no additional runtime CDN requests.
+
+For web development with hot reload, keep Metro running on port 8081 and run:
+
+```sh
+pnpm --filter @io-app/expo-xstate-inspector run dev
+```
+
+Open the URL printed by Vite. Its development server proxies the inspection
+WebSocket to Metro. The Expo plugin menu continues to serve the built `dist/`
+page, so rebuild before testing through that menu.
 
 1. Run a development build of the app on a device or emulator. See the
    [main app setup](../../apps/main-app/README.md#getting-started) for platform

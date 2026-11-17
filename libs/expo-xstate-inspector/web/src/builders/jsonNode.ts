@@ -1,4 +1,4 @@
-import { createSpan } from "../utils/dom.js";
+import { createSpan } from "../utils/dom";
 
 const typeOf = (value: unknown) =>
   value === null ? "null" : Array.isArray(value) ? "array" : typeof value;

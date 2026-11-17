@@ -1,4 +1,4 @@
-import type { StateValue } from "../types/inspector.js";
+import type { StateValue } from "../types/inspector";
 
 type ActivePaths = {
   leaves: Array<Array<string>>;

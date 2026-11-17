@@ -1,26 +1,12 @@
 import assert from "node:assert/strict";
-import { registerHooks } from "node:module";
 import { test } from "node:test";
 import { createActor, createMachine } from "xstate";
-
-registerHooks({
-  resolve(specifier, context, nextResolve) {
-    try {
-      return nextResolve(specifier, context);
-    } catch (error) {
-      if (specifier.startsWith(".") && error.code === "ERR_MODULE_NOT_FOUND") {
-        return nextResolve(`${specifier}.ts`, context);
-      }
-      throw error;
-    }
-  }
-});
 
 const { createInspector } = await import("../inspectors/createInspector.ts");
 const { createActorRegistry } = await import("../registries/actorRegistry.ts");
 const { serializeValue } = await import("../serializers/value.ts");
 
-test("serializes sets recursively and detects cycles", () => {
+void test("serializes sets recursively and detects cycles", () => {
   const value = new Set(["credential", { nested: new Set([1, 2]) }]);
   value.add(value);
 
@@ -31,7 +17,7 @@ test("serializes sets recursively and detects cycles", () => {
   ]);
 });
 
-test("replays actors only after they start, with their actual start time", t => {
+void test("replays actors only after they start, with their actual start time", t => {
   let now = 100;
   t.mock.method(Date, "now", () => now);
   const messages = [];

@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { mock, test } from "node:test";
 
-import { createDiagramView } from "../../../scripts/views/diagramView.js";
+import { createDiagramView } from "../diagramView.ts";
 
 const setup = (t, dark) => {
   const colorScheme = Object.assign(new EventTarget(), { matches: dark });
@@ -34,7 +34,7 @@ const setup = (t, dark) => {
 };
 
 for (const dark of [false, true]) {
-  test(`uses the initial ${dark ? "dark" : "light"} preference and caches unchanged diagrams`, async t => {
+  void test(`uses the initial ${dark ? "dark" : "light"} preference and caches unchanged diagrams`, async t => {
     const { actor, container, renderDiagram, view } = setup(t, dark);
     await view.render(actor);
     await view.render(actor);
@@ -45,7 +45,7 @@ for (const dark of [false, true]) {
   });
 }
 
-test("redraws the latest actor on theme changes without resetting the viewport", async t => {
+void test("redraws the latest actor on theme changes without resetting the viewport", async t => {
   const { actor, colorScheme, container, renderDiagram, view, viewport } =
     setup(t, false);
   await view.render(actor);
@@ -68,7 +68,7 @@ test("redraws the latest actor on theme changes without resetting the viewport",
   assert.equal(renderDiagram.mock.callCount(), 4);
 });
 
-test("preserves messages when the system theme changes", async t => {
+void test("preserves messages when the system theme changes", async t => {
   const { actor, colorScheme, container, renderDiagram, view } = setup(
     t,
     false
@@ -85,7 +85,7 @@ test("preserves messages when the system theme changes", async t => {
 });
 
 for (const outcome of ["resolve", "reject"]) {
-  test(`ignores an in-flight render that ${outcome}s after a message`, async t => {
+  void test(`ignores an in-flight render that ${outcome}s after a message`, async t => {
     const { actor, container, renderDiagram, view } = setup(t, false);
     let settle;
     const pending = new Promise((resolve, reject) => {
@@ -103,7 +103,7 @@ for (const outcome of ["resolve", "reject"]) {
   });
 }
 
-test("ignores an older render failure after a newer diagram", async t => {
+void test("ignores an older render failure after a newer diagram", async t => {
   const { actor, container, renderDiagram, view } = setup(t, false);
   let reject;
   const pending = new Promise((_, fail) => {
@@ -120,7 +120,7 @@ test("ignores an older render failure after a newer diagram", async t => {
   assert.equal(container.textContent, undefined);
 });
 
-test("describes the clicked state until another machine is shown", async t => {
+void test("describes the clicked state until another machine is shown", async t => {
   const { actor, details, view } = setup(t, false);
   await view.render(actor);
   const stateElement = {

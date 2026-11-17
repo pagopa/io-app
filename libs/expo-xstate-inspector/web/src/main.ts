@@ -1,17 +1,18 @@
-import { connectDevToolsClient } from "./clients/devToolsClient.js";
-import { createInspectorController } from "./controllers/inspectorController.js";
-import { createMermaidRenderer } from "./renderers/mermaidRenderer.js";
-import { createActorStore } from "./stores/actorStore.js";
-import { createSelectionStore } from "./stores/selectionStore.js";
-import { createActorListView } from "./views/actorListView.js";
-import { createChildActorTableView } from "./views/childActorTableView.js";
-import { createDetailsView } from "./views/detailsView.js";
-import { createDiagramView } from "./views/diagramView.js";
-import { createStateDetailsView } from "./views/stateDetailsView.js";
-import { bindPanelResizer } from "./widgets/panelResizer.js";
-import { bindPanZoom } from "./widgets/panZoom.js";
-import { bindTabs } from "./widgets/tabs.js";
-import { bindZoomControls } from "./widgets/zoomControls.js";
+import "../styles/index.css";
+import { connectDevToolsClient } from "./clients/devToolsClient";
+import { createInspectorController } from "./controllers/inspectorController";
+import { createMermaidRenderer } from "./renderers/mermaidRenderer";
+import { createActorStore } from "./stores/actorStore";
+import { createSelectionStore } from "./stores/selectionStore";
+import { createActorListView } from "./views/actorListView";
+import { createChildActorTableView } from "./views/childActorTableView";
+import { createDetailsView } from "./views/detailsView";
+import { createDiagramView } from "./views/diagramView";
+import { createStateDetailsView } from "./views/stateDetailsView";
+import { bindPanelResizer } from "./widgets/panelResizer";
+import { bindPanZoom } from "./widgets/panZoom";
+import { bindTabs } from "./widgets/tabs";
+import { bindZoomControls } from "./widgets/zoomControls";
 
 const element = (id: string) => {
   const found = document.getElementById(id);

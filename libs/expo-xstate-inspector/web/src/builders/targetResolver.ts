@@ -1,6 +1,6 @@
-import type { StateNodeConfig } from "../types/inspector.js";
+import type { StateNodeConfig } from "../types/inspector";
 
-import { listStateNodes } from "../utils/stateNodes.js";
+import { listStateNodes } from "../utils/stateNodes";
 
 export type TargetResolver = (
   target: string,

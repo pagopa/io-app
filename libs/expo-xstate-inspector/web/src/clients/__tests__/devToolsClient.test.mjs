@@ -1,9 +1,9 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 
-import { connectDevToolsClient } from "../../../scripts/clients/devToolsClient.js";
+import { connectDevToolsClient } from "../devToolsClient.ts";
 
-test("connects to the page origin even when devServer points elsewhere", t => {
+void test("connects to the page origin even when devServer points elsewhere", t => {
   globalThis.location = {
     host: "localhost:8081",
     protocol: "https:",

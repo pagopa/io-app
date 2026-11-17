@@ -1,7 +1,10 @@
-import type { StateNodeConfig } from "../types/inspector.js";
+import { Cancel01Icon } from "@hugeicons/core-free-icons";
 
-import { describeState } from "../builders/stateDetails.js";
-import { createSpan } from "../utils/dom.js";
+import type { StateNodeConfig } from "../types/inspector";
+
+import { describeState } from "../builders/stateDetails";
+import { createSpan } from "../utils/dom";
+import { setButtonIcon } from "../widgets/iconButton";
 
 const createSection = (title: string, rows: Array<string>) => {
   const section = document.createElement("section");
@@ -26,10 +29,11 @@ export const createStateDetailsView = (
 ) => {
   const header = document.createElement("header");
   const title = document.createElement("h3");
-  const close = document.createElement("button");
-  close.textContent = "×";
-  close.title = "Close";
-  close.ariaLabel = "Close state details";
+  const close = setButtonIcon(
+    document.createElement("button"),
+    Cancel01Icon,
+    "Close state details"
+  );
   close.onclick = onClose;
   header.append(title, close);
   const body = document.createElement("div");

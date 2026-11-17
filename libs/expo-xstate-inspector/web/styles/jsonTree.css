@@ -1,10 +1,12 @@
 .json-toolbar {
-  margin-bottom: 8px;
+  margin-bottom: 20px;
+  width: fit-content;
 }
 
 .json-tree {
   font-family: ui-monospace, monospace;
-  line-height: 1.6;
+  font-size: 12px;
+  line-height: 1.8;
   overflow-wrap: anywhere;
 }
 

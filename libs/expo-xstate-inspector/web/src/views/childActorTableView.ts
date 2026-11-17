@@ -1,8 +1,8 @@
-import type { ActorEntry, InspectedActor } from "../types/inspector.js";
+import type { ActorEntry, InspectedActor } from "../types/inspector";
 
-import { buildJsonTree } from "../builders/jsonNode.js";
-import { createCell, createSpan } from "../utils/dom.js";
-import { formatDuration, formatTime } from "../utils/time.js";
+import { buildJsonTree } from "../builders/jsonNode";
+import { createCell, createSpan } from "../utils/dom";
+import { formatDuration, formatTime } from "../utils/time";
 
 const STATUS_LABELS: Record<string, string> = {
   active: "running",
