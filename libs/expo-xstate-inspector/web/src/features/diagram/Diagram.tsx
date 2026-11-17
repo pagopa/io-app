@@ -70,7 +70,19 @@ export const Diagram = ({ actor, disconnected }: Props) => {
   return (
     <>
       <main aria-label="Machine diagram" id="diagram" ref={viewport}>
-        <div id="diagram-canvas" ref={canvas}>
+        <div
+          id="diagram-canvas"
+          onKeyDown={event => {
+            if (
+              (event.key === "Enter" || event.key === " ") &&
+              event.target instanceof Element
+            ) {
+              event.preventDefault();
+              diagram.current?.selectAt(event.target);
+            }
+          }}
+          ref={canvas}
+        >
           <p className="empty-state">Waiting for the app to connect...</p>
         </div>
         <div

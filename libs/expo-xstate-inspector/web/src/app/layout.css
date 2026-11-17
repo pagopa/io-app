@@ -84,9 +84,33 @@ body {
 
 #app {
   @apply grid m-0 bg-surface font-sans text-sm text-ink;
+  --min-pane-width: 200px;
+  --min-diagram-width: 240px;
+  --resizer-width: 4px;
+  --sidebar-default-width: 248px;
+  --panel-default-width: 400px;
+  --sidebar-size: min(
+    var(--sidebar-width, var(--sidebar-default-width)),
+    calc(
+      100% - var(--min-pane-width) - var(--min-diagram-width) -
+        var(--resizer-width) - var(--resizer-width)
+    )
+  );
+  --panel-size: min(
+    var(--panel-width, var(--panel-default-width)),
+    calc(
+      100% - var(--sidebar-size) - var(--min-diagram-width) -
+        var(--resizer-width) - var(--resizer-width)
+    )
+  );
   height: 100dvh;
   grid-template-rows: minmax(0, 1fr);
-  grid-template-columns: 248px minmax(240px, 1fr) 4px var(--panel-width, 400px);
+  grid-template-columns:
+    var(--sidebar-size) var(--resizer-width)
+    minmax(
+      var(--min-diagram-width),
+      1fr
+    ) var(--resizer-width) var(--panel-size);
 }
 
 #diagram {
@@ -160,15 +184,30 @@ body {
   background: var(--color-visited-background);
 }
 
-#resizer {
+.resizer {
+  position: relative;
+  z-index: 1;
   cursor: col-resize;
   background: var(--color-separator);
   touch-action: none;
 }
 
-#resizer:hover,
-#resizer.dragging {
+.resizer::after {
+  position: absolute;
+  inset-block: 0;
+  inset-inline: -10px;
+  content: "";
+}
+
+.resizer:hover,
+.resizer.dragging,
+.resizer:focus-visible {
   background: var(--color-accent);
+}
+
+.resizer:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -2px;
 }
 
 #panel {
@@ -192,10 +231,8 @@ body {
 
 @media (max-width: 1100px) {
   #app {
-    grid-template-columns: 208px minmax(240px, 1fr) 4px var(
-        --panel-width,
-        320px
-      );
+    --sidebar-default-width: 208px;
+    --panel-default-width: 320px;
   }
 }
 
@@ -224,7 +261,7 @@ body {
   }
 
   #machine-list > p,
-  #resizer {
+  .resizer {
     display: none;
   }
 

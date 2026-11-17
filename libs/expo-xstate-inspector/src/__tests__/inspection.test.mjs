@@ -17,6 +17,11 @@ void test("serializes sets recursively and detects cycles", () => {
   ]);
 });
 
+void test("does not include function source in ordinary serialized values", () => {
+  const logEvent = () => true;
+  assert.deepEqual(serializeValue(logEvent), { type: "logEvent" });
+});
+
 void test("replays actors only after they start, with their actual start time", t => {
   let now = 100;
   t.mock.method(Date, "now", () => now);

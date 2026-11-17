@@ -12,7 +12,6 @@ type Props = {
 };
 
 const TABS = [
-  { id: "state", label: "State" },
   { id: "context", label: "Context" },
   { id: "events", label: "Events" },
   { id: "child-actors", label: "Actors" }
@@ -34,7 +33,7 @@ const actorData = ({ input, snapshot }: InspectedActor) =>
   );
 
 export const InspectionPanel = ({ actor, selectedId, childActors }: Props) => {
-  const [tab, setTab] = useState("state");
+  const [tab, setTab] = useState("context");
 
   return (
     <section id="panel">
@@ -54,15 +53,6 @@ export const InspectionPanel = ({ actor, selectedId, childActors }: Props) => {
             {label}
           </button>
         ))}
-      </div>
-      <div
-        aria-labelledby="state-trigger"
-        hidden={tab !== "state"}
-        id="state-tab"
-        role="tabpanel"
-        tabIndex={0}
-      >
-        <JsonTree initiallyOpen toolbar value={actor?.snapshot?.value} />
       </div>
       <div
         aria-labelledby="context-trigger"

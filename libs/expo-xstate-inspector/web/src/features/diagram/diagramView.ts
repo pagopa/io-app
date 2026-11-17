@@ -10,7 +10,7 @@ import { buildStateDiagram } from "./model/stateDiagram";
 import { listStateNodes } from "./model/stateNodes";
 import { markTakenEdges } from "./svgEdges";
 
-const STATE_ELEMENTS = "g.node, g.cluster";
+const STATE_ELEMENTS = "g.node, g.cluster, g.statediagram-cluster";
 
 // Mermaid builds element ids around ours, e.g. `diagram-1-state-s_idle-0`.
 const stateIdOf = (element: Element, ids: ReadonlyMap<string, unknown>) =>
@@ -40,6 +40,7 @@ export const createDiagramView = (
     actor?: InspectedActor;
     code?: string;
     definition?: InspectedActor["definition"];
+    requestedDefinition?: InspectedActor["definition"];
     selectedId?: string;
   } = {};
   const states = () =>
@@ -53,10 +54,20 @@ export const createDiagramView = (
     const ids = states();
     const state = shown.selectedId ? ids.get(shown.selectedId) : undefined;
     container.querySelectorAll(STATE_ELEMENTS).forEach(element => {
+      const id = stateIdOf(element, ids);
+      const node = id ? ids.get(id) : undefined;
       element.classList.toggle(
         "selected",
-        state !== undefined && stateIdOf(element, ids) === shown.selectedId
+        node !== undefined && id === shown.selectedId
       );
+      if (node) {
+        element.setAttribute("role", "button");
+        element.setAttribute("tabindex", "0");
+        element.setAttribute(
+          "aria-label",
+          `Show details for state ${node.path.join(".")}`
+        );
+      }
     });
     details.render(state);
   };
@@ -64,6 +75,7 @@ export const createDiagramView = (
     requests.latest++;
     shown.code = undefined;
     shown.definition = undefined;
+    shown.requestedDefinition = undefined;
     shown.actor = undefined;
     shown.selectedId = undefined;
     container.textContent = text;
@@ -87,15 +99,26 @@ export const createDiagramView = (
         key !== undefined && actor.taken.has(key) ? [index] : []
       );
       const drawing = `${colorScheme.matches}\n${code}\n${taken.join(",")}`;
-      if (drawing === shown.code) {
+      if (
+        drawing === shown.code &&
+        actor.definition === shown.requestedDefinition
+      ) {
         return;
       }
       shown.code = drawing;
+      shown.requestedDefinition = actor.definition;
       request.id = ++requests.latest;
       const svg = await renderDiagram(code, colorScheme.matches);
       if (request.id !== requests.latest || svg === undefined) {
         return;
       }
+      const focused = container.ownerDocument?.activeElement;
+      const focusedId =
+        actor.definition === shown.definition &&
+        focused &&
+        container.contains(focused)
+          ? stateIdOf(focused, states())
+          : undefined;
       container.innerHTML = svg;
       markTakenEdges(container, taken);
       const isNew = actor.definition !== shown.definition;
@@ -104,6 +127,13 @@ export const createDiagramView = (
       }
       shown.definition = actor.definition;
       showSelection();
+      if (focusedId) {
+        const ids = states();
+        const replacement = Array.from(
+          container.querySelectorAll(STATE_ELEMENTS)
+        ).find(element => stateIdOf(element, ids) === focusedId);
+        (replacement as SVGElement | undefined)?.focus({ preventScroll: true });
+      }
       viewport.update({ isNew });
     } catch (error) {
       if (request.id === requests.latest) {

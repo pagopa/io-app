@@ -167,3 +167,117 @@ void test("describes the clicked state until another machine is shown", async t 
   view.selectAt({ closest: () => null });
   assert.deepEqual(details.render.mock.calls.at(-1).arguments, [undefined]);
 });
+
+void test("selects and highlights compound state diagram clusters", async t => {
+  const { actor, container, details, view } = setup(t, false);
+  actor.definition.states.running = {
+    initial: "nested",
+    states: { nested: {} }
+  };
+  const cluster = {
+    id: "diagram-1-state-s_running-3",
+    getAttribute: name => (name === "data-id" ? "s_running" : null),
+    classList: { toggle: mock.fn() },
+    setAttribute: mock.fn()
+  };
+  const matchesCluster = selector =>
+    selector.split(",").some(part => part.trim() === "g.statediagram-cluster");
+  container.querySelectorAll = selector =>
+    matchesCluster(selector) ? [cluster] : [];
+  await view.render(actor);
+
+  view.selectAt({
+    closest: selector => (matchesCluster(selector) ? cluster : null)
+  });
+  assert.deepEqual(details.render.mock.calls.at(-1).arguments, [
+    { node: actor.definition.states.running, path: ["running"] }
+  ]);
+  assert.deepEqual(cluster.classList.toggle.mock.calls.at(-1).arguments, [
+    "selected",
+    true
+  ]);
+  assert.ok(
+    cluster.setAttribute.mock.calls.some(
+      ({ arguments: args }) =>
+        args[0] === "aria-label" && args[1] === "Show details for state running"
+    )
+  );
+  assert.ok(
+    cluster.setAttribute.mock.calls.some(
+      ({ arguments: args }) => args[0] === "tabindex" && args[1] === "0"
+    )
+  );
+
+  view.selectAt(null);
+  assert.deepEqual(cluster.classList.toggle.mock.calls.at(-1).arguments, [
+    "selected",
+    false
+  ]);
+});
+
+void test("clears stale details when switching machines with identical diagrams", async t => {
+  const { actor, details, renderDiagram, view } = setup(t, false);
+  actor.definition = { states: { idle: { description: "First" } } };
+  await view.render(actor);
+  const stateElement = {
+    id: "diagram-1-state-s_idle-0",
+    getAttribute: () => null
+  };
+  view.selectAt({ closest: () => stateElement });
+  assert.equal(
+    details.render.mock.calls.at(-1).arguments[0].node.description,
+    "First"
+  );
+
+  const next = {
+    ...actor,
+    definition: { states: { idle: { description: "Second" } } }
+  };
+  await view.render(next);
+  assert.equal(renderDiagram.mock.callCount(), 2);
+  assert.deepEqual(details.render.mock.calls.at(-1).arguments, [undefined]);
+
+  view.selectAt({ closest: () => stateElement });
+  assert.equal(
+    details.render.mock.calls.at(-1).arguments[0].node.description,
+    "Second"
+  );
+});
+
+void test("does not render a duplicate diagram while the same definition is pending", async t => {
+  const { actor, renderDiagram, view } = setup(t, false);
+  let resolve;
+  renderDiagram.mock.mockImplementationOnce(
+    () =>
+      new Promise(done => {
+        resolve = done;
+      })
+  );
+  const rendering = view.render(actor);
+  await view.render({ ...actor });
+  assert.equal(renderDiagram.mock.callCount(), 1);
+  resolve("<svg>light</svg>");
+  await rendering;
+});
+
+void test("keeps keyboard focus on a state when its machine is redrawn", async t => {
+  const { actor, container, view } = setup(t, false);
+  const stateElement = {
+    id: "diagram-1-state-s_idle-0",
+    getAttribute: () => null,
+    setAttribute: mock.fn(),
+    classList: { toggle: mock.fn() },
+    focus: mock.fn()
+  };
+  container.ownerDocument = { activeElement: null };
+  container.contains = element => element === stateElement;
+  container.querySelectorAll = selector =>
+    selector.includes("g.node") ? [stateElement] : [];
+  await view.render(actor);
+  container.ownerDocument.activeElement = stateElement;
+
+  await view.render({ ...actor, snapshot: { value: "running" } });
+  assert.deepEqual(stateElement.focus.mock.calls.at(-1).arguments, [
+    { preventScroll: true }
+  ]);
+});

@@ -13,16 +13,27 @@ export const App = () => {
     inspector.subscribe,
     inspector.getSnapshot
   );
-  const resizer = useRef<HTMLDivElement>(null);
+  const sidebarResizer = useRef<HTMLDivElement>(null);
+  const panelResizer = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (resizer.current) {
-      bindPanelResizer(resizer.current);
-    }
-    return connectDevToolsClient({
+    const unbindSidebar =
+      sidebarResizer.current !== null
+        ? bindPanelResizer(sidebarResizer.current, "left")
+        : undefined;
+    const unbindPanel =
+      panelResizer.current !== null
+        ? bindPanelResizer(panelResizer.current, "right")
+        : undefined;
+    const disconnect = connectDevToolsClient({
       onMessage: inspector.handleMessage,
       onClose: inspector.handleDisconnect
     });
+    return () => {
+      unbindSidebar?.();
+      unbindPanel?.();
+      disconnect();
+    };
   }, [inspector]);
 
   return (
@@ -32,13 +43,25 @@ export const App = () => {
         onSelect={inspector.select}
         selectedId={state.selectedId}
       />
+      <div
+        aria-controls="machine-list"
+        aria-label="Resize machines sidebar"
+        aria-orientation="vertical"
+        className="resizer"
+        ref={sidebarResizer}
+        role="separator"
+        tabIndex={0}
+      />
       <Diagram actor={state.selected} disconnected={state.disconnected} />
       <div
-        aria-label="Resize panel"
+        aria-controls="panel"
+        aria-label="Resize inspection panel"
         aria-orientation="vertical"
+        className="resizer"
         id="resizer"
-        ref={resizer}
+        ref={panelResizer}
         role="separator"
+        tabIndex={0}
       />
       <InspectionPanel
         actor={state.selected}

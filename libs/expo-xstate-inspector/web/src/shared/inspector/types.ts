@@ -14,6 +14,16 @@ export type EventEntry = {
   timestamp: number;
 };
 
+export type GuardConfig =
+  | string
+  | {
+      guards?: Array<GuardConfig>;
+      params?: unknown;
+      source?: null | string;
+      stateValue?: unknown;
+      type?: string;
+    };
+
 /** An actor as known by the page; any message may be the first received. */
 export type InspectedActor = Partial<
   Omit<InspectorMessages["actor"], "definition" | "sessionId" | "snapshot">
@@ -43,6 +53,7 @@ export type Snapshot = Omit<SerializedSnapshot, "status" | "value"> & {
 export type StateNodeConfig = {
   after?: Record<string, TransitionsConfig>;
   always?: TransitionsConfig;
+  description?: string;
   entry?: Array<ConfigRef> | ConfigRef;
   exit?: Array<ConfigRef> | ConfigRef;
   id?: string;
@@ -62,7 +73,7 @@ export type TransitionConfig =
   | string
   | {
       actions?: Array<ConfigRef> | ConfigRef;
-      guard?: ConfigRef;
+      guard?: GuardConfig;
       target?: Array<string> | string;
     };
 
