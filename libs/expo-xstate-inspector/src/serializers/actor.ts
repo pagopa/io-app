@@ -19,7 +19,7 @@ export const serializeActor = (
 ): InspectorMessages["actor"] => {
   const definition = readDefinition(actor);
   return {
-    definition: serializeValue(definition),
+    definition: serializeValue(definition, [], { includeGuardDetails: true }),
     id: actor.id,
     input: serializeValue(actor.options.input),
     name: definition?.id ?? actor.id,

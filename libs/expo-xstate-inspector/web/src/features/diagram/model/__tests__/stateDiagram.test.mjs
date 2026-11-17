@@ -25,3 +25,35 @@ void test("draws transitions to the machine without using ELK's reserved root id
   assert.match(code, /s_idle --> machine : restart/);
   assert.equal(edgeKeys[1], transitionKey(["idle"], [], "restart"));
 });
+
+void test("keeps diagram labels for each kind of transition", () => {
+  const { code } = buildStateDiagram({
+    states: {
+      idle: {
+        on: { submit: { guard: "canSubmit", target: "done" } },
+        after: { 1000: "done" },
+        always: "done",
+        onDone: "done",
+        invoke: {
+          src: "loadData",
+          onDone: "done",
+          onError: "done",
+          onSnapshot: "done"
+        }
+      },
+      done: {}
+    }
+  });
+
+  for (const label of [
+    "submit [canSubmit]",
+    "after 1000",
+    "always",
+    "onDone",
+    "done loadData",
+    "error loadData",
+    "snapshot loadData"
+  ]) {
+    assert.ok(code.includes(`s_idle --> s_done : ${label}`), label);
+  }
+});
