@@ -1,12 +1,10 @@
 import {
   ContentWrapper,
   H6,
-  hexToRgba,
   HSpacer,
   HStack,
   IconButton,
-  IOColorsLegacy,
-  useIOTheme,
+  useIOColors,
   WithTestID
 } from "@io-app/design-system";
 import I18n from "i18next";
@@ -20,7 +18,6 @@ const styles = StyleSheet.create({
     paddingBottom: 14,
     borderBottomWidth: 0,
     position: "relative",
-    boxShadow: `0px 4px 8px ${hexToRgba(IOColorsLegacy.black, 0.1)}`,
     zIndex: 999
   }
 });
@@ -72,13 +69,19 @@ const renderNavigationComponent = (
  * @returns
  */
 const DocumentsNavigationBar = (props: Props) => {
-  const theme = useIOTheme();
-
-  const backgroundColor = IOColorsLegacy[theme["appBackground-primary"]];
-  const borderColor = IOColorsLegacy[theme["divider-default"]];
+  const colors = useIOColors();
 
   return (
-    <View style={[styles.container, { backgroundColor, borderColor }]}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: colors.background.default,
+          borderColor: colors.stroke.divider,
+          boxShadow: `0px 4px 8px ${colors.surface.shadow}`
+        }
+      ]}
+    >
       {props.indicatorPosition === "left" && (
         <>
           {renderNavigationComponent(props, props.titleLeft)}

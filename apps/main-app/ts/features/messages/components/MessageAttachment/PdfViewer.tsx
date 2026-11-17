@@ -1,4 +1,4 @@
-import { IOColorsLegacy } from "@io-app/design-system";
+import { useIOColors } from "@io-app/design-system";
 import I18n from "i18next";
 import { ComponentProps, useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -8,8 +8,7 @@ import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay"
 
 const styles = StyleSheet.create({
   pdf: {
-    flex: 1,
-    backgroundColor: IOColorsLegacy["grey-700"]
+    flex: 1
   }
 });
 
@@ -28,6 +27,7 @@ export const PdfViewer = ({
   onLoadComplete,
   ...rest
 }: Props) => {
+  const colors = useIOColors();
   const [isLoading, setIsLoading] = useState(true);
   const commonOnLoadingCompleted = () => {
     if (isLoading) {
@@ -60,7 +60,11 @@ export const PdfViewer = ({
           onLoadComplete={commonOnLoadingCompleted}
           onPageChanged={commonOnLoadingCompleted}
           source={{ uri: downloadPath, cache: true }}
-          style={[styles.pdf, style]}
+          style={[
+            styles.pdf,
+            { backgroundColor: colors.surface.document },
+            style
+          ]}
         />
       </View>
     </LoadingSpinnerOverlay>

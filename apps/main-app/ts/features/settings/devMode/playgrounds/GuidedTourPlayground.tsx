@@ -2,8 +2,7 @@ import {
   Body,
   H6,
   IOButton,
-  IOColorsLegacy,
-  useIOTheme,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import { useHeaderHeight } from "@react-navigation/elements";
@@ -30,11 +29,11 @@ const PLAYGROUND_GROUP_ID = "playground";
 
 export const GuidedTourPlayground = () => {
   const dispatch = useIODispatch();
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const { registerScrollRef, unregisterScrollRef } = useTourContext();
 
-  const cardBgColor = IOColorsLegacy[theme["appBackground-secondary"]];
-  const fillerBgColor = IOColorsLegacy[theme["appBackground-primary"]];
+  const cardBgColor = colors.surface.secondary;
+  const fillerBgColor = colors.background.default;
   const isCompleted = useIOSelector(state =>
     isTourCompletedSelector(state, PLAYGROUND_GROUP_ID)
   );

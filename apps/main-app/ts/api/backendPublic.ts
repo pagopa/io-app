@@ -1,7 +1,7 @@
 import { BackendStatus } from "@io-app/api-types/generated/definitions/content/BackendStatus";
 import { AccessToken } from "@io-app/api-types/generated/definitions/session_manager/AccessToken";
 import { PasswordLogin } from "@io-app/api-types/generated/definitions/session_manager/PasswordLogin";
-import { PublicKey } from "@pagopa/io-react-native-crypto";
+import { PublicKey } from "@io-app/expo-crypto";
 import {
   ApiHeaderJson,
   basicResponseDecoder,

@@ -2,9 +2,9 @@
 
 exports[`Test ToastNotification component - Experimental Enabled should match snapshot for props ({ message: 'Hello', icon: 'checkTick', variant: 'info' }) 1`] = `
 <View
-  accessibilityLabel="Hello"
-  accessibilityRole="alert"
-  accessible={true}
+  accessibilityElementsHidden={true}
+  accessible={false}
+  importantForAccessibility="no-hide-descendants"
   style={
     [
       {
@@ -115,9 +115,9 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
 
 exports[`Test ToastNotification component - Experimental Enabled should match snapshot for props ({ message: 'Hello', variant: 'error' }) 1`] = `
 <View
-  accessibilityLabel="Hello"
-  accessibilityRole="alert"
-  accessible={true}
+  accessibilityElementsHidden={true}
+  accessible={false}
+  importantForAccessibility="no-hide-descendants"
   style={
     [
       {
@@ -163,9 +163,9 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
 
 exports[`Test ToastNotification component - Experimental Enabled should match snapshot for props ({ message: 'Hello', variant: 'info' }) 1`] = `
 <View
-  accessibilityLabel="Hello"
-  accessibilityRole="alert"
-  accessible={true}
+  accessibilityElementsHidden={true}
+  accessible={false}
+  importantForAccessibility="no-hide-descendants"
   style={
     [
       {
@@ -211,9 +211,9 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
 
 exports[`Test ToastNotification component - Experimental Enabled should match snapshot for props ({ message: 'Hello', variant: 'success' }) 1`] = `
 <View
-  accessibilityLabel="Hello"
-  accessibilityRole="alert"
-  accessible={true}
+  accessibilityElementsHidden={true}
+  accessible={false}
+  importantForAccessibility="no-hide-descendants"
   style={
     [
       {
@@ -259,9 +259,9 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
 
 exports[`Test ToastNotification component - Experimental Enabled should match snapshot for props ({ message: 'Hello', variant: 'warning' }) 1`] = `
 <View
-  accessibilityLabel="Hello"
-  accessibilityRole="alert"
-  accessible={true}
+  accessibilityElementsHidden={true}
+  accessible={false}
+  importantForAccessibility="no-hide-descendants"
   style={
     [
       {
@@ -307,9 +307,9 @@ exports[`Test ToastNotification component - Experimental Enabled should match sn
 
 exports[`Test ToastNotification component should match snapshot for props ({ message: 'Hello', icon: 'checkTick', variant: 'info' }) 1`] = `
 <View
-  accessibilityLabel="Hello"
-  accessibilityRole="alert"
-  accessible={true}
+  accessibilityElementsHidden={true}
+  accessible={false}
+  importantForAccessibility="no-hide-descendants"
   style={
     [
       {
@@ -420,9 +420,9 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
 
 exports[`Test ToastNotification component should match snapshot for props ({ message: 'Hello', variant: 'error' }) 1`] = `
 <View
-  accessibilityLabel="Hello"
-  accessibilityRole="alert"
-  accessible={true}
+  accessibilityElementsHidden={true}
+  accessible={false}
+  importantForAccessibility="no-hide-descendants"
   style={
     [
       {
@@ -468,9 +468,9 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
 
 exports[`Test ToastNotification component should match snapshot for props ({ message: 'Hello', variant: 'info' }) 1`] = `
 <View
-  accessibilityLabel="Hello"
-  accessibilityRole="alert"
-  accessible={true}
+  accessibilityElementsHidden={true}
+  accessible={false}
+  importantForAccessibility="no-hide-descendants"
   style={
     [
       {
@@ -516,9 +516,9 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
 
 exports[`Test ToastNotification component should match snapshot for props ({ message: 'Hello', variant: 'success' }) 1`] = `
 <View
-  accessibilityLabel="Hello"
-  accessibilityRole="alert"
-  accessible={true}
+  accessibilityElementsHidden={true}
+  accessible={false}
+  importantForAccessibility="no-hide-descendants"
   style={
     [
       {
@@ -564,9 +564,9 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
 
 exports[`Test ToastNotification component should match snapshot for props ({ message: 'Hello', variant: 'warning' }) 1`] = `
 <View
-  accessibilityLabel="Hello"
-  accessibilityRole="alert"
-  accessible={true}
+  accessibilityElementsHidden={true}
+  accessible={false}
+  importantForAccessibility="no-hide-descendants"
   style={
     [
       {
