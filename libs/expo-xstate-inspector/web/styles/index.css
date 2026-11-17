@@ -1,0 +1,19 @@
+@import "tailwindcss" source(none);
+@import "./layout.css";
+@import "./components.css";
+@import "./jsonTree.css";
+@import "./table.css";
+@import "./diagram.css";
+
+@source "../index.html";
+@source "../src";
+
+@theme inline {
+  --font-sans: "Titillio", system-ui, sans-serif;
+  --color-surface: var(--color-background);
+  --color-secondary: var(--color-surface);
+  --color-ink: var(--color-text);
+  --color-muted: var(--color-muted);
+  --color-divider: var(--color-separator);
+  --color-brand: var(--color-accent);
+}

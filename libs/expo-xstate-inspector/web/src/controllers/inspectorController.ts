@@ -1,9 +1,9 @@
-import type { ActorStore } from "../stores/actorStore.js";
-import type { SelectionStore } from "../stores/selectionStore.js";
-import type { createActorListView } from "../views/actorListView.js";
-import type { createChildActorTableView } from "../views/childActorTableView.js";
-import type { createDetailsView } from "../views/detailsView.js";
-import type { createDiagramView } from "../views/diagramView.js";
+import type { ActorStore } from "../stores/actorStore";
+import type { SelectionStore } from "../stores/selectionStore";
+import type { createActorListView } from "../views/actorListView";
+import type { createChildActorTableView } from "../views/childActorTableView";
+import type { createDetailsView } from "../views/detailsView";
+import type { createDiagramView } from "../views/diagramView";
 
 type Dependencies = {
   actors: ActorStore;

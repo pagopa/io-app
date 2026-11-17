@@ -1,7 +1,7 @@
-import type { InspectedActor } from "../types/inspector.js";
+import type { InspectedActor } from "../types/inspector";
 
-import { createEventTableView } from "./eventTableView.js";
-import { createJsonTreeView } from "./jsonTreeView.js";
+import { createEventTableView } from "./eventTableView";
+import { createJsonTreeView } from "./jsonTreeView";
 
 type DetailsContainers = {
   context: Element;

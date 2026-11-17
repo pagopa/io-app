@@ -1,9 +1,9 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 
-import { describeState } from "../../../scripts/builders/stateDetails.js";
+import { describeState } from "../stateDetails.ts";
 
-test("describes the actions, invoked actors and transitions of a state", () => {
+void test("describes the actions, invoked actors and transitions of a state", () => {
   assert.deepEqual(
     describeState({
       entry: ["track", { type: "assign" }, { type: "" }],
@@ -53,6 +53,6 @@ test("describes the actions, invoked actors and transitions of a state", () => {
   );
 });
 
-test("leaves out empty sections", () => {
+void test("leaves out empty sections", () => {
   assert.deepEqual(describeState({}), []);
 });

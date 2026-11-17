@@ -1,7 +1,7 @@
-import type { ConfigRef, StateNodeConfig } from "../types/inspector.js";
+import type { ConfigRef, StateNodeConfig } from "../types/inspector";
 
-import { nameOf, toArray } from "../utils/stateNodes.js";
-import { labelledTransitions } from "./transitionEdges.js";
+import { nameOf, toArray } from "../utils/stateNodes";
+import { labelledTransitions } from "./transitionEdges";
 
 export type StateDetailsSection = { rows: Array<string>; title: string };
 

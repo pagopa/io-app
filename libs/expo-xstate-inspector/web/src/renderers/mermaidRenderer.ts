@@ -13,9 +13,26 @@ export type DiagramRenderer = (
 export const createMermaidRenderer = (sandbox: Element): DiagramRenderer => {
   const renders = { count: 0 };
   return async (code, dark) => {
+    const styles = getComputedStyle(document.documentElement);
+    const color = (name: string) =>
+      styles.getPropertyValue(`--color-${name}`).trim();
     mermaid.initialize({
       startOnLoad: false,
-      theme: dark ? "dark" : "neutral",
+      theme: "base",
+      themeVariables: {
+        darkMode: dark,
+        fontFamily: "Titillio, system-ui, sans-serif",
+        fontSize: "14px",
+        primaryColor: color("background"),
+        primaryTextColor: color("text"),
+        primaryBorderColor: color("border"),
+        lineColor: color("muted"),
+        secondaryColor: color("surface"),
+        tertiaryColor: color("surface"),
+        edgeLabelBackground: color("background"),
+        clusterBkg: color("background"),
+        clusterBorder: color("border")
+      },
       securityLevel: "strict",
       suppressErrorRendering: true,
       // Natural size, so the pan and zoom start from real proportions.

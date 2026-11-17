@@ -10,12 +10,12 @@ import type {
   Snapshot,
   StateNodeConfig,
   StateValue
-} from "../types/inspector.js";
+} from "../types/inspector";
 
-import { toNodeId } from "../builders/nodeIds.js";
-import { MAX_EVENTS_PER_ACTOR } from "../constants/limits.js";
-import { activePaths } from "../utils/stateValue.js";
-import { transitionKey } from "../utils/transitionKeys.js";
+import { toNodeId } from "../builders/nodeIds";
+import { MAX_EVENTS_PER_ACTOR } from "../constants/limits";
+import { activePaths } from "../utils/stateValue";
+import { transitionKey } from "../utils/transitionKeys";
 
 const isMachine = (actor: InspectedActor | undefined) =>
   Boolean(actor?.definition?.states);

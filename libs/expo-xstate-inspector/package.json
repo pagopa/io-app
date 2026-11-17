@@ -9,18 +9,23 @@
   "source": "src/index.ts",
   "files": [
     "src",
-    "web",
+    "dist",
     "expo-module.config.json"
   ],
   "scripts": {
-    "prepare": "tsc -p tsconfig.web.json",
-    "test": "pnpm run prepare && node --test",
+    "prepare": "vite build",
+    "dev": "vite",
+    "test": "node --import ./src/__tests__/setup.mjs --test",
     "tsc-noemit": "tsc --noEmit && tsc -p tsconfig.web.json --noEmit"
   },
   "devDependencies": {
+    "@hugeicons/core-free-icons": "^4.4.0",
+    "@tailwindcss/vite": "^4.3.5",
     "expo": "^55.0.8",
     "react-native": "catalog:",
+    "tailwindcss": "^4.3.5",
     "typescript": "catalog:",
+    "vite": "^7.3.5",
     "xstate": "catalog:"
   }
 }

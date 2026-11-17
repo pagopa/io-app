@@ -1,9 +1,9 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 
-import { bindPanZoom } from "../../../scripts/widgets/panZoom.js";
+import { bindPanZoom } from "../panZoom.ts";
 
-test("leaves wheel scrolling on controls to the browser", t => {
+void test("leaves wheel scrolling on controls to the browser", t => {
   globalThis.Element = class {};
   globalThis.ResizeObserver = class {
     observe() {}

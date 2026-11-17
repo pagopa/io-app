@@ -1,4 +1,4 @@
-import { toNodeId } from "../builders/nodeIds.js";
+import { toNodeId } from "../builders/nodeIds";
 
 // The app reports these with generated ids, e.g. `xstate.done.actor.<id>`,
 // which the machine config does not know.

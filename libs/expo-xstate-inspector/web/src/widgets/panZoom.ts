@@ -7,8 +7,8 @@ import {
   MAX_ZOOM,
   MIN_ZOOM,
   WHEEL_ZOOM_SPEED
-} from "../constants/zoom.js";
-import { unionRect } from "../utils/rects.js";
+} from "../constants/zoom";
+import { unionRect } from "../utils/rects";
 
 const clamp = (value: number, min: number, max: number) =>
   Math.min(Math.max(value, min), max);

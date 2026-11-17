@@ -1,11 +1,11 @@
-import type { StateNodeConfig, StateValue } from "../types/inspector.js";
+import type { StateNodeConfig, StateValue } from "../types/inspector";
 
-import { listStateNodes } from "../utils/stateNodes.js";
-import { buildActiveStyles } from "./activeStyles.js";
-import { toNodeId } from "./nodeIds.js";
-import { buildStateDeclarations } from "./stateDeclarations.js";
-import { createTargetResolver } from "./targetResolver.js";
-import { buildTransitionEdges } from "./transitionEdges.js";
+import { listStateNodes } from "../utils/stateNodes";
+import { buildActiveStyles } from "./activeStyles";
+import { toNodeId } from "./nodeIds";
+import { buildStateDeclarations } from "./stateDeclarations";
+import { createTargetResolver } from "./targetResolver";
+import { buildTransitionEdges } from "./transitionEdges";
 
 /**
  * Builds a Mermaid `stateDiagram-v2` from a machine definition, highlighting

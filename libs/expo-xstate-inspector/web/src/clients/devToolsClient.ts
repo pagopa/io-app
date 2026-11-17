@@ -1,5 +1,5 @@
-import { PLUGIN_NAME, PROTOCOL_VERSION } from "../constants/plugin.js";
-import { unpackFrame } from "../utils/frames.js";
+import { PLUGIN_NAME, PROTOCOL_VERSION } from "../constants/plugin";
+import { unpackFrame } from "../utils/frames";
 
 type DevToolsClientCallbacks = {
   onClose: () => void;

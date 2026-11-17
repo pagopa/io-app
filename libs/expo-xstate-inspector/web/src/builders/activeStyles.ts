@@ -1,7 +1,7 @@
-import type { StateValue } from "../types/inspector.js";
+import type { StateValue } from "../types/inspector";
 
-import { activePaths } from "../utils/stateValue.js";
-import { toNodeId } from "./nodeIds.js";
+import { activePaths } from "../utils/stateValue";
+import { toNodeId } from "./nodeIds";
 
 const classLine = (ids: Array<string>, className: string) =>
   ids.length ? [`  class ${ids.join(",")} ${className}`] : [];

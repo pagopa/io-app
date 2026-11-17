@@ -1,4 +1,4 @@
-import type { ConfigRef, StateNodeConfig } from "../types/inspector.js";
+import type { ConfigRef, StateNodeConfig } from "../types/inspector";
 
 export const toArray = <T>(value: Array<T> | T | undefined): Array<T> =>
   value === undefined ? [] : Array.isArray(value) ? value : [value];

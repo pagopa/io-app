@@ -1,6 +1,6 @@
 /** Shows the panel of the clicked tab and hides the others. */
 export const bindTabs = (tablist: Element) => {
-  const tabs = [...tablist.querySelectorAll<HTMLElement>('[role="tab"]')];
+  const tabs = [...tablist.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
   const show = (selected: HTMLElement) =>
     tabs.forEach(tab => {
       tab.ariaSelected = String(tab === selected);

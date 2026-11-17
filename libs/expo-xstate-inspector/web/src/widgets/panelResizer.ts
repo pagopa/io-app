@@ -1,4 +1,4 @@
-import { MIN_PANE_WIDTH } from "../constants/limits.js";
+import { MIN_PANE_WIDTH } from "../constants/limits";
 
 /**
  * Lets `handle` be dragged to resize the panel on its right, keeping the pane

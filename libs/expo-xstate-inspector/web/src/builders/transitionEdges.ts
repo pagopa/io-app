@@ -1,9 +1,9 @@
-import type { StateNodeConfig, TransitionsConfig } from "../types/inspector.js";
-import type { TargetResolver } from "./targetResolver.js";
+import type { StateNodeConfig, TransitionsConfig } from "../types/inspector";
+import type { TargetResolver } from "./targetResolver";
 
-import { nameOf, toArray } from "../utils/stateNodes.js";
-import { transitionKey } from "../utils/transitionKeys.js";
-import { escapeLabel, toNodeId } from "./nodeIds.js";
+import { nameOf, toArray } from "../utils/stateNodes";
+import { transitionKey } from "../utils/transitionKeys";
+import { escapeLabel, toNodeId } from "./nodeIds";
 
 type LabelledTransitions = [
   label: string,

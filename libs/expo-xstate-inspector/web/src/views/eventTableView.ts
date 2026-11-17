@@ -1,8 +1,8 @@
-import type { EventEntry } from "../types/inspector.js";
+import type { EventEntry } from "../types/inspector";
 
-import { buildJsonTree } from "../builders/jsonNode.js";
-import { createCell } from "../utils/dom.js";
-import { formatTime } from "../utils/time.js";
+import { buildJsonTree } from "../builders/jsonNode";
+import { createCell } from "../utils/dom";
+import { formatTime } from "../utils/time";
 
 /** Shows the events received by the selected machine, newest first. */
 export const createEventTableView = (container: Element) => {
