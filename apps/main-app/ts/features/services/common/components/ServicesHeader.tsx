@@ -2,17 +2,17 @@ import {
   Avatar,
   BodySmall,
   H3,
-  IOColors,
+  IOColorsLegacy,
+  IODimensions,
+  IODimensionScale,
   IOSkeleton,
-  IOSpacingScale,
-  IOVisualCostants,
   useIOTheme,
   VStack
 } from "@io-app/design-system";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
 
-const ITEM_PADDING_VERTICAL: IOSpacingScale = 6;
-const AVATAR_MARGIN_RIGHT: IOSpacingScale = 16;
+const ITEM_PADDING_VERTICAL: IODimensionScale = 6;
+const AVATAR_MARGIN_RIGHT: IODimensionScale = 16;
 
 const styles = StyleSheet.create({
   container: {
@@ -74,29 +74,29 @@ export const ServicesHeaderSkeleton = () => (
   >
     <View style={styles.itemAvatar}>
       <IOSkeleton
-        color={IOColors["grey-200"]}
-        radius={IOVisualCostants.avatarRadiusSizeMedium}
+        color={IOColorsLegacy["grey-200"]}
+        radius={IODimensions.radius.avatar.medium}
         shape="square"
-        size={IOVisualCostants.avatarSizeMedium}
+        size={IODimensions.size.avatar.medium}
       />
     </View>
     <VStack space={8} style={{ flex: 1 }}>
       <IOSkeleton
-        color={IOColors["grey-200"]}
+        color={IOColorsLegacy["grey-200"]}
         height={16}
         radius={8}
         shape="rectangle"
         width={"100%"}
       />
       <IOSkeleton
-        color={IOColors["grey-200"]}
+        color={IOColorsLegacy["grey-200"]}
         height={16}
         radius={8}
         shape="rectangle"
         width={"80%"}
       />
       <IOSkeleton
-        color={IOColors["grey-200"]}
+        color={IOColorsLegacy["grey-200"]}
         height={8}
         radius={8}
         shape="rectangle"

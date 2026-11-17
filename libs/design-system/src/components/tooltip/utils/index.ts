@@ -1,6 +1,6 @@
 import { ScaledSize } from "react-native";
 
-import { IOVisualCostants } from "../../../core";
+import { IODimensions } from "../../../core";
 import { ChildrenCoords, DisplayInsets, Placement } from "./types";
 
 export const ARROW_HEIGHT = 14;
@@ -10,8 +10,8 @@ const ARROW_WIDTH = 24;
 const DEFAULT_INSETS: DisplayInsets = {
   top: 0,
   bottom: 0,
-  left: IOVisualCostants.appMarginDefault,
-  right: IOVisualCostants.appMarginDefault
+  left: IODimensions.padding.screen.default,
+  right: IODimensions.padding.screen.default
 };
 
 /**

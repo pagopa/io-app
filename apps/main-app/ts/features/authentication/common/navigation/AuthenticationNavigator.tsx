@@ -1,4 +1,4 @@
-import { IOVisualCostants } from "@io-app/design-system";
+import { IODimensions } from "@io-app/design-system";
 import {
   createStackNavigator,
   TransitionPresets
@@ -264,7 +264,7 @@ const AuthenticationStackNavigator = () => {
           headerTitle: () => null,
           headerRight: CloseButton,
           headerStyle: {
-            height: IOVisualCostants.headerHeight,
+            height: IODimensions.height.header,
             // shadowOpacity and elevation are set to 0 to hide the shadow under the header
             elevation: 0,
             shadowOpacity: 0

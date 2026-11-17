@@ -12,15 +12,15 @@ import { LayoutRectangle, StyleSheet, View } from "react-native";
 import {
   Extrapolation,
   interpolate,
-  SensorType,
-  useAnimatedReaction,
-  useAnimatedSensor,
-  useDerivedValue,
-  useSharedValue
+  SharedValue,
+  useDerivedValue
 } from "react-native-reanimated";
 
+import { RotationSensor } from "../../../../components/RotationSensor";
+import { useFeatureColors } from "../../../../hooks/useFeatureColors";
+import { useRotationEffectEnabled } from "../../../../hooks/useRotationSensor";
+import { itwColors } from "../../colors";
 import { useLayoutSize } from "../hooks/useLayoutSize";
-import { useItWalletTheme } from "../utils/theme";
 import { ItwBrandedSkiaBorder } from "./ItwBrandedSkiaBorder";
 import { ItwSkiaBrandedGradientVariant } from "./ItwBrandedSkiaGradient";
 
@@ -53,7 +53,7 @@ export const ItwBrandedBox = ({
   children,
   style: customStyle
 }: PropsWithChildren<ItwIridescentBorderProps>) => {
-  const theme = useItWalletTheme();
+  const colors = useFeatureColors(itwColors);
   const { themeType } = useIOThemeContext();
   const isLightMode = themeType === "light";
   const shouldUseGradientBackground =
@@ -64,40 +64,88 @@ export const ItwBrandedBox = ({
   /* Styles */
   const lightSkiaOpacity = isLightMode ? 0.4 : 0.05;
 
-  /* Sensors */
-  const rotationSensor = useAnimatedSensor(SensorType.ROTATION);
-  const currentRoll = useSharedValue(0);
-  const initialRoll = useSharedValue(0);
+  const isRotationEffectEnabled = useRotationEffectEnabled();
 
-  useAnimatedReaction(
-    () => rotationSensor.sensor.value,
-    s => {
-      if (initialRoll.value === 0) {
-        initialRoll.value = s.roll;
-      }
-      currentRoll.value = s.roll;
-    },
-    []
+  return (
+    <View
+      onLayout={onLayout}
+      style={[
+        styles.container,
+        customStyle,
+        {
+          borderRadius,
+          backgroundColor: colors.brandedBox.background
+        }
+      ]}
+    >
+      {shouldUseGradientBackground && (
+        <LinearGradient
+          colors={brandedBoxGradientColors}
+          end={{ x: 0.5, y: 1 }}
+          pointerEvents="none"
+          start={{ x: 0.5, y: 0 }}
+          style={StyleSheet.absoluteFill}
+        />
+      )}
+
+      {/* Skia Canvas for border and light effect */}
+      <Canvas
+        style={{
+          position: "absolute",
+          height: size.height,
+          width: size.width
+        }}
+      >
+        <RotationSensor enabled={isRotationEffectEnabled}>
+          {roll => (
+            <>
+              {/* Animated light effect */}
+              <SkiaLight
+                height={size.height}
+                opacity={lightSkiaOpacity}
+                roll={roll}
+                width={size.width}
+              />
+
+              {/* Animated gradient border */}
+              <ItwBrandedSkiaBorder
+                borderRadius={borderRadius}
+                height={size.height}
+                roll={roll}
+                themeType={themeType}
+                thickness={borderThickness}
+                variant={variant}
+                width={size.width}
+              />
+            </>
+          )}
+        </RotationSensor>
+      </Canvas>
+
+      {/* Box content */}
+      {children}
+    </View>
   );
+};
 
-  /* Not all devices are in an initial flat position on a surface
-        (e.g. a table) then we use a relative rotation value,
-        not an absolute one  */
-  const relativeRoll = useDerivedValue(
-    () => initialRoll.value - currentRoll.value
-  );
+type SkiaLightProps = {
+  height: LayoutRectangle["height"];
+  opacity: number;
+  roll?: SharedValue<number>;
+  width: LayoutRectangle["width"];
+};
 
+/* We don't need to look at the whole quaternion range,
+    just a very small part of it. */
+const quaternionRange = 0.5;
+
+const SkiaLight = ({ width, height, opacity, roll }: SkiaLightProps) => {
   /* Set translate boundaries for the main light */
-  const maxTranslateX =
-    (size.width - (lightSize ?? 0) * visibleLightPercentage) / 2;
-
-  /* We don't need to look at the whole quaternion range,
-      just a very small part of it. */
-  const quaternionRange = 0.5;
+  const maxTranslateX = (width - lightSize * visibleLightPercentage) / 2;
 
   const skiaLightTranslateX = useDerivedValue(() => {
     const translateX = interpolate(
-      relativeRoll.value,
+      roll?.value ?? 0,
       [quaternionRange, -quaternionRange],
       [maxTranslateX, -maxTranslateX],
       Extrapolation.CLAMP
@@ -106,19 +154,16 @@ export const ItwBrandedBox = ({
     return [{ translateX }, { scale: lightScaleMultiplier }];
   });
 
-  const SkiaLight = () => (
-    <SkiaGroup
-      opacity={lightSkiaOpacity}
-      origin={vec(size.width / 2, size.height / 2)}
-    >
+  return (
+    <SkiaGroup opacity={opacity} origin={vec(width / 2, height / 2)}>
       <SkiaCircle
-        cx={(size.width ?? 0) / 2}
-        cy={(size.height ?? 0) / 2}
+        cx={width / 2}
+        cy={height / 2}
         r={lightSize / 2}
         transform={skiaLightTranslateX}
       >
         <SkiaRadialGradient
-          c={vec((size.width ?? 0) / 2, (size.height ?? 0) / 2)}
+          c={vec(width / 2, height / 2)}
           colors={[
             "rgba(255,255,255,1)",
             "rgba(255,255,255,0.987)",
@@ -146,55 +191,6 @@ export const ItwBrandedBox = ({
         />
       </SkiaCircle>
     </SkiaGroup>
-  );
-
-  return (
-    <View
-      onLayout={onLayout}
-      style={[
-        styles.container,
-        customStyle,
-        {
-          borderRadius,
-          backgroundColor: theme["banner-background"]
-        }
-      ]}
-    >
-      {shouldUseGradientBackground && (
-        <LinearGradient
-          colors={brandedBoxGradientColors}
-          end={{ x: 0.5, y: 1 }}
-          pointerEvents="none"
-          start={{ x: 0.5, y: 0 }}
-          style={StyleSheet.absoluteFill}
-        />
-      )}
-
-      {/* Skia Canvas for border and light effect */}
-      <Canvas
-        style={{
-          position: "absolute",
-          height: size.height,
-          width: size.width
-        }}
-      >
-        {/* Animated light effect */}
-        <SkiaLight />
-
-        {/* Animated gradient border */}
-        <ItwBrandedSkiaBorder
-          borderRadius={borderRadius}
-          height={size.height}
-          themeType={themeType}
-          thickness={borderThickness}
-          variant={variant}
-          width={size.width}
-        />
-      </Canvas>
-
-      {/* Box content */}
-      {children}
-    </View>
   );
 };
 

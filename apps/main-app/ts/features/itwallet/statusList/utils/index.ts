@@ -1,7 +1,7 @@
 import {
   verifyCertificateChain,
   X509CertificateOptions
-} from "@pagopa/io-react-native-crypto";
+} from "@io-app/expo-crypto";
 import { decode as decodeJwt } from "@pagopa/io-react-native-jwt";
 import {
   CredentialIssuance,

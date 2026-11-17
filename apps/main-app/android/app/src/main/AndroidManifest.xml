@@ -65,6 +65,14 @@
     android:requestLegacyExternalStorage="true" android:theme="@style/AppTheme"
     android:supportsRtl="true" android:largeHeap="true">
 
+    <!-- Push notifications -->
+    <!-- Used by the Firebase SDK for notifications displayed while the app is in background or killed -->
+    <meta-data android:name="com.google.firebase.messaging.default_notification_channel_id" android:value="@string/default_notification_channel_id" />
+    <meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@drawable/ic_notification" />
+    <!-- Used by expo-notifications for notifications displayed while the app is in foreground -->
+    <meta-data android:name="expo.modules.notifications.default_notification_icon" android:resource="@drawable/ic_notification" />
+    <!-- END Push notifications -->
+
     <!-- Mixpanel -->
 
     <meta-data android:name="com.mixpanel.android.MPConfig.UseIpAddressForGeolocation" android:value="false" />
@@ -146,6 +154,17 @@
         <category android:name="android.intent.category.DEFAULT" />
         <category android:name="android.intent.category.BROWSABLE" />
         <data android:scheme="haip-vci" />
+      </intent-filter>
+
+      <!-- Intent filters coming from legacy io-react-native-login-utils -->
+      <intent-filter tools:ignore="IntentFilterUniqueDataAttributes">
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+
+        <data android:scheme="iologin" />
+        <data android:scheme="iossoapi" />
+        <data android:scheme="iowallet" />
       </intent-filter>
 
     </activity>

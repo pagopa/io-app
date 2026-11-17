@@ -7,20 +7,20 @@
 
 The application uses the font _Titillium Sans Pro_. Fonts are handled differently than Android and iOS. To use the font, `TitilliumSansPro-SemiboldItalic` example, you must apply the following properties for Android:
 
-```css
-{
-  fontFamily: 'TitilliumSansPro-SemiboldItalic'
-}
+```js
+const androidStyle = {
+  fontFamily: "TitilliumSansPro-SemiboldItalic"
+};
 ```
 
 while in iOS the code to be applied is:
 
-```css
-{
-  fontFamily: 'Titillium Sans Pro',
-  fontWeight: '600',
-  fontStyle: 'italic'
-}
+```js
+const iosStyle = {
+  fontFamily: "Titillium Sans Pro",
+  fontWeight: "600",
+  fontStyle: "italic"
+};
 ```
 
 To manage fonts and variants more easily, we have created utility functions within the file [fonts.ts](fonts.ts).

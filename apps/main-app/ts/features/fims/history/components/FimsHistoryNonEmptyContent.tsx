@@ -2,7 +2,7 @@ import { AccessHistoryPage } from "@io-app/api-types/generated/definitions/fims_
 import {
   Divider,
   FooterActions,
-  IOVisualCostants,
+  IODimensions,
   useFooterActionsMeasurements
 } from "@io-app/design-system";
 import { FlashList } from "@shopify/flash-list";
@@ -48,7 +48,7 @@ export const FimsHistoryNonEmptyContent = ({
     <>
       <FlashList
         contentContainerStyle={{
-          paddingHorizontal: IOVisualCostants.appMarginDefault,
+          paddingHorizontal: IODimensions.padding.screen.default,
           paddingBottom: footerActionsMeasurements.safeBottomAreaHeight
         }}
         data={accesses?.data}

@@ -6,7 +6,7 @@ import {
   Divider,
   H6,
   IOButton,
-  IOListItemVisualParams,
+  IODimensions,
   ListItemHeader,
   ModuleCredential,
   TabItem,
@@ -46,10 +46,10 @@ import { PoweredByItWalletText } from "../../common/components/PoweredByItWallet
 import { selectItwEnv } from "../../common/store/selectors/environment.ts";
 import {
   itwIsL2FallbackSelector,
-  itwIsL3EnabledSelector,
-  itwShouldRenderL3UpgradeBannerSelector
+  itwIsL3EnabledSelector
 } from "../../common/store/selectors/index.ts";
 import { itwIsActivationDisabledSelector } from "../../common/store/selectors/preferences.ts";
+import { itwCanUpgradeToL3Selector } from "../../common/store/selectors/upgrade.ts";
 import {
   isL2Credential,
   isUpcomingCredential
@@ -141,17 +141,14 @@ const ItwCredentialOnboardingSection = () => {
   const isWalletEnabled = useIOSelector(itwLifecycleIsValidSelector);
   const isITWalletEnabled = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const isL2Fallback = useIOSelector(itwIsL2FallbackSelector);
-  const isUpgradeAvailable = useIOSelector(
-    itwShouldRenderL3UpgradeBannerSelector
-  );
+  const canUpgradeToL3 = useIOSelector(itwCanUpgradeToL3Selector);
   const isItWalletActivationDisabled = useIOSelector(
     itwIsActivationDisabledSelector
   );
   const catalogueCredentials = useIOSelector(
     itwAvailableCredentialsListSelector
   );
-  const shouldRenderUpgradeBanner =
-    !isItWalletActivationDisabled && isL2Fallback && isUpgradeAvailable;
+  const shouldRenderUpgradeBanner = isL2Fallback && canUpgradeToL3;
 
   useFocusEffect(
     useCallback(() => {
@@ -336,9 +333,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingVertical: IOListItemVisualParams.paddingVertical,
-    paddingHorizontal: IOListItemVisualParams.paddingHorizontal,
-    marginHorizontal: -IOListItemVisualParams.paddingHorizontal
+    paddingVertical: IODimensions.padding.listItem.default.vertical,
+    paddingHorizontal: IODimensions.padding.listItem.default.horizontal,
+    marginHorizontal: -IODimensions.padding.listItem.default.horizontal
   }
 });
 

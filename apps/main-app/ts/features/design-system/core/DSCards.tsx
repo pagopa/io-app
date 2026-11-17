@@ -1,7 +1,7 @@
 import {
   ContentWrapper,
   HStack,
-  IOVisualCostants,
+  IODimensions,
   TabItem,
   TabNavigation,
   VSpacer,
@@ -174,13 +174,13 @@ const PaymentCards = () => (
         <DSComponentViewerBox name="PaymentCard">
           <ScrollView
             contentContainerStyle={{
-              paddingHorizontal: IOVisualCostants.appMarginDefault
+              paddingHorizontal: IODimensions.padding.screen.default
             }}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
             style={{
               aspectRatio: 16 / 9,
-              marginHorizontal: -IOVisualCostants.appMarginDefault
+              marginHorizontal: -IODimensions.padding.screen.default
             }}
           >
             <HStack space={cardHorizontalScrollGap}>

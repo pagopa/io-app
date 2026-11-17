@@ -3,7 +3,6 @@ import {
   TextInput,
   TextInputPassword,
   TextInputValidation,
-  useIOTheme,
   VStack
 } from "@io-app/design-system";
 import { ComponentProps, useState } from "react";
@@ -13,8 +12,6 @@ import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 
 export const DSTextFields = () => {
-  const theme = useIOTheme();
-
   const sectionTitleMargin = 16;
   const componentMargin = 24;
   const sectionMargin = 40;
@@ -23,7 +20,7 @@ export const DSTextFields = () => {
     <DesignSystemScreen title={"Text Fields"}>
       <VStack space={sectionMargin}>
         <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Base input</H4>
+          <H4>Base input</H4>
 
           <VStack space={componentMargin}>
             <DSComponentViewerBox name="Base input" reverse>
@@ -68,12 +65,12 @@ export const DSTextFields = () => {
         </VStack>
 
         <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Secret input</H4>
+          <H4>Secret input</H4>
           <InputPasswordComponentWrapper placeholder={"Password"} />
         </VStack>
 
         <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Disabled states</H4>
+          <H4>Disabled states</H4>
           <View>
             <VStack space={16}>
               <InputComponentWrapper

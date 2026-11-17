@@ -29,7 +29,7 @@ exports[`ItwBrandedBox should render correctly for variant default 1`] = `
     }
   >
     <skGroup
-      opacity={0.05}
+      opacity={0.4}
       origin={
         JsiSkPoint {
           "CanvasKit": {
@@ -142,7 +142,7 @@ exports[`ItwBrandedBox should render correctly for variant default 1`] = `
     </skGroup>
     <skRRect
       height={0}
-      opacity={0.6400000000000001}
+      opacity={1}
       r={16}
       strokeJoin="round"
       strokeWidth={3}
@@ -261,7 +261,7 @@ exports[`ItwBrandedBox should render correctly for variant error 1`] = `
     }
   >
     <skGroup
-      opacity={0.05}
+      opacity={0.4}
       origin={
         JsiSkPoint {
           "CanvasKit": {
@@ -374,7 +374,7 @@ exports[`ItwBrandedBox should render correctly for variant error 1`] = `
     </skGroup>
     <skRRect
       height={0}
-      opacity={0.6400000000000001}
+      opacity={1}
       r={16}
       strokeJoin="round"
       strokeWidth={3}
@@ -493,7 +493,7 @@ exports[`ItwBrandedBox should render correctly for variant warning 1`] = `
     }
   >
     <skGroup
-      opacity={0.05}
+      opacity={0.4}
       origin={
         JsiSkPoint {
           "CanvasKit": {
@@ -606,7 +606,7 @@ exports[`ItwBrandedBox should render correctly for variant warning 1`] = `
     </skGroup>
     <skRRect
       height={0}
-      opacity={0.6400000000000001}
+      opacity={1}
       r={16}
       strokeJoin="round"
       strokeWidth={3}

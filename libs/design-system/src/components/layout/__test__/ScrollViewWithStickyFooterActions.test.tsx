@@ -2,7 +2,7 @@ import { act, fireEvent, render, within } from "@testing-library/react-native";
 import { View } from "react-native";
 import { type Metrics, SafeAreaProvider } from "react-native-safe-area-context";
 
-import { IOSpacing } from "../../../core";
+import { IODimensions } from "../../../core";
 import { ScrollViewWithStickyFooterActions } from "../ScrollViewWithStickyFooterActions";
 
 /* The component and FooterActions read safe-area insets, so every case uses
@@ -19,7 +19,7 @@ const footerTestID = "sticky-footer-actions";
 const invisibleButAccessibleOpacity = 0.01;
 const actionBlockHeight = 48;
 const floatingActionsHeight =
-  actionBlockHeight + metrics.insets.bottom + IOSpacing.screenEndMargin;
+  actionBlockHeight + metrics.insets.bottom + IODimensions.padding.screen.end;
 const placeholderY = 1000;
 const scrollViewHeight = 600;
 const dockingScrollY = placeholderY - scrollViewHeight + floatingActionsHeight;
@@ -65,7 +65,7 @@ describe("ScrollViewWithStickyFooterActions", () => {
       getByTestId(footerTestID, { includeHiddenElements: true })
     ).toHaveStyle({ paddingBottom: metrics.insets.bottom });
     expect(getByTestId(endSpacerTestID)).toHaveStyle({
-      height: IOSpacing.screenEndMargin + metrics.insets.bottom
+      height: IODimensions.padding.screen.end + metrics.insets.bottom
     });
   });
 
@@ -75,7 +75,7 @@ describe("ScrollViewWithStickyFooterActions", () => {
     expect(queryByTestId(dockedActionsTestID)).toBeNull();
     expect(queryByTestId(placeholderTestID)).toBeNull();
     expect(getByTestId(endSpacerTestID)).toHaveStyle({
-      height: IOSpacing.screenEndMargin + metrics.insets.bottom
+      height: IODimensions.padding.screen.end + metrics.insets.bottom
     });
     expect(queryByRole("button", { includeHiddenElements: true })).toBeNull();
   });
@@ -208,8 +208,8 @@ describe("ScrollViewWithStickyFooterActions", () => {
     });
 
     expect(getByTestId(placeholderTestID)).toHaveStyle({
-      paddingTop: IOSpacing.screenEndMargin,
-      paddingBottom: IOSpacing.screenEndMargin
+      paddingTop: IODimensions.padding.screen.end,
+      paddingBottom: IODimensions.padding.screen.end
     });
     expect(getByTestId(dockedActionsTestID)).toHaveStyle({
       marginTop: 0,
@@ -225,7 +225,7 @@ describe("ScrollViewWithStickyFooterActions", () => {
     const { getByTestId } = renderComponent({}, metricsWithoutInsets);
 
     expect(getByTestId(endSpacerTestID)).toHaveStyle({
-      height: IOSpacing.screenEndMargin
+      height: IODimensions.padding.screen.end
     });
   });
 });

@@ -2,21 +2,40 @@ import {
   IOButton,
   ListItemHeader,
   ListItemInfo,
-  ListItemSwitch,
-  ListItemSwitchProps
+  ListItemNav,
+  ListItemSwitch
 } from "@io-app/design-system";
 import { View } from "react-native";
 
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { resetTourCompletedAction } from "../../../tour/store/actions";
 import { isTourCompletedSelector } from "../../../tour/store/selectors";
-import { itwSetDiscoverMoreCEDEnabled } from "../../common/store/actions/preferences.ts";
-import { itwDiscoverMoreCEDSelector } from "../../credentialsCatalogue/store/selectors";
+import {
+  itwResetEngagementScreenShown,
+  itwSetDiscoverMoreCEDEnabled,
+  itwSetWhatsNewLocallyEnabled
+} from "../../common/store/actions/preferences.ts";
+import {
+  itwIsDiscoverMoreCEDLocallyEnabledSelector,
+  itwIsWhatsNewLocallyEnabledSelector
+} from "../../common/store/selectors/preferences";
+import { itwIsEngagementScreenShownSelector } from "../../loginEngagement/store/selectors";
+import { ITW_ROUTES } from "../../navigation/routes";
 import { ITW_TOUR_GROUP_ID } from "../../tour/utils/constants";
 
 export const ItwMiscSection = () => {
   const dispatch = useIODispatch();
-  const isDiscoverMoreCEDEnabled = useIOSelector(itwDiscoverMoreCEDSelector);
+  const navigation = useIONavigation();
+  const isEngagementScreenShown = useIOSelector(
+    itwIsEngagementScreenShownSelector
+  );
+  const isDiscoverMoreCEDEnabled = useIOSelector(
+    itwIsDiscoverMoreCEDLocallyEnabledSelector
+  );
+  const isWhatsNewLocallyEnabled = useIOSelector(
+    itwIsWhatsNewLocallyEnabledSelector
+  );
 
   const isTourCompleted = useIOSelector(state =>
     isTourCompletedSelector(state, ITW_TOUR_GROUP_ID)
@@ -25,17 +44,6 @@ export const ItwMiscSection = () => {
   const resetTourGuide = () => {
     dispatch(resetTourCompletedAction({ groupId: ITW_TOUR_GROUP_ID }));
   };
-
-  const featureFlags: ReadonlyArray<ListItemSwitchProps> = [
-    {
-      label: "Scopri le opportunità della CED",
-      description:
-        "Se abilitato, l'utente visualizza la CTA nel dettaglio della CED per scoprire le opportunità della CED.",
-      value: isDiscoverMoreCEDEnabled,
-      onSwitchValueChange: value =>
-        dispatch(itwSetDiscoverMoreCEDEnabled(value))
-    }
-  ];
 
   return (
     <View>
@@ -51,10 +59,44 @@ export const ItwMiscSection = () => {
         onPress={resetTourGuide}
         variant="solid"
       />
-      <ListItemHeader label="Feature flag" />
-      {featureFlags.map(props => (
-        <ListItemSwitch key={props.label} {...props} />
-      ))}
+      <ListItemHeader label="What's New" />
+      <ListItemSwitch
+        description="Se abilitato, la schermata What's New viene mostrata al login anche con il flag remoto disattivato."
+        label="What's New IT-Wallet"
+        onSwitchValueChange={value =>
+          dispatch(itwSetWhatsNewLocallyEnabled(value))
+        }
+        value={isWhatsNewLocallyEnabled}
+      />
+      <ListItemNav
+        description="Navigate to the IT-Wallet What's New screen"
+        label="IT-Wallet What's New"
+        onPress={() =>
+          navigation.navigate(ITW_ROUTES.MAIN, {
+            screen: ITW_ROUTES.ENGAGEMENT
+          })
+        }
+      />
+      <ListItemInfo
+        label="Shown to current user"
+        value={isEngagementScreenShown ? "YES" : "NO"}
+      />
+      <IOButton
+        color="danger"
+        disabled={!isEngagementScreenShown}
+        label="Reset What's New visibility"
+        onPress={() => dispatch(itwResetEngagementScreenShown())}
+        variant="solid"
+      />
+      <ListItemHeader label="CED" />
+      <ListItemSwitch
+        description="Se abilitato, l'utente visualizza la CTA nel dettaglio della CED per scoprire le opportunità della CED."
+        label="Scopri le opportunità della CED"
+        onSwitchValueChange={value =>
+          dispatch(itwSetDiscoverMoreCEDEnabled(value))
+        }
+        value={isDiscoverMoreCEDEnabled}
+      />
     </View>
   );
 };

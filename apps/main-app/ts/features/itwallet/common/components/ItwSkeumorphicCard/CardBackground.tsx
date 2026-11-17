@@ -1,8 +1,9 @@
-import { IOColors } from "@io-app/design-system";
 import { memo } from "react";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
 
 import { AnimatedImage } from "../../../../../components/AnimatedImage";
+import { useFeatureColors } from "../../../../../hooks/useFeatureColors";
+import { itwColors } from "../../../colors";
 import { CredentialMetadata } from "../../utils/itwTypesUtils";
 import { CardSide } from "./types";
 
@@ -13,6 +14,7 @@ type CardBackgroundProps = {
 
 /** Renders the background of a card based on its type and side */
 const CardBackground = ({ credentialType, side }: CardBackgroundProps) => {
+  const { skeumorphicCard: colors } = useFeatureColors(itwColors);
   const cardAssets = assetsMap[credentialType];
 
   if (cardAssets === undefined) {
@@ -20,7 +22,7 @@ const CardBackground = ({ credentialType, side }: CardBackgroundProps) => {
   }
 
   return (
-    <View style={styles.wrapper}>
+    <View style={[styles.wrapper, { backgroundColor: colors.background }]}>
       <AnimatedImage source={cardAssets[side]} style={styles.background} />
     </View>
   );
@@ -42,7 +44,6 @@ const assetsMap: Record<string, CardAssets> = {
 
 const styles = StyleSheet.create({
   wrapper: {
-    backgroundColor: IOColors["grey-100"],
     borderRadius: 8
   },
   background: {

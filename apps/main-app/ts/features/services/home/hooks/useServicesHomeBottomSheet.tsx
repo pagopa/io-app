@@ -1,6 +1,6 @@
 import {
   Divider,
-  IOVisualCostants,
+  IODimensions,
   ListItemNav,
   VSpacer
 } from "@io-app/design-system";
@@ -15,8 +15,8 @@ import * as analytics from "../../common/analytics";
 
 const styles = StyleSheet.create({
   containerList: {
-    marginHorizontal: -IOVisualCostants.appMarginDefault,
-    paddingHorizontal: IOVisualCostants.appMarginDefault
+    marginHorizontal: -IODimensions.padding.screen.default,
+    paddingHorizontal: IODimensions.padding.screen.default
   }
 });
 

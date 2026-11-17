@@ -4,22 +4,13 @@ import {
   LayoutChangeEvent,
   LayoutRectangle,
   StyleSheet,
-  Text,
   View,
   ViewStyle
 } from "react-native";
 import Animated, { AnimatedStyle } from "react-native-reanimated";
 
-import { useIOTheme } from "../../context";
-import {
-  buttonSolidHeight,
-  footerBoxShadow,
-  hexToRgba,
-  IOColors,
-  IOSpacer,
-  IOSpacing,
-  IOVisualCostants
-} from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions } from "../../core";
 import { WithTestID } from "../../utils/types";
 import {
   IOButton,
@@ -28,6 +19,7 @@ import {
 } from "../buttons";
 import { useBottomMargins } from "./hooks/useBottomMargins";
 import { VSpacer } from "./Spacer";
+import { footerBoxShadow } from "./styles";
 
 export type FooterActionsMeasurements = {
   // Height of the "Actions" block
@@ -48,10 +40,6 @@ type FooterActionsProps = WithTestID<
   PropsWithChildren<{
     actions?: FooterActions;
     animatedStyles?: FooterAnimatedStyles;
-    /* Show the following elements:
-       - Opaque red background to show the component boundaries
-       - Height of the component */
-    debugMode?: boolean;
     /* Don't include safe area insets */
     excludeSafeAreaMargins?: boolean;
     /* Don't add any vertical spacing around the actions,
@@ -100,24 +88,11 @@ type IOButtonBlockProps = Omit<
 
 type IOButtonLinkProps = Omit<IOButtonLinkSpecificProps, "variant">;
 
-/* Margin between `solid` and `variant` variant */
-const spaceBetweenActions: IOSpacer = 16;
-/* Margin between `solid` and `link` variant */
-const spaceBetweenActionAndLink: IOSpacer = 16;
-
 const styles = StyleSheet.create({
   buttonContainer: {
-    paddingHorizontal: IOVisualCostants.appMarginDefault,
+    paddingHorizontal: IODimensions.padding.screen.default,
     width: "100%",
     flexShrink: 0
-  },
-  debugText: {
-    position: "absolute",
-    right: 8,
-    top: -16,
-    color: IOColors.black,
-    fontSize: 9,
-    opacity: 0.75
   }
 });
 
@@ -129,10 +104,9 @@ export const FooterActions = ({
   fixed = true,
   transparent = false,
   onMeasure,
-  testID,
-  debugMode = false
+  testID
 }: FooterActionsProps) => {
-  const theme = useIOTheme();
+  const footerColors = useIOColors().component.footer;
 
   const bottomMargins = useBottomMargins(
     !!actions?.secondary,
@@ -142,7 +116,9 @@ export const FooterActions = ({
   const { bottomMargin, extraBottomMargin } = excludeVerticalMargins
     ? { bottomMargin: 0, extraBottomMargin: 0 }
     : bottomMargins;
-  const topMargins = excludeVerticalMargins ? 0 : IOSpacing.screenEndMargin;
+  const topMargins = excludeVerticalMargins
+    ? 0
+    : IODimensions.padding.screen.end;
 
   /* Total height of actions */
   const [actionBlockHeight, setActionBlockHeight] =
@@ -150,14 +126,14 @@ export const FooterActions = ({
 
   /* Background color should be app main background
      (both light and dark themes) */
-  const HEADER_BG_COLOR: ColorValue = IOColors[theme["appBackground-primary"]];
+  const HEADER_BG_COLOR: ColorValue = footerColors.background;
   const TRANSPARENT_BG_COLOR: ColorValue = "transparent";
 
   /* Safe background block. Cover everything until it reaches
      the half of the primary action button. It avoids
      glitchy behavior underneath.  */
   const safeBackgroundBlockHeight =
-    bottomMargin + actionBlockHeight - buttonSolidHeight / 2;
+    bottomMargin + actionBlockHeight - IODimensions.height.button / 2;
 
   const getActionBlockMeasurements = (event: LayoutChangeEvent) => {
     const { height } = event.nativeEvent.layout;
@@ -165,7 +141,7 @@ export const FooterActions = ({
     /* Height of the safe bottom area, applied to the ScrollView:
        Actions + Content end margin */
     const safeBottomAreaHeight =
-      bottomMargin + height + IOSpacing.screenEndMargin;
+      bottomMargin + height + IODimensions.padding.screen.end;
     onMeasure?.({ actionBlockHeight: height, safeBottomAreaHeight });
   };
 
@@ -177,9 +153,6 @@ export const FooterActions = ({
           paddingBottom: bottomMargin
         },
         fixed ? { position: "absolute", bottom: 0 } : { marginTop: topMargins },
-        debugMode && {
-          backgroundColor: hexToRgba(IOColors["error-500"], 0.15)
-        },
         animatedStyles?.mainBlock
       ]}
       testID={testID}
@@ -211,10 +184,6 @@ export const FooterActions = ({
         pointerEvents="box-none"
         style={styles.buttonContainer}
       >
-        {debugMode && (
-          <Text style={styles.debugText}>{`Height: ${actionBlockHeight}`}</Text>
-        )}
-
         {renderActions(actions, extraBottomMargin)}
       </View>
     </Animated.View>
@@ -243,7 +212,7 @@ const renderActions = (
       {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions */}
       {type === "TwoButtons" && secondaryAction && (
         <View style={{ alignSelf: "center", marginBottom: extraBottomMargin }}>
-          <VSpacer size={spaceBetweenActionAndLink} />
+          <VSpacer size={IODimensions.gap.footer.link} />
           <IOButton variant="link" {...secondaryAction} />
         </View>
       )}
@@ -252,7 +221,7 @@ const renderActions = (
           {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions */}
           {secondaryAction && (
             <>
-              <VSpacer size={spaceBetweenActions} />
+              <VSpacer size={IODimensions.gap.footer.actions} />
               <IOButton fullWidth variant="outline" {...secondaryAction} />
             </>
           )}
@@ -261,7 +230,7 @@ const renderActions = (
             <View
               style={{ alignSelf: "center", marginBottom: extraBottomMargin }}
             >
-              <VSpacer size={spaceBetweenActionAndLink} />
+              <VSpacer size={IODimensions.gap.footer.link} />
               <IOButton variant="link" {...tertiaryAction} />
             </View>
           )}

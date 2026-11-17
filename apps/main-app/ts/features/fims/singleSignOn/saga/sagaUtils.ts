@@ -6,7 +6,7 @@ import {
   HttpClientSuccessResponse,
   nativeRequest,
   removeAllCookiesForDomain
-} from "@pagopa/io-react-native-http-client";
+} from "@io-app/expo-http-client";
 import { StackActions } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import { URL as PolyfillURL } from "react-native-url-polyfill";

@@ -1,7 +1,7 @@
-import { ColorValue, View } from "react-native";
+import { View } from "react-native";
 
-import { useIOTheme } from "../../context";
-import { IOColors, IOSpacer, IOVisualCostants } from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions } from "../../core";
 
 type StepperProps = {
   currentStep: number;
@@ -9,34 +9,30 @@ type StepperProps = {
 };
 
 export const Stepper = ({ steps, currentStep }: StepperProps) => {
-  const theme = useIOTheme();
-
-  const STEPPER_SPACE: IOSpacer = 4;
-
-  const colorMap: Record<string, ColorValue> = {
-    default: IOColors[theme["stepper-default"]],
-    active: IOColors[theme["interactiveElem-default"]]
-  };
+  const stepperColors = useIOColors().component.stepper;
 
   return (
-    <View style={{ paddingHorizontal: IOVisualCostants.appMarginDefault }}>
+    <View style={{ paddingHorizontal: IODimensions.padding.screen.default }}>
       <View
         style={{
           flex: 1,
           flexDirection: "row",
           justifyContent: "space-between",
-          gap: STEPPER_SPACE
+          gap: IODimensions.gap.stepper.items
         }}
       >
         {[...Array(steps)].map((_, i) => (
           <View
             key={i}
             style={{
-              borderRadius: 2,
+              /* Rounded ends */
+              borderRadius: IODimensions.stroke.stepper,
               borderCurve: "continuous",
               borderBottomColor:
-                i > currentStep - 1 ? colorMap.default : colorMap.active,
-              borderBottomWidth: 2,
+                i > currentStep - 1
+                  ? stepperColors.default
+                  : stepperColors.active,
+              borderBottomWidth: IODimensions.stroke.stepper,
               flex: 1
             }}
           />

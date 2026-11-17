@@ -5,7 +5,7 @@ import {
   H2,
   H6,
   IconButton,
-  IOVisualCostants,
+  IODimensions,
   ListItemInfo,
   VSpacer
 } from "@io-app/design-system";
@@ -34,11 +34,11 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     flexDirection: "row",
     paddingBottom: 18,
-    paddingRight: IOVisualCostants.appMarginDefault,
+    paddingRight: IODimensions.padding.screen.default,
     paddingTop: 24
   },
   listContainer: {
-    marginHorizontal: IOVisualCostants.appMarginDefault
+    marginHorizontal: IODimensions.padding.screen.default
   }
 });
 

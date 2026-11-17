@@ -1,16 +1,14 @@
 import {
   H4,
-  hexToRgba,
-  IOColors,
   LoadingSpinner,
   Pictogram,
   ProgressLoader,
-  useIOTheme,
+  useIOColors,
   VStack
 } from "@io-app/design-system";
 import I18n from "i18next";
 import { ReactNode, useEffect, useState } from "react";
-import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { ActivityIndicator, ColorValue, StyleSheet, View } from "react-native";
 
 import { CircularProgress } from "../../../components/ui/CircularProgress";
 import { LoadingIndicator } from "../../../components/ui/LoadingIndicator";
@@ -26,7 +24,6 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: hexToRgba(IOColors.black, 0.15),
     padding: 16,
     overflow: "hidden"
   },
@@ -44,30 +41,37 @@ type SpinnerViewerBox = {
   variant?: "default" | "primary";
 };
 
-const viewerBackgroundMap: Record<
-  NonNullable<SpinnerViewerBox["variant"]>,
-  IOColors
-> = {
-  default: "white",
-  primary: "blueIO-500"
-};
-
 const SpinnerViewerBox = ({
   name,
   children,
   variant = "default"
-}: SpinnerViewerBox) => (
-  <DSComponentViewerBox name={name}>
-    <View
-      style={[
-        styles.spinnerOuter,
-        { backgroundColor: IOColors[viewerBackgroundMap[variant]] }
-      ]}
-    >
-      {children}
-    </View>
-  </DSComponentViewerBox>
-);
+}: SpinnerViewerBox) => {
+  const colors = useIOColors();
+
+  const viewerBackgroundMap: Record<
+    NonNullable<SpinnerViewerBox["variant"]>,
+    ColorValue
+  > = {
+    default: colors.background.default,
+    primary: colors.background.accent
+  };
+
+  return (
+    <DSComponentViewerBox name={name}>
+      <View
+        style={[
+          styles.spinnerOuter,
+          {
+            backgroundColor: viewerBackgroundMap[variant],
+            borderColor: colors.stroke.default
+          }
+        ]}
+      >
+        {children}
+      </View>
+    </DSComponentViewerBox>
+  );
+};
 
 const ProgressLoaderViewerBox = () => {
   const [progress, setProgress] = useState(0);
@@ -83,15 +87,15 @@ const ProgressLoaderViewerBox = () => {
 };
 
 const CircularProgressViewerBox = () => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <CircularProgress
       progress={10}
       radius={imgDimension / 2}
       size={imgDimension}
-      strokeBgColor={IOColors[theme["appBackground-tertiary"]]}
-      strokeColor={IOColors[theme["interactiveElem-default"]]}
+      strokeBgColor={colors.surface.tertiary}
+      strokeColor={colors.foreground.accent}
       strokeWidth={circleBorderWidth}
     >
       <View style={styles.imgWrapper}>
@@ -105,13 +109,13 @@ const sectionMargin = 40;
 const sectionTitleMargin = 16;
 
 export const DSLoaders = () => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <DesignSystemScreen title={"Loaders"}>
       <VStack space={sectionMargin}>
         <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Activity Indicator</H4>
+          <H4>Activity Indicator</H4>
           <DSComponentViewerBox name="ActivityIndicator · Large size, primary color">
             <View style={{ alignItems: "flex-start" }}>
               <ActivityIndicator
@@ -123,7 +127,7 @@ export const DSLoaders = () => {
                 )}
                 accessible={true}
                 animating={true}
-                color={IOColors[theme["interactiveElem-default"]]}
+                color={colors.foreground.accent}
                 importantForAccessibility={"no-hide-descendants"}
                 size={"large"}
                 testID={"activityIndicator"}
@@ -133,25 +137,23 @@ export const DSLoaders = () => {
         </VStack>
 
         <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Loading Indicator</H4>
+          <H4>Loading Indicator</H4>
           <DSComponentViewerBox name="LoadingIndicator, with predefined visual attributes">
             <LoadingIndicator />
           </DSComponentViewerBox>
         </VStack>
 
         <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Loading Spinner</H4>
+          <H4>Loading Spinner</H4>
           <VStack space={16}>
             <SpinnerViewerBox name="LoadingSpinner · Size 24, primary color">
-              <LoadingSpinner
-                color={IOColors[theme["interactiveElem-default"]]}
-              />
+              <LoadingSpinner color={colors.foreground.accent} />
             </SpinnerViewerBox>
             <SpinnerViewerBox
               name="LoadingSpinner · Size 24, white color"
               variant="primary"
             >
-              <LoadingSpinner color="white" />
+              <LoadingSpinner color={colors.foreground.onAccent.default} />
             </SpinnerViewerBox>
             <DSComponentViewerBox name="LoadingSpinner · Size 48, default color">
               <LoadingSpinner size={48} />
@@ -160,13 +162,13 @@ export const DSLoaders = () => {
         </VStack>
 
         <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>ProgressLoader</H4>
+          <H4>ProgressLoader</H4>
           <ProgressLoaderViewerBox />
         </VStack>
 
         <VStack space={sectionTitleMargin}>
           {/* CIE Card Reading */}
-          <H4 color={theme["textHeading-default"]}>CircularProgress</H4>
+          <H4>CircularProgress</H4>
           <CircularProgressViewerBox />
         </VStack>
       </VStack>

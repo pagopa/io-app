@@ -3,7 +3,7 @@ import {
   ContentWrapper,
   H4,
   IOButton,
-  IOVisualCostants,
+  IODimensions,
   useIOTheme,
   VSpacer
 } from "@io-app/design-system";
@@ -111,7 +111,7 @@ export const NativeSheetLongContent = () => {
         <H4 color={theme["textHeading-default"]}>Long scrollable content</H4>
         <VSpacer size={8} />
         <LongContent />
-        <VSpacer size={IOVisualCostants.appMarginDefault} />
+        <VSpacer size={IODimensions.padding.screen.default} />
         <IOButton
           fullWidth
           label="Dismiss"
@@ -137,7 +137,7 @@ export const NativeSheetLongContentFit = () => {
         </H4>
         <VSpacer size={8} />
         <LongContent />
-        <VSpacer size={IOVisualCostants.appMarginDefault} />
+        <VSpacer size={IODimensions.padding.screen.default} />
         <IOButton
           fullWidth
           label="Dismiss"

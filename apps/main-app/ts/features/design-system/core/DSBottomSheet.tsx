@@ -5,7 +5,6 @@ import {
   H4,
   IOButton,
   ListItemNav,
-  useIOTheme,
   VSpacer,
   VStack
 } from "@io-app/design-system";
@@ -17,8 +16,6 @@ import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import DESIGN_SYSTEM_ROUTES from "../navigation/routes";
 
 export const DSBottomSheet = () => {
-  const theme = useIOTheme();
-
   const handlePressDismiss = () => {
     dismissStaticBottomSheet();
     dismissStaticBottomSheetWithFooter();
@@ -162,7 +159,7 @@ export const DSBottomSheet = () => {
     >
       <VStack space={blockMargin}>
         <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Available bottom sheets</H4>
+          <H4>Available bottom sheets</H4>
           <View>
             <ListItemNav
               accessibilityLabel="Static bottom sheet"

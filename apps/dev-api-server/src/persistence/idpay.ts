@@ -97,7 +97,7 @@ const generateRandomInitiativeDTO = (): InitiativeDTO => {
     lastCounterUpdate: faker.date.recent({ days: 1 }),
     iban: faker.helpers.arrayElement(ibanList)?.iban || "",
     nInstr: 1,
-    logoURL: faker.image.urlLoremFlickr({ width: 480, height: 480 }),
+    logoURL: faker.image.url({ width: 480, height: 480 }),
     organizationName: faker.company.name()
   };
 };

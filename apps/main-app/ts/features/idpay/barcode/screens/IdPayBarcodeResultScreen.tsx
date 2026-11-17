@@ -2,10 +2,10 @@ import { TransactionBarCodeResponse } from "@io-app/api-types/generated/definiti
 import {
   Body,
   H3,
-  IOColors,
+  IODimensions,
   IOText,
   IOTypography,
-  IOVisualCostants,
+  useIOColors,
   useIOTheme,
   VSpacer
 } from "@io-app/design-system";
@@ -156,6 +156,7 @@ const SuccessContent = ({
 
   const [isBarcodeExpired, setIsBarcodeExpired] = useState(false);
   const theme = useIOTheme();
+  const colors = useIOColors();
 
   useEffect(() => {
     if (isBarcodeExpired) {
@@ -201,7 +202,12 @@ const SuccessContent = ({
         label: I18n.t("idpay.barCode.resultScreen.success.header")
       }}
     >
-      <View style={styles.barcodeContainer}>
+      <View
+        style={[
+          styles.barcodeContainer,
+          { borderColor: colors.stroke.default }
+        ]}
+      >
         <VSpacer size={4} />
         <Barcode format="CODE128" value={trx} />
         <View style={{ alignItems: "center" }}>
@@ -283,13 +289,11 @@ const LoadingScreen = () => (
 const styles = StyleSheet.create({
   loadingWrapper: {
     flex: 1,
-    paddingHorizontal: IOVisualCostants.appMarginDefault,
+    paddingHorizontal: IODimensions.padding.screen.default,
     justifyContent: "center",
     alignItems: "center"
   },
   barcodeContainer: {
-    /* TODO: Dark mode: Replace with theme values */
-    borderColor: IOColors["grey-100"],
     borderWidth: 1,
     padding: 16,
     borderRadius: 8

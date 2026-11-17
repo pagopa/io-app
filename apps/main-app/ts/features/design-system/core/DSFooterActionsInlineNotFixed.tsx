@@ -1,7 +1,6 @@
 import {
   FooterActionsInline,
-  IOColors,
-  useIOTheme,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import { Fragment } from "react";
@@ -12,7 +11,7 @@ const onButtonPress = () => {
 };
 
 export const DSFooterActionsInlineNotFixed = () => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <ScrollView>
@@ -21,10 +20,12 @@ export const DSFooterActionsInlineNotFixed = () => {
           <View
             style={[
               styles.block,
-              { backgroundColor: IOColors[theme["appBackground-secondary"]] }
+              {
+                backgroundColor: colors.surface.secondary
+              }
             ]}
           >
-            <Text style={{ color: IOColors[theme["textBody-tertiary"]] }}>
+            <Text style={{ color: colors.text.content.tertiary }}>
               {`Block ${i}`}
             </Text>
           </View>

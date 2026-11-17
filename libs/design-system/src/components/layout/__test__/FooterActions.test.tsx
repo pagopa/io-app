@@ -2,7 +2,7 @@ import { render } from "@testing-library/react-native";
 import { StyleSheet } from "react-native";
 import { type Metrics, SafeAreaProvider } from "react-native-safe-area-context";
 
-import { IOSpacing } from "../../../core";
+import { IODimensions } from "../../../core";
 import { FooterActions } from "../FooterActions";
 
 const onPress = () => undefined;
@@ -145,7 +145,7 @@ describe("FooterActions - vertical margins", () => {
       const footer = getByTestId(footerTestID);
 
       expect(footer).toHaveStyle({
-        marginTop: IOSpacing.screenEndMargin,
+        marginTop: IODimensions.padding.screen.end,
         paddingBottom: metrics.insets.bottom
       });
       expect(findLinkWrappers(footer)[0]).toHaveStyle({

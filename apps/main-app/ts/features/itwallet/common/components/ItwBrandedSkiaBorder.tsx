@@ -1,20 +1,16 @@
-import {
-  RoundedRect,
-  LinearGradient as SkiaLinearGradient,
-  vec
-} from "@shopify/react-native-skia";
+import { RoundedRect } from "@shopify/react-native-skia";
 import { ColorSchemeName, LayoutRectangle } from "react-native";
+import { SharedValue } from "react-native-reanimated";
 
-import {
-  itwBrandedGradientColors,
-  useItwBrandedGradientTransform
-} from "./ItwBrandedSkiaGradient";
+import { ItwBrandedSkiaGradient } from "./ItwBrandedSkiaGradient";
 
 export type ItwIridescentBorderVariant = "default" | "error" | "warning";
 
 type ItwIridescentBorderProps = {
   borderRadius?: number;
   height: LayoutRectangle["height"];
+  /** Relative device roll; the border stays at rest when omitted. */
+  roll?: SharedValue<number>;
   themeType?: ColorSchemeName;
   thickness?: number;
   variant?: ItwIridescentBorderVariant;
@@ -41,9 +37,9 @@ export const ItwBrandedSkiaBorder = ({
   thickness = 3,
   borderRadius = 16,
   variant = "default",
-  themeType = "light"
+  themeType = "light",
+  roll
 }: ItwIridescentBorderProps) => {
-  const gradientTransform = useItwBrandedGradientTransform(height);
   const opacity =
     themeType === "light" ? 1 : DARK_GRADIENT_OPACITY * DARK_TICK_OPACITY;
 
@@ -59,12 +55,11 @@ export const ItwBrandedSkiaBorder = ({
       x={0}
       y={0}
     >
-      <SkiaLinearGradient
-        colors={itwBrandedGradientColors[variant]}
-        end={vec(width / 3, width)}
-        mode="mirror"
-        start={vec(0, 0)}
-        transform={gradientTransform}
+      <ItwBrandedSkiaGradient
+        height={height}
+        roll={roll}
+        variant={variant}
+        width={width}
       />
     </RoundedRect>
   );

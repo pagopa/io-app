@@ -18,14 +18,10 @@ import Animated, {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { scheduleOnRN } from "react-native-worklets";
 
-import { useIOTheme } from "../../context";
-import {
-  footerBoxShadow,
-  IOColors,
-  IOSpacing,
-  IOSpacingScale
-} from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions, IODimensionScale } from "../../core";
 import { FooterActions, FooterActionsMeasurements } from "./FooterActions";
+import { footerBoxShadow } from "./styles";
 
 const defaultScrollEventThrottle = 8;
 const placeholderTestID = "ScrollViewWithStickyFooterActionsPlaceholder";
@@ -74,13 +70,11 @@ export const ScrollViewWithStickyFooterActions = ({
   placeholderFallback,
   scrollViewProps
 }: ScrollViewWithStickyFooterActionsProps) => {
-  const theme = useIOTheme();
+  const footerColors = useIOColors().component.footer;
   const { bottom: safeAreaBottom } = useSafeAreaInsets();
   const { actions, testID, transparent } = footerActionProps;
 
-  const backgroundColor = transparent
-    ? "transparent"
-    : IOColors[theme["appBackground-primary"]];
+  const backgroundColor = transparent ? "transparent" : footerColors.background;
 
   const {
     dockedActionsStyle,
@@ -122,7 +116,7 @@ export const ScrollViewWithStickyFooterActions = ({
         )}
         {afterPlaceholder}
         <View
-          style={{ height: IOSpacing.screenEndMargin + safeAreaBottom }}
+          style={{ height: IODimensions.padding.screen.end + safeAreaBottom }}
           testID="ScrollViewWithStickyFooterActionsEndSpacer"
         />
       </Animated.ScrollView>
@@ -148,7 +142,7 @@ export const ScrollViewWithStickyFooterActions = ({
   );
 };
 
-const shadowTransitionDistance: IOSpacingScale = 24;
+const shadowTransitionDistance: IODimensionScale = 24;
 const invisibleButAccessibleOpacity = 0.01;
 
 const useFooterActionsDocking = () => {
@@ -241,7 +235,7 @@ const styles = StyleSheet.create({
   },
   dockedActionsPlaceholder: {
     // the docking point assumes the floating actions' content end margin above the docked ones
-    paddingTop: IOSpacing.screenEndMargin,
-    paddingBottom: IOSpacing.screenEndMargin
+    paddingTop: IODimensions.padding.screen.end,
+    paddingBottom: IODimensions.padding.screen.end
   }
 });

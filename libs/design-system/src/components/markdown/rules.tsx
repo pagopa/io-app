@@ -162,7 +162,7 @@ const renderParagraph = (
 
   return (
     <Body
-      {...(containsLinks ? { accessible: true, focusable: true } : {})}
+      {...(containsLinks ? { accessible: true, focusable: false } : {})}
       key={node.key}
       style={{ textAlign: context.textAlign }}
     >
