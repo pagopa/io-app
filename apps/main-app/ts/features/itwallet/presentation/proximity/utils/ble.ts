@@ -39,6 +39,20 @@ export const subscribeBluetoothState = (listener: (state: State) => void) =>
   getBleManager().onStateChange(listener, true);
 
 /**
+ * Checks whether all the required Bluetooth permissions are granted, without
+ * requesting them.
+ *
+ * @returns A promise that resolves to true if all required permissions are
+ *   granted, or false otherwise.
+ */
+export const areBluetoothPermissionsGranted = async () => {
+  const statuses = await checkMultiple(BLUETOOTH_PERMISSIONS);
+  return BLUETOOTH_PERMISSIONS.every(
+    permission => statuses[permission] === RESULTS.GRANTED
+  );
+};
+
+/**
  * Checks and requests necessary Bluetooth permissions based on the platform and
  * OS version.
  *
