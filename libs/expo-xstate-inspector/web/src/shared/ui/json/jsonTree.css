@@ -1,6 +1,25 @@
-.json-toolbar {
-  margin-bottom: 20px;
-  width: fit-content;
+.json-root {
+  position: relative;
+}
+
+.json-toolbar.toolbar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  gap: 2px;
+  padding: 2px;
+  border-radius: 8px;
+}
+
+.json-toolbar .icon-button {
+  width: 24px;
+  height: 24px;
+}
+
+.json-toolbar .icon-button svg {
+  width: 14px;
+  height: 14px;
 }
 
 .json-tree {
@@ -12,6 +31,9 @@
 
 .json-tree summary {
   cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .json-tree details > :not(summary) {

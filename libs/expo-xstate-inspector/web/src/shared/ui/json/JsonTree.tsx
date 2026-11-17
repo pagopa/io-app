@@ -50,7 +50,7 @@ export const JsonTree = ({
     });
 
   return (
-    <>
+    <div className="json-root">
       {toolbar && (
         <div className="json-toolbar toolbar">
           <IconButton
@@ -82,6 +82,6 @@ export const JsonTree = ({
           value={value}
         />
       </div>
-    </>
+    </div>
   );
 };
