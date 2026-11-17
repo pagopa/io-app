@@ -1,0 +1,90 @@
+/* Transitions taken by the selected machine. */
+#diagram-canvas path.taken {
+  stroke: var(--color-visited-border) !important;
+  stroke-width: 2.5px !important;
+}
+
+#diagram-canvas marker.taken path {
+  fill: var(--color-visited-border) !important;
+  stroke: var(--color-visited-border) !important;
+}
+
+#diagram-canvas .edgeLabel.taken p,
+#diagram-canvas .edgeLabel.taken span {
+  background-color: var(--color-visited-background) !important;
+  color: var(--color-visited-text) !important;
+  font-weight: 600;
+}
+
+/* State clicked on the diagram, described in #state-details. */
+#diagram-canvas g.node {
+  cursor: pointer;
+}
+
+#diagram-canvas g.selected > rect,
+#diagram-canvas g.selected > path {
+  stroke: var(--color-accent) !important;
+  stroke-dasharray: 6 3;
+  stroke-width: 3px !important;
+}
+
+#state-details {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  overflow: auto;
+  max-width: min(420px, calc(100% - 32px));
+  max-height: calc(100% - 96px);
+  box-sizing: border-box;
+  padding: 16px 20px 20px;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  background: var(--color-background);
+  box-shadow: 0 4px 16px var(--color-shadow);
+  cursor: auto;
+  user-select: text;
+}
+
+#state-details[hidden] {
+  display: none;
+}
+
+#state-details header {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+#state-details h3 {
+  flex: 1;
+  margin: 4px 0;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+#state-details .state-type {
+  margin-left: 8px;
+  color: var(--color-muted);
+  font-size: 12px;
+  font-weight: normal;
+}
+
+#state-details h4 {
+  margin: 10px 0 4px;
+  color: var(--color-muted);
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+#state-details ul {
+  margin: 0;
+  padding-left: 18px;
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+#state-details .empty {
+  color: var(--color-muted);
+  font-size: 12px;
+}

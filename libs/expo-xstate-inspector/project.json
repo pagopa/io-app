@@ -5,6 +5,14 @@
   "projectType": "library",
   "targets": {
     "tsc-noemit": {
+      "inputs": [
+        "typecheck",
+        "{projectRoot}/tsconfig.web.json",
+        "{projectRoot}/package.json",
+        {
+          "externalDependencies": ["react", "@types/react", "@types/react-dom"]
+        }
+      ],
       "executor": "nx:run-commands",
       "options": {
         "command": "pnpm --filter @io-app/expo-xstate-inspector run tsc-noemit"
