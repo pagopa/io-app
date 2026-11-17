@@ -967,6 +967,7 @@ exports[`MessageDetailsScreen should match the snapshot with footer actions and 
                                                   "width": "100%",
                                                 }
                                               }
+                                              testID="avatar_double_background_image"
                                             />
                                           </View>
                                         </View>
@@ -4990,6 +4991,7 @@ exports[`MessageDetailsScreen should match the snapshot with footer actions and 
                                                   "width": "100%",
                                                 }
                                               }
+                                              testID="avatar_double_background_image"
                                             />
                                           </View>
                                         </View>
@@ -8195,6 +8197,7 @@ exports[`MessageDetailsScreen should match the snapshot without footer actions a
                                                   "width": "100%",
                                                 }
                                               }
+                                              testID="avatar_double_background_image"
                                             />
                                           </View>
                                         </View>
@@ -10740,6 +10743,7 @@ exports[`MessageDetailsScreen should match the snapshot without footer actions a
                                                   "width": "100%",
                                                 }
                                               }
+                                              testID="avatar_double_background_image"
                                             />
                                           </View>
                                         </View>

@@ -783,6 +783,7 @@ exports[`MessageDetails component should match the snapshot with footer actions 
                                               "width": "100%",
                                             }
                                           }
+                                          testID="avatar_image"
                                         />
                                       </View>
                                     </View>
@@ -4983,6 +4984,7 @@ exports[`MessageDetails component should match the snapshot without footer actio
                                               "width": "100%",
                                             }
                                           }
+                                          testID="avatar_image"
                                         />
                                       </View>
                                     </View>
