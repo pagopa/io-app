@@ -14,7 +14,7 @@ and inline actors are labelled as such. Click elsewhere or press × to close it.
 [Stately's browser inspector](https://github.com/statelyai/inspect/blob/d72a7fce0927380e0538383ce2dbf2df22fce2e9/src/browser.ts)
 opens a Stately-hosted page and sends inspection events to that page by default.
 The full interface can be resource-intensive for everyday debugging. This plugin
-uses a smaller, framework-free page focused on the views we need.
+uses a smaller React app focused on the views we need.
 
 The plugin sends inspection messages through the configured Expo development
 server, not to Stately. Use a local server on a trusted network if the inspection
@@ -28,9 +28,14 @@ so the page contacts a third party and is not fully offline.
 2. `src/handlers/`, `src/serializers/`, and `src/registries/` prepare actor
    definitions, events, microsteps, and snapshots. The registry tracks running
    actors. `src/transports/` sends the messages through Expo dev tools.
-3. Vite bundles `web/` into `dist/`, which Expo serves. Its `web/src/` client receives the messages
+3. Vite bundles the React app in `web/` into `dist/`, which Expo serves. Its `web/src/` client receives the messages
    through the Expo development server, stores actor data in browser memory,
-   and renders the views and Mermaid diagram.
+   and renders React components and the Mermaid diagram.
+
+The web app keeps composition and the Expo connection in `web/src/app/`,
+actor inspection and diagram features in `web/src/features/`, and shared
+inspection models and UI in `web/src/shared/`. Tests and feature-specific
+styles live alongside their modules.
 
 When the page connects, it requests the currently running actors. Events sent
 while no page is connected are dropped rather than replayed.
@@ -45,14 +50,14 @@ pnpm nx run main-app:start
 ```
 
 The package's `prepare` script runs Vite during `pnpm install`, bundling
-TypeScript, Tailwind CSS, and the app's Titillio fonts into the ignored `dist/`
+React, TypeScript, Tailwind CSS, and the app's Titillio fonts into the ignored `dist/`
 directory. After changing browser source or styles, rebuild with:
 
 ```sh
 pnpm --filter @io-app/expo-xstate-inspector run prepare
 ```
 
-The framework-free web UI mirrors the IO design system's semantic light/dark
+The React web UI mirrors the IO design system's semantic light/dark
 colors; it does not load React Native components. Tailwind and fonts are served
 locally, with no additional runtime CDN requests.
 

@@ -480,12 +480,12 @@ export default defineConfig([
     }
   },
   {
-    // Browser page driving the DOM imperatively, speaking the Expo dev tools
-    // protocol (e.g. `__isHandshakeMessages`).
-    files: ["libs/expo-xstate-inspector/web/src/**/*.ts"],
+    // Browser helpers speaking the Expo dev tools protocol.
+    files: ["libs/expo-xstate-inspector/web/src/**/*.{ts,tsx}"],
 
     rules: {
       "functional/immutable-data": "off",
+      "i18next/no-literal-string": "off",
       "no-underscore-dangle": "off"
     }
   },
