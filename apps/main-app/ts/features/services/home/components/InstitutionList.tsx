@@ -194,6 +194,7 @@ export const InstitutionList = ({
         flexGrow: 1,
         paddingHorizontal: IODimensions.padding.screen.default
       }}
+      contentInsetAdjustmentBehavior="automatic"
       data={data?.institutions}
       ItemSeparatorComponent={Divider}
       ListEmptyComponent={ListEmptyComponent}

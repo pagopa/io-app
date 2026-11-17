@@ -25,6 +25,7 @@ import {
   LayoutRectangle,
   RefreshControl,
   RefreshControlProps,
+  ScrollViewProps,
   StyleSheet,
   View,
   ViewStyle
@@ -75,9 +76,12 @@ export type IOScrollViewProps = WithTestID<
     actions?: WithTestID<IOScrollViewActions>;
     alwaysBounceVertical?: boolean;
     animatedRef?: AnimatedRef<Animated.ScrollView>;
+    /* Native bottom obstruction, including its safe area, for fixed actions. */
+    bottomInset?: number;
     /* Center content in iOS without inertial scrolling */
     centerContent?: boolean;
     contentContainerStyle?: ViewStyle;
+    contentInsetAdjustmentBehavior?: ScrollViewProps["contentInsetAdjustmentBehavior"];
     debugMode?: boolean;
     /* Don't include end content margin */
     excludeEndContentMargin?: boolean;
@@ -163,9 +167,11 @@ export const IOScrollView = ({
   includeContentMargins = true,
   debugMode = false,
   animatedRef,
+  bottomInset,
   centerContent,
   refreshControlProps,
   contentContainerStyle,
+  contentInsetAdjustmentBehavior,
   alwaysBounceVertical,
   testID
 }: IOScrollViewProps) => {
@@ -190,9 +196,11 @@ export const IOScrollView = ({
     setActionBlockHeight(event.nativeEvent.layout.height);
   };
 
-  const { bottomMargin, needSafeAreaMargin } = useFooterActionsMargin(
-    excludeSafeAreaMargins
-  );
+  const { bottomMargin, contentBottomMargin, needSafeAreaMargin } =
+    useFooterActionsMargin(excludeSafeAreaMargins, {
+      bottomInset,
+      contentInsetAdjustmentBehavior
+    });
 
   /* GENERATE EASING GRADIENT
      Background color should be app main background
@@ -227,7 +235,7 @@ export const IOScrollView = ({
   /* Height of the safe bottom area, applied to the ScrollView:
      Actions + Content end margin */
   const safeBottomAreaHeight =
-    bottomMargin + actionBlockHeight + IODimensions.padding.screen.end;
+    contentBottomMargin + actionBlockHeight + IODimensions.padding.screen.end;
 
   const handleScroll = useAnimatedScrollHandler(
     ({ contentOffset, layoutMeasurement, contentSize }) => {
@@ -302,7 +310,7 @@ export const IOScrollView = ({
               ? 0
               : actions
                 ? safeBottomAreaHeight
-                : bottomMargin + IODimensions.padding.screen.end,
+                : contentBottomMargin + IODimensions.padding.screen.end,
             paddingHorizontal: includeContentMargins
               ? IODimensions.padding.screen.default
               : 0,
@@ -318,6 +326,7 @@ export const IOScrollView = ({
               }
             : {}
         ]}
+        contentInsetAdjustmentBehavior={contentInsetAdjustmentBehavior}
         decelerationRate="normal"
         onScroll={handleScroll}
         ref={animatedRef}
