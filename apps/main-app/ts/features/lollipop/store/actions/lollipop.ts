@@ -1,6 +1,6 @@
 /** Action types and action creator related to lollipop */
 
-import { PublicKey } from "@pagopa/io-react-native-crypto";
+import { PublicKey } from "@io-app/expo-crypto";
 import { ActionType, createStandardAction } from "typesafe-actions";
 
 type KeyTagSavePayload = {

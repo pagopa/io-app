@@ -1,5 +1,5 @@
 import { IdpData } from "@io-app/api-types/generated/definitions/content/IdpData";
-import { PublicKey } from "@pagopa/io-react-native-crypto";
+import { PublicKey } from "@io-app/expo-crypto";
 import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
 
