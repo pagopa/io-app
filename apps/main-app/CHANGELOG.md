@@ -1,3 +1,26 @@
+## 3.44.0-rc.2 (2026-11-17)
+
+### Features
+
+- [[IOCOM-3154](https://pagopa.atlassian.net/browse/IOCOM-3154)] messages section tab navigation de-anchor ([#8629](https://github.com/pagopa/io-app/pull/8629))
+
+### Bug Fixes
+
+- **IT-Wallet:** [[SIW-5422](https://pagopa.atlassian.net/browse/SIW-5422)] Close proximity flow on Android back ([#8869](https://github.com/pagopa/io-app/pull/8869))
+- [[IOPLT-2283](https://pagopa.atlassian.net/browse/IOPLT-2283)] Universal link redirect ([#8884](https://github.com/pagopa/io-app/pull/8884))
+
+### Chores
+
+- **release:** 3.43.0-rc.12 ([b65a21a06](https://github.com/pagopa/io-app/commit/b65a21a06))
+
+### ❤️ Thank You
+
+- Alessandro Dell'Oste @adelloste
+- Alessandro Mazzon
+- Emanuele Dall'Ara @LeleDallas
+- Martino Cesari Tomba @forrest57
+- MonicaRungi-EY
+
 ## 3.44.0-rc.1 (2026-11-16)
 
 ### Chores
