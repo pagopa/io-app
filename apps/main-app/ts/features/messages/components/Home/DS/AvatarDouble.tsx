@@ -1,5 +1,5 @@
 import { Icon, IODimensions, useIOColors } from "@io-app/design-system";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import {
   Image,
   ImageSourcePropType,
@@ -68,7 +68,9 @@ const getImageState = (backgroundLogoUri?: ImageSourcePropType) => {
  */
 export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
   const colors = useIOColors();
-  const indexValue = useRef<number>(0);
+  const [imageIndex, setImageIndex] = useState(0);
+  const logoKey = JSON.stringify(backgroundLogoUri); // compare by content rather than by reference
+  const [prevLogoKey, setPrevLogoKey] = useState(logoKey);
 
   const imageInitialState = useCallback(
     () => getImageState(backgroundLogoUri),
@@ -76,15 +78,21 @@ export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
   );
   const [imageSource, setImageSource] = useState(imageInitialState);
 
+  // A recycled list cell receives a different logo: restart from its first
+  // source instead of keeping the previous logo or its fallback
+  if (logoKey !== prevLogoKey) {
+    setPrevLogoKey(logoKey);
+    setImageIndex(0);
+    setImageSource(getImageState(backgroundLogoUri));
+  }
+
   const onError = () => {
     if (
       Array.isArray(backgroundLogoUri) &&
-      indexValue.current + 1 < backgroundLogoUri.length
+      imageIndex + 1 < backgroundLogoUri.length
     ) {
-      indexValue.current = indexValue.current + 1;
-      setImageSource(
-        addCacheTimestampToUri(backgroundLogoUri[indexValue.current])
-      );
+      setImageIndex(imageIndex + 1);
+      setImageSource(addCacheTimestampToUri(backgroundLogoUri[imageIndex + 1]));
       return;
     }
     setImageSource(undefined);
@@ -135,6 +143,7 @@ export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
               onError={onError}
               source={imageSource}
               style={styles.avatarImage}
+              testID="avatar_double_background_image"
             />
           </View>
         )}

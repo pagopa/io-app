@@ -1,11 +1,9 @@
 import { TabItem, TabNavigation } from "@io-app/design-system";
 import I18n from "i18next";
-import { RefObject, useCallback } from "react";
+import { memo } from "react";
 import { StyleSheet, View } from "react-native";
-import PagerView from "react-native-pager-view";
 
-import { useIOSelector } from "../../../../store/hooks";
-import { shownMessageCategorySelector } from "../../store/reducers/allPaginated";
+import { MessageListCategory } from "../../types/messageListCategory";
 import { messageListCategoryToViewPageIndex } from "./homeUtils";
 
 const styles = StyleSheet.create({
@@ -14,30 +12,17 @@ const styles = StyleSheet.create({
   }
 });
 
-export const TabNavigationContainer = ({
-  pagerViewRef
-}: {
-  pagerViewRef: RefObject<null | PagerView>;
-}) => {
-  const shownMessageCategory = useIOSelector(shownMessageCategorySelector);
-  const shownPageIndex =
-    messageListCategoryToViewPageIndex(shownMessageCategory);
-  const onTabNavigationItemPressed = useCallback(
-    (selectedTabIndex: number) => {
-      if (shownPageIndex !== selectedTabIndex) {
-        // The PagerViewContainer is used to pilot the business logic
-        // that both switches page and trigger the redux store update
-        // to re-render this component
-        pagerViewRef.current?.setPage(selectedTabIndex);
-      }
-    },
-    [pagerViewRef, shownPageIndex]
-  );
-  return (
+type TabNavigationContainerProps = {
+  currentCategory: MessageListCategory;
+  onTabPressed: (selectedTabIndex: number) => void;
+};
+
+export const TabNavigationContainer = memo(
+  ({ currentCategory, onTabPressed }: TabNavigationContainerProps) => (
     <View style={styles.tabContainer}>
       <TabNavigation
-        onItemPress={onTabNavigationItemPressed}
-        selectedIndex={shownPageIndex}
+        onItemPress={onTabPressed}
+        selectedIndex={messageListCategoryToViewPageIndex(currentCategory)}
         tabAlignment="start"
       >
         <TabItem
@@ -58,5 +43,5 @@ export const TabNavigationContainer = ({
         />
       </TabNavigation>
     </View>
-  );
-};
+  )
+);
