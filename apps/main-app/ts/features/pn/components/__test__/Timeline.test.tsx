@@ -1,7 +1,9 @@
+import { IOColors } from "@io-app/design-system";
 import { createStore } from "redux";
 
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
+import { findAllByStyle, withDarkTheme } from "../../../../utils/testColors";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import PN_ROUTES from "../../navigation/routes";
 import { getNotificationStatusAccessibilityLabel } from "../../utils";
@@ -121,16 +123,58 @@ describe("Timeline component", () => {
     );
     expect(component.toJSON()).toMatchSnapshot();
   });
+  it("should draw the line and the dot rings with dark tokens in dark mode", () => {
+    const { toJSON } = renderComponent(
+      defaultProps.data,
+      defaultProps.footerHeight,
+      "dark"
+    );
+    const tree = toJSON();
+    const middleDots = defaultProps.data.length - 2;
+
+    expect(
+      findAllByStyle(tree, {
+        borderColor: IOColors.dark.background.default,
+        borderWidth: 1.5
+      })
+    ).toHaveLength(middleDots);
+    expect(
+      findAllByStyle(tree, { backgroundColor: IOColors.dark.stroke.divider })
+    ).toHaveLength(defaultProps.data.length * 2);
+  });
+  it("should color the texts with dark tokens in dark mode", () => {
+    const { getAllByText } = renderComponent(
+      defaultProps.data,
+      defaultProps.footerHeight,
+      "dark"
+    );
+    const [{ day, description, month, time }] = defaultProps.data;
+
+    expect(getAllByText(day)[0]).toHaveStyle({
+      color: IOColors.dark.text.content.secondary
+    });
+    expect(getAllByText(month)[0]).toHaveStyle({
+      color: IOColors.dark.text.content.tertiary
+    });
+    expect(getAllByText(description)[0]).toHaveStyle({
+      color: IOColors.dark.text.heading.secondary
+    });
+    expect(getAllByText(time)[0]).toHaveStyle({
+      color: IOColors.dark.text.content.tertiary
+    });
+  });
 });
 
 const renderComponent = (
   data: ReadonlyArray<TimelineItemProps>,
-  footerHeight: number
+  footerHeight: number,
+  theme: "dark" | "light" = "light"
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, initialState as any);
+  const Component = () => <Timeline data={data} footerHeight={footerHeight} />;
   return renderScreenWithNavigationStoreContext(
-    () => <Timeline data={data} footerHeight={footerHeight} />,
+    theme === "dark" ? withDarkTheme(Component) : Component,
     PN_ROUTES.MESSAGE_DETAILS,
     {},
     store

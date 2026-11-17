@@ -4,7 +4,7 @@ import {
   H2,
   IODimensions,
   ListItemNav,
-  useIOTheme,
+  useIOColors,
   VSpacer,
   VStack
 } from "@io-app/design-system";
@@ -90,7 +90,7 @@ const DESIGN_SYSTEM_SECTION_DATA: Array<SectionDataProps> = [
 ];
 
 export const DesignSystem = () => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const navigation = useIONavigation();
   const nativeNavigation =
     useNavigation<NativeStackNavigationProp<DesignSystemParamsList>>();
@@ -148,14 +148,8 @@ export const DesignSystem = () => {
     section: { description?: string; title: string };
   }) => (
     <VStack space={4}>
-      <H2 color={theme["textHeading-default"]} weight="Bold">
-        {title}
-      </H2>
-      {description && (
-        <BodySmall color={theme["textBody-tertiary"]} weight={"Regular"}>
-          {description}
-        </BodySmall>
-      )}
+      <H2 weight="Bold">{title}</H2>
+      {description && <BodySmall weight={"Regular"}>{description}</BodySmall>}
     </VStack>
   );
 
@@ -181,13 +175,11 @@ export const DesignSystem = () => {
         }
       } as NativeStackNavigationOptions["headerSearchBarOptions"]
     });
-  }, [nativeNavigation, theme]);
+  }, [nativeNavigation, colors]);
 
   const renderListEmpty = () => (
     <VStack space={8}>
-      <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
-        No components found.
-      </BodySmall>
+      <BodySmall weight="Regular">No components found.</BodySmall>
     </VStack>
   );
 

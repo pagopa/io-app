@@ -1,9 +1,8 @@
 import {
   IconButton,
-  IOColors,
   makeFontStyleObject,
+  useIOColors,
   useIOExperimentalDesign,
-  useIOTheme,
   useIOThemeContext
 } from "@io-app/design-system";
 import { ThemeProvider, useNavigation } from "@react-navigation/native";
@@ -108,7 +107,7 @@ const RNNCloseButton = () => {
 export const DesignSystemNavigator = () => {
   const { isExperimental } = useIOExperimentalDesign();
   const { themeType } = useIOThemeContext();
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   const customModalHeaderConf = {
     headerRight: RNNCloseButton,
@@ -121,7 +120,7 @@ export const DesignSystemNavigator = () => {
         isExperimental ? "Regular" : "Semibold",
         undefined
       ),
-      color: IOColors[theme["textHeading-default"]]
+      color: colors.text.heading.default
     }
   };
 
@@ -134,7 +133,7 @@ export const DesignSystemNavigator = () => {
       <Stack.Navigator
         initialRouteName={DESIGN_SYSTEM_ROUTES.MAIN.route}
         screenOptions={{
-          headerTintColor: IOColors[theme["interactiveElem-default"]],
+          headerTintColor: colors.foreground.action.primary.default,
           headerTitleStyle: {
             ...makeFontStyleObject(
               14,
@@ -143,7 +142,7 @@ export const DesignSystemNavigator = () => {
               isExperimental ? "Regular" : "Semibold",
               undefined
             ),
-            color: IOColors[theme["textHeading-default"]]
+            color: colors.text.heading.default
           },
           headerTitleAlign: "center",
           headerBackButtonDisplayMode: "minimal",

@@ -1,13 +1,8 @@
 import { isValidElement, ReactNode } from "react";
 import { ImageURISource, View } from "react-native";
 
-import { useIOTheme } from "../../context";
-import {
-  IOColors,
-  IODimensions,
-  IOListItemStyles,
-  IOTypography
-} from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions, IOTypography } from "../../core";
 import { WithTestID } from "../../utils/types";
 import { isImageUri } from "../../utils/url";
 import { Avatar } from "../avatar/Avatar";
@@ -22,6 +17,7 @@ import {
   PressableListItemBase,
   PressableListItemBaseProps
 } from "./PressableListItemBase";
+import { IOListItemStyles } from "./styles";
 
 export type ListItemTransaction = WithTestID<
   PressableListItemBaseProps & {
@@ -93,11 +89,11 @@ const ListItemTransactionContent = ({
   badge: ListItemTransactionBadge | undefined;
   refund: boolean | undefined;
 }) => {
-  const theme = useIOTheme();
-  const interactiveColor: IOColors = theme["interactiveElem-default"];
-  const amountColor: IOColors = refund
-    ? theme.successText
-    : theme["textBody-default"];
+  const listItemColors = useIOColors().component.listItem;
+  const interactiveColor = listItemColors.foreground.action.primary;
+  const amountColor = refund
+    ? listItemColors.foreground.success
+    : listItemColors.foreground.label;
 
   return (
     <>
@@ -119,10 +115,16 @@ const ListItemTransactionContent = ({
           </View>
         )}
         <View style={{ flexShrink: 1 }}>
-          <H6 color={theme["textBody-default"]} numberOfLines={numberOfLines}>
+          <H6
+            color={listItemColors.foreground.label}
+            numberOfLines={numberOfLines}
+          >
             {label}
           </H6>
-          <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
+          <BodySmall
+            color={listItemColors.foreground.description}
+            weight="Regular"
+          >
             {description}
           </BodySmall>
         </View>
