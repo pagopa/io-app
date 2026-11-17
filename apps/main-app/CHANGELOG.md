@@ -1,3 +1,18 @@
+## 3.43.0-rc.12 (2026-11-17)
+
+### Bug Fixes
+
+- [[IOPLT-2283](https://pagopa.atlassian.net/browse/IOPLT-2283)] Universal link redirect ([#8884](https://github.com/pagopa/io-app/pull/8884))
+
+### Chores
+
+- align Android versionCode for hotfix ([d51f0808f](https://github.com/pagopa/io-app/commit/d51f0808f))
+
+### ❤️ Thank You
+
+- Alessandro Mazzon
+- Emanuele Dall'Ara @LeleDallas
+
 ## 3.43.0-rc.11 (2026-11-13)
 
 ### Features
