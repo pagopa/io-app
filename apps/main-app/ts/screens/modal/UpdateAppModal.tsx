@@ -5,10 +5,9 @@
 
 import {
   Dismissable,
-  IOColorsLegacy,
   IODimensions,
   ToastNotification,
-  useIOTheme
+  useIOColors
 } from "@io-app/design-system";
 import I18n from "i18next";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
@@ -62,10 +61,10 @@ const UpdateAppModal: FC = () => {
     setIsError(false);
   }, []);
 
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
-    <Modal backdropColor={IOColorsLegacy[theme["appBackground-primary"]]}>
+    <Modal backdropColor={colors.background.default}>
       <OperationResultScreenContent
         action={{
           label: actionLabel,
