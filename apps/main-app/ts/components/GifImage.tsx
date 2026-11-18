@@ -1,4 +1,4 @@
-import { BodySmall, Icon, useIOTheme, VStack } from "@io-app/design-system";
+import { BodySmall, Icon, useIOColors, VStack } from "@io-app/design-system";
 import { useIsFocused } from "@react-navigation/native";
 import {
   Image,
@@ -56,7 +56,7 @@ const FocusedGifImage = ({
   style,
   ...imageProps
 }: Props) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const reduceMotion = useReducedMotion();
   const { imageKey, isPlaying, togglePlayback } = useAnimationPlayback({
     autoPlay,
@@ -97,7 +97,7 @@ const FocusedGifImage = ({
         {showPlayOverlay && (
           <VStack space={8} style={styles.playOverlay}>
             <BodySmall>{playAccessibilityLabel}</BodySmall>
-            <Icon color={theme["interactiveElem-default"]} name="play" />
+            <Icon color={colors.icon.action} name="play" />
           </VStack>
         )}
       </View>
