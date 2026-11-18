@@ -2,6 +2,7 @@
 
 `getNfcAntennaPosition()` returns
 `Promise<{ position: "top" | "center" | "bottom"; source: "api" | "mapping"; confidence: "high" | "medium" | "low" } | undefined>`.
+Public types are defined in `types.ts` and can be imported from `@io-app/expo-nfc-antenna-info`.
 
 - iOS returns `undefined` without calling Android APIs.
 - Android first reads `NfcAntennaInfo` (API 34+). The device height is split

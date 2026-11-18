@@ -1,27 +1,17 @@
 import { requireNativeModule } from "expo-modules-core";
 import { Platform } from "react-native";
 
-import type { NfcAntennaConfidence, NfcAntennaPosition } from "./types";
+import type { NfcAntennaInfoResult, NfcAntennaPositionInfo } from "./types";
 
 import { antennaMapping } from "./antennaMapping";
 
-export type AvailableNfcAntenna = {
-  locationX: number;
-  locationY: number;
-};
-
-export type NfcAntennaInfoResult = {
-  availableNfcAntennas: ReadonlyArray<AvailableNfcAntenna>;
-  deviceHeight: number;
-  deviceWidth: number;
-  isDeviceFoldable: boolean;
-};
-
-export type NfcAntennaPositionInfo = {
-  confidence: NfcAntennaConfidence;
-  position: NfcAntennaPosition;
-  source: "api" | "mapping";
-};
+export type {
+  AvailableNfcAntenna,
+  NfcAntennaConfidence,
+  NfcAntennaInfoResult,
+  NfcAntennaPosition,
+  NfcAntennaPositionInfo
+} from "./types";
 
 interface NfcAntennaInfoModuleType {
   getNfcAntennaInfo: () => Promise<NfcAntennaInfoResult>;
