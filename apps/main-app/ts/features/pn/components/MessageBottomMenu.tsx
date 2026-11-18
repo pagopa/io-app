@@ -1,10 +1,6 @@
 import { NotificationPaymentInfo } from "@io-app/api-types/generated/definitions/pn/NotificationPaymentInfo";
 import { NotificationStatusHistory } from "@io-app/api-types/generated/definitions/pn/NotificationStatusHistory";
-import {
-  IOColorsLegacy,
-  IODimensions,
-  useIOTheme
-} from "@io-app/design-system";
+import { IODimensions, useIOColors } from "@io-app/design-system";
 import I18n from "i18next";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
@@ -163,7 +159,7 @@ export const MessageBottomMenu = ({
   sendOpeningSource,
   sendUserType
 }: MessageBottomMenuProps) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   const showMoreSectionData = useMemo(
     () =>
@@ -178,10 +174,7 @@ export const MessageBottomMenu = ({
   );
   return (
     <View
-      style={[
-        styles.container,
-        { backgroundColor: IOColorsLegacy[theme["appBackground-secondary"]] }
-      ]}
+      style={[styles.container, { backgroundColor: colors.surface.secondary }]}
     >
       <TimelineListItem
         history={history}
