@@ -99,7 +99,9 @@ export const AppStackNavigator = (): ReactElement => {
   return <AuthenticatedStackNavigator />;
 };
 
-type InnerNavigationContainerProps = PropsWithChildren;
+type InnerNavigationContainerProps = PropsWithChildren<{
+  enableIncomingShare?: boolean;
+}>;
 
 const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
   const routeNameRef = useRef<string>(undefined);
@@ -233,7 +235,9 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
         barStyle={themeType === "dark" ? "light-content" : "dark-content"}
       />
       {props.children}
-      <IncomingShareHandler isReady={mainReady} />
+      {props.enableIncomingShare && (
+        <IncomingShareHandler isReady={mainReady} />
+      )}
     </NavigationContainer>
   );
 };
@@ -245,7 +249,7 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
  * @class
  */
 export const IONavigationContainer = () => (
-  <InnerNavigationContainer>
+  <InnerNavigationContainer enableIncomingShare>
     <AppStackNavigator />
   </InnerNavigationContainer>
 );
