@@ -1,4 +1,4 @@
-import { HeaderSecondLevel, useIOTheme, VSpacer } from "@io-app/design-system";
+import { HeaderSecondLevel, useIOColors, VSpacer } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { memo, useCallback, useLayoutEffect, useState } from "react";
@@ -51,7 +51,7 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
     cardAreaHeight
   );
   const [isFlipped, setFlipped] = useState(false);
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const valuesHidden = useIOSelector(itwIsClaimValueHiddenSelector);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const dispatch = useIODispatch();
@@ -93,7 +93,7 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
         styles.contentContainer,
         {
           paddingBottom: safeAreaInsets.bottom,
-          backgroundColor: theme["appBackground-primary"]
+          backgroundColor: colors.background.default
         }
       ]}
     >
