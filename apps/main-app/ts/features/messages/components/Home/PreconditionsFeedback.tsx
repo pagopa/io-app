@@ -2,7 +2,7 @@ import {
   BodySmall,
   H3,
   IODimensions,
-  useIOTheme,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import { StyleSheet, View } from "react-native";
@@ -33,7 +33,7 @@ export const PreconditionsFeedback = ({
   title,
   subtitle
 }: Props) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <View style={styles.container}>
@@ -42,17 +42,14 @@ export const PreconditionsFeedback = ({
         size={IODimensions.size.pictogram.screen}
       />
       <VSpacer size={24} />
-      <H3
-        color={theme["textHeading-secondary"]}
-        style={{ textAlign: "center" }}
-      >
+      <H3 color={colors.text.heading.secondary} style={{ textAlign: "center" }}>
         {title}
       </H3>
       {subtitle && (
         <>
           <VSpacer size={8} />
           <BodySmall
-            color={theme["textBody-tertiary"]}
+            color={colors.text.content.tertiary}
             style={{ textAlign: "center" }}
             weight="Regular"
           >
