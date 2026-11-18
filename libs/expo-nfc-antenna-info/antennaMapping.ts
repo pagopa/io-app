@@ -1,6 +1,6 @@
 import type { NfcAntennaConfidence, NfcAntennaPosition } from "./types";
 
-// Generated from the internal study and Google Play supported devices; see README.md.
+// Based on the internal study and Google Play supported devices; see README.md.
 export const antennaMapping: Readonly<
   Record<
     string,
