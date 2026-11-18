@@ -13,8 +13,3 @@ android {
     versionName '1.0.0'
   }
 }
-
-dependencies {
-  // 1.0.4+ needs Kotlin 2.3 metadata and 1.0.8+ compileSdk 37; its androidx/material deps are unused.
-  implementation('de.boehrsi:devicemarketingnames:1.0.3') { transitive = false }
-}

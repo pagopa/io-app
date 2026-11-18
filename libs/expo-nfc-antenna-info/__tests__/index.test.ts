@@ -1,13 +1,13 @@
 jest.mock("react-native", () => ({
   Platform: {
     OS: "android",
-    constants: { Model: "unknown", Manufacturer: "unknown", Brand: "unknown" }
+    constants: { Model: "unknown" }
   }
 }));
 
 jest.mock("expo-modules-core", () => {
   const nativeModule = {
-    getMarketingNames: jest.fn(),
+    getDevice: jest.fn(),
     getNfcAntennaInfo: jest.fn()
   };
   return { requireNativeModule: jest.fn(() => nativeModule) };
@@ -19,10 +19,10 @@ import { Platform } from "react-native";
 import { getNfcAntennaPosition, type NfcAntennaInfoResult } from "../index";
 
 const nativeModule = requireNativeModule<{
-  getMarketingNames: () => Promise<Array<string>>;
+  getDevice: () => string;
   getNfcAntennaInfo: () => Promise<NfcAntennaInfoResult>;
 }>("NfcAntennaInfo");
-const mockGetMarketingNames = jest.mocked(nativeModule.getMarketingNames);
+const mockGetDevice = jest.mocked(nativeModule.getDevice);
 const mockGetNfcAntennaInfo = jest.mocked(nativeModule.getNfcAntennaInfo);
 
 const antennaInfo: NfcAntennaInfoResult = {
@@ -42,7 +42,7 @@ describe("getNfcAntennaPosition", () => {
   beforeEach(() => {
     jest.replaceProperty(Platform, "OS", "android");
     setModel("unknown");
-    mockGetMarketingNames.mockResolvedValue([]);
+    mockGetDevice.mockReturnValue("unknown");
     mockGetNfcAntennaInfo.mockResolvedValue(antennaInfo);
   });
 
@@ -57,6 +57,7 @@ describe("getNfcAntennaPosition", () => {
 
     await expect(getNfcAntennaPosition()).resolves.toBeUndefined();
     expect(mockGetNfcAntennaInfo).not.toHaveBeenCalled();
+    expect(mockGetDevice).not.toHaveBeenCalled();
   });
 
   test.each([
@@ -172,9 +173,11 @@ describe("getNfcAntennaPosition", () => {
     "returns undefined for $name without using the mapping",
     async ({ info }) => {
       setModel("Pixel 8");
+      mockGetDevice.mockReturnValue("shiba");
       mockGetNfcAntennaInfo.mockResolvedValue(info);
 
       await expect(getNfcAntennaPosition()).resolves.toBeUndefined();
+      expect(mockGetDevice).not.toHaveBeenCalled();
     }
   );
 
@@ -184,6 +187,7 @@ describe("getNfcAntennaPosition", () => {
     { name: "unavailable API data", code: "ERR_NFC_ANTENNA_INFO_UNAVAILABLE" }
   ])("falls back to the mapping for $name", async ({ code }) => {
     setModel("Pixel 8");
+    mockGetDevice.mockReturnValue("shiba");
     mockGetNfcAntennaInfo.mockRejectedValue(
       Object.assign(new Error("Unavailable"), { code })
     );
@@ -205,54 +209,84 @@ describe("getNfcAntennaPosition", () => {
     test.each([
       {
         name: "high confidence",
-        model: "Galaxy A54 5G",
+        device: "a54x",
+        model: "SM-A546B",
         position: "top",
         confidence: "high"
       },
       {
         name: "medium confidence",
-        model: "Galaxy A12",
+        device: "a12",
+        model: "SM-A125F",
         position: "center",
         confidence: "medium"
       },
       {
         name: "low confidence",
-        model: "Galaxy A40",
+        device: "a40",
+        model: "SM-A405FN",
         position: "center",
         confidence: "low"
       },
       {
         name: "bottom position",
-        model: "Galaxy Z Flip5",
+        device: "b5q",
+        model: "SM-F731B",
         position: "bottom",
         confidence: "high"
       },
       {
         name: "native model code",
+        device: "OP4F0BL1",
         model: "CPH2207",
         position: "top",
         confidence: "high"
       },
       {
         name: "native model code explicitly listed in parentheses",
+        device: "OP4B9B",
         model: "CPH2021",
         position: "top",
         confidence: "medium"
       },
       {
         name: "individual model from a slash-separated CSV row",
-        model: "A80 5G",
+        device: "OP5B05L1",
+        model: "CPH2639",
         position: "top",
         confidence: "medium"
       },
       {
+        name: "Redmi retail brand in the catalog",
+        device: "sweet",
+        model: "M2101K6G",
+        position: "top",
+        confidence: "high"
+      },
+      {
+        name: "Huawei marketing name with a brand prefix",
+        device: "HWMAR",
+        model: "MAR-LX1A",
+        position: "center",
+        confidence: "medium"
+      },
+      {
+        name: "different confidence on the same device",
+        device: "OP4F97",
+        model: "CPH2273",
+        position: "top",
+        confidence: "high"
+      },
+      {
         name: "case and whitespace normalization",
+        device: "  LyNx  ",
         model: "  PiXeL 7a  ",
         position: "center",
         confidence: "high"
       }
-    ])("preserves $name", async ({ model, position, confidence }) => {
+    ])("preserves $name", async ({ device, model, position, confidence }) => {
       setModel(model);
+      mockGetDevice.mockReturnValue(device);
 
       await expect(getNfcAntennaPosition()).resolves.toEqual({
         position,
@@ -262,21 +296,44 @@ describe("getNfcAntennaPosition", () => {
     });
 
     test.each([
-      { name: "unknown model", model: "Unknown phone" },
-      { name: "empty model", model: "" },
-      { name: "unclassified CSV model", model: "P20 lite" },
-      { name: "model prefix", model: "Pixel" },
-      { name: "model suffix", model: "Pixel 8 XL" },
-      { name: "inherited object property", model: "constructor" }
-    ])("returns undefined for $name", async ({ model }) => {
+      { name: "unknown model", device: "shiba", model: "Unknown phone" },
+      { name: "empty model", device: "shiba", model: "" },
+      { name: "unknown device", device: "unknown", model: "Pixel 8" },
+      { name: "empty device", device: "", model: "Pixel 8" },
+      { name: "unclassified CSV model", device: "hwane", model: "P20 lite" },
+      {
+        name: "wrong device for known model",
+        device: "lynx",
+        model: "Pixel 8"
+      },
+      { name: "model prefix", device: "shiba", model: "Pixel" },
+      { name: "model suffix", device: "shiba", model: "Pixel 8 XL" },
+      {
+        name: "inherited device property",
+        device: "constructor",
+        model: "Pixel 8"
+      },
+      {
+        name: "inherited model property",
+        device: "shiba",
+        model: "constructor"
+      },
+      { name: "another brand's A52", device: "A52", model: "A52" },
+      {
+        name: "ambiguous catalog identity",
+        device: "curtana",
+        model: "Redmi Note 9 Pro"
+      }
+    ])("returns undefined for $name", async ({ device, model }) => {
       setModel(model);
+      mockGetDevice.mockReturnValue(device);
 
       await expect(getNfcAntennaPosition()).resolves.toBeUndefined();
     });
 
-    it("matches marketing names of the native model", async () => {
-      setModel("SM-A546B");
-      mockGetMarketingNames.mockResolvedValue(["Galaxy A54 5G"]);
+    it("identifies the Oppo A52 by both device and model", async () => {
+      mockGetDevice.mockReturnValue("OP4C77L1");
+      setModel("CPH2061");
 
       await expect(getNfcAntennaPosition()).resolves.toEqual({
         position: "top",
@@ -285,25 +342,13 @@ describe("getNfcAntennaPosition", () => {
       });
     });
 
-    it("matches marketing names without the manufacturer prefix", async () => {
-      setModel("MAR-LX1A");
-      if (Platform.OS === "android") {
-        jest.replaceProperty(Platform.constants, "Manufacturer", "HUAWEI");
-      }
-      mockGetMarketingNames.mockResolvedValue(["HUAWEI P30 lite"]);
-
-      await expect(getNfcAntennaPosition()).resolves.toEqual({
-        position: "center",
-        source: "mapping",
-        confidence: "medium"
+    it("propagates errors retrieving the device identifier", async () => {
+      const error = new Error("Cannot read device identifier");
+      mockGetDevice.mockImplementation(() => {
+        throw error;
       });
-    });
 
-    it("returns undefined when marketing names map to different positions", async () => {
-      setModel("unknown");
-      mockGetMarketingNames.mockResolvedValue(["Galaxy A54 5G", "Galaxy S23"]);
-
-      await expect(getNfcAntennaPosition()).resolves.toBeUndefined();
+      await expect(getNfcAntennaPosition()).rejects.toBe(error);
     });
   });
 

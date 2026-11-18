@@ -11,12 +11,8 @@ Public types are defined in `types.ts` and can be imported from `@io-app/expo-nf
   in the same third. API results have `high` confidence.
 - If the native API reports an unsupported device, unavailable adapter, or
   unavailable antenna information, the function looks up `antennaMapping.ts`
-  using `Build.MODEL` and its marketing names from
-  [DeviceMarketingNames](https://github.com/Boehrsi/DeviceMarketingNames)
-  (e.g. `SM-A546B` → `Galaxy A54 5G`), also without a leading manufacturer or
-  brand (e.g. `HUAWEI P30 lite` → `P30 lite`). Matching ignores case and
-  surrounding whitespace. Candidates mapped to different positions return
-  `undefined`. Unexpected native errors reject the promise.
+  using both Android `Build.DEVICE` and `Build.MODEL`. Matching ignores case
+  and surrounding whitespace. Unexpected native errors reject the promise.
 - Successful API responses with invalid geometry, no antennas, or antennas
   spanning different thirds return `undefined`, without a mapping fallback.
 - Unknown or unclassified models return `undefined`.
@@ -24,13 +20,25 @@ Public types are defined in `types.ts` and can be imported from `@io-app/expo-nf
 The mapping comes from attachment **144256** of
 [SIW-5555](https://pagopa.atlassian.net/browse/SIW-5555):
 _Lettura CIE con NFC - NFC Devices distribution - Prima mappatura.csv_.
-Confidence is preserved (`Alta` → `high`, `Media` → `medium`, `Bassa` → `low`).
-Only classified rows are included, including codes explicitly written in
-parentheses and individual models separated by `/`. No family/prefix matches are
-inferred.
+The classified marketing names are matched by brand against the
+[Google Play supported devices catalog](https://storage.googleapis.com/play_public/supported_devices.html)
+to obtain device and model identifiers. Confidence is preserved (`Alta` →
+`high`, `Media` → `medium`, `Bassa` → `low`). Pairs associated with conflicting
+classifications or with additional unclassified marketing names are excluded.
+The catalog does not prove that every regional variant has the same antenna.
 
-The Android dependency `de.boehrsi:devicemarketingnames` is pinned to 1.0.3,
-without transitive dependencies: 1.0.4+ ships Kotlin 2.3 metadata and 1.0.8+
-requires compileSdk 37.
+The current mapping uses the catalog of 2026-11-18 (CSV SHA-256
+`1a298dda3a709b47719cd999bce69afc741dd9fd784d8a390c5f8399f34b1d5c`).
+It covers 176 of 184 classified source rows; 25 ambiguous pairs are excluded.
+The remaining rows include names without an exact catalog match. For example,
+Reno6 5G is nevertheless represented by the separately listed CPH2251 code.
 
-The main app's NFC Playground displays the result and the marketing names; no production flow uses it yet.
+To regenerate, download the issue attachment and the Google Play CSV and run:
+
+```sh
+python3 libs/expo-nfc-antenna-info/scripts/generate-antenna-mapping.py \
+  <antenna-csv> <supported-devices-csv> > libs/expo-nfc-antenna-info/antennaMapping.ts
+pnpm format
+```
+
+The main app's NFC Playground displays the result; no production flow uses it yet.

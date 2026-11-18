@@ -14,7 +14,7 @@ export type {
 } from "./types";
 
 interface NfcAntennaInfoModuleType {
-  getMarketingNames: () => Promise<Array<string>>;
+  getDevice: () => string;
   getNfcAntennaInfo: () => Promise<NfcAntennaInfoResult>;
   isHceSupported: () => Promise<boolean>;
 }
@@ -36,58 +36,6 @@ export const getNfcAntennaInfo = (): Promise<NfcAntennaInfoResult> => {
     );
   }
   return NfcAntennaInfoModule.getNfcAntennaInfo();
-};
-
-/**
- * Returns the marketing names matching Android `Build.MODEL`, according to
- * DeviceMarketingNames. Unknown models resolve to `[Build.MODEL]`.
- *
- * @throws If invoked on a platform other than Android.
- */
-export const getMarketingNames = (): Promise<Array<string>> => {
-  if (!NfcAntennaInfoModule) {
-    return Promise.reject(
-      new Error("NfcAntennaInfo is only available on Android devices.")
-    );
-  }
-  return NfcAntennaInfoModule.getMarketingNames();
-};
-
-const normalize = (value: string) => value.trim().toLowerCase();
-
-// Matches Build.MODEL and its marketing names, also without a leading
-// manufacturer or brand (e.g. "HUAWEI P30 lite" -> "p30 lite").
-// Candidates mapped to different positions are ambiguous.
-const getMappedAntennaPosition = async (): Promise<
-  NfcAntennaPositionInfo | undefined
-> => {
-  if (Platform.OS !== "android") {
-    return undefined;
-  }
-  const { Model, Manufacturer, Brand } = Platform.constants;
-  const prefixes = [Manufacturer, Brand].map(prefix => `${normalize(prefix)} `);
-  const names = (await getMarketingNames()).map(normalize);
-  const candidates = new Set([
-    normalize(Model),
-    ...names,
-    ...names.flatMap(name =>
-      prefixes
-        .filter(prefix => name.startsWith(prefix))
-        .map(prefix => name.slice(prefix.length))
-    )
-  ]);
-  const entries = [...candidates].flatMap(candidate => {
-    const entry = Object.hasOwn(antennaMapping, candidate)
-      ? antennaMapping[candidate]
-      : undefined;
-    return entry ? [entry] : [];
-  });
-  const [entry] = entries;
-  if (!entry || entries.some(([position]) => position !== entry[0])) {
-    return undefined;
-  }
-  const [position, confidence] = entry;
-  return { position, source: "mapping", confidence };
 };
 
 const unavailableAntennaInfoCodes = new Set([
@@ -128,7 +76,19 @@ export const getNfcAntennaPosition = async (): Promise<
   });
 
   if (!info) {
-    return getMappedAntennaPosition();
+    const device = NfcAntennaInfoModule?.getDevice().trim().toLowerCase();
+    const model = Platform.constants.Model.trim().toLowerCase();
+    const models =
+      device && Object.hasOwn(antennaMapping, device)
+        ? antennaMapping[device]
+        : undefined;
+    const entry =
+      models && Object.hasOwn(models, model) ? models[model] : undefined;
+    if (!entry) {
+      return undefined;
+    }
+    const [position, confidence] = entry;
+    return { position, source: "mapping", confidence };
   }
 
   const { deviceHeight, deviceWidth, availableNfcAntennas } = info;

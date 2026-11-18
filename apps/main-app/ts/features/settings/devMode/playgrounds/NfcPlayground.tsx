@@ -5,7 +5,6 @@ import {
   VStack
 } from "@io-app/design-system";
 import {
-  getMarketingNames,
   getNfcAntennaPosition,
   type NfcAntennaPositionInfo
 } from "@io-app/expo-nfc-antenna-info";
@@ -45,7 +44,6 @@ export const NfcPlayground = () => {
     <IOScrollView>
       <VStack space={16}>
         <AntennaPosition />
-        <DeviceModelInfo />
         <HostCardEmulationInfo />
         <AntennaInfo />
       </VStack>
@@ -100,30 +98,6 @@ const AntennaPosition = () => {
           }
         }}
         value="Confidence"
-      />
-    </View>
-  );
-};
-
-const DeviceModelInfo = () => {
-  const [names, setNames] = useState<Array<string>>();
-  const [failure, setFailure] = useState<Error>();
-
-  useOnFirstRender(() => {
-    getMarketingNames().then(setNames).catch(setFailure);
-  });
-
-  return (
-    <View>
-      <ListItemHeader label="Device Model" />
-      <ListItemInfo
-        label="Build.MODEL"
-        value={Platform.OS === "android" ? Platform.constants.Model : "-"}
-      />
-      <Divider />
-      <ListItemInfo
-        label="Marketing names"
-        value={failure?.message ?? names?.join(" / ") ?? "-"}
       />
     </View>
   );
