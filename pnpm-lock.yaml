@@ -383,6 +383,9 @@ importers:
       '@io-app/expo-device-internal':
         specifier: workspace:*
         version: link:../../libs/expo-device-internal
+      '@io-app/expo-http-client':
+        specifier: workspace:*
+        version: link:../../libs/expo-http-client
       '@io-app/expo-navigation-bar-manager':
         specifier: workspace:*
         version: link:../../libs/expo-navigation-bar-manager

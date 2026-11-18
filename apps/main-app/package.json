@@ -51,6 +51,7 @@
     "@io-app/design-system": "workspace:@pagopa/io-app-design-system@*",
     "@io-app/expo-crypto": "workspace:*",
     "@io-app/expo-device-internal": "workspace:*",
+    "@io-app/expo-http-client": "workspace:*",
     "@io-app/expo-navigation-bar-manager": "workspace:*",
     "@io-app/expo-nfc-antenna-info": "workspace:*",
     "@io-app/expo-pdf-high-res-generator": "workspace:*",

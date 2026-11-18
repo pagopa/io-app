@@ -1,12 +1,441 @@
 {
   "name": "IO",
   "displayName": "IO",
+  "slug": "io-app",
   "version": "3.44.0",
+  "locales": {
+    "en": "./app-config/locales/en.json",
+    "it": "./app-config/locales/it.json",
+    "de": "./app-config/locales/de.json"
+  },
   "ios": {
-    "buildNumber": "2"
+    "buildNumber": "2",
+    "appleTeamId": "M2X5YQ4BJ7",
+    "supportsTablet": false,
+    "userInterfaceStyle": "automatic",
+    "associatedDomains": [
+      "applinks:continua.io.pagopa.it",
+      "applinks:continua.ioapp.it",
+      "applinks:cittadini.uat.notifichedigitali.it",
+      "applinks:cittadini.notifichedigitali.it"
+    ],
+    "config": {
+      "usesNonExemptEncryption": false
+    },
+    "infoPlist": {
+      "CFBundleDevelopmentRegion": "en",
+      "CFBundlePackageType": "APPL",
+      "RCTNewArchEnabled": true,
+      "CFBundleURLTypes": [
+        {
+          "CFBundleTypeRole": "Editor",
+          "CFBundleURLName": "ioit",
+          "CFBundleURLSchemes": [
+            "ioit",
+            "iowalletcie",
+            "iologincie",
+            "openid-credential-offer",
+            "haip-vci"
+          ]
+        }
+      ],
+      "LSApplicationQueriesSchemes": ["http", "https", "CIEID"],
+      "UISupportedInterfaceOrientations": ["UIInterfaceOrientationPortrait"],
+      "UIRequiredDeviceCapabilities": ["arm64"],
+      "UIBackgroundModes": ["processing", "fetch", "remote-notification"],
+      "BGTaskSchedulerPermittedIdentifiers": [
+        "com.expo.modules.backgroundtask.processing"
+      ],
+      "UIStatusBarStyle": "UIStatusBarStyleLightContent",
+      "UIViewControllerBasedStatusBarAppearance": false,
+      "CADisableMinimumFrameDurationOnPhone": true,
+      "UIFileSharingEnabled": true,
+      "LSSupportsOpeningDocumentsInPlace": true,
+      "NSAppTransportSecurity": {
+        "NSAllowsArbitraryLoads": false,
+        "NSAllowsLocalNetworking": true,
+        "NSExceptionDomains": {
+          "localhost": {
+            "NSExceptionAllowsInsecureHTTPLoads": true
+          }
+        }
+      },
+      "com.apple.developer.nfc.readersession.iso7816.select-identifiers": [
+        "A0000002471001",
+        "A0000000308000000009816001",
+        "A00000000039",
+        "A0000002472001",
+        "00000000000000"
+      ],
+      "NFCReaderUsageDescription": "NFC tag to read EIC cards",
+      "NSBluetoothAlwaysUsageDescription": "IO richiede l'accesso al Bluetooth per completare la verifica dei documenti",
+      "NSBluetoothPeripheralUsageDescription": "IO richiede l'accesso al Bluetooth per completare la verifica dei documenti",
+      "NSCameraUsageDescription": "You’ll be able to read QR codes and pay pagoPA notices.",
+      "NSCalendarsUsageDescription": "So that you’ll be able to add deadlines to your calendar and set a reminder.",
+      "NSCalendarsFullAccessUsageDescription": "So that you’ll be able to add deadlines to your calendar and set a reminder.",
+      "NSRemindersUsageDescription": "So that you’ll be able to add deadlines to your calendar and set a reminder.",
+      "NSRemindersFullAccessUsageDescription": "So that you’ll be able to add deadlines to your calendar and set a reminder.",
+      "NSContactsUsageDescription": "IO needs access to your contacts to let you add them in calendar events",
+      "NSFaceIDUsageDescription": "You'll be able to access the app more easily without having to enter the unlock code.",
+      "NSMicrophoneUsageDescription": "IO needs access to the microphone in case you want to leave a voice note",
+      "NSPhotoLibraryUsageDescription": "You’ll be able to save bonuses, certificates and upload screenshots or payment notices.",
+      "NSPhotoLibraryAddUsageDescription": "You will be able to save pictures from the app to your device.",
+      "NSAppleMusicUsageDescription": "The app needs NSAppleMusicUsageDescription permission",
+      "NSLocationUsageDescription": "The app needs NSLocationUsageDescription permission",
+      "NSLocationAlwaysUsageDescription": "The app needs NSLocationAlwaysUsageDescription permission",
+      "NSLocationWhenInUseUsageDescription": "The app needs NSLocationWhenInUseUsageDescription permission",
+      "NSMotionUsageDescription": "The app needs NSMotionUsageDescription permission",
+      "NSSpeechRecognitionUsageDescription": "The app needs NSSpeechRecognitionUsageDescription permission"
+    },
+    "privacyManifests": {
+      "NSPrivacyTracking": false,
+      "NSPrivacyTrackingDomains": [],
+      "NSPrivacyAccessedAPITypes": [
+        {
+          "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategorySystemBootTime",
+          "NSPrivacyAccessedAPITypeReasons": ["35F9.1"]
+        },
+        {
+          "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryFileTimestamp",
+          "NSPrivacyAccessedAPITypeReasons": ["C617.1", "0A2A.1", "3B52.1"]
+        },
+        {
+          "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryUserDefaults",
+          "NSPrivacyAccessedAPITypeReasons": ["CA92.1", "1C8F.1"]
+        },
+        {
+          "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryDiskSpace",
+          "NSPrivacyAccessedAPITypeReasons": ["E174.1", "85F4.1", "7D9E.1"]
+        }
+      ],
+      "NSPrivacyCollectedDataTypes": [
+        {
+          "NSPrivacyCollectedDataType": "NSPrivacyCollectedDataTypeOtherDataTypes",
+          "NSPrivacyCollectedDataTypeLinked": true,
+          "NSPrivacyCollectedDataTypeTracking": false,
+          "NSPrivacyCollectedDataTypePurposes": [
+            "NSPrivacyCollectedDataTypePurposeAppFunctionality",
+            "NSPrivacyCollectedDataTypePurposeProductPersonalization",
+            "NSPrivacyCollectedDataTypePurposeAnalytics"
+          ]
+        },
+        {
+          "NSPrivacyCollectedDataType": "NSPrivacyCollectedDataTypeCoarseLocation",
+          "NSPrivacyCollectedDataTypeLinked": true,
+          "NSPrivacyCollectedDataTypeTracking": false,
+          "NSPrivacyCollectedDataTypePurposes": [
+            "NSPrivacyCollectedDataTypePurposeAppFunctionality"
+          ]
+        },
+        {
+          "NSPrivacyCollectedDataType": "NSPrivacyCollectedDataTypeName",
+          "NSPrivacyCollectedDataTypeLinked": true,
+          "NSPrivacyCollectedDataTypeTracking": false,
+          "NSPrivacyCollectedDataTypePurposes": [
+            "NSPrivacyCollectedDataTypePurposeAppFunctionality"
+          ]
+        },
+        {
+          "NSPrivacyCollectedDataType": "NSPrivacyCollectedDataTypeEmailAddress",
+          "NSPrivacyCollectedDataTypeLinked": true,
+          "NSPrivacyCollectedDataTypeTracking": false,
+          "NSPrivacyCollectedDataTypePurposes": [
+            "NSPrivacyCollectedDataTypePurposeAppFunctionality"
+          ]
+        },
+        {
+          "NSPrivacyCollectedDataType": "NSPrivacyCollectedDataTypeHealth",
+          "NSPrivacyCollectedDataTypeLinked": true,
+          "NSPrivacyCollectedDataTypeTracking": false,
+          "NSPrivacyCollectedDataTypePurposes": [
+            "NSPrivacyCollectedDataTypePurposeAppFunctionality"
+          ]
+        },
+        {
+          "NSPrivacyCollectedDataType": "NSPrivacyCollectedDataTypePaymentInfo",
+          "NSPrivacyCollectedDataTypeLinked": true,
+          "NSPrivacyCollectedDataTypeTracking": false,
+          "NSPrivacyCollectedDataTypePurposes": [
+            "NSPrivacyCollectedDataTypePurposeAppFunctionality"
+          ]
+        },
+        {
+          "NSPrivacyCollectedDataType": "NSPrivacyCollectedDataTypeCustomerSupport",
+          "NSPrivacyCollectedDataTypeLinked": true,
+          "NSPrivacyCollectedDataTypeTracking": false,
+          "NSPrivacyCollectedDataTypePurposes": [
+            "NSPrivacyCollectedDataTypePurposeAppFunctionality",
+            "NSPrivacyCollectedDataTypePurposeAnalytics"
+          ]
+        },
+        {
+          "NSPrivacyCollectedDataType": "NSPrivacyCollectedDataTypeUserID",
+          "NSPrivacyCollectedDataTypeLinked": true,
+          "NSPrivacyCollectedDataTypeTracking": false,
+          "NSPrivacyCollectedDataTypePurposes": [
+            "NSPrivacyCollectedDataTypePurposeAnalytics",
+            "NSPrivacyCollectedDataTypePurposeAppFunctionality",
+            "NSPrivacyCollectedDataTypePurposeProductPersonalization"
+          ]
+        },
+        {
+          "NSPrivacyCollectedDataType": "NSPrivacyCollectedDataTypeDeviceID",
+          "NSPrivacyCollectedDataTypeLinked": false,
+          "NSPrivacyCollectedDataTypeTracking": false,
+          "NSPrivacyCollectedDataTypePurposes": [
+            "NSPrivacyCollectedDataTypePurposeAppFunctionality",
+            "NSPrivacyCollectedDataTypePurposeAnalytics"
+          ]
+        },
+        {
+          "NSPrivacyCollectedDataType": "NSPrivacyCollectedDataTypePurchaseHistory",
+          "NSPrivacyCollectedDataTypeLinked": true,
+          "NSPrivacyCollectedDataTypeTracking": false,
+          "NSPrivacyCollectedDataTypePurposes": [
+            "NSPrivacyCollectedDataTypePurposeAppFunctionality"
+          ]
+        },
+        {
+          "NSPrivacyCollectedDataType": "NSPrivacyCollectedDataTypeProductInteraction",
+          "NSPrivacyCollectedDataTypeLinked": true,
+          "NSPrivacyCollectedDataTypeTracking": false,
+          "NSPrivacyCollectedDataTypePurposes": [
+            "NSPrivacyCollectedDataTypePurposeAppFunctionality",
+            "NSPrivacyCollectedDataTypePurposeAnalytics"
+          ]
+        },
+        {
+          "NSPrivacyCollectedDataType": "NSPrivacyCollectedDataTypeOtherUsageData",
+          "NSPrivacyCollectedDataTypeLinked": false,
+          "NSPrivacyCollectedDataTypeTracking": false,
+          "NSPrivacyCollectedDataTypePurposes": [
+            "NSPrivacyCollectedDataTypePurposeAppFunctionality",
+            "NSPrivacyCollectedDataTypePurposeAnalytics"
+          ]
+        },
+        {
+          "NSPrivacyCollectedDataType": "NSPrivacyCollectedDataTypeCrashData",
+          "NSPrivacyCollectedDataTypeLinked": false,
+          "NSPrivacyCollectedDataTypeTracking": false,
+          "NSPrivacyCollectedDataTypePurposes": [
+            "NSPrivacyCollectedDataTypePurposeAppFunctionality",
+            "NSPrivacyCollectedDataTypePurposeAnalytics"
+          ]
+        },
+        {
+          "NSPrivacyCollectedDataType": "NSPrivacyCollectedDataTypePerformanceData",
+          "NSPrivacyCollectedDataTypeLinked": true,
+          "NSPrivacyCollectedDataTypeTracking": false,
+          "NSPrivacyCollectedDataTypePurposes": [
+            "NSPrivacyCollectedDataTypePurposeAppFunctionality",
+            "NSPrivacyCollectedDataTypePurposeAnalytics"
+          ]
+        },
+        {
+          "NSPrivacyCollectedDataType": "NSPrivacyCollectedDataTypeOtherDiagnosticData",
+          "NSPrivacyCollectedDataTypeLinked": true,
+          "NSPrivacyCollectedDataTypeTracking": false,
+          "NSPrivacyCollectedDataTypePurposes": [
+            "NSPrivacyCollectedDataTypePurposeAppFunctionality",
+            "NSPrivacyCollectedDataTypePurposeAnalytics"
+          ]
+        }
+      ]
+    }
   },
   "android": {
     "version": "3.44.0.2",
-    "versionCode": 100155330
-  }
+    "versionCode": 100155330,
+    "allowBackup": false,
+    "predictiveBackGestureEnabled": false,
+    "permissions": [
+      "NFC",
+      "INTERNET",
+      "ACCESS_NETWORK_STATE",
+      "VIBRATE",
+      "RECEIVE_BOOT_COMPLETED",
+      "POST_NOTIFICATIONS",
+      "READ_CALENDAR",
+      "WRITE_CALENDAR",
+      "CAMERA",
+      "USE_FINGERPRINT",
+      "USE_BIOMETRIC",
+      "SCHEDULE_EXACT_ALARM",
+      "BLUETOOTH_CONNECT",
+      "BLUETOOTH_ADVERTISE"
+    ],
+    "blockedPermissions": [
+      "android.permission.ACCESS_WIFI_STATE",
+      "android.permission.RECORD_AUDIO",
+      "android.permission.READ_MEDIA_IMAGES"
+    ],
+    "intentFilters": [
+      {
+        "action": "VIEW",
+        "autoVerify": false,
+        "category": ["BROWSABLE", "DEFAULT"],
+        "data": [
+          {
+            "scheme": "ioit"
+          }
+        ]
+      },
+      {
+        "action": "VIEW",
+        "autoVerify": false,
+        "category": ["BROWSABLE", "DEFAULT"],
+        "data": [
+          {
+            "scheme": "iowalletcie"
+          }
+        ]
+      },
+      {
+        "action": "VIEW",
+        "autoVerify": false,
+        "category": ["BROWSABLE", "DEFAULT"],
+        "data": [
+          {
+            "scheme": "openid-credential-offer"
+          }
+        ]
+      },
+      {
+        "action": "VIEW",
+        "autoVerify": false,
+        "category": ["BROWSABLE", "DEFAULT"],
+        "data": [
+          {
+            "scheme": "haip-vci"
+          }
+        ]
+      },
+      {
+        "action": "VIEW",
+        "autoVerify": false,
+        "category": ["BROWSABLE", "DEFAULT"],
+        "data": [
+          {
+            "scheme": "iologin"
+          }
+        ]
+      },
+      {
+        "action": "VIEW",
+        "autoVerify": false,
+        "category": ["BROWSABLE", "DEFAULT"],
+        "data": [
+          {
+            "scheme": "iossoapi"
+          }
+        ]
+      },
+      {
+        "action": "VIEW",
+        "autoVerify": false,
+        "category": ["BROWSABLE", "DEFAULT"],
+        "data": [
+          {
+            "scheme": "iowallet"
+          }
+        ]
+      },
+      {
+        "action": "VIEW",
+        "autoVerify": true,
+        "category": ["BROWSABLE", "DEFAULT"],
+        "data": [
+          {
+            "scheme": "https"
+          },
+          {
+            "host": "continua.io.pagopa.it"
+          }
+        ]
+      },
+      {
+        "action": "VIEW",
+        "autoVerify": true,
+        "category": ["BROWSABLE", "DEFAULT"],
+        "data": [
+          {
+            "scheme": "https"
+          },
+          {
+            "host": "continua.ioapp.it"
+          }
+        ]
+      },
+      {
+        "action": "VIEW",
+        "autoVerify": true,
+        "category": ["BROWSABLE", "DEFAULT"],
+        "data": [
+          {
+            "scheme": "https"
+          },
+          {
+            "host": "cittadini.uat.notifichedigitali.it"
+          },
+          {
+            "host": "cittadini.notifichedigitali.it"
+          },
+          {
+            "pathPrefix": "/io"
+          }
+        ]
+      }
+    ]
+  },
+  "plugins": [
+    [
+      "expo-build-properties",
+      {
+        "android": {
+          "minSdkVersion": 26,
+          "extraMavenRepos": ["https://zendesk.jfrog.io/zendesk/repo"],
+          "packagingOptions": {
+            "pickFirst": [
+              "lib/x86/libc++_shared.so",
+              "lib/x86_64/libjsc.so",
+              "lib/arm64-v8a/libjsc.so",
+              "lib/arm64-v8a/libc++_shared.so",
+              "lib/x86_64/libc++_shared.so",
+              "lib/armeabi-v7a/libc++_shared.so"
+            ],
+            "exclude": ["lib/riscv64/**"]
+          },
+          "extraProguardRules": "\n# devsupport\n-keep class com.facebook.react.devsupport.** { *; }\n-dontwarn com.facebook.react.devsupport.**\n\n# MixPanel\n-keep class com.kevinejohn.RNMixpanel.** { *; }\n-dontwarn com.kevinejohn.RNMixpanel.**\n\n# React Native Config must referencing to BuildConfig\n-keep class it.pagopa.io.app.BuildConfig { *; }\n\n# React-native svg\n-keep public class com.horcrux.svg.** {*;}\n-dontwarn com.horcrux.svg.**\n\n# React-native cie\n-keep public class it.ipzs.** {*;}\n-dontwarn it.ipzs.**\n\n-keep class com.google.android.gms.** { *; }\n-dontwarn com.google.android.gms.**\n\n# React-native Keychain\n-keep class com.facebook.crypto.** { *; }\n\n# Hermes\n-keep class com.facebook.hermes.unicode.** { *; }\n\n# React Native Skia\n-keep class com.shopify.reactnative.skia.** { *; }\n"
+        },
+        "ios": {
+          "deploymentTarget": "15.1",
+          "buildReactNativeFromSource": true
+        }
+      }
+    ],
+    [
+      "react-native-permissions",
+      {
+        "iosPermissions": ["PhotoLibrary", "Bluetooth"]
+      }
+    ],
+    [
+      "react-native-vision-camera",
+      {
+        "enableCodeScanner": true
+      }
+    ],
+    "expo-background-task",
+    "expo-web-browser",
+    [
+      "expo-font",
+      {
+        "fonts": [
+          "./assets/fonts/TitilliumSansPro",
+          "./assets/fonts/Titillio",
+          "./assets/fonts/FiraCode"
+        ]
+      }
+    ]
+  ]
 }
