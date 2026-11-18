@@ -5,7 +5,6 @@ import { setConnectionStatus } from "../../../../connectivity/store/actions";
 import { isConnectedSelector } from "../../../../connectivity/store/selectors";
 import {
   syncItwAnalyticsProperties,
-  updateNfcInfoTrackingProperties,
   watchItwAnalyticsSaga
 } from "../../../analytics/saga";
 import { watchItwCredentialsSaga } from "../../../credentials/saga";
@@ -60,8 +59,6 @@ describe("watchItwSaga", () => {
       .fork(handleWalletCredentialsRehydration)
       .next()
       .fork(handleKeyAttestationsCleanUp)
-      .next()
-      .fork(updateNfcInfoTrackingProperties)
       .next()
       .fork(syncItwAnalyticsProperties)
       .next()
