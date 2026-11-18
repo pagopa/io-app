@@ -28,7 +28,7 @@ platform :ios do
       use_automatic_signing: false,
       path: "IO.xcodeproj",
       team_id: "M2X5YQ4BJ7",
-      targets: ["IO"],
+      targets: [options[:target] || "IO"],
       build_configurations: [options[:build_configuration]],
       profile_name: options[:profile_name],
       code_sign_identity: "iPhone Distribution",
@@ -71,7 +71,11 @@ platform :ios do
     # use the App Store API Key to authenticate
     api_key = authenticate_app_store_connect
 
-    sync_code_signing(type: "appstore", api_key: api_key)
+    sync_code_signing(
+      type: "appstore",
+      app_identifier: ["it.pagopa.app.io", "it.pagopa.app.io.ShareExtension"],
+      api_key: api_key
+    )
 
     # Install pods
     cocoapods
@@ -80,6 +84,11 @@ platform :ios do
     disable_automatic_code_signing(
       build_configuration: "Release",
       profile_name: "match AppStore it.pagopa.app.io"
+    )
+    disable_automatic_code_signing(
+      build_configuration: "Release",
+      target: "expo-sharing-extension",
+      profile_name: "match AppStore it.pagopa.app.io.ShareExtension"
     )
 
     # build the app
@@ -114,7 +123,11 @@ platform :ios do
     # use the App Store API Key to authenticate
     api_key = authenticate_app_store_connect
 
-    sync_code_signing(type: "appstore", app_identifier: app_identifier, api_key: api_key)
+    sync_code_signing(
+      type: "appstore",
+      app_identifier: [app_identifier, "#{app_identifier}.ShareExtension"],
+      api_key: api_key
+    )
 
     # Install pods
     cocoapods
@@ -123,6 +136,11 @@ platform :ios do
     disable_automatic_code_signing(
       build_configuration: "Canary",
       profile_name: "match AppStore it.pagopa.app.io.canary"
+    )
+    disable_automatic_code_signing(
+      build_configuration: "Canary",
+      target: "expo-sharing-extension",
+      profile_name: "match AppStore it.pagopa.app.io.canary.ShareExtension"
     )
 
     # build the app

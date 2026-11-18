@@ -32,5 +32,9 @@ module.exports.writeVersion = function (contents, version) {
   contents = contents.replace(regex, (substr, ...args) =>
     replacer(substr, version, ...args)
   );
+  contents = contents.replace(
+    /(MARKETING_VERSION\s?=\s?)[\d.]+(;)/gm,
+    `$1${versionModule.getVersion(version)}$2`
+  );
   return contents;
 };
