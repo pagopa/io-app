@@ -1,9 +1,8 @@
 import {
   ContentWrapper,
   H2,
-  IOColorsLegacy,
   IOMarkdown,
-  useIOTheme,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
@@ -114,7 +113,7 @@ type ContentViewProps = {
 };
 
 export const ContentView = ({ credentialType }: ContentViewProps) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isLoading =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
@@ -159,10 +158,7 @@ export const ContentView = ({ credentialType }: ContentViewProps) => {
         <H2>{credentialName}</H2>
         <VSpacer size={16} />
         <View
-          style={[
-            styles.contentBox,
-            { borderColor: IOColorsLegacy[theme["cardBorder-default"]] }
-          ]}
+          style={[styles.contentBox, { borderColor: colors.stroke.default }]}
         >
           <IOMarkdown content={markdownContent} />
         </View>
