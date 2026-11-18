@@ -17,10 +17,9 @@ Public types are defined in `types.ts` and can be imported from `@io-app/expo-nf
   spanning different thirds return `undefined`, without a mapping fallback.
 - Unknown or unclassified models return `undefined`.
 
-The mapping comes from attachment **144256** of
-[SIW-5555](https://pagopa.atlassian.net/browse/SIW-5555):
-_Lettura CIE con NFC - NFC Devices distribution - Prima mappatura.csv_.
-The classified marketing names are matched by brand against the
+The mapping is based on an internal study that classifies NFC antenna
+positions and assigns a confidence level to each model. The study's
+classified marketing names are matched by brand against the
 [Google Play supported devices catalog](https://storage.googleapis.com/play_public/supported_devices.html)
 to obtain retail brands and model identifiers. Confidence is preserved (`Alta` →
 `high`, `Media` → `medium`, `Bassa` → `low`). Pairs associated with conflicting
@@ -35,7 +34,8 @@ It covers 175 of 184 classified source rows; 32 ambiguous pairs are excluded.
 The remaining rows include names without an exact catalog match. For example,
 Reno6 5G is nevertheless represented by the separately listed CPH2251 code.
 
-To regenerate, download the issue attachment and the Google Play CSV and run:
+To regenerate, provide the internal study CSV (columns `Brand`, `Model`,
+`Cluster_Label`, and `Confidence`) and the Google Play CSV, then run:
 
 ```sh
 python3 libs/expo-nfc-antenna-info/scripts/generate-antenna-mapping.py \

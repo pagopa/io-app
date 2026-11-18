@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate antennaMapping.ts from the SIW-5555 and Google Play CSV files."""
+"""Generate antennaMapping.ts from the internal study and Google Play CSV files."""
 
 import argparse
 import csv
@@ -93,7 +93,7 @@ def main():
 
     print('import type { NfcAntennaConfidence, NfcAntennaPosition } from "./types";')
     print()
-    print("// Generated from SIW-5555 and Google Play supported devices; see README.md.")
+    print("// Generated from the internal study and Google Play supported devices; see README.md.")
     print("export const antennaMapping: Readonly<")
     print("  Record<string, readonly [NfcAntennaPosition, NfcAntennaConfidence] | undefined>")
     print("> = {")
