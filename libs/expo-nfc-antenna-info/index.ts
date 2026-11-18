@@ -14,7 +14,6 @@ export type {
 } from "./types";
 
 interface NfcAntennaInfoModuleType {
-  getDevice: () => string;
   getNfcAntennaInfo: () => Promise<NfcAntennaInfoResult>;
   isHceSupported: () => Promise<boolean>;
 }
@@ -76,14 +75,12 @@ export const getNfcAntennaPosition = async (): Promise<
   });
 
   if (!info) {
-    const device = NfcAntennaInfoModule?.getDevice().trim().toLowerCase();
+    const brand = Platform.constants.Brand.trim().toLowerCase();
     const model = Platform.constants.Model.trim().toLowerCase();
-    const models =
-      device && Object.hasOwn(antennaMapping, device)
-        ? antennaMapping[device]
-        : undefined;
-    const entry =
-      models && Object.hasOwn(models, model) ? models[model] : undefined;
+    const key = `${brand}|${model}`;
+    const entry = Object.hasOwn(antennaMapping, key)
+      ? antennaMapping[key]
+      : undefined;
     if (!entry) {
       return undefined;
     }

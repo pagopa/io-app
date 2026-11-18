@@ -1,13 +1,12 @@
 jest.mock("react-native", () => ({
   Platform: {
     OS: "android",
-    constants: { Model: "unknown" }
+    constants: { Model: "unknown", Brand: "unknown" }
   }
 }));
 
 jest.mock("expo-modules-core", () => {
   const nativeModule = {
-    getDevice: jest.fn(),
     getNfcAntennaInfo: jest.fn()
   };
   return { requireNativeModule: jest.fn(() => nativeModule) };
@@ -19,10 +18,8 @@ import { Platform } from "react-native";
 import { getNfcAntennaPosition, type NfcAntennaInfoResult } from "../index";
 
 const nativeModule = requireNativeModule<{
-  getDevice: () => string;
   getNfcAntennaInfo: () => Promise<NfcAntennaInfoResult>;
 }>("NfcAntennaInfo");
-const mockGetDevice = jest.mocked(nativeModule.getDevice);
 const mockGetNfcAntennaInfo = jest.mocked(nativeModule.getNfcAntennaInfo);
 
 const antennaInfo: NfcAntennaInfoResult = {
@@ -38,11 +35,17 @@ const setModel = (model: string) => {
   }
 };
 
+const setBrand = (brand: string) => {
+  if (Platform.OS === "android") {
+    jest.replaceProperty(Platform.constants, "Brand", brand);
+  }
+};
+
 describe("getNfcAntennaPosition", () => {
   beforeEach(() => {
     jest.replaceProperty(Platform, "OS", "android");
     setModel("unknown");
-    mockGetDevice.mockReturnValue("unknown");
+    setBrand("unknown");
     mockGetNfcAntennaInfo.mockResolvedValue(antennaInfo);
   });
 
@@ -57,7 +60,6 @@ describe("getNfcAntennaPosition", () => {
 
     await expect(getNfcAntennaPosition()).resolves.toBeUndefined();
     expect(mockGetNfcAntennaInfo).not.toHaveBeenCalled();
-    expect(mockGetDevice).not.toHaveBeenCalled();
   });
 
   test.each([
@@ -173,11 +175,10 @@ describe("getNfcAntennaPosition", () => {
     "returns undefined for $name without using the mapping",
     async ({ info }) => {
       setModel("Pixel 8");
-      mockGetDevice.mockReturnValue("shiba");
+      setBrand("Google");
       mockGetNfcAntennaInfo.mockResolvedValue(info);
 
       await expect(getNfcAntennaPosition()).resolves.toBeUndefined();
-      expect(mockGetDevice).not.toHaveBeenCalled();
     }
   );
 
@@ -187,7 +188,7 @@ describe("getNfcAntennaPosition", () => {
     { name: "unavailable API data", code: "ERR_NFC_ANTENNA_INFO_UNAVAILABLE" }
   ])("falls back to the mapping for $name", async ({ code }) => {
     setModel("Pixel 8");
-    mockGetDevice.mockReturnValue("shiba");
+    setBrand("Google");
     mockGetNfcAntennaInfo.mockRejectedValue(
       Object.assign(new Error("Unavailable"), { code })
     );
@@ -209,84 +210,84 @@ describe("getNfcAntennaPosition", () => {
     test.each([
       {
         name: "high confidence",
-        device: "a54x",
+        brand: "Samsung",
         model: "SM-A546B",
         position: "top",
         confidence: "high"
       },
       {
         name: "medium confidence",
-        device: "a12",
+        brand: "Samsung",
         model: "SM-A125F",
         position: "center",
         confidence: "medium"
       },
       {
         name: "low confidence",
-        device: "a40",
+        brand: "Samsung",
         model: "SM-A405FN",
         position: "center",
         confidence: "low"
       },
       {
         name: "bottom position",
-        device: "b5q",
+        brand: "Samsung",
         model: "SM-F731B",
         position: "bottom",
         confidence: "high"
       },
       {
         name: "native model code",
-        device: "OP4F0BL1",
+        brand: "Oppo",
         model: "CPH2207",
         position: "top",
         confidence: "high"
       },
       {
         name: "native model code explicitly listed in parentheses",
-        device: "OP4B9B",
+        brand: "Oppo",
         model: "CPH2021",
         position: "top",
         confidence: "medium"
       },
       {
         name: "individual model from a slash-separated CSV row",
-        device: "OP5B05L1",
+        brand: "Oppo",
         model: "CPH2639",
         position: "top",
         confidence: "medium"
       },
       {
         name: "Redmi retail brand in the catalog",
-        device: "sweet",
+        brand: "Redmi",
         model: "M2101K6G",
         position: "top",
         confidence: "high"
       },
       {
         name: "Huawei marketing name with a brand prefix",
-        device: "HWMAR",
+        brand: "Huawei",
         model: "MAR-LX1A",
         position: "center",
         confidence: "medium"
       },
       {
-        name: "different confidence on the same device",
-        device: "OP4F97",
+        name: "different confidence for a model",
+        brand: "Oppo",
         model: "CPH2273",
         position: "top",
         confidence: "high"
       },
       {
         name: "case and whitespace normalization",
-        device: "  LyNx  ",
+        brand: "  GoOgLe  ",
         model: "  PiXeL 7a  ",
         position: "center",
         confidence: "high"
       }
-    ])("preserves $name", async ({ device, model, position, confidence }) => {
+    ])("preserves $name", async ({ brand, model, position, confidence }) => {
       setModel(model);
-      mockGetDevice.mockReturnValue(device);
+      setBrand(brand);
 
       await expect(getNfcAntennaPosition()).resolves.toEqual({
         position,
@@ -296,43 +297,43 @@ describe("getNfcAntennaPosition", () => {
     });
 
     test.each([
-      { name: "unknown model", device: "shiba", model: "Unknown phone" },
-      { name: "empty model", device: "shiba", model: "" },
-      { name: "unknown device", device: "unknown", model: "Pixel 8" },
-      { name: "empty device", device: "", model: "Pixel 8" },
-      { name: "unclassified CSV model", device: "hwane", model: "P20 lite" },
+      { name: "unknown model", brand: "Google", model: "Unknown phone" },
+      { name: "empty model", brand: "Google", model: "" },
+      { name: "unknown brand", brand: "unknown", model: "Pixel 8" },
+      { name: "empty brand", brand: "", model: "Pixel 8" },
+      { name: "unclassified CSV model", brand: "Huawei", model: "P20 lite" },
       {
-        name: "wrong device for known model",
-        device: "lynx",
+        name: "wrong brand for known model",
+        brand: "Samsung",
         model: "Pixel 8"
       },
-      { name: "model prefix", device: "shiba", model: "Pixel" },
-      { name: "model suffix", device: "shiba", model: "Pixel 8 XL" },
+      { name: "model prefix", brand: "Google", model: "Pixel" },
+      { name: "model suffix", brand: "Google", model: "Pixel 8 XL" },
       {
-        name: "inherited device property",
-        device: "constructor",
+        name: "inherited brand property",
+        brand: "constructor",
         model: "Pixel 8"
       },
       {
         name: "inherited model property",
-        device: "shiba",
+        brand: "Google",
         model: "constructor"
       },
-      { name: "another brand's A52", device: "A52", model: "A52" },
+      { name: "another brand's A52", brand: "Blackview", model: "A52" },
       {
         name: "ambiguous catalog identity",
-        device: "curtana",
+        brand: "Redmi",
         model: "Redmi Note 9 Pro"
       }
-    ])("returns undefined for $name", async ({ device, model }) => {
+    ])("returns undefined for $name", async ({ brand, model }) => {
       setModel(model);
-      mockGetDevice.mockReturnValue(device);
+      setBrand(brand);
 
       await expect(getNfcAntennaPosition()).resolves.toBeUndefined();
     });
 
-    it("identifies the Oppo A52 by both device and model", async () => {
-      mockGetDevice.mockReturnValue("OP4C77L1");
+    it("identifies the Oppo A52 by brand and model", async () => {
+      setBrand("Oppo");
       setModel("CPH2061");
 
       await expect(getNfcAntennaPosition()).resolves.toEqual({
@@ -340,15 +341,6 @@ describe("getNfcAntennaPosition", () => {
         source: "mapping",
         confidence: "high"
       });
-    });
-
-    it("propagates errors retrieving the device identifier", async () => {
-      const error = new Error("Cannot read device identifier");
-      mockGetDevice.mockImplementation(() => {
-        throw error;
-      });
-
-      await expect(getNfcAntennaPosition()).rejects.toBe(error);
     });
   });
 

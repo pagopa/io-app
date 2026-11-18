@@ -30,10 +30,6 @@ class NfcAntennaInfoModule : Module() {
       )
     }
 
-    Function("getDevice") {
-      Build.DEVICE
-    }
-
     AsyncFunction("isHceSupported") {
       appContext.reactContext
         ?.packageManager

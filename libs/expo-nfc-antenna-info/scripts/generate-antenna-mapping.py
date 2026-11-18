@@ -64,22 +64,21 @@ def main():
     pairs = defaultdict(list)
     matched_rows = set()
     for row in read_csv(args.devices_csv, "utf-16"):
-        device = normalize(row["Device"])
-        model = normalize(row["Model"])
-        if not device or not model:
-            continue
         brand = normalize(row["Retail Branding"])
+        model = normalize(row["Model"])
+        if not brand or not model:
+            continue
         name = normalize(row["Marketing Name"])
         matches = names[(brand, name)] | codes[(brand, model)]
         for alias in name.split("/"):
             matches |= names[(brand, normalize(alias))]
         matched_rows.update(row_number for row_number, _ in matches)
-        pairs[(device, model)].append(matches)
+        pairs[(brand, model)].append(matches)
 
-    mapping = defaultdict(dict)
+    mapping = {}
     ambiguous = 0
     covered_rows = set()
-    for (device, model), candidates in sorted(pairs.items()):
+    for (brand, model), candidates in sorted(pairs.items()):
         matches = set().union(*candidates)
         if not matches:
             continue
@@ -87,23 +86,19 @@ def main():
         if any(not candidate for candidate in candidates) or len(values) != 1:
             ambiguous += 1
             continue
-        mapping[device][model] = values.pop()
+        if "|" in brand or "|" in model:
+            raise ValueError(f"Invalid separator in brand/model: {brand}, {model}")
+        mapping[f"{brand}|{model}"] = values.pop()
         covered_rows.update(row_number for row_number, _ in matches)
 
     print('import type { NfcAntennaConfidence, NfcAntennaPosition } from "./types";')
     print()
     print("// Generated from SIW-5555 and Google Play supported devices; see README.md.")
     print("export const antennaMapping: Readonly<")
-    print("  Record<")
-    print("    string,")
-    print("    Readonly<Record<string, readonly [NfcAntennaPosition, NfcAntennaConfidence] | undefined>> | undefined")
-    print("  >")
+    print("  Record<string, readonly [NfcAntennaPosition, NfcAntennaConfidence] | undefined>")
     print("> = {")
-    for device, models in sorted(mapping.items()):
-        print(f"  {json.dumps(device)}: {{")
-        for model, (position, confidence) in sorted(models.items()):
-            print(f"    {json.dumps(model)}: [{json.dumps(position)}, {json.dumps(confidence)}],")
-        print("  },")
+    for key, (position, confidence) in sorted(mapping.items()):
+        print(f"  {json.dumps(key)}: [{json.dumps(position)}, {json.dumps(confidence)}],")
     print("};")
 
     print(
