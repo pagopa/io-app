@@ -1,3 +1,13 @@
+## 3.44.0-rc.3 (2026-11-18)
+
+### Chores
+
+- [[IOPLT-2300](https://pagopa.atlassian.net/browse/IOPLT-2300)] Enforce the `no-hardcoded-colors` lint rule ([#8894](https://github.com/pagopa/io-app/pull/8894))
+
+### ❤️ Thank You
+
+- Damiano Plebani
+
 ## 3.44.0-rc.2 (2026-11-17)
 
 ### Features
