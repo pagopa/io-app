@@ -52,7 +52,7 @@
       </dict>
     </array>
     <key>CFBundleVersion</key>
-    <string>2</string>
+    <string>8242</string>
     <key>ExpoShareIntoAppGroupId</key>
     <string>group.$(IO_SHARE_APP_ID)</string>
     <key>ITSAppUsesNonExemptEncryption</key>
