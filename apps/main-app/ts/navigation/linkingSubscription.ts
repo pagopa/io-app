@@ -8,6 +8,7 @@ import { storeLinkingUrl } from "../features/linking/actions";
 import { trackIOOpenedFromUniversalAppLink } from "../features/linking/analytics";
 import { resetMessageArchivingAction } from "../features/messages/store/actions/archiving";
 import { isArchivingDisabledSelector } from "../features/messages/store/reducers/archiving";
+import { isIncomingShareUrl } from "../features/payments/barcode/utils/incomingShare";
 import { initiateAarFlow } from "../features/pn/aar/store/actions";
 import { isSendAarLink } from "../features/pn/aar/utils/deepLinking";
 import { processUtmLink } from "../features/utmLink";
@@ -29,6 +30,9 @@ export const linkingSubscription =
   (dispatch: Dispatch<Action>, store: Store<Readonly<GlobalState>>) =>
   (listener: (url: string) => void) => {
     const subscription = Linking.addEventListener("url", ({ url }) => {
+      if (isIncomingShareUrl(url)) {
+        return;
+      }
       // track if the app is opened from a universal link, but only if the url
       // is an https link, to avoid tracking custom scheme deep links that are
       // not universal links

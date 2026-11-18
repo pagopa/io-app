@@ -8,7 +8,13 @@ import {
   NavigationContainer,
   NavigationContainerProps
 } from "@react-navigation/native";
-import { PropsWithChildren, ReactElement, useEffect, useRef } from "react";
+import {
+  PropsWithChildren,
+  ReactElement,
+  useEffect,
+  useRef,
+  useState
+} from "react";
 import { Linking, View } from "react-native";
 
 import { useStoredExperimentalDesign } from "../common/context/DSExperimentalContext";
@@ -24,6 +30,8 @@ import { ITW_CREDENTIAL_OFFER_LINKING_PREFIXES } from "../features/itwallet/offe
 import { storeLinkingUrl } from "../features/linking/actions";
 import { trackIOOpenedFromUniversalAppLink } from "../features/linking/analytics";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
+import { IncomingShareHandler } from "../features/payments/barcode/components/IncomingShareHandler";
+import { isIncomingShareUrl } from "../features/payments/barcode/utils/incomingShare";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { SETTINGS_ROUTES } from "../features/settings/common/navigation/routes";
 import { processUtmLink } from "../features/utmLink";
@@ -91,12 +99,15 @@ export const AppStackNavigator = (): ReactElement => {
   return <AuthenticatedStackNavigator />;
 };
 
-type InnerNavigationContainerProps = PropsWithChildren;
+type InnerNavigationContainerProps = PropsWithChildren<{
+  enableIncomingShare?: boolean;
+}>;
 
 const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
   const routeNameRef = useRef<string>(undefined);
   const dispatch = useIODispatch();
   const store = useIOStore();
+  const [mainReady, setMainReady] = useState(false);
 
   const cgnEnabled = useIOSelector(isCGNEnabledAfterLoadSelector);
 
@@ -150,7 +161,11 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
         [ROUTES.PAGE_NOT_FOUND]: "*"
       }
     },
-    subscribe: linkingSubscription(dispatch, store)
+    subscribe: linkingSubscription(dispatch, store),
+    getInitialURL: async () => {
+      const url = await Linking.getInitialURL();
+      return url && isIncomingShareUrl(url) ? null : url;
+    }
   };
 
   /**
@@ -162,7 +177,7 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
    */
   useOnFirstRender(() => {
     void Linking.getInitialURL().then(initialUrl => {
-      if (initialUrl) {
+      if (initialUrl && !isIncomingShareUrl(initialUrl)) {
         // Track if the app is opened from a universal link on cold start
         // This mirrors the behavior in linkingSubscription for warm starts
         // We read the user's Mixpanel preference from the store to respect their choice
@@ -191,9 +206,13 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
       linking={linking}
       onReady={() => {
         NavigationService.setNavigationReady();
+        setMainReady(
+          isMainNavigatorReady(navigationRef.current?.getRootState())
+        );
         routeNameRef.current = navigationRef.current?.getCurrentRoute()?.name;
       }}
       onStateChange={state => {
+        setMainReady(isMainNavigatorReady(state));
         if (isMainNavigatorReady(state)) {
           setMainNavigatorReady();
         }
@@ -216,6 +235,9 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
         barStyle={themeType === "dark" ? "light-content" : "dark-content"}
       />
       {props.children}
+      {props.enableIncomingShare && (
+        <IncomingShareHandler isReady={mainReady} />
+      )}
     </NavigationContainer>
   );
 };
@@ -227,7 +249,7 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
  * @class
  */
 export const IONavigationContainer = () => (
-  <InnerNavigationContainer>
+  <InnerNavigationContainer enableIncomingShare>
     <AppStackNavigator />
   </InnerNavigationContainer>
 );

@@ -17,6 +17,7 @@
 		2AD40B9924CB049500E4124A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AD40B9824CB049500E4124A /* LaunchScreen.storyboard */; };
 		45678F6126F1401FB03B1B02 /* TitilliumSansPro-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = F820513E31C7443CB7F5A99E /* TitilliumSansPro-ThinItalic.otf */; };
 		58585030D26943298D52B5A5 /* Titillio-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7206342A24764B138D864DFF /* Titillio-LightItalic.otf */; };
+		58C653B395154183B8E01924 /* expo-sharing-extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = BF64E6E273DA4EC68C13916B /* expo-sharing-extension.appex */; };
 		65FE1313CE69411888425831 /* Titillio-ExtrablackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 96C2E93186814D36AD451D83 /* Titillio-ExtrablackItalic.otf */; };
 		68CE798678EF43669BE56D51 /* Titillio-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B58BBAC865EA4651B828C92B /* Titillio-Bold.otf */; };
 		697EE758195E4C198755B4EE /* Titillio-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = C9E629838F224B4F9823D692 /* Titillio-Thin.otf */; };
@@ -24,15 +25,18 @@
 		73C78AB456BA498FA470EE9E /* FiraCode-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F9BF48C6EC30493DBDB754CA /* FiraCode-Medium.ttf */; };
 		76D9756A42724A6C9E607D7F /* Titillio-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 18809C19D0B945658C774D0D /* Titillio-RegularItalic.otf */; };
 		7C18455047A64AC0A9DD442A /* TitilliumSansPro-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 132CADD7BDBB46C7AB1DC348 /* TitilliumSansPro-BlackItalic.otf */; };
+		8CE23881703D425AA72A0B04 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC670B5C0C74BE687C8D51C /* Constants.swift */; };
 		8D51BCD77547410BBC7E6050 /* TitilliumSansPro-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 148E8F80A1D5448DAD5263B7 /* TitilliumSansPro-Italic.otf */; };
 		8DCB405D579147AAB059BEE6 /* Titillio-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = E8C4B91357FA47018EE5ACF0 /* Titillio-BlackItalic.otf */; };
 		A5C4E8CE93074865A66DFAC1 /* TitilliumSansPro-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 015E4FBE7D1D4C2485C73321 /* TitilliumSansPro-SemiboldItalic.otf */; };
+		B4040F1A18B34F38B1EE952E /* ShareIntoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5042829470AE4956AF7D393F /* ShareIntoViewController.swift */; };
 		B551AC412DA55A0E00A4E30F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B551AC402DA55A0E00A4E30F /* AppDelegate.swift */; };
 		B572E1E42DC12161009BA244 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		B7B71EAAE496484488FE3751 /* Titillio-Extrabold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 59423B676D254801BFAA4C5E /* Titillio-Extrabold.otf */; };
 		B851B29045D067562CDFD92D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34D8E6D4B7FD8B878BBDC56E /* ExpoModulesProvider.swift */; };
 		D2245B924B42442CAF4944D5 /* Titillio-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = D688263BB87C4DFBA007CD92 /* Titillio-SemiboldItalic.otf */; };
 		D3577FD00169492CB2980CE3 /* Titillio-Extrablack.otf in Resources */ = {isa = PBXBuildFile; fileRef = 71A3E9FDB4AD4D74AB491DA4 /* Titillio-Extrablack.otf */; };
+		EB857C5C03C74C6691EB9D19 /* ShareProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A4AD7D05DB4BCF9A9B2A2D /* ShareProtocol.swift */; };
 		EC056373020AA03F7D8532D9 /* libPods-IO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 22DB90684FEFB1CA71467FD6 /* libPods-IO.a */; };
 		EE925F079133484AB8E0D5D8 /* Titillio-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 710E428774CA4C718ED747ED /* Titillio-Light.otf */; };
 		F0625E7F2326825600EDEF90 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
@@ -59,6 +63,17 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F006E28BF37548AEBF5177B0 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				58C653B395154183B8E01924 /* expo-sharing-extension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -79,7 +94,11 @@
 		34D8E6D4B7FD8B878BBDC56E /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-IO/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		3CA5B0F4CFD44E78900FE43A /* TitilliumSansPro-LightItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumSansPro-LightItalic.otf"; path = "../assets/fonts/TitilliumSansPro/TitilliumSansPro-LightItalic.otf"; sourceTree = "<group>"; };
 		3E5721DADB56490699700FBF /* Titillio-ThinItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Titillio-ThinItalic.otf"; path = "../assets/fonts/Titillio/Titillio-ThinItalic.otf"; sourceTree = "<group>"; };
+		3EC670B5C0C74BE687C8D51C /* Constants.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = "../../../../../node_modules/expo-sharing/ios/shared/Constants.swift"; sourceTree = "<group>"; };
+		47A4AD7D05DB4BCF9A9B2A2D /* ShareProtocol.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = ShareProtocol.swift; path = "../../../../../node_modules/expo-sharing/ios/shared/ShareProtocol.swift"; sourceTree = "<group>"; };
 		4F54E8E3A56A4E139D5DC82D /* Titillio-BoldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Titillio-BoldItalic.otf"; path = "../assets/fonts/Titillio/Titillio-BoldItalic.otf"; sourceTree = "<group>"; };
+		4FE26D6F62CF4E0AA0F67F93 /* expo-sharing-extension.entitlements */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "expo-sharing-extension.entitlements"; path = "expo-sharing-extension.entitlements"; sourceTree = "<group>"; };
+		5042829470AE4956AF7D393F /* ShareIntoViewController.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = ShareIntoViewController.swift; path = "../../../../libs/expo-share-pdf/ios/ShareIntoViewController.swift"; sourceTree = "<group>"; };
 		59423B676D254801BFAA4C5E /* Titillio-Extrabold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Titillio-Extrabold.otf"; path = "../assets/fonts/Titillio/Titillio-Extrabold.otf"; sourceTree = "<group>"; };
 		63C062964A43B2B6E44AA4D0 /* Pods-IO.canary.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IO.canary.xcconfig"; path = "Target Support Files/Pods-IO/Pods-IO.canary.xcconfig"; sourceTree = "<group>"; };
 		6B0E3E090B0347B6BD0A41A2 /* Titillio-Semibold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Titillio-Semibold.otf"; path = "../assets/fonts/Titillio/Titillio-Semibold.otf"; sourceTree = "<group>"; };
@@ -91,12 +110,14 @@
 		872A6A79E0CF4C4DA0AEAF3E /* TitilliumSansPro-BoldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumSansPro-BoldItalic.otf"; path = "../assets/fonts/TitilliumSansPro/TitilliumSansPro-BoldItalic.otf"; sourceTree = "<group>"; };
 		9205B2AD16D94BDAA69E880E /* Titillio-Black.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Titillio-Black.otf"; path = "../assets/fonts/Titillio/Titillio-Black.otf"; sourceTree = "<group>"; };
 		96C2E93186814D36AD451D83 /* Titillio-ExtrablackItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Titillio-ExtrablackItalic.otf"; path = "../assets/fonts/Titillio/Titillio-ExtrablackItalic.otf"; sourceTree = "<group>"; };
+		97CDBAA9F3AD46DA9DA6096F /* Info.plist */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.xml; name = Info.plist; path = Info.plist; sourceTree = "<group>"; };
 		A245EDE7064D4143BF1857DB /* Titillio-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Titillio-Regular.otf"; path = "../assets/fonts/Titillio/Titillio-Regular.otf"; sourceTree = "<group>"; };
 		B242A588B065130DE65386E4 /* Pods-IO.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IO.debug.xcconfig"; path = "Target Support Files/Pods-IO/Pods-IO.debug.xcconfig"; sourceTree = "<group>"; };
 		B551AC402DA55A0E00A4E30F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B57593872B70FFA400674515 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B57593882B70FFA400674515 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = IO/de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B58BBAC865EA4651B828C92B /* Titillio-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Titillio-Bold.otf"; path = "../assets/fonts/Titillio/Titillio-Bold.otf"; sourceTree = "<group>"; };
+		BF64E6E273DA4EC68C13916B /* expo-sharing-extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = undefined; name = "expo-sharing-extension.appex"; path = "expo-sharing-extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9E629838F224B4F9823D692 /* Titillio-Thin.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Titillio-Thin.otf"; path = "../assets/fonts/Titillio/Titillio-Thin.otf"; sourceTree = "<group>"; };
 		D688263BB87C4DFBA007CD92 /* Titillio-SemiboldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Titillio-SemiboldItalic.otf"; path = "../assets/fonts/Titillio/Titillio-SemiboldItalic.otf"; sourceTree = "<group>"; };
 		E65EB458FCBA5EA05FA80A1F /* Pods-IO.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IO.release.xcconfig"; path = "Target Support Files/Pods-IO/Pods-IO.release.xcconfig"; sourceTree = "<group>"; };
@@ -124,6 +145,13 @@
 			files = (
 				F0625E7F2326825600EDEF90 /* JavaScriptCore.framework in Frameworks */,
 				EC056373020AA03F7D8532D9 /* libPods-IO.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D33D192C7904F2D8AA1B3F6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,6 +229,16 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		740B0E8ECC24482688BDBF90 /* shared */ = {
+			isa = PBXGroup;
+			children = (
+				3EC670B5C0C74BE687C8D51C /* Constants.swift */,
+				47A4AD7D05DB4BCF9A9B2A2D /* ShareProtocol.swift */,
+			);
+			name = shared;
+			path = shared;
+			sourceTree = "<group>";
+		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -220,6 +258,7 @@
 				D4DC8E1B3B2C5EA1E4968752 /* Frameworks */,
 				591602A69619994F43D34A93 /* Pods */,
 				CB6FFFBCF241CCAEA81BE870 /* ExpoModulesProviders */,
+				C6A13BCC9B5440689CF7C749 /* expo-sharing-extension */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -230,6 +269,7 @@
 			isa = PBXGroup;
 			children = (
 				13B07F961A680F5B00A75B9A /* IO.app */,
+				BF64E6E273DA4EC68C13916B /* expo-sharing-extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -240,6 +280,18 @@
 				34D8E6D4B7FD8B878BBDC56E /* ExpoModulesProvider.swift */,
 			);
 			name = IO;
+			sourceTree = "<group>";
+		};
+		C6A13BCC9B5440689CF7C749 /* expo-sharing-extension */ = {
+			isa = PBXGroup;
+			children = (
+				5042829470AE4956AF7D393F /* ShareIntoViewController.swift */,
+				4FE26D6F62CF4E0AA0F67F93 /* expo-sharing-extension.entitlements */,
+				97CDBAA9F3AD46DA9DA6096F /* Info.plist */,
+				740B0E8ECC24482688BDBF90 /* shared */,
+			);
+			name = "expo-sharing-extension";
+			path = "expo-sharing-extension";
 			sourceTree = "<group>";
 		};
 		CB6FFFBCF241CCAEA81BE870 /* ExpoModulesProviders */ = {
@@ -277,6 +329,7 @@
 				61CC933C2135818C00206602 /* Embed Frameworks */,
 				E23AA837AE8C328E85F7E88A /* [CP] Embed Pods Frameworks */,
 				E75456F6CF8A80246F68EAA7 /* [CP] Copy Pods Resources */,
+				F006E28BF37548AEBF5177B0 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -286,6 +339,23 @@
 			productName = "Hello World";
 			productReference = 13B07F961A680F5B00A75B9A /* IO.app */;
 			productType = "com.apple.product-type.application";
+		};
+		B3FE8DEFB0BF429CB919C4DD /* expo-sharing-extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CDB100CF20D948138B1E752C /* Build configuration list for PBXNativeTarget "expo-sharing-extension" */;
+			buildPhases = (
+				EA00065C4037447FA4DBA15E /* Sources */,
+				3D33D192C7904F2D8AA1B3F6 /* Frameworks */,
+				881AADBC0A8E4B9EB115B440 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "expo-sharing-extension";
+			productName = "expo-sharing-extension";
+			productReference = BF64E6E273DA4EC68C13916B /* expo-sharing-extension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -306,6 +376,11 @@
 							};
 						};
 					};
+					B3FE8DEFB0BF429CB919C4DD = {
+						CreatedOnToolsVersion = 15.1;
+						LastSwiftMigration = 1250;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "IO" */;
@@ -324,6 +399,7 @@
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* IO */,
+				B3FE8DEFB0BF429CB919C4DD /* expo-sharing-extension */,
 			);
 		};
 /* End PBXProject section */
@@ -368,6 +444,13 @@
 				697EE758195E4C198755B4EE /* Titillio-Thin.otf in Resources */,
 				1CB9A62CD91A4933BB5021C6 /* Titillio-ThinItalic.otf in Resources */,
 				73C78AB456BA498FA470EE9E /* FiraCode-Medium.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		881AADBC0A8E4B9EB115B440 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -560,6 +643,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EA00065C4037447FA4DBA15E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B4040F1A18B34F38B1EE952E /* ShareIntoViewController.swift in Sources */,
+				8CE23881703D425AA72A0B04 /* Constants.swift in Sources */,
+				EB857C5C03C74C6691EB9D19 /* ShareProtocol.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
@@ -607,6 +700,7 @@
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
 				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
 				INFOPLIST_PREPROCESS = NO;
+				IO_SHARE_APP_ID = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -648,6 +742,7 @@
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
 				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
 				INFOPLIST_PREPROCESS = NO;
+				IO_SHARE_APP_ID = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -812,6 +907,122 @@
 			};
 			name = Release;
 		};
+		87897C8C33444B70BBC0D3AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "expo-sharing-extension/expo-sharing-extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 9;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "expo-sharing-extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "expo-sharing-extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IO_SHARE_APP_ID = it.pagopa.app.io;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 3.43.0;
+				MTL_FAST_MATH = YES;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
+				PRODUCT_BUNDLE_IDENTIFIER = it.pagopa.app.io.ShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		AC3F3DFCC4B3463AA78D8D41 /* Canary */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "expo-sharing-extension/expo-sharing-extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 9;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "expo-sharing-extension/Info.plist";
+				IO_SHARE_APP_ID = it.pagopa.app.io.canary;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 3.43.0;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
+				PRODUCT_BUNDLE_IDENTIFIER = it.pagopa.app.io.canary.ShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Canary;
+		};
+		B2CA52CA980B4C19B6E2BA28 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "expo-sharing-extension/expo-sharing-extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 9;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "expo-sharing-extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "expo-sharing-extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IO_SHARE_APP_ID = it.pagopa.app.io;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 3.43.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
+				PRODUCT_BUNDLE_IDENTIFIER = it.pagopa.app.io.ShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
 		B5B0AB482D09EF680022D03F /* Canary */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -902,6 +1113,7 @@
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
 				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
 				INFOPLIST_PREPROCESS = NO;
+				IO_SHARE_APP_ID = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -941,6 +1153,16 @@
 				83CBBA201A601CBA00E9B192 /* Debug */,
 				83CBBA211A601CBA00E9B192 /* Release */,
 				B5B0AB482D09EF680022D03F /* Canary */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CDB100CF20D948138B1E752C /* Build configuration list for PBXNativeTarget "expo-sharing-extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B2CA52CA980B4C19B6E2BA28 /* Debug */,
+				87897C8C33444B70BBC0D3AB /* Release */,
+				AC3F3DFCC4B3463AA78D8D41 /* Canary */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

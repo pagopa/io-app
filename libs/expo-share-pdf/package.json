@@ -1,0 +1,31 @@
+{
+  "name": "@io-app/expo-share-pdf",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.ts",
+  "types": "index.ts",
+  "react-native": "index.ts",
+  "files": [
+    "index.ts",
+    "app.plugin.js",
+    "ios"
+  ],
+  "dependencies": {
+    "@expo/config-plugins": "^55.0.11",
+    "@expo/plist": "^0.5.4",
+    "expo-file-system": "~55.0.22",
+    "expo-sharing": "~55.0.22"
+  },
+  "peerDependencies": {
+    "expo": "^55.0.8",
+    "react": "*",
+    "react-native": "*"
+  },
+  "devDependencies": {
+    "react-native": "catalog:",
+    "typescript": "catalog:"
+  },
+  "scripts": {
+    "tsc-noemit": "tsc --noEmit"
+  }
+}

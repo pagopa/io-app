@@ -395,6 +395,9 @@ importers:
       '@io-app/expo-pdf-high-res-generator':
         specifier: workspace:*
         version: link:../../libs/expo-pdf-high-res-generator
+      '@io-app/expo-share-pdf':
+        specifier: workspace:*
+        version: link:../../libs/expo-share-pdf
       '@io-app/expo-switch-access':
         specifier: workspace:*
         version: link:../../libs/expo-switch-access
@@ -1166,6 +1169,34 @@ importers:
       expo-modules-core:
         specifier: ^55.0.25
         version: 55.0.25(react-native-worklets@0.8.3(@babel/core@7.29.7(supports-color@8.1.1))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)(supports-color@8.1.1))(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
+      typescript:
+        specifier: 'catalog:'
+        version: 6.0.3
+
+  libs/expo-share-pdf:
+    dependencies:
+      '@expo/config-plugins':
+        specifier: ^55.0.11
+        version: 55.0.11(supports-color@8.1.1)
+      '@expo/plist':
+        specifier: ^0.5.4
+        version: 0.5.4
+      expo:
+        specifier: ^55.0.8
+        version: 55.0.26(3682a58119468322fd2634c3efd68c49)
+      expo-file-system:
+        specifier: ~55.0.22
+        version: 55.0.22(expo@55.0.26)(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))
+      expo-sharing:
+        specifier: ~55.0.22
+        version: 55.0.22(expo@55.0.26)(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)(supports-color@8.1.1)
+      react:
+        specifier: '*'
+        version: 19.2.0
+    devDependencies:
+      react-native:
+        specifier: 'catalog:'
+        version: 0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)
       typescript:
         specifier: 'catalog:'
         version: 6.0.3

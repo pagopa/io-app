@@ -1,3 +1,6 @@
+import { IOToast } from "@io-app/design-system";
+import { waitFor } from "@testing-library/react-native";
+import * as TE from "fp-ts/lib/TaskEither";
 import configureMockStore from "redux-mock-store";
 
 import * as mixpanel from "../../../../../mixpanel";
@@ -7,6 +10,8 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { BarcodeScanBaseScreenComponent } from "../../../../barcode";
 import * as analytics from "../../../../barcode/analytics";
+import * as imageDecoding from "../../../../barcode/utils/imageDecodingTask";
+import * as pdfGeneration from "../../../../barcode/utils/imageGenerationTask";
 import { PaymentsCheckoutRoutes } from "../../../checkout/navigation/routes";
 import { PaymentsBarcodeRoutes } from "../../navigation/routes";
 import { PaymentsBarcodeScanScreen } from "../PaymentsBarcodeScanScreen";
@@ -53,7 +58,7 @@ jest.mock("../../../checkout/hooks/usePagoPaPayment", () => ({
   })
 }));
 
-const renderComponent = () => {
+const renderComponent = (params: Record<string, unknown> = {}) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const mockStore = configureMockStore<GlobalState>();
@@ -62,15 +67,102 @@ const renderComponent = () => {
   return renderScreenWithNavigationStoreContext<GlobalState>(
     PaymentsBarcodeScanScreen,
     PaymentsBarcodeRoutes.PAYMENT_BARCODE_SCAN,
-    {},
+    params,
     store
   );
 };
 
 describe("PaymentsBarcodeScanScreen", () => {
+  afterEach(() => jest.restoreAllMocks());
+
   it("should render correctly", () => {
     const component = renderComponent();
     expect(component).toBeDefined();
+  });
+
+  it("reports PDF rendering failures instead of leaving the scanner loading", async () => {
+    jest
+      .spyOn(pdfGeneration, "imageGenerationTask")
+      .mockReturnValue(TE.left({ reason: "UNEXPECTED" }));
+    const toast = jest.spyOn(IOToast, "error").mockImplementation(() => {});
+    const component = renderComponent({
+      sharedFile: {
+        kind: "pdf",
+        uri: "content://provider/notice.pdf",
+        mimeType: "application/pdf"
+      }
+    });
+    await waitFor(() => expect(toast).toHaveBeenCalled());
+    await waitFor(() =>
+      expect(
+        component.UNSAFE_queryByType(BarcodeScanBaseScreenComponent)
+      ).not.toBeNull()
+    );
+  });
+
+  it("does not mount the camera scanner while reading a shared PDF", () => {
+    jest
+      .spyOn(pdfGeneration, "imageGenerationTask")
+      .mockReturnValue(() => new Promise(() => {}));
+
+    const component = renderComponent({
+      sharedFile: {
+        kind: "pdf",
+        uri: "content://provider/notice.pdf",
+        mimeType: "application/pdf"
+      }
+    });
+
+    expect(
+      component.UNSAFE_queryByType(BarcodeScanBaseScreenComponent)
+    ).toBeNull();
+  });
+
+  it("restores the scanner when PDF processing throws", async () => {
+    jest
+      .spyOn(pdfGeneration, "imageGenerationTask")
+      .mockReturnValue(() =>
+        Promise.reject(new Error("PDF processing failed"))
+      );
+    const toast = jest.spyOn(IOToast, "error").mockImplementation(() => {});
+    const component = renderComponent({
+      sharedFile: {
+        kind: "pdf",
+        uri: "content://provider/notice.pdf",
+        mimeType: "application/pdf"
+      }
+    });
+
+    await waitFor(() => {
+      expect(toast).toHaveBeenCalled();
+      expect(
+        component.UNSAFE_getByType(BarcodeScanBaseScreenComponent).props
+          .isLoading
+      ).toBe(false);
+    });
+  });
+
+  it("decodes a shared image using the image barcode reader", async () => {
+    jest
+      .spyOn(imageDecoding, "imageDecodingTask")
+      .mockReturnValue(TE.left({ reason: "BARCODE_NOT_FOUND" }));
+    const toast = jest.spyOn(IOToast, "error").mockImplementation(() => {});
+
+    renderComponent({
+      sharedFile: {
+        kind: "image",
+        uri: "content://provider/notice.jpg",
+        mimeType: "image/jpeg"
+      }
+    });
+
+    await waitFor(() => expect(toast).toHaveBeenCalled());
+    expect(imageDecoding.imageDecodingTask).toHaveBeenCalledWith(
+      expect.any(Object),
+      { uri: "content://provider/notice.jpg" },
+      expect.any(Array),
+      ["PAGOPA"]
+    );
   });
 
   it("navigates to barcode choice screen when multiple PAGOPA barcodes are found", () => {
