@@ -1,5 +1,16 @@
 {
   "name": "IO",
   "displayName": "IO",
-  "plugins": ["expo-background-task", "expo-web-browser"]
+  "scheme": "ioit",
+  "ios": {
+    "bundleIdentifier": "it.pagopa.app.io"
+  },
+  "android": {
+    "package": "it.pagopa.io.app"
+  },
+  "plugins": [
+    "expo-background-task",
+    "expo-web-browser",
+    "../../libs/expo-share-pdf/app.plugin.js"
+  ]
 }

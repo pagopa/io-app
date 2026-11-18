@@ -42,9 +42,19 @@
           <string>haip-vci</string>
         </array>
       </dict>
+      <dict>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+        </array>
+      </dict>
     </array>
     <key>CFBundleVersion</key>
     <string>2</string>
+    <key>ExpoShareIntoAppGroupId</key>
+    <string>group.$(IO_SHARE_APP_ID)</string>
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
     <key>LSApplicationQueriesSchemes</key>
