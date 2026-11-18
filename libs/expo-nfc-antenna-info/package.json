@@ -9,6 +9,7 @@
   "source": "index.ts",
   "files": [
     "index.ts",
+    "antennaMapping.ts",
     "android",
     "ios",
     "expo-module.config.json",
@@ -18,6 +19,7 @@
     "tsc-noemit": "tsc --noEmit"
   },
   "devDependencies": {
+    "@types/jest": "catalog:",
     "expo-modules-core": "^55.0.25",
     "react-native": "catalog:",
     "typescript": "catalog:"

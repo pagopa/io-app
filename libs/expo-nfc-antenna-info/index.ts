@@ -1,6 +1,12 @@
 import { requireNativeModule } from "expo-modules-core";
 import { Platform } from "react-native";
 
+import {
+  antennaMapping,
+  type NfcAntennaConfidence,
+  type NfcAntennaPosition
+} from "./antennaMapping";
+
 export type AvailableNfcAntenna = {
   locationX: number;
   locationY: number;
@@ -11,6 +17,12 @@ export type NfcAntennaInfoResult = {
   deviceHeight: number;
   deviceWidth: number;
   isDeviceFoldable: boolean;
+};
+
+export type NfcAntennaPositionInfo = {
+  confidence: NfcAntennaConfidence;
+  position: NfcAntennaPosition;
+  source: "api" | "mapping";
 };
 
 interface NfcAntennaInfoModuleType {
@@ -35,6 +47,90 @@ export const getNfcAntennaInfo = (): Promise<NfcAntennaInfoResult> => {
     );
   }
   return NfcAntennaInfoModule.getNfcAntennaInfo();
+};
+
+const unavailableAntennaInfoCodes = new Set([
+  "ERR_NFC_ADAPTER_UNAVAILABLE",
+  "ERR_NFC_ANTENNA_INFO_UNAVAILABLE",
+  "ERR_NFC_UNSUPPORTED_DEVICE"
+]);
+
+const antennaPositions = ["top", "center", "bottom"] as const;
+const antennaBandCount = antennaPositions.length;
+
+/**
+ * Resolves the antenna's vertical third, with API data taking precedence over
+ * the SIW-5555 model mapping. API results have high confidence; mapping results
+ * retain the confidence of the source document.
+ *
+ * Returns undefined on iOS, for unknown models, unusable geometry, or antennas
+ * spanning different thirds. Unexpected native errors are propagated.
+ */
+export const getNfcAntennaPosition = async (): Promise<
+  NfcAntennaPositionInfo | undefined
+> => {
+  if (Platform.OS !== "android") {
+    return undefined;
+  }
+
+  const info = await getNfcAntennaInfo().catch((error: unknown) => {
+    if (
+      typeof error === "object" &&
+      error !== null &&
+      "code" in error &&
+      typeof error.code === "string" &&
+      unavailableAntennaInfoCodes.has(error.code)
+    ) {
+      return undefined;
+    }
+    throw error;
+  });
+
+  if (!info) {
+    const model = Platform.constants.Model.trim().toLowerCase();
+    const entry = Object.hasOwn(antennaMapping, model)
+      ? antennaMapping[model]
+      : undefined;
+    if (!entry) {
+      return undefined;
+    }
+    const [position, confidence] = entry;
+    return { position, source: "mapping", confidence };
+  }
+
+  const { deviceHeight, deviceWidth, availableNfcAntennas } = info;
+  if (
+    !Number.isFinite(deviceHeight) ||
+    !Number.isFinite(deviceWidth) ||
+    deviceHeight <= 0 ||
+    deviceWidth <= 0 ||
+    availableNfcAntennas.length === 0
+  ) {
+    return undefined;
+  }
+
+  const bands = availableNfcAntennas.map(({ locationX, locationY }) => {
+    if (
+      !Number.isFinite(locationX) ||
+      !Number.isFinite(locationY) ||
+      locationX < 0 ||
+      locationX > deviceWidth ||
+      locationY < 0 ||
+      locationY > deviceHeight
+    ) {
+      return undefined;
+    }
+    // Include the device's bottom edge in the last third.
+    const band = Math.min(
+      Math.floor((locationY / deviceHeight) * antennaBandCount),
+      antennaBandCount - 1
+    );
+    return antennaPositions[band];
+  });
+  const [position] = bands;
+  return position && bands.every(band => band === position)
+    ? { position, source: "api", confidence: "high" }
+    : undefined;
 };
 
 /**
