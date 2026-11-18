@@ -3,6 +3,7 @@ package expo.modules.nfcantennainfo
 import android.content.pm.PackageManager
 import android.nfc.NfcAdapter
 import android.os.Build
+import de.boehrsi.devicemarketingnames.DeviceMarketingNames
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 
@@ -28,6 +29,10 @@ class NfcAntennaInfoModule : Module() {
           AvailableNfcAntennaRecord(locationX = it.locationX, locationY = it.locationY)
         }
       )
+    }
+
+    AsyncFunction("getMarketingNames") {
+      DeviceMarketingNames.getNamesAsList()
     }
 
     AsyncFunction("isHceSupported") {
