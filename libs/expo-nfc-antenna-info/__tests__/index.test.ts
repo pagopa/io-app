@@ -1,12 +1,15 @@
 jest.mock("react-native", () => ({
   Platform: {
     OS: "android",
-    constants: { Model: "unknown" }
+    constants: { Model: "unknown", Manufacturer: "unknown", Brand: "unknown" }
   }
 }));
 
 jest.mock("expo-modules-core", () => {
-  const nativeModule = { getNfcAntennaInfo: jest.fn() };
+  const nativeModule = {
+    getMarketingNames: jest.fn(),
+    getNfcAntennaInfo: jest.fn()
+  };
   return { requireNativeModule: jest.fn(() => nativeModule) };
 });
 
@@ -15,11 +18,12 @@ import { Platform } from "react-native";
 
 import { getNfcAntennaPosition, type NfcAntennaInfoResult } from "../index";
 
-const mockGetNfcAntennaInfo = jest.mocked(
-  requireNativeModule<{
-    getNfcAntennaInfo: () => Promise<NfcAntennaInfoResult>;
-  }>("NfcAntennaInfo").getNfcAntennaInfo
-);
+const nativeModule = requireNativeModule<{
+  getMarketingNames: () => Promise<Array<string>>;
+  getNfcAntennaInfo: () => Promise<NfcAntennaInfoResult>;
+}>("NfcAntennaInfo");
+const mockGetMarketingNames = jest.mocked(nativeModule.getMarketingNames);
+const mockGetNfcAntennaInfo = jest.mocked(nativeModule.getNfcAntennaInfo);
 
 const antennaInfo: NfcAntennaInfoResult = {
   deviceWidth: 75,
@@ -38,6 +42,7 @@ describe("getNfcAntennaPosition", () => {
   beforeEach(() => {
     jest.replaceProperty(Platform, "OS", "android");
     setModel("unknown");
+    mockGetMarketingNames.mockResolvedValue([]);
     mockGetNfcAntennaInfo.mockResolvedValue(antennaInfo);
   });
 
@@ -260,12 +265,43 @@ describe("getNfcAntennaPosition", () => {
       { name: "unknown model", model: "Unknown phone" },
       { name: "empty model", model: "" },
       { name: "unclassified CSV model", model: "P20 lite" },
-      { name: "unmapped native identifier", model: "SM-A546B" },
       { name: "model prefix", model: "Pixel" },
       { name: "model suffix", model: "Pixel 8 XL" },
       { name: "inherited object property", model: "constructor" }
     ])("returns undefined for $name", async ({ model }) => {
       setModel(model);
+
+      await expect(getNfcAntennaPosition()).resolves.toBeUndefined();
+    });
+
+    it("matches marketing names of the native model", async () => {
+      setModel("SM-A546B");
+      mockGetMarketingNames.mockResolvedValue(["Galaxy A54 5G"]);
+
+      await expect(getNfcAntennaPosition()).resolves.toEqual({
+        position: "top",
+        source: "mapping",
+        confidence: "high"
+      });
+    });
+
+    it("matches marketing names without the manufacturer prefix", async () => {
+      setModel("MAR-LX1A");
+      if (Platform.OS === "android") {
+        jest.replaceProperty(Platform.constants, "Manufacturer", "HUAWEI");
+      }
+      mockGetMarketingNames.mockResolvedValue(["HUAWEI P30 lite"]);
+
+      await expect(getNfcAntennaPosition()).resolves.toEqual({
+        position: "center",
+        source: "mapping",
+        confidence: "medium"
+      });
+    });
+
+    it("returns undefined when marketing names map to different positions", async () => {
+      setModel("unknown");
+      mockGetMarketingNames.mockResolvedValue(["Galaxy A54 5G", "Galaxy S23"]);
 
       await expect(getNfcAntennaPosition()).resolves.toBeUndefined();
     });
