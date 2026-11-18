@@ -63,7 +63,7 @@ describe("getNfcAntennaPosition", () => {
   });
 
   test.each([
-    { name: "top edge", y: 0, position: "top" },
+    { name: "just below the top edge", y: 1, position: "top" },
     { name: "end of top third", y: 49, position: "top" },
     { name: "start of center third", y: 50, position: "center" },
     { name: "end of center third", y: 99, position: "center" },
@@ -101,6 +101,7 @@ describe("getNfcAntennaPosition", () => {
 
   it("prefers API data over a conflicting model mapping", async () => {
     setModel("Pixel 7a");
+    setBrand("Google");
 
     await expect(getNfcAntennaPosition()).resolves.toEqual({
       position: "top",
@@ -114,7 +115,7 @@ describe("getNfcAntennaPosition", () => {
       ...antennaInfo,
       isDeviceFoldable: true,
       availableNfcAntennas: [
-        { locationX: 0, locationY: 70 },
+        { locationX: 1, locationY: 70 },
         { locationX: 75, locationY: 90 }
       ]
     });
@@ -137,10 +138,12 @@ describe("getNfcAntennaPosition", () => {
     { name: "zero width", info: { ...antennaInfo, deviceWidth: 0 } },
     { name: "no antennas", info: { ...antennaInfo, availableNfcAntennas: [] } },
     ...[
+      { name: "zero Y", locationX: 35, locationY: 0 },
       { name: "negative Y", locationX: 35, locationY: -1 },
       { name: "Y beyond the device", locationX: 35, locationY: 151 },
       { name: "NaN Y", locationX: 35, locationY: NaN },
       { name: "infinite Y", locationX: 35, locationY: Infinity },
+      { name: "zero X", locationX: 0, locationY: 20 },
       { name: "negative X", locationX: -1, locationY: 20 },
       { name: "X beyond the device", locationX: 76, locationY: 20 },
       { name: "NaN X", locationX: NaN, locationY: 20 }
@@ -152,16 +155,6 @@ describe("getNfcAntennaPosition", () => {
       }
     })),
     {
-      name: "antennas in different thirds",
-      info: {
-        ...antennaInfo,
-        availableNfcAntennas: [
-          { locationX: 35, locationY: 20 },
-          { locationX: 35, locationY: 80 }
-        ]
-      }
-    },
-    {
       name: "one invalid antenna among valid antennas",
       info: {
         ...antennaInfo,
@@ -171,16 +164,40 @@ describe("getNfcAntennaPosition", () => {
         ]
       }
     }
-  ])(
-    "returns undefined for $name without using the mapping",
-    async ({ info }) => {
-      setModel("Pixel 8");
-      setBrand("Google");
-      mockGetNfcAntennaInfo.mockResolvedValue(info);
+  ])("falls back to the mapping for $name", async ({ info }) => {
+    setModel("Pixel 7a");
+    setBrand("Google");
+    mockGetNfcAntennaInfo.mockResolvedValue(info);
 
-      await expect(getNfcAntennaPosition()).resolves.toBeUndefined();
-    }
-  );
+    await expect(getNfcAntennaPosition()).resolves.toEqual({
+      position: "center",
+      source: "mapping",
+      confidence: "high"
+    });
+  });
+
+  it("returns undefined for invalid geometry when the device is not mapped", async () => {
+    mockGetNfcAntennaInfo.mockResolvedValue({
+      ...antennaInfo,
+      availableNfcAntennas: [{ locationX: 0, locationY: 20 }]
+    });
+
+    await expect(getNfcAntennaPosition()).resolves.toBeUndefined();
+  });
+
+  it("returns undefined when valid antennas span different thirds", async () => {
+    setModel("Pixel 8");
+    setBrand("Google");
+    mockGetNfcAntennaInfo.mockResolvedValue({
+      ...antennaInfo,
+      availableNfcAntennas: [
+        { locationX: 35, locationY: 20 },
+        { locationX: 35, locationY: 80 }
+      ]
+    });
+
+    await expect(getNfcAntennaPosition()).resolves.toBeUndefined();
+  });
 
   test.each([
     { name: "unsupported Android version", code: "ERR_NFC_UNSUPPORTED_DEVICE" },
