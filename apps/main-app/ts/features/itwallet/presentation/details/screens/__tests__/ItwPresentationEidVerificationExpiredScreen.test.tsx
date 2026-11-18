@@ -1,4 +1,4 @@
-import { useFocusEffect, useRoute } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 import { fireEvent, render } from "@testing-library/react-native";
 import I18n from "i18next";
 
@@ -8,34 +8,19 @@ import { ItwEidReissuingTrigger } from "../../analytics/types";
 import { ItwPresentationEidVerificationExpiredScreen } from "../ItwPresentationEidVerificationExpiredScreen";
 
 const mockNavigate = jest.fn();
-const mockPresent = jest.fn();
-const mockTrackItwSurveyRequest = jest.fn();
+const mockPopToTop = jest.fn();
 const mockTrackItwEidReissuingMandatory = jest.fn();
 const mockTrackItwEidReissuingMandatoryConfirm = jest.fn();
 const mockTrackItwEidReissuingMandatoryCancel = jest.fn();
 
 jest.mock("@react-navigation/native", () => ({
   ...jest.requireActual("@react-navigation/native"),
-  useRoute: jest.fn(),
   useFocusEffect: jest.fn()
 }));
 
 jest.mock("../../../../../../navigation/params/AppParamsList.ts", () => ({
   ...jest.requireActual("../../../../../../navigation/params/AppParamsList.ts"),
   useIONavigation: jest.fn()
-}));
-
-jest.mock("../../../../common/hooks/useItwEidFeedbackBottomSheet.tsx", () => ({
-  useItwEidFeedbackBottomSheet: () => ({
-    present: mockPresent,
-    bottomSheet: null
-  })
-}));
-
-jest.mock("../../../../analytics", () => ({
-  ...jest.requireActual("../../../../analytics"),
-  trackItwSurveyRequest: (properties: unknown) =>
-    mockTrackItwSurveyRequest(properties)
 }));
 
 jest.mock("../../analytics", () => ({
@@ -53,10 +38,7 @@ describe("ItwPresentationEidVerificationExpiredScreen", () => {
     jest.clearAllMocks();
     (useIONavigation as jest.Mock).mockReturnValue({
       navigate: mockNavigate,
-      popToTop: jest.fn()
-    });
-    (useRoute as jest.Mock).mockReturnValue({
-      name: "ITW_PRESENTATION_EID_VERIFICATION_EXPIRED"
+      popToTop: mockPopToTop
     });
     (useFocusEffect as jest.Mock).mockImplementation(callback => callback());
   });
@@ -91,7 +73,8 @@ describe("ItwPresentationEidVerificationExpiredScreen", () => {
     });
   });
 
-  it("tracks cancel and opens the feedback bottom sheet", () => {
+  // SIW-5526: the eID reissuance exit survey has been removed
+  it("tracks cancel and goes back to the wallet", () => {
     const component = render(<ItwPresentationEidVerificationExpiredScreen />);
 
     fireEvent.press(component.getByText(I18n.t("global.buttons.cancel")));
@@ -99,10 +82,6 @@ describe("ItwPresentationEidVerificationExpiredScreen", () => {
     expect(mockTrackItwEidReissuingMandatoryCancel).toHaveBeenCalledWith(
       ItwEidReissuingTrigger.ADD_CREDENTIAL
     );
-    expect(mockTrackItwSurveyRequest).toHaveBeenCalledWith({
-      survey_id: "confirm_eid_flow_exit",
-      survey_page: "ITW_PRESENTATION_EID_VERIFICATION_EXPIRED"
-    });
-    expect(mockPresent).toHaveBeenCalledTimes(1);
+    expect(mockPopToTop).toHaveBeenCalledTimes(1);
   });
 });

@@ -28,10 +28,6 @@ export const itwResetEngagementScreenShown = createStandardAction(
   "ITW_RESET_ENGAGEMENT_SCREEN_SHOWN"
 )();
 
-export const itwSetPidReissuingSurveyHidden = createStandardAction(
-  "ITW_SET_PID_REISSUING_SURVEY_HIDDEN"
-)<boolean>();
-
 export const itwSetCredentialUpgradeFailed = createStandardAction(
   "ITW_SET_CREDENTIAL_UPGRADE_FAILED"
 )<ReadonlyArray<CredentialMetadata["credentialType"]>>();
@@ -93,7 +89,6 @@ export type ItwPreferencesActions =
   | ActionType<typeof itwSetFiscalCodeWhitelisted>
   | ActionType<typeof itwSetIdentificationMode>
   | ActionType<typeof itwSetL2Fallback>
-  | ActionType<typeof itwSetPidReissuingSurveyHidden>
   | ActionType<typeof itwSetProximityNfcLocallyEnabled>
   | ActionType<typeof itwSetWalletActivationFeedbackBannerData>
   | ActionType<typeof itwSetWhatsNewLocallyEnabled>;

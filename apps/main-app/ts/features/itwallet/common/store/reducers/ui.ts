@@ -6,8 +6,7 @@ import { EidActivationExitStep } from "../../hooks/useItwActivationExitSurveyBot
 import { CredentialExitStep } from "../../hooks/useItwCredentialExitSurveyBottomSheet.tsx";
 import {
   itwSetActivationExitSurvey,
-  itwSetCredentialExitSurvey,
-  itwSetFeedbackBottomSheetVisible
+  itwSetCredentialExitSurvey
 } from "../actions/ui";
 
 export type ItwUiState = Readonly<{
@@ -15,11 +14,9 @@ export type ItwUiState = Readonly<{
   credentialExitSurvey:
     | undefined
     | { credential: MixPanelCredential; step: CredentialExitStep };
-  itwFeedbackBottomSheet: boolean;
 }>;
 
 export const itwUiInitialState: ItwUiState = {
-  itwFeedbackBottomSheet: false,
   activationExitSurvey: undefined,
   credentialExitSurvey: undefined
 };
@@ -34,9 +31,6 @@ const reducer = (
 
     case getType(itwSetCredentialExitSurvey):
       return { ...state, credentialExitSurvey: action.payload };
-
-    case getType(itwSetFeedbackBottomSheetVisible):
-      return { ...state, itwFeedbackBottomSheet: action.payload };
 
     default:
       return state;

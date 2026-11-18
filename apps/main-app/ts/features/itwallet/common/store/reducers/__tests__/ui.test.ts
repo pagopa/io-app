@@ -2,13 +2,11 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { GlobalState } from "../../../../../../store/reducers/types";
 import {
   itwSetActivationExitSurvey,
-  itwSetCredentialExitSurvey,
-  itwSetFeedbackBottomSheetVisible
+  itwSetCredentialExitSurvey
 } from "../../actions/ui";
 import {
   itwActivationExitSurveySelector,
-  itwCredentialExitSurveySelector,
-  itwFeedbackBottomSheetVisibleSelector
+  itwCredentialExitSurveySelector
 } from "../../selectors/ui";
 import reducer, { itwUiInitialState, ItwUiState } from "../ui";
 
@@ -17,17 +15,6 @@ describe("IT Wallet ui reducer", () => {
     expect(reducer(undefined, applicationChangeState("active"))).toEqual(
       itwUiInitialState
     );
-  });
-
-  it("should show and hide the itwFeedbackBottomSheet flag", () => {
-    const shown = reducer(
-      itwUiInitialState,
-      itwSetFeedbackBottomSheetVisible(true)
-    );
-    expect(shown.itwFeedbackBottomSheet).toBe(true);
-
-    const hidden = reducer(shown, itwSetFeedbackBottomSheetVisible(false));
-    expect(hidden.itwFeedbackBottomSheet).toBe(false);
   });
 
   it("should show and hide the activationExitSurvey", () => {
@@ -61,17 +48,12 @@ describe("IT Wallet ui reducer", () => {
 
 describe("ui selectors", () => {
   const uiState: ItwUiState = {
-    itwFeedbackBottomSheet: true,
     activationExitSurvey: { step: "intro" },
     credentialExitSurvey: { step: "data_share", credential: "ITW_PID" }
   };
   const state = {
     features: { itWallet: { ui: uiState } }
   } as GlobalState;
-
-  it("itwFeedbackBottomSheetVisibleSelector should return the flag", () => {
-    expect(itwFeedbackBottomSheetVisibleSelector(state)).toBe(true);
-  });
 
   it("itwActivationExitSurveySelector should return the activation exit survey state", () => {
     expect(itwActivationExitSurveySelector(state)).toEqual({ step: "intro" });

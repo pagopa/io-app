@@ -24,12 +24,8 @@ import {
   itwSetL2Fallback,
   itwSetWalletActivationFeedbackBannerData
 } from "../../common/store/actions/preferences";
-import {
-  itwSetActivationExitSurvey,
-  itwSetFeedbackBottomSheetVisible
-} from "../../common/store/actions/ui";
+import { itwSetActivationExitSurvey } from "../../common/store/actions/ui";
 import { selectItwSpecsVersion } from "../../common/store/selectors/environment";
-import { itwIsPidReissuingSurveyHiddenSelector } from "../../common/store/selectors/preferences";
 import { itwCredentialsSelector } from "../../credentials/store/selectors";
 import { itwFetchCredentialsCatalogue } from "../../credentialsCatalogue/store/actions";
 import {
@@ -296,21 +292,13 @@ export const closeIssuanceAction = ({ context, event }: EidActionArgs) => {
     return;
   }
 
-  const isSurveyHidden = itwIsPidReissuingSurveyHiddenSelector(
-    store.getState()
-  );
   const isReissuance = context.mode === "reissuance";
   const isL3 = context.level === "l3";
 
   const surveyStep = event.type === "close" ? event.surveyStep : undefined;
 
-  // The reissuance survey is reserved to "Documenti su IO" (L2) reissuance,
-  // while the activation exit survey is reserved to IT-Wallet (L3) activation.
-  if (isReissuance) {
-    if (!isL3 && !isSurveyHidden) {
-      store.dispatch(itwSetFeedbackBottomSheetVisible(true));
-    }
-  } else if (surveyStep && isL3) {
+  // The activation exit survey is reserved to IT-Wallet (L3) activation.
+  if (!isReissuance && surveyStep && isL3) {
     store.dispatch(itwSetActivationExitSurvey({ step: surveyStep }));
   }
 

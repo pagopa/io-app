@@ -38,7 +38,6 @@ exports[`itWalletReducer should match snapshot [if this test fails, remember to 
   "ui": {
     "activationExitSurvey": undefined,
     "credentialExitSurvey": undefined,
-    "itwFeedbackBottomSheet": false,
   },
   "walletInstance": {
     "attestation": undefined,
