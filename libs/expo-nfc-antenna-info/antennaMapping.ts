@@ -1,5 +1,4 @@
-export type NfcAntennaConfidence = "high" | "low" | "medium";
-export type NfcAntennaPosition = "bottom" | "center" | "top";
+import type { NfcAntennaConfidence, NfcAntennaPosition } from "./types";
 
 // SIW-5555, attachment 144256: classified rows and explicitly listed model codes.
 // No additional native identifiers or model families are inferred.

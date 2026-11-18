@@ -1,11 +1,9 @@
 import { requireNativeModule } from "expo-modules-core";
 import { Platform } from "react-native";
 
-import {
-  antennaMapping,
-  type NfcAntennaConfidence,
-  type NfcAntennaPosition
-} from "./antennaMapping";
+import type { NfcAntennaConfidence, NfcAntennaPosition } from "./types";
+
+import { antennaMapping } from "./antennaMapping";
 
 export type AvailableNfcAntenna = {
   locationX: number;
