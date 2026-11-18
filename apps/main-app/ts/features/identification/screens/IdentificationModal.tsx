@@ -440,7 +440,7 @@ export const IdentificationModal = () => {
                 <H2
                   accessibilityRole="header"
                   accessible
-                  color={"white"}
+                  color={colors.foreground.onAccent.default}
                   style={{ textAlign: "center" }}
                 >
                   {titleLabel}
