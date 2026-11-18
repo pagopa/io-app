@@ -47,12 +47,14 @@ const antennaPositions = ["top", "center", "bottom"] as const;
 const antennaBandCount = antennaPositions.length;
 
 /**
- * Resolves the antenna's vertical third, with API data taking precedence over
- * the SIW-5555 model mapping. API results have high confidence; mapping results
- * retain the confidence of the source document.
+ * Resolves the antenna's vertical third using Android's NFC antenna API. When
+ * the API, adapter, or antenna information is unavailable, an internal study's
+ * classification is looked up by Android brand and model. API results have high
+ * confidence; mapping results retain the study's confidence.
  *
- * Returns undefined on iOS, for unknown models, unusable geometry, or antennas
- * spanning different thirds. Unexpected native errors are propagated.
+ * Returns undefined on iOS, for unknown brand/model pairs, unusable geometry,
+ * or antennas spanning different thirds. Invalid API results do not fall back
+ * to the mapping. Unexpected native errors are propagated.
  */
 export const getNfcAntennaPosition = async (): Promise<
   NfcAntennaPositionInfo | undefined
