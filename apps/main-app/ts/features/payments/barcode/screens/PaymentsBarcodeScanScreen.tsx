@@ -1,10 +1,18 @@
 import { IOToast, triggerHaptic } from "@io-app/design-system";
-import { useNavigation } from "@react-navigation/native";
+import { discardSharedFile } from "@io-app/expo-share-pdf";
+import {
+  RouteProp,
+  useFocusEffect,
+  useNavigation,
+  useRoute
+} from "@react-navigation/native";
 import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { mixpanelTrack } from "../../../../mixpanel";
 import {
   AppParamsList,
@@ -28,10 +36,25 @@ import {
 } from "../../../barcode/types/IOBarcode";
 import { usePagoPaPayment } from "../../checkout/hooks/usePagoPaPayment";
 import { PaymentsCheckoutRoutes } from "../../checkout/navigation/routes";
+import { PaymentsBarcodeParamsList } from "../navigation/params";
 import { PaymentsBarcodeRoutes } from "../navigation/routes";
+import { IncomingShare } from "../utils/incomingShare";
 
 const PaymentsBarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const route =
+    useRoute<
+      RouteProp<
+        PaymentsBarcodeParamsList,
+        typeof PaymentsBarcodeRoutes.PAYMENT_BARCODE_SCAN
+      >
+    >();
+  const lastSharedFile = useRef<IncomingShare | undefined>(undefined);
+  const activeSharedFile = useRef(false);
+  const restoreScannerOnFocus = useRef(false);
+  const [isSharedFileMode, setSharedFileMode] = useState(
+    Boolean(route.params?.sharedFile)
+  );
   const { dataMatrixPosteEnabled } = useIOSelector(
     barcodesScannerConfigSelector
   );
@@ -48,6 +71,9 @@ const PaymentsBarcodeScanScreen = () => {
     barcodes: Array<IOBarcode>,
     origin: IOBarcodeOrigin
   ) => {
+    if (activeSharedFile.current) {
+      restoreScannerOnFocus.current = true;
+    }
     triggerHaptic("notificationSuccess");
 
     analytics.trackBarcodeScanSuccess("avviso", barcodes[0], origin);
@@ -90,6 +116,9 @@ const PaymentsBarcodeScanScreen = () => {
   };
 
   const handleBarcodeError = (failure: BarcodeFailure) => {
+    if (activeSharedFile.current) {
+      setSharedFileMode(false);
+    }
     IOToast.error(I18n.t("barcodeScan.error"));
     if (
       failure.reason === "UNKNOWN_CONTENT" &&
@@ -110,6 +139,8 @@ const PaymentsBarcodeScanScreen = () => {
 
   const {
     showFilePicker,
+    readImage,
+    readDocument,
     filePickerBottomSheet,
     isLoading: isFileReaderLoading,
     isFilePickerVisible
@@ -120,6 +151,51 @@ const PaymentsBarcodeScanScreen = () => {
     onBarcodeError: handleBarcodeError,
     barcodeAnalyticsFlow: "avviso"
   });
+
+  useFocusEffect(
+    useCallback(() => {
+      if (restoreScannerOnFocus.current) {
+        restoreScannerOnFocus.current = false;
+        setSharedFileMode(false);
+      }
+    }, [])
+  );
+
+  useEffect(() => {
+    const sharedFile = route.params?.sharedFile;
+    if (sharedFile && sharedFile !== lastSharedFile.current) {
+      lastSharedFile.current = sharedFile;
+      activeSharedFile.current = true;
+      setSharedFileMode(true);
+      void (async () => {
+        try {
+          if (sharedFile.kind === "pdf") {
+            await readDocument(sharedFile);
+          } else {
+            await readImage(sharedFile.uri);
+          }
+        } catch {
+          setSharedFileMode(false);
+          IOToast.error(I18n.t("barcodeScan.error"));
+        } finally {
+          activeSharedFile.current = false;
+          try {
+            discardSharedFile(sharedFile.uri);
+          } catch {
+            IOToast.error(I18n.t("barcodeScan.error"));
+          }
+        }
+      })();
+    }
+  }, [readDocument, readImage, route.params?.sharedFile]);
+
+  if (
+    isSharedFileMode ||
+    (route.params?.sharedFile &&
+      route.params.sharedFile !== lastSharedFile.current)
+  ) {
+    return <LoadingSpinnerOverlay isLoading={true} />;
+  }
 
   return (
     <>

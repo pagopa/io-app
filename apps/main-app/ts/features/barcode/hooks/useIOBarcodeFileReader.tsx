@@ -6,6 +6,7 @@ import {
 } from "expo-document-picker";
 import * as ImagePicker from "expo-image-picker";
 import * as A from "fp-ts/lib/Array";
+import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as T from "fp-ts/lib/Task";
@@ -43,6 +44,10 @@ type IOBarcodeFileReader = {
   isFilePickerVisible: boolean;
   /** Indicates that the decoder is currently reading/decoding barcodes */
   isLoading: boolean;
+  readDocument: (
+    asset: Pick<DocumentPickerAsset, "mimeType" | "uri">
+  ) => Promise<void>;
+  readImage: (uri: string) => Promise<void>;
   /**
    * Shows the document picker that lets the user select a PDF document from the
    * library
@@ -144,6 +149,24 @@ const useIOBarcodeFileReader = ({
     )();
   };
 
+  const readImage = async (uri: string) => {
+    setIsLoading(true);
+    try {
+      await pipe(
+        imageDecodingTask(
+          store.getState(),
+          { uri },
+          barcodeFormats,
+          barcodeTypes
+        ),
+        TE.mapLeft(handleBarcodeError),
+        TE.map(handleBarcodeSuccess)
+      )();
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const showImagePicker = async () => {
     setIsLoading(true);
 
@@ -172,7 +195,9 @@ const useIOBarcodeFileReader = ({
   };
 
   /** Handles the Barcode decoding from a PDF document */
-  const onDocumentSelected = async (asset: DocumentPickerAsset) => {
+  const onDocumentSelected = async (
+    asset: Pick<DocumentPickerAsset, "mimeType" | "uri">
+  ) => {
     const { uri, mimeType } = asset;
 
     if (mimeType !== "application/pdf") {
@@ -182,38 +207,48 @@ const useIOBarcodeFileReader = ({
 
     setIsLoading(true);
 
-    await pipe(
-      imageGenerationTask(uri),
-      TE.map(
-        A.reduce(
-          Promise.resolve([] as Array<IOBarcode>),
-          async (barcodes, { uri: internalUri }) =>
-            pipe(
-              imageDecodingTask(
-                store.getState(),
-                { uri: internalUri },
-                barcodeFormats,
-                barcodeTypes
-              ),
-              TE.map(async decodedBarcodes => [
-                ...(await barcodes),
-                ...decodedBarcodes
-              ]),
-              TE.getOrElse(() => T.of(barcodes))
-            )()
+    try {
+      const result = await pipe(
+        imageGenerationTask(uri),
+        TE.mapLeft(handleBarcodeError),
+        TE.map(
+          A.reduce(
+            Promise.resolve([] as Array<IOBarcode>),
+            async (barcodes, { uri: internalUri }) =>
+              pipe(
+                imageDecodingTask(
+                  store.getState(),
+                  { uri: internalUri },
+                  barcodeFormats,
+                  barcodeTypes
+                ),
+                TE.map(async decodedBarcodes => [
+                  ...(await barcodes),
+                  ...decodedBarcodes
+                ]),
+                TE.getOrElse(() => T.of(barcodes))
+              )()
+          )
+        ),
+        TE.map(async barcodes =>
+          pipe(
+            await barcodes,
+            O.of,
+            O.filter(A.isNonEmpty),
+            O.map(getUniqueBarcodes),
+            O.map(handleBarcodeSuccess),
+            O.getOrElse(() =>
+              handleBarcodeError({ reason: "BARCODE_NOT_FOUND" })
+            )
+          )
         )
-      ),
-      TE.map(async barcodes =>
-        pipe(
-          await barcodes,
-          O.of,
-          O.filter(A.isNonEmpty),
-          O.map(getUniqueBarcodes),
-          O.map(handleBarcodeSuccess),
-          O.getOrElse(() => handleBarcodeError({ reason: "BARCODE_NOT_FOUND" }))
-        )
-      )
-    )();
+      )();
+      if (E.isRight(result)) {
+        await result.right;
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   /**
@@ -284,6 +319,8 @@ const useIOBarcodeFileReader = ({
   return {
     showImagePicker: () => void showImagePicker(),
     showDocumentPicker: () => void showDocumentPicker(),
+    readImage,
+    readDocument: onDocumentSelected,
     filePickerBottomSheet: filePickerModal.bottomSheet,
     showFilePicker: handleShowFilePickerPressed,
     isLoading,
