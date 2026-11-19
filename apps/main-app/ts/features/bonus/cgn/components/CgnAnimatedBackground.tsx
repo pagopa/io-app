@@ -17,7 +17,7 @@ import { cgnColors } from "../colors";
 // Blob configuration
 const NUM_BLOB_POINTS = 7;
 const BLOB_BASE_RADIUS = 80;
-const WOBBLE_AMPLITUDE = 25; // How much the blob wobbles (±pixels)
+const WOBBLE_RATIO = 25 / BLOB_BASE_RADIUS;
 
 // Elliptical motion path parameters (as fraction of canvas dimensions)
 const MOTION_PATH_RADIUS_X_RATIO = 0.35;
@@ -31,7 +31,20 @@ const SCALE_RANGE = [0.95, 1.5] as const;
 const OPACITY_RANGE = [0.4, 0.5] as const;
 const SEED_RANGE = [1, 7] as const;
 
+// Keep the two lower shapes behind the searchbar throughout the animation.
+// Positions, radii and drift are relative to the header's dimensions.
+const HEADER_BLOBS = [
+  { centerX: 0.18, centerY: 0.94, radiusX: 0.57, radiusY: 0.72 },
+  { centerX: 0.5, centerY: -0.14, radiusX: 0.29, radiusY: 0.51 },
+  { centerX: 0.94, centerY: 0.73, radiusX: 0.44, radiusY: 0.66 }
+] as const;
+const HEADER_DRIFT_X_RATIO = 0.012;
+const HEADER_DRIFT_Y_RATIO = 0.018;
+const HEADER_WOBBLE_RATIO = 0.07;
+
 interface AnimatedBlobProps {
+  anchor?: (typeof HEADER_BLOBS)[number];
+  blobCount: number;
   canvasSize: { value: { height: number; width: number } };
   color: string;
   index: number;
@@ -74,12 +87,12 @@ const generateBlobPath = (
   time: number,
   centerX: number,
   centerY: number,
-  scale: number
+  radiusX: number,
+  radiusY: number,
+  wobbleRatio: number
 ): ReturnType<typeof Skia.Path.Make> => {
   "worklet";
   const path = Skia.Path.Make();
-  const scaledRadius = BLOB_BASE_RADIUS * scale;
-  const scaledAmplitude = WOBBLE_AMPLITUDE * scale;
 
   const points: Array<{ x: number; y: number }> = Array.from(
     { length: NUM_BLOB_POINTS },
@@ -87,15 +100,11 @@ const generateBlobPath = (
       const angle = (i / NUM_BLOB_POINTS) * Math.PI * 2;
 
       // Each point gets unique wobble based on its index
-      const wobble = organicWobble(i, time, seed);
-
-      // Map wobble (-1 to 1) to radius variation
-      const radiusOffset = wobble * scaledAmplitude;
-      const radius = scaledRadius + radiusOffset;
+      const radiusFactor = 1 + organicWobble(i, time, seed) * wobbleRatio;
 
       return {
-        x: centerX + radius * Math.cos(angle),
-        y: centerY + radius * Math.sin(angle)
+        x: centerX + radiusX * radiusFactor * Math.cos(angle),
+        y: centerY + radiusY * radiusFactor * Math.sin(angle)
       };
     }
   );
@@ -132,12 +141,17 @@ const generateBlobPath = (
   return path;
 };
 
-const AnimatedBlob = ({ index, canvasSize, color }: AnimatedBlobProps) => {
+const AnimatedBlob = ({
+  anchor,
+  blobCount,
+  index,
+  canvasSize,
+  color
+}: AnimatedBlobProps) => {
   // Derive properties from index using interpolation
   // This distributes blobs evenly and creates variety without repetitive config
-  const pathOffset = index / NUM_BLOBS; // Evenly distributed around ellipse
-  // Interpolate properties directly from blob index (0 to NUM_BLOBS-1)
-  const blobIndexRange = [0, NUM_BLOBS - 1] as const;
+  const pathOffset = index / blobCount;
+  const blobIndexRange = [0, blobCount - 1] as const;
   const seed = interpolate(index, blobIndexRange, SEED_RANGE);
   const scale = interpolate(index, blobIndexRange, SCALE_RANGE);
   const opacity = interpolate(index, blobIndexRange, OPACITY_RANGE);
@@ -149,22 +163,32 @@ const AnimatedBlob = ({ index, canvasSize, color }: AnimatedBlobProps) => {
 
   // Generate morphing blob path at current orbit position
   const blobPath = useDerivedValue(() => {
-    // Get center from canvas size (centered relative to the card)
     const { width, height } = canvasSize.value;
-    const ellipseCenterX = width / 2;
-    const ellipseCenterY = height / 2;
+    const ellipseCenterX = width * (anchor?.centerX ?? 0.5);
+    const ellipseCenterY = height * (anchor?.centerY ?? 0.5);
 
     // Calculate position on elliptical motion path (radii scale with canvas size)
     const angle = (pathOffset + orbitProgress.value) * Math.PI * 2;
-    const motionRadiusX = width * MOTION_PATH_RADIUS_X_RATIO;
-    const motionRadiusY = height * MOTION_PATH_RADIUS_Y_RATIO;
+    const motionRadiusX =
+      width * (anchor ? HEADER_DRIFT_X_RATIO : MOTION_PATH_RADIUS_X_RATIO);
+    const motionRadiusY =
+      height * (anchor ? HEADER_DRIFT_Y_RATIO : MOTION_PATH_RADIUS_Y_RATIO);
     const posX = ellipseCenterX + motionRadiusX * Math.cos(angle);
     const posY = ellipseCenterY + motionRadiusY * Math.sin(angle);
 
     // morphTime drives the blob shape deformation
     const morphTime = orbitProgress.value * MORPH_SPEED;
 
-    return generateBlobPath(seed, morphTime, posX, posY, scale);
+    const radius = BLOB_BASE_RADIUS * scale;
+    return generateBlobPath(
+      seed,
+      morphTime,
+      posX,
+      posY,
+      anchor ? width * anchor.radiusX : radius,
+      anchor ? height * anchor.radiusY : radius,
+      anchor ? HEADER_WOBBLE_RATIO : WOBBLE_RATIO
+    );
   });
 
   useEffect(() => {
@@ -185,13 +209,19 @@ const AnimatedBlob = ({ index, canvasSize, color }: AnimatedBlobProps) => {
   return <Path color={foregroundColor} opacity={opacity} path={blobPath} />;
 };
 
-export const CgnAnimatedBackground = () => {
+export const CgnAnimatedBackground = ({
+  variant = "card"
+}: {
+  variant?: "card" | "discovery";
+}) => {
   // Canvas size is provided via onSize callback and updated on the UI thread
   const canvasSize = useSharedValue({ width: 0, height: 0 });
   const colors = useFeatureColors(cgnColors);
 
   const backgroundColor = colors.detailCard.background;
   const foregroundColor = colors.detailCard.foreground;
+  const anchors = variant === "discovery" ? HEADER_BLOBS : undefined;
+  const blobCount = anchors?.length ?? NUM_BLOBS;
 
   return (
     <Canvas
@@ -199,8 +229,10 @@ export const CgnAnimatedBackground = () => {
       pointerEvents="none"
       style={[StyleSheet.absoluteFill, { backgroundColor }]}
     >
-      {Array.from({ length: NUM_BLOBS }, (_, index) => (
+      {Array.from({ length: blobCount }, (_, index) => (
         <AnimatedBlob
+          anchor={anchors?.[index]}
+          blobCount={blobCount}
           canvasSize={canvasSize}
           color={foregroundColor}
           index={index}

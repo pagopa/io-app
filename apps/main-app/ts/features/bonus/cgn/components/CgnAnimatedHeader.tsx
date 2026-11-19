@@ -89,7 +89,7 @@ const CgnAnimatedHeader = ({
           pointerEvents="none"
           style={{ ...StyleSheet.absoluteFill, zIndex: 0 }}
         >
-          <CgnAnimatedBackground />
+          <CgnAnimatedBackground variant="discovery" />
         </View>
         {Platform.OS === "ios" && (
           <Animated.View
