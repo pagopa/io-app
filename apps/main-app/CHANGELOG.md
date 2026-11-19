@@ -1,3 +1,18 @@
+## 3.44.0-rc.4 (2026-11-19)
+
+### Bug Fixes
+
+- [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] `react-native-screens` patch ([#8905](https://github.com/pagopa/io-app/pull/8905))
+
+### Chores
+
+- release 3.42.3-rc.0 ([#8906](https://github.com/pagopa/io-app/pull/8906))
+
+### ❤️ Thank You
+
+- Alessandro Mazzon
+- Emanuele Dall'Ara @LeleDallas
+
 ## 3.42.3-rc.0 (2026-11-19)
 
 ### Bug Fixes
