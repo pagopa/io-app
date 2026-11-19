@@ -850,7 +850,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
-                                  color="#555C70"
+                                  color="#636B82"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -2296,7 +2296,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
-                                  color="#555C70"
+                                  color="#636B82"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -3742,7 +3742,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
-                                  color="#555C70"
+                                  color="#636B82"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -5188,7 +5188,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
-                                  color="#555C70"
+                                  color="#636B82"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -6634,7 +6634,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
-                                  color="#555C70"
+                                  color="#636B82"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -8080,7 +8080,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
-                                  color="#555C70"
+                                  color="#636B82"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -9526,7 +9526,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
-                                  color="#555C70"
+                                  color="#636B82"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -10972,7 +10972,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
-                                  color="#555C70"
+                                  color="#636B82"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -12418,7 +12418,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
-                                  color="#555C70"
+                                  color="#636B82"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -13864,7 +13864,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
-                                  color="#555C70"
+                                  color="#636B82"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -15310,7 +15310,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
-                                  color="#555C70"
+                                  color="#636B82"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -16756,7 +16756,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
-                                  color="#555C70"
+                                  color="#636B82"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -18202,7 +18202,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
-                                  color="#555C70"
+                                  color="#636B82"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -19648,7 +19648,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
-                                  color="#555C70"
+                                  color="#636B82"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -21094,7 +21094,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
-                                  color="#555C70"
+                                  color="#636B82"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -22540,7 +22540,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
-                                  color="#555C70"
+                                  color="#636B82"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -23986,7 +23986,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
-                                  color="#555C70"
+                                  color="#636B82"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -25432,7 +25432,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
-                                  color="#555C70"
+                                  color="#636B82"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
