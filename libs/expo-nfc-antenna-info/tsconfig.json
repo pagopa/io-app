@@ -8,6 +8,6 @@
     "jsx": "react-jsx",
     "types": ["jest"]
   },
-  "include": ["index.ts", "antennaMapping.ts", "__tests__/**/*.ts"],
+  "include": ["index.ts", "position/**/*.ts", "__tests__/**/*.ts"],
   "exclude": ["node_modules"]
 }

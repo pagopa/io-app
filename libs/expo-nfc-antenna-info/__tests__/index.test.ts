@@ -54,14 +54,6 @@ describe("getNfcAntennaPosition", () => {
     jest.resetAllMocks();
   });
 
-  it("returns undefined on iOS without accessing the native API or mapping", async () => {
-    setModel("Pixel 8");
-    jest.replaceProperty(Platform, "OS", "ios");
-
-    await expect(getNfcAntennaPosition()).resolves.toBeUndefined();
-    expect(mockGetNfcAntennaInfo).not.toHaveBeenCalled();
-  });
-
   test.each([
     { name: "just below the top edge", y: 1, position: "top" },
     { name: "end of top third", y: 49, position: "top" },
@@ -176,16 +168,20 @@ describe("getNfcAntennaPosition", () => {
     });
   });
 
-  it("returns undefined for invalid geometry when the device is not mapped", async () => {
+  it("defaults to bottom for invalid geometry when the device is not mapped", async () => {
     mockGetNfcAntennaInfo.mockResolvedValue({
       ...antennaInfo,
       availableNfcAntennas: [{ locationX: 0, locationY: 20 }]
     });
 
-    await expect(getNfcAntennaPosition()).resolves.toBeUndefined();
+    await expect(getNfcAntennaPosition()).resolves.toStrictEqual({
+      position: "bottom",
+      confidence: "low",
+      source: undefined
+    });
   });
 
-  it("returns undefined when valid antennas span different thirds", async () => {
+  it("defaults to bottom without using the mapping when valid antennas span different thirds", async () => {
     setModel("Pixel 8");
     setBrand("Google");
     mockGetNfcAntennaInfo.mockResolvedValue({
@@ -196,7 +192,11 @@ describe("getNfcAntennaPosition", () => {
       ]
     });
 
-    await expect(getNfcAntennaPosition()).resolves.toBeUndefined();
+    await expect(getNfcAntennaPosition()).resolves.toStrictEqual({
+      position: "bottom",
+      confidence: "low",
+      source: undefined
+    });
   });
 
   test.each([
@@ -342,11 +342,15 @@ describe("getNfcAntennaPosition", () => {
         brand: "Redmi",
         model: "Redmi Note 9 Pro"
       }
-    ])("returns undefined for $name", async ({ brand, model }) => {
+    ])("defaults to bottom for $name", async ({ brand, model }) => {
       setModel(model);
       setBrand(brand);
 
-      await expect(getNfcAntennaPosition()).resolves.toBeUndefined();
+      await expect(getNfcAntennaPosition()).resolves.toStrictEqual({
+        position: "bottom",
+        confidence: "low",
+        source: undefined
+      });
     });
 
     it("identifies the Oppo A52 by brand and model", async () => {
@@ -364,6 +368,17 @@ describe("getNfcAntennaPosition", () => {
   it("propagates unexpected native errors instead of hiding them with the mapping", async () => {
     setModel("Pixel 8");
     const error = new Error("Native module failure");
+    mockGetNfcAntennaInfo.mockRejectedValue(error);
+
+    await expect(getNfcAntennaPosition()).rejects.toBe(error);
+  });
+
+  test.each([
+    { name: "unknown error code", error: { code: "ERR_UNEXPECTED" } },
+    { name: "non-string error code", error: { code: 123 } },
+    { name: "null", error: null },
+    { name: "string", error: "ERR_NFC_UNSUPPORTED_DEVICE" }
+  ])("propagates $name", async ({ error }) => {
     mockGetNfcAntennaInfo.mockRejectedValue(error);
 
     await expect(getNfcAntennaPosition()).rejects.toBe(error);

@@ -9,7 +9,8 @@
   "source": "index.ts",
   "files": [
     "index.ts",
-    "antennaMapping.ts",
+    "types.ts",
+    "position",
     "android",
     "ios",
     "expo-module.config.json",
@@ -17,6 +18,9 @@
   ],
   "scripts": {
     "tsc-noemit": "tsc --noEmit"
+  },
+  "dependencies": {
+    "zod": "4.3.6"
   },
   "devDependencies": {
     "@types/jest": "catalog:",

@@ -1,23 +1,26 @@
 # NFC antenna information
 
 `getNfcAntennaPosition()` returns
-`Promise<{ position: "top" | "center" | "bottom"; source: "api" | "mapping"; confidence: "high" | "medium" | "low" } | undefined>`.
+`Promise<NfcAntennaPositionInfo>`, with `position: "top" | "center" | "bottom"`,
+`source: "api" | "mapping" | undefined`, and `confidence: "high" | "medium" | "low"`.
 Public types are defined in `types.ts` and can be imported from `@io-app/expo-nfc-antenna-info`.
 
-- iOS returns `undefined` without calling Android APIs.
+- Every public function rejects if the Android native module is unavailable,
+  including on iOS.
 - Android first reads `NfcAntennaInfo` (API 34+). The device height is split
   into equal thirds: `(0, height/3)`, `[height/3, 2*height/3)`, and
   `[2*height/3, height]`. All antennas must have valid coordinates and fall
   in the same third. API results have `high` confidence.
 - If the native API reports an unsupported device, unavailable adapter,
   unavailable antenna information, invalid dimensions or coordinates, or no
-  antennas, the function looks up `antennaMapping.ts` using Android
+  antennas, the function looks up `position/mapping.ts` using Android
   `Build.BRAND` and `Build.MODEL`. Zero dimensions and zero X or Y coordinates
   are treated as invalid. Matching ignores case and surrounding whitespace.
   Unexpected native errors reject the promise.
-- Antennas with valid coordinates spanning different thirds return `undefined`,
-  without a mapping fallback.
-- Unknown or unclassified models return `undefined`.
+- Antennas with valid coordinates spanning different thirds do not use the
+  mapping fallback.
+- Whenever the position cannot be determined (including unknown or unclassified
+  models), the result is `{ position: "bottom", confidence: "low", source: undefined }`.
 
 The mapping is based on an internal study that classifies NFC antenna
 positions and assigns a confidence level to each model. The study's
@@ -36,4 +39,4 @@ It covers 175 of 184 classified source rows; 32 ambiguous pairs are excluded.
 The remaining rows include names without an exact catalog match. For example,
 Reno6 5G is nevertheless represented by the separately listed CPH2251 code.
 
-The main app's NFC Playground displays the result; no production flow uses it yet.
+The main app's Android NFC Playground displays the result; no production flow uses it yet.

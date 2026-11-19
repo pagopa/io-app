@@ -30,7 +30,6 @@ export const NfcPlayground = () => {
   if (Platform.OS === "ios") {
     return (
       <IOScrollView centerContent={true}>
-        <AntennaPosition />
         <OperationResultScreenContent
           pictogram="accessDenied"
           subtitle="NFC information is not accessible on iOS devices."

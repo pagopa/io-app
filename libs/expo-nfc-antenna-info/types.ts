@@ -17,5 +17,5 @@ export type NfcAntennaPosition = "bottom" | "center" | "top";
 export type NfcAntennaPositionInfo = {
   confidence: NfcAntennaConfidence;
   position: NfcAntennaPosition;
-  source: "api" | "mapping";
+  source: "api" | "mapping" | undefined;
 };

@@ -1,9 +1,14 @@
 import { requireNativeModule } from "expo-modules-core";
 import { Platform } from "react-native";
+import { z } from "zod";
 
 import type { NfcAntennaInfoResult, NfcAntennaPositionInfo } from "./types";
 
-import { antennaMapping } from "./antennaMapping";
+import {
+  getMappedNfcAntennaPosition,
+  getNfcAntennaBands,
+  getNfcAntennaPositionFromBands
+} from "./position";
 
 export type {
   AvailableNfcAntenna,
@@ -37,14 +42,36 @@ export const getNfcAntennaInfo = (): Promise<NfcAntennaInfoResult> => {
   return NfcAntennaInfoModule.getNfcAntennaInfo();
 };
 
-const unavailableAntennaInfoCodes = new Set([
-  "ERR_NFC_ADAPTER_UNAVAILABLE",
-  "ERR_NFC_ANTENNA_INFO_UNAVAILABLE",
-  "ERR_NFC_UNSUPPORTED_DEVICE"
-]);
+const unavailableAntennaInfoError = z.object({
+  code: z.enum([
+    "ERR_NFC_ADAPTER_UNAVAILABLE",
+    "ERR_NFC_ANTENNA_INFO_UNAVAILABLE",
+    "ERR_NFC_UNSUPPORTED_DEVICE"
+  ])
+});
 
-const antennaPositions = ["top", "center", "bottom"] as const;
-const antennaBandCount = antennaPositions.length;
+/**
+ * Returns undefined for known API-unavailability errors and propagates
+ * unexpected errors.
+ */
+const getAvailableNfcAntennaInfo = (): Promise<
+  NfcAntennaInfoResult | undefined
+> =>
+  getNfcAntennaInfo().catch((error: unknown) => {
+    if (unavailableAntennaInfoError.safeParse(error).success) {
+      return undefined;
+    }
+    throw error;
+  });
+
+/** Looks up the current Android device in the study's brand/model mapping. */
+const getDeviceNfcAntennaPosition = (): NfcAntennaPositionInfo | undefined => {
+  if (Platform.OS !== "android") {
+    return undefined;
+  }
+  const { Brand, Model } = Platform.constants;
+  return getMappedNfcAntennaPosition({ brand: Brand, model: Model });
+};
 
 /**
  * Resolves the antenna's vertical third using Android's NFC antenna API. When
@@ -53,84 +80,28 @@ const antennaBandCount = antennaPositions.length;
  * and model. API results have high confidence; mapping results retain the
  * study's confidence.
  *
- * Returns undefined on iOS, for unmapped brand/model pairs when a fallback is
- * needed, or for antennas spanning different thirds. Unexpected native errors
- * are propagated.
+ * Defaults to bottom with low confidence and no source when the position cannot
+ * be determined. Unexpected native errors are propagated.
+ *
+ * @throws If the Android native module is unavailable.
  */
-export const getNfcAntennaPosition = async (): Promise<
-  NfcAntennaPositionInfo | undefined
-> => {
-  if (Platform.OS !== "android") {
-    return undefined;
-  }
-
-  const { Brand, Model } = Platform.constants;
-  const getMappingFallback = (): NfcAntennaPositionInfo | undefined => {
-    const key = `${Brand.trim().toLowerCase()}|${Model.trim().toLowerCase()}`;
-    const entry = Object.hasOwn(antennaMapping, key)
-      ? antennaMapping[key]
-      : undefined;
-    if (!entry) {
-      return undefined;
+export const getNfcAntennaPosition =
+  async (): Promise<NfcAntennaPositionInfo> => {
+    if (!NfcAntennaInfoModule) {
+      return Promise.reject(
+        new Error("NfcAntennaInfo is only available on Android devices.")
+      );
     }
-    const [position, confidence] = entry;
-    return { position, source: "mapping", confidence };
-  };
 
-  const info = await getNfcAntennaInfo().catch((error: unknown) => {
-    if (
-      typeof error === "object" &&
-      error !== null &&
-      "code" in error &&
-      typeof error.code === "string" &&
-      unavailableAntennaInfoCodes.has(error.code)
-    ) {
-      return undefined;
-    }
-    throw error;
-  });
-
-  if (!info) {
-    return getMappingFallback();
-  }
-
-  const { deviceHeight, deviceWidth, availableNfcAntennas } = info;
-  if (
-    !Number.isFinite(deviceHeight) ||
-    !Number.isFinite(deviceWidth) ||
-    deviceHeight <= 0 ||
-    deviceWidth <= 0 ||
-    availableNfcAntennas.length === 0
-  ) {
-    return getMappingFallback();
-  }
-
-  const bands = availableNfcAntennas.map(({ locationX, locationY }) => {
-    if (
-      !Number.isFinite(locationX) ||
-      !Number.isFinite(locationY) ||
-      locationX <= 0 ||
-      locationX > deviceWidth ||
-      locationY <= 0 ||
-      locationY > deviceHeight
-    ) {
-      return undefined;
-    }
-    // Include the device's bottom edge in the last third.
-    const band = Math.min(
-      Math.floor((locationY / deviceHeight) * antennaBandCount),
-      antennaBandCount - 1
+    const info = await getAvailableNfcAntennaInfo();
+    const bands = info ? getNfcAntennaBands(info) : undefined;
+    const position = bands
+      ? getNfcAntennaPositionFromBands(bands)
+      : getDeviceNfcAntennaPosition();
+    return (
+      position ?? { position: "bottom", confidence: "low", source: undefined }
     );
-    return antennaPositions[band];
-  });
-  if (bands.some(band => band === undefined)) {
-    return getMappingFallback();
-  }
-  const [position] = bands;
-  return position && bands.every(band => band === position)
-    ? { position, source: "api", confidence: "high" }
-    : undefined;
-};
+  };
 
 /**
  * Checks if Host Card Emulation (HCE) is supported on the device.
