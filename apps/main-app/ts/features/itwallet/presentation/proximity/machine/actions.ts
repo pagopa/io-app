@@ -3,6 +3,8 @@ import { ActionArgs, assign } from "xstate";
 
 import { assert } from "../../../../../utils/assert";
 import {
+  trackItwProximityBluetoothAccessClose,
+  trackItwProximityBluetoothActivationClose,
   trackItwProximityPresentationCompleted,
   trackItwProximityQrCodeLoadingFailure,
   trackItwProximityStart
@@ -168,6 +170,14 @@ export const trackProximityStartAction = ({
   trackItwProximityStart({
     proximity_flow: getProximityFlow(context)
   });
+};
+
+export const trackBluetoothAccessCloseAction = () => {
+  trackItwProximityBluetoothAccessClose();
+};
+
+export const trackBluetoothActivationCloseAction = () => {
+  trackItwProximityBluetoothActivationClose();
 };
 
 export const trackProximitySuccessAction = ({
