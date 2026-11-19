@@ -1,5 +1,5 @@
 import {
-  IOColors,
+  IOColorsLegacy,
   IOThemeDark,
   IOThemeLight,
   ListItemHeader,
@@ -39,8 +39,8 @@ export const updateNavigationBarColor = (theme?: ColorModeChoice) => {
     const resolvedTheme = theme === "auto" ? "light" : theme;
     const backgroundColor =
       resolvedTheme === "dark"
-        ? IOColors[IOThemeDark["appBackground-primary"]]
-        : IOColors[IOThemeLight["appBackground-primary"]];
+        ? IOColorsLegacy[IOThemeDark["appBackground-primary"]]
+        : IOColorsLegacy[IOThemeLight["appBackground-primary"]];
 
     setNavigationBarColor(resolvedTheme, backgroundColor).catch(constVoid);
   }

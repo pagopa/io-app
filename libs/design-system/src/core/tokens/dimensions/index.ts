@@ -272,7 +272,7 @@ const componentPictogramSize = {
 const componentSize = {
   avatar: { xsmall: 30, small: 44, medium: 66 },
   codeInput: { dot: 16 },
-  iconButton: { small: 24, default: 48, large: 56 },
+  iconButton: { small: 24, large: 56 },
   module: { graphic: 48 } /* used in `ModuleNavigationAlt` (icon or image) */,
   /* Checkbox and radio control */
   selection: { control: 24 }

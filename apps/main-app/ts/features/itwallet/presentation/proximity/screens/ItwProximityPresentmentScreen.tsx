@@ -3,15 +3,14 @@ import {
   BodySmall,
   H6,
   HeaderSecondLevel,
-  hexToRgba,
   IOButton,
-  IOColors,
   IODimensions,
+  useIOColors,
   VSpacer,
   VStack
 } from "@io-app/design-system";
 import I18n from "i18next";
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import Animated, {
   LinearTransition,
@@ -39,7 +38,7 @@ import { ItwProximityQrCode as ItwProximityQrCodeTracking } from "../analytics/t
 import { ItwProximityQrCodeImage } from "../components/ItwProximityQrCodeImage.tsx";
 import { ItwProximityQrCodeInfoBanner } from "../components/ItwProximityQrCodeInfoBanner.tsx";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
-import { selectFailure, selectIsLoading } from "../machine/selectors.ts";
+import { selectFailure } from "../machine/selectors.ts";
 import { ItwProximityParamsList } from "../navigation/ItwProximityParamsList.ts";
 import { shouldShowExpiredProximityCredentialsBannerSelector } from "../store/selectors/credentials.ts";
 
@@ -55,6 +54,7 @@ type ItwProximityPresentmentScreenProps = IOStackNavigationRouteProps<
 export const ItwProximityPresentmentScreen = ({
   route
 }: ItwProximityPresentmentScreenProps) => {
+  const colors = useIOColors();
   const { source } = route.params;
 
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
@@ -63,7 +63,6 @@ export const ItwProximityPresentmentScreen = ({
   const safeAreaInsets = useSafeAreaInsets();
 
   const machineRef = ItwProximityMachineContext.useActorRef();
-  const isLoading = ItwProximityMachineContext.useSelector(selectIsLoading);
   const failure = ItwProximityMachineContext.useSelector(selectFailure);
 
   const shouldShowExpiredCredentialsBanner = useIOSelector(
@@ -78,13 +77,15 @@ export const ItwProximityPresentmentScreen = ({
 
   const isFailure = !!failure;
 
-  useDebugInfo({
-    isLoading,
-    failure,
-    // isPermissionsRequired,
-    // isBluetoothRequired,
-    shouldShowExpiredCredentialsBanner
-  });
+  useDebugInfo(
+    useMemo(
+      () => ({
+        failure,
+        shouldShowExpiredCredentialsBanner
+      }),
+      [failure, shouldShowExpiredCredentialsBanner]
+    )
+  );
 
   // Auto-start machine on mount.
   useEffect(() => {
@@ -100,6 +101,7 @@ export const ItwProximityPresentmentScreen = ({
       header: () => (
         <HeaderSecondLevel
           animatedRef={animatedScrollViewRef}
+          disablePressAnimation={true}
           enableDiscreteTransition={true}
           firstAction={{
             icon: "closeLarge",
@@ -161,7 +163,7 @@ export const ItwProximityPresentmentScreen = ({
 
       <ItwBrandedBox
         backgroundVariant={"gradient"}
-        style={styles.qrCodeShadow}
+        style={{ boxShadow: `0px 4px 32px ${colors.surface.shadow}` }}
         variant={isFailure ? "error" : "default"}
       >
         <VStack space={16}>
@@ -216,9 +218,6 @@ export const ItwProximityPresentmentScreen = ({
 const styles = StyleSheet.create({
   expiredBanner: {
     marginBottom: 24
-  },
-  qrCodeShadow: {
-    boxShadow: `0px 4px 32px ${hexToRgba(IOColors.black, 0.1)}`
   },
   nfcSection: {
     alignSelf: "center",

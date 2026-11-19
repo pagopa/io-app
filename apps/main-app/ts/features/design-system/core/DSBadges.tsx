@@ -2,10 +2,9 @@ import {
   Badge,
   H4,
   HStack,
-  IOColors,
+  IOColorPalette,
   IODimensions,
   Tag,
-  useIOTheme,
   VStack
 } from "@io-app/design-system";
 import { View } from "react-native";
@@ -18,25 +17,21 @@ const sectionMargin = 40;
 const componentMargin = 24;
 const componentInnerMargin = 8;
 
-export const DSBadges = () => {
-  const theme = useIOTheme();
-
-  return (
-    <DesignSystemScreen title={"Badge"}>
-      <VStack space={sectionMargin}>
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Tag</H4>
-          {renderTag()}
-        </VStack>
-
-        <VStack space={sectionTitleMargin}>
-          <H4 color={theme["textHeading-default"]}>Badge</H4>
-          {renderBadge()}
-        </VStack>
+export const DSBadges = () => (
+  <DesignSystemScreen title={"Badge"}>
+    <VStack space={sectionMargin}>
+      <VStack space={sectionTitleMargin}>
+        <H4>Tag</H4>
+        {renderTag()}
       </VStack>
-    </DesignSystemScreen>
-  );
-};
+
+      <VStack space={sectionTitleMargin}>
+        <H4>Badge</H4>
+        {renderBadge()}
+      </VStack>
+    </VStack>
+  </DesignSystemScreen>
+);
 
 const renderBadge = () => (
   <VStack space={componentMargin}>
@@ -82,11 +77,14 @@ const renderTag = () => (
     <DSComponentViewerBox name={"Tag · Without icon"}>
       <Tag text={"No icon"} variant="noIcon" />
     </DSComponentViewerBox>
+    <DSComponentViewerBox name={"Tag · Force light mode"}>
+      <Tag forceLightMode text={"Valido"} variant="success" />
+    </DSComponentViewerBox>
     <DSComponentViewerBox name={"Tag · Custom icon (with custom color)"}>
       <Tag
         icon={{
           name: "categTravel",
-          color: "grey-450"
+          color: "grey"
         }}
         text={"Custom icon"}
         variant="custom"
@@ -95,7 +93,7 @@ const renderTag = () => (
     <DSComponentViewerBox name={"Tag · Stress test"}>
       <View
         style={{
-          backgroundColor: IOColors["error-100"],
+          backgroundColor: IOColorPalette.red[100],
           padding: 8,
           width: "40%",
           borderRadius: IODimensions.radius.tag + 8

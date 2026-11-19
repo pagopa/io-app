@@ -4,6 +4,7 @@ import { BackendStatus } from "@io-app/api-types/generated/definitions/content/B
 import { BancomatPayConfig } from "@io-app/api-types/generated/definitions/content/BancomatPayConfig";
 import { Banner } from "@io-app/api-types/generated/definitions/content/Banner";
 import { BarcodesScannerConfig } from "@io-app/api-types/generated/definitions/content/BarcodesScannerConfig";
+import { CgnFeaturedOpportunity } from "@io-app/api-types/generated/definitions/content/CgnFeaturedOpportunity";
 import { FimsServiceConfiguration } from "@io-app/api-types/generated/definitions/content/FimsServiceConfiguration";
 import { OSPerPlatform } from "@io-app/api-types/generated/definitions/content/OSPerPlatform";
 import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
@@ -35,6 +36,7 @@ export type RemoteConfigState = O.Option<BackendStatus["config"]>;
 
 const initialRemoteConfigState: RemoteConfigState = O.none;
 const emptyArray: ReadonlyArray<string> = []; // to avoid unnecessary rerenders
+const emptyCgnFeaturedOpportunities: ReadonlyArray<CgnFeaturedOpportunity> = [];
 
 export default function remoteConfigReducer(
   state: RemoteConfigState = initialRemoteConfigState,
@@ -77,6 +79,19 @@ export const cgnMerchantsModalSelector = createSelector(
       ),
       O.getOrElse(() => false)
     )
+);
+
+export const cgnFeaturedOpportunitiesSelector = createSelector(
+  remoteConfigSelector,
+  remoteConfig => {
+    const featuredOpportunities = O.isSome(remoteConfig)
+      ? remoteConfig.value.cgn?.featured_opportunities
+      : undefined;
+    return featuredOpportunities &&
+      isMinAppVersionSupported(O.some(featuredOpportunities))
+      ? featuredOpportunities.opportunities
+      : emptyCgnFeaturedOpportunities;
+  }
 );
 
 export const isCGNDiscoveryBannerEnabledSelector = (state: GlobalState) =>

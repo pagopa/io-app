@@ -1,6 +1,6 @@
 import {
   ContentWrapper,
-  IOColors,
+  IOColorsLegacy,
   useIOTheme,
   VSpacer,
   WithTestID
@@ -32,7 +32,7 @@ export const ServicesHeaderSection = ({
   return (
     <View
       style={{
-        backgroundColor: IOColors[theme["appBackground-secondary"]],
+        backgroundColor: IOColorsLegacy[theme["appBackground-secondary"]],
         paddingBottom: extraBottomPadding,
         paddingTop: WINDOW_HEIGHT,
         marginTop: -WINDOW_HEIGHT

@@ -1,8 +1,8 @@
 import { ComponentProps, useCallback, useMemo } from "react";
 import { View } from "react-native";
 
-import { useIOTheme } from "../../context";
-import { IODimensions, IOListItemStyles } from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions, IORoleColor } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { Badge } from "../badge";
@@ -10,6 +10,7 @@ import { IconButton, IOButton, IOButtonLinkSpecificProps } from "../buttons";
 import { Icon, IOIcons } from "../icons";
 import { VSpacer } from "../layout";
 import { BodySmall, H6 } from "../typography";
+import { IOListItemStyles } from "./styles";
 
 export type ListItemHeader = IconProps &
   WithTestID<{
@@ -43,7 +44,8 @@ type IconButtonActionProps = {
 
 type IconProps =
   | {
-      iconColor?: ComponentProps<typeof Icon>["color"];
+      /* A semantic token: it has a value in both modes */
+      iconColor?: IORoleColor<"foreground">;
       iconName: IOIcons;
     }
   | { iconColor?: never; iconName?: never };
@@ -57,7 +59,7 @@ export const ListItemHeader = ({
   accessibilityLabel,
   testID
 }: ListItemHeader) => {
-  const theme = useIOTheme();
+  const listItemColors = useIOColors().component.listItem;
 
   const { dynamicFontScale, spacingScaleMultiplier, hugeFontEnabled } =
     useIOFontDynamicScale();
@@ -69,10 +71,10 @@ export const ListItemHeader = ({
         accessibilityRole="header"
         accessible
       >
-        <H6 color={theme["textBody-tertiary"]}>{label}</H6>
+        <H6 color={listItemColors.foreground.description}>{label}</H6>
       </View>
     ),
-    [label, accessibilityLabel, theme]
+    [label, accessibilityLabel, listItemColors]
   );
 
   const listItemAction = useCallback(() => {
@@ -107,7 +109,7 @@ export const ListItemHeader = ({
           >
             <Icon
               allowFontScaling
-              color={iconColor ?? theme["icon-decorative"]}
+              color={iconColor ?? listItemColors.foreground.icon}
               name={iconName}
               size={IODimensions.size.icon.listItem}
             />
@@ -125,7 +127,10 @@ export const ListItemHeader = ({
       {description && (
         <View>
           <VSpacer size={IODimensions.gap.listItem.default.description} />
-          <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
+          <BodySmall
+            color={listItemColors.foreground.description}
+            weight="Regular"
+          >
             {description}
           </BodySmall>
         </View>

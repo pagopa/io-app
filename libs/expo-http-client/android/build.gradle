@@ -1,0 +1,27 @@
+plugins {
+  id 'com.android.library'
+  id 'expo-module-gradle-plugin'
+}
+
+group = 'expo.modules.httpclient'
+version = '2.0.0'
+
+def ktorVersion = '3.2.3'
+def coroutinesVersion = '1.8.1'
+
+android {
+  namespace "expo.modules.httpclient"
+  defaultConfig {
+    versionCode 1
+    versionName "2.0.0"
+  }
+  lintOptions {
+    abortOnError false
+  }
+}
+
+dependencies {
+  implementation "io.ktor:ktor-client-core:${ktorVersion}"
+  implementation "io.ktor:ktor-client-android:${ktorVersion}"
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutinesVersion}"
+}

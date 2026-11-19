@@ -345,7 +345,6 @@ exports[`CountdownComponent should render correctly when visible is true 1`] = `
                           onLayout={[Function]}
                           style={
                             {
-                              "backgroundColor": "#FFFFFF",
                               "height": 16,
                               "justifyContent": "center",
                               "width": "100%",
@@ -353,39 +352,48 @@ exports[`CountdownComponent should render correctly when visible is true 1`] = `
                           }
                         >
                           <View
-                            collapsable={false}
-                            jestAnimatedProps={
-                              {
-                                "value": {},
-                              }
-                            }
-                            jestAnimatedStyle={
-                              {
-                                "value": {
-                                  "width": 0,
-                                },
-                              }
-                            }
-                            jestInlineStyle={
-                              [
-                                {
-                                  "backgroundColor": "#0B3EE3",
-                                  "height": 4,
-                                },
-                              ]
-                            }
                             style={
-                              [
-                                {
-                                  "width": 0,
-                                },
-                                {
-                                  "backgroundColor": "#0B3EE3",
-                                  "height": 4,
-                                },
-                              ]
+                              {
+                                "backgroundColor": "#F4F5F8",
+                                "height": 4,
+                              }
                             }
-                          />
+                          >
+                            <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "width": 0,
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "backgroundColor": "#0B3EE3",
+                                    "height": 4,
+                                  },
+                                ]
+                              }
+                              style={
+                                [
+                                  {
+                                    "width": 0,
+                                  },
+                                  {
+                                    "backgroundColor": "#0B3EE3",
+                                    "height": 4,
+                                  },
+                                ]
+                              }
+                            />
+                          </View>
                         </View>
                         <View
                           style={

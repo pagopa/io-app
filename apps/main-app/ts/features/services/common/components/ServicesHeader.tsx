@@ -2,7 +2,7 @@ import {
   Avatar,
   BodySmall,
   H3,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   IODimensionScale,
   IOSkeleton,
@@ -74,7 +74,7 @@ export const ServicesHeaderSkeleton = () => (
   >
     <View style={styles.itemAvatar}>
       <IOSkeleton
-        color={IOColors["grey-200"]}
+        color={IOColorsLegacy["grey-200"]}
         radius={IODimensions.radius.avatar.medium}
         shape="square"
         size={IODimensions.size.avatar.medium}
@@ -82,21 +82,21 @@ export const ServicesHeaderSkeleton = () => (
     </View>
     <VStack space={8} style={{ flex: 1 }}>
       <IOSkeleton
-        color={IOColors["grey-200"]}
+        color={IOColorsLegacy["grey-200"]}
         height={16}
         radius={8}
         shape="rectangle"
         width={"100%"}
       />
       <IOSkeleton
-        color={IOColors["grey-200"]}
+        color={IOColorsLegacy["grey-200"]}
         height={16}
         radius={8}
         shape="rectangle"
         width={"80%"}
       />
       <IOSkeleton
-        color={IOColors["grey-200"]}
+        color={IOColorsLegacy["grey-200"]}
         height={8}
         radius={8}
         shape="rectangle"

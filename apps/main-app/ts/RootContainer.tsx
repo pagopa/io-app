@@ -12,6 +12,7 @@ import {
   setupAndroidNotificationChannel
 } from "./features/pushNotifications/utils/configurePushNotification";
 import { useAppThemeConfiguration } from "./hooks/useAppThemeConfiguration";
+import { useHapticFeedbackConfiguration } from "./hooks/useHapticFeedbackConfiguration";
 import { setLocale } from "./i18n";
 import { IONavigationContainer } from "./navigation/AppStackNavigator";
 import RootModal from "./screens/modal/RootModal";
@@ -123,6 +124,7 @@ const RootContainerInner = ({ store }: { store: Store }) => {
 
 const RootContainerFC = ({ store }: { store: Store }) => {
   useAppThemeConfiguration();
+  useHapticFeedbackConfiguration();
 
   return <RootContainerInner store={store} />;
 };

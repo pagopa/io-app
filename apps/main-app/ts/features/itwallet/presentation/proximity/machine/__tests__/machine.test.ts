@@ -69,9 +69,12 @@ describe("itwProximityMachine", () => {
   const trackProximityStart = jest.fn();
   const trackProximitySuccess = jest.fn();
   const trackQrCodeLoadingFailure = jest.fn();
+  const trackBluetoothAccessClose = jest.fn();
+  const trackBluetoothActivationClose = jest.fn();
 
   const checkBluetoothPermissions = jest.fn();
   const checkBluetoothActivation = jest.fn();
+  const verifyBluetoothPermissions = jest.fn();
   const checkNfcActivation = jest.fn();
   const startEngagement = jest.fn();
   const sendDocuments = jest.fn();
@@ -100,6 +103,8 @@ describe("itwProximityMachine", () => {
       trackProximityStart,
       trackProximitySuccess,
       trackQrCodeLoadingFailure,
+      trackBluetoothAccessClose,
+      trackBluetoothActivationClose,
       grantConsent: assign(({ context }) => {
         if (!context.proximityDetails) {
           throw new Error(
@@ -117,6 +122,7 @@ describe("itwProximityMachine", () => {
     actors: {
       checkBluetoothPermissions: fromPromise(checkBluetoothPermissions),
       checkBluetoothActivation: fromPromise(checkBluetoothActivation),
+      verifyBluetoothPermissions: fromPromise(verifyBluetoothPermissions),
       checkNfcActivation: fromPromise(checkNfcActivation),
       proximityCommunicationLogic: fromCallback(() => () => {}),
       startEngagement: fromPromise(startEngagement),
@@ -270,6 +276,64 @@ describe("itwProximityMachine", () => {
     );
   });
 
+  it("back from Bluetooth.RequirePermissions continues when permissions were granted", async () => {
+    verifyBluetoothPermissions.mockResolvedValue(true);
+    checkBluetoothActivation.mockReturnValue(new Promise(() => {}));
+    const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
+      snapshot: makeSnapshot({ Bluetooth: "RequirePermissions" })
+    });
+
+    actor.start();
+    actor.send({ type: "back" });
+
+    await waitFor(actor, snapshot =>
+      snapshot.matches({ Bluetooth: "CheckActivation" })
+    );
+    expect(checkBluetoothPermissions).not.toHaveBeenCalled();
+    expect(closeProximity).not.toHaveBeenCalled();
+    expect(trackBluetoothAccessClose).not.toHaveBeenCalled();
+  });
+
+  it.each([
+    ["permissions are still denied", () => Promise.resolve(false)],
+    [
+      "the permissions check fails",
+      () => Promise.reject(new Error("permissions unavailable"))
+    ]
+  ])(
+    "back from Bluetooth.RequirePermissions closes the flow when %s",
+    async (_name, verify) => {
+      verifyBluetoothPermissions.mockImplementation(verify);
+      const actor = createActor(mockedMachine, {
+        input: { deps: T_DEPS },
+        snapshot: makeSnapshot({ Bluetooth: "RequirePermissions" })
+      });
+
+      actor.start();
+      actor.send({ type: "back" });
+
+      await waitFor(actor, snapshot => snapshot.matches("Idle"));
+      expect(trackBluetoothAccessClose).toHaveBeenCalledTimes(1);
+      expect(closeProximity).toHaveBeenCalledTimes(1);
+    }
+  );
+
+  it("repeated back from Bluetooth.RequirePermissions is handled once", async () => {
+    verifyBluetoothPermissions.mockResolvedValue(false);
+    const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
+      snapshot: makeSnapshot({ Bluetooth: "RequirePermissions" })
+    });
+
+    actor.start();
+    actor.send({ type: "back" });
+    actor.send({ type: "back" });
+
+    await waitFor(actor, snapshot => snapshot.matches("Idle"));
+    expect(verifyBluetoothPermissions).toHaveBeenCalledTimes(1);
+    expect(closeProximity).toHaveBeenCalledTimes(1);
+  });
   it("active bluetooth moves to Presentment.Starting", async () => {
     checkBluetoothPermissions.mockResolvedValue(true);
     checkBluetoothActivation.mockResolvedValue(true);
@@ -330,6 +394,49 @@ describe("itwProximityMachine", () => {
     });
     expect(closeProximity).toHaveBeenCalledTimes(1);
   });
+
+  it("back from Bluetooth.RequireActivation continues when bluetooth was enabled", async () => {
+    checkBluetoothActivation.mockResolvedValue(true);
+    startEngagement.mockReturnValue(new Promise(() => {}));
+    const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
+      snapshot: makeSnapshot({ Bluetooth: "RequireActivation" })
+    });
+
+    actor.start();
+    actor.send({ type: "back" });
+
+    await waitFor(actor, snapshot =>
+      snapshot.matches({ Presentment: "Starting" })
+    );
+    expect(navigateToPresentmentScreen).toHaveBeenCalledTimes(1);
+    expect(closeProximity).not.toHaveBeenCalled();
+    expect(trackBluetoothActivationClose).not.toHaveBeenCalled();
+  });
+
+  it.each([
+    ["bluetooth is still disabled", () => Promise.resolve(false)],
+    [
+      "the activation check fails",
+      () => Promise.reject(new Error("bluetooth unavailable"))
+    ]
+  ])(
+    "back from Bluetooth.RequireActivation closes the flow when %s",
+    async (_name, check) => {
+      checkBluetoothActivation.mockImplementation(check);
+      const actor = createActor(mockedMachine, {
+        input: { deps: T_DEPS },
+        snapshot: makeSnapshot({ Bluetooth: "RequireActivation" })
+      });
+
+      actor.start();
+      actor.send({ type: "back" });
+
+      await waitFor(actor, snapshot => snapshot.matches("Idle"));
+      expect(trackBluetoothActivationClose).toHaveBeenCalledTimes(1);
+      expect(closeProximity).toHaveBeenCalledTimes(1);
+    }
+  );
 
   it("continue from Bluetooth.RequireActivation moves to Presentment.Starting", async () => {
     startEngagement.mockReturnValue(new Promise(() => {}));
@@ -1022,10 +1129,67 @@ describe("itwProximityMachine", () => {
     expect(terminateSession).toHaveBeenCalledTimes(1);
   });
 
-  it("close from ClaimsDisclosure terminates the session and shows the consent denied failure", () => {
+  it("close from ClaimsDisclosure terminates the session before showing the consent denied failure", async () => {
+    const resolveTermination = jest.fn<void, []>();
+    terminateSession.mockReturnValue(
+      new Promise<void>(resolve => {
+        resolveTermination.mockImplementation(() => resolve());
+      })
+    );
     const actor = createActor(mockedMachine, {
       input: { deps: T_DEPS },
       snapshot: makeSnapshot({ Presentment: "ClaimsDisclosure" })
+    });
+
+    actor.start();
+    actor.send({ type: "close" });
+
+    expect(
+      actor
+        .getSnapshot()
+        .matches({ Presentment: "TerminatingForConsentDenial" })
+    ).toBe(true);
+    expect(actor.getSnapshot().context.failure?.type).toBe(
+      ProximityFailureType.CONSENT_DENIED
+    );
+    expect(actor.getSnapshot().hasTag(ItwPresentationTags.Loading)).toBe(false);
+    expect(navigateToFailureScreen).not.toHaveBeenCalled();
+    expect(terminateSession).toHaveBeenCalledTimes(1);
+    expect(closeProximity).not.toHaveBeenCalled();
+
+    actor.send({ type: "device-disconnected" });
+    actor.send({ type: "device-error", error: new Error("device error") });
+    actor.send({
+      type: "device-document-request-received",
+      proximityDetails: T_PROXIMITY_DETAILS,
+      verifierRequest: T_VERIFIER_REQUEST,
+      retrievalMethod: "ble"
+    });
+    expect(
+      actor
+        .getSnapshot()
+        .matches({ Presentment: "TerminatingForConsentDenial" })
+    ).toBe(true);
+    expect(actor.getSnapshot().context.failure?.type).toBe(
+      ProximityFailureType.CONSENT_DENIED
+    );
+
+    resolveTermination();
+    await waitFor(actor, snapshot => snapshot.matches("Failure"));
+
+    expect(actor.getSnapshot().context.sessionTerminated).toBe(true);
+    expect(navigateToFailureScreen).toHaveBeenCalledTimes(1);
+    expect(terminateSession).toHaveBeenCalledTimes(1);
+    actor.stop();
+  });
+
+  it("does not terminate again when NFC consent teardown already ended the session", () => {
+    const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
+      snapshot: makeSnapshot(
+        { Presentment: "ClaimsDisclosure" },
+        { retrievalMethod: "nfc", sessionTerminated: true }
+      )
     });
 
     actor.start();
@@ -1035,9 +1199,28 @@ describe("itwProximityMachine", () => {
     expect(actor.getSnapshot().context.failure?.type).toBe(
       ProximityFailureType.CONSENT_DENIED
     );
+    expect(terminateSession).not.toHaveBeenCalled();
     expect(navigateToFailureScreen).toHaveBeenCalledTimes(1);
+    actor.stop();
+  });
+
+  it("shows the consent denied failure when termination fails", async () => {
+    terminateSession.mockRejectedValueOnce(new Error("termination failed"));
+    const actor = createActor(mockedMachine, {
+      input: { deps: T_DEPS },
+      snapshot: makeSnapshot({ Presentment: "ClaimsDisclosure" })
+    });
+
+    actor.start();
+    actor.send({ type: "close" });
+    await waitFor(actor, snapshot => snapshot.matches("Failure"));
+
+    expect(actor.getSnapshot().context.failure?.type).toBe(
+      ProximityFailureType.CONSENT_DENIED
+    );
+    expect(actor.getSnapshot().context.sessionTerminated).toBe(true);
     expect(terminateSession).toHaveBeenCalledTimes(1);
-    expect(closeProximity).not.toHaveBeenCalled();
+    actor.stop();
   });
 
   it("holder-consent with NFC retrieval moves to StoreConsent", () => {

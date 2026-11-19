@@ -4,7 +4,7 @@ import {
   Body,
   H3,
   H6,
-  IOColors,
+  IOColorsLegacy,
   useIOThemeContext,
   VSpacer
 } from "@io-app/design-system";
@@ -34,10 +34,10 @@ export type IdPayCardProps = {
 const idPayCardColorPalette: Record<
   NonNullable<Exclude<ColorSchemeName, "unspecified">>,
   {
-    amountLabel: IOColors;
-    amountValue: IOColors;
-    expirationDate: IOColors;
-    title: IOColors;
+    amountLabel: IOColorsLegacy;
+    amountValue: IOColorsLegacy;
+    expirationDate: IOColorsLegacy;
+    title: IOColorsLegacy;
   }
 > = {
   light: {

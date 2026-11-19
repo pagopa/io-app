@@ -1,4 +1,4 @@
-import { useIOThemeContext } from "@io-app/design-system";
+import { IOColors, useIOThemeContext } from "@io-app/design-system";
 import Color from "color";
 import { useMemo } from "react";
 import { ColorSchemeName, ImageRequireSource } from "react-native";
@@ -6,9 +6,9 @@ import { ColorSchemeName, ImageRequireSource } from "react-native";
 import { useIOSelector } from "../../../../../store/hooks";
 import { XOR } from "../../../../../types/utils";
 import { fnv1a } from "../../../../../utils/hash";
+import { itwColors } from "../../../colors";
 import { itwCredentialsCatalogueByTypesSelector } from "../../../credentialsCatalogue/store/selectors";
 import { CredentialType } from "../../utils/itwMocksUtils";
-import { ItWalletThemes } from "../../utils/theme";
 
 /**
  * Fixed artwork color from the physical Disability Card, independent of the app
@@ -361,9 +361,9 @@ const generateCredentialCardConfig = (
   credentialColor?: string,
   credentialDomain?: string
 ): CredentialCardConfig => {
-  const theme =
-    ItWalletThemes[colorScheme !== "unspecified" ? colorScheme : "light"];
   const isLight = colorScheme !== "dark";
+  const mode = isLight ? "light" : "dark";
+  const { gradientEnd } = itwColors(IOColors[mode], mode).credentialCard;
 
   const color =
     credentialColor || generateBaseColorFromCredentialType(credentialType);
@@ -395,7 +395,7 @@ const generateCredentialCardConfig = (
     titleColor,
     background: {
       type: "linear",
-      colors: [backgroundColor, theme["card-background"]],
+      colors: [backgroundColor, gradientEnd],
       angle: 0
     },
     overlay: {

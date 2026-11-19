@@ -2,7 +2,7 @@ import { ServiceId } from "@io-app/api-types/generated/definitions/services/Serv
 import { ServiceMinified } from "@io-app/api-types/generated/definitions/services/ServiceMinified";
 import {
   Divider,
-  IOColors,
+  IOColorsLegacy,
   IODimensions,
   IOToast,
   ListItemNav,
@@ -92,7 +92,7 @@ export const InstitutionServicesScreen = ({
 
   const headerConfig = useMemo<HeaderSecondLevelHookProps>(
     () => ({
-      backgroundColor: IOColors[theme["appBackground-secondary"]],
+      backgroundColor: IOColorsLegacy[theme["appBackground-secondary"]],
       goBack,
       headerShown: !!data || !isError,
       enableDiscreteTransition: true,

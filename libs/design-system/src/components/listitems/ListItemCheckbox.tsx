@@ -2,8 +2,8 @@ import { ComponentProps, useState } from "react";
 import { Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { useIOTheme } from "../../context";
-import { IODimensions, IOSelectionListItemStyles } from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions, IOOpacity } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
@@ -11,6 +11,13 @@ import { Checkbox } from "../checkbox/Checkbox";
 import { Icon, IOIcons } from "../icons";
 import { HSpacer, VSpacer } from "../layout";
 import { BodySmall, H6 } from "../typography";
+import { IOSelectionListItemStyles } from "./styles";
+
+type ListItemCheckboxProps = Pick<
+  ComponentProps<typeof Pressable>,
+  "accessibilityHint" | "accessibilityLabel" | "disabled" | "onPress"
+> &
+  Props;
 
 type Props = {
   description?: string;
@@ -19,14 +26,6 @@ type Props = {
   onValueChange?: (newValue: boolean) => void;
   selected?: boolean;
 };
-
-const DISABLED_OPACITY = 0.5;
-
-type ListItemCheckboxProps = Pick<
-  ComponentProps<typeof Pressable>,
-  "accessibilityHint" | "accessibilityLabel" | "disabled" | "onPress"
-> &
-  Props;
 
 /**
  * With the automatic state management that uses a {@link AnimatedCheckBox} The
@@ -53,8 +52,7 @@ export const ListItemCheckbox = ({
   const { onPressIn, onPressOut, scaleAnimatedStyle, backgroundAnimatedStyle } =
     useListItemAnimation();
 
-  // Theme
-  const theme = useIOTheme();
+  const listItemColors = useIOColors().component.listItem;
 
   // Accessibility
   // Comma = Small pause when announcing content
@@ -94,7 +92,7 @@ export const ListItemCheckbox = ({
         style={[
           IOSelectionListItemStyles.listItem,
           backgroundAnimatedStyle,
-          { opacity: disabled ? DISABLED_OPACITY : 1 }
+          { opacity: disabled ? IOOpacity.disabled : 1 }
         ]}
       >
         <Animated.View style={scaleAnimatedStyle}>
@@ -112,12 +110,15 @@ export const ListItemCheckbox = ({
               {icon && !hugeFontEnabled && (
                 <Icon
                   allowFontScaling
-                  color={theme["icon-decorative"]}
+                  color={listItemColors.foreground.icon}
                   name={icon}
                   size={IODimensions.size.icon.selection}
                 />
               )}
-              <H6 color={theme["textBody-default"]} style={{ flexShrink: 1 }}>
+              <H6
+                color={listItemColors.foreground.label}
+                style={{ flexShrink: 1 }}
+              >
                 {label}
               </H6>
             </View>
@@ -136,7 +137,10 @@ export const ListItemCheckbox = ({
           {description && (
             <View>
               <VSpacer size={IODimensions.gap.selection.description} />
-              <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
+              <BodySmall
+                color={listItemColors.foreground.description}
+                weight="Regular"
+              >
                 {description}
               </BodySmall>
             </View>
