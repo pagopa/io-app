@@ -15,7 +15,9 @@ export const StatusMessages = ({ children }: StatusMessagesProps) => {
       {statusAlert && (
         <StatusBar
           backgroundColor={
-            colors.surface[statusAlert.alertProps?.variant || "info"]
+            colors.component.alertEdgeToEdge[
+              statusAlert.alertProps?.variant || "info"
+            ].background
           }
           barStyle="dark-content"
         />
