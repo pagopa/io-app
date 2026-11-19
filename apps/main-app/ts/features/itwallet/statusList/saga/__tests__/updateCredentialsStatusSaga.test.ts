@@ -84,7 +84,7 @@ describe("updateCredentialsStatusSaga", () => {
     };
     const statusList = makeStatusList();
     mockGetStatus.mockReturnValue({
-      status: "INVALID",
+      status: "invalid",
       rawStatus: "0x01"
     });
 
@@ -106,7 +106,7 @@ describe("updateCredentialsStatusSaga", () => {
   it("does not dispatch when the cached status does not change validity", () => {
     const credential = makeCredential();
     mockGetStatus.mockReturnValue({
-      status: "VALID",
+      status: "valid",
       rawStatus: "0x00"
     });
 
@@ -143,7 +143,7 @@ describe("updateCredentialsStatusSaga", () => {
         .mockImplementationOnce(() => {
           throw new Error("Unsupported credential status bit: 0x04");
         })
-        .mockReturnValueOnce({ status: "SUSPENDED", rawStatus: "0x02" });
+        .mockReturnValueOnce({ status: "suspended", rawStatus: "0x02" });
 
       testSaga(updateCredentialsStatusSaga, { itwVersion: "1.4.6" })
         .next()
