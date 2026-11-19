@@ -80,8 +80,8 @@ const getDeviceNfcAntennaPosition = (): NfcAntennaPositionInfo | undefined => {
  * and model. API results have high confidence; mapping results retain the
  * study's confidence.
  *
- * Defaults to bottom with low confidence and no source when the position cannot
- * be determined. Unexpected native errors are propagated.
+ * Defaults to top with low confidence and no source when the position cannot be
+ * determined. Unexpected native errors are propagated.
  *
  * @throws If the Android native module is unavailable.
  */
@@ -99,7 +99,7 @@ export const getNfcAntennaPosition =
       ? getNfcAntennaPositionFromBands(bands)
       : getDeviceNfcAntennaPosition();
     return (
-      position ?? { position: "bottom", confidence: "low", source: undefined }
+      position ?? { position: "top", confidence: "low", source: undefined }
     );
   };
 

@@ -20,7 +20,7 @@ Public types are defined in `types.ts` and can be imported from `@io-app/expo-nf
 - Antennas with valid coordinates spanning different thirds do not use the
   mapping fallback.
 - Whenever the position cannot be determined (including unknown or unclassified
-  models), the result is `{ position: "bottom", confidence: "low", source: undefined }`.
+  models), the result is `{ position: "top", confidence: "low", source: undefined }`.
 
 The mapping is based on an internal study that classifies NFC antenna
 positions and assigns a confidence level to each model. The study's
