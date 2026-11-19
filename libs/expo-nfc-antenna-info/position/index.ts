@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 import type {
   NfcAntennaInfoResult,
   NfcAntennaPosition,
@@ -9,34 +11,39 @@ import { antennaMapping } from "./mapping";
 const antennaPositions = ["top", "center", "bottom"] as const;
 const antennaBandCount = antennaPositions.length;
 
+const nfcAntennaGeometrySchema = z
+  .object({
+    deviceHeight: z.number().positive(),
+    deviceWidth: z.number().positive(),
+    availableNfcAntennas: z
+      .array(
+        z.object({
+          locationX: z.number().positive(),
+          locationY: z.number().positive()
+        })
+      )
+      .nonempty()
+  })
+  .refine(({ deviceHeight, deviceWidth, availableNfcAntennas }) =>
+    availableNfcAntennas.every(
+      ({ locationX, locationY }) =>
+        locationX <= deviceWidth && locationY <= deviceHeight
+    )
+  );
+
 /**
  * Maps each antenna to a vertical third; returns undefined for empty or invalid
  * geometry.
  */
-export const getNfcAntennaBands = ({
-  deviceHeight,
-  deviceWidth,
-  availableNfcAntennas
-}: NfcAntennaInfoResult): ReadonlyArray<NfcAntennaPosition> | undefined => {
-  if (
-    !Number.isFinite(deviceHeight) ||
-    !Number.isFinite(deviceWidth) ||
-    deviceHeight <= 0 ||
-    deviceWidth <= 0 ||
-    availableNfcAntennas.length === 0 ||
-    availableNfcAntennas.some(
-      ({ locationX, locationY }) =>
-        !Number.isFinite(locationX) ||
-        !Number.isFinite(locationY) ||
-        locationX <= 0 ||
-        locationX > deviceWidth ||
-        locationY <= 0 ||
-        locationY > deviceHeight
-    )
-  ) {
+export const getNfcAntennaBands = (
+  info: NfcAntennaInfoResult
+): ReadonlyArray<NfcAntennaPosition> | undefined => {
+  const result = nfcAntennaGeometrySchema.safeParse(info);
+  if (!result.success) {
     return undefined;
   }
 
+  const { deviceHeight, availableNfcAntennas } = result.data;
   return availableNfcAntennas.map(({ locationY }) => {
     // Include the device's bottom edge in the last third.
     const band = Math.min(
