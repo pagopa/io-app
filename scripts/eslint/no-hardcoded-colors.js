@@ -1,5 +1,5 @@
 /**
- * ESLint rule that warns on hardcoded color values (`#RRGGBB`, `rgb()`,
+ * ESLint rule that reports hardcoded color values (`#RRGGBB`, `rgb()`,
  * `rgba()`, `hsl()`, `hsla()`).
  *
  * A color is declared once in a module-level constant (`IOColorPalette`, or a
@@ -8,8 +8,6 @@
  *
  * Style objects are left to `react-native/no-color-literals`: a color there
  * can't follow dark mode either.
- *
- * Kept as a warning until the existing hardcoded colors are migrated.
  */
 
 "use strict";
