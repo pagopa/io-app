@@ -36,3 +36,53 @@ index 422b21bc60a713b142871aa6a109f11007f5e2aa..ecfee407fbb576877e4c7ee9ba21dccf
      open fun onUpdate() {
          createTransaction().let {
              // detach screens that are no longer active
+diff --git a/ios/RNSScreenContainer.mm b/ios/RNSScreenContainer.mm
+index 51809db..8c233e4 100644
+--- a/ios/RNSScreenContainer.mm
++++ b/ios/RNSScreenContainer.mm
+@@ -162,10 +162,13 @@ - (void)attachScreen:(RNSScreenView *)screen atIndex:(NSInteger)index
+ 
+ - (void)updateContainer
+ {
++  // Loop over copies of `_reactSubviews`: attaching or detaching a screen can run a synchronous layout pass that
++  // commits and mounts a pending React transaction inline, which inserts into or removes from this array.
++  // See https://github.com/software-mansion/react-native-screens/issues/4168 (port of PR #5046).
+   BOOL screenRemoved = NO;
+   // remove screens that are no longer active
+   NSMutableSet *orphaned = [NSMutableSet setWithSet:_activeScreens];
+-  for (RNSScreenView *screen in _reactSubviews) {
++  for (RNSScreenView *screen in [_reactSubviews copy]) {
+     if (screen.activityState == RNSActivityStateInactive && [_activeScreens containsObject:screen]) {
+       screenRemoved = YES;
+       [self detachScreen:screen];
+@@ -179,7 +182,7 @@ - (void)updateContainer
+ 
+   // detect if new screen is going to be activated
+   BOOL screenAdded = NO;
+-  for (RNSScreenView *screen in _reactSubviews) {
++  for (RNSScreenView *screen in [_reactSubviews copy]) {
+     if (screen.activityState != RNSActivityStateInactive && ![_activeScreens containsObject:screen]) {
+       screenAdded = YES;
+     }
+@@ -188,7 +191,11 @@ - (void)updateContainer
+   if (screenAdded) {
+     // add new screens in order they are placed in subviews array
+     NSInteger index = 0;
+-    for (RNSScreenView *screen in _reactSubviews) {
++    for (RNSScreenView *screen in [_reactSubviews copy]) {
++      // An earlier attach can run a nested update that unmounts this screen; don't attach it after that.
++      if (![_reactSubviews containsObject:screen]) {
++        continue;
++      }
+       if (screen.activityState != RNSActivityStateInactive) {
+         if ([_activeScreens containsObject:screen] && screen.activityState == RNSActivityStateTransitioningOrBelowTop) {
+           // for screens that were already active we want to mimick the effect UINavigationController
+@@ -202,7 +209,7 @@ - (void)updateContainer
+     }
+   }
+ 
+-  for (RNSScreenView *screen in _reactSubviews) {
++  for (RNSScreenView *screen in [_reactSubviews copy]) {
+     if (screen.activityState == RNSActivityStateOnTop) {
+       [screen notifyFinishTransitioning];
+     }
