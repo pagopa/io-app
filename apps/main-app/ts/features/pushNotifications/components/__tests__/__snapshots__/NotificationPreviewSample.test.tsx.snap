@@ -344,7 +344,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                           align="xMidYMid"
                           bbHeight={24}
                           bbWidth={24}
-                          color="#555C70"
+                          color="#636B82"
                           focusable={false}
                           height={24}
                           importantForAccessibility="no-hide-descendants"
@@ -823,7 +823,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                           align="xMidYMid"
                           bbHeight={24}
                           bbWidth={24}
-                          color="#555C70"
+                          color="#636B82"
                           focusable={false}
                           height={24}
                           importantForAccessibility="no-hide-descendants"
@@ -1302,7 +1302,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                           align="xMidYMid"
                           bbHeight={24}
                           bbWidth={24}
-                          color="#555C70"
+                          color="#636B82"
                           focusable={false}
                           height={24}
                           importantForAccessibility="no-hide-descendants"
@@ -1781,7 +1781,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                           align="xMidYMid"
                           bbHeight={24}
                           bbWidth={24}
-                          color="#555C70"
+                          color="#636B82"
                           focusable={false}
                           height={24}
                           importantForAccessibility="no-hide-descendants"
