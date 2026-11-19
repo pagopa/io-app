@@ -39,7 +39,7 @@ Keep each feature self-contained under `apps/main-app/ts/features/<feature>/`, l
 
 ## Colors
 
-- Read tokens with `useIOColors()`. Don't use `useIOTheme()` or `IOColorsLegacy` in new code: they're deprecated.
+- Read tokens with `useIOColors()`.
 - Don't use the palette (`IOColorPalette`) or a hex value in a component. If no semantic token fits, add one to the design system's semantic layer.
 - A component whose icon and text share a color takes `foreground`; one where they differ takes `icon` and `text`. See `libs/design-system/src/core/tokens/colors/README.md`.
 - In the design system, declare a component's colors in its own `colors.ts`, by variant, role (`background`, `foreground`, `border`) and state.
