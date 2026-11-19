@@ -60,16 +60,6 @@ const BLE_LOCATION_PERMISSION: PermissionAttributes = {
   "android:maxSdkVersion": "30"
 };
 
-const NOTIFICATIONS_META_DATA: Record<string, string> = {
-  "com.google.firebase.messaging.default_notification_channel_id":
-    "@string/default_notification_channel_id"
-};
-const NOTIFICATIONS_ICONS: Record<string, string> = {
-  "com.google.firebase.messaging.default_notification_icon":
-    "@drawable/ic_notification",
-  "expo.modules.notifications.default_notification_icon":
-    "@drawable/ic_notification"
-};
 /**
  * Declared at app level by the Expo template or by library plugins, but not by
  * the former app manifest: library manifests still contribute their own.
@@ -194,23 +184,6 @@ const withManifestCustomizations: ConfigPlugin = config =>
         application,
         name,
         value
-      )
-    );
-
-    Object.entries(NOTIFICATIONS_META_DATA).forEach(([name, value]) =>
-      AndroidConfig.Manifest.addMetaDataItemToMainApplication(
-        application,
-        name,
-        value
-      )
-    );
-
-    Object.entries(NOTIFICATIONS_ICONS).forEach(([name, value]) =>
-      AndroidConfig.Manifest.addMetaDataItemToMainApplication(
-        application,
-        name,
-        value,
-        "resource"
       )
     );
 

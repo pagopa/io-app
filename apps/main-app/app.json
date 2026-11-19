@@ -414,6 +414,14 @@
       }
     ],
     [
+      "expo-notifications",
+      {
+        "icon": "./app-config/native/android/res/drawable/ic_notification.png",
+        "defaultChannel": "default",
+        "enableBackgroundRemoteNotifications": true
+      }
+    ],
+    [
       "react-native-permissions",
       {
         "iosPermissions": ["PhotoLibrary", "Bluetooth"]
