@@ -6,6 +6,7 @@ import {
   Easing,
   interpolate,
   useDerivedValue,
+  useReducedMotion,
   useSharedValue,
   withRepeat,
   withTiming
@@ -48,6 +49,7 @@ interface AnimatedBlobProps {
   canvasSize: { value: { height: number; width: number } };
   color: string;
   index: number;
+  reduceMotion: boolean;
 }
 
 /**
@@ -146,7 +148,8 @@ const AnimatedBlob = ({
   blobCount,
   index,
   canvasSize,
-  color
+  color,
+  reduceMotion
 }: AnimatedBlobProps) => {
   // Derive properties from index using interpolation
   // This distributes blobs evenly and creates variety without repetitive config
@@ -192,6 +195,10 @@ const AnimatedBlob = ({
   });
 
   useEffect(() => {
+    if (reduceMotion) {
+      return;
+    }
+
     orbitProgress.value = withRepeat(
       withTiming(1, {
         duration: ORBIT_DURATION,
@@ -204,7 +211,7 @@ const AnimatedBlob = ({
     return () => {
       cancelAnimation(orbitProgress);
     };
-  }, [orbitProgress]);
+  }, [orbitProgress, reduceMotion]);
 
   return <Path color={foregroundColor} opacity={opacity} path={blobPath} />;
 };
@@ -217,6 +224,7 @@ export const CgnAnimatedBackground = ({
   // Canvas size is provided via onSize callback and updated on the UI thread
   const canvasSize = useSharedValue({ width: 0, height: 0 });
   const colors = useFeatureColors(cgnColors);
+  const reduceMotion = useReducedMotion();
 
   const backgroundColor = colors.detailCard.background;
   const foregroundColor = colors.detailCard.foreground;
@@ -237,6 +245,7 @@ export const CgnAnimatedBackground = ({
           color={foregroundColor}
           index={index}
           key={`blob-${index}`}
+          reduceMotion={reduceMotion}
         />
       ))}
     </Canvas>
