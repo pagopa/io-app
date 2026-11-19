@@ -168,20 +168,20 @@ describe("getNfcAntennaPosition", () => {
     });
   });
 
-  it("defaults to bottom for invalid geometry when the device is not mapped", async () => {
+  it("defaults to top for invalid geometry when the device is not mapped", async () => {
     mockGetNfcAntennaInfo.mockResolvedValue({
       ...antennaInfo,
       availableNfcAntennas: [{ locationX: 0, locationY: 20 }]
     });
 
     await expect(getNfcAntennaPosition()).resolves.toStrictEqual({
-      position: "bottom",
+      position: "top",
       confidence: "low",
       source: undefined
     });
   });
 
-  it("defaults to bottom without using the mapping when valid antennas span different thirds", async () => {
+  it("defaults to top without using the mapping when valid antennas span different thirds", async () => {
     setModel("Pixel 8");
     setBrand("Google");
     mockGetNfcAntennaInfo.mockResolvedValue({
@@ -193,7 +193,7 @@ describe("getNfcAntennaPosition", () => {
     });
 
     await expect(getNfcAntennaPosition()).resolves.toStrictEqual({
-      position: "bottom",
+      position: "top",
       confidence: "low",
       source: undefined
     });
@@ -342,12 +342,12 @@ describe("getNfcAntennaPosition", () => {
         brand: "Redmi",
         model: "Redmi Note 9 Pro"
       }
-    ])("defaults to bottom for $name", async ({ brand, model }) => {
+    ])("defaults to top for $name", async ({ brand, model }) => {
       setModel(model);
       setBrand(brand);
 
       await expect(getNfcAntennaPosition()).resolves.toStrictEqual({
-        position: "bottom",
+        position: "top",
         confidence: "low",
         source: undefined
       });
