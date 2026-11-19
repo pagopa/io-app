@@ -19,10 +19,5 @@ module.exports = {
         ios: null
       }
     }
-  },
-  assets: [
-    "./assets/fonts/TitilliumSansPro",
-    "./assets/fonts/Titillio",
-    "./assets/fonts/FiraCode"
-  ]
+  }
 };

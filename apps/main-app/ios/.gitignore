@@ -1,7 +1,0 @@
-IO.app*
-IO.app*
-include
-*.a
-fastlane/report.xml
-Italia.app.dSYM.zip
-.xcode.env.local

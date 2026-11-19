@@ -50,6 +50,11 @@ esac
 move_if_missing "$IOS_SOURCE" "$IOS_TARGET"
 move_if_missing "$PODSPEC_SOURCE" "$PODSPEC_TARGET"
 
+if [[ "$MODE" != "ci" && ! -f ios/Podfile ]]; then
+  echo "ios/Podfile not found: generate the native project with 'pnpm prebuild:ios' first" >&2
+  exit 1
+fi
+
 case "$MODE" in
 prod)
   echo "Installing iOS pods"

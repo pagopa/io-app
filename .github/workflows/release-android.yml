@@ -35,6 +35,11 @@ on:
         description: Label used for the AAB when attached to the GitHub release
         required: true
         type: string
+      app-variant:
+        description: App variant used to generate the native project with expo prebuild (production or canary)
+        required: false
+        default: production
+        type: string
 
 permissions:
   contents: write
@@ -75,10 +80,12 @@ jobs:
         name: Build and upload Android release
         run: |
           cd apps/main-app
-          ./scripts/android-release.sh ./android/app
-          cd android && bundle exec fastlane ${{ inputs.fastlane-build-lane }}
+          ./scripts/android-release.sh
+          GOOGLE_SERVICES_JSON=/tmp/google-services.json pnpm prebuild:android
+          bundle exec fastlane android ${{ inputs.fastlane-build-lane }}
         shell: bash
         env:
+          APP_VARIANT: ${{ inputs.app-variant }}
           ENCODED_IOAPP_GOOGLE_SERVICES_JSON_FILE: ${{secrets.ENCODED_IOAPP_GOOGLE_SERVICES_JSON_FILE}}
           ENCODED_IOAPP_JSON_KEY_FILE: ${{secrets.ENCODED_IOAPP_JSON_KEY_FILE}}
           ENCODED_IO_APP_RELEASE_KEYSTORE: ${{secrets.ENCODED_IO_APP_RELEASE_KEYSTORE}}
@@ -92,11 +99,10 @@ jobs:
         continue-on-error: true
         run: |
           cd apps/main-app
-          ./scripts/android-release.sh ./android/app
-          cd android
-          VERSION_CODE=$(sed -n 's/.*versionCode \(.*\)/\1/p' "app/build.gradle")
+          ./scripts/android-release.sh
+          VERSION_CODE=$(node -p "require('./app.json').android.versionCode")
           echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
-          bundle exec fastlane ${{ inputs.fastlane-download-lane }}
+          bundle exec fastlane android ${{ inputs.fastlane-download-lane }}
         env:
           ENCODED_IOAPP_JSON_KEY_FILE: ${{secrets.ENCODED_IOAPP_JSON_KEY_FILE}}
           VERSION_CODE: ${{ env.VERSION_CODE }}
@@ -106,7 +112,7 @@ jobs:
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
           name: ${{ inputs.universal-apk-filename }}
-          path: apps/main-app/android/${{ inputs.universal-apk-filename }}
+          path: apps/main-app/${{ inputs.universal-apk-filename }}
       - id: upload-aab
         # We don't want to fail whole job if the AAB upload step fails
         continue-on-error: true
@@ -119,7 +125,7 @@ jobs:
         continue-on-error: true
         run: |
           APP_VERSION=$(node -p -e "require('./apps/main-app/package.json').version")
-          gh release upload $APP_VERSION "$BUNDLE_OUTPUT_PATH#$RELEASE_AAB_LABEL" "apps/main-app/android/$UNIVERSAL_APK_FILENAME#$UNIVERSAL_APK_FILENAME"
+          gh release upload $APP_VERSION "$BUNDLE_OUTPUT_PATH#$RELEASE_AAB_LABEL" "apps/main-app/$UNIVERSAL_APK_FILENAME#$UNIVERSAL_APK_FILENAME"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BUNDLE_OUTPUT_PATH: ${{ inputs.bundle-output-path }}

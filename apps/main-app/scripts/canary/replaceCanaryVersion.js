@@ -3,17 +3,13 @@
 const fs = require("fs-extra");
 
 const packagePath = "package.json";
-const gradlePath = "./android/app/build.gradle";
-const versionCodeRegex = /(versionCode )([0-9]+)/gm;
-
-function replaceVersionCode(_, version, p1, __) {
-  return [p1, version].join("");
-}
+const appJsonPath = "app.json";
 
 /**
  * Prepare the package.json file for a new fix|release|breaking cycle. In order
  * to use the automatic functionality of commit-and-tag-version, just remove the
- * -rc.x suffix to initiate a new cycle.
+ * -rc.x suffix to initiate a new cycle. The Android versionCode in app.json is
+ * set to the given build code.
  */
 const replaceCanaryVersion = () => {
   // read package.json as JSON
@@ -26,15 +22,11 @@ const replaceCanaryVersion = () => {
   // replace the version, removing the rc part
   package.version = `${versionSplit[0]}-canary.${isNaN(normalizedVersion) ? 0 : normalizedVersion}`;
 
-  const contents = fs.readFileSync(gradlePath).toString("utf8");
+  const appJson = JSON.parse(fs.readFileSync(appJsonPath).toString("utf8"));
+  appJson.android.versionCode = parseInt(process.argv[2], 10);
 
-  const updatedGradleContents = contents.replace(
-    versionCodeRegex,
-    (substr, ...args) =>
-      replaceVersionCode(substr, `${parseInt(process.argv[2], 10)}`, ...args)
-  );
   fs.writeFileSync(packagePath, JSON.stringify(package, undefined, 2));
-  fs.writeFileSync(gradlePath, updatedGradleContents);
+  fs.writeFileSync(appJsonPath, `${JSON.stringify(appJson, undefined, 2)}\n`);
 };
 
 replaceCanaryVersion();

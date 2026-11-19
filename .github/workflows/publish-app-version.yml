@@ -40,7 +40,7 @@ jobs:
       fastlane-build-lane: alpha
       fastlane-download-lane: download_apk
       universal-apk-filename: io-app-universal.apk
-      bundle-output-path: apps/main-app/android/app/build/outputs/bundle/productionRelease/app-production-release.aab
+      bundle-output-path: apps/main-app/android/app/build/outputs/bundle/release/app-release.aab
       bundle-artifact-name: app-release.aab
       release-aab-label: android-app-release.aab
   release-ios:
