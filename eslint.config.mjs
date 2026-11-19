@@ -408,8 +408,7 @@ export default defineConfig([
       // Remove this after the migration of fp-ts is being completed and replaced by neverthrow;
       "@io-app/no-fp-ts": "warn",
 
-      // Turn into an error once the existing hardcoded colors are migrated
-      "@io-app/no-hardcoded-colors": "warn"
+      "@io-app/no-hardcoded-colors": "error"
     },
 
     settings: {
