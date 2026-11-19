@@ -1,4 +1,4 @@
-import { IODimensions, IOTextColor } from "@io-app/design-system";
+import { IODimensions, IOTokenColor } from "@io-app/design-system";
 import { ColorValue, ViewStyle } from "react-native";
 
 import { useFeatureColors } from "../../../../hooks/useFeatureColors";
@@ -7,8 +7,8 @@ import { servicesHomeColors } from "../colors";
 type ServiceCardStyle = {
   card: ViewStyle;
   foreground: {
-    primary: IOTextColor;
-    secondary: IOTextColor;
+    primary: IOTokenColor;
+    secondary: IOTokenColor;
   };
 };
 
