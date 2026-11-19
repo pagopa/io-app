@@ -56,8 +56,15 @@ const withSharePdf = config => {
         "IO",
         "IO-Canary.entitlements"
       );
-      if (fs.existsSync(canaryFile)) {
-        const entitlements = plist.parse(fs.readFileSync(canaryFile, "utf8"));
+      let entitlements;
+      try {
+        entitlements = plist.parse(fs.readFileSync(canaryFile, "utf8"));
+      } catch (error) {
+        if (error.code !== "ENOENT") {
+          throw error;
+        }
+      }
+      if (entitlements) {
         const key = "com.apple.security.application-groups";
         const groups = entitlements[key] ?? [];
         const group = `group.$(${parentBundleIdSetting})`;
@@ -92,6 +99,18 @@ const withSharePdf = config => {
     const builds = project.pbxXCBuildConfigurationSection();
     const appTarget = project.getFirstTarget().firstTarget;
     const appConfigurations = lists[appTarget.buildConfigurationList];
+    const appInfo = plist.parse(
+      fs.readFileSync(
+        path.join(mod.modRequest.platformProjectRoot, "IO", "Info.plist"),
+        "utf8"
+      )
+    );
+    const appBuildSettingsByConfiguration = new Map(
+      appConfigurations.buildConfigurations.map(entry => [
+        builds[entry.value]?.name?.replaceAll('"', ""),
+        builds[entry.value]?.buildSettings
+      ])
+    );
     const hasCanary = appConfigurations.buildConfigurations.some(
       entry => builds[entry.value]?.name?.replaceAll('"', "") === "Canary"
     );
@@ -141,7 +160,23 @@ const withSharePdf = config => {
         build.buildSettings[parentBundleIdSetting] =
           name === "IO" ? '"$(PRODUCT_BUNDLE_IDENTIFIER)"' : appId;
         if (name === extensionName) {
+          const appBuildSettings = appBuildSettingsByConfiguration.get(
+            build.name?.replaceAll('"', "")
+          );
+          if (
+            !appBuildSettings ||
+            appBuildSettings.CURRENT_PROJECT_VERSION === undefined ||
+            !appInfo.CFBundleShortVersionString
+          ) {
+            throw new Error(
+              `Missing host version settings for ${build.name} share extension configuration`
+            );
+          }
           build.buildSettings.PRODUCT_BUNDLE_IDENTIFIER = `${appId}.ShareExtension`;
+          build.buildSettings.CURRENT_PROJECT_VERSION =
+            appBuildSettings.CURRENT_PROJECT_VERSION;
+          build.buildSettings.MARKETING_VERSION =
+            appInfo.CFBundleShortVersionString;
         }
       }
     }
