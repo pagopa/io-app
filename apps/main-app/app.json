@@ -9,7 +9,7 @@
     "de": "./app-config/locales/de.json"
   },
   "ios": {
-    "buildNumber": "2",
+    "buildNumber": "3",
     "appleTeamId": "M2X5YQ4BJ7",
     "supportsTablet": false,
     "userInterfaceStyle": "automatic",
@@ -244,8 +244,8 @@
     }
   },
   "android": {
-    "version": "3.44.0.2",
-    "versionCode": 100155330,
+    "version": "3.44.0.3",
+    "versionCode": 100155331,
     "allowBackup": false,
     "predictiveBackGestureEnabled": false,
     "permissions": [
