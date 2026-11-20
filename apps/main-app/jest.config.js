@@ -17,6 +17,7 @@ module.exports = {
       "<rootDir>/../../libs/design-system/src/index.tsx",
     "^expo-file-system$": "<rootDir>/ts/__mocks__/expo-file-system.js"
   },
+  resolver: "react-native-reanimated/jest/resolver",
   setupFiles: [
     "./jestSetup.js",
     "../../node_modules/react-native-gesture-handler/jestSetup.js",

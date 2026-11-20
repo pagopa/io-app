@@ -86,12 +86,12 @@ catalog:
   expo-modules-core: "~57.0.25"
 
   # --- Design System ---
-  react-native-worklets: "0.10.1"
+  react-native-worklets: "0.13.1"
   expo-linear-gradient: "~57.0.2"
   react-native-easing-gradient: "^1.1.1"
   react-native-gesture-handler: "~2.32.0"
   react-native-pulsar: "^1.7.0"
-  react-native-reanimated: "4.5.1"
+  react-native-reanimated: "4.7.2"
   react-native-safe-area-context: "^5.6.2"
   react-native-svg: "^15.14.0"
 

@@ -14,7 +14,10 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "isolatedModules": true,
-    "types": ["jest"]
+    "types": [
+      "jest",
+      "react-native-reanimated/lib/typescript/jestUtils/index.native"
+    ]
   },
   "exclude": ["node_modules"]
 }

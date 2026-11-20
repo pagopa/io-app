@@ -1528,6 +1528,7 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                               <View
                                 collapsable={false}
                                 exiting={[Function]}
+                                forwardedRef={[Function]}
                                 jestAnimatedProps={
                                   {
                                     "value": {},
@@ -3321,6 +3322,7 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
                               <View
                                 collapsable={false}
                                 exiting={[Function]}
+                                forwardedRef={[Function]}
                                 jestAnimatedProps={
                                   {
                                     "value": {},
@@ -5014,6 +5016,7 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
                               <View
                                 collapsable={false}
                                 exiting={[Function]}
+                                forwardedRef={[Function]}
                                 jestAnimatedProps={
                                   {
                                     "value": {},

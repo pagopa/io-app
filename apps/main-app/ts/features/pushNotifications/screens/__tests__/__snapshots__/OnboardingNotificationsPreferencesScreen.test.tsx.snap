@@ -8548,6 +8548,7 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                             <View
                               collapsable={false}
                               exiting={[Function]}
+                              forwardedRef={[Function]}
                               jestAnimatedProps={
                                 {
                                   "value": {},

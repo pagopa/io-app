@@ -1477,6 +1477,7 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                               <View
                                 collapsable={false}
                                 exiting={[Function]}
+                                forwardedRef={[Function]}
                                 jestAnimatedProps={
                                   {
                                     "value": {},
