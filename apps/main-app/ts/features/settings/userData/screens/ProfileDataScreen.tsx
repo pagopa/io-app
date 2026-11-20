@@ -46,6 +46,9 @@ const ProfileDataScreen = () => {
 
   const showFiscalCode = useMemo<EndElementProps>(() => {
     const label = I18n.t("global.buttons.show");
+    const accessibilityLabel = I18n.t(
+      "profile.data.list.accessibility.fiscalCode"
+    );
 
     return {
       type: "buttonLink",
@@ -56,7 +59,7 @@ const ProfileDataScreen = () => {
           });
         },
         label,
-        accessibilityLabel: label,
+        accessibilityLabel,
         testID: "show-fiscal-code-cta"
       }
     };
@@ -64,13 +67,14 @@ const ProfileDataScreen = () => {
 
   const editEmail = useMemo<EndElementProps>(() => {
     const label = I18n.t("global.buttons.edit");
+    const accessibilityLabel = I18n.t("profile.data.list.accessibility.email");
 
     return {
       type: "buttonLink",
       componentProps: {
         onPress: onPressEmail,
         label,
-        accessibilityLabel: label,
+        accessibilityLabel,
         testID: "insert-or-edit-email-cta"
       }
     };
@@ -103,7 +107,6 @@ const ProfileDataScreen = () => {
             <ListItemInfo
               endElement={showFiscalCode}
               label={I18n.t("profile.data.list.fiscalCode")}
-              // accessibilityLabel={I18n.t("profile.data.list.fiscalCode")}
               testID="show-fiscal-code"
               value={fiscalCode}
             />
@@ -115,7 +118,6 @@ const ProfileDataScreen = () => {
           endElement={editEmail}
           label={I18n.t("profile.data.list.email")}
           testID="insert-or-edit-email"
-          // accessibilityLabel={I18n.t("profile.data.list.email")}
           value={email}
         />
       </ContentWrapper>

@@ -9,7 +9,7 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useRef, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
 
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
@@ -80,6 +80,10 @@ const FiscalCodeScreen = () => {
             "profile.fiscalCode.accessibility.fiscalCodeHint",
             { fiscalCode }
           )}
+          accessibilityRespondsToUserInteraction={
+            Platform.OS === "ios" ? false : undefined
+          }
+          accessibilityRole={Platform.OS === "ios" ? "text" : undefined}
           accessible
           style={[
             styles.card,

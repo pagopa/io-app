@@ -791,6 +791,8 @@ exports[`FiscalCodeScreen should match snapshot 1`] = `
                             />
                             <View
                               accessibilityLabel="Immagine del codice a barre del tuo codice fiscale. Il tuo codice fiscale è: AAAAAA00A00A000A"
+                              accessibilityRespondsToUserInteraction={false}
+                              accessibilityRole="text"
                               accessible={true}
                               style={
                                 [
