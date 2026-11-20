@@ -1,3 +1,40 @@
+## 3.44.0-rc.4 (2026-11-19)
+
+### Bug Fixes
+
+- [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] `react-native-screens` patch ([#8905](https://github.com/pagopa/io-app/pull/8905))
+
+### Chores
+
+- release 3.42.3-rc.0 ([#8906](https://github.com/pagopa/io-app/pull/8906))
+
+### ❤️ Thank You
+
+- Alessandro Mazzon
+- Emanuele Dall'Ara @LeleDallas
+
+## 3.42.3-rc.0 (2026-11-19)
+
+### Bug Fixes
+
+- update versionCode to 100155331 for release 3.42.2.0 ([c42396e56](https://github.com/pagopa/io-app/commit/c42396e56))
+- [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] `react-native-screens` patch ([#8905](https://github.com/pagopa/io-app/pull/8905))
+
+### ❤️ Thank You
+
+- Alessandro Mazzon
+- Emanuele Dall'Ara @LeleDallas
+
+## 3.44.0-rc.3 (2026-11-18)
+
+### Chores
+
+- [[IOPLT-2300](https://pagopa.atlassian.net/browse/IOPLT-2300)] Enforce the `no-hardcoded-colors` lint rule ([#8894](https://github.com/pagopa/io-app/pull/8894))
+
+### ❤️ Thank You
+
+- Damiano Plebani
+
 ## 3.44.0-rc.2 (2026-11-17)
 
 ### Features
