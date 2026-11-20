@@ -11,6 +11,7 @@ module.exports = {
   moduleNameMapper: {
     "\\.svg": "<rootDir>/ts/__mocks__/svgMock.js"
   },
+  resolver: "react-native-reanimated/jest/resolver",
   setupFiles: ["./jestSetup.js"],
   collectCoverage: true
 };
