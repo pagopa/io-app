@@ -1,5 +1,5 @@
 import { useIOThemeContext } from "@io-app/design-system";
-import { Canvas, Path, Skia } from "@shopify/react-native-skia";
+import { Canvas, Path, Skia, type SkPath } from "@shopify/react-native-skia";
 import { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import {
@@ -75,9 +75,9 @@ const generateBlobPath = (
   centerX: number,
   centerY: number,
   scale: number
-): ReturnType<typeof Skia.Path.Make> => {
+): SkPath => {
   "worklet";
-  const path = Skia.Path.Make();
+  const builder = Skia.PathBuilder.Make();
   const scaledRadius = BLOB_BASE_RADIUS * scale;
   const scaledAmplitude = WOBBLE_AMPLITUDE * scale;
 
@@ -102,7 +102,7 @@ const generateBlobPath = (
 
   // Create smooth closed curve using cubic Bezier approximation of Catmull-Rom spline
   if (points.length < 3) {
-    return path;
+    return builder.detach();
   }
 
   // Helper to get point with wrapping
@@ -114,7 +114,7 @@ const generateBlobPath = (
     x: (getPoint(-1).x + getPoint(0).x) / 2,
     y: (getPoint(-1).y + getPoint(0).y) / 2
   };
-  path.moveTo(startMid.x, startMid.y);
+  builder.moveTo(startMid.x, startMid.y);
 
   // Draw smooth curves through each point
   points.forEach((_, i) => {
@@ -125,11 +125,11 @@ const generateBlobPath = (
     const mid2 = { x: (p1.x + p2.x) / 2, y: (p1.y + p2.y) / 2 };
 
     // Quadratic curve through the control point to the next midpoint
-    path.quadTo(p1.x, p1.y, mid2.x, mid2.y);
+    builder.quadTo(p1.x, p1.y, mid2.x, mid2.y);
   });
 
-  path.close();
-  return path;
+  builder.close();
+  return builder.detach();
 };
 
 const AnimatedBlob = ({ index, canvasSize, color }: AnimatedBlobProps) => {
@@ -186,7 +186,7 @@ const AnimatedBlob = ({ index, canvasSize, color }: AnimatedBlobProps) => {
 };
 
 export const CgnAnimatedBackground = () => {
-  // Canvas size is provided via onSize callback and updated on the UI thread
+  // Canvas size is set from onLayout and read by the blobs on the UI thread
   const canvasSize = useSharedValue({ width: 0, height: 0 });
   const { themeType } = useIOThemeContext();
 
@@ -201,7 +201,10 @@ export const CgnAnimatedBackground = () => {
 
   return (
     <Canvas
-      onSize={canvasSize}
+      // `onSize` measures every frame and warns while the screen is detached
+      onLayout={({ nativeEvent: { layout } }) => {
+        canvasSize.value = { width: layout.width, height: layout.height };
+      }}
       pointerEvents="none"
       style={[StyleSheet.absoluteFill, { backgroundColor }]}
     >
