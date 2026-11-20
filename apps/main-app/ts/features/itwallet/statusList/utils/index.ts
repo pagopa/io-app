@@ -103,11 +103,7 @@ export const getCredentialStatusFromStatusList = async (
     idx
   );
 
-  // Every status check in the app is done against the lowercase value, so it is transformed here.
-  // TODO: [SIW-4664] Export a more accurate type from `getStatus`.
-  const canonicalStatus = status.toLowerCase();
-
-  if (canonicalStatus !== "valid") {
+  if (status !== "valid") {
     throw new InvalidTslCredentialStatus(credentialId, rawStatus);
   }
 
@@ -115,7 +111,7 @@ export const getCredentialStatusFromStatusList = async (
     idx,
     parsedStatusList: parsed,
     rawStatus,
-    status: canonicalStatus,
+    status,
     statusList,
     uri
   };
