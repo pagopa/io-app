@@ -73,7 +73,7 @@ const itwReducer = combineReducers({
   walletInstance: wiaReducer
 });
 
-const CURRENT_REDUX_ITW_STORE_VERSION = 20;
+const CURRENT_REDUX_ITW_STORE_VERSION = 21;
 
 export const migrations: MigrationManifest = {
   // Added preferences store
@@ -214,7 +214,10 @@ export const migrations: MigrationManifest = {
   // Removed the flag to switch between the hardcoded values and the catalogue,
   // the catalogue is now the only source for the list of credentials
   "20": (state: PersistedState): PersistedState =>
-    _.omit(state, "credentialsCatalogue.isEnabledForCredentialsList")
+    _.omit(state, "credentialsCatalogue.isEnabledForCredentialsList"),
+  // Removed isPidReissuingSurveyHidden from preferences
+  "21": (state: PersistedState): PersistedState =>
+    _.omit(state, "preferences.isPidReissuingSurveyHidden")
 };
 
 const itwPersistConfig: PersistConfig = {

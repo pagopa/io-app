@@ -20,21 +20,16 @@ import ROUTES from "../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import {
-  trackItwSurveyRequest,
   trackOpenWalletScreen,
   trackWalletAdd
 } from "../../itwallet/analytics";
 import { itwMixPanelCredentialDetailsSelector } from "../../itwallet/analytics/store/selectors";
 import { useItwActivationExitSurveyBottomSheet } from "../../itwallet/common/hooks/useItwActivationExitSurveyBottomSheet";
 import { useItwCredentialExitSurveyBottomSheet } from "../../itwallet/common/hooks/useItwCredentialExitSurveyBottomSheet";
-import { useItwEidFeedbackBottomSheet } from "../../itwallet/common/hooks/useItwEidFeedbackBottomSheet";
-import { itwSetPidReissuingSurveyHidden } from "../../itwallet/common/store/actions/preferences";
-import { itwSetFeedbackBottomSheetVisible } from "../../itwallet/common/store/actions/ui";
 import {
   isItwProximityEnabledSelector,
   itwIsL3EnabledSelector
 } from "../../itwallet/common/store/selectors";
-import { itwFeedbackBottomSheetVisibleSelector } from "../../itwallet/common/store/selectors/ui";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { trackItwProximityShowQrCode } from "../../itwallet/presentation/proximity/analytics";
 import { ITW_PROXIMITY_ROUTES } from "../../itwallet/presentation/proximity/navigation/routes";
@@ -76,15 +71,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   );
 
   const isNewElementAdded = useRef(route.params?.newMethodAdded || false);
-  const isRequiredEidFeedback = useIOSelector(
-    itwFeedbackBottomSheetVisibleSelector
-  );
   const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
-  const itwFeedbackBottomSheet = useItwEidFeedbackBottomSheet({
-    onPrimaryAction: () => {
-      dispatch(itwSetPidReissuingSurveyHidden(true));
-    }
-  });
   const activationExitSurvey = useItwActivationExitSurveyBottomSheet();
   const credentialExitSurvey = useItwCredentialExitSurveyBottomSheet();
 
@@ -167,20 +154,6 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
     }, [isNewElementAdded])
   );
 
-  /** Handles the EID feedback bottom sheet display */
-  useFocusEffect(
-    useCallback(() => {
-      if (isRequiredEidFeedback) {
-        trackItwSurveyRequest({
-          survey_id: "confirm_eid_flow_exit",
-          survey_page: route.name
-        });
-        itwFeedbackBottomSheet.present();
-        dispatch(itwSetFeedbackBottomSheetVisible(false));
-      }
-    }, [dispatch, isRequiredEidFeedback, itwFeedbackBottomSheet, route.name])
-  );
-
   const handleRefreshWallet = useCallback(() => {
     setIsRefreshing(true);
     dispatch(walletUpdate());
@@ -233,7 +206,6 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
         <WalletCategoryFilterTabs />
         <WalletCardsContainer />
       </IOScrollView>
-      {itwFeedbackBottomSheet.bottomSheet}
       {activationExitSurvey.bottomSheet}
       {credentialExitSurvey.bottomSheet}
     </>

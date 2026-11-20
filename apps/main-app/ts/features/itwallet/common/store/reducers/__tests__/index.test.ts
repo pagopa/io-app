@@ -373,4 +373,34 @@ describe("itWalletReducer migrations", () => {
       }
     });
   });
+
+  test.each([
+    {
+      name: "removes the flag and preserves the other preferences",
+      preferences: {
+        isPidReissuingSurveyHidden: true,
+        isL2Fallback: true,
+        isWhatsNewLocallyEnabled: false
+      }
+    },
+    {
+      name: "preserves the preferences when the flag is absent",
+      preferences: { isL2Fallback: true, isWhatsNewLocallyEnabled: false }
+    }
+  ])(
+    "should migrate the store to version 21: $name",
+    async ({ preferences }) => {
+      const previousState = {
+        _persist: { version: 20, rehydrated: false },
+        preferences
+      };
+
+      const newState = await migrate(previousState, 21);
+
+      expect(newState).toEqual({
+        _persist: { version: 20, rehydrated: false },
+        preferences: { isL2Fallback: true, isWhatsNewLocallyEnabled: false }
+      });
+    }
+  );
 });

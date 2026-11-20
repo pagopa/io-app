@@ -1205,19 +1205,6 @@
             "content": "Tell us about your experience activating IT-Wallet and help us improve.",
             "title": "Can you tell us how it went?"
           }
-        },
-        "reissuance": {
-          "banner": {
-            "action": "Get started",
-            "content": "Tell us about your verification experience and help us improve.",
-            "title": "How did it go?"
-          },
-          "bottomSheet": {
-            "content": "You've decided not to continue: please let us know why, so we can improve your experience with the app. It'll only take a minute!",
-            "primaryAction": "Share your feedback",
-            "secondaryAction": "Not now",
-            "title": "Would you like to tell us why?"
-          }
         }
       },
       "generic": {
