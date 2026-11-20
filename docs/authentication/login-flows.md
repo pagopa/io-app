@@ -2,7 +2,7 @@
 
 ## Context
 
-**Before.** IO ran the whole login stack itself: the IO backend built the SAML requests and verified the Identity Providers' assertions. Security patches and new capabilities, such as login for minors, all fell on the IO team.
+**Before.** IO ran the whole login stack itself: the Session Manager built the SAML requests and verified the Identity Providers' assertions. Security patches and new capabilities, such as login for minors, all fell on the IO team.
 
 **OneIdentity.** The internal service PagoPA products use to authenticate citizens with SPID and CIE. It speaks SAML to the IdPs and exposes an OIDC flow to the products. A dedicated team maintains it, and it lets PagoPA hold a single AgID membership.
 
@@ -20,8 +20,8 @@ Technical terms are explained in the [glossary](#glossary) at the end.
 
 ```mermaid
 flowchart LR
-    App["App IO<br/>(WebView)"]
-    BE["IO backend<br/>(Session Manager)"]
+    App["App IO"]
+    BE["Session Manager"]
     subgraph OI["OneIdentity"]
         BB["OIDC provider"]
         CDN["CDN"]
@@ -78,14 +78,14 @@ The stack is chosen per device. The local flag in the Login Config Screen wins (
 
 ### 4.2 IO stack (being phased out)
 
-The IO backend speaks SAML directly to the IdP: it builds the request and verifies the assertion.
+The Session Manager speaks SAML directly to the IdP: it builds the request and verifies the assertion.
 
 ```mermaid
 sequenceDiagram
     autonumber
     participant App as App IO
     participant WV as WebView
-    participant BE as IO backend
+    participant BE as Session Manager
     participant IdP as IdP
     Note over App: generates the ephemeral Lollipop key
     App->>WV: opens the WebView
@@ -94,10 +94,16 @@ sequenceDiagram
     WV->>App: SAMLRequest intercepted
     Note over App: checks the assertion-ref
     WV->>IdP: SAML request
-    Note over IdP: citizen authenticates
-    IdP-->>BE: SAML assertion → /acs (via WebView)
-    Note over BE: callback logic, creates the session
-    BE-->>WV: redirect profile.html#token
+    IdP-->>WV: login page
+    Note over WV: login
+    WV->>IdP: citizen logs in
+    IdP-->>WV: consent page
+    Note over WV: consent
+    WV->>IdP: citizen accepts data sharing
+    IdP-->>WV: auto-submit HTML form with the SAMLResponse
+    WV->>BE: POST /acs (SAMLResponse)
+    Note over BE: creates the session
+    BE-->>WV: profile.html#token
     WV->>App: token intercepted
 ```
 
@@ -112,12 +118,12 @@ sequenceDiagram
     autonumber
     participant App as App IO
     participant WV as WebView
-    participant BE as IO backend
+    participant BE as Session Manager
     participant OI as OneIdentity
     participant IdP as IdP
     Note over App: generates the ephemeral Lollipop key
     App->>BE: POST /api/auth/v1/reserve
-    Note over BE: reserves the key, stores the login data (15 min)
+    Note over BE: reserves the Lollipop key
     BE-->>App: OIDC parameters
     App->>WV: opens the WebView
     WV->>OI: GET /authorize (assertion-ref header)
@@ -125,19 +131,28 @@ sequenceDiagram
     WV->>App: SAMLRequest intercepted
     Note over App: checks the assertion-ref
     WV->>IdP: SAML request
-    Note over IdP: citizen authenticates
-    IdP-->>OI: SAML assertion → /acs (via WebView)
-    OI-->>BE: code + state → /callback (via WebView)
+    IdP-->>WV: login page
+    Note over WV: login
+    WV->>IdP: citizen logs in
+    IdP-->>WV: consent page
+    Note over WV: consent
+    WV->>IdP: citizen accepts data sharing
+    IdP-->>WV: auto-submit HTML form with the SAMLResponse
+    WV->>OI: POST /acs (SAMLResponse)
+    OI-->>WV: redirect to redirect_uri?code=…&state=…
+    WV->>BE: GET /callback?code=…&state=…
     BE->>OI: code exchange (B2B)
     OI-->>BE: ID token, access token, SAML assertion
-    Note over BE: OIDC checks + callback logic, creates the session
-    BE-->>WV: redirect profile.html#token
+    Note over BE: checks the result, creates the session
+    BE-->>WV: profile.html#token
     WV->>App: token intercepted
 ```
 
-The app calls `/reserve` directly, and it returns the parameters for `/authorize`: `authorization_endpoint`, `client_id`, `redirect_uri`, `state`, `nonce`, `acr_values`. From these the app builds the `/authorize` URL, adding the chosen `idp`, `scope=openid` and `response_type=code`. On this stack `/acs` belongs to OneIdentity, not to the IO backend. From step 12 onward the flow is the same as on the IO stack.
+The app calls `/reserve` directly, and it returns the parameters for `/authorize`: `authorization_endpoint`, `client_id`, `redirect_uri`, `state`, `nonce`, `acr_values`. From these the app builds the `/authorize` URL, adding the chosen `idp`, `scope=openid` and `response_type=code`. On this stack `/acs` belongs to OneIdentity, not to the Session Manager.
 
-Steps introduced with OneIdentity: 1, 2, 4, 9, 10, 11.
+The IdP replies to the consent with an HTML form that submits itself: the WebView sends it as a `POST /acs` to OneIdentity, carrying the SAMLResponse. OneIdentity validates it, creates the `code` and redirects to `redirect_uri`, the Session Manager callback.
+
+Steps 1, 2, 4 and 13–17 are introduced with OneIdentity; from step 18 onward the flow is the same as on the IO stack.
 
 ### 4.4 What the app sends at login
 
@@ -152,35 +167,15 @@ Steps introduced with OneIdentity: 1, 2, 4, 9, 10, 11.
 | OneIdentity environment                     | —                                                 | `env` (`PROD` or `UAT`) in the `/reserve` body           |
 | Key thumbprint (assertion-ref)              | —                                                 | `x-pagopa-lollipop-assertion-ref` header on `/authorize` |
 
-### 4.5 What the backend does
+### 4.5 What the app does after the token
 
-**OneIdentity stack only.** At `/reserve` the Session Manager reserves the Lollipop key and stores the login data for 15 minutes (login type, current user, assertion-ref, minimum level, environment, nonce): a login that has started must finish within that time. At `/callback` it receives `code` and `state`, retrieves that data and exchanges the `code` with OneIdentity, getting an ID token, an access token and the SAML assertion. It then checks that:
+The app stores the token in the authentication state, which is persisted in the Keychain, and starts initialization. The first call to the Session Manager checks the session: if it returns 401, the session has expired or, with fast login, the token refresh starts (section 3). The same call returns the session information, including the expiry (`expirationDate`, used for the expiry warning) and the level (`spidLevel`, used by Sign with IO), plus the tokens for the other services.
 
-- the fiscal code in the ID token matches the one in the SAML assertion;
-- the assertion's `InResponseTo` matches the stored assertion-ref: this is the last link of the Lollipop binding (section 5);
-- the level obtained is not lower than `min_auth_level` (no downgrade).
+### 4.6 What is simplified
 
-**Both stacks.** After `/acs` on the IO stack and after `/callback` on the OneIdentity stack, the callback logic is the same:
-
-1. active session login: if the fiscal code differs from the session's, error 1004;
-2. blocked user: if the session is blocked it returns 403; if the citizen has locked access from IO-Web, error 1002;
-3. revocation of the previous session and Lollipop key, activation of the new key;
-4. creation of the session token, retrieval or creation of the IO profile, login event sent;
-5. redirect to `profile.html#token`.
-
-A technical error in any of these steps returns 500.
-
-### 4.6 What the app does after the token
-
-The app stores the token in the authentication state, which is persisted in the Keychain, and starts initialization. The first backend call checks the session: if it returns 401, the session has expired or, with fast login, the token refresh starts (section 3). The same call returns the session information, including the expiry (`expirationDate`, used for the expiry warning) and the level (`spidLevel`, used by Sign with IO), plus the tokens for the other services.
-
-### 4.7 What is simplified
-
-- The diagrams leave out intermediate redirects, the IdP consent screen, the CIE NFC reading (between the SAML request and the assertion) and the hand-off to the CieID app. Step 11 of the OneIdentity stack merges two calls: the `code` exchange and the retrieval of the SAML assertion with the access token.
+- **Login and consent.** How the citizen logs in depends on the method: SPID credentials, CIE card and PIN over NFC, or the CieID app (section 2). Between login and consent the IdP may add its own steps, such as the second factor for SPID L2. For CIE + PIN this is where the app reads the card over NFC, outside the WebView; for CieID, where the citizen authenticates in the CieID app. The diagrams show only the WebView path and leave out intermediate redirects.
+- Steps 16–17 of the OneIdentity stack merge two calls: the `code` exchange and the retrieval of the SAML assertion with the access token.
 - **CIE + PIN.** On the IO stack the app, not the WebView, follows the redirects up to the `SAMLRequest` natively. On the OneIdentity stack the same behaviour is enabled via remote config; remote config also enables, on Android, clearing the session cookies before the login.
-- The app-side steps are checked against the io-app code; the backend ones (section 4.5) come from the OneIdentity design review, in particular the [Login Happy Path diagram](https://www.planttext.com/?text=dLPHR-Cs37wUVWMHlYJ65RiRC0mesk3S9hq5IzSiJWiSYi9GB2OHuaYU9AVhVlqeEN5iTxiUrWUXfYJouyUFL3vRnuqhTpdqfdej5VpAY-8LPjnjUin9boDqxOmLT4Lcik3AGJoR0RT0korpBq5hfLPmnnLVe-dvGtRNFdElS38AErgX54nmnvVS8lJYqifSSWFMQKFtmo63Gbh6x5OgSiDtyBjsc6ouq2zIhU4NndZfj2ftIpJGkrmEdpv-VEunTdK5SxHezWXNLtGeStBF7GRCZ1OuVpfRvYK-3mdX1LncEjVcmbk6JxFxPF5SNqSb2YsLE_cWb9WY6A3t59ISVI3B3r5qhOLdYr2YGsEZY07zeTf7q2-v0ssWC5eCWdadLKhGDscEUyohexbdFNMl1ORFh3G6bKjB0dBOptDPw28jocMwnTUeRTrmkqbvljQCC8D7ICJjpeS-mUdXK1M3eWkHumitsCY4ieYY19589r2-MXR_B55b24BoDUL5APrSUzz74hiSVa65ndDrFndTU7_qlu2YvWRwcHO8gro_3Be8MWoIL9t7I23QMHqZ1u6qWoUSoiQFQl82WnLn_sF6ytp9ioqGeQTgLWexOQY-e-YtyLUAFnydu_dZ-Fmo01cI_J6UFenf9n2vyBKwrEd1bubRMXqrmHnNBCibsIU2KR5ZglNKbvhIs4F_8LvuFSpczwF18RqeMYocvFZJpruSfKDxoZY0WWRTJ60dWr1g4kC5ATULHeN4cyVeqXlLHX79lD2A-i-hDqYsGfrIRm9Kz0DK2264CfYH9esaJvwPTCy9KWEgRpsVh3RoxqFp5SK1cMz-GSwbUwsKKQdHom3wJUg0h1la0iqWEBmvbgxsvnLtgmr9MDYgndl9eIvn_uXqmDuXu8-7yVmhpE9vV3TUZES9SU2rUL3UzsgEE3SIkxhhgYoixrRnk1y6P3lCzK_N43e7_yesNAqREgx6QLZ_ioqd8rZeBIhWb5QSPJIlAqCJIENe7I1rlabyDuNuMBfGX9RZT_1zEt0NFpoYaIkPSH_BjWR7X-hsMHSGTVwEPc-smMnBkpK3DxTmFeI4qojuEdnpIqVYZWxhYewyojvUcgXZ3oqqh2JceehZGfowxs7e-wBfgZaLeAyqqAEcQCmA7FpB1AzRu9gSA4-mVwIp_p-_xUxfR6qGrNDxRXnVyJV2Q5ShlAIVoHtzaFW7).
-
-The server-side components (Session Manager, Redis, Lollipop and Profile functions, CosmosDB, Service Bus) are in the [IO–OneIdentity container diagram](https://www.plantuml.com/plantuml/uml/ZLPBZzis4BxxLqnrA6H0ZIyv5KKHFtOJ0OdjsWw2dXQKDFQoIv4gITbrYlxt3X-MxPMDpSNXShxvvi5lHlbWBDEshSNW9ovBqLO8lqtVZwRldwPAMiObwjylJEnxgt4qThzJLTTAzesvjBZJp78b0t2DUizBdBIc3vunomfcq9muJQtChEW3ALhJsXZwiPMbuty3DcwQ6BiFN5kbsIu2_sYnnNZJXtx38l8jyozC4gP6QVkuETg3qYzSxhhmWfU-4H-PnGCxlbd_2YjkfgnyfZG6bbk1a7Jl03FEgB7rhv0lVbb8XBn2IQ1ZClWy_dFnTVEqMIoVPejlytGu62nH6oNJrg3Eag_qcz3bO7qq5kkdYMfbnVGnvOgop2395_155PpYNMIT3E7V0K2NG5fxIF2WNyeZeTCAMMbXJYvxT7zVC81zPXPGiaAWWP9R_Xsb0Qk0bIKQ0qrR41POLNF9ZTN1ouHNCvJoV_sSbKHUPSbL1uOkqGXy-CS6J55aoQJbeg8dWObGvKkI9KuXJ1w1IujQCW6BV3Q5WsPDWngOTb5WlSndesd-0AorpnIYQyYDA6KbYNKslvqihveiET5r-S9IgpslKFSI9to1MP9NIoXO-OAoShmtNoxQ2Ro0ISGItHtjfLJWxf1TlKuqKLUMWjcjqZNSC5C2h-OuZGzKj2PB7lPKaol8FQZIJW4U3X4Fv40K_GcYZ7YT9UxkAeDb3cSGUVP6DENIM2Q4pz9uIv0uv9S6y1QYzlz2T2R2VYiVEOiT3BEmGLR3exDxglEx_GpZ8DpO_3WYhzPDQWX2Vg4CFLwkYNOTxc9jlazpLM46csE3fjIyiNGNwZXXgHScWpGk3HEqgf4An0eeVAEuj6ReTVbgWQJQ7RF4tr0JOlbqycQWNb_JDKop6Yrgqz5rYpOLIWZUgCQBxNFyWxZ2IvzWDnmRhRPSeFTRXlDzjsx_dneOaywwviMBZY8wJFoGk35PeGWxBsmsrqu3T2A0CvqtMBSX5XAxv-MIMzWATQ00dpQRvRhd5kTpVBKNoC_m2k60nPxZVUSuWl530Hh_Rj5O0_PPgtRt3ET1lajnNZbHY6vJSBbL1b9yjti7GkqKQKPmOuUlM4BuC7KhrLekTpq4sVhYlOFk0xkcUcNbnhIeWVHNgZtguyZlLP_ne-PKfJY29Cr1gIJP7TUR4QAgdGxGWCMwKPfckDCaC5dTrNMS1YT4gqebxaRfoI-4kvnD0-xRdVZzTPVdF3OhT3ip_g-8L1-EeBRWrDebUt8uVHXVy7XgoMZriDxSZTJDsKUqewb6OWlfdkVknuXkxTOLxjKB6c0oP1jcRwuitvucu5DRN6tVDneJH9ZBFHEyOjPp7w7HkEUgDH0Tm59ODrtWFX9GqkBwmIekFr1hKfe1T9yf0nftJ5UavL09JGkNVk8X3MUd7ur_OMd1kiKyx2hvG3njBVu7).
 
 ## 5. Lollipop
 
@@ -188,20 +183,20 @@ Lollipop is IO's _proof of possession_: it proves that a request comes from the 
 
 In short: at every login the phone creates a key pair. The public key's thumbprint becomes the ID of the request to the IdP, which by signing the assertion certifies that the key belongs to the citizen. From then on, sensitive requests, signed with the private key that never leaves the device, prove they come from that phone.
 
-1. **Generation.** At every login attempt the app deletes the ephemeral key and generates a new pair. The private key stays in the device's secure area (Secure Enclave or Keystore); the app only knows its `keyTag`. A new key at every attempt keeps it unique: the backend rejects an already reserved key with 409.
+1. **Generation.** At every login attempt the app deletes the ephemeral key and generates a new pair. The private key stays in the device's secure area (Secure Enclave or Keystore); the app only knows its `keyTag`. A new key at every attempt keeps it unique: the Session Manager rejects an already reserved key with 409.
 2. **Sending the public key.** Only once, during the login (section 4.4).
 3. **Binding to the identity.** The public key's thumbprint (`sha256-<thumbprint>`, the _assertion-ref_) becomes the ID of the SAML request. Before moving on to the IdP, the app checks that the ID matches its own key. The IdP replies with a signed assertion that quotes that ID.
 4. **Login outcome.** If the login succeeds, the ephemeral key becomes the main key and a new one is prepared for the next login; if it fails, it is discarded.
 5. **Signing requests.** Sensitive requests (Sign with IO, SEND, fast login refresh) are signed with the private key following the HTTP Message Signatures standard (`signature`, `signature-input`, `content-digest`). The others only use the session token.
 6. **Verification.** Whoever receives a signed request verifies the signature with the public key bound to the citizen.
 
-**What differs between the stacks.** Besides how the public key travels (section 4.4), the OneIdentity stack adds two checks to the identity binding: the key thumbprint travels in the `x-pagopa-lollipop-assertion-ref` header of `/authorize`, and at `/callback` the backend checks that the assertion's `InResponseTo` matches the stored assertion-ref (section 4.5).
+**What differs between the stacks.** Besides how the public key travels (section 4.4), the OneIdentity stack adds two checks to the identity binding: the key thumbprint travels in the `x-pagopa-lollipop-assertion-ref` header of `/authorize`, and at `/callback` the Session Manager checks that the assertion's `InResponseTo` matches the stored assertion-ref.
 
 ## 6. Errors
 
 Errors reach the app in two ways:
 
-- **Error code from the backend.** The final page of the flow is `error.html?errorCode=…&errorMessage=…`: the WebView intercepts it without loading it, and the app shows the screen for that code, either with retry or as a permanent error. Applies to both stacks.
+- **Error code from the Session Manager.** The final page of the flow is `error.html?errorCode=…&errorMessage=…`: the WebView intercepts it without loading it, and the app shows the screen for that code, either with retry or as a permanent error. Applies to both stacks.
 - **Error during the flow.** An HTTP error in the WebView, or a failed app-side check, stops the login before it reaches the final page.
 
 | Case                                                                                                                                                  | What the citizen sees                                                |
@@ -211,7 +206,7 @@ Errors reach the app in two ways:
 | 1002                                                                                                                                                  | They locked access to IO from IO-Web: screen to unlock it            |
 | 1004                                                                                                                                                  | Fiscal code different from the session's (active session login only) |
 | Lollipop check failed                                                                                                                                 | Login stopped with an error                                          |
-| HTTP error in a step of the flow, OneIdentity stack (`/reserve`, `/authorize`, IdP pages, `/acs`, `/callback`)                                        | Generic error screen                                                 |
+| HTTP error in a step of the flow, OneIdentity stack (`/reserve`, `/authorize`, IdP pages, `/acs`, `/callback`)                                        | Generic error screen, except the case below                          |
 | Callback fails to load during an active session login                                                                                                 | Forced logout and back to the landing screen                         |
 
 CIE reading errors (wrong PIN, invalid or expired card, APDU not supported) have dedicated screens.
@@ -241,13 +236,13 @@ The Login Config Screen (easter egg on the landing screen) sets three values, wh
 ## Glossary
 
 - **Assertion-ref.** Thumbprint of the Lollipop public key (`sha256-<thumbprint>`), used as the ID of the SAML request.
-- **CieID.** Official app for authenticating with the CIE identity; IO hands the citizen off to it and gets them back once the login is done.
 - **CIE.** Carta d'Identità Elettronica, the Italian electronic identity card.
+- **CieID.** Official app for authenticating with the CIE identity; IO hands the citizen off to it and gets them back once the login is done.
 - **Fast login (LV).** Login with a 365-day session and token refresh (section 3).
 - **IdP (Identity Provider).** Whoever authenticates the citizen: the SPID providers, or the Ministry of the Interior for CIE.
 - **L2 / L3.** SPID security levels: L2 with password and a second factor, L3 with a physical device (for CIE, card and PIN).
 - **Lollipop.** IO's proof of possession (section 5).
-- **OIDC (OpenID Connect).** Authentication protocol built on OAuth 2.0. IO uses it with OneIdentity in the _authorization code_ flow: OneIdentity returns a `code`, which the backend exchanges for the tokens.
+- **OIDC (OpenID Connect).** Authentication protocol built on OAuth 2.0. IO uses it with OneIdentity in the _authorization code_ flow: OneIdentity returns a `code`, which the Session Manager exchanges for the tokens.
 - **SAML.** Protocol used with the IdP to exchange the authentication request (`SAMLRequest`) and the signed assertion (`SAMLResponse`).
 - **SAML assertion.** Document signed by the IdP with the citizen's identity, in reply to a SAML request.
 - **Session Manager.** IO backend component that handles login and sessions.
