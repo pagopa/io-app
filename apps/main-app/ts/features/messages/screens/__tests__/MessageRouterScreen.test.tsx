@@ -99,7 +99,11 @@ describe("MessageRouterScreen", () => {
           MESSAGES_ROUTES.MESSAGES_NAVIGATOR,
           {
             screen: MESSAGES_ROUTES.MESSAGE_DETAIL,
-            params: { messageId: MESSAGE_ID, serviceId: "s1" }
+            params: {
+              messageId: MESSAGE_ID,
+              serviceId: "s1",
+              firstTimeOpening: true
+            }
           }
         );
       });
