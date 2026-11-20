@@ -1,4 +1,10 @@
-import { Divider, H3, H6, IOSkeleton, useIOTheme } from "@io-app/design-system";
+import {
+  Divider,
+  H3,
+  H6,
+  IOSkeleton,
+  useIOColors
+} from "@io-app/design-system";
 import I18n from "i18next";
 import { View } from "react-native";
 
@@ -13,7 +19,7 @@ export const WalletPaymentTotalAmount = ({
   totalAmount,
   loading
 }: TotalAmountSectionProps) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <>
@@ -26,7 +32,7 @@ export const WalletPaymentTotalAmount = ({
           paddingVertical: 16
         }}
       >
-        <H6 color={theme["textHeading-tertiary"]}>
+        <H6 color={colors.text.heading.tertiary}>
           {I18n.t("payment.confirm.totalAmount")}
         </H6>
         {loading && (

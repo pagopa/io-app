@@ -3,9 +3,8 @@ import {
   H6,
   HSpacer,
   Icon,
-  IOColorsLegacy,
   IODimensionScale,
-  useIOTheme
+  useIOColors
 } from "@io-app/design-system";
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
@@ -85,15 +84,15 @@ export const NotificationPreviewSample = ({
     remindersEnabled
   );
 
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <View
       style={[
         styles.notification,
         {
-          backgroundColor: IOColorsLegacy[theme["appBackground-primary"]],
-          borderColor: IOColorsLegacy[theme["cardBorder-default"]]
+          backgroundColor: colors.surface.default,
+          borderColor: colors.stroke.default
         }
       ]}
     >

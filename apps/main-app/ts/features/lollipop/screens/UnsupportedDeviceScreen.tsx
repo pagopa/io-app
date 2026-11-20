@@ -1,4 +1,4 @@
-import { IOColorsLegacy, useIOTheme } from "@io-app/design-system";
+import { useIOColors } from "@io-app/design-system";
 import I18n from "i18next";
 import { Modal } from "react-native";
 
@@ -29,10 +29,10 @@ const UnsupportedDeviceScreen = () => {
   const subtitle = I18n.t("unsupportedDevice.subtitle");
   const label = I18n.t("unsupportedDevice.cta.faq");
 
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
-    <Modal backdropColor={IOColorsLegacy[theme["appBackground-primary"]]}>
+    <Modal backdropColor={colors.background.default}>
       <OperationResultScreenContent
         pictogram="umbrella"
         secondaryAction={{
