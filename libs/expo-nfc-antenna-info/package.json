@@ -9,6 +9,8 @@
   "source": "index.ts",
   "files": [
     "index.ts",
+    "types.ts",
+    "position",
     "android",
     "ios",
     "expo-module.config.json",
@@ -17,7 +19,11 @@
   "scripts": {
     "tsc-noemit": "tsc --noEmit"
   },
+  "dependencies": {
+    "zod": "4.3.6"
+  },
   "devDependencies": {
+    "@types/jest": "catalog:",
     "expo-modules-core": "^55.0.25",
     "react-native": "catalog:",
     "typescript": "catalog:"
