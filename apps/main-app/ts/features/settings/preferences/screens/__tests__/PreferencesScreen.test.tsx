@@ -10,6 +10,7 @@ import { openAppSettings } from "../../../../../utils/appSettings";
 import { checkAndRequestPermission } from "../../../../../utils/calendar";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
+import * as preferencesAnalytics from "../../analytics";
 import PreferencesScreen from "../PreferencesScreen";
 
 jest.mock("../../../../../navigation/params/AppParamsList", () => ({
@@ -32,11 +33,18 @@ describe("PreferencesScreen", () => {
     (useIONavigation as jest.Mock).mockReturnValue({
       navigate: mockNavigate
     });
+    jest
+      .spyOn(preferencesAnalytics, "trackLanguagePreferenceSelected")
+      .mockImplementation(() => undefined);
+    jest
+      .spyOn(preferencesAnalytics, "trackPreferencesScreenView")
+      .mockImplementation(() => undefined);
   });
 
   it("should match snapshot", () => {
     const tree = renderComponent().toJSON();
     expect(tree).toMatchSnapshot();
+    expect(preferencesAnalytics.trackPreferencesScreenView).toHaveBeenCalled();
   });
 
   it("should render the preferences screen correctly", () => {
@@ -108,6 +116,9 @@ describe("PreferencesScreen", () => {
         screen: SETTINGS_ROUTES.PROFILE_PREFERENCES_LANGUAGE
       })
     );
+    expect(
+      preferencesAnalytics.trackLanguagePreferenceSelected
+    ).toHaveBeenCalledTimes(1);
   });
 
   it("should navigate to calendar preferences if permission is granted", async () => {

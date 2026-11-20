@@ -228,3 +228,6 @@ export const preferredLanguageSelector = createSelector<
   PersistedPreferencesState,
   O.Option<Locales>
 >(persistedPreferencesSelector, pps => O.fromNullable(pps.preferredLanguage));
+
+export const uiLanguageSelector = (state: GlobalState): Locales =>
+  state.persistedPreferences.preferredLanguage ?? "it";
