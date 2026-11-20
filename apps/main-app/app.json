@@ -417,7 +417,7 @@
       "expo-notifications",
       {
         "icon": "./app-config/native/android/res/drawable/ic_notification.png",
-        "defaultChannel": "default",
+        "defaultChannel": "@strings/default_notification_channel_id",
         "enableBackgroundRemoteNotifications": true
       }
     ],
