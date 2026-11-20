@@ -1,9 +1,13 @@
-import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
-
-import { applicationChangeState } from "../../../../../store/actions/application";
+import {
+  applicationChangeState,
+  startApplicationInitialization
+} from "../../../../../store/actions/application";
 import { Action } from "../../../../../store/actions/types";
 import { appReducer } from "../../../../../store/reducers";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { successGetMessageDataFor } from "../../../__mocks__/messageData";
 import {
+  cancelGetMessageDataAction,
   getMessageDataAction,
   loadMessageById,
   LoadMessageByIdFailureKind,
@@ -11,14 +15,13 @@ import {
   resetGetMessageDataAction
 } from "../../actions";
 import {
-  blockedFromPushNotificationSelector,
   INITIAL_STATE,
+  isLoadingMessageDataSelector,
   messageGetStatusErrorPhaseSelector,
   MessageGetStatusFailurePhaseType,
   messageGetStatusReducer,
-  messageRouterScreenErrorVariantSelector,
-  messageSuccessDataSelector,
-  showSpinnerFromMessageGetStatusSelector
+  messageGetStatusSelector,
+  messageRouterScreenErrorVariantSelector
 } from "../messageGetStatus";
 
 describe("messageGetStatusReducer", () => {
@@ -53,21 +56,7 @@ describe("messageGetStatusReducer", () => {
     expect(loadingState).toStrictEqual(expectedLoadingState);
   });
   it("should match successful state after getMessageDataAction.success action", () => {
-    const successData = {
-      messageId: "m1",
-      serviceId: "s1" as ServiceId,
-      serviceName: "name",
-      firstTimeOpening: true,
-      isPNMessage: false,
-      organizationName: "orgName",
-      organizationFiscalCode: "orgFisCod",
-      containsAttachments: false,
-      hasRemoteContent: false,
-      hasFIMSCTA: false,
-      createdAt: new Date(),
-      fciMessageType: "not_set" as const,
-      fciResult: "not_set" as const
-    };
+    const successData = successGetMessageDataFor("m1");
     const expectedSuccessState = {
       status: "success",
       successData
@@ -120,199 +109,151 @@ describe("messageGetStatusReducer", () => {
     );
     expect(resetState).toStrictEqual(INITIAL_STATE);
   });
-  it("should match initial state after reloadAllMessages.request action", () => {
-    const failureState = messageGetStatusReducer(
+  it("should match initial state after cancelGetMessageDataAction action", () => {
+    const loadingState = messageGetStatusReducer(
       undefined,
-      getMessageDataAction.failure({ phase: "paginatedMessage" })
+      getMessageDataAction.request({
+        messageId: "m1",
+        fromPushNotification: false
+      })
     );
-    expect(failureState).not.toStrictEqual(INITIAL_STATE);
-    const resetState = messageGetStatusReducer(
-      failureState,
+    expect(loadingState).not.toStrictEqual(INITIAL_STATE);
+    const cancelledState = messageGetStatusReducer(
+      loadingState,
+      cancelGetMessageDataAction()
+    );
+    expect(cancelledState).toStrictEqual(INITIAL_STATE);
+  });
+  it("should keep its state after reloadAllMessages.request action", () => {
+    // The inbox can be reloaded while a message is being opened, and the
+    // outcome of its loading must not be lost
+    const successState = messageGetStatusReducer(
+      undefined,
+      getMessageDataAction.success(successGetMessageDataFor("m1"))
+    );
+    const reloadState = messageGetStatusReducer(
+      successState,
       reloadAllMessages.request({
         filter: {},
         pageSize: 20,
         fromUserAction: false
       })
     );
-    expect(resetState).toStrictEqual(INITIAL_STATE);
+    expect(reloadState).toBe(successState);
+  });
+  it("should switch to retry state after a session expiration while loading", () => {
+    const data = { messageId: "m1", fromPushNotification: true };
+    const loadingState = messageGetStatusReducer(
+      undefined,
+      getMessageDataAction.request(data)
+    );
+    const retryState = messageGetStatusReducer(
+      loadingState,
+      startApplicationInitialization({ handleSessionExpiration: true })
+    );
+    expect(retryState).toStrictEqual({ status: "retry", data });
   });
 });
-describe("showSpinnerFromMessageGetStatusSelector", () => {
-  it("should return true for initial state", () => {
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-    const showSpinner = showSpinnerFromMessageGetStatusSelector(globalState);
-    expect(showSpinner).toBe(true);
-  });
-  it("should return true for loading state", () => {
+
+describe("messageGetStatusSelector", () => {
+  it("should return the whole message get status", () => {
     const globalState = appReducer(
       undefined,
       getMessageDataAction.request({
         messageId: "m1",
-        fromPushNotification: false
+        fromPushNotification: true
       })
     );
-    const showSpinner = showSpinnerFromMessageGetStatusSelector(globalState);
-    expect(showSpinner).toBe(true);
-  });
-  it("should return true for blocked failure state", () => {
-    const globalState = appReducer(
-      undefined,
-      getMessageDataAction.failure({
-        phase: "preconditions",
-        blockedFromPushNotificationOpt: true
-      })
+    expect(messageGetStatusSelector(globalState)).toBe(
+      globalState.entities.messages.messageGetStatus
     );
-    const showSpinner = showSpinnerFromMessageGetStatusSelector(globalState);
-    expect(showSpinner).toBe(true);
-  });
-  it("should return true for success state", () => {
-    const globalState = appReducer(
-      undefined,
-      getMessageDataAction.success({
-        messageId: "m1",
-        serviceId: "s1" as ServiceId,
-        serviceName: "name",
-        firstTimeOpening: true,
-        isPNMessage: false,
-        organizationName: "orgName",
-        organizationFiscalCode: "orgFisCod",
-        containsAttachments: false,
-        hasRemoteContent: false,
-        hasFIMSCTA: false,
-        createdAt: new Date(),
-        fciMessageType: "request",
-        fciResult: "not_set"
-      })
-    );
-    const showSpinner = showSpinnerFromMessageGetStatusSelector(globalState);
-    expect(showSpinner).toBe(true);
-  });
-  it("should return false for failure (non blocking) state", () => {
-    const globalState = appReducer(
-      undefined,
-      getMessageDataAction.failure({ phase: "messageDetails" })
-    );
-    const showSpinner = showSpinnerFromMessageGetStatusSelector(globalState);
-    expect(showSpinner).toBe(false);
   });
 });
-describe("messageSuccessDataSelector", () => {
-  it("should return undefined for initial state", () => {
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-    const successData = messageSuccessDataSelector(globalState);
-    expect(successData).toBeUndefined();
-  });
-  it("should return undefined for loading state", () => {
-    const globalState = appReducer(
+
+describe("isLoadingMessageDataSelector", () => {
+  const MESSAGE_ID = "m1";
+  const OTHER_MESSAGE_ID = "m2";
+
+  const loadingState = (messageId: string) =>
+    appReducer(
       undefined,
-      getMessageDataAction.request({
-        messageId: "m1",
-        fromPushNotification: false
-      })
+      getMessageDataAction.request({ messageId, fromPushNotification: false })
     );
-    const successData = messageSuccessDataSelector(globalState);
-    expect(successData).toBeUndefined();
-  });
-  it("should return undefined for blocked failure state", () => {
-    const globalState = appReducer(
-      undefined,
-      getMessageDataAction.failure({
-        phase: "preconditions",
-        blockedFromPushNotificationOpt: true
-      })
-    );
-    const successData = messageSuccessDataSelector(globalState);
-    expect(successData).toBeUndefined();
-  });
-  it("should return undefined for failure (non blocking) state", () => {
-    const globalState = appReducer(
-      undefined,
-      getMessageDataAction.failure({ phase: "messageDetails" })
-    );
-    const successData = messageSuccessDataSelector(globalState);
-    expect(successData).toBeUndefined();
-  });
-  it("should match expected success data for success state", () => {
-    const expectedSuccessData = {
-      messageId: "m1",
-      serviceId: "s1" as ServiceId,
-      serviceName: "name",
-      firstTimeOpening: true,
-      isPNMessage: false,
-      organizationFiscalCode: "orgFisCod",
-      organizationName: "orgName",
-      containsAttachments: false,
-      hasRemoteContent: false,
-      hasFIMSCTA: false,
-      createdAt: new Date(),
-      fciMessageType: "not_set" as const,
-      fciResult: "not_set" as const
-    };
-    const globalState = appReducer(
-      undefined,
-      getMessageDataAction.success(expectedSuccessData)
-    );
-    const successData = messageSuccessDataSelector(globalState);
-    expect(successData).toStrictEqual(expectedSuccessData);
-  });
-});
-describe("blockedFromPushNotificationSelector", () => {
-  it("should return false for initial state", () => {
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-    const blockedFromPush = blockedFromPushNotificationSelector(globalState);
-    expect(blockedFromPush).toBe(false);
-  });
-  it("should return false for loading state", () => {
-    const globalState = appReducer(
-      undefined,
-      getMessageDataAction.request({
-        messageId: "m1",
-        fromPushNotification: false
-      })
-    );
-    const blockedFromPush = blockedFromPushNotificationSelector(globalState);
-    expect(blockedFromPush).toBe(false);
-  });
-  it("should return false for success state", () => {
-    const globalState = appReducer(
-      undefined,
-      getMessageDataAction.success({
-        messageId: "m1",
-        serviceId: "s1" as ServiceId,
-        serviceName: "name",
-        firstTimeOpening: true,
-        isPNMessage: false,
-        organizationName: "orgName",
-        organizationFiscalCode: "orgFisCod",
-        containsAttachments: false,
-        hasRemoteContent: false,
-        hasFIMSCTA: false,
-        createdAt: new Date(),
-        fciMessageType: "not_set",
-        fciResult: "not_set"
-      })
-    );
-    const blockedFromPush = blockedFromPushNotificationSelector(globalState);
-    expect(blockedFromPush).toBe(false);
-  });
-  it("should return false for failure (non blocking) state", () => {
-    const globalState = appReducer(
-      undefined,
-      getMessageDataAction.failure({ phase: "messageDetails" })
-    );
-    const blockedFromPush = blockedFromPushNotificationSelector(globalState);
-    expect(blockedFromPush).toBe(false);
-  });
-  it("should return true for blocked failure state", () => {
-    const globalState = appReducer(
-      undefined,
-      getMessageDataAction.failure({
-        phase: "preconditions",
-        blockedFromPushNotificationOpt: true
-      })
-    );
-    const blockedFromPush = blockedFromPushNotificationSelector(globalState);
-    expect(blockedFromPush).toBe(true);
+
+  type Scenario = {
+    expected: boolean;
+    name: string;
+    state: () => GlobalState;
+  };
+
+  const scenarios: ReadonlyArray<Scenario> = [
+    {
+      name: "returns false for the initial state",
+      state: () => appReducer(undefined, applicationChangeState("active")),
+      expected: false
+    },
+    {
+      name: "returns true while the message is loading",
+      state: () => loadingState(MESSAGE_ID),
+      expected: true
+    },
+    {
+      name: "returns false while another message is loading",
+      state: () => loadingState(OTHER_MESSAGE_ID),
+      expected: false
+    },
+    {
+      name: "returns true while the message is waiting to be retried",
+      state: () =>
+        appReducer(
+          loadingState(MESSAGE_ID),
+          startApplicationInitialization({ handleSessionExpiration: true })
+        ),
+      expected: true
+    },
+    {
+      name: "returns false while another message is waiting to be retried",
+      state: () =>
+        appReducer(
+          loadingState(OTHER_MESSAGE_ID),
+          startApplicationInitialization({ handleSessionExpiration: true })
+        ),
+      expected: false
+    },
+    {
+      name: "returns false once the message is loaded",
+      state: () =>
+        appReducer(
+          loadingState(MESSAGE_ID),
+          getMessageDataAction.success(successGetMessageDataFor(MESSAGE_ID))
+        ),
+      expected: false
+    },
+    {
+      name: "returns false once the loading has failed",
+      state: () =>
+        appReducer(
+          loadingState(MESSAGE_ID),
+          getMessageDataAction.failure({ phase: "messageDetails" })
+        ),
+      expected: false
+    },
+    {
+      name: "returns false once the message has been blocked",
+      state: () =>
+        appReducer(
+          loadingState(MESSAGE_ID),
+          getMessageDataAction.failure({
+            phase: "preconditions",
+            blockedFromPushNotificationOpt: true
+          })
+        ),
+      expected: false
+    }
+  ];
+
+  it.each(scenarios)("$name", ({ state, expected }) => {
+    expect(isLoadingMessageDataSelector(state(), MESSAGE_ID)).toBe(expected);
   });
 });
 

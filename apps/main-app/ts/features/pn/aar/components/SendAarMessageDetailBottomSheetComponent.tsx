@@ -26,7 +26,7 @@ export const SendAarMessageDetailBottomSheetComponent = ({
 }: SendAarMessageDetailBottomSheetComponentProps) => {
   const navigation =
     useNavigation<
-      IOStackNavigationProp<MessagesParamsList, "MESSAGE_DETAIL">
+      IOStackNavigationProp<MessagesParamsList, typeof PN_ROUTES.MAIN>
     >();
   // This selector returns undefined if service's preferences have
   // not been requested and loaded yet. But here, we are looking at
