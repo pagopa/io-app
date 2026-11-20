@@ -20,6 +20,8 @@ jobs:
         github.event.pull_request.user.login == 'github-actions[bot]'
       }}
     runs-on: ubuntu-latest
+    env:
+      LEFTHOOK: "0"
     steps:
       - name: Checkout pull request branch
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
