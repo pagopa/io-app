@@ -65,7 +65,29 @@ describe("getPin", () => {
 
     const result = await getPin();
     expect(result).toBeUndefined();
+    expect(mockResetGenericPassword).not.toHaveBeenCalled();
   });
+
+  test.each([
+    { name: "the unreadable pin is removed", resetResult: true },
+    { name: "removing the unreadable pin fails", resetResult: false }
+  ])(
+    "should return undefined when the stored pin can't be read and $name",
+    async ({ resetResult }) => {
+      mockGetGenericPassword.mockRejectedValue(new Error("E_CRYPTO_FAILED"));
+      if (resetResult) {
+        mockResetGenericPassword.mockResolvedValue(true);
+      } else {
+        mockResetGenericPassword.mockRejectedValue(
+          new Error("E_KEYSTORE_ACCESS_ERROR")
+        );
+      }
+
+      const result = await getPin();
+      expect(result).toBeUndefined();
+      expect(mockResetGenericPassword).toHaveBeenCalledTimes(1);
+    }
+  );
 });
 
 describe("setPin", () => {
