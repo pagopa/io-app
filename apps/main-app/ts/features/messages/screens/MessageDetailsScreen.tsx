@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
 });
 
 export type MessageDetailsScreenRouteParams = {
+  firstTimeOpening: boolean;
   messageId: string;
   serviceId: ServiceId;
 };
@@ -71,7 +72,7 @@ type MessageDetailsScreenProps = IOStackNavigationRouteProps<
 >;
 
 export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
-  const { messageId, serviceId } = props.route.params;
+  const { firstTimeOpening, messageId, serviceId } = props.route.params;
 
   const dispatch = useIODispatch();
   const message = pipe(
@@ -221,7 +222,10 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
               serviceId={serviceId}
             />
             {hasRemoteContent && <RemoteContentBanner />}
-            <StandardMessageSurveyBanner message={message} />
+            <StandardMessageSurveyBanner
+              firstTimeOpening={firstTimeOpening}
+              message={message}
+            />
           </ContentWrapper>
         </View>
       }

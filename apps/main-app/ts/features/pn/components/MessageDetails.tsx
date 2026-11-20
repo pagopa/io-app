@@ -40,6 +40,7 @@ import { MessagePaymentBottomSheet } from "./MessagePaymentBottomSheet";
 import { MessagePayments } from "./MessagePayments";
 
 export type MessageDetailsProps = {
+  firstTimeOpening: boolean | undefined;
   message: PNMessage;
   messageId: string;
   payments?: ReadonlyArray<NotificationPaymentInfo>;
@@ -49,6 +50,7 @@ export type MessageDetailsProps = {
 };
 
 export const MessageDetails = ({
+  firstTimeOpening,
   message,
   messageId,
   payments,
@@ -165,7 +167,13 @@ export const MessageDetails = ({
               sendUserType={sendUserType}
               serviceId={serviceId}
             />
-            <SendMessageSurveyBanner message={message} serviceId={serviceId} />
+            <SendMessageSurveyBanner
+              firstTimeOpening={firstTimeOpening}
+              message={message}
+              sendOpeningSource={sendOpeningSource}
+              sendUserType={sendUserType}
+              serviceId={serviceId}
+            />
             <VSpacer size={16} />
           </ContentWrapper>
         }
