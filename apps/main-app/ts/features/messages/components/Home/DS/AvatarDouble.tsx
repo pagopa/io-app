@@ -1,4 +1,9 @@
-import { Icon, IODimensions, useIOColors } from "@io-app/design-system";
+import {
+  Icon,
+  IOColors,
+  IODimensions,
+  useIOColors
+} from "@io-app/design-system";
 import { useCallback, useState } from "react";
 import {
   Image,
@@ -176,7 +181,11 @@ export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
             }
           ]}
         >
-          <Icon color="blueItalia-500" name="productPagoPA" size={20} />
+          <Icon
+            color={IOColors.light.icon.pagopa}
+            name="productPagoPA"
+            size={20}
+          />
         </View>
       </View>
     </View>
