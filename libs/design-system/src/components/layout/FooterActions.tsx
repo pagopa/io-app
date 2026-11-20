@@ -42,6 +42,9 @@ type FooterActionsProps = WithTestID<
     animatedStyles?: FooterAnimatedStyles;
     /* Don't include safe area insets */
     excludeSafeAreaMargins?: boolean;
+    /* Don't add any vertical spacing around the actions,
+       leaving spacing to the parent component */
+    excludeVerticalMargins?: boolean;
     /* Fixed at the bottom of the screen */
     fixed?: boolean;
     onMeasure?: (measurements: FooterActionsMeasurements) => void;
@@ -96,6 +99,7 @@ const styles = StyleSheet.create({
 export const FooterActions = ({
   actions,
   excludeSafeAreaMargins = false,
+  excludeVerticalMargins = false,
   animatedStyles,
   fixed = true,
   transparent = false,
@@ -104,10 +108,17 @@ export const FooterActions = ({
 }: FooterActionsProps) => {
   const footerColors = useIOColors().component.footer;
 
-  const { bottomMargin, extraBottomMargin } = useBottomMargins(
+  const bottomMargins = useBottomMargins(
     !!actions?.secondary,
     excludeSafeAreaMargins
   );
+
+  const { bottomMargin, extraBottomMargin } = excludeVerticalMargins
+    ? { bottomMargin: 0, extraBottomMargin: 0 }
+    : bottomMargins;
+  const topMargins = excludeVerticalMargins
+    ? 0
+    : IODimensions.padding.screen.end;
 
   /* Total height of actions */
   const [actionBlockHeight, setActionBlockHeight] =
@@ -141,9 +152,7 @@ export const FooterActions = ({
           width: "100%",
           paddingBottom: bottomMargin
         },
-        fixed
-          ? { position: "absolute", bottom: 0 }
-          : { marginTop: IODimensions.padding.screen.end },
+        fixed ? { position: "absolute", bottom: 0 } : { marginTop: topMargins },
         animatedStyles?.mainBlock
       ]}
       testID={testID}

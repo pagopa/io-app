@@ -647,6 +647,13 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -3008,6 +3015,13 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -5703,6 +5717,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -7441,6 +7462,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -9176,6 +9204,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {
@@ -11158,6 +11193,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -13137,6 +13179,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                       <View
                         style={
                           {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        style={
+                          {
                             "marginHorizontal": -24,
                             "paddingHorizontal": 24,
                             "paddingVertical": 12,
@@ -13744,6 +13793,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                         }
                       }
                     >
+                      <View
+                        style={
+                          {
+                            "height": 16,
+                          }
+                        }
+                      />
                       <View
                         style={
                           {

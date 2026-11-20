@@ -1,5 +1,5 @@
 import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
-import { ListItemHeader } from "@io-app/design-system";
+import { ListItemHeader, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
 import { ReactNode } from "react";
 
@@ -46,6 +46,7 @@ export const MessageDetailsAttachments = ({
 
   return (
     <>
+      <VSpacer size={16} />
       <ListItemHeader
         iconName={"paperclip"}
         label={I18n.t("features.messages.attachments")}

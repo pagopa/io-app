@@ -14,7 +14,6 @@ export const RemoteContentBanner = () => {
 
   return (
     <>
-      <VSpacer size={16} />
       <Banner
         action={`${I18n.t("messageDetails.banner.action")}`}
         color="turquoise"
@@ -24,7 +23,9 @@ export const RemoteContentBanner = () => {
           present();
         }}
         pictogramName="message"
+        testID="remote-content-banner"
       />
+      <VSpacer size={24} />
       {bottomSheet}
     </>
   );
