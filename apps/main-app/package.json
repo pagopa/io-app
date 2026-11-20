@@ -45,7 +45,7 @@
     "@babel/plugin-transform-react-jsx": "^7.25.9",
     "@craftzdog/react-native-buffer": "^6.1.1",
     "@expo/ui": "~57.0.26",
-    "@gorhom/bottom-sheet": "^5.2.8",
+    "@gorhom/bottom-sheet": "^5.2.14",
     "@io-app/api-types": "workspace:*",
     "@io-app/login-utils": "workspace:*",
     "@io-app/design-system": "workspace:@pagopa/io-app-design-system@*",

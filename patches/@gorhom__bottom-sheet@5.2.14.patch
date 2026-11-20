@@ -1,8 +1,8 @@
 diff --git a/lib/commonjs/components/bottomSheet/BottomSheet.js b/lib/commonjs/components/bottomSheet/BottomSheet.js
-index 40725c071f23498d5a3053c0b307ab3f17566e18..cf0beec057669deb6d9397fa95fa39399f572de8 100644
+index a7748c0..5fdee29 100644
 --- a/lib/commonjs/components/bottomSheet/BottomSheet.js
 +++ b/lib/commonjs/components/bottomSheet/BottomSheet.js
-@@ -1232,6 +1232,19 @@ const BottomSheetComponent = /*#__PURE__*/(0, _react.forwardRef)(function Bottom
+@@ -1252,6 +1252,19 @@ const BottomSheetComponent = /*#__PURE__*/(0, _react.forwardRef)(function Bottom
    //#endregion
  
    // render
@@ -22,7 +22,9 @@ index 40725c071f23498d5a3053c0b307ab3f17566e18..cf0beec057669deb6d9397fa95fa3939
    return /*#__PURE__*/(0, _jsxRuntime.jsx)(_contexts.BottomSheetProvider, {
      value: externalContextVariables,
      children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_contexts.BottomSheetInternalProvider, {
-@@ -1269,9 +1282,6 @@ const BottomSheetComponent = /*#__PURE__*/(0, _react.forwardRef)(function Bottom
+@@ -1277,28 +1290,14 @@ const BottomSheetComponent = /*#__PURE__*/(0, _react.forwardRef)(function Bottom
+               animatedPosition: animatedPosition,
+               backgroundComponent: backgroundComponent,
                backgroundStyle: _providedBackgroundStyle
 -            }, "BottomSheetBackgroundContainer"), /*#__PURE__*/(0, _jsxRuntime.jsxs)(_BottomSheetContent.BottomSheetContent, {
 +            }, "BottomSheetBackgroundContainer"), _reactNative.Platform.OS === 'ios' ? handle : null, /*#__PURE__*/(0, _jsxRuntime.jsxs)(_BottomSheetContent.BottomSheetContent, {
@@ -33,7 +35,6 @@ index 40725c071f23498d5a3053c0b307ab3f17566e18..cf0beec057669deb6d9397fa95fa3939
                keyboardBehavior: keyboardBehavior,
                detached: detached,
                children: [children, footerComponent ? /*#__PURE__*/(0, _jsxRuntime.jsx)(_bottomSheetFooter.BottomSheetFooterContainer, {
-@@ -1278,16 +1288,5 @@ const BottomSheetComponent = /*#__PURE__*/(0, _react.forwardRef)(function Bottom
                  footerComponent: footerComponent
                }) : null]
 -            }), handleComponent !== null ? /*#__PURE__*/(0, _jsxRuntime.jsx)(_bottomSheetHandle.BottomSheetHandleContainer, {
@@ -51,11 +52,25 @@ index 40725c071f23498d5a3053c0b307ab3f17566e18..cf0beec057669deb6d9397fa95fa3939
 +            }), _reactNative.Platform.OS !== 'ios' ? handle : null]
            })
          }, "BottomSheetContainer")]
+       })
+diff --git a/lib/commonjs/components/bottomSheet/styles.js b/lib/commonjs/components/bottomSheet/styles.js
+index cd747ad..3afb59c 100644
+--- a/lib/commonjs/components/bottomSheet/styles.js
++++ b/lib/commonjs/components/bottomSheet/styles.js
+@@ -7,7 +7,7 @@ exports.styles = void 0;
+ var _reactNative = require("react-native");
+ const styles = exports.styles = _reactNative.StyleSheet.create({
+   container: {
+-    flexDirection: 'column-reverse',
++    flexDirection: _reactNative.Platform.OS === 'ios' ? 'column' : 'column-reverse',
+     position: 'absolute',
+     top: 0,
+     left: 0,
 diff --git a/lib/commonjs/components/bottomSheetBackdrop/BottomSheetBackdrop.js b/lib/commonjs/components/bottomSheetBackdrop/BottomSheetBackdrop.js
-index 46eb51ef092d47886dd293a67b0f24021f1b956e..4c9bf325e2952cdf6525caa15dc907c5e4615674 100644
+index f779d6d..6134cf5 100644
 --- a/lib/commonjs/components/bottomSheetBackdrop/BottomSheetBackdrop.js
 +++ b/lib/commonjs/components/bottomSheetBackdrop/BottomSheetBackdrop.js
-@@ -25,7 +25,6 @@ const BottomSheetBackdropComponent = ({
+@@ -26,7 +26,6 @@ const BottomSheetBackdropComponent = ({
    accessible: _providedAccessible = _constants.DEFAULT_ACCESSIBLE,
    accessibilityRole: _providedAccessibilityRole = _constants.DEFAULT_ACCESSIBILITY_ROLE,
    accessibilityLabel: _providedAccessibilityLabel = _constants.DEFAULT_ACCESSIBILITY_LABEL,
@@ -63,7 +78,7 @@ index 46eb51ef092d47886dd293a67b0f24021f1b956e..4c9bf325e2952cdf6525caa15dc907c5
  }) => {
    //#region hooks
    const {
-@@ -99,10 +98,6 @@ const BottomSheetBackdropComponent = ({
+@@ -100,10 +99,6 @@ const BottomSheetBackdropComponent = ({
    const AnimatedView = /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNativeReanimated.default.View, {
      style: containerStyle,
      pointerEvents: pointerEvents,
@@ -75,10 +90,10 @@ index 46eb51ef092d47886dd293a67b0f24021f1b956e..4c9bf325e2952cdf6525caa15dc907c5
    });
    return pressBehavior !== 'none' ? /*#__PURE__*/(0, _jsxRuntime.jsx)(_reactNativeGestureHandler.GestureDetector, {
 diff --git a/lib/module/components/bottomSheet/BottomSheet.js b/lib/module/components/bottomSheet/BottomSheet.js
-index 561ad524ac6ed22e9e2284097b964923751ee9aa..dcef875ba4aeb72bba816799f3ebac2d6d934537 100644
+index ca4bb3b..a9d52b4 100644
 --- a/lib/module/components/bottomSheet/BottomSheet.js
 +++ b/lib/module/components/bottomSheet/BottomSheet.js
-@@ -1225,6 +1225,19 @@ const BottomSheetComponent = /*#__PURE__*/forwardRef(function BottomSheet(props,
+@@ -1245,6 +1245,19 @@ const BottomSheetComponent = /*#__PURE__*/forwardRef(function BottomSheet(props,
    //#endregion
  
    // render
@@ -98,7 +113,9 @@ index 561ad524ac6ed22e9e2284097b964923751ee9aa..dcef875ba4aeb72bba816799f3ebac2d
    return /*#__PURE__*/_jsx(BottomSheetProvider, {
      value: externalContextVariables,
      children: /*#__PURE__*/_jsx(BottomSheetInternalProvider, {
-@@ -1262,9 +1275,6 @@ const BottomSheetComponent = /*#__PURE__*/forwardRef(function BottomSheet(props,
+@@ -1270,28 +1283,14 @@ const BottomSheetComponent = /*#__PURE__*/forwardRef(function BottomSheet(props,
+               animatedPosition: animatedPosition,
+               backgroundComponent: backgroundComponent,
                backgroundStyle: _providedBackgroundStyle
 -            }, "BottomSheetBackgroundContainer"), /*#__PURE__*/_jsxs(BottomSheetContent, {
 +            }, "BottomSheetBackgroundContainer"), Platform.OS === 'ios' ? handle : null, /*#__PURE__*/_jsxs(BottomSheetContent, {
@@ -109,7 +126,6 @@ index 561ad524ac6ed22e9e2284097b964923751ee9aa..dcef875ba4aeb72bba816799f3ebac2d
                keyboardBehavior: keyboardBehavior,
                detached: detached,
                children: [children, footerComponent ? /*#__PURE__*/_jsx(BottomSheetFooterContainer, {
-@@ -1271,16 +1281,5 @@ const BottomSheetComponent = /*#__PURE__*/forwardRef(function BottomSheet(props,
                  footerComponent: footerComponent
                }) : null]
 -            }), handleComponent !== null ? /*#__PURE__*/_jsx(BottomSheetHandleContainer, {
@@ -127,11 +143,28 @@ index 561ad524ac6ed22e9e2284097b964923751ee9aa..dcef875ba4aeb72bba816799f3ebac2d
 +            }), Platform.OS !== 'ios' ? handle : null]
            })
          }, "BottomSheetContainer")]
+       })
+diff --git a/lib/module/components/bottomSheet/styles.js b/lib/module/components/bottomSheet/styles.js
+index fe18f15..3a00542 100644
+--- a/lib/module/components/bottomSheet/styles.js
++++ b/lib/module/components/bottomSheet/styles.js
+@@ -1,9 +1,9 @@
+ "use strict";
+ 
+-import { StyleSheet } from 'react-native';
++import { Platform, StyleSheet } from 'react-native';
+ export const styles = StyleSheet.create({
+   container: {
+-    flexDirection: 'column-reverse',
++    flexDirection: Platform.OS === 'ios' ? 'column' : 'column-reverse',
+     position: 'absolute',
+     top: 0,
+     left: 0,
 diff --git a/lib/module/components/bottomSheetBackdrop/BottomSheetBackdrop.js b/lib/module/components/bottomSheetBackdrop/BottomSheetBackdrop.js
-index 38e0953bc9d5718c4d16683bac77f121b7f1a172..c86c7c640151611c1344f58eaee9213847e70f8a 100644
+index aac25f6..662a17b 100644
 --- a/lib/module/components/bottomSheetBackdrop/BottomSheetBackdrop.js
 +++ b/lib/module/components/bottomSheetBackdrop/BottomSheetBackdrop.js
-@@ -20,7 +20,6 @@ const BottomSheetBackdropComponent = ({
+@@ -21,7 +21,6 @@ const BottomSheetBackdropComponent = ({
    accessible: _providedAccessible = DEFAULT_ACCESSIBLE,
    accessibilityRole: _providedAccessibilityRole = DEFAULT_ACCESSIBILITY_ROLE,
    accessibilityLabel: _providedAccessibilityLabel = DEFAULT_ACCESSIBILITY_LABEL,
@@ -139,7 +172,7 @@ index 38e0953bc9d5718c4d16683bac77f121b7f1a172..c86c7c640151611c1344f58eaee92138
  }) => {
    //#region hooks
    const {
-@@ -94,10 +93,6 @@ const BottomSheetBackdropComponent = ({
+@@ -95,10 +94,6 @@ const BottomSheetBackdropComponent = ({
    const AnimatedView = /*#__PURE__*/_jsx(Animated.View, {
      style: containerStyle,
      pointerEvents: pointerEvents,
@@ -151,10 +184,13 @@ index 38e0953bc9d5718c4d16683bac77f121b7f1a172..c86c7c640151611c1344f58eaee92138
    });
    return pressBehavior !== 'none' ? /*#__PURE__*/_jsx(GestureDetector, {
 diff --git a/src/components/bottomSheet/BottomSheet.tsx b/src/components/bottomSheet/BottomSheet.tsx
-index 6748c93cac1a29c745480fe2282b8d8f6b36226f..c938a78c15d532cd9011799dd786ef7e2db34d7b 100644
+index fc52033..1037493 100644
 --- a/src/components/bottomSheet/BottomSheet.tsx
 +++ b/src/components/bottomSheet/BottomSheet.tsx
-@@ -1778,3 +1778,19 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
+@@ -1791,6 +1791,22 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
+     //#endregion
+ 
+     // render
 +    const handle = handleComponent !== null ? (
 +      <BottomSheetHandleContainer
 +        key="BottomSheetHandleContainer"
@@ -174,7 +210,9 @@ index 6748c93cac1a29c745480fe2282b8d8f6b36226f..c938a78c15d532cd9011799dd786ef7e
      return (
        <BottomSheetProvider value={externalContextVariables}>
          <BottomSheetInternalProvider value={internalContextVariables}>
-@@ -1810,9 +1826,7 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
+@@ -1824,11 +1840,9 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
+                     backgroundStyle={_providedBackgroundStyle}
+                   />
                  )}
 +                {Platform.OS === 'ios' ? handle : null}
                  <BottomSheetContent
@@ -185,7 +223,7 @@ index 6748c93cac1a29c745480fe2282b8d8f6b36226f..c938a78c15d532cd9011799dd786ef7e
                    keyboardBehavior={keyboardBehavior}
                    detached={detached}
                  >
-@@ -1823,20 +1837,6 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
+@@ -1839,21 +1853,7 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
                      />
                    ) : null}
                  </BottomSheetContent>
@@ -207,11 +245,27 @@ index 6748c93cac1a29c745480fe2282b8d8f6b36226f..c938a78c15d532cd9011799dd786ef7e
 +                {Platform.OS !== 'ios' ? handle : null}
                </BottomSheetBody>
                {/* <BottomSheetDebugView
+                 values={{
+diff --git a/src/components/bottomSheet/styles.ts b/src/components/bottomSheet/styles.ts
+index 58458f6..6f15d06 100644
+--- a/src/components/bottomSheet/styles.ts
++++ b/src/components/bottomSheet/styles.ts
+@@ -1,8 +1,8 @@
+-import { StyleSheet } from 'react-native';
++import { Platform, StyleSheet } from 'react-native';
+ 
+ export const styles = StyleSheet.create({
+   container: {
+-    flexDirection: 'column-reverse',
++    flexDirection: Platform.OS === 'ios' ? 'column' : 'column-reverse',
+     position: 'absolute',
+     top: 0,
+     left: 0,
 diff --git a/src/components/bottomSheetBackdrop/BottomSheetBackdrop.tsx b/src/components/bottomSheetBackdrop/BottomSheetBackdrop.tsx
-index d0756b8c5f10f1d7112b519682876c7a1d335119..f9559df92213a61d828b1617dea4e343dcb01df4 100644
+index a0345b0..fa336cd 100644
 --- a/src/components/bottomSheetBackdrop/BottomSheetBackdrop.tsx
 +++ b/src/components/bottomSheetBackdrop/BottomSheetBackdrop.tsx
-@@ -139,16 +139,6 @@ const BottomSheetBackdropComponent = ({
+@@ -144,16 +144,6 @@ const BottomSheetBackdropComponent = ({
      <Animated.View
        style={containerStyle}
        pointerEvents={pointerEvents}
@@ -228,41 +282,3 @@ index d0756b8c5f10f1d7112b519682876c7a1d335119..f9559df92213a61d828b1617dea4e343
      >
        {children}
      </Animated.View>
-diff --git a/lib/commonjs/components/bottomSheet/styles.js b/lib/commonjs/components/bottomSheet/styles.js
---- a/lib/commonjs/components/bottomSheet/styles.js
-+++ b/lib/commonjs/components/bottomSheet/styles.js
-@@ -8,7 +8,7 @@
- const styles = exports.styles = _reactNative.StyleSheet.create({
-   container: {
--    flexDirection: 'column-reverse',
-+    flexDirection: _reactNative.Platform.OS === 'ios' ? 'column' : 'column-reverse',
-     position: 'absolute',
-     top: 0,
-     left: 0,
-     right: 0
-diff --git a/lib/module/components/bottomSheet/styles.js b/lib/module/components/bottomSheet/styles.js
---- a/lib/module/components/bottomSheet/styles.js
-+++ b/lib/module/components/bottomSheet/styles.js
-@@ -3,7 +3,7 @@
--import { StyleSheet } from 'react-native';
-+import { Platform, StyleSheet } from 'react-native';
- export const styles = StyleSheet.create({
-   container: {
--    flexDirection: 'column-reverse',
-+    flexDirection: Platform.OS === 'ios' ? 'column' : 'column-reverse',
-     position: 'absolute',
-     top: 0,
-     left: 0,
-diff --git a/src/components/bottomSheet/styles.ts b/src/components/bottomSheet/styles.ts
---- a/src/components/bottomSheet/styles.ts
-+++ b/src/components/bottomSheet/styles.ts
-@@ -1,7 +1,7 @@
--import { StyleSheet } from 'react-native';
-+import { Platform, StyleSheet } from 'react-native';
- 
- export const styles = StyleSheet.create({
-   container: {
--    flexDirection: 'column-reverse',
-+    flexDirection: Platform.OS === 'ios' ? 'column' : 'column-reverse',
-     position: 'absolute',
-     top: 0,
