@@ -1,3 +1,13 @@
+## 3.44.0-rc.5 (2026-11-20)
+
+### Chores
+
+- release 3.43.0-rc.13 ([353589e67](https://github.com/pagopa/io-app/commit/353589e67))
+
+### ❤️ Thank You
+
+- Alessandro Mazzon
+
 ## 3.43.0-rc.13 (2026-11-20)
 
 ### Bug Fixes
