@@ -65,10 +65,11 @@ The session length depends on the login type: standard (30 days) or fast login (
 | Phase                                                                            | Standard login           | Fast login (LV)                                                                                                     |
 | -------------------------------------------------------------------------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------- |
 | Session length                                                                   | 30 days                  | 365 days                                                                                                            |
-| Token expired during the session (401)                                           | Session expired → logout | Token refresh: the app asks for confirmation and the unlock code, then `nonce` + `/fast-login` signed with Lollipop |
+| 401 on the first call at startup                                                 | Session expired → logout | Silent token refresh                                                                                                |
+| 401 later during the session                                                     | Session expired → logout | Token refresh: the app asks for confirmation and the unlock code, then `nonce` + `/fast-login` signed with Lollipop |
 | App unlocked with the IO unlock code, after at least 2 minutes in the background | No action                | Silent token refresh                                                                                                |
 
-**Expiry warning.** Applies to both types, if active session login is enabled via remote config. When fewer days than the threshold remain (`loginConfig.notifyExpirationThreshold`, with separate values for standard and fast login), a blocking screen appears at startup, only once; after that the banner appears. Both lead to the active session login, which creates a new session without logging out. If the citizen ignores the warning, they will have to do the first login again when the session expires.
+**Expiry warning.** Applies to both types, if active session login is enabled via remote config. When the days left drop to the threshold or below (`loginConfig.notifyExpirationThreshold`, with separate values for standard and fast login), a blocking screen appears at startup, only once; after that the banner appears. Both lead to the active session login, which creates a new session without logging out. If the citizen ignores the warning, they will have to do the first login again when the session expires.
 
 ## 4. The two stacks
 
@@ -187,7 +188,7 @@ In short: at every login the phone creates a key pair. The public key's thumbpri
 2. **Sending the public key.** Only once, during the login (section 4.4).
 3. **Binding to the identity.** The public key's thumbprint (`sha256-<thumbprint>`, the _assertion-ref_) becomes the ID of the SAML request. Before moving on to the IdP, the app checks that the ID matches its own key. The IdP replies with a signed assertion that quotes that ID.
 4. **Login outcome.** If the login succeeds, the ephemeral key becomes the main key and a new one is prepared for the next login; if it fails, it is discarded.
-5. **Signing requests.** Sensitive requests (Sign with IO, SEND, fast login refresh) are signed with the private key following the HTTP Message Signatures standard (`signature`, `signature-input`, `content-digest`). The others only use the session token.
+5. **Signing requests.** Requests made through `lollipopFetch` are signed with the private key following the HTTP Message Signatures standard (`signature`, `signature-input`, `content-digest`). This covers the Identity and Communication API clients (profile, data processing, service preferences, messages, push token upload), Sign with IO, SEND and the fast login refresh.
 6. **Verification.** Whoever receives a signed request verifies the signature with the public key bound to the citizen.
 
 **What differs between the stacks.** Besides how the public key travels (section 4.4), the OneIdentity stack adds two checks to the identity binding: the key thumbprint travels in the `x-pagopa-lollipop-assertion-ref` header of `/authorize`, and at `/callback` the Session Manager checks that the assertion's `InResponseTo` matches the stored assertion-ref.
@@ -199,21 +200,23 @@ Errors reach the app in two ways:
 - **Error code from the Session Manager.** The final page of the flow is `error.html?errorCode=…&errorMessage=…`: the WebView intercepts it without loading it, and the app shows the screen for that code, either with retry or as a permanent error. Applies to both stacks.
 - **Error during the flow.** An HTTP error in the WebView, or a failed app-side check, stops the login before it reaches the final page.
 
-| Case                                                                                                                                                  | What the citizen sees                                                |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| SPID codes: 19 too many attempts, 20 insufficient security level, 21 timeout, 22 consent denied, 23 identity suspended or revoked, 25 login cancelled | A dedicated message for each code                                    |
-| 1001                                                                                                                                                  | Minimum age not reached (18)                                         |
-| 1002                                                                                                                                                  | They locked access to IO from IO-Web: screen to unlock it            |
-| 1004                                                                                                                                                  | Fiscal code different from the session's (active session login only) |
-| Lollipop check failed                                                                                                                                 | Login stopped with an error                                          |
-| HTTP error in a step of the flow, OneIdentity stack (`/reserve`, `/authorize`, IdP pages, `/acs`, `/callback`)                                        | Generic error screen, except the case below                          |
-| Callback fails to load during an active session login                                                                                                 | Forced logout and back to the landing screen                         |
+| Case                                                                                                                                                  | What the citizen sees                                                               |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| SPID codes: 19 too many attempts, 20 insufficient security level, 21 timeout, 22 consent denied, 23 identity suspended or revoked, 25 login cancelled | A dedicated message for each code                                                   |
+| 1001                                                                                                                                                  | Minimum age not reached (18)                                                        |
+| 1002                                                                                                                                                  | They locked access to IO from IO-Web: screen to unlock it                           |
+| 1004                                                                                                                                                  | Fiscal code different from the session's (active session login only)                |
+| Lollipop check failed                                                                                                                                 | Login stopped with an error                                                         |
+| HTTP error in a step of the flow, OneIdentity stack (`/reserve`, `/authorize`, IdP pages, `/acs`, `/callback`)                                        | Generic error screen, except the cases below                                        |
+| Callback fails to load during an active session login                                                                                                 | Forced logout and back to the landing screen                                        |
+| HTTP 403 from a URL outside the IO API, or any 403 during an active session login                                                                     | Ignored: the login goes on                                                          |
+| OneIdentity `/login/error` page                                                                                                                       | Only tracked (`trackLoginOIConfigurationError`); the app shows no screen of its own |
 
 CIE reading errors (wrong PIN, invalid or expired card, APDU not supported) have dedicated screens.
 
 ## 7. Configuring the app for testing
 
-The Login Config Screen (easter egg on the landing screen) sets three values, which are persisted:
+The Login Config Screen (easter egg on the landing screen) sets three values. The stack and the OneIdentity environment are persisted; the CIE environment is not, and goes back to production when the app restarts.
 
 - **Stack.** Forces the IO stack or the OneIdentity stack, instead of the rollout.
 - **OneIdentity environment.** PROD or UAT (`io.oneid.pagopa.it` / `uat.io.oneid.pagopa.it`); applies to the OneIdentity stack only.
