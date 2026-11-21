@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
@@ -13,8 +13,7 @@ import { idpayTimelinePageGet } from "../store/actions";
 
 export const useInitiativeTimelineFetcher = (
   initiativeId: string,
-  pageSize: number,
-  onError: () => void
+  pageSize: number
 ) => {
   const dispatch = useIODispatch();
 
@@ -30,50 +29,58 @@ export const useInitiativeTimelineFetcher = (
   const isError = pot.isError(paginatedTimelinePot);
 
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const requestPending = useRef(false);
+  const lastRequest = useRef<undefined | { isRefresh: boolean; page: number }>(
+    undefined
+  );
 
   useEffect(() => {
-    if (currentPage >= 0 && isRefreshing) {
+    if (!isLoading && !isUpdating) {
+      requestPending.current = false;
       setIsRefreshing(false);
     }
-  }, [currentPage, isRefreshing]);
+  }, [isLoading, isUpdating]);
 
-  const refresh = () => {
-    if (!isLoading) {
-      setIsRefreshing(true);
-      fetchPage(0);
+  const fetchPage = (page: number, isRefresh = false) => {
+    if (isUpdating || isLoading || requestPending.current) {
+      return;
     }
-  };
-
-  const fetchPage = (page: number) =>
-    !isUpdating &&
-    !isLoading &&
+    requestPending.current = true;
+    lastRequest.current = { page, isRefresh };
+    if (isRefresh) {
+      setIsRefreshing(true);
+    }
     dispatch(
       idpayTimelinePageGet.request({
         initiativeId,
         page,
-        pageSize
+        pageSize,
+        ...(isRefresh ? { isRefresh } : {})
       })
     );
+  };
+
+  const refresh = () => fetchPage(0, true);
 
   const fetchNextPage = () => {
-    if (isLastPage || isLoading) {
+    if (isLastPage || isLoading || isUpdating || isError) {
       return;
     }
-    if (isError) {
-      onError();
-    } else {
-      fetchPage(currentPage + 1);
-    }
+    fetchPage(currentPage + 1);
   };
 
   const retryFetchLastPage = () => {
-    fetchPage(currentPage);
+    fetchPage(
+      lastRequest.current?.page ?? currentPage + 1,
+      lastRequest.current?.isRefresh
+    );
   };
 
   return {
     isLoading,
     isUpdating,
     isRefreshing,
+    isError,
     timeline,
     fetchPage,
     refresh,

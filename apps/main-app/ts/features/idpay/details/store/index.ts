@@ -4,10 +4,7 @@ import {
   StatusEnum as InitiativeStatusEnum
 } from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
 import { OnboardingStatusDTO } from "@io-app/api-types/generated/definitions/idpay/OnboardingStatusDTO";
-import { TimelineDTO } from "@io-app/api-types/generated/definitions/idpay/TimelineDTO";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import * as _ from "lodash";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
@@ -15,6 +12,7 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";
+import { TimelineDTO } from "../../common/api/timeline";
 import {
   idPayBeneficiaryDetailsGet,
   idpayInitiativeGet,
@@ -101,7 +99,9 @@ const reducer = (
       if (action.payload.page === 0) {
         return {
           ...state,
-          timeline: pot.toLoading(pot.none)
+          timeline: pot.toLoading(
+            action.payload.isRefresh ? state.timeline : pot.none
+          )
         };
       }
       return {
@@ -112,7 +112,8 @@ const reducer = (
         )
       };
     case getType(idpayTimelinePageGet.success):
-      const currentTimeline = pot.getOrElse(state.timeline, []);
+      const currentTimeline =
+        action.payload.page === 0 ? {} : pot.getOrElse(state.timeline, {});
 
       return {
         ...state,
@@ -135,13 +136,7 @@ export const idpayInitiativeDetailsSelector = createSelector(
 
 export const idpayInitiativeIdSelector = createSelector(
   idpayInitiativeDetailsSelector,
-  details =>
-    pipe(
-      details,
-      pot.toOption,
-      O.map(details => details.initiativeId),
-      O.toUndefined
-    )
+  details => pot.toUndefined(details)?.initiativeId
 );
 
 export const idpayPaginatedTimelineSelector = createSelector(
@@ -171,17 +166,18 @@ const idpayOperationListLengthSelector = createSelector(
 export const initiativeNeedsConfigurationSelector = createSelector(
   idpayInitiativeDetailsSelector,
   idpayOperationListLengthSelector,
-  (initiative, timelineLenght) =>
-    pipe(
-      initiative,
-      pot.toOption,
-      O.map(
-        initiative =>
-          initiative.status === InitiativeStatusEnum.NOT_REFUNDABLE &&
-          timelineLenght <= 1
-      ),
-      O.getOrElse(() => false)
-    )
+  idpayPaginatedTimelineSelector,
+  (initiative, timelineLenght, timeline) => {
+    const initiativeValue = pot.toUndefined(initiative);
+    return (
+      initiativeValue !== undefined &&
+      pot.isSome(timeline) &&
+      !pot.isLoading(timeline) &&
+      !pot.isError(timeline) &&
+      initiativeValue.status === InitiativeStatusEnum.NOT_REFUNDABLE &&
+      timelineLenght <= 1
+    );
+  }
 );
 
 export const idpayTimelineCurrentPageSelector = createSelector(
