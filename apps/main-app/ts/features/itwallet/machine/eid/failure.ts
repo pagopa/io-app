@@ -10,6 +10,10 @@ import {
   isMrtdTaxIdCodeMismatchFailure,
   isWebViewError
 } from "../../common/utils/itwFailureUtils";
+import {
+  type SerializedError,
+  serializeError
+} from "../../common/utils/itwStoreUtils";
 import { type WebViewError } from "../../identification/cie/utils/error";
 import { type EidIssuanceEvents } from "./events";
 
@@ -52,6 +56,7 @@ type ReasonTypeByFailure = {
   [IssuanceFailureType.ISSUER_GENERIC]:
     | Error
     | Errors.IssuerResponseError
+    | SerializedError
     | WebViewError;
   [IssuanceFailureType.MRTD_CHALLENGE_INIT_ERROR]: Errors.IssuerResponseError;
   [IssuanceFailureType.NOT_MATCHING_IDENTITY]: string;
@@ -141,7 +146,8 @@ export const mapEventToFailure = (
   if (isWebViewError(error)) {
     return {
       type: IssuanceFailureType.ISSUER_GENERIC,
-      reason: error
+      // Error instances have no enumerable props and would be tracked as an empty object
+      reason: error instanceof Error ? serializeError(error) : error
     };
   }
 
