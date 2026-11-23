@@ -98,7 +98,7 @@ describe("fallback wallet banners", () => {
         fallback && active && !upgraded
       );
       expect(
-        commonSelectors.itwShouldRenderL2EngagementBannerSelector(state)
+        commonSelectors.shouldRenderDocSuIOEngagementBannerSelector(state)
       ).toBe(!offline && active && !upgraded && fallback);
       expect(upgradeSelectors.itwShouldRenderUpgradeBannerSelector(state)).toBe(
         !offline && !upgraded && !(fallback && active)
@@ -629,7 +629,7 @@ describe("itwShouldRenderWalletDiscoveryBannerSelector", () => {
   );
 });
 
-describe("itwShouldRenderL2EngagementBannerForInactiveWalletSelector", () => {
+describe("shouldRenderDocSuIOEngagementBannerForInactiveWalletSelector", () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.clearAllMocks();
@@ -685,7 +685,7 @@ describe("itwShouldRenderL2EngagementBannerForInactiveWalletSelector", () => {
         .mockReturnValue(isActivationDisabled);
 
       expect(
-        commonSelectors.itwShouldRenderL2EngagementBannerForInactiveWalletSelector(
+        commonSelectors.shouldRenderDocSuIOEngagementBannerForInactiveWalletSelector(
           state
         )
       ).toBe(expected);
@@ -693,7 +693,7 @@ describe("itwShouldRenderL2EngagementBannerForInactiveWalletSelector", () => {
   );
 });
 
-describe("itwShouldRenderL2EngagementBannerSelector", () => {
+describe("shouldRenderDocSuIOEngagementBannerSelector", () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.clearAllMocks();
@@ -749,7 +749,7 @@ describe("itwShouldRenderL2EngagementBannerSelector", () => {
         .mockReturnValue(isActivationDisabled);
 
       expect(
-        commonSelectors.itwShouldRenderL2EngagementBannerSelector(state)
+        commonSelectors.shouldRenderDocSuIOEngagementBannerSelector(state)
       ).toBe(expected);
     }
   );

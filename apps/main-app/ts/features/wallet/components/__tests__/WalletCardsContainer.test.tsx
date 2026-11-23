@@ -289,7 +289,7 @@ describe("ItwWalletCardsContainer", () => {
         .mockReturnValue(false);
 
       jest
-        .spyOn(itwSelectors, "itwShouldRenderL2EngagementBannerSelector")
+        .spyOn(itwSelectors, "shouldRenderDocSuIOEngagementBannerSelector")
         .mockReturnValue(false);
 
       jest
@@ -333,7 +333,7 @@ describe("ItwWalletCardsContainer", () => {
       .mockReturnValue(true);
 
     const l2BannerSpy = jest
-      .spyOn(itwSelectors, "itwShouldRenderL2EngagementBannerSelector")
+      .spyOn(itwSelectors, "shouldRenderDocSuIOEngagementBannerSelector")
       .mockReturnValue(true);
 
     jest

@@ -233,7 +233,7 @@ export const itwShouldRenderWalletDiscoveryBannerSelector = (
  *   their normal, non-restricted experience and this banner does not apply
  * - The wallet is not active (because the device does not have the nfc)
  */
-export const itwShouldRenderL2EngagementBannerForInactiveWalletSelector = (
+export const shouldRenderDocSuIOEngagementBannerForInactiveWalletSelector = (
   state: GlobalState
 ) =>
   offlineAccessReasonSelector(state) === undefined &&
@@ -246,7 +246,9 @@ export const itwShouldRenderL2EngagementBannerForInactiveWalletSelector = (
  * Offers restricted documents after fallback activation or when NFC is
  * unsupported.
  */
-export const itwShouldRenderL2EngagementBannerSelector = (state: GlobalState) =>
+export const shouldRenderDocSuIOEngagementBannerSelector = (
+  state: GlobalState
+) =>
   offlineAccessReasonSelector(state) === undefined &&
   !itwLifecycleIsITWalletValidSelector(state) &&
   itwIsL3EnabledSelector(state) &&
