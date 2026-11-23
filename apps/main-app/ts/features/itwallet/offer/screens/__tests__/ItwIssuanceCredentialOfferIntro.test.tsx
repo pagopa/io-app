@@ -18,6 +18,10 @@ import * as itwCommonSelectors from "../../../common/store/selectors";
 import * as credentialStatusUtils from "../../../common/utils/itwCredentialStatusUtils";
 import * as credentialsSelectors from "../../../credentials/store/selectors";
 import * as catalogSelectors from "../../../credentialsCatalogue/store/selectors";
+import {
+  trackItwCredentialIntro,
+  trackItwCredentialStartIssuing
+} from "../../../issuance/analytics";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import {
@@ -36,6 +40,11 @@ import { ItwIssuanceCredentialOfferIntroScreen } from "../ItwIssuanceCredentialO
 
 jest.mock("../../../../../hooks/useHeaderSecondLevel", () => ({
   useHeaderSecondLevel: jest.fn()
+}));
+
+jest.mock("../../../issuance/analytics", () => ({
+  trackItwCredentialIntro: jest.fn(),
+  trackItwCredentialStartIssuing: jest.fn()
 }));
 
 jest.mock("../../../presentation/remote/analytics", () => ({
@@ -70,6 +79,9 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
     jest
       .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
       .mockReturnValue("valid");
+    jest
+      .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+      .mockReturnValue(true);
     jest
       .spyOn(itwCommonSelectors, "itwIsL3EnabledSelector")
       .mockReturnValue(true);
@@ -288,6 +300,51 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
     const { queryByText } = renderComponent(jest.fn());
 
     expect(queryByText(expectedTitle)).not.toBeNull();
+  });
+
+  it("tracks the intro view and the start of the issuance when the user continues", () => {
+    jest
+      .spyOn(catalogSelectors, "itwCredentialIntroContentSelector")
+      .mockReturnValue(() => "Introduction content");
+
+    const { getByText } = renderComponent(jest.fn());
+
+    expect(trackItwCredentialIntro).toHaveBeenCalledTimes(1);
+    expect(trackItwCredentialIntro).toHaveBeenCalledWith("ITW_ED");
+    expect(trackItwCredentialStartIssuing).not.toHaveBeenCalled();
+
+    fireEvent.press(getByText(I18n.t("global.buttons.continue")));
+
+    expect(trackItwCredentialStartIssuing).toHaveBeenCalledTimes(1);
+    expect(trackItwCredentialStartIssuing).toHaveBeenCalledWith("ITW_ED");
+    expect(machineSend).toHaveBeenCalledWith({
+      type: "confirm-credential-offer"
+    });
+  });
+
+  it.each([
+    { name: "the intro is skipped", setup: () => undefined },
+    {
+      name: "the wallet is not active",
+      setup: () =>
+        jest
+          .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
+          .mockReturnValue(false)
+    },
+    {
+      name: "the eID must be reissued",
+      setup: () =>
+        jest
+          .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
+          .mockReturnValue("jwtExpired")
+    }
+  ])("does not track intro events when $name", ({ setup }) => {
+    setup();
+
+    renderComponent(jest.fn());
+
+    expect(trackItwCredentialIntro).not.toHaveBeenCalled();
+    expect(trackItwCredentialStartIssuing).not.toHaveBeenCalled();
   });
 
   it("blocks the flow when the offered credential is already in the wallet and valid", () => {
