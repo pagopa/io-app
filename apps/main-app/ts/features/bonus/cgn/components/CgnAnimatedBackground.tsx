@@ -1,6 +1,6 @@
 import { Canvas, Path, Skia, type SkPath } from "@shopify/react-native-skia";
 import { useEffect } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import {
   cancelAnimation,
   Easing,
@@ -227,7 +227,6 @@ export const CgnAnimatedBackground = ({
 }: {
   variant?: "card" | "discovery";
 }) => {
-  // Canvas size is provided via onSize callback and updated on the UI thread
   const canvasSize = useSharedValue({ width: 0, height: 0 });
   const colors = useFeatureColors(cgnColors);
   const reduceMotion = useReduceMotionEnabled();
@@ -238,22 +237,26 @@ export const CgnAnimatedBackground = ({
   const blobCount = anchors?.length ?? NUM_BLOBS;
 
   return (
-    <Canvas
-      onSize={canvasSize}
+    <View
+      onLayout={({ nativeEvent: { layout } }) => {
+        canvasSize.value = { width: layout.width, height: layout.height };
+      }}
       pointerEvents="none"
       style={[StyleSheet.absoluteFill, { backgroundColor }]}
     >
-      {Array.from({ length: blobCount }, (_, index) => (
-        <AnimatedBlob
-          anchor={anchors?.[index]}
-          blobCount={blobCount}
-          canvasSize={canvasSize}
-          color={foregroundColor}
-          index={index}
-          key={`blob-${index}`}
-          reduceMotion={reduceMotion}
-        />
-      ))}
-    </Canvas>
+      <Canvas style={StyleSheet.absoluteFill}>
+        {Array.from({ length: blobCount }, (_, index) => (
+          <AnimatedBlob
+            anchor={anchors?.[index]}
+            blobCount={blobCount}
+            canvasSize={canvasSize}
+            color={foregroundColor}
+            index={index}
+            key={`blob-${index}`}
+            reduceMotion={reduceMotion}
+          />
+        ))}
+      </Canvas>
+    </View>
   );
 };

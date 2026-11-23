@@ -1,3 +1,4 @@
+import { Canvas } from "@shopify/react-native-skia";
 import { render } from "@testing-library/react-native";
 import { cancelAnimation, withRepeat } from "react-native-reanimated";
 
@@ -7,7 +8,7 @@ import { CgnAnimatedBackground } from "../CgnAnimatedBackground";
 jest.mock("../../../../../hooks/useReduceMotionEnabled");
 
 jest.mock("@shopify/react-native-skia", () => ({
-  Canvas: ({ children }: React.PropsWithChildren) => children,
+  Canvas: jest.fn(({ children }: React.PropsWithChildren) => children),
   Path: () => null,
   Skia: {
     Color: (color: string) => color,
@@ -34,6 +35,13 @@ jest.mock("react-native-reanimated", () => {
 describe.each(["card", "discovery"] as const)("%s background", variant => {
   beforeEach(() => {
     jest.clearAllMocks();
+  });
+
+  it("does not enable per-frame canvas measurement while the view may be off-screen", () => {
+    jest.mocked(useReduceMotionEnabled).mockReturnValue(true);
+    render(<CgnAnimatedBackground variant={variant} />);
+    const [props] = jest.mocked(Canvas).mock.calls[0];
+    expect(props.onSize).toBeUndefined();
   });
 
   test.each([true, false])(
