@@ -11,9 +11,10 @@ jest.mock("@shopify/react-native-skia", () => ({
   Path: () => null,
   Skia: {
     Color: (color: string) => color,
-    Path: {
+    PathBuilder: {
       Make: () => ({
         close: jest.fn(),
+        detach: () => ({}),
         moveTo: jest.fn(),
         quadTo: jest.fn()
       })

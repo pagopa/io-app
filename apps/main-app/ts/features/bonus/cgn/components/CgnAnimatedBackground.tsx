@@ -1,4 +1,4 @@
-import { Canvas, Path, Skia } from "@shopify/react-native-skia";
+import { Canvas, Path, Skia, type SkPath } from "@shopify/react-native-skia";
 import { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import {
@@ -93,9 +93,9 @@ const generateBlobPath = (
   radiusX: number,
   radiusY: number,
   wobbleRatio: number
-): ReturnType<typeof Skia.Path.Make> => {
+): SkPath => {
   "worklet";
-  const path = Skia.Path.Make();
+  const builder = Skia.PathBuilder.Make();
 
   const points: Array<{ x: number; y: number }> = Array.from(
     { length: NUM_BLOB_POINTS },
@@ -114,7 +114,7 @@ const generateBlobPath = (
 
   // Create smooth closed curve using cubic Bezier approximation of Catmull-Rom spline
   if (points.length < 3) {
-    return path;
+    return builder.detach();
   }
 
   // Helper to get point with wrapping
@@ -126,7 +126,7 @@ const generateBlobPath = (
     x: (getPoint(-1).x + getPoint(0).x) / 2,
     y: (getPoint(-1).y + getPoint(0).y) / 2
   };
-  path.moveTo(startMid.x, startMid.y);
+  builder.moveTo(startMid.x, startMid.y);
 
   // Draw smooth curves through each point
   points.forEach((_, i) => {
@@ -137,11 +137,11 @@ const generateBlobPath = (
     const mid2 = { x: (p1.x + p2.x) / 2, y: (p1.y + p2.y) / 2 };
 
     // Quadratic curve through the control point to the next midpoint
-    path.quadTo(p1.x, p1.y, mid2.x, mid2.y);
+    builder.quadTo(p1.x, p1.y, mid2.x, mid2.y);
   });
 
-  path.close();
-  return path;
+  builder.close();
+  return builder.detach();
 };
 
 const AnimatedBlob = ({
