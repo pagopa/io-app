@@ -155,13 +155,13 @@ describe("encodeQualtricsParameters", () => {
       name: "SEND opening from AAR as delegato",
       parameters: {
         messageType: MessageKind.SEND,
-        firstTimeOpening: "yes",
+        firstTimeOpening: "unknown",
         sendOpeningSource: "aar",
         sendUserType: "delegato"
       },
       expectedParameters: {
         messageType: MessageKind.SEND,
-        first_time_opening: "yes",
+        first_time_opening: "unknown",
         opening_source: "aar",
         send_user: "delegato"
       }
@@ -170,13 +170,13 @@ describe("encodeQualtricsParameters", () => {
       name: "SEND opening from AAR as destinatario",
       parameters: {
         messageType: MessageKind.SEND,
-        firstTimeOpening: "yes",
+        firstTimeOpening: "unknown",
         sendOpeningSource: "aar",
         sendUserType: "destinatario"
       },
       expectedParameters: {
         messageType: MessageKind.SEND,
-        first_time_opening: "yes",
+        first_time_opening: "unknown",
         opening_source: "aar",
         send_user: "destinatario"
       }
@@ -444,7 +444,7 @@ describe("SendMessageSurveyBanner", () => {
         sendUserType: "mandatory"
       },
       expectedParameters: {
-        firstTimeOpening: "yes",
+        firstTimeOpening: "unknown",
         sendOpeningSource: "aar",
         sendUserType: "delegato"
       }
@@ -457,7 +457,7 @@ describe("SendMessageSurveyBanner", () => {
         sendUserType: "recipient"
       },
       expectedParameters: {
-        firstTimeOpening: "yes",
+        firstTimeOpening: "unknown",
         sendOpeningSource: "aar",
         sendUserType: "destinatario"
       }

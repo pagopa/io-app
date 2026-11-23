@@ -28,7 +28,7 @@ const MessageKind = {
 type MessageKind = (typeof MessageKind)[keyof typeof MessageKind];
 
 type QualtricsParameters = {
-  firstTimeOpening: "no" | "yes";
+  firstTimeOpening: "no" | "unknown" | "yes";
   messageType: MessageKind;
   organizationFiscalCode: string;
   sendingDate: string;
@@ -71,6 +71,17 @@ export const StandardMessageSurveyBanner = ({
   );
 };
 
+const optionalBooleanToYesNoUnknown = (flag?: boolean) => {
+  switch (flag) {
+    case true:
+      return "yes";
+    case false:
+      return "no";
+    default:
+      return "unknown";
+  }
+};
+
 export const SendMessageSurveyBanner = ({
   firstTimeOpening,
   message,
@@ -95,8 +106,7 @@ export const SendMessageSurveyBanner = ({
 
   return (
     <MessageSurveyBanner
-      /* firstTimeOpening is undefined for "AAR" messages, we consider it as true */
-      firstTimeOpening={firstTimeOpening === false ? "no" : "yes"}
+      firstTimeOpening={optionalBooleanToYesNoUnknown(firstTimeOpening)}
       messageType={MessageKind.SEND}
       organizationFiscalCode={organizationFiscalCode}
       sendingDate={message.created_at.toISOString()}
