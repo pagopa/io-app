@@ -9,11 +9,7 @@ import {
   withDarkTheme
 } from "../../../../../utils/testColors";
 import * as UTILS from "../../../utils";
-import {
-  CieCardReadContent,
-  CieCardReadContentProps,
-  testable
-} from "../CieCardReadContent";
+import { CieCardReadContentProps, testable } from "../CieCardReadContent";
 
 jest.mock("@react-navigation/native");
 
@@ -62,7 +58,22 @@ describe.each<typeof Platform.OS>(["ios", "android"])(
         }
       }
     ])("should match the snapshot when the input props are: %o", props => {
-      const component = render(<CieCardReadContent {...props} />);
+      if (!testable) {
+        throw new Error("testable is not available in test environment");
+      }
+      /* `CieCardReadContent` picks its layout on import, before `Platform.OS` is replaced */
+      const Content =
+        platform === "ios" ? testable.ContentIos : testable.ContentAndroid;
+      const component = render(
+        <SafeAreaProvider
+          initialMetrics={{
+            frame: { x: 0, y: 0, width: 0, height: 0 },
+            insets: { top: 0, left: 0, right: 0, bottom: 0 }
+          }}
+        >
+          <Content {...props} />
+        </SafeAreaProvider>
+      );
 
       expect(component.toJSON()).toMatchSnapshot();
     });

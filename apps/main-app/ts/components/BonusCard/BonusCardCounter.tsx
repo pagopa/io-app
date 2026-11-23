@@ -1,10 +1,8 @@
 import {
   H3,
-  IOColorsLegacy,
   IOSkeleton,
+  IOTextColor,
   LabelMini,
-  useIOTheme,
-  useIOThemeContext,
   VSpacer
 } from "@io-app/design-system";
 import { useEffect } from "react";
@@ -14,6 +12,9 @@ import Animated, {
   useSharedValue,
   withTiming
 } from "react-native-reanimated";
+
+import { useFeatureColors } from "../../hooks/useFeatureColors";
+import { bonusCardCounterColors } from "./colors";
 
 export type BonusCardCounter = BaseProps & LoadingProps;
 
@@ -33,6 +34,11 @@ type BaseProps = {
   type: CounterType;
 };
 
+type BonusCardCounterProps = BonusCardCounter & {
+  /** The card's text color */
+  labelColor: IOTextColor;
+};
+
 type CounterType = "Value" | "ValueWithProgress";
 
 type LoadingProps =
@@ -42,9 +48,8 @@ type LoadingProps =
     })
   | { isLoading: true; label?: string; skeletonColor: ColorValue };
 
-const BonusCardCounter = (props: BonusCardCounter) => {
-  const theme = useIOTheme();
-  const isDark = useIOThemeContext().themeType === "dark";
+const BonusCardCounter = ({ labelColor, ...props }: BonusCardCounterProps) => {
+  const colors = useFeatureColors(bonusCardCounterColors);
 
   if (props.isLoading) {
     return (
@@ -61,14 +66,14 @@ const BonusCardCounter = (props: BonusCardCounter) => {
       testID="BonusCardCounterTestID"
     >
       <LabelMini
-        color={isDark ? "white" : "blueItalia-850"}
+        color={labelColor}
         style={{ textAlign: "center" }}
         weight="Regular"
       >
         {props.label}
       </LabelMini>
       <VSpacer size={4} />
-      <H3 color={theme["interactiveElem-default"]} style={styles.value}>
+      <H3 color={colors.value} style={styles.value}>
         {props.value}
       </H3>
       {props.type === "ValueWithProgress" && (
@@ -86,10 +91,7 @@ type BonusProgressBarProps = {
 };
 
 const BonusProgressBar = ({ progress }: BonusProgressBarProps) => {
-  const theme = useIOTheme();
-
-  const progressBarColor: ColorValue =
-    IOColorsLegacy[theme["interactiveElem-default"]];
+  const { progress: progressColors } = useFeatureColors(bonusCardCounterColors);
 
   const width = useSharedValue(100);
   useEffect(() => {
@@ -100,14 +102,17 @@ const BonusProgressBar = ({ progress }: BonusProgressBarProps) => {
   }));
   return (
     <View
-      style={styles.progressBarContainer}
+      style={[
+        styles.progressBarContainer,
+        { backgroundColor: progressColors.track }
+      ]}
       testID="BonusCardCounterProgressTestID"
     >
       <Animated.View
         style={[
           {
             width: `${width.value}%`,
-            backgroundColor: progressBarColor,
+            backgroundColor: progressColors.fill,
             flex: 1
           },
           scalingWidth
@@ -167,7 +172,6 @@ const styles = StyleSheet.create({
   },
   progressBarContainer: {
     height: 4,
-    backgroundColor: IOColorsLegacy.white,
     marginHorizontal: 16,
     borderRadius: 4,
     overflow: "hidden"

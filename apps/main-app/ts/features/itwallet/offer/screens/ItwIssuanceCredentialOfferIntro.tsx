@@ -7,7 +7,7 @@ import {
 } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { Image, StyleSheet, View } from "react-native";
 
 import introHeroSource from "../../../../../img/features/itWallet/issuance/intro_hero.png";
@@ -21,6 +21,7 @@ import {
   isStartupLoaded,
   StartupStatusEnum
 } from "../../../../store/reducers/startup";
+import { getMixPanelCredential } from "../../analytics/utils";
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors";
@@ -33,7 +34,14 @@ import {
   itwCredentialIntroContentSelector,
   itwCredentialNameResolverSelector
 } from "../../credentialsCatalogue/store/selectors";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import {
+  trackItwCredentialIntro,
+  trackItwCredentialStartIssuing
+} from "../../issuance/analytics";
+import {
+  itwLifecycleIsITWalletValidSelector,
+  itwLifecycleIsValidSelector
+} from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
   selectCredentialType,
@@ -97,6 +105,7 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
     itwCredentialIntroContentSelector(credentialType)
   );
   const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
   const credentialName = useItwCredentialName(credentialType);
@@ -130,7 +139,7 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
     }, [machineRef, credentialOfferUri, resolvedCredentialOffer])
   );
 
-  const handleContinue = useCallback(() => {
+  const confirmOffer = useCallback(() => {
     machineRef.send({ type: "confirm-credential-offer" });
   }, [machineRef]);
 
@@ -152,11 +161,35 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
     !isOfferBlocked &&
     !introductionContent;
 
+  const isIntroVisible =
+    isResolved &&
+    !isCredentialAlreadyAdded &&
+    !isOfferBlocked &&
+    !shouldSkipIntro;
+
+  const mixPanelCredential = useMemo(
+    () => getMixPanelCredential(credentialType ?? "", isItwL3),
+    [credentialType, isItwL3]
+  );
+
   useEffect(() => {
     if (shouldSkipIntro) {
-      handleContinue();
+      confirmOffer();
     }
-  }, [shouldSkipIntro, handleContinue]);
+  }, [shouldSkipIntro, confirmOffer]);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (isIntroVisible) {
+        trackItwCredentialIntro(mixPanelCredential);
+      }
+    }, [isIntroVisible, mixPanelCredential])
+  );
+
+  const handleContinue = useCallback(() => {
+    trackItwCredentialStartIssuing(mixPanelCredential);
+    confirmOffer();
+  }, [confirmOffer, mixPanelCredential]);
 
   useFocusEffect(
     useCallback(() => {
