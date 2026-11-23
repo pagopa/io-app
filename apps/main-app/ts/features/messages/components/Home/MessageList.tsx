@@ -1,9 +1,16 @@
 import { Divider } from "@io-app/design-system";
-import { FlashList, FlashListRef, ListRenderItem } from "@shopify/flash-list";
+import {
+  FlashList,
+  FlashListProps,
+  FlashListRef,
+  ListRenderItem
+} from "@shopify/flash-list";
 import I18n from "i18next";
 import { forwardRef, useCallback, useMemo } from "react";
 import { RefreshControl, StyleSheet, View } from "react-native";
-import Animated from "react-native-reanimated";
+import Animated, {
+  type ILayoutAnimationBuilder
+} from "react-native-reanimated";
 import {
   useSafeAreaFrame,
   useSafeAreaInsets
@@ -65,8 +72,14 @@ const keyExtractor = (item: MessageListItem) =>
   typeof item === "number" ? `${item}` : item.id;
 
 const maintainVisibleContentPosition = { disabled: true };
-const AnimatedFlashList =
-  Animated.createAnimatedComponent(FlashList) as typeof FlashList;
+const AnimatedFlashList = Animated.createAnimatedComponent(
+  FlashList
+) as React.ComponentType<
+  FlashListProps<MessageListItem> & {
+    itemLayoutAnimation?: ILayoutAnimationBuilder;
+    ref?: React.Ref<FlashListRef<MessageListItem>>;
+  }
+>;
 
 export const MessageList = forwardRef<
   FlashListRef<MessageListItem>,
@@ -154,12 +167,12 @@ export const MessageList = forwardRef<
       contentContainerStyle={styles.contentContainer}
       data={data}
       getItemType={getItemType}
-      ItemSeparatorComponent={isLoading ? undefined : Divider}
-      keyExtractor={keyExtractor}
       // Messages slide along with the landing banner height changes
       itemLayoutAnimation={
         category === "INBOX" ? bannerLayoutTransition : undefined
       }
+      ItemSeparatorComponent={isLoading ? undefined : Divider}
+      keyExtractor={keyExtractor}
       ListEmptyComponent={<EmptyList category={category} />}
       ListFooterComponent={<Footer category={category} />}
       ListHeaderComponent={ListHeader}

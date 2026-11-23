@@ -1,8 +1,4 @@
-import {
-  IOBannerRadius,
-  IOSkeleton,
-  IOVisualCostants
-} from "@io-app/design-system";
+import { IODimensions, IOSkeleton } from "@io-app/design-system";
 import { StyleSheet, View } from "react-native";
 
 /** Approximates the height of the landing screen banners */
@@ -17,7 +13,7 @@ export const LandingScreenBannerSkeleton = () => (
   >
     <IOSkeleton
       height={BANNER_SKELETON_HEIGHT}
-      radius={IOBannerRadius}
+      radius={IODimensions.radius.banner}
       shape="rectangle"
       width="100%"
     />
@@ -26,7 +22,7 @@ export const LandingScreenBannerSkeleton = () => (
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: IOVisualCostants.appMarginDefault,
+    marginHorizontal: IODimensions.padding.screen.default,
     marginVertical: 16
   }
 });
