@@ -7,7 +7,7 @@ import { shallowEqual } from "react-redux";
 
 import { useDebugInfo } from "../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../store/hooks";
-import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
+import { DocSuIODiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/DocSuIODiscoveryBannerStandalone";
 import ItwActivationSuccessFeedbackBanner from "../../itwallet/common/components/ItwActivationSuccessFeedbackBanner";
 import { ItwEnvironmentAlert } from "../../itwallet/common/components/ItwEnvironmentAlert";
 import { ItwL2EngagementBanner } from "../../itwallet/common/components/ItwL2EngagementBanner";
@@ -109,7 +109,7 @@ const WalletCardsContainer = () => {
     <Animated.View layout={CONTAINER_LAYOUT} style={styles.container}>
       <ItwEnvironmentAlert />
       <ItwWalletNotAvailableBanner />
-      <ItwDiscoveryBannerStandalone />
+      <DocSuIODiscoveryBannerStandalone />
 
       {walletContent}
     </Animated.View>
