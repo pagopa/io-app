@@ -9,7 +9,6 @@ import { testSaga } from "redux-saga-test-plan";
 import { Effect } from "redux-saga/effects";
 import { call, take } from "typed-redux-saga/macro";
 
-import { isPnRemoteEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { getServiceDetails } from "../../../services/common/saga/getServiceDetails";
 import * as analytics from "../../analytics";
 import { trackMessageDataLoadFailure } from "../../analytics";
@@ -488,8 +487,6 @@ describe("dispatchSuccessAction", () => {
       thirdPartyMessage
     )
       .next()
-      .select(isPnRemoteEnabledSelector)
-      .next(true)
       .put(getMessageDataAction.success(expectedOutput))
       .next()
       .isDone();
@@ -542,8 +539,6 @@ describe("dispatchSuccessAction", () => {
       thirdPartyMessage
     )
       .next()
-      .select(isPnRemoteEnabledSelector)
-      .next(true)
       .put(getMessageDataAction.success(expectedOutput))
       .next()
       .isDone();
@@ -594,8 +589,6 @@ describe("dispatchSuccessAction", () => {
       thirdPartyMessage
     )
       .next()
-      .select(isPnRemoteEnabledSelector)
-      .next(true)
       .put(getMessageDataAction.success(expectedOutput))
       .next()
       .isDone();
@@ -643,8 +636,6 @@ describe("dispatchSuccessAction", () => {
       undefined
     )
       .next()
-      .select(isPnRemoteEnabledSelector)
-      .next(false)
       .put(getMessageDataAction.success(expectedOutput))
       .next()
       .isDone();
@@ -692,8 +683,6 @@ describe("dispatchSuccessAction", () => {
       undefined
     )
       .next()
-      .select(isPnRemoteEnabledSelector)
-      .next(false)
       .put(getMessageDataAction.success(expectedOutput))
       .next()
       .isDone();
@@ -744,8 +733,6 @@ describe("dispatchSuccessAction", () => {
       undefined
     )
       .next()
-      .select(isPnRemoteEnabledSelector)
-      .next(false)
       .put(getMessageDataAction.success(expectedOutput))
       .next()
       .isDone();
@@ -795,8 +782,6 @@ describe("dispatchSuccessAction", () => {
       undefined
     )
       .next()
-      .select(isPnRemoteEnabledSelector)
-      .next(false)
       .put(getMessageDataAction.success(expectedOutput))
       .next()
       .isDone();
@@ -852,8 +837,6 @@ describe("dispatchSuccessAction", () => {
       thirdPartyMessage
     )
       .next()
-      .select(isPnRemoteEnabledSelector)
-      .next(true)
       .put(getMessageDataAction.success(expectedOutput))
       .next()
       .isDone();

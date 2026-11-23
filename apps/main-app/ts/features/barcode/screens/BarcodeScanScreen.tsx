@@ -20,8 +20,7 @@ import {
 import { useIOSelector } from "../../../store/hooks";
 import {
   barcodesScannerConfigSelector,
-  isIdPayEnabledInScanScreenSelector,
-  isPnRemoteEnabledSelector
+  isIdPayEnabledInScanScreenSelector
 } from "../../../store/reducers/backendStatus/remoteConfig";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { FCI_ROUTES } from "../../fci/navigation/routes";
@@ -58,7 +57,6 @@ const BarcodeScanScreen = () => {
     isIdPayEnabledInScanScreenSelector
   );
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
-  const isSendEnabled = useIOSelector(isPnRemoteEnabledSelector);
 
   const { startPaymentFlowWithRptId } = usePagoPaPayment();
 
@@ -78,11 +76,7 @@ const BarcodeScanScreen = () => {
   );
 
   const barcodeTypes: Array<IOBarcodeType> = IO_BARCODE_ALL_TYPES.filter(type =>
-    type === "IDPAY"
-      ? isIdPayEnabledInScanScreen
-      : type === "SEND"
-        ? isSendEnabled
-        : true
+    type === "IDPAY" ? isIdPayEnabledInScanScreen : true
   );
 
   /**

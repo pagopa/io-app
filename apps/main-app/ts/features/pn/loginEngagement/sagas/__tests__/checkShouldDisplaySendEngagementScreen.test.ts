@@ -3,7 +3,6 @@ import { expectSaga } from "redux-saga-test-plan";
 import { select } from "redux-saga/effects";
 
 import NavigationService from "../../../../../navigation/NavigationService";
-import { isPnRemoteEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { setSecurityAdviceReadyToShow } from "../../../../authentication/fastLogin/store/actions/securityAdviceActions";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import PN_ROUTES from "../../../navigation/routes";
@@ -21,7 +20,6 @@ describe("checkShouldDisplaySendEngagementScreen saga", () => {
     expectSaga(checkShouldDisplaySendEngagementScreen, true)
       .provide([
         [select(hasSendEngagementScreenBeenDismissedSelector), false],
-        [select(isPnRemoteEnabledSelector), true],
         [select(isPnServiceEnabled), false]
       ])
       .put(setSecurityAdviceReadyToShow(true))
@@ -34,10 +32,9 @@ describe("checkShouldDisplaySendEngagementScreen saga", () => {
     expectSaga(checkShouldDisplaySendEngagementScreen, false)
       .provide([
         [select(hasSendEngagementScreenBeenDismissedSelector), false],
-        [select(isPnRemoteEnabledSelector), true],
         [select(isPnServiceEnabled), false]
       ])
-      .call(handleNavigateToSendEngagementScreen, false, true, false)
+      .call(handleNavigateToSendEngagementScreen, false, false)
       .run()
       .then(result => {
         expect(result.returnValue).toBeUndefined();
@@ -47,7 +44,6 @@ describe("checkShouldDisplaySendEngagementScreen saga", () => {
     expectSaga(checkShouldDisplaySendEngagementScreen, false)
       .provide([
         [select(hasSendEngagementScreenBeenDismissedSelector), false],
-        [select(isPnRemoteEnabledSelector), true],
         [select(isPnServiceEnabled), undefined]
       ])
       .run()
@@ -59,7 +55,7 @@ describe("checkShouldDisplaySendEngagementScreen saga", () => {
       }));
   describe("handleNavigateToSendEngagementScreen", () => {
     it("should navigate when all the conditions are met", () =>
-      expectSaga(handleNavigateToSendEngagementScreen, false, true, false)
+      expectSaga(handleNavigateToSendEngagementScreen, false, false)
         .call(
           NavigationService.dispatchNavigationAction,
           StackActions.push(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
@@ -74,21 +70,14 @@ describe("checkShouldDisplaySendEngagementScreen saga", () => {
           expect(result.effects.put).toBeUndefined();
         }));
     it("should not navigate when the SEND engagement screen has been dismissed", () =>
-      expectSaga(handleNavigateToSendEngagementScreen, true, true, false)
+      expectSaga(handleNavigateToSendEngagementScreen, true, false)
         .put(setSecurityAdviceReadyToShow(true))
         .run()
         .then(result => {
           expect(result.effects.call).toBeUndefined();
         }));
     it("should not navigate when the SEND service is enabled", () =>
-      expectSaga(handleNavigateToSendEngagementScreen, false, true, true)
-        .put(setSecurityAdviceReadyToShow(true))
-        .run()
-        .then(result => {
-          expect(result.effects.call).toBeUndefined();
-        }));
-    it("should not navigate when the SEND remote FF is not enabled", () =>
-      expectSaga(handleNavigateToSendEngagementScreen, false, false, false)
+      expectSaga(handleNavigateToSendEngagementScreen, false, true)
         .put(setSecurityAdviceReadyToShow(true))
         .run()
         .then(result => {
