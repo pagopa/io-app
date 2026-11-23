@@ -3,8 +3,9 @@ import {
   H2,
   IconButton,
   IOButton,
-  IOColorsLegacy,
   Pictogram,
+  useFooterActionsMeasurements,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import I18n from "i18next";
@@ -48,6 +49,9 @@ const styles = StyleSheet.create({
  * @deprecated This component is really old and should be removed/refactored
  */
 const TosBonusComponent: FunctionComponent<Props> = props => {
+  const colors = useIOColors();
+  const { footerActionsMeasurements, handleFooterActionsMeasurements } =
+    useFooterActionsMeasurements();
   const handleBackPressed = () => {
     props.onClose();
     return true;
@@ -96,10 +100,14 @@ const TosBonusComponent: FunctionComponent<Props> = props => {
 
   return (
     <LoadingSpinnerOverlay isLoading={!isLoadEnd}>
-      <SafeAreaView style={{ flex: 1, backgroundColor: IOColorsLegacy.white }}>
+      <SafeAreaView
+        edges={["top", "left", "right"]}
+        style={{ flex: 1, backgroundColor: colors.background.default }}
+      >
         <View
           style={{
             paddingHorizontal: 16,
+            paddingBottom: 16,
             alignItems: "flex-end"
           }}
         >
@@ -110,7 +118,12 @@ const TosBonusComponent: FunctionComponent<Props> = props => {
             onPress={props.onClose}
           />
         </View>
-        <ScrollView contentContainerStyle={styles.flex1}>
+        <ScrollView
+          contentContainerStyle={[
+            styles.flex1,
+            { paddingBottom: footerActionsMeasurements.safeBottomAreaHeight }
+          ]}
+        >
           {renderError()}
           {!hasError && (
             <View style={styles.flex1}>
@@ -136,6 +149,7 @@ const TosBonusComponent: FunctionComponent<Props> = props => {
                 label: I18n.t("global.buttons.close")
               }
             }}
+            onMeasure={handleFooterActionsMeasurements}
           />
         )}
       </SafeAreaView>
