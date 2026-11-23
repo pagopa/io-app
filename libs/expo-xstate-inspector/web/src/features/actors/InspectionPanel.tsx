@@ -101,7 +101,7 @@ export const InspectionPanel = ({ actor, selectedId, childActors }: Props) => {
         role="tabpanel"
         tabIndex={0}
       >
-        <table className="data-table">
+        <table className="data-table child-actors-table">
           <thead>
             <tr>
               <th>Started</th>

@@ -61,7 +61,16 @@
   display: block;
 }
 
-#child-actors td:nth-child(2) {
+.child-actors-table {
+  table-layout: fixed;
+}
+
+.child-actors-table th:first-child {
+  width: 12%;
+}
+
+.child-actors-table th:nth-child(2),
+.child-actors-table td:nth-child(2) {
   width: 50%;
 }
 
