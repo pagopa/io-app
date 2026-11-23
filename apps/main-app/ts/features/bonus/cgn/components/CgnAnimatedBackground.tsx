@@ -5,14 +5,15 @@ import {
   cancelAnimation,
   Easing,
   interpolate,
+  ReduceMotion,
   useDerivedValue,
-  useReducedMotion,
   useSharedValue,
   withRepeat,
   withTiming
 } from "react-native-reanimated";
 
 import { useFeatureColors } from "../../../../hooks/useFeatureColors";
+import { useReduceMotionEnabled } from "../../../../hooks/useReduceMotionEnabled";
 import { cgnColors } from "../colors";
 
 // Blob configuration
@@ -199,13 +200,18 @@ const AnimatedBlob = ({
       return;
     }
 
+    // The live system preference above owns playback, not Reanimated's startup setting.
+    orbitProgress.value = 0;
     orbitProgress.value = withRepeat(
       withTiming(1, {
         duration: ORBIT_DURATION,
-        easing: Easing.linear
+        easing: Easing.linear,
+        reduceMotion: ReduceMotion.Never
       }),
       -1,
-      false
+      false,
+      undefined,
+      ReduceMotion.Never
     );
 
     return () => {
@@ -224,7 +230,7 @@ export const CgnAnimatedBackground = ({
   // Canvas size is provided via onSize callback and updated on the UI thread
   const canvasSize = useSharedValue({ width: 0, height: 0 });
   const colors = useFeatureColors(cgnColors);
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReduceMotionEnabled();
 
   const backgroundColor = colors.detailCard.background;
   const foregroundColor = colors.detailCard.foreground;
