@@ -28,7 +28,7 @@ const MessageKind = {
 type MessageKind = (typeof MessageKind)[keyof typeof MessageKind];
 
 type QualtricsParameters = {
-  firstTimeOpening?: boolean;
+  firstTimeOpening: "no" | "yes";
   messageType: MessageKind;
   organizationFiscalCode: string;
   sendingDate: string;
@@ -58,7 +58,7 @@ export const StandardMessageSurveyBanner = ({
 
   return (
     <MessageSurveyBanner
-      firstTimeOpening={firstTimeOpening}
+      firstTimeOpening={firstTimeOpening ? "yes" : "no"}
       messageType={messageKindFromStandardMessage(
         message,
         messageDetails,
@@ -69,28 +69,6 @@ export const StandardMessageSurveyBanner = ({
       serviceId={message.serviceId}
     />
   );
-};
-
-const getOpeningSource = (sendOpeningSource: SendOpeningSource) => {
-  switch (sendOpeningSource) {
-    case "aar":
-      return "aar";
-    case "message":
-      return "message";
-    default:
-      return;
-  }
-};
-
-const getUserType = (sendUserType: SendUserType) => {
-  switch (sendUserType) {
-    case "mandatory":
-      return "delegato";
-    case "recipient":
-      return "destinatario";
-    default:
-      return;
-  }
 };
 
 export const SendMessageSurveyBanner = ({
@@ -117,12 +95,13 @@ export const SendMessageSurveyBanner = ({
 
   return (
     <MessageSurveyBanner
-      firstTimeOpening={firstTimeOpening}
+      /* firstTimeOpening is undefined for "AAR" messages, we consider it as true */
+      firstTimeOpening={firstTimeOpening === false ? "no" : "yes"}
       messageType={MessageKind.SEND}
       organizationFiscalCode={organizationFiscalCode}
       sendingDate={message.created_at.toISOString()}
-      sendOpeningSource={getOpeningSource(sendOpeningSource)}
-      sendUserType={getUserType(sendUserType)}
+      sendOpeningSource={sendOpeningSource === "aar" ? "aar" : "message"}
+      sendUserType={sendUserType === "mandatory" ? "delegato" : "destinatario"}
       serviceId={serviceId}
     />
   );

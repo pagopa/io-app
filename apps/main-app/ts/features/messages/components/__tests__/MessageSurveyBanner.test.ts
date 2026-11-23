@@ -46,7 +46,8 @@ const qualtricsParameters = {
   organizationFiscalCode: "Comune di Tokyo",
   serviceId: "service-id" as ServiceId,
   sendingDate: "2026-06-18T10:30:00.000Z",
-  messageType: MessageKind.STANDARD
+  messageType: MessageKind.STANDARD,
+  firstTimeOpening: "yes" as const
 };
 
 const messageId = "01JYW0BM2FSGPP8M5RM8V72WJ8";
@@ -78,8 +79,14 @@ describe("encodeQualtricsParameters", () => {
       QUALTRICS_URI,
       qualtricsParameters
     );
+
+    const { firstTimeOpening, ...rest } = qualtricsParameters;
+
     const parametersBase64Url = Buffer.from(
-      JSON.stringify(qualtricsParameters),
+      JSON.stringify({
+        ...rest,
+        first_time_opening: firstTimeOpening
+      }),
       "utf8"
     ).toString("base64url");
 
@@ -96,76 +103,80 @@ describe("encodeQualtricsParameters", () => {
       name: "standard message first opening",
       parameters: {
         messageType: MessageKind.STANDARD,
-        firstTimeOpening: true
+        firstTimeOpening: "yes"
       },
       expectedParameters: {
         messageType: MessageKind.STANDARD,
-        first_time_opening: true
+        first_time_opening: "yes"
       }
     },
     {
       name: "standard message subsequent opening",
       parameters: {
         messageType: MessageKind.STANDARD,
-        firstTimeOpening: false
+        firstTimeOpening: "no"
       },
       expectedParameters: {
         messageType: MessageKind.STANDARD,
-        first_time_opening: false
+        first_time_opening: "no"
       }
     },
     {
       name: "SEND first opening from message",
       parameters: {
         messageType: MessageKind.SEND,
-        firstTimeOpening: true,
+        firstTimeOpening: "yes",
         sendOpeningSource: "message",
-        sendUserType: undefined
+        sendUserType: "destinatario"
       },
       expectedParameters: {
         messageType: MessageKind.SEND,
-        first_time_opening: true,
-        opening_source: "message"
+        first_time_opening: "yes",
+        opening_source: "message",
+        send_user: "destinatario"
       }
     },
     {
       name: "SEND subsequent opening from message",
       parameters: {
         messageType: MessageKind.SEND,
-        firstTimeOpening: false,
+        firstTimeOpening: "no",
         sendOpeningSource: "message",
-        sendUserType: undefined
+        sendUserType: "destinatario"
       },
       expectedParameters: {
         messageType: MessageKind.SEND,
-        first_time_opening: false,
-        opening_source: "message"
+        first_time_opening: "no",
+        opening_source: "message",
+        send_user: "destinatario"
       }
     },
     {
-      name: "SEND opening from aar as delegato",
+      name: "SEND opening from AAR as delegato",
       parameters: {
         messageType: MessageKind.SEND,
-        firstTimeOpening: undefined,
+        firstTimeOpening: "yes",
         sendOpeningSource: "aar",
         sendUserType: "delegato"
       },
       expectedParameters: {
         messageType: MessageKind.SEND,
+        first_time_opening: "yes",
         opening_source: "aar",
         send_user: "delegato"
       }
     },
     {
-      name: "SEND opening from aar as destinatario",
+      name: "SEND opening from AAR as destinatario",
       parameters: {
         messageType: MessageKind.SEND,
-        firstTimeOpening: undefined,
+        firstTimeOpening: "yes",
         sendOpeningSource: "aar",
         sendUserType: "destinatario"
       },
       expectedParameters: {
         messageType: MessageKind.SEND,
+        first_time_opening: "yes",
         opening_source: "aar",
         send_user: "destinatario"
       }
@@ -341,7 +352,7 @@ describe("StandardMessageSurveyBanner", () => {
         serviceId: service_1.id,
         sendingDate: createdAt.toISOString(),
         messageType: MessageKind.STANDARD,
-        firstTimeOpening: true
+        firstTimeOpening: "yes"
       })
     );
   });
@@ -350,7 +361,7 @@ describe("StandardMessageSurveyBanner", () => {
     const { getByTestId } = renderWithState(
       createElement(StandardMessageSurveyBanner, {
         message: standardMessage,
-        firstTimeOpening: true
+        firstTimeOpening: false
       }),
       [
         backendStatusWithSurveyUri(),
@@ -371,7 +382,7 @@ describe("StandardMessageSurveyBanner", () => {
         serviceId: service_1.id,
         sendingDate: createdAt.toISOString(),
         messageType: MessageKind.ATTACHMENT,
-        firstTimeOpening: true
+        firstTimeOpening: "no"
       })
     );
   });
@@ -407,9 +418,9 @@ describe("SendMessageSurveyBanner", () => {
         sendUserType: "not_set"
       },
       expectedParameters: {
-        firstTimeOpening: true,
+        firstTimeOpening: "yes",
         sendOpeningSource: "message",
-        sendUserType: undefined
+        sendUserType: "destinatario"
       }
     },
     {
@@ -420,9 +431,9 @@ describe("SendMessageSurveyBanner", () => {
         sendUserType: "not_set"
       },
       expectedParameters: {
-        firstTimeOpening: false,
+        firstTimeOpening: "no",
         sendOpeningSource: "message",
-        sendUserType: undefined
+        sendUserType: "destinatario"
       }
     },
     {
@@ -433,7 +444,7 @@ describe("SendMessageSurveyBanner", () => {
         sendUserType: "mandatory"
       },
       expectedParameters: {
-        firstTimeOpening: undefined,
+        firstTimeOpening: "yes",
         sendOpeningSource: "aar",
         sendUserType: "delegato"
       }
@@ -446,7 +457,7 @@ describe("SendMessageSurveyBanner", () => {
         sendUserType: "recipient"
       },
       expectedParameters: {
-        firstTimeOpening: undefined,
+        firstTimeOpening: "yes",
         sendOpeningSource: "aar",
         sendUserType: "destinatario"
       }
