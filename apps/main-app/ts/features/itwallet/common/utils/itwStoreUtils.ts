@@ -92,12 +92,6 @@ const createReasonObject = (message: string) => ({
   errorDescription: message
 });
 
-/** Converts an {@link Error} into a plain object that can be safely tracked. */
-export const serializeError = (error: Error) =>
-  createReasonObject(error.message);
-
-export type SerializedError = ReturnType<typeof serializeError>;
-
 /**
  * Guards and maps failure reasons to a consistent format for serialization.
  * Missing reasons and Error instances are converted to a structured object,
@@ -110,7 +104,7 @@ const mapFailureReason = (reason: unknown) => {
   }
 
   if (reason instanceof Error) {
-    return serializeError(reason);
+    return createReasonObject(reason.message);
   }
 
   return reason;

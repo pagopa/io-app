@@ -6,6 +6,7 @@ import {
   ItwStatus,
   MixPanelCredential
 } from "../../analytics/utils/types";
+import { isWebViewError } from "../../common/utils/itwFailureUtils";
 import { IssuanceFailure } from "../../machine/eid/failure";
 import {
   ITW_ISSUANCE_ACTIONS_EVENTS,
@@ -94,11 +95,23 @@ export const trackIdNotMatch = (
   );
 };
 
+/**
+ * A WebView failure carries an Error, which has no enumerable properties and
+ * would be tracked as an empty object.
+ */
+const serializeWebViewReason = (reason: unknown) =>
+  reason instanceof Error && isWebViewError(reason)
+    ? { code: "WEBVIEW_ERROR", errorDescription: reason.message }
+    : reason;
+
 export const trackItwIdRequestFailure = (properties: IdRequestFailure) => {
   if (properties.ITW_ID_method) {
     void mixpanelTrack(
       ITW_ISSUANCE_ERRORS_EVENTS.ITW_ID_REQUEST_FAILURE,
-      buildEventProperties("KO", "error", properties)
+      buildEventProperties("KO", "error", {
+        ...properties,
+        reason: serializeWebViewReason(properties.reason)
+      })
     );
   }
 };

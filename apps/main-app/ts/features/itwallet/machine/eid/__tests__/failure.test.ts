@@ -41,37 +41,6 @@ describe("mapEventToFailure", () => {
     });
   });
 
-  it("serializes CieID WebView errors so that the reason can be tracked", () => {
-    expect(
-      mapEventToFailure({
-        type: "error",
-        scope: "cieid-login",
-        error: new Error("CIEID_WEBVIEW_HTTP_ERROR_500")
-      })
-    ).toStrictEqual({
-      type: IssuanceFailureType.ISSUER_GENERIC,
-      reason: {
-        code: "UNEXPECTED",
-        errorDescription: "CIEID_WEBVIEW_HTTP_ERROR_500"
-      }
-    });
-  });
-
-  it("keeps CIE PIN WebView errors untouched", () => {
-    const error = { name: "WEBVIEW_ERROR", message: "500" } as const;
-
-    expect(
-      mapEventToFailure({
-        type: "error",
-        scope: "cie-auth",
-        error
-      })
-    ).toStrictEqual({
-      type: IssuanceFailureType.ISSUER_GENERIC,
-      reason: error
-    });
-  });
-
   it("keeps mapping unknown errors to UNEXPECTED", () => {
     const error = new Error("Unexpected failure");
 

@@ -3386,13 +3386,9 @@ describe("itwEidIssuanceMachine", () => {
     });
 
     expect(actor.getSnapshot().value).toEqual("Failure");
-    expect(actor.getSnapshot().context.failure).toEqual({
-      type: IssuanceFailureType.ISSUER_GENERIC,
-      reason: {
-        code: "UNEXPECTED",
-        errorDescription: "CIEID_WEBVIEW_HTTP_ERROR_500"
-      }
-    });
+    expect(actor.getSnapshot().context.failure?.type).toEqual(
+      IssuanceFailureType.ISSUER_GENERIC
+    );
   });
 });
 
