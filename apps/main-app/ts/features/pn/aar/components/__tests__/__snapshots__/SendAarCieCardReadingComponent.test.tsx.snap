@@ -423,7 +423,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                     [
                                       {},
                                       {
-                                        "color": "#636B82",
+                                        "color": "#555C70",
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -1498,7 +1498,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                     [
                                       {},
                                       {
-                                        "color": "#636B82",
+                                        "color": "#555C70",
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -2573,7 +2573,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                     [
                                       {},
                                       {
-                                        "color": "#636B82",
+                                        "color": "#555C70",
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -3648,7 +3648,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                     [
                                       {},
                                       {
-                                        "color": "#636B82",
+                                        "color": "#555C70",
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -4653,7 +4653,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                 jestInlineStyle={
                                   [
                                     {
-                                      "backgroundColor": "#00C5CA",
+                                      "backgroundColor": "#0B3EE3",
                                       "borderRadius": 4,
                                       "height": 4,
                                     },
@@ -4665,7 +4665,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       "width": 0,
                                     },
                                     {
-                                      "backgroundColor": "#00C5CA",
+                                      "backgroundColor": "#0B3EE3",
                                       "borderRadius": 4,
                                       "height": 4,
                                     },
@@ -4735,7 +4735,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                     [
                                       {},
                                       {
-                                        "color": "#636B82",
+                                        "color": "#555C70",
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -5623,7 +5623,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                 jestInlineStyle={
                                   [
                                     {
-                                      "backgroundColor": "#00C5CA",
+                                      "backgroundColor": "#0B3EE3",
                                       "borderRadius": 4,
                                       "height": 4,
                                     },
@@ -5635,7 +5635,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       "width": 0,
                                     },
                                     {
-                                      "backgroundColor": "#00C5CA",
+                                      "backgroundColor": "#0B3EE3",
                                       "borderRadius": 4,
                                       "height": 4,
                                     },
@@ -5705,7 +5705,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                     [
                                       {},
                                       {
-                                        "color": "#636B82",
+                                        "color": "#555C70",
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -6593,7 +6593,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                 jestInlineStyle={
                                   [
                                     {
-                                      "backgroundColor": "#00C5CA",
+                                      "backgroundColor": "#0B3EE3",
                                       "borderRadius": 4,
                                       "height": 4,
                                     },
@@ -6605,7 +6605,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       "width": 0,
                                     },
                                     {
-                                      "backgroundColor": "#00C5CA",
+                                      "backgroundColor": "#0B3EE3",
                                       "borderRadius": 4,
                                       "height": 4,
                                     },
@@ -6675,7 +6675,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                     [
                                       {},
                                       {
-                                        "color": "#636B82",
+                                        "color": "#555C70",
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -7563,7 +7563,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                 jestInlineStyle={
                                   [
                                     {
-                                      "backgroundColor": "#00C5CA",
+                                      "backgroundColor": "#0B3EE3",
                                       "borderRadius": 4,
                                       "height": 4,
                                     },
@@ -7575,7 +7575,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       "width": 0,
                                     },
                                     {
-                                      "backgroundColor": "#00C5CA",
+                                      "backgroundColor": "#0B3EE3",
                                       "borderRadius": 4,
                                       "height": 4,
                                     },
@@ -7645,7 +7645,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                     [
                                       {},
                                       {
-                                        "color": "#636B82",
+                                        "color": "#555C70",
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -8533,7 +8533,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                 jestInlineStyle={
                                   [
                                     {
-                                      "backgroundColor": "#00C5CA",
+                                      "backgroundColor": "#0B3EE3",
                                       "borderRadius": 4,
                                       "height": 4,
                                     },
@@ -8545,7 +8545,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       "width": 0,
                                     },
                                     {
-                                      "backgroundColor": "#00C5CA",
+                                      "backgroundColor": "#0B3EE3",
                                       "borderRadius": 4,
                                       "height": 4,
                                     },
