@@ -1,3 +1,4 @@
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import {
   createStackNavigator,
   TransitionPresets
@@ -122,7 +123,13 @@ const AuthenticatedStackNavigator = () => {
       <Stack.Screen
         component={MessagesStackNavigator}
         name={MESSAGES_ROUTES.MESSAGES_NAVIGATOR}
-        options={hideHeaderOptions}
+        options={({ route }) => ({
+          ...hideHeaderOptions,
+          gestureEnabled:
+            isGestureEnabled &&
+            (getFocusedRouteNameFromRoute(route) ??
+              MESSAGES_ROUTES.MESSAGE_ROUTER) === MESSAGES_ROUTES.MESSAGE_ROUTER
+        })}
       />
       {/* This screen is outside the MessagesNavigator to change gesture and transion behaviour. */}
 

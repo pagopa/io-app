@@ -7300,9 +7300,9 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                         edges={
                           {
                             "bottom": "additive",
-                            "left": "additive",
-                            "right": "additive",
-                            "top": "additive",
+                            "left": "off",
+                            "right": "off",
+                            "top": "off",
                           }
                         }
                         style={
@@ -7310,6 +7310,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                             "flexGrow": 1,
                           }
                         }
+                        testID="send-message-details-error"
                       >
                         <RCTScrollView
                           alwaysBounceVertical={false}
@@ -8191,9 +8192,9 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                         edges={
                           {
                             "bottom": "additive",
-                            "left": "additive",
-                            "right": "additive",
-                            "top": "additive",
+                            "left": "off",
+                            "right": "off",
+                            "top": "off",
                           }
                         }
                         style={
@@ -8201,6 +8202,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                             "flexGrow": 1,
                           }
                         }
+                        testID="send-message-details-error"
                       >
                         <RCTScrollView
                           alwaysBounceVertical={false}
@@ -9082,9 +9084,9 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                         edges={
                           {
                             "bottom": "additive",
-                            "left": "additive",
-                            "right": "additive",
-                            "top": "additive",
+                            "left": "off",
+                            "right": "off",
+                            "top": "off",
                           }
                         }
                         style={
@@ -9092,6 +9094,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                             "flexGrow": 1,
                           }
                         }
+                        testID="send-message-details-error"
                       >
                         <RCTScrollView
                           alwaysBounceVertical={false}
@@ -9973,9 +9976,9 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                         edges={
                           {
                             "bottom": "additive",
-                            "left": "additive",
-                            "right": "additive",
-                            "top": "additive",
+                            "left": "off",
+                            "right": "off",
+                            "top": "off",
                           }
                         }
                         style={
@@ -9983,6 +9986,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                             "flexGrow": 1,
                           }
                         }
+                        testID="send-message-details-error"
                       >
                         <RCTScrollView
                           alwaysBounceVertical={false}
@@ -10864,9 +10868,9 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                         edges={
                           {
                             "bottom": "additive",
-                            "left": "additive",
-                            "right": "additive",
-                            "top": "additive",
+                            "left": "off",
+                            "right": "off",
+                            "top": "off",
                           }
                         }
                         style={
@@ -10874,6 +10878,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                             "flexGrow": 1,
                           }
                         }
+                        testID="send-message-details-error"
                       >
                         <RCTScrollView
                           alwaysBounceVertical={false}
@@ -11755,9 +11760,9 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                         edges={
                           {
                             "bottom": "additive",
-                            "left": "additive",
-                            "right": "additive",
-                            "top": "additive",
+                            "left": "off",
+                            "right": "off",
+                            "top": "off",
                           }
                         }
                         style={
@@ -11765,6 +11770,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                             "flexGrow": 1,
                           }
                         }
+                        testID="send-message-details-error"
                       >
                         <RCTScrollView
                           alwaysBounceVertical={false}
@@ -12505,6 +12511,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                             "flexGrow": 1,
                           }
                         }
+                        testID="send-message-details-error"
                       >
                         <RCTScrollView
                           alwaysBounceVertical={false}
@@ -13245,6 +13252,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                             "flexGrow": 1,
                           }
                         }
+                        testID="send-message-details-error"
                       >
                         <RCTScrollView
                           alwaysBounceVertical={false}
@@ -13985,6 +13993,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                             "flexGrow": 1,
                           }
                         }
+                        testID="send-message-details-error"
                       >
                         <RCTScrollView
                           alwaysBounceVertical={false}

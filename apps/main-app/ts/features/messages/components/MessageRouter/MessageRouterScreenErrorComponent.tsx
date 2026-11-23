@@ -37,7 +37,7 @@ export const MessageRouterScreenErrorComponent = ({
     }
   }, [errorVariant]);
 
-  return <OperationResultScreenContent {...componentProps} />;
+  return <OperationResultScreenContent {...componentProps} isHeaderVisible />;
 };
 
 // -------------- Selector and utils for error handling --------------

@@ -9,9 +9,11 @@ import {
   trackMessageNotificationParsingFailure,
   trackMessageNotificationTap,
   trackMessagePaymentFailure,
-  trackOpenMessage
+  trackOpenMessage,
+  trackOpenMessageFromSuccessData
 } from "..";
 import * as MIXPANEL from "../../../../mixpanel";
+import { successGetMessageDataFor } from "../../__mocks__/messageData";
 
 describe("index", () => {
   afterEach(() => {
@@ -83,6 +85,76 @@ describe("index", () => {
           )
         )
       )
+    );
+  });
+
+  describe("trackOpenMessageFromSuccessData", () => {
+    type Scenario = {
+      containsPayment: boolean | undefined;
+      expectedContainsPayment: "no" | "unknown" | "yes";
+      fromPushNotification: boolean;
+      name: string;
+    };
+    const scenarios: ReadonlyArray<Scenario> = [false, true].flatMap(
+      fromPushNotification => [
+        {
+          name: `a message with unknown payments (fromPushNotification ${fromPushNotification})`,
+          containsPayment: undefined,
+          expectedContainsPayment: "unknown" as const,
+          fromPushNotification
+        },
+        {
+          name: `a message without payments (fromPushNotification ${fromPushNotification})`,
+          containsPayment: false,
+          expectedContainsPayment: "no" as const,
+          fromPushNotification
+        },
+        {
+          name: `a message with a payment (fromPushNotification ${fromPushNotification})`,
+          containsPayment: true,
+          expectedContainsPayment: "yes" as const,
+          fromPushNotification
+        }
+      ]
+    );
+
+    it.each(scenarios)(
+      "should track the opening of $name with the loaded data",
+      ({ containsPayment, expectedContainsPayment, fromPushNotification }) => {
+        const spyOnMixpanelTrack = jest
+          .spyOn(MIXPANEL, "mixpanelTrack")
+          .mockReturnValue(undefined);
+        const data = successGetMessageDataFor("01JK8TKP8QCNJ689M4D94VA6VH", {
+          containsAttachments: true,
+          containsPayment,
+          createdAt: new Date(2025, 0, 1, 10, 30, 45),
+          fciMessageType: "result",
+          fciResult: "success",
+          hasRemoteContent: true
+        });
+
+        trackOpenMessageFromSuccessData(data, fromPushNotification);
+
+        expect(spyOnMixpanelTrack).toHaveBeenCalledTimes(1);
+        expect(spyOnMixpanelTrack).toHaveBeenCalledWith("OPEN_MESSAGE", {
+          event_category: "UX",
+          event_type: "screen_view",
+          flow: undefined,
+          service_id: data.serviceId,
+          service_name: data.serviceName,
+          organization_name: data.organizationName,
+          organization_fiscal_code: data.organizationFiscalCode,
+          contains_payment: expectedContainsPayment,
+          remote_content: "yes",
+          contains_attachment: "yes",
+          first_time_opening: "yes",
+          fromPushNotification: fromPushNotification ? "yes" : "no",
+          has_fims_callback: "no",
+          date_sent: "2025-01-01T10:30:45.000Z",
+          fci_message_type: "result",
+          fci_result: "success"
+        });
+      }
     );
   });
 
