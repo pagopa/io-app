@@ -210,7 +210,9 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
 
         {shouldRenderL2EngagementBanner && <ItwL2EngagementBanner />}
 
-        {!shouldRenderL2EngagementBanner && <ItwWalletReadyBanner />}
+        {!shouldRenderL2EngagementBanner && !shouldRenderUpgradeBanner && (
+          <ItwWalletReadyBanner />
+        )}
       </View>
       {eidInfoBottomSheet.bottomSheet}
     </View>
