@@ -284,21 +284,17 @@ describe("isPnActivationReminderBannerRenderableSelector", () => {
 
   const testCases = [true, false]
     .map(hasBeenDismissed =>
-      [true, false].map(isRemoteEnabled =>
-        [true, false].map(isInboxEnabled => ({
-          hasBeenDismissed,
-          isRemoteEnabled,
-          isInboxEnabled,
-          result: isRemoteEnabled && !hasBeenDismissed && !isInboxEnabled
-        }))
-      )
+      [true, false].map(isInboxEnabled => ({
+        hasBeenDismissed,
+        isInboxEnabled,
+        result: !hasBeenDismissed && !isInboxEnabled
+      }))
     )
-    .flat()
     .flat();
 
   test.each(testCases)(
     "handles the following case: %p",
-    ({ hasBeenDismissed, isRemoteEnabled, isInboxEnabled, result }) => {
+    ({ hasBeenDismissed, isInboxEnabled, result }) => {
       const state = {
         features: {
           pn: {
@@ -322,7 +318,6 @@ describe("isPnActivationReminderBannerRenderableSelector", () => {
         },
         remoteConfig: O.some({
           pn: {
-            enabled: isRemoteEnabled,
             notificationServiceId: pnServiceId
           }
         })
@@ -356,9 +351,7 @@ describe("isPnActivationReminderBannerRenderableSelector", () => {
         } as unknown as ServicesState
       },
       remoteConfig: O.some({
-        pn: {
-          enabled: true
-        }
+        pn: {}
       })
     } as GlobalState;
 

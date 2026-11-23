@@ -5,10 +5,7 @@ import { useCallback, useMemo } from "react";
 
 import { IOScrollViewActions } from "../../../components/ui/IOScrollView";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import {
-  isPnAppVersionSupportedSelector,
-  isPnRemoteEnabledSelector
-} from "../../../store/reducers/backendStatus/remoteConfig";
+import { isPnAppVersionSupportedSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { openAppStoreUrl } from "../../../utils/url";
 import * as analytics from "../../services/common/analytics";
@@ -68,7 +65,6 @@ export const useSpecialCtaPn = (
   serviceId: ServiceId,
   activate = false
 ): IOScrollViewActions["primary"] | undefined => {
-  const isPnEnabled = useIOSelector(isPnRemoteEnabledSelector);
   const isPnSupported = useIOSelector(isPnAppVersionSupportedSelector);
 
   const { activationHandler, isLoadingPnActivation } =
@@ -96,13 +92,13 @@ export const useSpecialCtaPn = (
         activationHandler(true);
       }
     },
-    () => isPnEnabled && isPnSupported
+    () => isPnSupported
   );
 
   return useMemo(() => {
-    // if pn is not enabled or the inbox channel is undefined
+    // if the inbox channel is undefined
     // then the special service is not available
-    if (!isPnEnabled || servicePreferenceByChannel === undefined) {
+    if (servicePreferenceByChannel === undefined) {
       return undefined;
     }
 
@@ -130,7 +126,6 @@ export const useSpecialCtaPn = (
   }, [
     activationHandler,
     isLoading,
-    isPnEnabled,
     isPnSupported,
     isServiceActive,
     servicePreferenceByChannel
