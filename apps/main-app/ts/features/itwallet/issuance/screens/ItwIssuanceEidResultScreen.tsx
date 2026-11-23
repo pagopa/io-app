@@ -413,9 +413,7 @@ const ItwIssuanceEidReissuanceResultContent = () => {
       }}
       pictogram="success"
       subtitle={I18n.t(
-        isL3
-          ? "features.itWallet.issuance.eidResult.success.reissuance.subtitleL3"
-          : "features.itWallet.issuance.eidResult.success.reissuance.subtitle"
+        "features.itWallet.issuance.eidResult.success.reissuance.subtitle"
       )}
       title={I18n.t(
         "features.itWallet.issuance.eidResult.success.reissuance.title"

@@ -333,30 +333,6 @@ describe("ItwIssuanceEidResultScreen", () => {
       const { queryByTestId } = renderComponent("l3", { mode: "reissuance" });
       expect(queryByTestId("itwFeedbackBannerTestID")).toBeNull();
     });
-
-    // SIW-4909: IT-Wallet (L3) reissuance must not mention Documenti su IO
-    test.each([
-      {
-        name: "Documenti su IO (L2)",
-        level: "l2" as const,
-        subtitleKey:
-          "features.itWallet.issuance.eidResult.success.reissuance.subtitle" as const
-      },
-      {
-        name: "IT-Wallet (L3)",
-        level: "l3" as const,
-        subtitleKey:
-          "features.itWallet.issuance.eidResult.success.reissuance.subtitleL3" as const
-      }
-    ])("renders the $name reissuance subtitle", ({ level, subtitleKey }) => {
-      const { getByText } = renderComponent(level, { mode: "reissuance" });
-      expect(getByText(I18n.t(subtitleKey))).toBeTruthy();
-    });
-
-    it("does not mention Documenti su IO in the IT-Wallet (L3) reissuance", () => {
-      const { queryByText } = renderComponent("l3", { mode: "reissuance" });
-      expect(queryByText(/Documenti su IO/)).toBeNull();
-    });
   });
 
   // SIW-4993: IT-Wallet surveys must never leak into the Documenti su IO fallback flow

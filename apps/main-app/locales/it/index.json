@@ -1623,7 +1623,6 @@
             "reissuance": {
               "primaryAction": "Ok, chiudi",
               "subtitle": "Ora puoi continuare a usare Documenti su IO.",
-              "subtitleL3": "Ora puoi continuare a usare IT-Wallet.",
               "title": "Hai verificato la tua identità"
             },
             "secondaryAction": "Continua più tardi",
