@@ -12,8 +12,6 @@ export const emailAcknowledged = createStandardAction("EMAIL_ACKNOWLEDGED")();
 
 export const abortOnboarding = createStandardAction("ABORT_ONBOARDING")();
 
-export const emailInsert = createStandardAction("EMAIL_INSERT")();
-
 export const servicesOptinCompleted = createStandardAction(
   "SERVICES_OPTIN_COMPLETED"
 )();
@@ -26,7 +24,6 @@ type OnboardingActionTypes =
   | typeof abortOnboarding
   | typeof completeOnboarding
   | typeof emailAcknowledged
-  | typeof emailInsert
   | typeof fingerprintAcknowledged
   | typeof servicesOptinCompleted
   | typeof tosAccepted;
