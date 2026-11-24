@@ -1,8 +1,4 @@
-import {
-  IOColorsLegacy,
-  makeFontStyleObject,
-  useIOTheme
-} from "@io-app/design-system";
+import { makeFontStyleObject } from "@io-app/design-system";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import I18n from "i18next";
 
@@ -15,10 +11,12 @@ import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { ServicesHomeScreen } from "../features/services/home/screens/ServicesHomeScreen";
 import { WalletHomeScreen } from "../features/wallet/screens/WalletHomeScreen";
 import { useBottomTabNavigatorStyle } from "../hooks/useBottomTabNavigatorStyle";
+import { useFeatureColors } from "../hooks/useFeatureColors";
 import { useIOSelector } from "../store/hooks";
 import { fontPreferenceSelector } from "../store/reducers/persistedPreferences";
 import { isStartupLoaded, StartupStatusEnum } from "../store/reducers/startup";
 import { getListItemAccessibilityLabelCount } from "../utils/accessibility";
+import { navigationColors } from "./colors";
 import { useIONavigation } from "./params/AppParamsList";
 import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";
@@ -31,7 +29,7 @@ const getTabAccessibilityLabel = (label: string, index: number) =>
   `${label}${getListItemAccessibilityLabelCount(MAIN_TAB_COUNT, index)}`;
 
 export const MainTabNavigator = () => {
-  const theme = useIOTheme();
+  const { tabBar } = useFeatureColors(navigationColors);
   const navigation = useIONavigation();
 
   const startupLoaded = useIOSelector(isStartupLoaded);
@@ -65,9 +63,8 @@ export const MainTabNavigator = () => {
           ),
           tabBarHideOnKeyboard: true,
           tabBarAllowFontScaling: false,
-          tabBarActiveTintColor:
-            IOColorsLegacy[theme["interactiveElem-default"]],
-          tabBarInactiveTintColor: IOColorsLegacy[theme["textBody-tertiary"]],
+          tabBarActiveTintColor: tabBar.foreground.active,
+          tabBarInactiveTintColor: tabBar.foreground.inactive,
           tabBarStyle
         }}
       >

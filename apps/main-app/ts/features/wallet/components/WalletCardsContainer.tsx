@@ -7,14 +7,14 @@ import { shallowEqual } from "react-redux";
 
 import { useDebugInfo } from "../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../store/hooks";
-import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
+import { DocSuIODiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/DocSuIODiscoveryBannerStandalone";
+import { DocSuIOEngagementBanner } from "../../itwallet/common/components/DocSuIOEngagementBanner";
 import ItwActivationSuccessFeedbackBanner from "../../itwallet/common/components/ItwActivationSuccessFeedbackBanner";
 import { ItwEnvironmentAlert } from "../../itwallet/common/components/ItwEnvironmentAlert";
-import { ItwL2EngagementBanner } from "../../itwallet/common/components/ItwL2EngagementBanner";
 import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
 import {
-  itwShouldRenderL2EngagementBannerForInactiveWalletSelector,
-  itwShouldRenderWalletDiscoveryBannerSelector
+  itwShouldRenderWalletDiscoveryBannerSelector,
+  shouldRenderDocSuIOEngagementBannerForInactiveWalletSelector
 } from "../../itwallet/common/store/selectors";
 import { itwIsActivationSuccessFeedbackBannerVisibleSelector } from "../../itwallet/common/store/selectors/banners";
 import { itwWalletActivationFeedbackBannerDataSelector } from "../../itwallet/common/store/selectors/preferences";
@@ -55,8 +55,8 @@ const WalletCardsContainer = () => {
   const shouldRenderItwDiscoveryBanner = useIOSelector(
     itwShouldRenderWalletDiscoveryBannerSelector
   );
-  const shouldRenderL2EngagementBanner = useIOSelector(
-    itwShouldRenderL2EngagementBannerForInactiveWalletSelector
+  const shouldRenderDocSuIOEngagementBanner = useIOSelector(
+    shouldRenderDocSuIOEngagementBannerForInactiveWalletSelector
   );
   const isActivationSuccessFeedbackBannerVisible = useIOSelector(
     itwIsActivationSuccessFeedbackBannerVisibleSelector
@@ -77,7 +77,7 @@ const WalletCardsContainer = () => {
     }
     return (
       <>
-        {shouldRenderL2EngagementBanner && <ItwL2EngagementBanner />}
+        {shouldRenderDocSuIOEngagementBanner && <DocSuIOEngagementBanner />}
         {shouldRenderItwDiscoveryBanner && (
           <ItwDiscoveryBanner style={{ marginVertical: 8 }} />
         )}
@@ -100,7 +100,7 @@ const WalletCardsContainer = () => {
     shouldRenderEmptyState,
     shouldRenderItwCardsContainer,
     shouldRenderItwDiscoveryBanner,
-    shouldRenderL2EngagementBanner,
+    shouldRenderDocSuIOEngagementBanner,
     isActivationSuccessFeedbackBannerVisible,
     activationSuccessFeedbackBannerData
   ]);
@@ -109,7 +109,7 @@ const WalletCardsContainer = () => {
     <Animated.View layout={CONTAINER_LAYOUT} style={styles.container}>
       <ItwEnvironmentAlert />
       <ItwWalletNotAvailableBanner />
-      <ItwDiscoveryBannerStandalone />
+      <DocSuIODiscoveryBannerStandalone />
 
       {walletContent}
     </Animated.View>

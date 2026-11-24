@@ -1,4 +1,4 @@
-import { ComponentProps, memo, useRef, useState } from "react";
+import { ComponentProps, memo, useState } from "react";
 import { Image, ImageSourcePropType, StyleSheet, View } from "react-native";
 import { SvgCssUri } from "react-native-svg/css";
 
@@ -45,16 +45,28 @@ const styles = StyleSheet.create({
  */
 export const Avatar = ({ logoUri, size }: Avatar) => {
   const avatarColors = useIOColors().component.avatar;
-  const indexValue = useRef<number>(0);
+  const [imageIndex, setImageIndex] = useState(0);
 
   const [imageSource, setImageSource] = useState(
     logoUri === undefined ? undefined : addCacheTimestampToUri(logoUri)
   );
+  const logoKey = JSON.stringify(logoUri);
+  const [prevLogoKey, setPrevLogoKey] = useState(logoKey);
+
+  // A recycled list cell receives a different logo: restart from its first
+  // source instead of keeping the previous logo or its fallback
+  if (logoKey !== prevLogoKey) {
+    setPrevLogoKey(logoKey);
+    setImageIndex(0);
+    setImageSource(
+      logoUri === undefined ? undefined : addCacheTimestampToUri(logoUri)
+    );
+  }
 
   const onError = () => {
-    if (Array.isArray(logoUri) && indexValue.current + 1 < logoUri.length) {
-      indexValue.current = indexValue.current + 1;
-      setImageSource(addCacheTimestampToUri(logoUri[indexValue.current]));
+    if (Array.isArray(logoUri) && imageIndex + 1 < logoUri.length) {
+      setImageIndex(imageIndex + 1);
+      setImageSource(addCacheTimestampToUri(logoUri[imageIndex + 1]));
       return;
     }
     setImageSource(undefined);
@@ -102,6 +114,7 @@ export const Avatar = ({ logoUri, size }: Avatar) => {
             onError={onError}
             source={imageSource}
             style={styles.avatarImage}
+            testID="avatar_image"
           />
         </View>
       )}

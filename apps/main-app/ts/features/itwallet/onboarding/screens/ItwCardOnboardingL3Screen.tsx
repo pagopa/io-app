@@ -11,7 +11,7 @@ import {
   ModuleCredential,
   TabItem,
   TabNavigation,
-  useIOTheme,
+  useIOColors,
   VStack
 } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
@@ -134,7 +134,7 @@ const ItwCardOnboardingL3Screen = ({ route }: Props) => {
 };
 
 const ItwCredentialOnboardingSection = () => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const navigation = useItwNavigation();
 
   const env = useIOSelector(selectItwEnv);
@@ -192,7 +192,7 @@ const ItwCredentialOnboardingSection = () => {
   return (
     <View>
       <View style={styles.header}>
-        <H6 color={theme["textBody-tertiary"]} role="heading">
+        <H6 color={colors.text.content.tertiary} role="heading">
           {I18n.t("features.wallet.onboarding.sections.itw")}
         </H6>
         {!shouldShowL2Credentials && <PoweredByItWalletText />}

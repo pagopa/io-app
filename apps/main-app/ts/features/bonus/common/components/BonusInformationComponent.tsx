@@ -6,6 +6,8 @@ import {
   H2,
   IOButtonBlockSpecificProps,
   IOMarkdown,
+  IOTokenColor,
+  useIOColors,
   useIOThemeContext,
   VSpacer
 } from "@io-app/design-system";
@@ -51,7 +53,8 @@ const getTosFooter = (
   maybeBonusTos: O.Option<string>,
   maybeRegulationUrl: O.Option<{ name: string; url: string }>,
   handleModalPress: (tos: string) => void,
-  ctaText: string
+  ctaText: string,
+  adviceColor: IOTokenColor
 ) =>
   pipe(
     maybeBonusTos,
@@ -65,7 +68,7 @@ const getTosFooter = (
               // if tos is defined and the regolation url is not defined
               // return the link (BONUS VACANZE)
               <>
-                <Body color="grey-850">
+                <Body color={adviceColor}>
                   {I18n.t("bonus.bonusVacanze.advice")}
                 </Body>
                 <Body
@@ -103,6 +106,7 @@ const imageHeight = 270;
  */
 const BonusInformationComponent = ({ ref, ...props }: Props) => {
   const { showModal, hideModal } = useContext(LightModalContext);
+  const colors = useIOColors();
   const bonusType = props.bonus;
   const { imageStyle: imageProps } = props;
   const bonusTypeLocalizedContent: BonusAvailableContent =
@@ -221,7 +225,8 @@ const BonusInformationComponent = ({ ref, ...props }: Props) => {
           maybeBonusTos,
           maybeRegulationUrl,
           handleModalPress,
-          props.primaryCtaText
+          props.primaryCtaText,
+          colors.text.content.secondary
         )}
       </ContentWrapper>
     </IOScrollView>
