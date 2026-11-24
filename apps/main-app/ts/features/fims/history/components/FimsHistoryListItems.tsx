@@ -7,7 +7,7 @@ import {
   HSpacer,
   Icon,
   IOListItemStyles,
-  useIOTheme,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import I18n from "i18next";
@@ -32,14 +32,14 @@ export const FimsHistorySuccessListItem = ({
   serviceData,
   consent
 }: FimsHistorySuccessListItemProps) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <View style={defaultListItemStyles}>
       <View style={{ flexDirection: "row" }}>
         <Icon name="calendar" size={16} />
         <HSpacer size={4} />
-        <Caption color={theme["textBody-tertiary"]}>
+        <Caption color={colors.text.content.tertiary}>
           {dateToAccessibilityReadableFormat(
             consent.timestamp,
             // eslint-disable-next-line i18next/no-literal-string -- date format token, not user-facing copy
@@ -51,8 +51,7 @@ export const FimsHistorySuccessListItem = ({
       <VSpacer size={8} />
 
       <H6>{serviceData.organization.name}</H6>
-      {/* TODO: Dark mode: Replace with theme values */}
-      <BodySmall color="grey-700" weight="Regular">
+      <BodySmall color={colors.text.content.tertiary} weight="Regular">
         {consent.redirect?.display_name}
       </BodySmall>
     </View>
@@ -62,7 +61,7 @@ export const FimsHistorySuccessListItem = ({
 export const FimsHistoryFailureListItem = ({
   item
 }: FimsHistoryBaseListItemProps) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <View
@@ -86,22 +85,20 @@ export const FimsHistoryFailureListItem = ({
             flexDirection: "row"
           }}
         >
-          <Icon color="grey-300" name="calendar" size={16} />
+          <Icon color={colors.icon.decorative} name="calendar" size={16} />
           <HSpacer size={4} />
-          <Caption color={theme["textBody-tertiary"]}>
+          <Caption color={colors.text.content.tertiary}>
             {}
             {/* eslint-disable-next-line i18next/no-literal-string -- date format token, not user-facing copy */}
             {dateToAccessibilityReadableFormat(item.timestamp, "DD,MM,YYYY")}
           </Caption>
         </View>
         <VSpacer size={4} />
-        {/* TODO: Dark mode: Replace with theme values */}
-        <BodySmall color="error-600" weight="Semibold">
+        <BodySmall color={colors.foreground.error} weight="Semibold">
           {I18n.t("FIMS.history.errorStates.dataUnavailable")}
         </BodySmall>
       </View>
-      {/* TODO: Dark mode: Replace with theme values */}
-      <Icon color="error-600" name="errorFilled" />
+      <Icon color={colors.foreground.error} name="errorFilled" />
     </View>
   );
 };

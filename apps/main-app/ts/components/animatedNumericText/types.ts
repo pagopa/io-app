@@ -1,4 +1,4 @@
-import { IOFontSize, IOTextProps } from "@io-app/design-system";
+import { IOFontSize, IOTextProps, IOTokenColor } from "@io-app/design-system";
 
 export type AnimatedNumericTextProps = InheritedTextProps & {
   /**
@@ -25,13 +25,15 @@ export type AnimatedNumericTextProps = InheritedTextProps & {
  */
 type InheritedTextProps = Pick<
   IOTextProps,
-  "allowFontScaling" | "color" | "maxFontSizeMultiplier" | "weight"
+  "allowFontScaling" | "maxFontSizeMultiplier" | "weight"
 > & {
   /**
    * Spoken description of the value. The animated iOS implementation renders
    * outside the React Native text tree, so it cannot be derived automatically.
    */
   accessibilityLabel: NonNullable<IOTextProps["accessibilityLabel"]>;
+  /** A token, as SwiftUI takes the color value itself */
+  color?: IOTokenColor;
   /**
    * Restricted to the sizes of the design system, unlike `IOText`, since the
    * value is always rendered on its own.

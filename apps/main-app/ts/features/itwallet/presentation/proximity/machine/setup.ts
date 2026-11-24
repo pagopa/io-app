@@ -14,6 +14,8 @@ import {
   navigateToSuccessScreenAction,
   onInitAction,
   storeConsentAction,
+  trackBluetoothAccessCloseAction,
+  trackBluetoothActivationCloseAction,
   trackProximityStartAction,
   trackProximitySuccessAction,
   trackQrCodeLoadingFailureAction
@@ -25,7 +27,8 @@ import {
   proximityCommunicationLogicActor,
   sendDocumentsActor,
   startEngagementActor,
-  terminateSessionActor
+  terminateSessionActor,
+  verifyBluetoothPermissionsActor
 } from "./actors";
 import { Context } from "./context";
 import { ProximityEvents } from "./events";
@@ -76,6 +79,8 @@ export const itwProximityMachineSetup = setup({
 
     /** Analytics */
 
+    trackBluetoothAccessClose: trackBluetoothAccessCloseAction,
+    trackBluetoothActivationClose: trackBluetoothActivationCloseAction,
     trackProximityStart: trackProximityStartAction,
     trackProximitySuccess: trackProximitySuccessAction,
     trackQrCodeLoadingFailure: trackQrCodeLoadingFailureAction
@@ -83,6 +88,7 @@ export const itwProximityMachineSetup = setup({
   actors: {
     checkBluetoothPermissions: checkBluetoothPermissionsActor,
     checkBluetoothActivation: checkBluetoothActivationActor,
+    verifyBluetoothPermissions: verifyBluetoothPermissionsActor,
     checkNfcActivation: checkNfcActivationActor,
     proximityCommunicationLogic: proximityCommunicationLogicActor,
     startEngagement: startEngagementActor,

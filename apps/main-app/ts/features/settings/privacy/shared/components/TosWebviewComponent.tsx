@@ -1,8 +1,7 @@
 import {
   FooterActions,
-  IOColorsLegacy,
   useFooterActionsMeasurements,
-  useIOTheme
+  useIOColors
 } from "@io-app/design-system";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
@@ -48,7 +47,7 @@ const TosWebviewComponent: FunctionComponent<Props> = ({
   const { footerActionsMeasurements, handleFooterActionsMeasurements } =
     useFooterActionsMeasurements();
 
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   const handleError = useCallback(() => {
     handleLoadEnd();
@@ -102,7 +101,7 @@ const TosWebviewComponent: FunctionComponent<Props> = ({
           source={webViewSource}
           style={{
             flex: 1,
-            backgroundColor: IOColorsLegacy[theme["appBackground-primary"]]
+            backgroundColor: colors.background.default
           }}
           textZoom={100}
         />

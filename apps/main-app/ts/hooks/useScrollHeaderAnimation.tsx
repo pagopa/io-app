@@ -1,8 +1,7 @@
 import {
   HeaderSecondLevel,
-  hexToRgba,
-  IOColorsLegacy,
-  useIOTheme
+  useIOColors,
+  withAlpha
 } from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
 import { ComponentProps, useLayoutEffect, useMemo } from "react";
@@ -38,12 +37,10 @@ export const useScrollHeaderAnimation = ({
 }: ScrollAnimationHookProps) => {
   const scrollPositionAbsolute = useSharedValue(0);
   const scrollPositionPercentage = useSharedValue(0);
-  const theme = useIOTheme();
   const { isAlertVisible } = useIOAlertVisible();
   const navigation = useNavigation();
 
-  const HEADER_BG_COLOR: ColorValue =
-    IOColorsLegacy[theme["appBackground-primary"]];
+  const HEADER_BG_COLOR: ColorValue = useIOColors().background.default;
 
   const handleScroll = useAnimatedScrollHandler(
     ({ contentOffset, layoutMeasurement, contentSize }) => {
@@ -70,7 +67,7 @@ export const useScrollHeaderAnimation = ({
     () =>
       easeGradient({
         colorStops: {
-          0: { color: hexToRgba(HEADER_BG_COLOR, 0) },
+          0: { color: withAlpha(HEADER_BG_COLOR, 0) },
           1: { color: HEADER_BG_COLOR }
         },
         easing: Easing.ease,

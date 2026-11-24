@@ -1,4 +1,4 @@
-import { BiometricsValidType, Body } from "@io-app/design-system";
+import { BiometricsValidType, Body, useIOColors } from "@io-app/design-system";
 import { TxtParagraphNode } from "@textlint/ast-node-types";
 import I18n from "i18next";
 import { BackHandler, Platform, View } from "react-native";
@@ -48,6 +48,7 @@ export const IdentificationInstructionsComponent = (props: {
   isBimoetricIdentificatoinFailed: boolean;
 }) => {
   const { biometricType, isBimoetricIdentificatoinFailed } = props;
+  const colors = useIOColors();
   const a11yInstruction = getAccessibiliyIdentificationInstructions(
     biometricType,
     isBimoetricIdentificatoinFailed
@@ -57,7 +58,7 @@ export const IdentificationInstructionsComponent = (props: {
     Paragraph(paragraph: TxtParagraphNode, render: Renderer) {
       return (
         <Body
-          color="white"
+          color={colors.foreground.onAccent.default}
           key={getTxtNodeKey(paragraph)}
           style={{ textAlign: "center" }}
         >

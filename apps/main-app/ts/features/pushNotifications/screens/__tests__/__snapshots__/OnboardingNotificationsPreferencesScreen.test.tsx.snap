@@ -661,7 +661,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
-                                  color="#555C70"
+                                  color="#636B82"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -2408,7 +2408,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
-                                  color="#555C70"
+                                  color="#636B82"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -4156,7 +4156,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
-                                  color="#555C70"
+                                  color="#636B82"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -5904,7 +5904,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
-                                  color="#555C70"
+                                  color="#636B82"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -7652,7 +7652,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
-                                  color="#555C70"
+                                  color="#636B82"
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"

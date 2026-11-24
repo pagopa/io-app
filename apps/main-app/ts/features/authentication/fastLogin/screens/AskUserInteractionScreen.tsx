@@ -1,4 +1,4 @@
-import { IOColorsLegacy, useIOTheme } from "@io-app/design-system";
+import { useIOColors } from "@io-app/design-system";
 import { Modal } from "react-native";
 
 import {
@@ -10,10 +10,10 @@ import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBa
 const AskUserInteractionScreen = (props: OperationResultScreenContentProps) => {
   useAvoidHardwareBackButton();
 
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
-    <Modal backdropColor={IOColorsLegacy[theme["appBackground-primary"]]}>
+    <Modal backdropColor={colors.background.default}>
       <OperationResultScreenContent {...props} />
     </Modal>
   );

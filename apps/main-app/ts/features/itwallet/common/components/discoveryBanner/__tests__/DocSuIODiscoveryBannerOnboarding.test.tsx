@@ -7,13 +7,13 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/
 import { ITW_ROUTES } from "../../../../navigation/routes";
 import * as useItwDiscoveryBannerTypeModule from "../../../hooks/useItwDiscoveryBannerType.ts";
 import * as selectors from "../../../store/selectors";
-import { ItwDiscoveryBannerOnboarding } from "../ItwDiscoveryBannerOnboarding";
+import { DocSuIODiscoveryBannerOnboarding } from "../DocSuIODiscoveryBannerOnboarding";
 
 jest.mock("../../../hooks/useItwDiscoveryBannerType.ts", () => ({
   useItwDiscoveryBannerType: jest.fn()
 }));
 
-describe("ItwDiscoveryBannerOnboarding", () => {
+describe("DocSuIODiscoveryBannerOnboarding", () => {
   beforeEach(() => {
     jest
       .spyOn(useItwDiscoveryBannerTypeModule, "useItwDiscoveryBannerType")
@@ -28,7 +28,7 @@ describe("ItwDiscoveryBannerOnboarding", () => {
     "should match snapshot when isItwDiscoveryBannerRenderable is %p",
     isItwDiscoveryBannerRenderable => {
       jest
-        .spyOn(selectors, "isItwDiscoveryBannerRenderableSelector")
+        .spyOn(selectors, "isDocSuIODiscoveryBannerRenderableSelector")
         .mockImplementation(() => isItwDiscoveryBannerRenderable);
 
       const { component } = renderComponent();
@@ -38,7 +38,7 @@ describe("ItwDiscoveryBannerOnboarding", () => {
 
   it("should match snapshot with 'onboarding' banner type", () => {
     jest
-      .spyOn(selectors, "isItwDiscoveryBannerRenderableSelector")
+      .spyOn(selectors, "isDocSuIODiscoveryBannerRenderableSelector")
       .mockImplementation(() => true);
     jest
       .spyOn(useItwDiscoveryBannerTypeModule, "useItwDiscoveryBannerType")
@@ -49,7 +49,7 @@ describe("ItwDiscoveryBannerOnboarding", () => {
 
   it("should match snapshot with 'reactivating' banner type", () => {
     jest
-      .spyOn(selectors, "isItwDiscoveryBannerRenderableSelector")
+      .spyOn(selectors, "isDocSuIODiscoveryBannerRenderableSelector")
       .mockImplementation(() => true);
     jest
       .spyOn(useItwDiscoveryBannerTypeModule, "useItwDiscoveryBannerType")
@@ -60,7 +60,7 @@ describe("ItwDiscoveryBannerOnboarding", () => {
 
   it("should not render banner content when banner type is undefined", () => {
     jest
-      .spyOn(selectors, "isItwDiscoveryBannerRenderableSelector")
+      .spyOn(selectors, "isDocSuIODiscoveryBannerRenderableSelector")
       .mockImplementation(() => true);
     jest
       .spyOn(useItwDiscoveryBannerTypeModule, "useItwDiscoveryBannerType")
@@ -83,7 +83,7 @@ const renderComponent = () => {
 
   return {
     component: renderScreenWithNavigationStoreContext<GlobalState>(
-      ItwDiscoveryBannerOnboarding,
+      DocSuIODiscoveryBannerOnboarding,
       ITW_ROUTES.L3_ONBOARDING,
       {},
       store

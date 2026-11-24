@@ -486,6 +486,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                                           "width": "100%",
                                         }
                                       }
+                                      testID="avatar_image"
                                     />
                                   </View>
                                 </View>
@@ -1026,6 +1027,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                                           "width": "100%",
                                         }
                                       }
+                                      testID="avatar_image"
                                     />
                                   </View>
                                 </View>

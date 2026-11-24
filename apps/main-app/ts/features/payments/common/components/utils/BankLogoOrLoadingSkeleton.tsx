@@ -1,4 +1,4 @@
-import { IOColorsLegacy, IOSkeleton } from "@io-app/design-system";
+import { IOSkeleton } from "@io-app/design-system";
 import { useEffect, useState } from "react";
 import { Image } from "react-native";
 
@@ -8,7 +8,6 @@ type BankLogoOrSkeletonProps = {
   abiCode?: string;
   dimensions: { height: number; width: number };
   imageA11yLabel?: string;
-  placeHolderColor?: IOColorsLegacy;
 };
 
 /**
@@ -17,12 +16,10 @@ type BankLogoOrSkeletonProps = {
  *
  * @param abiCode
  * @param dimensions - Height and width of the image and placeholder
- * @param placeHolderColor - Color of the placeholder
  */
 export const BankLogoOrSkeleton = ({
   abiCode,
   dimensions,
-  placeHolderColor = "grey-200",
   imageA11yLabel
 }: BankLogoOrSkeletonProps) => {
   const [imageUrl, setImageUrl] = useState<string | undefined>(undefined);
@@ -61,13 +58,7 @@ export const BankLogoOrSkeleton = ({
       }}
     />
   ) : (
-    <IOSkeleton
-      color={IOColorsLegacy[placeHolderColor]}
-      height={height}
-      radius={8}
-      shape="rectangle"
-      width={width}
-    />
+    <IOSkeleton height={height} radius={8} shape="rectangle" width={width} />
   );
 };
 async function fetchBlob(url: string) {
