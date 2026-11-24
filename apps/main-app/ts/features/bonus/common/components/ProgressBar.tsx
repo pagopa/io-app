@@ -1,4 +1,4 @@
-import { IOColorsLegacy, useIOTheme } from "@io-app/design-system";
+import { useIOColors } from "@io-app/design-system";
 import { FunctionComponent } from "react";
 import { DimensionValue, StyleSheet, View } from "react-native";
 
@@ -28,13 +28,13 @@ const calculateStylePercentage = (
  * @param props
  */
 export const ProgressBar: FunctionComponent<Props> = props => {
-  const theme = useIOTheme();
-  const backgroundColor = IOColorsLegacy[theme["interactiveElem-default"]];
+  const colors = useIOColors();
+  const backgroundColor = colors.foreground.accent;
 
   return (
     <View
       style={{
-        backgroundColor: IOColorsLegacy[theme["appBackground-tertiary"]],
+        backgroundColor: colors.surface.tertiary,
         height: 4
       }}
     >

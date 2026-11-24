@@ -3,9 +3,8 @@ import {
   Avatar,
   Body,
   BodySmall,
-  IOColorsLegacy,
   IODimensionScale,
-  useIOTheme
+  useIOColors
 } from "@io-app/design-system";
 import I18n from "i18next";
 import { useCallback } from "react";
@@ -49,7 +48,7 @@ export const OrganizationHeader = ({
   thirdPartySenderDenomination,
   canNavigateToServiceDetails = true
 }: OrganizationHeaderProps) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   const navigation = useIONavigation();
   const paymentData = useIOSelector(state =>
@@ -70,7 +69,7 @@ export const OrganizationHeader = ({
   const OrganizationNameComponent = () =>
     thirdPartySenderDenomination ? (
       <BodySmall
-        color={theme["textBody-default"]}
+        color={colors.text.content.default}
         testID="org-name-aar"
         weight="Regular"
       >
@@ -89,10 +88,7 @@ export const OrganizationHeader = ({
 
   return (
     <View
-      style={[
-        styles.item,
-        { borderColor: IOColorsLegacy[theme["divider-default"]] }
-      ]}
+      style={[styles.item, { borderColor: colors.stroke.divider }]}
       testID="organization-header"
     >
       <View style={{ flex: 1 }}>
