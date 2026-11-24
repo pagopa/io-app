@@ -13,7 +13,9 @@ import { StyleSheet, Text, View } from "react-native";
 
 import ItwAvatar from "../../../../../../img/features/itWallet/brand/itw_avatar.svg";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar.tsx";
+import { useFeatureColors } from "../../../../../hooks/useFeatureColors";
 import { useIOSelector } from "../../../../../store/hooks.ts";
+import { itwColors } from "../../../colors";
 import { useCredentialCardConfig } from "../../../common/components/ItwCredentialCard/config.ts";
 import { ItwCredentialDetailCard } from "../../../common/components/ItwCredentialDetailCard.tsx";
 import { useItwAuthSourceName } from "../../../common/hooks/useItwAuthSourceName.ts";
@@ -80,6 +82,8 @@ const ItwPresentationDetailsHeader = ({
   const credentialName = useItwCredentialName(credential.credentialType);
 
   const isLight = useMemo(() => Color(color).isLight(), [color]);
+  const { foreground } = useFeatureColors(itwColors).detailsHeader;
+  const textColor = isLight ? foreground.onLight : foreground.onDark;
 
   return (
     <>
@@ -93,17 +97,11 @@ const ItwPresentationDetailsHeader = ({
         credentialType={credential.credentialType}
       >
         <ItwAvatar height={48} width={48} />
-        <H2
-          color={isLight ? "blueItalia-850" : "white"}
-          style={styles.nameText}
-        >
+        <H2 color={textColor} style={styles.nameText}>
           {credentialName}
         </H2>
         {authSourceName && (
-          <Body
-            color={isLight ? "blueItalia-850" : "white"}
-            style={styles.authSourceText}
-          >
+          <Body color={textColor} style={styles.authSourceText}>
             {authSourceName}
           </Body>
         )}

@@ -76,7 +76,10 @@ export const cgnColors = (s: IOColorTheme, mode: IOColorMode) => {
     },
     merchantCard: {
       border: IOColorPalette.hanPurple[100],
-      newsBadge: IOColorPalette.hanPurple[100]
+      newsBadge: {
+        background: IOColorPalette.hanPurple[100],
+        text: IOColorPalette.hanPurple[500]
+      }
     },
     category: {
       iconBackground: withAlpha(IOColorPalette.greyscale.white, 0.2),

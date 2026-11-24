@@ -59,6 +59,10 @@ export const itwColors = (s: IOColorTheme, mode: IOColorMode) => {
       fadedOverlay: withAlpha(white, 0.7),
       shadow: withAlpha(black, 0.1)
     },
+    /** Name and issuer over the credential color, in the details header */
+    detailsHeader: {
+      foreground: { onLight: IOColorPalette.blueItalia[850], onDark: white }
+    },
     /** Card with the claims of a credential */
     claimsCard: {
       background: s.background.default,
