@@ -93,7 +93,7 @@ describe("OnboardingNotificationsInfoScreenConsent", () => {
       }));
     const screen = renderScreen();
     expect(screen).not.toBeNull();
-    appStateSpy.mock.calls[0][1]("active");
+    appStateSpy.mock.calls.forEach(([, listener]) => listener("active"));
 
     await waitFor(() => {
       expect(checkNotificationPermissions).toHaveBeenCalledTimes(1);
@@ -118,7 +118,7 @@ describe("OnboardingNotificationsInfoScreenConsent", () => {
     const screen = renderScreen();
     expect(screen).not.toBeNull();
 
-    appStateSpy.mock.calls[0][1]("active");
+    appStateSpy.mock.calls.forEach(([, listener]) => listener("active"));
 
     await waitFor(() => {
       expect(checkNotificationPermissions).toHaveBeenCalledTimes(1);

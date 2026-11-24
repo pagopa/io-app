@@ -1,11 +1,10 @@
 import {
   ContentWrapper,
   IconButton,
-  IOColorsLegacy,
   IODimensions,
   IOSpringValues,
   triggerHaptic,
-  useIOThemeContext
+  useIOColors
 } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { memo, ReactNode, RefObject, useCallback, useMemo } from "react";
@@ -116,7 +115,8 @@ const ListItemSwipeAction = ({
   const startX = useSharedValue(0);
   const hapticTriggered = useSharedValue(false);
   const swipeStartHandled = useSharedValue(false);
-  const { theme } = useIOThemeContext();
+  const colors = useIOColors();
+  const actionBackgroundColor = colors.surface.action.danger.default;
   const { width } = useWindowDimensions();
 
   const maxSwipeDistance = width * 0.9;
@@ -141,7 +141,7 @@ const ListItemSwipeAction = ({
 
   const backgroundStyle = useAnimatedStyle(() => ({
     backgroundColor:
-      translateX.value < 0 ? IOColorsLegacy["error-600"] : "transparent"
+      translateX.value < 0 ? actionBackgroundColor : "transparent"
   }));
 
   const animatedStyle = useAnimatedStyle(() => ({
@@ -224,10 +224,10 @@ const ListItemSwipeAction = ({
   const swipeableContentStyle = useMemo(
     () => ({
       flex: 1,
-      backgroundColor: IOColorsLegacy[theme["appBackground-primary"]],
+      backgroundColor: colors.background.default,
       marginHorizontal: IODimensions.padding.screen.default * -1
     }),
-    [theme]
+    [colors]
   );
 
   const handleRightActionPressed = useCallback(() => {

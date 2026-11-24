@@ -4,14 +4,15 @@ import {
   Body,
   ContentWrapper,
   H6,
-  IOColorsLegacy,
   ListItemNav
 } from "@io-app/design-system";
 import I18n from "i18next";
-import { Keyboard, StyleSheet, Text, View } from "react-native";
+import { ColorValue, Keyboard, StyleSheet, Text, View } from "react-native";
 
+import { useFeatureColors } from "../../../../../hooks/useFeatureColors";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { highlightSearchText } from "../../../../../utils/highlightSearchText";
+import { cgnColors } from "../../colors";
 import CGN_ROUTES from "../../navigation/routes";
 
 const TEXT_LEGNTH_WITH_BADGE = 60;
@@ -21,9 +22,6 @@ const styles = StyleSheet.create({
   listItemTextContainer: {
     flexGrow: 1,
     flexShrink: 1
-  },
-  highlightYes: {
-    backgroundColor: IOColorsLegacy["turquoise-150"]
   }
 });
 
@@ -35,6 +33,7 @@ export function MerchantSearchResultListItem({
   searchText: string;
 }) {
   const navigation = useIONavigation();
+  const { merchantSearch } = useFeatureColors(cgnColors);
   return (
     <ContentWrapper>
       <ListItemNav
@@ -44,11 +43,18 @@ export function MerchantSearchResultListItem({
             style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
             <View style={styles.listItemTextContainer}>
-              <H6>{highlightText({ text: item.name, searchText })}</H6>
+              <H6>
+                {highlightText({
+                  text: item.name,
+                  searchText,
+                  highlightColor: merchantSearch.highlight
+                })}
+              </H6>
               <Body ellipsizeMode="tail" numberOfLines={2}>
                 {highlightText({
                   text: item.description,
                   searchText,
+                  highlightColor: merchantSearch.highlight,
                   estimatedTextLengthToDisplay: item.newDiscounts
                     ? TEXT_LEGNTH_WITH_BADGE
                     : TEXT_LEGNTH_WITHOUT_BADGE
@@ -88,9 +94,11 @@ export function MerchantSearchResultListItem({
 function highlightText({
   searchText,
   text,
-  estimatedTextLengthToDisplay
+  estimatedTextLengthToDisplay,
+  highlightColor
 }: {
   estimatedTextLengthToDisplay?: number;
+  highlightColor: ColorValue;
   searchText: string;
   text: string;
 }) {
@@ -102,7 +110,9 @@ function highlightText({
   return chunks.map((chunk, index) => (
     <Text
       key={index}
-      style={chunk.highlighted ? styles.highlightYes : undefined}
+      style={
+        chunk.highlighted ? { backgroundColor: highlightColor } : undefined
+      }
     >
       {chunk.text}
     </Text>

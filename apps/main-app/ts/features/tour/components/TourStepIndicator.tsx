@@ -1,9 +1,7 @@
+import { useIOColors } from "@io-app/design-system";
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
-
-import { useFeatureColors } from "../../../hooks/useFeatureColors";
-import { tourColors } from "../colors";
 
 const DOT_SIZE = 8;
 const ACTIVE_WIDTH = 16;
@@ -18,8 +16,7 @@ type Props = {
 };
 
 export const TourStepIndicator = ({ stepIndex, totalSteps }: Props) => {
-  const { active: activeColor, inactive: defaultColor } =
-    useFeatureColors(tourColors).stepIndicator;
+  const colors = useIOColors();
 
   return (
     <View
@@ -40,9 +37,11 @@ export const TourStepIndicator = ({ stepIndex, totalSteps }: Props) => {
               {
                 width: isActive ? ACTIVE_WIDTH : DOT_SIZE,
                 height: isActive ? ACTIVE_HEIGHT : DOT_SIZE,
-                backgroundColor: isActive ? activeColor : TRANSPARENT,
+                backgroundColor: isActive
+                  ? colors.foreground.accent
+                  : TRANSPARENT,
                 borderWidth: isActive ? 0 : 1,
-                borderColor: isActive ? TRANSPARENT : defaultColor,
+                borderColor: isActive ? TRANSPARENT : colors.stroke.inactive,
                 transitionProperty: ["width", "height", "backgroundColor"],
                 transitionDuration: TRANSITION_DURATION
               }

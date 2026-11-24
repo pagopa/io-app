@@ -1,4 +1,4 @@
-import { IOColorsLegacy, IOText } from "@io-app/design-system";
+import { IOColorPalette, IOText } from "@io-app/design-system";
 import * as Clipboard from "expo-clipboard";
 import { Alert, Platform, Share, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -62,7 +62,7 @@ export function CieResultScreen({ route }: Props) {
       >
         <View pointerEvents="box-only" style={styles.content}>
           <IOText
-            color={"grey-700"}
+            color={IOColorPalette.greyscale[700]}
             font="FiraCode"
             lineHeight={18}
             size={12}
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     paddingBottom: 128
   },
   content: {
-    backgroundColor: IOColorsLegacy["grey-50"],
+    backgroundColor: IOColorPalette.greyscale[50],
     padding: 8
   }
 });

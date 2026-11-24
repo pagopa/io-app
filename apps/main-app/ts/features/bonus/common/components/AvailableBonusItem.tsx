@@ -1,6 +1,6 @@
 import { BonusAvailable } from "@io-app/api-types/generated/definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "@io-app/api-types/generated/definitions/content/BonusAvailableContent";
-import { Badge, Body, H6, HSpacer } from "@io-app/design-system";
+import { Badge, Body, H6, HSpacer, useIOColors } from "@io-app/design-system";
 import I18n from "i18next";
 import { FunctionComponent } from "react";
 import { Image, Pressable, StyleSheet, View, ViewStyle } from "react-native";
@@ -63,6 +63,7 @@ const renderBadge = (state: AvailableBonusItemState) => {
  */
 export const AvailableBonusItem: FunctionComponent<Props> = (props: Props) => {
   const { bonusItem, state } = props;
+  const colors = useIOColors();
   const disabledStyle: ViewStyle = state !== "active" ? { opacity: 0.75 } : {};
   const bonusTypeLocalizedContent: BonusAvailableContent =
     bonusItem[getRemoteLocale()];
@@ -82,7 +83,9 @@ export const AvailableBonusItem: FunctionComponent<Props> = (props: Props) => {
             ...disabledStyle
           }}
         >
-          <H6 color="grey-850">{bonusTypeLocalizedContent.name}</H6>
+          <H6 color={colors.text.heading.secondary}>
+            {bonusTypeLocalizedContent.name}
+          </H6>
           <HSpacer size={8} />
           {renderBadge(state)}
         </View>

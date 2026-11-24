@@ -1,4 +1,4 @@
-import { getPublicKey, PublicKey } from "@pagopa/io-react-native-crypto";
+import { getPublicKey, PublicKey } from "@io-app/expo-crypto";
 import { testSaga } from "redux-saga-test-plan";
 
 import {

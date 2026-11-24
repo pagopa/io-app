@@ -1,7 +1,7 @@
 import {
   Body,
   H3,
-  useIOTheme,
+  useIOColors,
   VSpacer,
   WithTestID
 } from "@io-app/design-system";
@@ -23,7 +23,7 @@ type Props = WithTestID<
  * @deprecated Use `LoadingScreenContent` component instead
  */
 const LoadingComponent = (props: Props) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const { captionTitle, captionSubtitle } = props;
 
   return (
@@ -34,7 +34,7 @@ const LoadingComponent = (props: Props) => {
       <LoadingIndicator />
       <VSpacer size={48} />
       <H3
-        color={theme["textHeading-secondary"]}
+        color={colors.text.heading.secondary}
         style={{ textAlign: "center" }}
         testID="LoadingSpinnerCaptionTitleID"
       >

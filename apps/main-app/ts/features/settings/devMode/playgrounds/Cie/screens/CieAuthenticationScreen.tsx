@@ -7,7 +7,7 @@ import {
 import { CieManager, NfcEvent } from "@pagopa/io-react-native-cie";
 import { useHeaderHeight } from "@react-navigation/elements";
 import I18n from "i18next";
-import { createRef, useEffect, useState } from "react";
+import { ComponentRef, useEffect, useRef, useState } from "react";
 import {
   Alert,
   Keyboard,
@@ -43,7 +43,7 @@ const AuthenticationUrlWebView = ({
   uri,
   onAuthUrlChange
 }: CiewWebViewProps) => {
-  const webView = createRef<WebView>();
+  const webViewRef = useRef<ComponentRef<typeof WebView>>(null);
   const [authUrl, setAuthUrl] = useState<string>();
 
   useEffect(() => {
@@ -67,7 +67,7 @@ const AuthenticationUrlWebView = ({
           url.indexOf("authnRequestString") !== -1
         ) {
           // avoid redirect and follow the 'happy path'
-          if (webView.current !== null) {
+          if (webViewRef.current !== null) {
             setAuthUrl(url);
           }
           return false;
@@ -81,7 +81,7 @@ const AuthenticationUrlWebView = ({
 
         return true;
       }}
-      ref={webView}
+      ref={webViewRef}
       source={{ uri }}
       userAgent={defaultUserAgent}
     />

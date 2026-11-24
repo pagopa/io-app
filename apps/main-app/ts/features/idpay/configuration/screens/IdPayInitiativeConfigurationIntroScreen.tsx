@@ -2,9 +2,8 @@ import {
   BodySmall,
   H6,
   Icon,
-  IOColorsLegacy,
   IOIcons,
-  useIOTheme,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
@@ -103,7 +102,7 @@ type RequiredDataItemProps = {
 };
 
 const RequiredDataItem = (props: RequiredDataItemProps) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <View
@@ -111,20 +110,16 @@ const RequiredDataItem = (props: RequiredDataItemProps) => {
         flexDirection: "row",
         paddingVertical: 16,
         borderBottomWidth: 1,
-        borderBottomColor: IOColorsLegacy[theme["divider-default"]]
+        borderBottomColor: colors.stroke.divider
       }}
     >
       {!!props.icon && (
         <View style={{ marginEnd: 16 }}>
-          <Icon
-            color={theme["interactiveElem-default"]}
-            name={props.icon}
-            size={24}
-          />
+          <Icon color={colors.icon.action} name={props.icon} size={24} />
         </View>
       )}
       <View>
-        <H6 color={theme["textBody-secondary"]}>{props.title}</H6>
+        <H6 color={colors.text.content.secondary}>{props.title}</H6>
         <BodySmall weight="Regular">{props.subTitle}</BodySmall>
       </View>
     </View>

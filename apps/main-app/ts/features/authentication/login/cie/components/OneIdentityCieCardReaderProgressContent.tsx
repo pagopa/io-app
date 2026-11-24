@@ -5,12 +5,10 @@ import {
   IOButton,
   IOButtonBlockSpecificProps,
   IOButtonLinkSpecificProps,
-  IOColorsLegacy,
   IOPictograms,
   IOPictogramSizeScale,
   Pictogram,
   useIOColors,
-  useIOTheme,
   VSpacer,
   VStack
 } from "@io-app/design-system";
@@ -164,9 +162,8 @@ const ReaderAnimation = ({
 >) => {
   const [progressBarValue, setProgressBarValue] = useState(0);
 
-  const theme = useIOTheme();
   const colors = useIOColors();
-  const circleColor = IOColorsLegacy[theme["interactiveElem-default"]];
+  const circleColor = colors.foreground.accent;
 
   const progress = useSharedValue(0);
 

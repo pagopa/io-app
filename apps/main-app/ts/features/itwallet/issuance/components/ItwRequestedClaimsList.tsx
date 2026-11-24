@@ -4,8 +4,7 @@ import {
   H6,
   HStack,
   Icon,
-  IOColorsLegacy,
-  useIOTheme
+  useIOColors
 } from "@io-app/design-system";
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
@@ -23,9 +22,9 @@ type ItwRequiredClaimsListProps = {
 };
 
 const ItwRequiredClaimsList = ({ items }: ItwRequiredClaimsListProps) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
-  const backgroundColor = IOColorsLegacy[theme["appBackground-secondary"]];
+  const backgroundColor = colors.surface.secondary;
 
   return (
     <View style={[styles.container, { backgroundColor }]}>
@@ -42,14 +41,14 @@ const ItwRequiredClaimsList = ({ items }: ItwRequiredClaimsListProps) => {
           >
             <View>
               <ClaimText claim={claim} />
-              <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
+              <BodySmall color={colors.text.content.tertiary} weight="Regular">
                 {I18n.t("features.itWallet.generic.dataSource.single", {
                   credentialSource: source
                 })}
               </BodySmall>
             </View>
             <Icon
-              color={theme["icon-decorative"]}
+              color={colors.icon.decorative}
               name="checkTickBig"
               size={24}
             />
