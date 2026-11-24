@@ -90,7 +90,6 @@ export const ClaimItem = ({
                       title
                     )}
                     label={description}
-                    reversed
                     value={privilege.driving_privilege}
                   />
                 )}
@@ -105,7 +104,6 @@ export const ClaimItem = ({
         <ListItemInfo
           accessibilityRole="image"
           label={description}
-          reversed
           value={
             <Image
               accessibilityIgnoresInvertColors
@@ -132,7 +130,6 @@ export const ClaimItem = ({
       ) : (
         <ListItemInfo
           label={description}
-          reversed
           value={value.map(getSafeText).join(", ")}
         />
       );
@@ -209,7 +206,6 @@ export const ClaimItem = ({
                   <ListItemInfo
                     endElement={buildInfoEndElement(present, singleItemClaims)}
                     label={summaryDesc}
-                    reversed
                     value={summaryVal}
                   />
                 )}
@@ -234,7 +230,7 @@ export const ClaimItem = ({
           selected={isSelected}
         />
       ) : (
-        <ListItemInfo label={description} reversed value={getSafeText(value)} />
+        <ListItemInfo label={description} value={getSafeText(value)} />
       );
   }
 };

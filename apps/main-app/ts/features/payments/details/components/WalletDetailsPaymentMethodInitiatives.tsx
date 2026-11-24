@@ -1,5 +1,5 @@
 import { WalletInfo } from "@io-app/api-types/generated/definitions/pagopa/walletv3/WalletInfo";
-import { Body, H6, VSpacer } from "@io-app/design-system";
+import { Body, H6, useIOColors, VSpacer } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { ComponentProps, ReactElement, useCallback } from "react";
@@ -30,6 +30,7 @@ const WalletDetailsPaymentMethodInitiatives = (
   props: Props
 ): null | ReactElement => {
   const navigation = useIONavigation();
+  const colors = useIOColors();
   const idWalletString = props.paymentMethod.walletId;
 
   const dispatch = useIODispatch();
@@ -71,7 +72,9 @@ const WalletDetailsPaymentMethodInitiatives = (
           alignItems: "center"
         }}
       >
-        <H6 color={"grey-700"}>{I18n.t("wallet.capability.title")}</H6>
+        <H6 color={colors.text.heading.tertiary}>
+          {I18n.t("wallet.capability.title")}
+        </H6>
         <Body
           asLink
           onPress={navigateToPairableInitiativesList}

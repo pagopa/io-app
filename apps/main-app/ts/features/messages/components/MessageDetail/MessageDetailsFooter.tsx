@@ -1,10 +1,5 @@
 import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
-import {
-  ContentWrapper,
-  IOColorsLegacy,
-  useIOTheme,
-  VSpacer
-} from "@io-app/design-system";
+import { ContentWrapper, useIOColors, VSpacer } from "@io-app/design-system";
 import I18n from "i18next";
 import { useMemo } from "react";
 
@@ -108,14 +103,14 @@ export const MessageDetailsFooter = ({
     [messageId, noticeNumber, payeeFiscalCode]
   );
 
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <ContentWrapper
       style={{
         paddingBottom: "75%",
         marginBottom: "-75%",
-        backgroundColor: IOColorsLegacy[theme["appBackground-secondary"]]
+        backgroundColor: colors.surface.secondary
       }}
     >
       <VSpacer size={16} />

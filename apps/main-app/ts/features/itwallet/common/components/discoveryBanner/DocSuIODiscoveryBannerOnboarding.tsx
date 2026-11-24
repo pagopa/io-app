@@ -13,15 +13,18 @@ import {
 } from "../../../analytics";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { useItwDiscoveryBannerType } from "../../hooks/useItwDiscoveryBannerType.ts";
-import { isItwDiscoveryBannerRenderableSelector } from "../../store/selectors";
+import { isDocSuIODiscoveryBannerRenderableSelector } from "../../store/selectors";
 
-/** ITW discovery banner to be displayed in the wallet card onboarding screen */
-const ItwDiscoveryBannerOnboarding = () => {
+/**
+ * Documenti su IO discovery banner displayed in the wallet card onboarding
+ * screen
+ */
+const DocSuIODiscoveryBannerOnboarding = () => {
   const navigation = useIONavigation();
   const route = useRoute();
   const bannerType = useItwDiscoveryBannerType();
   const isBannerRenderable = useIOSelector(
-    isItwDiscoveryBannerRenderableSelector
+    isDocSuIODiscoveryBannerRenderableSelector
   );
 
   const trackBannerProperties = useMemo(
@@ -90,6 +93,8 @@ const styles = StyleSheet.create({
   }
 });
 
-const MemoizedItwDiscoveryBannerOnboarding = memo(ItwDiscoveryBannerOnboarding);
+const MemoizedDocSuIODiscoveryBannerOnboarding = memo(
+  DocSuIODiscoveryBannerOnboarding
+);
 
-export { MemoizedItwDiscoveryBannerOnboarding as ItwDiscoveryBannerOnboarding };
+export { MemoizedDocSuIODiscoveryBannerOnboarding as DocSuIODiscoveryBannerOnboarding };

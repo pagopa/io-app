@@ -1,5 +1,5 @@
 import { LevelEnum } from "@io-app/api-types/generated/definitions/content/SectionStatus";
-import { Alert, IOColorsLegacy } from "@io-app/design-system";
+import { Alert, useIOColors } from "@io-app/design-system";
 import I18n from "i18next";
 import {
   ComponentProps,
@@ -34,17 +34,11 @@ type Props = {
 
 const statusVariantMap: Record<
   LevelEnum,
-  {
-    background: IOColorsLegacy;
-    variant: ComponentProps<typeof Alert>["variant"];
-  }
+  ComponentProps<typeof Alert>["variant"]
 > = {
-  [LevelEnum.normal]: {
-    variant: "info",
-    background: "info-100"
-  },
-  [LevelEnum.critical]: { variant: "error", background: "error-100" },
-  [LevelEnum.warning]: { variant: "warning", background: "warning-100" }
+  [LevelEnum.normal]: "info",
+  [LevelEnum.critical]: "error",
+  [LevelEnum.warning]: "warning"
 };
 
 /**
@@ -61,6 +55,7 @@ const ModalSectionStatusComponent = ({
   trackingAction
 }: Props) => {
   const { top } = useSafeAreaInsets();
+  const colors = useIOColors();
   const viewRef = useRef<View>(null);
   const locale = getFullLocale();
   const isMixpanelInitialized = useIOSelector(isMixpanelInitializedSelector);
@@ -128,7 +123,7 @@ const ModalSectionStatusComponent = ({
   }
 
   const action = webUrl ? I18n.t("global.sectionStatus.moreInfo") : undefined;
-  const { variant, background } = statusVariantMap[level ?? LevelEnum.normal];
+  const variant = statusVariantMap[level ?? LevelEnum.normal];
   const testId = `ModalSectionStatusComponent${
     webUrl ? "Pressable" : "Content"
   }`;
@@ -136,10 +131,8 @@ const ModalSectionStatusComponent = ({
   return (
     <View
       style={[
-        {
-          backgroundColor: IOColorsLegacy[background],
-          paddingTop: top
-        },
+        /* Opaque, so a sticky alert hides the content below */
+        { backgroundColor: colors.background.default },
         sticky && {
           position: "absolute",
           top: 0,
@@ -149,6 +142,8 @@ const ModalSectionStatusComponent = ({
         }
       ]}
     >
+      {/* The status bar area, on the alert tint */}
+      <View style={{ height: top, backgroundColor: colors.surface[variant] }} />
       <Alert
         action={action}
         content={message ?? ""}

@@ -1,4 +1,4 @@
-import { IOColorsLegacy, useIOTheme } from "@io-app/design-system";
+import { useIOColors } from "@io-app/design-system";
 import I18n from "i18next";
 import { useEffect } from "react";
 import { Modal } from "react-native";
@@ -20,10 +20,10 @@ export const GetProfileEndpointTransientError = () => {
     trackGetProfileEndpointTransientErrorScreen(afterIdentificationWithIdp);
   }, [afterIdentificationWithIdp]);
 
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
-    <Modal backdropColor={IOColorsLegacy[theme["appBackground-primary"]]}>
+    <Modal backdropColor={colors.background.default}>
       <OperationResultScreenContent
         pictogram="umbrella"
         subtitle={I18n.t(

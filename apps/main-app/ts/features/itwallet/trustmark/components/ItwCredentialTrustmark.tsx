@@ -1,8 +1,9 @@
+/* eslint-disable @io-app/no-hardcoded-colors -- artwork gradients, see CODING_STANDARDS.md#colors */
 import {
   Caption,
-  hexToRgba,
   useIOThemeContext,
   useScaleAnimation,
+  withAlpha,
   WithTestID
 } from "@io-app/design-system";
 import {
@@ -103,7 +104,7 @@ export const ItwCredentialTrustmark = ({
     end: { x: 0.5, y: 0 }
   };
 
-  const buttonInnerBorderColor: ColorValue = hexToRgba(
+  const buttonInnerBorderColor: ColorValue = withAlpha(
     buttonInnerBorderColorValue,
     buttonInnerBorderOpacity
   );
