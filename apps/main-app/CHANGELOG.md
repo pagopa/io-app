@@ -1,3 +1,27 @@
+## 3.44.0-rc.7 (2026-11-24)
+
+### Features
+
+- **IT-Wallet:** [[SIW-4415](https://pagopa.atlassian.net/browse/SIW-4415)] Reversed field and label Trust RP ([#8899](https://github.com/pagopa/io-app/pull/8899))
+
+### Bug Fixes
+
+- **IT-Wallet:** [[SIW-4909](https://pagopa.atlassian.net/browse/SIW-4909)] Show IT-Wallet copy after PID reissuance ([#8911](https://github.com/pagopa/io-app/pull/8911))
+- **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] serialize CieID WebView errors in ITW_ID_REQUEST_FAILURE ([#8913](https://github.com/pagopa/io-app/pull/8913))
+- [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Show IT-Wallet upgrade banner in inbox ([#8909](https://github.com/pagopa/io-app/pull/8909))
+
+### Chores
+
+- [[IOPLT-2309](https://pagopa.atlassian.net/browse/IOPLT-2309)] Bump `knip` to `6.48.0` ([#8917](https://github.com/pagopa/io-app/pull/8917))
+
+### ❤️ Thank You
+
+- Alessandro Mazzon
+- Damiano Plebani
+- Federico Mastrini @mastro993
+- MonicaRungi-EY
+- Riccardo Sacco @riccardosacco99
+
 ## 3.44.0-rc.6 (2026-11-23)
 
 ### Bug Fixes
