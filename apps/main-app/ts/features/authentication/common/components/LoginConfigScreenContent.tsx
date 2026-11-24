@@ -18,11 +18,9 @@ import {
   useIOStore
 } from "../../../../store/hooks";
 import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
-import {
-  cieLoginDisableUat,
-  cieLoginEnableUat
-} from "../../login/cie/store/actions";
-import { isCieLoginUatEnabledSelector } from "../../login/cie/store/selectors";
+import { setCieEnv } from "../../login/cie/store/actions";
+import { cieEnvSelector } from "../../login/cie/store/selectors";
+import { CIE_ENVS, CieEnv } from "../../login/cie/utils";
 import {
   setOneIdentityEnv,
   setOneIdentityLocalFeatureFlag
@@ -60,6 +58,22 @@ const LOGIN_FLOW_OPTIONS: ReadonlyArray<
   }
 ];
 
+const CIE_ENV_OPTIONS: ReadonlyArray<RadioItem<CieEnv>> = [
+  {
+    accessibilityLabel: "CIE produzione",
+    id: CIE_ENVS.PROD,
+    label: "Produzione",
+    description: "Usa gli endpoint di produzione per l'autenticazione con CIE."
+  },
+  {
+    accessibilityLabel: "CIE preproduzione",
+    id: CIE_ENVS.PREPROD,
+    label: "Preproduzione",
+    description:
+      "Usa gli endpoint di preproduzione per l'autenticazione con CIE (L3)."
+  }
+];
+
 type LoginConfigScreenContentProps = {
   disabled?: boolean;
 };
@@ -70,7 +84,7 @@ export const LoginConfigScreenContent = ({
   const store = useIOStore();
   const dispatch = useIODispatch();
 
-  const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
+  const cieEnv = useIOSelector(cieEnvSelector);
   const oneIdentityLocalFeatureFlag = useIOSelector(
     oneIdentityLocalFeatureFlagSelector
   );
@@ -78,11 +92,12 @@ export const LoginConfigScreenContent = ({
   const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
 
   const radioGroupItems = useMemo(
-    () =>
-      LOGIN_FLOW_OPTIONS.map(item => ({
-        ...item,
-        disabled
-      })),
+    () => LOGIN_FLOW_OPTIONS.map(item => ({ ...item, disabled })),
+    [disabled]
+  );
+
+  const cieEnvItems = useMemo(
+    () => CIE_ENV_OPTIONS.map(item => ({ ...item, disabled })),
     [disabled]
   );
 
@@ -106,12 +121,8 @@ export const LoginConfigScreenContent = ({
   );
 
   const handleCieEnv = useCallback(
-    (isUat: boolean) => {
-      if (isUat) {
-        dispatch(cieLoginEnableUat());
-      } else {
-        dispatch(cieLoginDisableUat());
-      }
+    (value: CieEnv) => {
+      dispatch(setCieEnv(value));
     },
     [dispatch]
   );
@@ -150,12 +161,11 @@ export const LoginConfigScreenContent = ({
       />
       <VSpacer size={24} />
       <ListItemHeader label="Environment CIE" />
-      <ListItemCheckbox
-        description="Questa opzione serve agli sviluppatori per testare la login con OneIdentity in ambiente di UAT e la CIE in ambiente di preproduzione (L3)."
-        disabled={disabled}
-        label="Abilita endpoint di preproduzione"
-        onValueChange={handleCieEnv}
-        selected={useCieUat}
+      <RadioGroup<CieEnv>
+        items={cieEnvItems}
+        onPress={handleCieEnv}
+        selectedItem={cieEnv}
+        type="radioListItem"
       />
       <VSpacer size={24} />
     </>

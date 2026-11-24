@@ -1,9 +1,4 @@
-import {
-  H6,
-  IOColors,
-  IODimensions,
-  useIOThemeContext
-} from "@io-app/design-system";
+import { H6, IODimensions } from "@io-app/design-system";
 import { LinearGradient } from "expo-linear-gradient";
 import { PropsWithChildren, ReactNode } from "react";
 import {
@@ -16,7 +11,8 @@ import {
 } from "react-native";
 import Animated, { AnimatedStyle } from "react-native-reanimated";
 
-import { useItWalletTheme } from "../utils/theme";
+import { useFeatureColors } from "../../../../hooks/useFeatureColors";
+import { itwColors } from "../../colors";
 
 // Border width offset to ensure the header gradient fits within the border curves.
 const CARD_BORDER = IODimensions.stroke.default;
@@ -55,8 +51,7 @@ export const ItwCredentialClaimsCard = ({
   onHeaderPress,
   title
 }: ItwCredentialClaimsCardProps) => {
-  const { theme } = useIOThemeContext();
-  const itwTheme = useItWalletTheme();
+  const { claimsCard: colors } = useFeatureColors(itwColors);
 
   const isHeaderInteractive = onHeaderPress !== undefined;
 
@@ -66,7 +61,7 @@ export const ItwCredentialClaimsCard = ({
       style={[styles.header, headerStyle]}
     >
       <LinearGradient
-        colors={[itwTheme["card-background"], gradientEndColor]}
+        colors={[colors.headerGradientStart, gradientEndColor]}
         style={StyleSheet.absoluteFill}
       />
       {/*
@@ -92,8 +87,8 @@ export const ItwCredentialClaimsCard = ({
       style={[
         styles.card,
         {
-          backgroundColor: IOColors[theme["appBackground-primary"]],
-          borderColor: IOColors[theme["cardBorder-default"]]
+          backgroundColor: colors.background,
+          borderColor: colors.border
         }
       ]}
     >

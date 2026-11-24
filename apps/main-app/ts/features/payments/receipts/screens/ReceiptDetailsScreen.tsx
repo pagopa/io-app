@@ -2,8 +2,7 @@ import { OriginEnum } from "@io-app/api-types/generated/definitions/pagopa/biz-e
 import {
   Alert,
   ContentWrapper,
-  IOColors,
-  useIOTheme,
+  useIOColors,
   useIOToast,
   VSpacer
 } from "@io-app/design-system";
@@ -56,13 +55,11 @@ const styles = StyleSheet.create({
     height: windowHeight,
     bottom: -windowHeight,
     left: 0,
-    right: 0,
-    backgroundColor: IOColors["grey-50"]
+    right: 0
   },
   wrapper: {
     flexGrow: 1,
-    alignContent: "flex-start",
-    backgroundColor: IOColors["grey-50"]
+    alignContent: "flex-start"
   }
 });
 
@@ -82,8 +79,8 @@ const ReceiptDetailsScreen = () => {
   const transactionDetails = pot.toUndefined(transactionDetailsPot);
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
 
-  const theme = useIOTheme();
-  const backgroundColor = IOColors[theme["appBackground-secondary"]];
+  const colors = useIOColors();
+  const backgroundColor = colors.surface.secondary;
 
   useOnFirstRender(() => {
     fetchTransactionDetails();

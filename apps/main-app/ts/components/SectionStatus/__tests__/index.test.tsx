@@ -95,9 +95,9 @@ describe("SectionStatusComponent", () => {
   });
 
   [
-    [LevelEnum.normal, IOColors["info-100"]],
-    [LevelEnum.warning, IOColors["warning-100"]],
-    [LevelEnum.critical, IOColors["error-100"]]
+    [LevelEnum.normal, IOColors.light.surface.info],
+    [LevelEnum.warning, IOColors.light.surface.warning],
+    [LevelEnum.critical, IOColors.light.surface.error]
   ].forEach(([level, color]) => {
     describe(`given the level ${level}`, () => {
       const store = mockStore(

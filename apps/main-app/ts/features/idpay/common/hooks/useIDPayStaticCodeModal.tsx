@@ -6,11 +6,10 @@ import {
   H2,
   Icon,
   IOButton,
-  IOColors,
   IOSkeleton,
   IOText,
   IOTypography,
-  useIOTheme,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -52,6 +51,11 @@ export const useIDPayStaticCodeModal = (
   );
 
   const isLoading = pot.isLoading(barcodePot);
+  const colors = useIOColors();
+  const barcodeContainerStyle = [
+    styles.barcodeContainer,
+    { borderColor: colors.stroke.default }
+  ];
 
   const IconPlaceholder = () => (
     <>
@@ -86,7 +90,7 @@ export const useIDPayStaticCodeModal = (
         width="75%"
       />
       <VSpacer size={24} />
-      <View style={styles.barcodeContainer}>
+      <View style={barcodeContainerStyle}>
         <IconPlaceholder />
         <IOSkeleton height={120} radius={4} shape="rectangle" width="100%" />
         <VSpacer size={12} />
@@ -102,44 +106,40 @@ export const useIDPayStaticCodeModal = (
     </View>
   );
 
-  const SuccessContent = (barcode: TransactionBarCodeResponse) => {
-    const theme = useIOTheme();
-
-    return (
-      <>
-        <H2 weight="Semibold">
-          {I18n.t(
-            "idpay.initiative.beneficiaryDetails.staticCodeModal.content.title"
-          )}
-        </H2>
-        <VSpacer size={16} />
-        <Body>
-          {I18n.t(
-            "idpay.initiative.beneficiaryDetails.staticCodeModal.content.subtitle"
-          )}
-        </Body>
-        <VSpacer size={24} />
-        <View style={styles.barcodeContainer}>
-          <IconPlaceholder />
-          <Barcode format="CODE128" value={barcode.trxCode} />
-          <View style={{ alignItems: "center" }}>
-            <IOText
-              color={theme["textBody-default"]}
-              font="FiraCode"
-              lineHeight={IOTypography.h3.lineHeight}
-              size={IOTypography.h3.size}
-              weight="Medium"
-            >
-              {barcode.trxCode}
-            </IOText>
-          </View>
-          <VSpacer size={32} />
+  const SuccessContent = (barcode: TransactionBarCodeResponse) => (
+    <>
+      <H2 weight="Semibold">
+        {I18n.t(
+          "idpay.initiative.beneficiaryDetails.staticCodeModal.content.title"
+        )}
+      </H2>
+      <VSpacer size={16} />
+      <Body>
+        {I18n.t(
+          "idpay.initiative.beneficiaryDetails.staticCodeModal.content.subtitle"
+        )}
+      </Body>
+      <VSpacer size={24} />
+      <View style={barcodeContainerStyle}>
+        <IconPlaceholder />
+        <Barcode format="CODE128" value={barcode.trxCode} />
+        <View style={{ alignItems: "center" }}>
+          <IOText
+            color={colors.text.content.default}
+            font="FiraCode"
+            lineHeight={IOTypography.h3.lineHeight}
+            size={IOTypography.h3.size}
+            weight="Medium"
+          >
+            {barcode.trxCode}
+          </IOText>
         </View>
         <VSpacer size={32} />
-        <VSpacer size={32} />
-      </>
-    );
-  };
+      </View>
+      <VSpacer size={32} />
+      <VSpacer size={32} />
+    </>
+  );
 
   const StaticCodeBottomSheetContent = () => {
     if (isLoading) {
@@ -231,7 +231,6 @@ export const useIDPayStaticCodeModal = (
 
 const styles = StyleSheet.create({
   barcodeContainer: {
-    borderColor: IOColors["grey-100"],
     borderWidth: 1,
     padding: 16,
     borderRadius: 8

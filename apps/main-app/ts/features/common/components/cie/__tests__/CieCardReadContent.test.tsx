@@ -1,11 +1,15 @@
+import { IOColors } from "@io-app/design-system";
 import { render } from "@testing-library/react-native";
-import { Platform } from "react-native";
+import { Platform, processColor } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
-import * as UTILS from "../../../utils";
 import {
-  CieCardReadContent,
-  CieCardReadContentProps
-} from "../CieCardReadContent";
+  findAllByStyle,
+  findAllNodes,
+  withDarkTheme
+} from "../../../../../utils/testColors";
+import * as UTILS from "../../../utils";
+import { CieCardReadContentProps, testable } from "../CieCardReadContent";
 
 jest.mock("@react-navigation/native");
 
@@ -54,9 +58,75 @@ describe.each<typeof Platform.OS>(["ios", "android"])(
         }
       }
     ])("should match the snapshot when the input props are: %o", props => {
-      const component = render(<CieCardReadContent {...props} />);
+      if (!testable) {
+        throw new Error("testable is not available in test environment");
+      }
+      /* `CieCardReadContent` picks its layout on import, before `Platform.OS` is replaced */
+      const Content =
+        platform === "ios" ? testable.ContentIos : testable.ContentAndroid;
+      const component = render(
+        <SafeAreaProvider
+          initialMetrics={{
+            frame: { x: 0, y: 0, width: 0, height: 0 },
+            insets: { top: 0, left: 0, right: 0, bottom: 0 }
+          }}
+        >
+          <Content {...props} />
+        </SafeAreaProvider>
+      );
 
       expect(component.toJSON()).toMatchSnapshot();
     });
   }
 );
+
+describe("CieCardReadContent in dark mode", () => {
+  if (!testable) {
+    throw new Error("testable is not available in test environment");
+  }
+  const { ContentAndroid, ContentIos } = testable;
+  const props: CieCardReadContentProps = {
+    title: "Title",
+    pictogram: "success",
+    progress: 0.5
+  };
+
+  it("should draw the iOS progress track with the dark divider token", () => {
+    const DarkContent = withDarkTheme(ContentIos);
+    const { toJSON } = render(<DarkContent {...props} />);
+
+    expect(
+      findAllByStyle(toJSON(), {
+        height: 4,
+        backgroundColor: IOColors.dark.stroke.default
+      })
+    ).toHaveLength(1);
+  });
+
+  it("should draw the Android progress ring with dark tokens", () => {
+    const DarkContent = withDarkTheme(ContentAndroid);
+    const { toJSON } = render(
+      <SafeAreaProvider
+        initialMetrics={{
+          frame: { x: 0, y: 0, width: 0, height: 0 },
+          insets: { top: 0, left: 0, right: 0, bottom: 0 }
+        }}
+      >
+        <DarkContent {...props} />
+      </SafeAreaProvider>
+    );
+    const [track, progress] = findAllNodes(
+      toJSON(),
+      node => node.type === "RNSVGCircle"
+    );
+
+    expect(track.props.stroke).toEqual({
+      type: 0,
+      payload: processColor(IOColors.dark.stroke.default)
+    });
+    expect(progress.props.stroke).toEqual({
+      type: 0,
+      payload: processColor(IOColors.dark.foreground.accent)
+    });
+  });
+});

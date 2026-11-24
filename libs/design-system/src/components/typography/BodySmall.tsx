@@ -1,8 +1,8 @@
 import { Ref } from "react";
 import { Pressable, View } from "react-native";
 
-import { useIOTheme } from "../../context";
-import { IOTypographicLinkColorToken, IOTypography } from "../../core";
+import { useIOColors } from "../../context";
+import { IOTypography } from "../../core";
 import { IOFontWeight } from "../../utils/fonts";
 import {
   IOText,
@@ -17,9 +17,7 @@ type BodySmallProps = Omit<TypographicStyleProps, "ref"> &
     weight?: Extract<IOFontWeight, "Regular" | "Semibold">;
   };
 
-const {
-  bodySmall: { colorToken, ...bodySmallStyle }
-} = IOTypography;
+const { bodySmall: bodySmallStyle } = IOTypography;
 
 /** `BodySmall` typographic style */
 export const BodySmall = ({
@@ -33,11 +31,11 @@ export const BodySmall = ({
   onPress,
   ...props
 }: BodySmallProps) => {
-  const theme = useIOTheme();
+  const typographyColors = useIOColors().component.typography;
 
   const defaultColor = asLink
-    ? theme[IOTypographicLinkColorToken]
-    : theme[colorToken];
+    ? typographyColors.link
+    : typographyColors.bodySmall;
 
   const BodySmallProps: IOTextProps = {
     ...props,

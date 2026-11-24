@@ -1,8 +1,9 @@
 import { Platform } from "react-native";
 
-import { getCieUatEndpoint } from "../endpoints";
+import { CieEnv } from "..";
+import { getCieIdpUrl } from "../endpoints";
 
-describe("getCieUatEndpoint", () => {
+describe("getCieIdpUrl", () => {
   const BASE_URL =
     "https://preproduzione.idserver.servizicie.interno.gov.it/idp/";
 
@@ -13,7 +14,7 @@ describe("getCieUatEndpoint", () => {
   ];
 
   it.each(SCENARIOS)(
-    "should return $expected when platform is $os",
+    "should return $expected for preprod when platform is $os",
     ({ os, expected }) => {
       jest
         .spyOn(Platform, "select")
@@ -22,7 +23,15 @@ describe("getCieUatEndpoint", () => {
             options[os] ?? options["default" as unknown as keyof typeof options]
         );
 
-      expect(getCieUatEndpoint()).toBe(expected);
+      expect(getCieIdpUrl("preprod")).toBe(expected);
     }
   );
+
+  it("should return null for prod", () => {
+    expect(getCieIdpUrl("production")).toBeNull();
+  });
+
+  it("should return null for an unknown environment", () => {
+    expect(getCieIdpUrl("unknown" as CieEnv)).toBeNull();
+  });
 });

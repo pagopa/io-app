@@ -11,6 +11,8 @@ class AppDelegate: ExpoAppDelegate {
  
   var reactNativeDelegate: ReactNativeDelegate?
   var reactNativeFactory: RCTReactNativeFactory?
+  private(set) var launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+  private(set) var hasStartedReactNative = false
   
   override func application(
     _ application: UIApplication,
@@ -22,16 +24,56 @@ class AppDelegate: ExpoAppDelegate {
 
     self.reactNativeDelegate = delegate
     self.reactNativeFactory = factory
+    self.launchOptions = launchOptions
 
     self.window = UIWindow(frame: UIScreen.main.bounds)
 
+    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+  }
+
+  // With scenes, .background during didFinishLaunching does not identify a background launch.
+  // Start without a scene only when iOS actually delivers background work.
+  override func application(
+    _ application: UIApplication,
+    didReceiveRemoteNotification userInfo: [AnyHashable: Any],
+    fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
+  ) {
+    startReactNative(launchOptions: launchOptions)
+    super.application(application, didReceiveRemoteNotification: userInfo, fetchCompletionHandler: completionHandler)
+  }
+
+  override func application(
+    _ application: UIApplication,
+    performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
+  ) {
+    startReactNative(launchOptions: launchOptions)
+    super.application(application, performFetchWithCompletionHandler: completionHandler)
+  }
+
+  override func application(
+    _ application: UIApplication,
+    handleEventsForBackgroundURLSession identifier: String,
+    completionHandler: @escaping () -> Void
+  ) {
+    startReactNative(launchOptions: launchOptions)
+    super.application(application, handleEventsForBackgroundURLSession: identifier, completionHandler: completionHandler)
+  }
+
+  func startReactNative(launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
+    guard !hasStartedReactNative else {
+      return
+    }
+    guard let factory = reactNativeFactory else {
+      preconditionFailure("React Native factory must be configured before starting")
+    }
+
+    hasStartedReactNative = true
     factory.startReactNative(
       withModuleName: "IO",
       in: window,
       launchOptions: launchOptions
     )
-    
-    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+    self.launchOptions = nil
   }
 
   // Deep linking
@@ -74,6 +116,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     appDelegate.window?.windowScene = windowScene
     window = appDelegate.window
+
+    if appDelegate.hasStartedReactNative {
+      connectionOptions.userActivities.forEach(forwardUniversalLink)
+      self.scene(scene, openURLContexts: connectionOptions.urlContexts)
+    } else {
+      // Initial links must reach getInitialURL(), not an event before JS subscribes.
+      var launchOptions = appDelegate.launchOptions ?? [:]
+      let initialURL = connectionOptions.urlContexts.first?.url
+        ?? connectionOptions.userActivities.first(where: {
+          $0.activityType == NSUserActivityTypeBrowsingWeb && $0.webpageURL != nil
+        })?.webpageURL
+      if let initialURL {
+        launchOptions[.url] = initialURL
+      }
+      appDelegate.startReactNative(launchOptions: launchOptions)
+    }
+  }
+
+  func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
+    forwardUniversalLink(userActivity)
   }
 
   func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
@@ -85,6 +147,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
       UIApplication.shared,
       open: urlContext.url,
       options: [:]
+    )
+  }
+
+  private func forwardUniversalLink(_ userActivity: NSUserActivity) {
+    guard
+      userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+      let appDelegate = UIApplication.shared.delegate as? AppDelegate
+    else {
+      return
+    }
+
+    _ = appDelegate.application(
+      UIApplication.shared,
+      continue: userActivity,
+      restorationHandler: { _ in }
     )
   }
 }

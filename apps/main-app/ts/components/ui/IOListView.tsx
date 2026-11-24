@@ -1,9 +1,9 @@
 import {
-  hexToRgba,
-  IOColors,
+  IOColorPalette,
   IODimensions,
   IODimensionScale,
-  useIOTheme
+  useIOColors,
+  withAlpha
 } from "@io-app/design-system";
 import { LinearGradient } from "expo-linear-gradient";
 import { ComponentProps, ReactElement, useState } from "react";
@@ -106,8 +106,6 @@ export const IOListView = <T,>({
   testID,
   loading
 }: IOListView<T>) => {
-  const theme = useIOTheme();
-
   /* Total height of actions */
   const [actionBlockHeight, setActionBlockHeight] =
     useState<LayoutRectangle["height"]>(0);
@@ -123,7 +121,7 @@ export const IOListView = <T,>({
   /* GENERATE EASING GRADIENT
        Background color should be app main background
        (both light and dark themes) */
-  const HEADER_BG_COLOR: ColorValue = IOColors[theme["appBackground-primary"]];
+  const HEADER_BG_COLOR: ColorValue = useIOColors().background.default;
 
   /* When the secondary action is visible, add extra margin
        to avoid little space from iPhone bottom handle */
@@ -198,7 +196,7 @@ export const IOListView = <T,>({
                 style={[
                   styles.gradientContainer,
                   debugMode && {
-                    backgroundColor: hexToRgba(IOColors["error-500"], 0.15)
+                    backgroundColor: withAlpha(IOColorPalette.red[500], 0.15)
                   }
                 ]}
               >
@@ -206,9 +204,9 @@ export const IOListView = <T,>({
                   style={[
                     opacityTransition,
                     debugMode && {
-                      borderTopColor: IOColors["error-500"],
+                      borderTopColor: IOColorPalette.red[500],
                       borderTopWidth: 1,
-                      backgroundColor: hexToRgba(IOColors["error-500"], 0.4)
+                      backgroundColor: withAlpha(IOColorPalette.red[500], 0.4)
                     }
                   ]}
                 >

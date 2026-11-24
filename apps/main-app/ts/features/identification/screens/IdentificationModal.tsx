@@ -3,12 +3,11 @@ import {
   H2,
   IconButton,
   IOButton,
-  IOColors,
   IOPictograms,
   Pictogram,
   ToastNotification,
+  useIOColors,
   useIOFontDynamicScale,
-  useIOTheme,
   VSpacer
 } from "@io-app/design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
@@ -69,7 +68,7 @@ export const IdentificationModal = () => {
   const showRetryText = useRef(false);
   const errorStatusRef = useRef<View>(null);
 
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const { isDeviceScreenSmall } = useDetectSmallScreen();
   const { hugeFontEnabled } = useIOFontDynamicScale();
 
@@ -265,7 +264,7 @@ export const IdentificationModal = () => {
   const NumberPad = memo(() => (
     <IdentificationNumberPad
       biometricsConfig={biometricsConfig}
-      numberPadVariant={"primary"}
+      numberPadVariant={"contrast"}
       pin={pin}
       pinValidation={onPinValidated}
     />
@@ -376,7 +375,7 @@ export const IdentificationModal = () => {
       <View
         style={[
           styles.contentWrapper,
-          { backgroundColor: IOColors[theme["appBackground-accent"]] }
+          { backgroundColor: colors.background.accent }
         ]}
       >
         {isValidatingTask && (
@@ -441,7 +440,7 @@ export const IdentificationModal = () => {
                 <H2
                   accessibilityRole="header"
                   accessible
-                  color={"white"}
+                  color={colors.foreground.onAccent.default}
                   style={{ textAlign: "center" }}
                 >
                   {titleLabel}

@@ -2,5 +2,11 @@
   "$schema": "../../node_modules/oxlint/configuration_schema.json",
   "extends": ["../../apps/main-app/.oxlintrc.jsonc"],
   // `extends` replaces `ignorePatterns` rather than merging it
-  "ignorePatterns": ["**/*.js", "**/*.cjs", "**/*.mjs", "lib/**"]
+  "ignorePatterns": ["**/*.js", "**/*.cjs", "**/*.mjs", "lib/**"],
+  // Top level, not in `overrides`: `no-cycle` needs the module graph, built only for root plugins
+  "plugins": ["import"],
+  "rules": {
+    // DS only for now: `core/tokens/colors` builds `IOColors` at load time from components' `colors.ts`
+    "import/no-cycle": "error"
+  }
 }

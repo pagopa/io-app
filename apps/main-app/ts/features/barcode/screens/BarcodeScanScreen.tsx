@@ -3,6 +3,7 @@ import {
   IOToast,
   ListItemNav,
   triggerHaptic,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
@@ -19,8 +20,7 @@ import {
 import { useIOSelector } from "../../../store/hooks";
 import {
   barcodesScannerConfigSelector,
-  isIdPayEnabledInScanScreenSelector,
-  isPnRemoteEnabledSelector
+  isIdPayEnabledInScanScreenSelector
 } from "../../../store/reducers/backendStatus/remoteConfig";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { FCI_ROUTES } from "../../fci/navigation/routes";
@@ -50,13 +50,13 @@ import {
 import { getIOBarcodesByType } from "../utils/getBarcodesByType";
 
 const BarcodeScanScreen = () => {
+  const colors = useIOColors();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const openDeepLink = useOpenDeepLink();
   const isIdPayEnabledInScanScreen = useIOSelector(
     isIdPayEnabledInScanScreenSelector
   );
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
-  const isSendEnabled = useIOSelector(isPnRemoteEnabledSelector);
 
   const { startPaymentFlowWithRptId } = usePagoPaPayment();
 
@@ -76,11 +76,7 @@ const BarcodeScanScreen = () => {
   );
 
   const barcodeTypes: Array<IOBarcodeType> = IO_BARCODE_ALL_TYPES.filter(type =>
-    type === "IDPAY"
-      ? isIdPayEnabledInScanScreen
-      : type === "SEND"
-        ? isSendEnabled
-        : true
+    type === "IDPAY" ? isIdPayEnabledInScanScreen : true
   );
 
   /**
@@ -246,7 +242,7 @@ const BarcodeScanScreen = () => {
       <ListItemNav
         accessibilityLabel={I18n.t("barcodeScan.manual.notice")}
         icon="productPagoPA"
-        iconColor="blueItalia-500"
+        iconColor={colors.icon.pagopa}
         label={I18n.t("barcodeScan.manual.notice")}
         onPress={handlePagoPACodeInput}
       />

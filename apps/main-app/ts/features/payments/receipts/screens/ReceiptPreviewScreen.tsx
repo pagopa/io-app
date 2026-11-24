@@ -1,8 +1,7 @@
 import {
   FooterActions,
   FooterActionsMeasurements,
-  IOColors,
-  useIOTheme
+  useIOColors
 } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { File, Paths } from "expo-file-system";
@@ -22,8 +21,8 @@ import { walletReceiptPotSelector } from "../store/selectors";
 import { RECEIPT_DOCUMENT_TYPE_PREFIX } from "../utils";
 
 const ReceiptPreviewScreen = () => {
-  const theme = useIOTheme();
-  const backgroundColor = IOColors[theme["appBackground-secondary"]];
+  const colors = useIOColors();
+  const backgroundColor = colors.surface.secondary;
   const [footerActionsMeasurements, setFooterActionsMeasurements] =
     useState<FooterActionsMeasurements>({
       actionBlockHeight: 0,

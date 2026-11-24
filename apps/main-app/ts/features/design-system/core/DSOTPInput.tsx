@@ -11,7 +11,6 @@ import {
   OTPInputProps,
   RadioGroup,
   RadioItem,
-  useIOTheme,
   VStack
 } from "@io-app/design-system";
 import { useHeaderHeight } from "@react-navigation/elements";
@@ -142,7 +141,6 @@ const scrollVerticallyToView = (
  * @returns A screen with a flexed view where you can test components
  */
 export const DSOTPInput = () => {
-  const theme = useIOTheme();
   const [selectedItem, setSelectedItem] = useState(radioButtons[0].id);
 
   const { present, dismiss, bottomSheet } = useIOBottomSheetModal({
@@ -198,7 +196,6 @@ export const DSOTPInput = () => {
               style={{ justifyContent: "space-between", alignItems: "center" }}
             >
               <H4
-                color={theme["textHeading-default"]}
                 style={{ marginVertical: IODimensions.padding.screen.default }}
               >
                 OTP Input with length of {otpConfig.otpLength}
@@ -213,26 +210,24 @@ export const DSOTPInput = () => {
 
             <VStack space={blockMargin}>
               <VStack space={sectionTitleMargin}>
-                <H5 color={theme["textHeading-default"]}>Default</H5>
+                <H5>Default</H5>
                 <OTPWrapper {...otpConfig} />
               </VStack>
 
               <VStack space={sectionTitleMargin}>
-                <H5 color={theme["textHeading-default"]}>Secret</H5>
+                <H5>Secret</H5>
                 <OTPWrapper secret {...otpConfig} />
               </VStack>
 
               <VStack space={sectionTitleMargin}>
                 <View>
-                  <H5 color={theme["textHeading-default"]}>
-                    {"Validation + Secret"}
-                  </H5>
+                  <H5>{"Validation + Secret"}</H5>
                   <Body>Correct OTP {otpConfig.otpCompare}</Body>
                 </View>
                 <OTPWrapper secret validation {...otpConfig} />
               </VStack>
               <VStack space={sectionTitleMargin}>
-                <H5 color={theme["textHeading-default"]}>Autofocus</H5>
+                <H5>Autofocus</H5>
                 <IOButton
                   label={`${
                     showAutofocusableOTP ? "Hide" : "Show"

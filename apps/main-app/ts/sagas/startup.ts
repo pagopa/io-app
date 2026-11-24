@@ -76,6 +76,7 @@ import {
   watchItwAuthenticatedSaga,
   watchItwSaga
 } from "../features/itwallet/common/saga";
+import { checkShouldDisplayItwEngagementScreen } from "../features/itwallet/loginEngagement/saga/checkShouldDisplayItwEngagementScreen";
 import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
 import {
   checkLollipopSessionAssertionAndInvalidateIfNeeded,
@@ -138,7 +139,6 @@ import {
 import {
   isAarRemoteEnabled,
   isIdPayEnabledSelector,
-  isPnRemoteEnabledSelector,
   remoteConfigSelector
 } from "../store/reducers/backendStatus/remoteConfig";
 import {
@@ -658,20 +658,14 @@ export function* initializeApplicationSaga(
     yield* put(cgnDetails.request());
   }
 
-  const pnEnabled: ReturnType<typeof isPnRemoteEnabledSelector> = yield* select(
-    isPnRemoteEnabledSelector
-  );
+  // Start watching for PN actions
+  yield* fork(watchPnSaga, sessionToken);
 
-  if (pnEnabled) {
-    // Start watching for PN actions
-    yield* fork(watchPnSaga, sessionToken);
+  yield* fork(watchSendLollipopLambda, sessionToken, keyInfo);
 
-    yield* fork(watchSendLollipopLambda, sessionToken, keyInfo);
-
-    const aarRemoteEnabled = yield* select(isAarRemoteEnabled);
-    if (aarRemoteEnabled) {
-      yield* fork(watchAarFlowSaga, sessionToken, keyInfo);
-    }
+  const aarRemoteEnabled = yield* select(isAarRemoteEnabled);
+  if (aarRemoteEnabled) {
+    yield* fork(watchAarFlowSaga, sessionToken, keyInfo);
   }
 
   const idPayEnabled: ReturnType<typeof isIdPayEnabledSelector> = yield* select(
@@ -771,8 +765,7 @@ export function* initializeApplicationSaga(
   if (!isHandlingBackgroundActions && showSessionExpirationBlockingScreen) {
     yield* call(navigateToActiveSessionLogin);
   } else if (!isHandlingBackgroundActions) {
-    // Check if should navigate to the send activation screen
-    yield* fork(checkShouldDisplaySendEngagementScreen, isFirstOnboarding);
+    yield* fork(checkShouldDisplayLoginEngagementScreens, isFirstOnboarding);
   }
 
   yield* put(
@@ -788,6 +781,20 @@ export function* startupSaga(): IterableIterator<ReduxSagaEffect> {
     getType(startApplicationInitialization),
     initializeApplicationSaga
   );
+}
+
+/**
+ * Shows at most one login engagement screen per app opening: ITW first,
+ * otherwise SEND.
+ */
+function* checkShouldDisplayLoginEngagementScreens(isFirstOnboarding: boolean) {
+  const isItwEngagementScreenShown = yield* call(
+    checkShouldDisplayItwEngagementScreen,
+    isFirstOnboarding
+  );
+  if (!isItwEngagementScreenShown) {
+    yield* call(checkShouldDisplaySendEngagementScreen, isFirstOnboarding);
+  }
 }
 
 export const testWaitForNavigatorServiceInitialization = isTestEnv

@@ -2,16 +2,12 @@ import {
   Avatar,
   BodySmall,
   H6,
-  hexToRgba,
   HStack,
-  IOColors,
   IODimensions,
   IOListItemStyles,
   MessageCheckbox,
   Tag,
   triggerHaptic,
-  useIOTheme,
-  useIOThemeContext,
   useListItemAnimation,
   WithTestID
 } from "@io-app/design-system";
@@ -28,6 +24,8 @@ import {
 import Animated from "react-native-reanimated";
 import Svg, { Circle } from "react-native-svg";
 
+import { useFeatureColors } from "../../../../../hooks/useFeatureColors";
+import { messagesColors } from "../../../colors";
 import { AvatarDouble } from "./AvatarDouble";
 
 export const ListItemMessageStandardHeight = 95;
@@ -74,6 +72,7 @@ export type ListItemMessageProps = Pick<
     avatarDouble?: boolean;
     formattedDate: string;
     isRead: boolean;
+    messageId?: string;
     messageTitle: string;
     organizationName: string;
     selected?: boolean;
@@ -105,6 +104,7 @@ export const ListItemMessage = ({
   avatarDouble,
   formattedDate,
   isRead,
+  messageId,
   messageTitle,
   onLongPress,
   onPress,
@@ -114,8 +114,7 @@ export const ListItemMessage = ({
   serviceLogos,
   testID
 }: ListItemMessageProps) => {
-  const theme = useIOTheme();
-  const { themeType } = useIOThemeContext();
+  const colors = useFeatureColors(messagesColors);
 
   const { onPressIn, onPressOut, scaleAnimatedStyle, backgroundAnimatedStyle } =
     useListItemAnimation();
@@ -131,11 +130,8 @@ export const ListItemMessage = ({
   );
 
   // Component colors
-  const unreadBadgeColor = IOColors[theme["interactiveElem-default"]];
-  const selectedBgColor =
-    themeType === "dark"
-      ? hexToRgba(IOColors["blueIO-300"], 0.1)
-      : IOColors["blueIO-50"];
+  const unreadBadgeColor = colors.listItem.unreadBadge;
+  const selectedBgColor = colors.listItem.selectedBackground;
 
   return (
     <Pressable
@@ -185,7 +181,13 @@ export const ListItemMessage = ({
                     }
                   ]}
                 >
-                  <MessageCheckbox accessible={false} checked={selected} />
+                  {/* Keyed by message so a recycled list cell does not animate
+                  the selection state of the previously rendered message */}
+                  <MessageCheckbox
+                    accessible={false}
+                    checked={selected}
+                    key={messageId}
+                  />
                 </View>
               </View>
             </View>
@@ -196,14 +198,14 @@ export const ListItemMessage = ({
                 react and react-native (on react-native, 'flex: 1' does
                 something similar to 'flex-grow') */}
                 <H6
-                  color={theme["textBody-default"]}
+                  color={colors.listItem.title}
                   numberOfLines={1}
                   style={{ flexGrow: 1, flexShrink: 1 }}
                 >
                   {organizationName}
                 </H6>
                 <BodySmall
-                  color={theme["textBody-tertiary"]}
+                  color={colors.listItem.preview}
                   style={{
                     marginLeft: IODimensions.gap.listItem.messages.trailing
                   }}

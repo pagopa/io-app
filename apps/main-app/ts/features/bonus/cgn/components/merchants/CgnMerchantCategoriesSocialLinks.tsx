@@ -1,8 +1,7 @@
 import {
   ContentWrapper,
-  IOColors,
   ListItemAction,
-  useIOTheme,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import I18n from "i18next";
@@ -11,7 +10,7 @@ import { View } from "react-native";
 import { openWebUrl } from "../../../../../utils/url";
 
 export const CgnMerchantCategoriesSocialLinks = () => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   const cgnSocialLinks = [
     {
@@ -43,7 +42,7 @@ export const CgnMerchantCategoriesSocialLinks = () => {
   return (
     <View
       style={{
-        backgroundColor: IOColors[theme["appBackground-secondary"]],
+        backgroundColor: colors.surface.secondary,
         flexGrow: 1
       }}
       testID="CgnMerchantCategoriesSocialLinks"

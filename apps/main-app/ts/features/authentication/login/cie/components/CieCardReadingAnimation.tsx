@@ -1,8 +1,8 @@
 import {
-  IOColors,
   IOPictograms,
   IOPictogramSizeScale,
-  Pictogram
+  Pictogram,
+  useIOColors
 } from "@io-app/design-system";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Animated, Easing, StyleSheet, View } from "react-native";
@@ -42,6 +42,7 @@ const CieCardReadingAnimation = ({
   pictogramName,
   circleColor
 }: CieCardReadingAnimationProps) => {
+  const colors = useIOColors();
   const [progressBarValue, setProgressBarValue] = useState(0);
   const progressAnimatedValue = useRef(new Animated.Value(0));
   const progressAnimation = useRef<Animated.CompositeAnimation | null>(null);
@@ -133,10 +134,10 @@ const CieCardReadingAnimation = ({
         }
         radius={imgSize / 2}
         size={imgSize}
-        strokeBgColor={IOColors["grey-100"]}
+        strokeBgColor={colors.stroke.default}
         strokeColor={
           readingState === ReadingState.error
-            ? IOColors["grey-100"]
+            ? colors.stroke.default
             : circleColor
         }
         strokeWidth={circleBorderWidth}

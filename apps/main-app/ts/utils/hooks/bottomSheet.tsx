@@ -8,12 +8,7 @@ import {
   BottomSheetScrollView,
   useBottomSheetModal
 } from "@gorhom/bottom-sheet";
-import {
-  IOColors,
-  IODimensions,
-  useIOTheme,
-  VSpacer
-} from "@io-app/design-system";
+import { IODimensions, useIOColors, VSpacer } from "@io-app/design-system";
 import { NonEmptyArray } from "fp-ts/lib/NonEmptyArray";
 import {
   JSX,
@@ -39,7 +34,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BottomSheetHeader } from "../../components/bottomSheet/BottomSheetHeader";
 import { useHardwareBackButtonToDismiss } from "../../hooks/useHardwareBackButton";
 import { isScreenReaderEnabled } from "../accessibility";
-import { useModalStyle } from "./useModalStyle";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -106,7 +100,6 @@ export const useIOBottomSheetModal = ({
   forceFullscreen
 }: BottomSheetOptions): IOBottomSheetModal => {
   const insets = useSafeAreaInsets();
-  const theme = useIOTheme();
   const { dismissAll } = useBottomSheetModal();
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const { onOpen, onClose } = useHardwareBackButtonToDismiss(dismissAll);
@@ -122,10 +115,9 @@ export const useIOBottomSheetModal = ({
     [dismissAll]
   );
 
-  const {
-    backdrop: { opacity: backdropOpacity },
-    modal: { backgroundColor }
-  } = useModalStyle();
+  const colors = useIOColors();
+  const backdropColor = colors.background.overlay;
+  const backgroundColor = colors.background.default;
 
   const header = <BottomSheetHeader onClose={dismissAll} title={title} />;
   const bottomSheetContent = (
@@ -164,10 +156,11 @@ export const useIOBottomSheetModal = ({
         {...backdropProps}
         appearsOnIndex={0}
         disappearsOnIndex={-1}
-        opacity={backdropOpacity}
+        opacity={1}
+        style={[backdropProps.style, { backgroundColor: backdropColor }]}
       />
     ),
-    [backdropOpacity]
+    [backdropColor]
   );
 
   useEffect(() => {
@@ -217,7 +210,7 @@ export const useIOBottomSheetModal = ({
               // bottomInset={insets.bottom}
               style={{
                 paddingBottom: insets.bottom,
-                backgroundColor: IOColors[theme["appBackground-primary"]]
+                backgroundColor
               }}
             >
               {footer}

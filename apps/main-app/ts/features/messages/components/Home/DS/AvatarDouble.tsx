@@ -1,11 +1,10 @@
 import {
-  hexToRgba,
   Icon,
   IOColors,
   IODimensions,
-  useIOTheme
+  useIOColors
 } from "@io-app/design-system";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import {
   Image,
   ImageSourcePropType,
@@ -23,7 +22,6 @@ type AvatarDoubleProps = {
 const avatarSize = IODimensions.size.avatar.xsmall;
 const avatarRadius = IODimensions.radius.avatar.xsmall;
 const avatarPadding = IODimensions.padding.avatar.xsmall;
-const avatarBorderLightMode = hexToRgba(IOColors.black, 0.1);
 
 const styles = StyleSheet.create({
   topContainer: {
@@ -32,14 +30,12 @@ const styles = StyleSheet.create({
   },
   avatarWrapper: {
     overflow: "hidden",
-    borderColor: avatarBorderLightMode,
     borderWidth: IODimensions.stroke.default,
     borderCurve: "continuous",
     position: "absolute"
   },
   avatarInnerWrapper: {
     overflow: "hidden",
-    backgroundColor: IOColors.white,
     borderCurve: "continuous"
   },
   avatarImage: {
@@ -76,8 +72,10 @@ const getImageState = (backgroundLogoUri?: ImageSourcePropType) => {
  * @returns
  */
 export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
-  const theme = useIOTheme();
-  const indexValue = useRef<number>(0);
+  const colors = useIOColors();
+  const [imageIndex, setImageIndex] = useState(0);
+  const logoKey = JSON.stringify(backgroundLogoUri); // compare by content rather than by reference
+  const [prevLogoKey, setPrevLogoKey] = useState(logoKey);
 
   const imageInitialState = useCallback(
     () => getImageState(backgroundLogoUri),
@@ -85,15 +83,21 @@ export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
   );
   const [imageSource, setImageSource] = useState(imageInitialState);
 
+  // A recycled list cell receives a different logo: restart from its first
+  // source instead of keeping the previous logo or its fallback
+  if (logoKey !== prevLogoKey) {
+    setPrevLogoKey(logoKey);
+    setImageIndex(0);
+    setImageSource(getImageState(backgroundLogoUri));
+  }
+
   const onError = () => {
     if (
       Array.isArray(backgroundLogoUri) &&
-      indexValue.current + 1 < backgroundLogoUri.length
+      imageIndex + 1 < backgroundLogoUri.length
     ) {
-      indexValue.current = indexValue.current + 1;
-      setImageSource(
-        addCacheTimestampToUri(backgroundLogoUri[indexValue.current])
-      );
+      setImageIndex(imageIndex + 1);
+      setImageSource(addCacheTimestampToUri(backgroundLogoUri[imageIndex + 1]));
       return;
     }
     setImageSource(undefined);
@@ -109,8 +113,11 @@ export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
             height: avatarSize,
             width: avatarSize,
             borderRadius: avatarRadius,
+            borderColor: colors.component.avatar.border,
             backgroundColor:
-              imageSource === undefined ? IOColors["grey-50"] : IOColors.white,
+              imageSource === undefined
+                ? colors.component.avatar.background.placeholder
+                : colors.component.avatar.background.logo,
             padding:
               imageSource === undefined
                 ? avatarPadding.placeholder
@@ -122,7 +129,7 @@ export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
       >
         {imageSource === undefined ? (
           <Icon
-            color={theme["icon-decorative"]}
+            color={colors.component.avatar.icon}
             name="institution"
             size={"100%"}
           />
@@ -131,6 +138,7 @@ export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
             style={[
               styles.avatarInnerWrapper,
               {
+                backgroundColor: colors.component.avatar.background.logo,
                 borderRadius: avatarRadius - avatarPadding.logo
               }
             ]}
@@ -140,6 +148,7 @@ export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
               onError={onError}
               source={imageSource}
               style={styles.avatarImage}
+              testID="avatar_double_background_image"
             />
           </View>
         )}
@@ -152,8 +161,11 @@ export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
             height: avatarSize,
             width: avatarSize,
             borderRadius: avatarRadius,
+            borderColor: colors.component.avatar.border,
             backgroundColor:
-              imageSource === undefined ? IOColors["grey-50"] : IOColors.white,
+              imageSource === undefined
+                ? colors.component.avatar.background.placeholder
+                : colors.component.avatar.background.logo,
             padding: 0,
             justifyContent: "center",
             alignItems: "center"
@@ -164,11 +176,16 @@ export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
           style={[
             styles.avatarInnerWrapper,
             {
+              backgroundColor: colors.component.avatar.background.logo,
               borderRadius: avatarRadius - avatarPadding.logo
             }
           ]}
         >
-          <Icon color="blueItalia-500" name="productPagoPA" size={20} />
+          <Icon
+            color={IOColors.light.icon.pagopa}
+            name="productPagoPA"
+            size={20}
+          />
         </View>
       </View>
     </View>

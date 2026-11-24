@@ -8,7 +8,6 @@ import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { call, delay, put, race, select, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 
-import { isPnRemoteEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { isTestEnv } from "../../../utils/environment";
 import { isFIMSLink } from "../../fims/singleSignOn/utils";
 import { trackPNPushOpened } from "../../pn/analytics";
@@ -78,8 +77,6 @@ function* dispatchSuccessAction(
   const attachmentCount =
     thirdPartyMessage?.third_party_message.attachments?.length ?? 0;
 
-  const isPnEnabled = yield* select(isPnRemoteEnabledSelector);
-
   const serviceId = paginatedMessage.serviceId;
   const hasFIMSCTA = computeHasFIMSCTA(
     messageDetails,
@@ -114,7 +111,7 @@ function* dispatchSuccessAction(
       hasFIMSCTA,
       hasRemoteContent: !!thirdPartyMessage,
       isLegacyGreenPass: !!messageDetails.euCovidCertificate?.authCode,
-      isPNMessage: isPnEnabled && isPNMessageCategory,
+      isPNMessage: isPNMessageCategory,
       messageId: paginatedMessage.id,
       organizationFiscalCode: paginatedMessage.organizationFiscalCode,
       organizationName: paginatedMessage.organizationName,

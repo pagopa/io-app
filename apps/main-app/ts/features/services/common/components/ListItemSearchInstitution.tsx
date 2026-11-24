@@ -7,7 +7,7 @@ import {
   Icon,
   IODimensions,
   IOListItemStyles,
-  useIOTheme,
+  useIOColors,
   useListItemAnimation,
   WithTestID
 } from "@io-app/design-system";
@@ -40,7 +40,7 @@ export const ListItemSearchInstitution = memo(
     testID,
     numberOfLines
   }: ListItemSearchInstitution) => {
-    const theme = useIOTheme();
+    const colors = useIOColors();
 
     const {
       onPressIn,
@@ -53,7 +53,7 @@ export const ListItemSearchInstitution = memo(
       <>
         {/* Let developer using a custom component (e.g: skeleton) */}
         {typeof value === "string" ? (
-          <H6 color={theme["textBody-default"]} numberOfLines={numberOfLines}>
+          <H6 color={colors.text.content.default} numberOfLines={numberOfLines}>
             {value}
           </H6>
         ) : (
@@ -62,7 +62,7 @@ export const ListItemSearchInstitution = memo(
         {description && (
           <>
             {typeof description === "string" ? (
-              <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
+              <BodySmall color={colors.text.content.tertiary} weight="Regular">
                 {description}
               </BodySmall>
             ) : (
@@ -107,7 +107,7 @@ export const ListItemSearchInstitution = memo(
               </View>
             </HStack>
             <Icon
-              color={theme["interactiveElem-default"]}
+              color={colors.icon.action}
               name="chevronRightListItem"
               size={IODimensions.size.icon.chevron}
             />

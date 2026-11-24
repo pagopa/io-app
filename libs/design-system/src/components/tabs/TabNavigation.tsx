@@ -31,7 +31,7 @@ const itemsJustify: Record<TabAlignment, FlexStyle["justifyContent"]> = {
 };
 
 const TabNavigation = ({
-  color = "light",
+  color = "primary",
   selectedIndex,
   tabAlignment = "center",
   onItemPress,

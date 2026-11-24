@@ -1,13 +1,14 @@
-import { IOColors, useIOTheme } from "@io-app/design-system";
+import { useIOColors } from "@io-app/design-system";
 import CookieManager from "@react-native-cookies/cookies";
 import I18n from "i18next";
 import {
-  createRef,
+  ComponentRef,
   Dispatch,
   ReactElement,
   SetStateAction,
   useCallback,
   useEffect,
+  useRef,
   useState
 } from "react";
 import { Platform, View } from "react-native";
@@ -38,8 +39,8 @@ import {
 } from "../../../activeSessionLogin/store/selectors";
 import { AUTH_LEVELS, getIdpLoginUri } from "../../../common/utils";
 import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
-import { isCieLoginUatEnabledSelector } from "../store/selectors";
-import { cieFlowForDevServerEnabled } from "../utils";
+import { cieEnvSelector } from "../store/selectors";
+import { cieFlowForDevServerEnabled, getCieEntityId } from "../utils";
 
 // to make sure the server recognizes the client as valid iPhone device (iOS only) we use a custom header
 // on Android it is not required
@@ -107,11 +108,6 @@ const generateRetryState: (state: InternalState) => InternalState = (
   key: state.key + 1
 });
 
-export enum CieEntityIds {
-  DEV = "xx_servizicie_coll",
-  PROD = "xx_servizicie"
-}
-
 type RequestInfo = RequestInfoAuthorizedState | RequestInfoLoadingState;
 
 type RequestInfoAuthorizedState = {
@@ -145,8 +141,7 @@ const CieWebView = (props: Props) => {
     nativeAttempts: 0
   });
 
-  const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
-  const CIE_IDP_ID = useCieUat ? CieEntityIds.DEV : CieEntityIds.PROD;
+  const CIE_IDP_ID = getCieEntityId(useIOSelector(cieEnvSelector));
   const remoteApiLoginUrlPrefix = useIOSelector(
     remoteApiLoginUrlPrefixSelector
   );
@@ -168,7 +163,7 @@ const CieWebView = (props: Props) => {
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
   const hashedFiscalCode = useIOSelector(hashedProfileFiscalCodeSelector);
 
-  const webView = createRef<WebView>();
+  const webViewRef = useRef<ComponentRef<typeof WebView>>(null);
   const { onSuccess } = props;
 
   const handleOnError = useCallback(
@@ -203,7 +198,7 @@ const CieWebView = (props: Props) => {
       url.indexOf("authnRequestString") !== -1
     ) {
       // avoid redirect and follow the 'happy path'
-      if (webView.current !== null) {
+      if (webViewRef.current !== null) {
         setInternalState(state => generateFoundAuthUrlState(url, state));
       }
       return false;
@@ -237,8 +232,8 @@ const CieWebView = (props: Props) => {
       handleOnError(new Error(eventTitle));
     }
     // inject JS on every page load end
-    if (injectJs && webView.current) {
-      webView.current.injectJavaScript(closeInjectedScript(injectJs));
+    if (injectJs) {
+      webViewRef.current?.injectJavaScript(closeInjectedScript(injectJs));
     }
   };
 
@@ -326,7 +321,7 @@ const CieWebView = (props: Props) => {
               onHttpError={handleOnError}
               onLoadEnd={handleOnLoadEnd}
               onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
-              ref={webView}
+              ref={webViewRef}
               source={{ uri: requestInfo.url } as WebViewSource}
               testID="webview"
               userAgent={defaultUserAgent}
@@ -340,13 +335,13 @@ const CieWebView = (props: Props) => {
 const ErrorComponent = (
   props: Pick<Props, "onClose"> & { onRetry: () => void }
 ) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <View
       style={{
         flex: 1,
-        backgroundColor: IOColors[theme["appBackground-primary"]]
+        backgroundColor: colors.background.default
       }}
     >
       <OperationResultScreenContent

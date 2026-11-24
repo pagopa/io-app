@@ -1,3 +1,4 @@
+/* eslint-disable @io-app/no-hardcoded-colors -- artwork gradients, see CODING_STANDARDS.md#colors */
 import { useIOThemeContext } from "@io-app/design-system";
 import {
   Canvas,
@@ -17,9 +18,10 @@ import {
 } from "react-native-reanimated";
 
 import { RotationSensor } from "../../../../components/RotationSensor";
+import { useFeatureColors } from "../../../../hooks/useFeatureColors";
 import { useRotationEffectEnabled } from "../../../../hooks/useRotationSensor";
+import { itwColors } from "../../colors";
 import { useLayoutSize } from "../hooks/useLayoutSize";
-import { useItWalletTheme } from "../utils/theme";
 import { ItwBrandedSkiaBorder } from "./ItwBrandedSkiaBorder";
 import { ItwSkiaBrandedGradientVariant } from "./ItwBrandedSkiaGradient";
 
@@ -52,7 +54,7 @@ export const ItwBrandedBox = ({
   children,
   style: customStyle
 }: PropsWithChildren<ItwIridescentBorderProps>) => {
-  const theme = useItWalletTheme();
+  const colors = useFeatureColors(itwColors);
   const { themeType } = useIOThemeContext();
   const isLightMode = themeType === "light";
   const shouldUseGradientBackground =
@@ -73,7 +75,7 @@ export const ItwBrandedBox = ({
         customStyle,
         {
           borderRadius,
-          backgroundColor: theme["banner-background"]
+          backgroundColor: colors.brandedBox.background
         }
       ]}
     >

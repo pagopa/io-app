@@ -9,7 +9,6 @@ import {
 } from "react";
 import {
   AccessibilityInfo,
-  ColorValue,
   LayoutChangeEvent,
   Platform,
   Pressable,
@@ -21,15 +20,14 @@ import {
 } from "react-native";
 import Animated, {
   Easing,
-  interpolateColor,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
   WithTimingConfig
 } from "react-native-reanimated";
 
-import { useIONewTypeface, useIOTheme } from "../../context";
-import { hexToRgba, IOColors, IODimensions } from "../../core";
+import { useIOColors, useIONewTypeface } from "../../context";
+import { IODimensions, IOOpacity, withAlpha } from "../../core";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import {
   IOFontSize,
@@ -49,7 +47,6 @@ type InputTextProps = WithTestID<{
   accessibilityHint?: string;
   accessibilityLabel?: string;
   bottomMessage?: string;
-  bottomMessageColor?: IOColors;
   counterLimit?: number;
   disabled?: boolean;
   icon?: IOIcons;
@@ -81,7 +78,6 @@ const inputRadius = IODimensions.radius.textInput;
 const inputTransitionDuration = 250;
 const inputLabelScaleFactor = 0.75; /* 16pt becomes 12pt */
 const inputLabelFontSize: IOFontSize = 16;
-const inputDisabledOpacity = 0.5;
 const inputRightElementMargin = IODimensions.gap.textInput.trailing;
 const iconSize = IODimensions.size.icon.textInput;
 const iconMargin = IODimensions.gap.textInput.leading;
@@ -130,10 +126,10 @@ const styles = StyleSheet.create({
 type InputTextHelperRow = Pick<
   InputTextProps,
   | "bottomMessage"
-  | "bottomMessageColor"
   | "counterLimit"
   | "inputType"
   | "showCounterOnlyWhenLimitReached"
+  | "status"
   | "textInputProps"
   | "value"
 >;
@@ -143,11 +139,11 @@ const HelperRow = ({
   counterLimit,
   showCounterOnlyWhenLimitReached,
   bottomMessage,
-  bottomMessageColor,
+  status,
   inputType,
   textInputProps
 }: InputTextHelperRow) => {
-  const theme = useIOTheme();
+  const textInputColors = useIOColors().component.textInput;
 
   const valueCount =
     inputType === "default" ? value.length : value.replace(/\s/g, "").length;
@@ -159,9 +155,11 @@ const HelperRow = ({
     return `${value}, ${valueCount}`;
   }, [value, valueCount, counterLimit, textInputProps]);
 
-  const bottomMessageColorDefault: IOColors = theme["textBody-tertiary"];
-  const bottomMessageColorValue =
-    bottomMessageColor ?? bottomMessageColorDefault;
+  /* Set by `TextInputValidation`, which announces the error itself: red, hidden from screen readers */
+  const isErrorMessage = status === "error";
+  const bottomMessageColor = isErrorMessage
+    ? textInputColors.helper.error
+    : textInputColors.helper.default;
 
   const shouldShowCounter =
     counterLimit != null &&
@@ -190,9 +188,9 @@ const HelperRow = ({
   return (
     <View
       // in case of error message the element should be ignored by VO or Talkback
-      accessibilityElementsHidden={bottomMessageColor === "error-600"}
+      accessibilityElementsHidden={isErrorMessage}
       importantForAccessibility={
-        bottomMessageColor === "error-600" ? "no-hide-descendants" : "auto"
+        isErrorMessage ? "no-hide-descendants" : "auto"
       }
       style={[
         {
@@ -204,7 +202,7 @@ const HelperRow = ({
       ]}
     >
       {bottomMessage && (
-        <BodySmall color={bottomMessageColorValue} weight="Regular">
+        <BodySmall color={bottomMessageColor} weight="Regular">
           {bottomMessage}
         </BodySmall>
       )}
@@ -212,7 +210,7 @@ const HelperRow = ({
         <BodySmall
           accessibilityLabel={helperAccessibilityLabel}
           accessibilityLiveRegion="polite"
-          color={bottomMessageColorValue}
+          color={bottomMessageColor}
           weight="Regular"
         >{`${valueCount} / ${counterLimit}`}</BodySmall>
       )}
@@ -237,7 +235,6 @@ export const TextInputBase = ({
   showCounterOnlyWhenLimitReached,
   accessibilityAnnounceLimitReached,
   bottomMessage,
-  bottomMessageColor,
   onBlur,
   onFocus,
   isPassword,
@@ -256,12 +253,7 @@ export const TextInputBase = ({
   const { newTypefaceEnabled } = useIONewTypeface();
   const { dynamicFontScale, spacingScaleMultiplier } = useIOFontDynamicScale();
 
-  const theme = useIOTheme();
-  const iconColor: IOColors = theme["icon-decorative"];
-  const inputLabelColor: ColorValue = IOColors[theme["textInputLabel-default"]];
-  const inputTextColor: ColorValue = IOColors[theme["textInputValue-default"]];
-  const inputDisabledTextColor: ColorValue =
-    IOColors[theme["textInputValue-disabled"]];
+  const textInputColors = useIOColors().component.textInput;
 
   /* Get the label width to enable the correct translation */
   const [labelWidth, setLabelWidth] = useState<number>(0);
@@ -279,17 +271,8 @@ export const TextInputBase = ({
   }, [status]);
 
   /* Visual attributes */
-  const appBackground: ColorValue = IOColors[theme["appBackground-primary"]];
-
-  const borderColorMap: Record<InputStatus, string> = useMemo(
-    () => ({
-      initial: IOColors[theme["textInputBorder-default"]],
-      disabled: IOColors[theme["textInputBorder-default"]],
-      focused: IOColors[theme["interactiveElem-default"]],
-      error: IOColors[theme.errorText]
-    }),
-    [theme]
-  );
+  const appBackground = textInputColors.background;
+  const borderColorMap = textInputColors.border;
 
   const easingConf: WithTimingConfig = {
     duration: inputTransitionDuration,
@@ -327,19 +310,11 @@ export const TextInputBase = ({
     };
   });
 
-  /* Interpolate border color based on input status,
-     but not apply the transition on `focus` state
-     because it's already managed by the
+  /* The `focused` border is the inner one, managed by
      `animatedInnerBorderStyle` */
   const animatedOuterBorderStyle = useAnimatedStyle(() => ({
     borderColor:
-      inputStatus !== "focused"
-        ? interpolateColor(
-            1,
-            [0, 1],
-            [borderColorMap.initial, borderColorMap[inputStatus]]
-          )
-        : borderColorMap.initial
+      inputStatus === "error" ? borderColorMap.error : borderColorMap.default
   }));
 
   const animatedInnerBorderStyle = useAnimatedStyle(() => ({
@@ -442,7 +417,7 @@ export const TextInputBase = ({
         importantForAccessibility="no"
         onPress={onTextInputPress}
         style={[
-          inputStatus === "disabled" ? { opacity: inputDisabledOpacity } : {},
+          inputStatus === "disabled" ? { opacity: IOOpacity.disabled } : {},
           styles.textInput,
           {
             paddingHorizontal:
@@ -469,7 +444,7 @@ export const TextInputBase = ({
           <>
             <Icon
               allowFontScaling
-              color={iconColor}
+              color={textInputColors.icon.default}
               name={icon}
               size={iconSize}
             />
@@ -490,8 +465,9 @@ export const TextInputBase = ({
           accessibilityState={{ disabled }}
           accessible
           autoFocus={false}
+          // TODO: replace the deprecated `blurOnSubmit` with `submitBehavior="blurAndSubmit"`
           blurOnSubmit={true}
-          cursorColor={IOColors[theme["interactiveElem-default"]]} // Caret Android
+          cursorColor={textInputColors.caret} // Caret Android
           disableFullscreenUI={true}
           editable={!disabled}
           importantForAccessibility="yes"
@@ -501,7 +477,7 @@ export const TextInputBase = ({
           onChangeText={onChangeTextHandler}
           onFocus={onFocusHandler}
           secureTextEntry={isSecretInput}
-          selectionColor={IOColors[theme["interactiveElem-default"]]} // Caret on iOS
+          selectionColor={textInputColors.caret} // Caret on iOS
           style={[
             {
               ...makeFontStyleObject(
@@ -512,9 +488,11 @@ export const TextInputBase = ({
               )
             },
             styles.textInputStyle,
-            !disabled
-              ? { color: inputTextColor }
-              : { color: inputDisabledTextColor }
+            {
+              color: disabled
+                ? textInputColors.foreground.disabled
+                : textInputColors.foreground.default
+            }
           ]}
           value={inputValue}
         />
@@ -555,7 +533,7 @@ export const TextInputBase = ({
                   undefined,
                   "Regular"
                 ),
-                color: inputLabelColor
+                color: textInputColors.label
               },
               animatedLabelStyle
             ]}
@@ -573,7 +551,7 @@ export const TextInputBase = ({
             }}
           >
             <LinearGradient
-              colors={[hexToRgba(appBackground, 0), appBackground]}
+              colors={[withAlpha(appBackground, 0), appBackground]}
               end={{ x: 1, y: 0.5 }}
               start={{ x: 0, y: 0.5 }}
               style={{
@@ -600,10 +578,10 @@ export const TextInputBase = ({
       {(bottomMessage || activeCounterLimit != null) && (
         <HelperRow
           bottomMessage={bottomMessage}
-          bottomMessageColor={bottomMessageColor}
           counterLimit={counterLimit}
           inputType={inputType}
           showCounterOnlyWhenLimitReached={showCounterOnlyWhenLimitReached}
+          status={status}
           textInputProps={textInputProps}
           value={inputValue}
         />

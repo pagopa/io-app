@@ -2,9 +2,9 @@ import {
   BodySmall,
   ContentWrapper,
   H4,
-  IOColors,
   Pictogram,
-  useIOTheme,
+  ProgressLoader,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
@@ -16,7 +16,6 @@ import {
   CountdownProvider,
   useCountdown
 } from "../../../components/countdown/CountdownProvider";
-import { ProgressIndicator } from "../../../components/ui/ProgressIndicator";
 import { useIODispatch } from "../../../store/hooks";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { identificationHideLockModal } from "../store/actions";
@@ -53,7 +52,7 @@ const Countdown = (props: CountdownProps) => {
 
   return (
     <>
-      <ProgressIndicator progress={loaderValue} />
+      <ProgressLoader progress={loaderValue} />
       <VSpacer size={8} />
       <View style={{ flexDirection: "row" }}>
         <BodySmall weight="Regular">{waitMessageText}</BodySmall>
@@ -68,7 +67,7 @@ const Countdown = (props: CountdownProps) => {
   A countdown is displayed indicating how long it is to unlock the application.
 */
 export const IdentificationLockModal = (props: Props) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const { countdownInMs, timeSpanInSeconds } = props;
   const timerTiming = Math.round((countdownInMs as number) / 1000);
 
@@ -83,7 +82,7 @@ export const IdentificationLockModal = (props: Props) => {
         style={{
           flex: 1,
           justifyContent: "center",
-          backgroundColor: IOColors[theme["appBackground-primary"]]
+          backgroundColor: colors.background.default
         }}
       >
         <ContentWrapper>

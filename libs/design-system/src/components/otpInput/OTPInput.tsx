@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { useIOTheme } from "../../context";
+import { useIOColors } from "../../context";
 import { IODimensions } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useErrorShakeAnimation } from "../../utils/hooks/useErrorShakeAnimation";
@@ -83,7 +83,7 @@ export const OTPInput = ({
   const [hasError, setHasError] = useState(false);
   const isSecret = props.secret === true;
 
-  const theme = useIOTheme();
+  const otpInputColors = useIOColors().component.otpInput;
 
   const { translate, animatedStyle, shakeAnimation } = useErrorShakeAnimation();
 
@@ -223,7 +223,7 @@ export const OTPInput = ({
       <VSpacer size={IODimensions.gap.otpInput.error} />
       {hasError && errorMessage && (
         <BodySmall
-          color={theme.errorText}
+          color={otpInputColors.helper.error}
           style={{ textAlign: "center" }}
           weight="Semibold"
         >

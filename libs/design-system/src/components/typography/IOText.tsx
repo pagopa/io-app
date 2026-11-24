@@ -9,7 +9,7 @@ import {
 import Animated from "react-native-reanimated";
 
 import { useIONewTypeface } from "../../context";
-import { IOColors } from "../../core";
+import { IOTokenColor } from "../../core";
 import { useBoldTextEnabled } from "../../utils/accessibility";
 import {
   IOFontFamily,
@@ -38,10 +38,10 @@ export type TypographicStyleAsLinkProps =
       accessibilityRole?: Extract<AccessibilityRole, "button" | "link">;
       asLink: true;
       avoidPressable?: true;
-      color?: IOColors;
+      color?: IOTokenColor;
       onPress: (event: GestureResponderEvent) => void;
     }
-  | { asLink?: false; avoidPressable?: false; color?: IOColors };
+  | { asLink?: false; avoidPressable?: false; color?: IOTokenColor };
 
 export type TypographicStyleProps = Omit<
   IOTextProps,
@@ -56,7 +56,7 @@ export type TypographicStyleProps = Omit<
  * default StyleProp<TextStyle>
  */
 type IOTextBaseProps = {
-  color?: IOColors;
+  color?: IOTokenColor;
   font?: IOFontFamily;
   fontStyle?: TextStyle["fontStyle"];
   lineHeight?: TextStyle["lineHeight"];
@@ -72,16 +72,15 @@ type IOTextExcludedProps = Omit<ComponentPropsWithRef<typeof Text>, "style">;
  * Decorate the function {@link makeFontStyleObject} with the additional color
  * calculation.
  *
- * @param color A value key from {@link IOColors}, transformed here in
- *   {@link ColorValue}
+ * @param color A color token
  * @param args The args of the function {@link makeFontStyleObject}
  */
 const calculateTextStyle = (
-  color?: IOColors,
+  color?: IOTokenColor,
   ...args: Parameters<typeof makeFontStyleObject>
 ) => ({
   ...makeFontStyleObject(...args),
-  color: color ? IOColors[color] : undefined
+  color
 });
 
 /**
@@ -130,7 +129,7 @@ const IOTextBase = ({
 
   /* In some cases, for example when we use color transitions with
     `reanimated` we need to manage chromatic values as `ColorValue`
-    or `string` (not `IOColors`). So we keep a way to override
+    or `string` (not `IOTokenColor`). So we keep a way to override
     the the `color' attribute without giving the ability to
     override all other all other typographic attributes
     through the `style' prop. */

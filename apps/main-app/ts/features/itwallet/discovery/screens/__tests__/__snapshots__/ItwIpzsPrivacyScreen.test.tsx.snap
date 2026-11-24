@@ -1087,7 +1087,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                   fraudulentWebsiteWarningEnabled={true}
                                   hasOnFileDownload={false}
                                   hasOnOpenWindowEvent={false}
-                                  injectedJavaScript="const meta = document.createElement('meta');meta.setAttribute('content', 'width=device-width, initial-scale=0.99, maximum-scale=0.99, user-scalable=0');meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta);;function sendHeight() {var html = document.documentElement;window.ReactNativeWebView.postMessage(html.offsetHeight);}window.addEventListener("load", sendHeight);window.addEventListener("resize", sendHeight);sendHeight();true;"
+                                  injectedJavaScript="const meta = document.createElement('meta');meta.setAttribute('content', 'width=device-width, initial-scale=0.99, maximum-scale=0.99, user-scalable=0');meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta);;(function () {var style = document.getElementById('io-privacy-style');if (!style) {style = document.createElement('style');style.id = 'io-privacy-style';document.head.appendChild(style);}style.textContent = "\\nhtml, body, body * {\\nbackground-color: #FFFFFF !important;\\ncolor: #0E0F13 !important;\\n-webkit-text-size-adjust: 150% !important;\\n}\\na, a * { color: #0B3EE3 !important; }\\n";window.dispatchEvent(new Event('resize'));})();;function sendHeight() {var html = document.documentElement;window.ReactNativeWebView.postMessage(html.offsetHeight);}window.addEventListener("load", sendHeight);window.addEventListener("resize", sendHeight);sendHeight();new ResizeObserver(sendHeight).observe(document.body);true;"
                                   injectedJavaScriptBeforeContentLoadedForMainFrameOnly={true}
                                   injectedJavaScriptForMainFrameOnly={true}
                                   javaScriptEnabled={true}
@@ -1122,12 +1122,13 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                         "backgroundColor": "#ffffff",
                                       },
                                       {
+                                        "backgroundColor": "#FFFFFF",
                                         "height": 0,
                                       },
                                     ]
                                   }
                                   textInteractionEnabled={true}
-                                  textZoom={100}
+                                  textZoom={150}
                                   useSharedProcessPool={true}
                                 />
                               </View>
@@ -2616,7 +2617,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                   fraudulentWebsiteWarningEnabled={true}
                                   hasOnFileDownload={false}
                                   hasOnOpenWindowEvent={false}
-                                  injectedJavaScript="const meta = document.createElement('meta');meta.setAttribute('content', 'width=device-width, initial-scale=0.99, maximum-scale=0.99, user-scalable=0');meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta);;function sendHeight() {var html = document.documentElement;window.ReactNativeWebView.postMessage(html.offsetHeight);}window.addEventListener("load", sendHeight);window.addEventListener("resize", sendHeight);sendHeight();true;"
+                                  injectedJavaScript="const meta = document.createElement('meta');meta.setAttribute('content', 'width=device-width, initial-scale=0.99, maximum-scale=0.99, user-scalable=0');meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta);;(function () {var style = document.getElementById('io-privacy-style');if (!style) {style = document.createElement('style');style.id = 'io-privacy-style';document.head.appendChild(style);}style.textContent = "\\nhtml, body, body * {\\nbackground-color: #FFFFFF !important;\\ncolor: #0E0F13 !important;\\n-webkit-text-size-adjust: 150% !important;\\n}\\na, a * { color: #0B3EE3 !important; }\\n";window.dispatchEvent(new Event('resize'));})();;function sendHeight() {var html = document.documentElement;window.ReactNativeWebView.postMessage(html.offsetHeight);}window.addEventListener("load", sendHeight);window.addEventListener("resize", sendHeight);sendHeight();new ResizeObserver(sendHeight).observe(document.body);true;"
                                   injectedJavaScriptBeforeContentLoadedForMainFrameOnly={true}
                                   injectedJavaScriptForMainFrameOnly={true}
                                   javaScriptEnabled={true}
@@ -2651,12 +2652,13 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                         "backgroundColor": "#ffffff",
                                       },
                                       {
+                                        "backgroundColor": "#FFFFFF",
                                         "height": 0,
                                       },
                                     ]
                                   }
                                   textInteractionEnabled={true}
-                                  textZoom={100}
+                                  textZoom={150}
                                   useSharedProcessPool={true}
                                 />
                               </View>

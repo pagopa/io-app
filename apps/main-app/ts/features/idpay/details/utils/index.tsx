@@ -2,24 +2,25 @@ import {
   InitiativeDTO,
   VoucherStatusEnum
 } from "@io-app/api-types/generated/definitions/idpay/InitiativeDTO";
-import { LabelMini, Tag, useIOThemeContext } from "@io-app/design-system";
+import { LabelMini, Tag } from "@io-app/design-system";
 import I18n from "i18next";
 
+import { useFeatureColors } from "../../../../hooks/useFeatureColors";
 import { format } from "../../../../utils/dates";
+import { idPayColors } from "../../colors";
 
 type InitiativeProps = {
   initiative: InitiativeDTO;
 };
 
 export function IdPayCardStatus({ initiative }: InitiativeProps) {
-  const { themeType } = useIOThemeContext();
-  const isDark = themeType === "dark";
+  const { cardStatus } = useFeatureColors(idPayColors);
   switch (initiative.voucherStatus) {
     case VoucherStatusEnum.ACTIVE:
       return (
         initiative.voucherEndDate && (
           <LabelMini
-            color={isDark ? "white" : "grey-650"}
+            color={cardStatus}
             testID="idpay-card-status-active"
             weight="Regular"
           >
