@@ -2,10 +2,9 @@ import {
   BodySmall,
   ContentWrapper,
   H4,
-  IOColorsLegacy,
   Pictogram,
   ProgressLoader,
-  useIOTheme,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
@@ -68,7 +67,7 @@ const Countdown = (props: CountdownProps) => {
   A countdown is displayed indicating how long it is to unlock the application.
 */
 export const IdentificationLockModal = (props: Props) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const { countdownInMs, timeSpanInSeconds } = props;
   const timerTiming = Math.round((countdownInMs as number) / 1000);
 
@@ -83,7 +82,7 @@ export const IdentificationLockModal = (props: Props) => {
         style={{
           flex: 1,
           justifyContent: "center",
-          backgroundColor: IOColorsLegacy[theme["appBackground-primary"]]
+          backgroundColor: colors.background.default
         }}
       >
         <ContentWrapper>

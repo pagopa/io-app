@@ -1,7 +1,7 @@
 import {
   H3,
   IOSkeleton,
-  IOTextColor,
+  IOTokenColor,
   LabelMini,
   VSpacer
 } from "@io-app/design-system";
@@ -36,7 +36,7 @@ type BaseProps = {
 
 type BonusCardCounterProps = BonusCardCounter & {
   /** The card's text color */
-  labelColor: IOTextColor;
+  labelColor: IOTokenColor;
 };
 
 type CounterType = "Value" | "ValueWithProgress";

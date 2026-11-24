@@ -4,7 +4,7 @@ import {
   LevelEnum,
   SectionStatus
 } from "@io-app/api-types/generated/definitions/content/SectionStatus";
-import { IOColorsLegacy } from "@io-app/design-system";
+import { IOColors } from "@io-app/design-system";
 import { fireEvent } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
@@ -95,9 +95,9 @@ describe("SectionStatusComponent", () => {
   });
 
   [
-    [LevelEnum.normal, IOColorsLegacy["info-100"]],
-    [LevelEnum.warning, IOColorsLegacy["warning-100"]],
-    [LevelEnum.critical, IOColorsLegacy["error-100"]]
+    [LevelEnum.normal, IOColors.light.surface.info],
+    [LevelEnum.warning, IOColors.light.surface.warning],
+    [LevelEnum.critical, IOColors.light.surface.error]
   ].forEach(([level, color]) => {
     describe(`given the level ${level}`, () => {
       const store = mockStore(

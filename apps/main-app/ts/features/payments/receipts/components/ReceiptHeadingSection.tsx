@@ -1,11 +1,6 @@
 import { CartItem } from "@io-app/api-types/generated/definitions/pagopa/biz-events/CartItem";
 import { NoticeDetailResponse } from "@io-app/api-types/generated/definitions/pagopa/biz-events/NoticeDetailResponse";
-import {
-  ContentWrapper,
-  IOColorsLegacy,
-  useIOTheme,
-  VStack
-} from "@io-app/design-system";
+import { ContentWrapper, useIOColors, VStack } from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
 
 import { Psp } from "../../../../types/pagopa";
@@ -25,8 +20,8 @@ type Props = {
 export const ReceiptHeadingSection = ({ transaction, isLoading }: Props) => {
   const navigation = useNavigation<ReceiptStackNavigation>();
 
-  const theme = useIOTheme();
-  const backgroundColor = IOColorsLegacy[theme["appBackground-primary"]];
+  const colors = useIOColors();
+  const backgroundColor = colors.surface.default;
 
   const transactionInfo = transaction?.infoNotice;
 

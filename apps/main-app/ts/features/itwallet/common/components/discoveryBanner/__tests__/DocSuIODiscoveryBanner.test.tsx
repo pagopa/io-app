@@ -11,7 +11,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/
 import * as connectivitySelectors from "../../../../../connectivity/store/selectors";
 import * as ingressSelectors from "../../../../../ingress/store/selectors";
 import * as useItwDiscoveryBannerTypeModule from "../../../hooks/useItwDiscoveryBannerType";
-import { ItwDiscoveryBannerLegacy } from "../ItwDiscoveryBanner";
+import { DocSuIODiscoveryBanner } from "../DocSuIODiscoveryBanner";
 
 const mockNavigate = jest.fn();
 const mockToastError = jest.fn();
@@ -43,7 +43,7 @@ jest.mock("../../../hooks/useItwDiscoveryBannerType.ts", () => ({
   useItwDiscoveryBannerType: jest.fn()
 }));
 
-describe("ItwDiscoveryBanner", () => {
+describe("DocSuIODiscoveryBanner", () => {
   beforeEach(() => {
     jest
       .spyOn(useItwDiscoveryBannerTypeModule, "useItwDiscoveryBannerType")
@@ -107,7 +107,7 @@ const renderComponent = () => {
 
   return {
     component: renderScreenWithNavigationStoreContext<GlobalState>(
-      ItwDiscoveryBannerLegacy,
+      DocSuIODiscoveryBanner,
       ROUTES.WALLET_HOME,
       {},
       store
