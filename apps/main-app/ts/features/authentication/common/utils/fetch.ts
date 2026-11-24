@@ -44,6 +44,16 @@ export const isTimeoutResponse = (
 ): response is FetchFailureResponse =>
   isFailureResponse(response) && response.reason === "timeout";
 
+export const isNetworkErrorResponse = (
+  response: FetchResponse
+): response is FetchFailureResponse =>
+  isFailureResponse(response) && response.reason === "network-error";
+
+export const isRetryableStatusResponse = (
+  response: FetchResponse
+): response is FetchFailureResponse =>
+  isFailureResponse(response) && response.reason === "retryable-status";
+
 export const isNoAttemptsResponse = (
   response: FetchResponse
 ): response is FetchFailureResponse =>
