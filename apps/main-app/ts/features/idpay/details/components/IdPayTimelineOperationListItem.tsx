@@ -40,8 +40,10 @@ import {
 } from "@io-app/api-types/generated/definitions/idpay/UnsubscribeOperationDTO";
 import {
   Icon,
+  IOIcons,
   ListItemTransaction,
   ListItemTransactionLogo,
+  useIOColors,
   WithTestID
 } from "@io-app/design-system";
 import I18n from "i18next";
@@ -97,6 +99,11 @@ export const IdPayTimelineOperationListItem = (
   );
 };
 
+/** Fallback logo of an operation without a brand logo */
+const OperationLogoIcon = (props: WithTestID<{ name: IOIcons }>) => (
+  <Icon color={useIOColors().icon.decorative} {...props} />
+);
+
 const getOperationProps = (operation: OperationListDTO) => {
   switch (operation.operationType) {
     case IbanOperationTypeEnum.ADD_IBAN:
@@ -148,7 +155,7 @@ const getTransactionOperationProps = (
   const isReversal = operationType === TransactionOperationTypeEnum.REVERSAL;
 
   const paymentLogoIcon: ListItemTransactionLogo = brand || (
-    <Icon color="grey-300" name={iconName} testID="genericLogoTestID" />
+    <OperationLogoIcon name={iconName} testID="genericLogoTestID" />
   );
 
   const label: string =
@@ -262,8 +269,7 @@ const getInstrumentOperationProps = (
   const getLogo = () => {
     if (instrumentType === InstrumentTypeEnum.IDPAYCODE) {
       return (
-        <Icon
-          color="grey-300"
+        <OperationLogoIcon
           name={"fiscalCodeIndividual"}
           testID="fiscalCodeLogoTestID"
         />
@@ -271,11 +277,7 @@ const getInstrumentOperationProps = (
     }
     return (
       brand || (
-        <Icon
-          color="grey-300"
-          name={"creditCard"}
-          testID="creditCardLogoTestID"
-        />
+        <OperationLogoIcon name={"creditCard"} testID="creditCardLogoTestID" />
       )
     );
   };
@@ -303,7 +305,7 @@ const getIbanOperationProps = (
   operation: IbanOperationDTO
 ): ListItemTransaction => ({
   paymentLogoIcon: (
-    <Icon color="grey-300" name={"institution"} testID="ibanLogoTestID" />
+    <OperationLogoIcon name={"institution"} testID="ibanLogoTestID" />
   ),
   label: I18n.t(
     `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.ADD_IBAN`
@@ -316,7 +318,7 @@ const getOnboardingOperationProps = (
   operation: OnboardingOperationDTO
 ): ListItemTransaction => ({
   paymentLogoIcon: (
-    <Icon color="grey-300" name={"checkTick"} testID="onboardingLogoTestID" />
+    <OperationLogoIcon name={"checkTick"} testID="onboardingLogoTestID" />
   ),
   label: I18n.t(
     `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.ONBOARDING`
@@ -332,7 +334,7 @@ const getRefundOperationProps = (
   const isRejected = operationType === RefundOperationTypeEnum.REJECTED_REFUND;
 
   const paymentLogoIcon = (
-    <Icon color="grey-300" name={"refund"} testID="refundLogoTestID" />
+    <OperationLogoIcon name={"refund"} testID="refundLogoTestID" />
   );
   const label = I18n.t(
     `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.REFUND`
@@ -368,7 +370,7 @@ const getSuspendOperationProps = (
   operation: SuspendOperationDTO
 ): ListItemTransaction => ({
   paymentLogoIcon: (
-    <Icon color="grey-300" name={"notice"} testID="creditCardLogoTestID" />
+    <OperationLogoIcon name={"notice"} testID="creditCardLogoTestID" />
   ),
   label: I18n.t(
     `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.SUSPENDED`
@@ -381,11 +383,7 @@ const getReadmittedOperationProps = (
   operation: ReadmittedOperationDTO
 ): ListItemTransaction => ({
   paymentLogoIcon: (
-    <Icon
-      color="grey-300"
-      name={"checkTickBig"}
-      testID="creditCardLogoTestID"
-    />
+    <OperationLogoIcon name={"checkTickBig"} testID="creditCardLogoTestID" />
   ),
   label: I18n.t(
     `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.READMITTED`
@@ -397,7 +395,7 @@ const getUnsubscribedOperationProps = (
   operation: UnsubscribeOperationDTO
 ): ListItemTransaction => ({
   paymentLogoIcon: (
-    <Icon color="grey-300" name={"closeSmall"} testID="creditCardLogoTestID" />
+    <OperationLogoIcon name={"closeSmall"} testID="creditCardLogoTestID" />
   ),
   label: I18n.t(
     `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.UNSUBSCRIBED`

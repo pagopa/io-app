@@ -37,7 +37,7 @@ const WalletEmptyScreenContent = () => {
         testID="walletEmptyScreenContentItWalletTestID"
       >
         <ItwDeckImage height={80} width={140} />
-        <Body color="grey-650" style={styles.text} weight="Regular">
+        <Body style={styles.text} weight="Regular">
           {I18n.t("features.wallet.home.screen.emptyMessage")}
         </Body>
         <IOButton
@@ -54,7 +54,7 @@ const WalletEmptyScreenContent = () => {
   return (
     <View style={styles.container} testID="walletEmptyScreenContentTestID">
       <Pictogram name="cardAdd" />
-      <Body color="grey-650" style={styles.text} weight="Regular">
+      <Body style={styles.text} weight="Regular">
         {I18n.t("features.wallet.home.screen.legacy.emptyMessage")}
       </Body>
       <IOButton

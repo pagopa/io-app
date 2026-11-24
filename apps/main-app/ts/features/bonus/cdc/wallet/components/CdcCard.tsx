@@ -15,6 +15,8 @@ import { StyleSheet, View } from "react-native";
 import WalletCardShape from "../../../../../../img/features/cdc/cdc_wallet_card.svg";
 import DarkModeWalletCardShape from "../../../../../../img/features/cdc/cdc_wallet_card_dark.svg";
 import { contentRepoUrl } from "../../../../../config.ts";
+import { useFeatureColors } from "../../../../../hooks/useFeatureColors";
+import { cdcColors } from "../../colors";
 
 export type CdcCardProps = CitizenStatus;
 
@@ -26,7 +28,7 @@ export const CdcCard = (props: CdcCardProps) => {
   const { themeType } = useIOThemeContext();
 
   const isDarkMode = themeType === "dark";
-  const textColor = isDarkMode ? "blueIO-50" : "blueIO-850";
+  const textColor = useFeatureColors(cdcColors).walletCard.foreground;
 
   return (
     <View style={styles.container}>

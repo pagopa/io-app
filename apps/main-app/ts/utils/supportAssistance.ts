@@ -37,14 +37,14 @@ export const anonymousAssistanceAddressWithSubject = (
     )
   )}`;
 
-export const zendeskDefaultJwtConfig: ZendeskAppConfig = {
+const zendeskDefaultJwtConfig: ZendeskAppConfig = {
   key: "mp9agCp6LWusBxvHIGbeBmfI0wMeLIJM",
   appId: "4ed72c757f79ed15dfa46546dcb672fc86a0af949a119156",
   clientId: "mobile_sdk_client_28679ae6f72da9ab5ef0",
   url: "https://appio.zendesk.com",
   logId
 };
-export const zendeskDefaultAnonymousConfig: ZendeskAppConfig = {
+const zendeskDefaultAnonymousConfig: ZendeskAppConfig = {
   key: "mp9agCp6LWusBxvHIGbeBmfI0wMeLIJM",
   appId: "a6f500a77dc0bd00f25a5306e4217ea37c11d0e7fed1e768",
   clientId: "mobile_sdk_client_aa8f9ebd96018279049b",
@@ -89,7 +89,7 @@ export const openSupportTicket = ZendDesk.openTicket;
 export const showSupportTickets = ZendDesk.showTickets;
 export const resetCustomFields = ZendDesk.resetCustomFields;
 export const resetLog = ZendDesk.resetLog;
-export const resetTag = ZendDesk.resetTags;
+const resetTag = ZendDesk.resetTags;
 export const addTicketCustomField = ZendDesk.addTicketCustomField;
 export const appendLog = ZendDesk.appendLog;
 export const hasOpenedTickets = ZendDesk.hasOpenedTickets;
@@ -100,7 +100,6 @@ export const addTicketTag = ZendDesk.addTicketTag;
  */
 export const dismissSupport = ZendDesk.dismiss;
 export const zendeskCategoryId = "1900004702053";
-export const zendeskBlockedPaymentRptIdId = "4414297346833";
 export const zendeskPaymentOrgFiscalCode = "13442126418705";
 export const zendeskPaymentStartOrigin = "13442129971473";
 export const zendeskPaymentFailure = "13442145527057";
@@ -124,14 +123,6 @@ export const defaultZendeskPaymentCategory: ZendeskCategory = {
   }
 };
 
-export const zendeskPaymentMethodCategory: ZendeskCategory = {
-  value: "metodo_di_pagamento",
-  description: {
-    "it-IT": "Metodo di pagamento",
-    "en-EN": "Payment method",
-    "de-DE": "Zahlungsmethode"
-  }
-};
 export const zendeskFCICategory: ZendeskCategory = {
   value: "firma_con_io",
   description: {

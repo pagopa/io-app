@@ -1,4 +1,4 @@
-import { IOColorsLegacy, useIOTheme } from "@io-app/design-system";
+import { useIOColors } from "@io-app/design-system";
 import CookieManager from "@react-native-cookies/cookies";
 import I18n from "i18next";
 import {
@@ -335,13 +335,13 @@ const CieWebView = (props: Props) => {
 const ErrorComponent = (
   props: Pick<Props, "onClose"> & { onRetry: () => void }
 ) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <View
       style={{
         flex: 1,
-        backgroundColor: IOColorsLegacy[theme["appBackground-primary"]]
+        backgroundColor: colors.background.default
       }}
     >
       <OperationResultScreenContent

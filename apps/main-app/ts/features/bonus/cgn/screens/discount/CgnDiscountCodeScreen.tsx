@@ -5,7 +5,6 @@ import {
   H4,
   Icon,
   useIOColors,
-  useIOTheme,
   VSpacer
 } from "@io-app/design-system";
 import { Second } from "@pagopa/ts-commons/lib/units";
@@ -51,7 +50,6 @@ const CgnDiscountCodeScreen = () => {
   const discountOtp = useIOSelector(cgnOtpDataSelector);
   const [isDiscountCodeExpired, setIsDiscountCodeExpired] = useState(false);
   const navigation = useIONavigation();
-  const theme = useIOTheme();
   const colors = useIOColors();
 
   const generateNewDiscountCode = () => {
@@ -121,7 +119,7 @@ const CgnDiscountCodeScreen = () => {
             }
           }}
         >
-          <H2 accessibilityRole="header" color={theme["textHeading-default"]}>
+          <H2 accessibilityRole="header" color={colors.text.heading.default}>
             {I18n.t(`bonus.cgn.merchantDetail.discount.title`)}
           </H2>
           <VSpacer size={24} />
@@ -132,7 +130,7 @@ const CgnDiscountCodeScreen = () => {
             ]}
           >
             <View style={{ flexDirection: "row", alignSelf: "center" }}>
-              <Icon color={theme["icon-decorative"]} name="tag" />
+              <Icon color={colors.icon.decorative} name="tag" />
             </View>
             <VSpacer size={4} />
             <Barcode

@@ -5,9 +5,9 @@ import { LoginExpirationBanner } from "../../authentication/activeSessionLogin/c
 import { showSessionExpirationBannerRenderableSelector } from "../../authentication/activeSessionLogin/store/selectors";
 import CgnDiscoveryBanner from "../../bonus/cgn/components/CgnDiscoveryBanner";
 import { isCgnEngagementBannerRenderableSelector } from "../../bonus/cgn/store/selectors/banners";
-import { ItwDiscoveryBannerLegacy } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBanner";
+import { DocSuIODiscoveryBanner } from "../../itwallet/common/components/discoveryBanner/DocSuIODiscoveryBanner";
 import {
-  isItwPersistedDiscoveryBannerRenderableSelector,
+  isDocSuIOPersistedDiscoveryBannerRenderableSelector,
   itwShouldRenderInboxDiscoveryBannerSelector
 } from "../../itwallet/common/store/selectors";
 import { ItwDiscoveryBanner } from "../../itwallet/discovery/components/ItwDiscoveryBanner";
@@ -68,9 +68,9 @@ export const landingScreenBannerMap: BannerMapById = {
   },
   ITW_DISCOVERY: {
     component: closeHandler => (
-      <ItwDiscoveryBannerLegacy closable handleOnClose={closeHandler} />
+      <DocSuIODiscoveryBanner closable handleOnClose={closeHandler} />
     ),
-    isRenderableSelector: isItwPersistedDiscoveryBannerRenderableSelector
+    isRenderableSelector: isDocSuIOPersistedDiscoveryBannerRenderableSelector
   },
   LV_EXPIRATION_REMINDER: {
     component: closeHandler => (

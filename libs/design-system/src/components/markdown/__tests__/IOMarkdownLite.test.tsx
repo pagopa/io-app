@@ -3,10 +3,10 @@ import { ComponentProps } from "react";
 import { Linking } from "react-native";
 
 import { IOThemeContextProvider } from "../../../context";
-import { IOColorsLegacy, IOThemeLight } from "../../../core";
+import { IOColors } from "../../../core";
 import { IOMarkdownLite } from "../IOMarkdownLite";
 
-const defaultParagraphColor = IOColorsLegacy[IOThemeLight["textBody-tertiary"]];
+const defaultParagraphColor = IOColors.light.component.typography.body;
 
 const renderComponent = (props: ComponentProps<typeof IOMarkdownLite>) =>
   render(

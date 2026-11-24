@@ -1,6 +1,6 @@
 import {
   HeaderActionProps,
-  IOTextColor,
+  IOTokenColor,
   useIOThemeContext
 } from "@io-app/design-system";
 import { ReactNode } from "react";
@@ -19,7 +19,7 @@ export type BonusCardColorSchemeValues = {
   background: string;
   // Skeleton or other visual elements
   foreground: string;
-  text: IOTextColor;
+  text: IOTokenColor;
 };
 
 export type BonusScreenComponentProps = BaseProps &

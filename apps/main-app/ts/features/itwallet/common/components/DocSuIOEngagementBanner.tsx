@@ -7,7 +7,7 @@ import { useIOSelector } from "../../../../store/hooks";
 import { itwIsWalletEmptySelector } from "../../credentials/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 
-export const ItwL2EngagementBanner = () => {
+export const DocSuIOEngagementBanner = () => {
   const navigation = useIONavigation();
   const shouldRender = useIOSelector(itwIsWalletEmptySelector);
 

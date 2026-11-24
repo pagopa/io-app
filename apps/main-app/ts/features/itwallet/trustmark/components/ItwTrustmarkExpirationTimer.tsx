@@ -3,7 +3,8 @@ import {
   HSpacer,
   Icon,
   IOMarkdownLite,
-  IOSkeleton
+  IOSkeleton,
+  useIOColors
 } from "@io-app/design-system";
 import { format } from "date-fns";
 import I18n from "i18next";
@@ -16,6 +17,7 @@ import { selectExpirationSeconds, selectFailure } from "../machine/selectors";
 
 /** Timer that shows the remaining time before the trustmark expires */
 const ItwTrustmarkExpirationTimer = () => {
+  const colors = useIOColors();
   const expirationSeconds = ItwTrustmarkMachineContext.useSelector(
     selectExpirationSeconds
   );
@@ -45,7 +47,7 @@ const ItwTrustmarkExpirationTimer = () => {
 
   return (
     <View style={{ flexDirection: "row", alignItems: "center" }}>
-      <Icon color="grey-300" name="history" size={24} />
+      <Icon color={colors.icon.decorative} name="history" size={24} />
       <HSpacer size={24} />
       {content}
     </View>

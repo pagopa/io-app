@@ -3,22 +3,22 @@ import {
   Divider,
   H6,
   Icon,
-  IOColorsLegacy,
-  useIOTheme
+  IOTokenColor,
+  useIOColors
 } from "@io-app/design-system";
 import { Fragment } from "react";
 import { StyleSheet, View } from "react-native";
 
 export const FimsClaimsList = ({ claims }: ClaimsListProps) => {
-  const theme = useIOTheme();
-  const backgroundColor = IOColorsLegacy[theme["appBackground-secondary"]];
+  const colors = useIOColors();
+  const backgroundColor = colors.surface.secondary;
 
   return (
     <View style={[styles.grantsList, { backgroundColor }]}>
       {claims.map((claim, index) => (
         <Fragment key={index}>
           <ClaimListItem
-            iconColor={theme["icon-decorative"]}
+            iconColor={colors.icon.decorative}
             label={claim.display_name}
           />
           {index < claims.length - 1 && <Divider />}
@@ -34,7 +34,7 @@ const ClaimListItem = ({ label, iconColor }: ClaimsListItemProps) => (
     <Icon color={iconColor} name="checkTickBig" size={24} />
   </View>
 );
-type ClaimsListItemProps = { iconColor: IOColorsLegacy; label?: string };
+type ClaimsListItemProps = { iconColor: IOTokenColor; label?: string };
 type ClaimsListProps = {
   claims: ReadonlyArray<Claim>;
 };

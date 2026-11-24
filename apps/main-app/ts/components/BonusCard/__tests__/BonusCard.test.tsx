@@ -72,7 +72,7 @@ describe("Test BonusCard", () => {
         organizationName: T_ORG_NAME,
         cardColorSchemeValues: mockResolvedColors,
         status: (
-          <LabelMini color="grey-650" weight="Regular">
+          <LabelMini weight="Regular">
             {I18n.t("bonusCard.validUntil", {
               endDate: format(T_END_DATE, "DD/MM/YY")
             })}

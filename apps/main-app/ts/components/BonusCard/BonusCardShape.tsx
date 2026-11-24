@@ -1,4 +1,4 @@
-import { IOColorsLegacy, useIOTheme } from "@io-app/design-system";
+import { useIOColors } from "@io-app/design-system";
 import { ColorValue, StyleSheet, View } from "react-native";
 import { Circle, ClipPath, Defs, Path, Rect, Svg } from "react-native-svg";
 
@@ -10,7 +10,7 @@ type Props = {
 };
 
 const BonusCardShape = ({ mode, backgroundColor }: Props) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   switch (mode) {
     case "draw-on-top": {
@@ -20,13 +20,13 @@ const BonusCardShape = ({ mode, backgroundColor }: Props) => {
             <Circle
               cx="0"
               cy="76%"
-              fill={IOColorsLegacy[theme["appBackground-primary"]]}
+              fill={colors.background.default}
               r={CIRCLE_MASK_SIZE / 2}
             />
             <Circle
               cx="100%"
               cy="76%"
-              fill={IOColorsLegacy[theme["appBackground-primary"]]}
+              fill={colors.background.default}
               r={CIRCLE_MASK_SIZE / 2}
             />
           </Svg>
@@ -41,7 +41,7 @@ const BonusCardShape = ({ mode, backgroundColor }: Props) => {
           >
             <Path
               d="M 0 24 A 24 24, 0, 0, 1, 24 0 L 0 0 Z"
-              fill={IOColorsLegacy[theme["appBackground-primary"]]}
+              fill={colors.background.default}
             />
           </Svg>
           <Svg
@@ -55,7 +55,7 @@ const BonusCardShape = ({ mode, backgroundColor }: Props) => {
           >
             <Path
               d="M 0 0 A 24 24, 0, 0, 1, 24 24 L 24 0 Z"
-              fill={IOColorsLegacy[theme["appBackground-primary"]]}
+              fill={colors.background.default}
             />
           </Svg>
           <Svg
@@ -69,7 +69,7 @@ const BonusCardShape = ({ mode, backgroundColor }: Props) => {
           >
             <Path
               d="M 24 0 A 24 24, 0, 0, 1, 0 24 L 24 24 Z"
-              fill={IOColorsLegacy[theme["appBackground-primary"]]}
+              fill={colors.background.default}
             />
           </Svg>
           <Svg
@@ -83,7 +83,7 @@ const BonusCardShape = ({ mode, backgroundColor }: Props) => {
           >
             <Path
               d="M 24 24 A 24 24, 0, 0, 1, 0 0 L 0 24 Z"
-              fill={IOColorsLegacy[theme["appBackground-primary"]]}
+              fill={colors.background.default}
             />
           </Svg>
         </View>

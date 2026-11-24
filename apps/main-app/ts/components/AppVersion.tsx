@@ -1,4 +1,4 @@
-import { BodySmall, useIOTheme } from "@io-app/design-system";
+import { BodySmall, useIOColors } from "@io-app/design-system";
 import I18n from "i18next";
 import { GestureResponderEvent, Pressable, View } from "react-native";
 
@@ -10,7 +10,7 @@ type AppVersion = WithTestID<{
 }>;
 
 const AppVersion = ({ onPress, testID }: AppVersion) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const appVersion = getAppVersion();
   const appVersionText = `${I18n.t("profile.main.appVersion")} ${appVersion}`;
 
@@ -29,7 +29,7 @@ const AppVersion = ({ onPress, testID }: AppVersion) => {
         }}
       >
         <BodySmall
-          color={theme["textBody-tertiary"]}
+          color={colors.text.content.tertiary}
           numberOfLines={1}
           weight="Semibold"
         >

@@ -10,10 +10,9 @@ import {
   ContentWrapper,
   H3,
   IOButton,
-  IOColorsLegacy,
   IOPictograms,
   triggerHaptic,
-  useIOTheme,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
@@ -118,8 +117,8 @@ const CieCardReaderScreen = () => {
     >();
   const route =
     useRoute<RouteProp<AuthenticationParamsList, "CIE_CARD_READER_SCREEN">>();
-  const theme = useIOTheme();
-  const circleColor = IOColorsLegacy[theme["interactiveElem-default"]];
+  const colors = useIOColors();
+  const circleColor = colors.foreground.accent;
 
   const dispatch = useIODispatch();
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);

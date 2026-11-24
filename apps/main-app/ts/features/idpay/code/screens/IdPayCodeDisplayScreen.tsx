@@ -2,9 +2,8 @@ import {
   Banner,
   Body,
   H3,
-  IOColorsLegacy,
   IOMarkdownLite,
-  useIOTheme,
+  useIOColors,
   VSpacer,
   VStack
 } from "@io-app/design-system";
@@ -111,17 +110,14 @@ const IdPayCodeDisplayScreen = () => {
 };
 
 const CodeDisplayComponent = ({ code }: { code: string }) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <View style={styles.codeDisplay}>
       {[...code].map((digit, index) => (
         <View
           key={index}
-          style={[
-            styles.codeDigit,
-            { borderColor: IOColorsLegacy[theme["textInputBorder-default"]] }
-          ]}
+          style={[styles.codeDigit, { borderColor: colors.stroke.divider }]}
           testID={`idPayCodeDigit${index}TestID`}
         >
           <H3>{digit}</H3>
