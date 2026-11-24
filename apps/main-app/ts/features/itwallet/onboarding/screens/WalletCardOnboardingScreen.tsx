@@ -23,7 +23,7 @@ import {
   trackShowCredentialsList,
   trackStartAddNewCredential
 } from "../../analytics";
-import { ItwDiscoveryBannerOnboarding } from "../../common/components/discoveryBanner/ItwDiscoveryBannerOnboarding";
+import { DocSuIODiscoveryBannerOnboarding } from "../../common/components/discoveryBanner/DocSuIODiscoveryBannerOnboarding";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors";
 import { selectItwEnv } from "../../common/store/selectors/environment";
 import { isItwEnabledSelector } from "../../common/store/selectors/remoteConfig";
@@ -59,7 +59,7 @@ const WalletCardOnboardingScreen = () => {
       }}
     >
       <VStack space={16} style={{ paddingVertical: 16 }}>
-        <ItwDiscoveryBannerOnboarding />
+        <DocSuIODiscoveryBannerOnboarding />
         {isItwSectionVisible ? <ItwCredentialOnboardingSection /> : null}
         <OtherCardsOnboardingSection showTitle={isItwSectionVisible} />
       </VStack>
