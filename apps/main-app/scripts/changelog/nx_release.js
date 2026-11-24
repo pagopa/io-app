@@ -27,15 +27,17 @@ run("pnpm", [
 const version = JSON.parse(
   fs.readFileSync(path.join(projectRoot, "package.json"), "utf8")
 ).version;
+const { writeVersion: writeAppJson } = require("./app_json_updater.js");
+const { writeVersion: writePubliccode } = require("./publiccode_updater.js");
 const versionUpdates = [
-  ["app.json", require("./app_json_updater.js")],
-  ["../../publiccode.yml", require("./publiccode_updater.js")]
+  ["app.json", writeAppJson],
+  ["../../publiccode.yml", writePubliccode]
 ];
 
-for (const [relativePath, updater] of versionUpdates) {
+for (const [relativePath, writeVersion] of versionUpdates) {
   const filePath = path.resolve(projectRoot, relativePath);
   const contents = fs.readFileSync(filePath, "utf8");
-  fs.writeFileSync(filePath, updater.writeVersion(contents, version));
+  fs.writeFileSync(filePath, writeVersion(contents, version));
 }
 
 if (preid === "canary") {

@@ -9,11 +9,6 @@
 const softwareVersionRegex = /(softwareVersion: )(.+)/m;
 const releaseDateRegex = /(releaseDate: ["'])(.+)(["'])/gm;
 
-module.exports.readVersion = function (contents) {
-  // return the 2nd group of the regex (the version)
-  return softwareVersionRegex.exec(contents)[2];
-};
-
 function replaceReleaseDate(_, version, prefix, _oldDate, suffix) {
   return [prefix, version, suffix].join("");
 }

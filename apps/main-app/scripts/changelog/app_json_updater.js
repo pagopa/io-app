@@ -11,21 +11,26 @@
  * - `android.versionCode`: the previous value increased by one
  */
 
-const versionModule = require("./version_utility.js");
+const {
+  androidGetBuildVersion,
+  getVersion,
+  iosGetBuildVersion
+} = require("./version_utility.js");
 
 module.exports.writeVersion = function (contents, version) {
   const appJson = JSON.parse(contents);
-  const versionClean = versionModule.getVersion(version);
-  const androidBuildNumber = versionModule.androidGetBuildVersion(version);
+  const versionClean = getVersion(version);
+  const androidBuildNumber = androidGetBuildVersion(version);
 
   const updatedAppJson = {
     ...appJson,
     version: versionClean,
     ios: {
       ...appJson.ios,
-      buildNumber: versionModule
-        .iosGetBuildVersion(version, appJson.ios.buildNumber)
-        .toString()
+      buildNumber: iosGetBuildVersion(
+        version,
+        appJson.ios.buildNumber
+      ).toString()
     },
     android: {
       ...appJson.android,
