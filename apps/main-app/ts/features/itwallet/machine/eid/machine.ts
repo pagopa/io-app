@@ -1,4 +1,12 @@
-import { and, assertEvent, assign, not, or, raise } from "xstate";
+import {
+  and,
+  assertEvent,
+  assign,
+  enqueueActions,
+  not,
+  or,
+  raise
+} from "xstate";
 
 import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { getIssuanceItwVersion } from "../../common/utils/itwIssuanceUtils";
@@ -343,7 +351,15 @@ export const itwEidIssuanceMachine = itwEidIssuanceMachineSetup.createMachine({
     Success: {
       entry: [
         "refreshCredentialsCatalogue",
-        "navigateToSuccessScreen",
+        enqueueActions(({ check, enqueue }) => {
+          // IT-Wallet (L3) reissuance has no result screen: the user goes
+          // straight back to the wallet with a success toast
+          if (check(and(["isReissuance", "isL3FeaturesEnabled"]))) {
+            enqueue("navigateToWallet");
+          } else {
+            enqueue("navigateToSuccessScreen");
+          }
+        }),
         "storeWalletActivationFeedbackBannerData"
       ],
       on: {
