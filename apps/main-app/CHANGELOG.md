@@ -1,3 +1,18 @@
+## 3.44.0-rc.6 (2026-11-23)
+
+### Bug Fixes
+
+- **IT-Wallet:** [[SIW-5474](https://pagopa.atlassian.net/browse/SIW-5474)] Track intro events in credential offer ([#8891](https://github.com/pagopa/io-app/pull/8891))
+
+### Chores
+
+- [[IOCOM-3410](https://pagopa.atlassian.net/browse/IOCOM-3410)] removal of SEND feature flag ([#8912](https://github.com/pagopa/io-app/pull/8912))
+
+### ❤️ Thank You
+
+- Martino Cesari Tomba @forrest57
+- MonicaRungi-EY
+
 ## 3.44.0-rc.5 (2026-11-20)
 
 ### Chores
