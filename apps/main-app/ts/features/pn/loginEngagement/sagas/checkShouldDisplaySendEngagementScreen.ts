@@ -12,10 +12,7 @@ import {
 import { v4 as uuidv4 } from "uuid";
 
 import NavigationService from "../../../../navigation/NavigationService";
-import {
-  isPnRemoteEnabledSelector as isSendRemoteEnabledSelector,
-  pnMessagingServiceIdSelector as sendServiceIdSelector
-} from "../../../../store/reducers/backendStatus/remoteConfig";
+import { pnMessagingServiceIdSelector as sendServiceIdSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isTestEnv } from "../../../../utils/environment";
 import { setSecurityAdviceReadyToShow } from "../../../authentication/fastLogin/store/actions/securityAdviceActions";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
@@ -35,7 +32,6 @@ export function* checkShouldDisplaySendEngagementScreen(
   const hasSendEngagementScreenBeenDismissed = yield* select(
     hasSendEngagementScreenBeenDismissedSelector
   );
-  const isSendEnabled = yield* select(isSendRemoteEnabledSelector);
   const isSendServiceEnabled = yield* select(isSendServiceEnabledSelector);
 
   if (isSendServiceEnabled === undefined) {
@@ -52,7 +48,6 @@ export function* checkShouldDisplaySendEngagementScreen(
           yield* call(
             handleNavigateToSendEngagementScreen,
             hasSendEngagementScreenBeenDismissed,
-            isSendEnabled,
             updatedIsSendServiceEnabled
           );
           yield* put({ type: guid });
@@ -65,7 +60,6 @@ export function* checkShouldDisplaySendEngagementScreen(
     yield* call(
       handleNavigateToSendEngagementScreen,
       hasSendEngagementScreenBeenDismissed,
-      isSendEnabled,
       isSendServiceEnabled
     );
   }
@@ -73,14 +67,9 @@ export function* checkShouldDisplaySendEngagementScreen(
 
 function* handleNavigateToSendEngagementScreen(
   isSendEngagementScreenDismissed: boolean,
-  isSendRemoteEnabled: boolean,
   isSendServiceEnabled: boolean | undefined
 ) {
-  if (
-    !isSendEngagementScreenDismissed &&
-    isSendRemoteEnabled &&
-    !isSendServiceEnabled
-  ) {
+  if (!isSendEngagementScreenDismissed && !isSendServiceEnabled) {
     yield* call(
       NavigationService.dispatchNavigationAction,
       StackActions.push(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
