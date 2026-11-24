@@ -13,17 +13,17 @@ import { GuidedTour } from "../../../tour/components/GuidedTour.tsx";
 import { WalletCardsCategoryContainer } from "../../../wallet/components/WalletCardsCategoryContainer";
 import { selectWalletCardsByCategory } from "../../../wallet/store/selectors";
 import { withWalletCategoryFilter } from "../../../wallet/utils";
+import { DocSuIOEngagementBanner } from "../../common/components/DocSuIOEngagementBanner.tsx";
 import {
   ItwEidInfoBottomSheetContent,
   ItwEidInfoBottomSheetTitle
 } from "../../common/components/ItwEidInfoBottomSheetContent";
 import { ItwEidLifecycleAlert } from "../../common/components/ItwEidLifecycleAlert";
-import { ItwL2EngagementBanner } from "../../common/components/ItwL2EngagementBanner.tsx";
 import { ItwWalletReadyBanner } from "../../common/components/ItwWalletReadyBanner";
 import { useItwStatusIconColor } from "../../common/hooks/useItwStatusIconColor.ts";
 import {
-  itwShouldRenderL2EngagementBannerSelector,
-  itwShouldRenderNewItWalletSelector
+  itwShouldRenderNewItWalletSelector,
+  shouldRenderDocSuIOEngagementBannerSelector
 } from "../../common/store/selectors";
 import {
   itwShouldHideEidLifecycleAlert,
@@ -62,8 +62,8 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const shouldRenderNonDismissibleUpgradeBanner = useIOSelector(
     itwShouldRenderNonDismissibleUpgradeBannerSelector
   );
-  const shouldRenderL2EngagementBanner = useIOSelector(
-    itwShouldRenderL2EngagementBannerSelector
+  const shouldRenderDocSuIOEngagementBanner = useIOSelector(
+    shouldRenderDocSuIOEngagementBannerSelector
   );
   const isItWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
@@ -208,9 +208,11 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
           </GuidedTour>
         )}
 
-        {shouldRenderL2EngagementBanner && <ItwL2EngagementBanner />}
+        {shouldRenderDocSuIOEngagementBanner && <DocSuIOEngagementBanner />}
 
-        {!shouldRenderL2EngagementBanner && <ItwWalletReadyBanner />}
+        {!shouldRenderDocSuIOEngagementBanner && !shouldRenderUpgradeBanner && (
+          <ItwWalletReadyBanner />
+        )}
       </View>
       {eidInfoBottomSheet.bottomSheet}
     </View>

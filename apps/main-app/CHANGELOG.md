@@ -1,3 +1,103 @@
+## 3.44.0-rc.6 (2026-11-23)
+
+### Bug Fixes
+
+- **IT-Wallet:** [[SIW-5474](https://pagopa.atlassian.net/browse/SIW-5474)] Track intro events in credential offer ([#8891](https://github.com/pagopa/io-app/pull/8891))
+
+### Chores
+
+- [[IOCOM-3410](https://pagopa.atlassian.net/browse/IOCOM-3410)] removal of SEND feature flag ([#8912](https://github.com/pagopa/io-app/pull/8912))
+
+### ❤️ Thank You
+
+- Martino Cesari Tomba @forrest57
+- MonicaRungi-EY
+
+## 3.44.0-rc.5 (2026-11-20)
+
+### Chores
+
+- release 3.43.0-rc.13 ([353589e67](https://github.com/pagopa/io-app/commit/353589e67))
+
+### ❤️ Thank You
+
+- Alessandro Mazzon
+
+## 3.43.0-rc.13 (2026-11-20)
+
+### Bug Fixes
+
+- [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] `react-native-screens` patch ([#8905](https://github.com/pagopa/io-app/pull/8905))
+
+### Chores
+
+- bump versionCode to 100155333 for hotfix release ([a0b1e332e](https://github.com/pagopa/io-app/commit/a0b1e332e))
+
+### ❤️ Thank You
+
+- Alessandro Mazzon
+- Emanuele Dall'Ara @LeleDallas
+
+## 3.44.0-rc.4 (2026-11-19)
+
+### Bug Fixes
+
+- [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] `react-native-screens` patch ([#8905](https://github.com/pagopa/io-app/pull/8905))
+
+### Chores
+
+- release 3.42.3-rc.0 ([#8906](https://github.com/pagopa/io-app/pull/8906))
+
+### ❤️ Thank You
+
+- Alessandro Mazzon
+- Emanuele Dall'Ara @LeleDallas
+
+## 3.42.3-rc.0 (2026-11-19)
+
+### Bug Fixes
+
+- update versionCode to 100155331 for release 3.42.2.0 ([c42396e56](https://github.com/pagopa/io-app/commit/c42396e56))
+- [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] `react-native-screens` patch ([#8905](https://github.com/pagopa/io-app/pull/8905))
+
+### ❤️ Thank You
+
+- Alessandro Mazzon
+- Emanuele Dall'Ara @LeleDallas
+
+## 3.44.0-rc.3 (2026-11-18)
+
+### Chores
+
+- [[IOPLT-2300](https://pagopa.atlassian.net/browse/IOPLT-2300)] Enforce the `no-hardcoded-colors` lint rule ([#8894](https://github.com/pagopa/io-app/pull/8894))
+
+### ❤️ Thank You
+
+- Damiano Plebani
+
+## 3.44.0-rc.2 (2026-11-17)
+
+### Features
+
+- [[IOCOM-3154](https://pagopa.atlassian.net/browse/IOCOM-3154)] messages section tab navigation de-anchor ([#8629](https://github.com/pagopa/io-app/pull/8629))
+
+### Bug Fixes
+
+- **IT-Wallet:** [[SIW-5422](https://pagopa.atlassian.net/browse/SIW-5422)] Close proximity flow on Android back ([#8869](https://github.com/pagopa/io-app/pull/8869))
+- [[IOPLT-2283](https://pagopa.atlassian.net/browse/IOPLT-2283)] Universal link redirect ([#8884](https://github.com/pagopa/io-app/pull/8884))
+
+### Chores
+
+- **release:** 3.43.0-rc.12 ([b65a21a06](https://github.com/pagopa/io-app/commit/b65a21a06))
+
+### ❤️ Thank You
+
+- Alessandro Dell'Oste @adelloste
+- Alessandro Mazzon
+- Emanuele Dall'Ara @LeleDallas
+- Martino Cesari Tomba @forrest57
+- MonicaRungi-EY
+
 ## 3.44.0-rc.1 (2026-11-16)
 
 ### Chores
@@ -16,6 +116,21 @@
 ## 3.44.0-rc.0 (2026-11-13)
 
 This was a version bump only for @io-app/main-app to align it with other projects, there were no code changes.
+
+## 3.43.0-rc.12 (2026-11-17)
+
+### Bug Fixes
+
+- [[IOPLT-2283](https://pagopa.atlassian.net/browse/IOPLT-2283)] Universal link redirect ([#8884](https://github.com/pagopa/io-app/pull/8884))
+
+### Chores
+
+- align Android versionCode for hotfix ([d51f0808f](https://github.com/pagopa/io-app/commit/d51f0808f))
+
+### ❤️ Thank You
+
+- Alessandro Mazzon
+- Emanuele Dall'Ara @LeleDallas
 
 ## 3.43.0-rc.11 (2026-11-13)
 

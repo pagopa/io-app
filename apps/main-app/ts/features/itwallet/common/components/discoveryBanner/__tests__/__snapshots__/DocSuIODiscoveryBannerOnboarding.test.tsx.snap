@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`ItwDiscoveryBannerOnboarding should match snapshot when isItwDiscoveryBannerRenderable is false 1`] = `
+exports[`DocSuIODiscoveryBannerOnboarding should match snapshot when isItwDiscoveryBannerRenderable is false 1`] = `
 <View
   style={
     {
@@ -328,7 +328,7 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot when isItwDiscoveryB
 </View>
 `;
 
-exports[`ItwDiscoveryBannerOnboarding should match snapshot when isItwDiscoveryBannerRenderable is true 1`] = `
+exports[`DocSuIODiscoveryBannerOnboarding should match snapshot when isItwDiscoveryBannerRenderable is true 1`] = `
 <View
   style={
     {
@@ -1055,7 +1055,7 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot when isItwDiscoveryB
 </View>
 `;
 
-exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'onboarding' banner type 1`] = `
+exports[`DocSuIODiscoveryBannerOnboarding should match snapshot with 'onboarding' banner type 1`] = `
 <View
   style={
     {
@@ -1782,7 +1782,7 @@ exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'onboarding' ba
 </View>
 `;
 
-exports[`ItwDiscoveryBannerOnboarding should match snapshot with 'reactivating' banner type 1`] = `
+exports[`DocSuIODiscoveryBannerOnboarding should match snapshot with 'reactivating' banner type 1`] = `
 <View
   style={
     {

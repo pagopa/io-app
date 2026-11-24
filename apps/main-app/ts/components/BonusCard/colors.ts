@@ -1,6 +1,7 @@
 import {
   IOColorMode,
   IOColorPalette,
+  IOColorTheme,
   IOCustomColor,
   withAlpha
 } from "@io-app/design-system";
@@ -19,3 +20,13 @@ export const bonusCardColors = (mode: IOColorMode) => {
     text: isDark ? IOColorPalette.blueIO[50] : IOColorPalette.blueItalia[850]
   };
 };
+
+/** Counters on the bonus card; the label takes the card's `text` */
+export const bonusCardCounterColors = (s: IOColorTheme) => ({
+  value: s.foreground.accent,
+  progress: {
+    fill: s.foreground.accent,
+    /* White in both modes, to show on the card background */
+    track: IOColorPalette.greyscale.white
+  }
+});

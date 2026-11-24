@@ -4,7 +4,7 @@ import {
   H4,
   IOButton,
   IODimensions,
-  useIOTheme,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
@@ -33,13 +33,13 @@ const LongContent = () => (
 );
 
 export const NativeSheetFitToContents = () => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const navigation = useNavigation();
 
   return (
     <ContentWrapper>
       <VSpacer size={24} />
-      <H4 color={theme["textHeading-default"]}>Fit to contents</H4>
+      <H4 color={colors.text.heading.default}>Fit to contents</H4>
       <VSpacer size={8} />
       <ShortContent />
       <VSpacer size={16} />
@@ -54,14 +54,14 @@ export const NativeSheetFitToContents = () => {
 };
 
 export const NativeSheetHalf = () => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
       <ContentWrapper>
         <VSpacer size={24} />
-        <H4 color={theme["textHeading-default"]}>Half screen (50%)</H4>
+        <H4 color={colors.text.heading.default}>Half screen (50%)</H4>
         <VSpacer size={8} />
         <ShortContent />
         <VSpacer size={16} />
@@ -77,14 +77,14 @@ export const NativeSheetHalf = () => {
 };
 
 export const NativeSheetTwoDetents = () => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
       <ContentWrapper>
         <VSpacer size={24} />
-        <H4 color={theme["textHeading-default"]}>Two detents (35%/80%)</H4>
+        <H4 color={colors.text.heading.default}>Two detents (35%/80%)</H4>
         <VSpacer size={8} />
         <ShortContent />
         <VSpacer size={16} />
@@ -100,7 +100,7 @@ export const NativeSheetTwoDetents = () => {
 };
 
 export const NativeSheetLongContent = () => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
 
@@ -108,7 +108,7 @@ export const NativeSheetLongContent = () => {
     <ScrollView contentContainerStyle={{ paddingBottom: insets.bottom }}>
       <ContentWrapper>
         <VSpacer size={24} />
-        <H4 color={theme["textHeading-default"]}>Long scrollable content</H4>
+        <H4 color={colors.text.heading.default}>Long scrollable content</H4>
         <VSpacer size={8} />
         <LongContent />
         <VSpacer size={IODimensions.padding.screen.default} />
@@ -124,7 +124,7 @@ export const NativeSheetLongContent = () => {
 };
 
 export const NativeSheetLongContentFit = () => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
 
@@ -132,7 +132,7 @@ export const NativeSheetLongContentFit = () => {
     <ScrollView contentContainerStyle={{ paddingBottom: insets.bottom }}>
       <ContentWrapper>
         <VSpacer size={24} />
-        <H4 color={theme["textHeading-default"]}>
+        <H4 color={colors.text.heading.default}>
           Long content (fitToContents)
         </H4>
         <VSpacer size={8} />

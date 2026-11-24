@@ -6,6 +6,7 @@ import type { EventsPayload } from "../utils/types";
 import { assert } from "../../../../../utils/assert";
 import { CredentialsVault } from "../../../credentials/utils/vault";
 import {
+  areBluetoothPermissionsGranted,
   checkBluetoothActivation as checkBluetoothActivationUtil,
   checkBluetoothPermissions as checkBluetoothPermissionsUtil,
   subscribeBluetoothState
@@ -58,6 +59,10 @@ export type StartEngagementActorInput = {
 
 export const checkBluetoothPermissionsActor = fromPromise<boolean>(
   checkBluetoothPermissionsUtil
+);
+
+export const verifyBluetoothPermissionsActor = fromPromise<boolean>(
+  areBluetoothPermissionsGranted
 );
 
 export const checkBluetoothActivationActor = fromPromise<boolean>(

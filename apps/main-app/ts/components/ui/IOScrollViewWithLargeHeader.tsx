@@ -4,7 +4,7 @@ import {
   H2,
   HeaderSecondLevel,
   IOMarkdownLite,
-  useIOTheme,
+  useIOColors,
   VSpacer,
   VStack
 } from "@io-app/design-system";
@@ -87,7 +87,7 @@ export const IOScrollViewWithLargeHeader = ({
   const { isAlertVisible } = useIOAlertVisible();
 
   const navigation = useNavigation();
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   const getTitleHeight = (event: LayoutChangeEvent) => {
     const { height } = event.nativeEvent.layout;
@@ -136,14 +136,14 @@ export const IOScrollViewWithLargeHeader = ({
       <ContentWrapper onLayout={getTitleHeight}>
         <VStack space={8}>
           {title.section && (
-            <BodySmall color={theme["textBody-tertiary"]} weight="Semibold">
+            <BodySmall color={colors.text.content.tertiary} weight="Semibold">
               {title.section}
             </BodySmall>
           )}
           <H2
             accessibilityLabel={title.accessibilityLabel ?? title.label}
             accessibilityRole="header"
-            color={theme["textHeading-default"]}
+            color={colors.text.heading.default}
             ref={ref}
             testID={title?.testID}
           >

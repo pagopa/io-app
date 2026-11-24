@@ -218,12 +218,15 @@ const BarcodeScanBaseScreenComponent = ({
       );
     }
 
-    return <LoadingSpinner color="white" size={48} />;
+    return (
+      <LoadingSpinner color={colors.foreground.onAccent.default} size={48} />
+    );
   }, [
     cameraPermissionStatus,
     openCameraSettings,
     cameraComponent,
-    requestCameraPermission
+    requestCameraPermission,
+    colors.foreground.onAccent.default
   ]);
 
   const handleTorchToggle = () => {

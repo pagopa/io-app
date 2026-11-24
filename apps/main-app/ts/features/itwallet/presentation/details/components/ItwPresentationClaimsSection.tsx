@@ -1,4 +1,4 @@
-import { Divider, H6, IconButton, useIOTheme } from "@io-app/design-system";
+import { Divider, H6, IconButton, useIOColors } from "@io-app/design-system";
 import I18n from "i18next";
 import { Fragment, useMemo } from "react";
 import { View } from "react-native";
@@ -23,7 +23,7 @@ type ItwPresentationClaimsSectionProps = {
 export const ItwPresentationClaimsSection = ({
   credential
 }: ItwPresentationClaimsSectionProps) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const dispatch = useIODispatch();
   const copyClaimValue = useItwCopyClaimValue(credential.credentialType);
 
@@ -67,7 +67,7 @@ export const ItwPresentationClaimsSection = ({
             <View
               style={{ flexDirection: "row", justifyContent: "space-between" }}
             >
-              <H6 color={theme["textHeading-tertiary"]}>
+              <H6 color={colors.text.heading.tertiary}>
                 {I18n.t(
                   "features.itWallet.presentation.credentialDetails.documentDataTitle"
                 )}
