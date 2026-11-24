@@ -5,7 +5,7 @@ import {
   H6,
   IOSkeleton,
   ListItemInfo,
-  useIOTheme,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
@@ -170,7 +170,7 @@ const AuthorizationScreenContent = ({
 }: {
   data: AuthPaymentResponseDTO;
 }) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
   return (
     <>
       <VSpacer size={16} />
@@ -189,7 +189,7 @@ const AuthorizationScreenContent = ({
             alignItems: "center"
           }}
         >
-          <H6 color={theme["textBody-tertiary"]}>
+          <H6 color={colors.text.content.tertiary}>
             {I18n.t("idpay.payment.authorization.discountedAmount")}
           </H6>
           <H3>{formatNumberCurrencyCentsOrDefault(data.rewardCents)}</H3>

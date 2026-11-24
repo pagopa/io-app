@@ -207,6 +207,7 @@ export const IoDevServerConfig = t.interface({
             isCgnEligible: t.boolean,
             // if true the user is eligible to the EYCA related activation
             isEycaEligible: t.boolean,
+            featuredOpportunitiesCount: t.number,
             // if true the handler does nothing, effectively timing out, use to test loading states
             hangOnActivation: t.boolean
           }),

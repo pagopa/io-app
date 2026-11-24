@@ -25,7 +25,6 @@ import {
   preferencesPagoPaTestEnvironmentSetEnabled
 } from "../../../../store/actions/persistedPreferences";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { isPnRemoteEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig.ts";
 import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
 import {
   isIdPayLocallyEnabledSelector,
@@ -314,7 +313,6 @@ const PlaygroundsSection = () => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const isIdPayTestEnabled = useIOSelector(isIdPayLocallyEnabledSelector);
-  const isSendEnabled = useIOSelector(isPnRemoteEnabledSelector);
 
   const playgroundsNavListItems: ReadonlyArray<PlaygroundsNavListItem> = [
     {
@@ -415,7 +413,6 @@ const PlaygroundsSection = () => {
       }
     },
     {
-      condition: isSendEnabled,
       value: "SEND",
       onPress: () =>
         navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {

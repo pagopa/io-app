@@ -1,4 +1,4 @@
-import { IOColorsLegacy, useIOTheme } from "@io-app/design-system";
+import { useIOColors } from "@io-app/design-system";
 import I18n from "i18next";
 import { useCallback, useEffect, useMemo } from "react";
 import { Platform } from "react-native";
@@ -50,7 +50,7 @@ export const SendAarCieCardReadingComponent = ({
   mandateId
 }: SendAarCieCardReadingComponentProps) => {
   const dispatch = useIODispatch();
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const { startReading, readState } = useCieInternalAuthAndMrtdReading();
 
   const isNfcAvailable = useIsNfcFeatureAvailable();
@@ -265,10 +265,7 @@ export const SendAarCieCardReadingComponent = ({
 
   return (
     <SafeAreaView
-      style={[
-        { flex: 1 },
-        { backgroundColor: IOColorsLegacy[theme["appBackground-primary"]] }
-      ]}
+      style={[{ flex: 1 }, { backgroundColor: colors.background.default }]}
     >
       <CieCardReadContent
         hiddenProgressBar={isError}

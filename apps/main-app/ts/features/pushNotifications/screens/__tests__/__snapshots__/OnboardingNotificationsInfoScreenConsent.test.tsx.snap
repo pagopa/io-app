@@ -506,7 +506,7 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                               size={16}
                             />
                             <H6
-                              color="grey-700"
+                              color="#555C70"
                             >
                               Ecco come:
                             </H6>

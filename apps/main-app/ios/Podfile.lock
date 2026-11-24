@@ -54,6 +54,9 @@ PODS:
     - ExpoModulesCore
   - ExpoClipboard (55.0.15):
     - ExpoModulesCore
+  - ExpoCrypto (1.0.0):
+    - ExpoModulesCore
+    - OpenSSL-Universal
   - ExpoDevice (55.0.19):
     - ExpoModulesCore
   - ExpoDeviceInternal (1.0.0):
@@ -172,7 +175,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - IoReactNativeIso18013 (0.9.0):
+  - IoReactNativeIso18013 (0.9.1):
     - boost
     - DoubleConversion
     - fast_float
@@ -218,35 +221,6 @@ PODS:
     - fmt
     - glog
     - hermes-engine
-    - RCT-Folly
-    - RCT-Folly/Fabric
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-jsi
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-renderercss
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - SocketRocket
-    - Yoga
-  - pagopa-io-react-native-crypto (1.2.5):
-    - boost
-    - DoubleConversion
-    - fast_float
-    - fmt
-    - glog
-    - hermes-engine
-    - OpenSSL-Universal
     - RCT-Folly
     - RCT-Folly/Fabric
     - RCTRequired
@@ -2686,7 +2660,7 @@ PODS:
     - Yoga
   - react-native-splash-screen (3.2.0):
     - React
-  - react-native-webview (13.16.0):
+  - react-native-webview (14.0.1):
     - boost
     - DoubleConversion
     - fast_float
@@ -3820,6 +3794,7 @@ DEPENDENCIES:
   - ExpoBrightness (from `../../../node_modules/expo-brightness/ios`)
   - ExpoCalendar (from `../../../node_modules/expo-calendar/ios`)
   - ExpoClipboard (from `../../../node_modules/expo-clipboard/ios`)
+  - ExpoCrypto (from `../../../libs/expo-crypto/ios`)
   - ExpoDevice (from `../../../node_modules/expo-device/ios`)
   - ExpoDeviceInternal (from `../../../libs/expo-device-internal/ios`)
   - ExpoDocumentPicker (from `../../../node_modules/expo-document-picker/ios`)
@@ -3854,7 +3829,6 @@ DEPENDENCIES:
   - jail-monkey (from `../../../node_modules/jail-monkey`)
   - MixpanelReactNative (from `../../../node_modules/mixpanel-react-native`)
   - "pagopa-io-react-native-cieid (from `../../../node_modules/@pagopa/io-react-native-cieid`)"
-  - "pagopa-io-react-native-crypto (from `../../../node_modules/@pagopa/io-react-native-crypto`)"
   - "pagopa-io-react-native-integrity (from `../../../node_modules/@pagopa/io-react-native-integrity`)"
   - "pagopa-io-react-native-jwt (from `../../../node_modules/@pagopa/io-react-native-jwt`)"
   - "pagopa-io-react-native-secure-storage (from `../../../node_modules/@pagopa/io-react-native-secure-storage`)"
@@ -4010,6 +3984,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/expo-calendar/ios"
   ExpoClipboard:
     :path: "../../../node_modules/expo-clipboard/ios"
+  ExpoCrypto:
+    :path: "../../../libs/expo-crypto/ios"
   ExpoDevice:
     :path: "../../../node_modules/expo-device/ios"
   ExpoDeviceInternal:
@@ -4079,8 +4055,6 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/mixpanel-react-native"
   pagopa-io-react-native-cieid:
     :path: "../../../node_modules/@pagopa/io-react-native-cieid"
-  pagopa-io-react-native-crypto:
-    :path: "../../../node_modules/@pagopa/io-react-native-crypto"
   pagopa-io-react-native-integrity:
     :path: "../../../node_modules/@pagopa/io-react-native-integrity"
   pagopa-io-react-native-jwt:
@@ -4307,6 +4281,7 @@ SPEC CHECKSUMS:
   ExpoBrightness: 6080760e05eb3dcd9765024472d4c78a50f3b201
   ExpoCalendar: a3a1a208327305361637b6127390e7b61c62bba5
   ExpoClipboard: 0e4b587fc6b5c5996b4ad4e5804d509e90aa6c75
+  ExpoCrypto: d32dc6c9e951c966e6390f74873ebaf2851d779f
   ExpoDevice: a574891cc954723e53062a2d69ec55f6d8196641
   ExpoDeviceInternal: 66b86e1d388629845cbecc30e0faeb9b837f44c4
   ExpoDocumentPicker: 8f1356ab2ac5b67aeaafc4c14b3719ceb480c099
@@ -4337,7 +4312,7 @@ SPEC CHECKSUMS:
   glog: 0456694f3aaf09460b660ea327cfc11defbeea4c
   hermes-engine: a2a9fc7160af80292783f30b771f14a477f29712
   IoReactNativeCie: d30d9055f74cfc1fd00c8583316c6321abdb7794
-  IoReactNativeIso18013: 7f153ea0db4055d00c8de7a4d74a3d548697fd97
+  IoReactNativeIso18013: 4ebc9584dfe22422a31de80c2571c2c00ed4f61b
   jail-monkey: 9298d04aa09f8c9cdcf04e7bf597ea423b52b5bf
   JOSESwift: 7784b1b844194d0f534eb6ac4fba5af683bccc79
   Mixpanel-swift: de454db5987bf6f601106520a44663fc556e8cfa
@@ -4345,7 +4320,6 @@ SPEC CHECKSUMS:
   MultiplatformBleAdapter: b1fddd0d499b96b607e00f0faa8e60648343dc1d
   OpenSSL-Universal: ecee7b138fa75a74ecf00d7ffd248fb584739b9e
   pagopa-io-react-native-cieid: 3969ed1784e0b9041baf892b461be3640315acd1
-  pagopa-io-react-native-crypto: afc8ee2585a7944dc115687eb2938009608f062a
   pagopa-io-react-native-integrity: c96d85212859750bcc3901501ef27d05475f8476
   pagopa-io-react-native-jwt: a5231b3f09cb69b54abd76dac34e1bddff596fe2
   pagopa-io-react-native-secure-storage: 64dcc5dff82ec5ce136d7904bc076d70db157dec
@@ -4405,7 +4379,7 @@ SPEC CHECKSUMS:
   react-native-safe-area-context: befb5404eb8a16fdc07fa2bebab3568ecabcbb8a
   react-native-skia: 80db9e2f8f8b16f8f22b563f0a3874c14026c1e2
   react-native-splash-screen: a43276f9cf4b2e65d7ce30efe372ffc528064293
-  react-native-webview: 654f794a7686b47491cf43aa67f7f428bea00eed
+  react-native-webview: 254a8650a0213d9adcb2d5103a245c701edd9649
   react-native-worklets-core: aaaac7d17f7e576592369a54f30e96fe4875c983
   React-NativeModulesApple: 9702c8c3fe884c714bb403509cc54e5af6d151d4
   React-networking: 738758445d21c007c23982f047ba095642d1c58c

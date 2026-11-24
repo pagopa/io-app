@@ -2,9 +2,8 @@ import {
   Body,
   H6,
   IOButton,
-  IOColorsLegacy,
   IOSkeleton,
-  useIOTheme,
+  useIOColors,
   VSpacer,
   VStack
 } from "@io-app/design-system";
@@ -21,7 +20,7 @@ type Props = {
 };
 
 const IdPayInitiativeRulesInfoBox = (props: Props) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const { content } = props;
 
   const { bottomSheet, present } = useIOBottomSheetModal({
@@ -40,7 +39,7 @@ const IdPayInitiativeRulesInfoBox = (props: Props) => {
         style={[
           styles.infoBox,
           // TODO: add a new theme key for more visible card border
-          { borderColor: IOColorsLegacy[theme["textInputBorder-default"]] }
+          { borderColor: colors.stroke.divider }
         ]}
       >
         <H6>{I18n.t("idpay.initiative.beneficiaryDetails.infobox.title")}</H6>
@@ -68,15 +67,10 @@ const IdPayInitiativeRulesInfoBox = (props: Props) => {
 };
 
 const IdPayInitiativeRulesInfoBoxSkeleton = () => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
-    <View
-      style={[
-        styles.infoBox,
-        { borderColor: IOColorsLegacy[theme["textInputBorder-default"]] }
-      ]}
-    >
+    <View style={[styles.infoBox, { borderColor: colors.stroke.divider }]}>
       <IOSkeleton height={24} radius={4} shape="rectangle" width={"40%"} />
       <VSpacer size={16} />
       <VStack space={4}>

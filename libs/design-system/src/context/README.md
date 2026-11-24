@@ -61,20 +61,20 @@ const MyComponent = () => {
 ### `IOThemeContext`
 
 ```jsx
-import { IOThemeContext, useIOTheme } from "@pagopa/io-app-design-system";
+import { IOThemeContextProvider, useIOColors } from "@pagopa/io-app-design-system";
 
 const App = () => (
-  <IOThemeContext.Provider value={IOThemes.light}>
+  <IOThemeContextProvider theme="light">
     { */ …App code… */ }
-  </IOThemeContext.Provider>
+  </IOThemeContextProvider>
 );
 
 const MyComponent = () => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <View style={{
-      backgroundColor: theme["appBackground-primary"]
+      backgroundColor: colors.background.default
     }}>
       { */ …Component code… */ }
     </View>

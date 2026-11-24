@@ -6,7 +6,6 @@ import {
   IOText,
   IOTypography,
   useIOColors,
-  useIOTheme,
   VSpacer
 } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -155,7 +154,6 @@ const SuccessContent = ({
   });
 
   const [isBarcodeExpired, setIsBarcodeExpired] = useState(false);
-  const theme = useIOTheme();
   const colors = useIOColors();
 
   useEffect(() => {
@@ -212,7 +210,7 @@ const SuccessContent = ({
         <Barcode format="CODE128" value={trx} />
         <View style={{ alignItems: "center" }}>
           <IOText
-            color={theme["textBody-default"]}
+            color={colors.text.content.default}
             font="FiraCode"
             lineHeight={IOTypography.h3.lineHeight}
             size={IOTypography.h3.size}

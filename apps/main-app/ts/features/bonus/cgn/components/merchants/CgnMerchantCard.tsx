@@ -83,6 +83,7 @@ const CgnMerchantCard = ({
   textColor
 }: CgnMerchantCardProps) => {
   const colors = useFeatureColors(cgnColors);
+  const contentColor = colors.category.content[textColor];
 
   return (
     <CardPressableBase
@@ -101,7 +102,7 @@ const CgnMerchantCard = ({
         testID={testID}
       >
         <View style={styles.cardTitle}>
-          <H6 color={textColor} numberOfLines={3}>
+          <H6 color={contentColor} numberOfLines={3}>
             {name}
           </H6>
         </View>
@@ -111,11 +112,11 @@ const CgnMerchantCard = ({
               accessible={false}
               style={[
                 styles.newsBadge,
-                { backgroundColor: colors.merchantCard.newsBadge }
+                { backgroundColor: colors.merchantCard.newsBadge.background }
               ]}
             >
               <IOText
-                color="hanPurple-500"
+                color={colors.merchantCard.newsBadge.text}
                 lineHeight={badgeTextLineHeight}
                 numberOfLines={1}
                 size={badgeTextSize}
@@ -126,7 +127,7 @@ const CgnMerchantCard = ({
               </IOText>
             </View>
           )}
-          <Icon color={textColor} name={icon} size={iconSize} />
+          <Icon color={contentColor} name={icon} size={iconSize} />
         </View>
       </View>
     </CardPressableBase>

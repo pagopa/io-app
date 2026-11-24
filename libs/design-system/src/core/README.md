@@ -18,7 +18,3 @@ Not yet migrated to `tokens`:
 - [`IOTypography`](./IOTypography.ts): visual attributes of each typographic style
 - [`IOAnimations`](./IOAnimations.ts): animation attributes of interactive elements
 - [`IOTransitions`](./IOTransitions.ts): custom enter/exit transitions
-
-## Deprecated
-
-- [`IOColorsLegacy`](./IOColorsLegacy.ts): the legacy palette and themes, replaced by `IOColors`

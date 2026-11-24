@@ -5,7 +5,7 @@ import {
   font,
   foregroundStyle
 } from "@expo/ui/swift-ui/modifiers";
-import { IOColorsLegacy } from "@io-app/design-system";
+import { IOColorPalette } from "@io-app/design-system";
 import { render, waitFor } from "@testing-library/react-native";
 import { AccessibilityInfo, Dimensions, Platform } from "react-native";
 
@@ -78,7 +78,7 @@ describe("AnimatedNumericText", () => {
       render(
         <AnimatedNumericText
           accessibilityLabel="remaining time"
-          color="blueIO-500"
+          color={IOColorPalette.blueIO[500]}
           size={20}
           value={42}
           weight="Bold"
@@ -90,7 +90,7 @@ describe("AnimatedNumericText", () => {
         size: 20
       });
       expect(jest.mocked(foregroundStyle)).toHaveBeenCalledWith(
-        IOColorsLegacy["blueIO-500"]
+        IOColorPalette.blueIO[500]
       );
     });
 
