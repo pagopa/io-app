@@ -186,6 +186,35 @@ pnpm nx run main-app:run-ios
 pnpm nx run main-app:run-ios "--simulator='iPhone 15'"
 ```
 
+### Maestro pilot: iOS login to inbox
+
+The [smoke flow](.maestro/ios/login-message.yaml) exercises a fresh local login,
+PIN creation and opening a specific inbox message. It uses the bundled dev API
+server's simulated SPID page, not a real identity provider. Before each run it
+[creates a message](.maestro/ios/seed-message.js) and looks up its sender, then
+checks the subject, organization and body in the app.
+
+1. Use a **dedicated iPhone simulator** with Italian as its language and no
+   Face ID enrolled. Each run clears the app's data **and the simulator keychain**.
+   Use a Debug build configured for the local backend as described under
+   [Environment variables](#environment-variables); never use a production build.
+2. Start `pnpm nx run @io-app/dev-api-server:start` with the default dev profile
+   and flags. Leave it running on `127.0.0.1:3000`. In another terminal, build
+   and launch the app on that simulator as above and keep Metro running.
+3. Install the [Maestro CLI](https://docs.maestro.dev/get-started/installing-maestro)
+   (pilot tested with 2.12.1). From the repository root, explicitly select the
+   dedicated simulator:
+
+   ```bash
+   xcrun simctl list devices booted
+   maestro --device "$SIMULATOR_UDID" test apps/main-app/.maestro/ios/login-message.yaml
+   ```
+
+   Set `SIMULATOR_UDID` to the dedicated simulator's UUID before running.
+   Maestro prints the path to its local logs and screenshots on failure.
+   Run serially against a dedicated dev API instance. This pilot is not a PR
+   gate; look for ten consecutive passes without retries before promoting it.
+
 ### Android emulator
 
 First, create and launch an AVD from [Android Studio](https://developer.android.com/studio/run/managing-avds).

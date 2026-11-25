@@ -1,0 +1,65 @@
+appId: it.pagopa.app.io
+name: Local SPID login and inbox message
+---
+- runScript: seed-message.js
+- launchApp:
+    clearState: true
+    clearKeychain: true
+- extendedWaitUntil:
+    visible:
+      id: landing-button-login-spid
+    timeout: 120000
+# RN groups this debug banner into one accessibility element on iOS.
+- tapOn:
+    text: ".*, Open debugger to view warnings\\."
+    point: "95%,50%"
+    optional: true
+- tapOn:
+    id: landing-button-login-spid
+- scrollUntilVisible:
+    element:
+      id: idp-arubaid-button
+    direction: DOWN
+    visibilityPercentage: 100
+- tapOn:
+    id: idp-arubaid-button
+- tapOn: "LOGIN"
+- tapOn: Non condividere
+- tapOn: Conferma
+- extendedWaitUntil:
+    visible:
+      id: pin-creation-screen
+    timeout: 30000
+- repeat:
+    times: 2
+    commands:
+      - tapOn: "3"
+      - tapOn: "8"
+      - tapOn: "1"
+      - tapOn: "6"
+      - tapOn: "2"
+      - tapOn: "9"
+- assertVisible:
+    id: not-enrolled-biometric-confirm
+- waitForAnimationToEnd
+- tapOn:
+    id: not-enrolled-biometric-confirm
+- tapOn:
+    text: Consenti
+    optional: true
+- extendedWaitUntil:
+    visible:
+      id: message_list_inbox
+    timeout: 30000
+- tapOn:
+    id: wrapped_message_list_item_.*
+    text: ${".*" + output.subject + ".*"}
+- assertVisible:
+    id: message-header-subject
+    text: ${output.subject}
+- assertVisible:
+    text: ${output.sender}
+- scrollUntilVisible:
+    element:
+      text: ${".*" + output.body + ".*"}
+    direction: DOWN
