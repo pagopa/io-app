@@ -2,6 +2,7 @@ import { createNativeBottomTabNavigator } from "@bottom-tabs/react-navigation";
 import { makeFontStyleObject, useIOColors } from "@io-app/design-system";
 import I18n from "i18next";
 import { Platform } from "react-native";
+
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { MessagesHomeScreen } from "../features/messages/screens/MessagesHomeScreen";
