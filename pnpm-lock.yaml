@@ -14703,7 +14703,7 @@ snapshots:
       node-forge: 1.4.0
       npm-package-arg: 11.0.3
       ora: 3.4.0
-      picomatch: 4.0.5
+      picomatch: 4.0.7
       pretty-format: 29.7.0
       progress: 2.0.3
       prompts: 2.4.2
@@ -15027,7 +15027,7 @@ snapshots:
       hermes-parser: 0.36.1
       jsc-safe-url: 0.2.4
       lightningcss: 1.32.0
-      picomatch: 4.0.5
+      picomatch: 4.0.7
       postcss: 8.5.15
       resolve-from: 5.0.0
     optionalDependencies:
@@ -16949,7 +16949,7 @@ snapshots:
       ora: 5.4.1
       semver: 7.8.5
       wcwidth: 1.0.1
-      yaml: 2.9.0
+      yaml: 2.9.1
     transitivePeerDependencies:
       - typescript
     optional: true
@@ -23132,7 +23132,7 @@ snapshots:
       jest-regex-util: 30.0.1
       jest-util: 30.3.0
       jest-worker: 30.3.0
-      picomatch: 4.0.5
+      picomatch: 4.0.7
       walker: 1.0.8
     optionalDependencies:
       fsevents: 2.3.3
@@ -23481,7 +23481,7 @@ snapshots:
       chalk: 4.1.2
       ci-info: 4.4.0
       graceful-fs: 4.2.11
-      picomatch: 4.0.5
+      picomatch: 4.0.7
 
   jest-validate@29.7.0:
     dependencies:
@@ -24284,7 +24284,7 @@ snapshots:
       metro-cache: 0.84.5(supports-color@8.1.1)
       metro-core: 0.84.5
       metro-runtime: 0.84.5
-      yaml: 2.9.0
+      yaml: 2.9.1
     transitivePeerDependencies:
       - bufferutil
       - supports-color
