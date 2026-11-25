@@ -392,7 +392,7 @@ const CieCardReaderScreen = () => {
           I18n.t("authentication.cie.card.iosAlert.genericError")
         );
       }
-      CieManager.setCustomIdpUrl(getCieIdpUrl(env) ?? undefined);
+      CieManager.setCustomIdpUrl(getCieIdpUrl(env));
 
       try {
         await CieManager.startReading(ciePin, cieAuthorizationUri);

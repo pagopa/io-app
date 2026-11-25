@@ -327,7 +327,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
           );
         });
       }
-      CieManager.setCustomIdpUrl(getCieIdpUrl(env) ?? undefined);
+      CieManager.setCustomIdpUrl(getCieIdpUrl(env));
 
       try {
         await CieManager.startReading(ciePin, authorizationUri);

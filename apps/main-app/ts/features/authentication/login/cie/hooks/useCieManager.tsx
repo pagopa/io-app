@@ -206,7 +206,7 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
       }
       // Set the IDP URL based on the environment (undefined falls back to PROD).
       const idpUrl = getCieIdpUrl(cieEnvSelector(store.getState()));
-      CieManager.setCustomIdpUrl(idpUrl ?? undefined);
+      CieManager.setCustomIdpUrl(idpUrl);
 
       try {
         await CieManager.startReading(pin, authUrl);
