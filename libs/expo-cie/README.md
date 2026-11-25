@@ -491,8 +491,7 @@ Contains CIE certificate data read from the card.
 
 ## Errors
 
-The CIE reading function may throw exceptions if the reading process cannot be initiated. These exceptions indicate issues with input validation or system compatibility.
-Below is a comprehensive list of possible exceptions that may be thrown during initialization:
+Native promise rejections contain `code` and `message` and can be parsed with `CieErrorSchema`. Expo can also return codes other than those listed below.
 
 | Error Code            | Platform    | Description                       |
 | --------------------- | ----------- | --------------------------------- |
@@ -501,6 +500,8 @@ Below is a comprehensive list of possible exceptions that may be thrown during i
 | `THREADING_ERROR`     | iOS         | Unexpected error                  |
 | `UNSUPPORTED`         | Android     | Feature not supported on platform |
 | `UNKNOWN_EXCEPTION`   | iOS/Android | Unexpected error                  |
+| `UNEXPECTED_ERROR`    | iOS         | Could not retrieve logs           |
+| `ERR_UNEXPECTED`      | iOS/Android | Unexpected native error           |
 
 ## Contributing
 

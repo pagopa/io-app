@@ -192,6 +192,6 @@ public class CieModule: Module {
   }
 }
 
-private func nativeError(_ code: String, _ message: String) -> NSError {
-  NSError(domain: code, code: 1, userInfo: [NSLocalizedDescriptionKey: message])
+private func nativeError(_ code: String, _ message: String) -> Exception {
+  Exception(name: "CieModuleException", description: message, code: code)
 }

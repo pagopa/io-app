@@ -12,6 +12,7 @@ import it.pagopa.io.app.cie.NisAndPaceCallback
 import it.pagopa.io.app.cie.cie.CertificateData
 import it.pagopa.io.app.cie.cie.CieAtrCallback
 import it.pagopa.io.app.cie.cie.CieCertificateDataCallback
+import it.pagopa.io.app.cie.cie.CieSdkException
 import it.pagopa.io.app.cie.cie.NfcError
 import it.pagopa.io.app.cie.cie.NfcEvent
 import it.pagopa.io.app.cie.network.NetworkCallback
@@ -23,6 +24,7 @@ import it.pagopa.io.app.cie.pace.MRTDResponse
 import it.pagopa.io.app.cie.pace.PaceCallback
 import it.pagopa.io.app.cie.toHex
 import java.lang.ref.WeakReference
+import java.net.MalformedURLException
 import java.net.URL
 
 class CieModule : Module() {
@@ -150,8 +152,13 @@ class CieModule : Module() {
     }
 
     AsyncFunction("startReading") { pin: String, authenticationUrl: String, timeout: Int ->
-      cieSdk.setPin(pin)
-      cieSdk.withUrl(URL(authenticationUrl).toString())
+      setPin(pin)
+      val url = try {
+        URL(authenticationUrl)
+      } catch (error: MalformedURLException) {
+        throw CodedException("INVALID_AUTH_URL", "Auth URL is invalid", error)
+      }
+      cieSdk.withUrl(url.toString())
       cieSdk.startReading(timeout, true, nfcEvents { event ->
         event.numerator.toDouble() / NfcEvent.totalNumeratorEvent
       }, object : NetworkCallback {
@@ -164,7 +171,7 @@ class CieModule : Module() {
     }
 
     AsyncFunction("startReadingCertificate") { pin: String, timeout: Int ->
-      cieSdk.setPin(pin)
+      setPin(pin)
       cieSdk.startReadingCertificate(timeout, true, nfcEvents { event ->
         event.numerator.toDouble() / NfcEvent.totalNumeratorEvent
       }, object : CieCertificateDataCallback {
@@ -187,6 +194,15 @@ class CieModule : Module() {
     }
     AsyncFunction("getLogsFilePath") { throw unsupportedException() }
     AsyncFunction("getLogs") { throw unsupportedException() }
+  }
+
+  private fun setPin(pin: String) {
+    try {
+      cieSdk.setPin(pin)
+    } catch (error: CieSdkException) {
+      if (error.getError() != NfcError.PIN_REGEX_NOT_VALID) throw error
+      throw CodedException("PIN_REGEX_NOT_VALID", "Pin must be exactly 8 digits", error)
+    }
   }
 
   private fun nfcEvents(progress: (NfcEvent) -> Double) = object : NfcEvents {
