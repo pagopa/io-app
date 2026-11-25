@@ -75,7 +75,7 @@ const mockSuccessfulCertificateValidation = () => {
   mockGetJwkFromCertificateChain.mockResolvedValue(CERTIFICATE_JWK as never);
 };
 
-const makeWallet = (status = "VALID", statusListSupported = true) => ({
+const makeWallet = (status = "valid", statusListSupported = true) => ({
   CredentialStatus: {
     statusList: {
       isSupported: statusListSupported,
@@ -225,8 +225,13 @@ describe("getCredentialStatusFromStatusList", () => {
     expect(wallet.CredentialStatus.statusList.getStatus).not.toHaveBeenCalled();
   });
 
-  it("throws when credential status is not valid", async () => {
-    mockGetIoWallet.mockReturnValue(makeWallet("INVALID") as never);
+  it.each([
+    { name: "invalid" },
+    { name: "suspended" },
+    { name: "update" },
+    { name: "attribute_update" }
+  ])("throws when credential status is $name", async ({ name }) => {
+    mockGetIoWallet.mockReturnValue(makeWallet(name) as never);
 
     await expect(
       getCredentialStatusFromStatusList(
@@ -240,7 +245,7 @@ describe("getCredentialStatusFromStatusList", () => {
   });
 
   it("throws when Status List is unsupported", async () => {
-    mockGetIoWallet.mockReturnValue(makeWallet("VALID", false) as never);
+    mockGetIoWallet.mockReturnValue(makeWallet("valid", false) as never);
 
     await expect(
       getCredentialStatusFromStatusList(

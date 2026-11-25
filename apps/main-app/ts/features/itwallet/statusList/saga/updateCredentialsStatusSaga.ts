@@ -53,7 +53,7 @@ export function* updateCredentialsStatusSaga({
       const nextValidity = {
         ...credential.validity,
         rawStatus,
-        status: status.toLowerCase()
+        status
       };
 
       return nextValidity.status !== credential.validity.status ||
