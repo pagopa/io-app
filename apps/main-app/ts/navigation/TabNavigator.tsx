@@ -1,5 +1,5 @@
 import { createNativeBottomTabNavigator } from "@bottom-tabs/react-navigation";
-import { makeFontStyleObject, useIOColors } from "@io-app/design-system";
+import { makeFontStyleObject } from "@io-app/design-system";
 import I18n from "i18next";
 import { Platform } from "react-native";
 
@@ -11,18 +11,20 @@ import { PaymentsHomeScreen } from "../features/payments/home/screens/PaymentsHo
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { ServicesHomeScreen } from "../features/services/home/screens/ServicesHomeScreen";
 import { WalletHomeScreen } from "../features/wallet/screens/WalletHomeScreen";
+import { useFeatureColors } from "../hooks/useFeatureColors";
 import { useIOSelector } from "../store/hooks";
 import { fontPreferenceSelector } from "../store/reducers/persistedPreferences";
 import { isStartupLoaded, StartupStatusEnum } from "../store/reducers/startup";
+import { navigationColors } from "./colors";
 import { useIONavigation } from "./params/AppParamsList";
 import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";
+
 const Tab = createNativeBottomTabNavigator<MainTabParamsList>();
 const LIQUID_GLASS_IOS_VERSION = 26;
 
 export const MainTabNavigator = () => {
-  const colors = useIOColors();
-
+  const { tabBar } = useFeatureColors(navigationColors);
   const navigation = useIONavigation();
 
   const startupLoaded = useIOSelector(isStartupLoaded);
@@ -32,25 +34,26 @@ export const MainTabNavigator = () => {
   const navigateToBarcodeScanScreen = () => {
     navigation.navigate(ROUTES.BARCODE_SCAN);
   };
+
   return (
     <LoadingSpinnerOverlay
       isLoading={startupLoaded === StartupStatusEnum.ONBOARDING}
       loadingOpacity={1}
     >
       <Tab.Navigator
-        activeIndicatorColor={colors.surface.accent}
+        activeIndicatorColor={tabBar.foreground.active}
         disablePageAnimations={
           Platform.OS === "ios" &&
           parseInt(String(Platform.Version), 10) < LIQUID_GLASS_IOS_VERSION
         }
         labeled
         minimizeBehavior="never"
-        scrollEdgeAppearance="opaque"
-        tabBarActiveTintColor={colors.foreground.accent}
+        scrollEdgeAppearance="transparent"
+        tabBarActiveTintColor={tabBar.foreground.active}
         tabBarHidden={!isArchivingDisabled}
-        tabBarInactiveTintColor={colors.text.content.tertiary}
+        tabBarInactiveTintColor={tabBar.foreground.inactive}
         tabBarStyle={{
-          backgroundColor: colors.background.default
+          backgroundColor: tabBar.background.default
         }}
         tabLabelStyle={makeFontStyleObject(
           11,

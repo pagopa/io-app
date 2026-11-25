@@ -7,6 +7,9 @@ export const navigationColors = (s: IOColorTheme) => ({
     foreground: {
       active: s.foreground.action.primary.default,
       inactive: s.text.content.tertiary
+    },
+    background: {
+      default: s.background.default
     }
   }
 });
