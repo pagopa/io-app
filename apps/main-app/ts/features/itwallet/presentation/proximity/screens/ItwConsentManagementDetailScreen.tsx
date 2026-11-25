@@ -1,13 +1,16 @@
 import {
+  BodySmall,
   ContentWrapper,
   IOMarkdownLite,
+  ListItemAction,
+  useIOColors,
   useIOToast,
   VStack
 } from "@io-app/design-system";
 import { StackActions, useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useEffect, useMemo, useRef } from "react";
-import { Alert } from "react-native";
+import { Alert, AlertButton, Platform } from "react-native";
 
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import {
@@ -53,6 +56,7 @@ export const ItwConsentManagementDetailScreen = ({ route }: Props) => {
   const dispatch = useIODispatch();
   const store = useIOStore();
   const toast = useIOToast();
+  const colors = useIOColors();
   const isRevoking = useRef(false);
   const consentSelector = useMemo(
     () => itwProximityConsentByKeySelector(consentKey),
@@ -124,6 +128,17 @@ export const ItwConsentManagementDetailScreen = ({ route }: Props) => {
       "features.itWallet.presentation.proximity.consentManagement.alert.cancel"
     );
 
+    const confirmButton: AlertButton = {
+      onPress: revokeConsent,
+      style: "destructive",
+      text: confirmLabel
+    };
+    const cancelButton: AlertButton = {
+      onPress: () => trackItwRevokeConsentOperationBlockAction("cancel"),
+      style: "cancel",
+      text: cancelLabel
+    };
+
     trackItwRevokeConsentOperationBlock();
     Alert.alert(
       I18n.t(
@@ -133,18 +148,11 @@ export const ItwConsentManagementDetailScreen = ({ route }: Props) => {
         "features.itWallet.presentation.proximity.consentManagement.alert.message",
         { relyingParty }
       ),
-      [
-        {
-          onPress: revokeConsent,
-          style: "destructive",
-          text: confirmLabel
-        },
-        {
-          onPress: () => trackItwRevokeConsentOperationBlockAction("cancel"),
-          style: "cancel",
-          text: cancelLabel
-        }
-      ]
+      // On Android the first button is rendered on the left, so the cancel
+      // action must come first to keep the confirm action on the right.
+      Platform.OS === "android"
+        ? [cancelButton, confirmButton]
+        : [confirmButton, cancelButton]
     );
   }, [consent, relyingParty, revokeConsent]);
 
@@ -155,29 +163,14 @@ export const ItwConsentManagementDetailScreen = ({ route }: Props) => {
   const savedAtDescription = getConsentSavedAtDescription(consent.savedAt);
 
   return (
-    <IOScrollViewWithLargeHeader
-      actions={{
-        type: "SingleButton",
-        primary: {
-          accessibilityLabel: I18n.t(
-            "features.itWallet.presentation.proximity.consentManagement.accessibility.revoke",
-            { relyingParty }
-          ),
-          color: "danger",
-          label: I18n.t(
-            "features.itWallet.presentation.proximity.consentManagement.detail.revokeAction"
-          ),
-          onPress: () => {
-            trackItwRevokeConsent();
-            showRevokeAlert();
-          },
-          testID: "revoke-consent-action"
-        }
-      }}
-      title={{ label: relyingParty, section: savedAtDescription }}
-    >
+    <IOScrollViewWithLargeHeader title={{ label: relyingParty }}>
       <ContentWrapper>
         <VStack space={24}>
+          {savedAtDescription && (
+            <BodySmall color={colors.text.content.tertiary} weight="Regular">
+              {savedAtDescription}
+            </BodySmall>
+          )}
           <IOMarkdownLite
             content={I18n.t(
               "features.itWallet.presentation.proximity.consentManagement.detail.message",
@@ -185,6 +178,22 @@ export const ItwConsentManagementDetailScreen = ({ route }: Props) => {
             )}
           />
           <ItwConsentClaims consent={consent} />
+          <ListItemAction
+            accessibilityLabel={I18n.t(
+              "features.itWallet.presentation.proximity.consentManagement.accessibility.revoke",
+              { relyingParty }
+            )}
+            icon="trashcan"
+            label={I18n.t(
+              "features.itWallet.presentation.proximity.consentManagement.detail.revokeAction"
+            )}
+            onPress={() => {
+              trackItwRevokeConsent();
+              showRevokeAlert();
+            }}
+            testID="revoke-consent-action"
+            variant="danger"
+          />
         </VStack>
       </ContentWrapper>
     </IOScrollViewWithLargeHeader>
