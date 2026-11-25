@@ -1,4 +1,4 @@
-import { IOColorsLegacy, useIOTheme } from "@io-app/design-system";
+import { useIOColors } from "@io-app/design-system";
 import I18n from "i18next";
 import { Modal } from "react-native";
 
@@ -7,10 +7,10 @@ import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBa
 
 const RefreshTokenLoadingScreen = () => {
   useAvoidHardwareBackButton();
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
-    <Modal backdropColor={IOColorsLegacy[theme["appBackground-primary"]]}>
+    <Modal backdropColor={colors.background.default}>
       <LoadingScreenContent title={I18n.t("fastLogin.loadingScreen.title")} />
     </Modal>
   );

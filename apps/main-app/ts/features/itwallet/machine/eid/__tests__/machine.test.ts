@@ -1280,6 +1280,47 @@ describe("itwEidIssuanceMachine", () => {
     }
   );
 
+  // SIW-4909: IT-Wallet (L3) reissuance has no result screen
+  test.each([
+    {
+      name: "goes back to the wallet after an IT-Wallet (L3) reissuance",
+      level: "l3" as const,
+      expectWallet: true
+    },
+    {
+      name: "shows the result screen after a Documenti su IO (L2) reissuance",
+      level: "l2" as const,
+      expectWallet: false
+    }
+  ])("$name", async ({ level, expectWallet }) => {
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine,
+      { input: { deps: T_DEPS } }
+    ).getSnapshot();
+
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { Issuance: "DisplayingPreview" },
+      context: {
+        mode: "reissuance",
+        level,
+        eid: T_EID_REQUEST_OUTPUT.credential
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, {
+      snapshot,
+      input: { deps: T_DEPS }
+    });
+    actor.start();
+    actor.send({ type: "add-to-wallet" });
+
+    await waitForActor(actor, snap => snap.matches("Success"));
+
+    expect(navigateToWallet).toHaveBeenCalledTimes(expectWallet ? 1 : 0);
+    expect(navigateToSuccessScreen).toHaveBeenCalledTimes(expectWallet ? 0 : 1);
+    actor.stop();
+  });
+
   it("Should store banner data on entering Success when EID activation was triggered by a credential request", async () => {
     storeEidCredentialActor.mockResolvedValue(undefined);
 

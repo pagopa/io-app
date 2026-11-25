@@ -6,6 +6,7 @@ import {
   IODimensions,
   IOPictograms,
   Pictogram,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import { StyleSheet, View } from "react-native";
@@ -20,27 +21,35 @@ type Props = {
   title: string;
 };
 
-const CameraPermissionView = (props: Props) => (
-  <View style={styles.container}>
-    <Pictogram name={props.pictogram} pictogramStyle="light-content" />
-    <VSpacer size={24} />
-    <H6 color="white" style={styles.text}>
-      {props.title}
-    </H6>
-    <VSpacer size={8} />
-    <BodySmall color="white" style={styles.text} weight="Regular">
-      {props.body}
-    </BodySmall>
-    <VSpacer size={32} />
-    <IOButton
-      color="contrast"
-      fullWidth
-      label={props.action.label}
-      onPress={props.action.onPress}
-      variant="solid"
-    />
-  </View>
-);
+const CameraPermissionView = (props: Props) => {
+  const colors = useIOColors();
+
+  return (
+    <View style={styles.container}>
+      <Pictogram name={props.pictogram} pictogramStyle="light-content" />
+      <VSpacer size={24} />
+      <H6 color={colors.foreground.onAccent.default} style={styles.text}>
+        {props.title}
+      </H6>
+      <VSpacer size={8} />
+      <BodySmall
+        color={colors.foreground.onAccent.default}
+        style={styles.text}
+        weight="Regular"
+      >
+        {props.body}
+      </BodySmall>
+      <VSpacer size={32} />
+      <IOButton
+        color="contrast"
+        fullWidth
+        label={props.action.label}
+        onPress={props.action.onPress}
+        variant="solid"
+      />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

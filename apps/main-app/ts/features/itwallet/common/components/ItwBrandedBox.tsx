@@ -1,3 +1,4 @@
+/* eslint-disable @io-app/no-hardcoded-colors -- artwork gradients, see CODING_STANDARDS.md#colors */
 import { useIOThemeContext } from "@io-app/design-system";
 import {
   Canvas,

@@ -68,9 +68,18 @@ export const cgnColors = (s: IOColorTheme, mode: IOColorMode) => {
         foreground: s.text.heading.default
       }
     },
+    /** Matches of the search text in the merchant search results */
+    merchantSearch: {
+      highlight: isDark
+        ? IOColorPalette.turquoise[850]
+        : IOColorPalette.turquoise[100]
+    },
     merchantCard: {
       border: IOColorPalette.hanPurple[100],
-      newsBadge: IOColorPalette.hanPurple[100]
+      newsBadge: {
+        background: IOColorPalette.hanPurple[100],
+        text: IOColorPalette.hanPurple[500]
+      }
     },
     category: {
       iconBackground: withAlpha(IOColorPalette.greyscale.white, 0.2),

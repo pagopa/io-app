@@ -8,11 +8,10 @@ import {
   H4,
   HStack,
   Icon,
-  IOColorsLegacy,
   IOIcons,
   IOMarkdownLite,
   IOToast,
-  useIOTheme,
+  useIOColors,
   useIOThemeContext,
   VSpacer,
   VStack
@@ -275,14 +274,14 @@ const FeatureBlock = (props: {
   content: string;
   image: React.ReactElement;
 }) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <HStack
       space={16}
       style={{
         ...styles.feature,
-        borderColor: IOColorsLegacy[theme["cardBorder-default"]]
+        borderColor: colors.stroke.default
       }}
     >
       {props.image}
@@ -298,17 +297,13 @@ const DetailBlock = (props: {
   icon: IOIcons;
   title: string;
 }) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <VStack space={8} style={styles.detail}>
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <H4>{props.title}</H4>
-        <Icon
-          color={theme["interactiveElem-default"]}
-          name={props.icon}
-          size={24}
-        />
+        <Icon color={colors.icon.action} name={props.icon} size={24} />
       </View>
       <IOMarkdown content={props.content} />
     </VStack>

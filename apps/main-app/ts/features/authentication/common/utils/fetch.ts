@@ -1,12 +1,5 @@
 import { unknownToString } from "../../../../utils/errors";
 
-export type FetchFailureReason =
-  | "aborted"
-  | "network-error"
-  | "no-attempts"
-  | "retryable-status"
-  | "timeout";
-
 export type FetchFailureResponse = {
   message: string;
   reason: FetchFailureReason;
@@ -25,6 +18,13 @@ export type FetchSuccessResponse = {
   response: Response;
   type: "success";
 };
+
+type FetchFailureReason =
+  | "aborted"
+  | "network-error"
+  | "no-attempts"
+  | "retryable-status"
+  | "timeout";
 
 export const isFailureResponse = (
   response: FetchResponse

@@ -2,7 +2,7 @@ import * as E from "fp-ts/lib/Either";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as TE from "fp-ts/lib/TaskEither";
 import { err, ok } from "neverthrow";
-import { ImageURISource, Linking } from "react-native";
+import { Linking } from "react-native";
 import URLParse from "url-parse";
 
 import { storeUrl, webStoreURL } from "./appVersion";
@@ -74,17 +74,17 @@ export function handleItemOnPress(
   }
 }
 
-export const isHttp = (url: string): boolean => {
+const isHttp = (url: string): boolean => {
   const urlLower = url.trim().toLocaleLowerCase();
   return urlLower.match(/http(s)?:\/\//gm) !== null;
 };
 
-export const isIOIT = (url: string): boolean => {
+const isIOIT = (url: string): boolean => {
   const urlLower = url.trim().toLocaleLowerCase();
   return urlLower.match(/ioit?:\/\//gm) !== null;
 };
 
-export const taskLinking = (url: string) =>
+const taskLinking = (url: string) =>
   TE.tryCatch(
     () => Linking.openURL(url),
     _ => `cannot open url ${url}`
@@ -118,20 +118,6 @@ export const openAppStoreUrl = async (onError: () => void = constNull) => {
     openWebUrl(webStoreURL, onError);
   }
 };
-
-/**
- * Escape characters with special meaning either inside or outside character
- * sets. Use a simple backslash escape when it’s always valid, and a `\xnn`
- * escape when the simpler form would be disallowed by Unicode patterns’
- * stricter grammar.
- */
-export function escapeStringRegexp(string: string) {
-  if (typeof string !== "string") {
-    throw new TypeError("Expected a string");
-  }
-
-  return string.replace(/[|\\{}()[\]^$+*?.]/g, "\\$&").replace(/-/g, "\\x2d");
-}
 
 /**
  * Extract the path from a given url if it matches one of the given prefixes
@@ -170,13 +156,18 @@ export function extractPathFromURL(
 }
 
 /**
- * Type guard to check if a value is an ImageURISource
- *
- * @param value The value to check, can be anything
- * @returns Boolean
+ * Escape characters with special meaning either inside or outside character
+ * sets. Use a simple backslash escape when it’s always valid, and a `\xnn`
+ * escape when the simpler form would be disallowed by Unicode patterns’
+ * stricter grammar.
  */
-export const isImageUri = (value: unknown): value is ImageURISource =>
-  typeof value === "object" && value !== null && "uri" in value;
+function escapeStringRegexp(string: string) {
+  if (typeof string !== "string") {
+    throw new TypeError("Expected a string");
+  }
+
+  return string.replace(/[|\\{}()[\]^$+*?.]/g, "\\$&").replace(/-/g, "\\x2d");
+}
 
 /**
  * Parses a URL without throwing: parsing failures are returned as an `Err` with

@@ -1,13 +1,13 @@
 import {
   HeaderSecondLevel,
-  hexToRgba,
   IOButton,
   IOButtonLinkSpecificProps,
-  IOColorsLegacy,
+  IOColorPalette,
   IODimensions,
   IODimensionScale,
-  useIOTheme,
-  VSpacer
+  useIOColors,
+  VSpacer,
+  withAlpha
 } from "@io-app/design-system";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -176,7 +176,6 @@ export const IOScrollView = ({
   testID
 }: IOScrollViewProps) => {
   const { isAlertVisible } = useIOAlertVisible();
-  const theme = useIOTheme();
   const insets = useSafeAreaInsets();
 
   /* Navigation */
@@ -205,12 +204,11 @@ export const IOScrollView = ({
   /* GENERATE EASING GRADIENT
      Background color should be app main background
      (both light and dark themes) */
-  const APP_BG_COLOR: ColorValue =
-    IOColorsLegacy[theme["appBackground-primary"]];
+  const APP_BG_COLOR: ColorValue = useIOColors().background.default;
 
   const { colors, locations } = easeGradient({
     colorStops: {
-      0: { color: hexToRgba(APP_BG_COLOR, 0) },
+      0: { color: withAlpha(APP_BG_COLOR, 0) },
       1: { color: APP_BG_COLOR }
     },
     easing: Easing.ease,
@@ -364,7 +362,7 @@ export const IOScrollView = ({
             style={[
               styles.gradientContainer,
               debugMode && {
-                backgroundColor: hexToRgba(IOColorsLegacy["error-500"], 0.15)
+                backgroundColor: withAlpha(IOColorPalette.red[500], 0.15)
               }
             ]}
           >
@@ -372,9 +370,9 @@ export const IOScrollView = ({
               style={[
                 opacityTransition,
                 debugMode && {
-                  borderTopColor: IOColorsLegacy["error-500"],
+                  borderTopColor: IOColorPalette.red[500],
                   borderTopWidth: 1,
-                  backgroundColor: hexToRgba(IOColorsLegacy["error-500"], 0.4)
+                  backgroundColor: withAlpha(IOColorPalette.red[500], 0.4)
                 }
               ]}
             >

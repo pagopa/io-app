@@ -8,13 +8,7 @@ import {
   BottomSheetScrollView,
   useBottomSheetModal
 } from "@gorhom/bottom-sheet";
-import {
-  IOColorsLegacy,
-  IODimensions,
-  useIOColors,
-  useIOTheme,
-  VSpacer
-} from "@io-app/design-system";
+import { IODimensions, useIOColors, VSpacer } from "@io-app/design-system";
 import { NonEmptyArray } from "fp-ts/lib/NonEmptyArray";
 import {
   JSX,
@@ -106,7 +100,6 @@ export const useIOBottomSheetModal = ({
   forceFullscreen
 }: BottomSheetOptions): IOBottomSheetModal => {
   const insets = useSafeAreaInsets();
-  const theme = useIOTheme();
   const { dismissAll } = useBottomSheetModal();
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const { onOpen, onClose } = useHardwareBackButtonToDismiss(dismissAll);
@@ -124,7 +117,7 @@ export const useIOBottomSheetModal = ({
 
   const colors = useIOColors();
   const backdropColor = colors.background.overlay;
-  const backgroundColor = IOColorsLegacy[theme["appBackground-primary"]];
+  const backgroundColor = colors.background.default;
 
   const header = <BottomSheetHeader onClose={dismissAll} title={title} />;
   const bottomSheetContent = (
@@ -217,7 +210,7 @@ export const useIOBottomSheetModal = ({
               // bottomInset={insets.bottom}
               style={{
                 paddingBottom: insets.bottom,
-                backgroundColor: IOColorsLegacy[theme["appBackground-primary"]]
+                backgroundColor
               }}
             >
               {footer}

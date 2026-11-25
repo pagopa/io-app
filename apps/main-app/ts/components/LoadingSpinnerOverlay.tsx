@@ -1,10 +1,4 @@
-import {
-  H3,
-  hexToRgba,
-  IOButton,
-  IOColorsLegacy,
-  useIOTheme
-} from "@io-app/design-system";
+import { H3, IOButton, useIOColors, withAlpha } from "@io-app/design-system";
 import I18n from "i18next";
 import { ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
@@ -48,7 +42,7 @@ const LoadingSpinnerOverlay = ({
   loadingOpacity = 0.7,
   onCancel
 }: Props) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <View style={styles.container} testID="overlayComponent">
@@ -57,8 +51,8 @@ const LoadingSpinnerOverlay = ({
           style={[
             styles.overlay,
             {
-              backgroundColor: hexToRgba(
-                IOColorsLegacy[theme["appBackground-primary"]],
+              backgroundColor: withAlpha(
+                colors.background.default,
                 loadingOpacity
               )
             }
@@ -81,7 +75,7 @@ const LoadingSpinnerOverlay = ({
               <View style={styles.textCaption}>
                 <H3
                   accessible={true}
-                  color={theme["textHeading-secondary"]}
+                  color={colors.text.heading.secondary}
                   style={{ textAlign: "center" }}
                 >
                   {loadingCaption || I18n.t("global.remoteStates.wait")}

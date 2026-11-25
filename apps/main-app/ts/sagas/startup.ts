@@ -139,7 +139,6 @@ import {
 import {
   isAarRemoteEnabled,
   isIdPayEnabledSelector,
-  isPnRemoteEnabledSelector,
   remoteConfigSelector
 } from "../store/reducers/backendStatus/remoteConfig";
 import {
@@ -659,20 +658,14 @@ export function* initializeApplicationSaga(
     yield* put(cgnDetails.request());
   }
 
-  const pnEnabled: ReturnType<typeof isPnRemoteEnabledSelector> = yield* select(
-    isPnRemoteEnabledSelector
-  );
+  // Start watching for PN actions
+  yield* fork(watchPnSaga, sessionToken);
 
-  if (pnEnabled) {
-    // Start watching for PN actions
-    yield* fork(watchPnSaga, sessionToken);
+  yield* fork(watchSendLollipopLambda, sessionToken, keyInfo);
 
-    yield* fork(watchSendLollipopLambda, sessionToken, keyInfo);
-
-    const aarRemoteEnabled = yield* select(isAarRemoteEnabled);
-    if (aarRemoteEnabled) {
-      yield* fork(watchAarFlowSaga, sessionToken, keyInfo);
-    }
+  const aarRemoteEnabled = yield* select(isAarRemoteEnabled);
+  if (aarRemoteEnabled) {
+    yield* fork(watchAarFlowSaga, sessionToken, keyInfo);
   }
 
   const idPayEnabled: ReturnType<typeof isIdPayEnabledSelector> = yield* select(

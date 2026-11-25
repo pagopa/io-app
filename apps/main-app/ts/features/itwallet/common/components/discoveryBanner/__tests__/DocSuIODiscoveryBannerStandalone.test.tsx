@@ -6,14 +6,14 @@ import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import * as selectors from "../../../store/selectors";
-import { ItwDiscoveryBannerStandalone } from "../ItwDiscoveryBannerStandalone";
+import { DocSuIODiscoveryBannerStandalone } from "../DocSuIODiscoveryBannerStandalone";
 
-describe("ItwDiscoveryBannerStandalone", () => {
+describe("DocSuIODiscoveryBannerStandalone", () => {
   test.each([true, false] as ReadonlyArray<boolean>)(
     "should match snapshot when isItwDiscoveryBannerRenderable is %p",
     isItwDiscoveryBannerRenderable => {
       jest
-        .spyOn(selectors, "isItwDiscoveryBannerRenderableSelector")
+        .spyOn(selectors, "isDocSuIODiscoveryBannerRenderableSelector")
         .mockImplementation(() => isItwDiscoveryBannerRenderable);
 
       const { component } = renderComponent();
@@ -32,7 +32,7 @@ const renderComponent = () => {
 
   return {
     component: renderScreenWithNavigationStoreContext<GlobalState>(
-      ItwDiscoveryBannerStandalone,
+      DocSuIODiscoveryBannerStandalone,
       ROUTES.WALLET_HOME,
       {},
       store

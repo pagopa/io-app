@@ -7,7 +7,6 @@ import {
   IOButton,
   IOButtonBlockSpecificProps,
   IOButtonLinkSpecificProps,
-  IOColorsLegacy,
   IODimensions,
   IOPictograms,
   IOSpringValues,
@@ -41,8 +40,16 @@ export type CieCardReadContentProps = {
   title: string;
 };
 
-/** Renders the title component title based on the platform */
-const Title = ({ title }: Pick<CieCardReadContentProps, "title">) => (
+type TextAlignmentProps = {
+  /** Android layout: centered under the progress */
+  centered?: boolean;
+};
+
+/** Renders the component title, left-aligned (iOS) or centered (Android) */
+const Title = ({
+  title,
+  centered
+}: Pick<CieCardReadContentProps, "title"> & TextAlignmentProps) => (
   <View>
     {/* A11y live node */}
     <View
@@ -52,26 +59,32 @@ const Title = ({ title }: Pick<CieCardReadContentProps, "title">) => (
       importantForAccessibility="yes"
       style={{ position: "absolute", width: 1, height: 1, opacity: 0 }}
     />
-    {platformSelect({
-      ios: <H4>{title}</H4>,
-      default: <H3 style={{ textAlign: "center" }}>{title}</H3>
-    })}
+    {centered ? (
+      <H3 style={{ textAlign: "center" }}>{title}</H3>
+    ) : (
+      <H4>{title}</H4>
+    )}
   </View>
 );
 
-/** Renders the component subtitle based on the platform and progress */
-const Subtitle = ({ subtitle }: Pick<CieCardReadContentProps, "subtitle">) => {
+/** Renders the component subtitle, left-aligned (iOS) or centered (Android) */
+const Subtitle = ({
+  subtitle,
+  centered
+}: Pick<CieCardReadContentProps, "subtitle"> & TextAlignmentProps) => {
+  const colors = useIOColors();
+
   if (subtitle === undefined) {
     return null;
   }
-  return platformSelect({
-    ios: <Body color="grey-650">{subtitle}</Body>,
-    default: (
-      <Body color="grey-650" style={{ textAlign: "center" }}>
-        {subtitle}
-      </Body>
-    )
-  });
+  return (
+    <Body
+      color={colors.text.content.tertiary}
+      style={centered ? { textAlign: "center" } : undefined}
+    >
+      {subtitle}
+    </Body>
+  );
 };
 
 /** Renders the content actions (Android) or footer actions (iOS) */
@@ -126,7 +139,7 @@ const LinearProgressBar = (
   const colors = useIOColors();
 
   const backgroundColor = colors.stroke.default;
-  const foregroundColor = IOColorsLegacy["turquoise-500"];
+  const foregroundColor = colors.foreground.accent;
 
   // Convert progress to 0-100 scale and round to avoid floating-point precision issues
   const progressPercent = Math.round(
@@ -237,8 +250,8 @@ const ContentAndroid = (props: CieCardReadContentProps) => {
             <Pictogram name={props.pictogram} size={180} />
           </CircularProgress>
           <VStack space={8}>
-            <Title title={props.title} />
-            <Subtitle subtitle={props.subtitle} />
+            <Title centered title={props.title} />
+            <Subtitle centered subtitle={props.subtitle} />
           </VStack>
           <Actions
             primaryAction={props.primaryAction}

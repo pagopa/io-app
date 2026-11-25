@@ -10,10 +10,9 @@ import {
   ContentWrapper,
   H3,
   IOButton,
-  IOColorsLegacy,
   IOPictograms,
   triggerHaptic,
-  useIOTheme,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
@@ -126,7 +125,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
 }: ActiveSessionLoginCieCardReaderScreenProps) => {
   const { authorizationUri, ciePin, loginType } = route.params;
 
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const dispatch = useIODispatch();
 
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
@@ -417,7 +416,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
         >
           <ContentWrapper>
             <CieCardReadingAnimation
-              circleColor={IOColorsLegacy[theme["interactiveElem-default"]]}
+              circleColor={colors.foreground.accent}
               pictogramName={getPictogramName(readingState)}
               readingState={readingState}
             />

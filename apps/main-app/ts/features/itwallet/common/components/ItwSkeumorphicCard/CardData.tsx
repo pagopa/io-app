@@ -1,6 +1,6 @@
 /* eslint-disable dot-notation */
 /* eslint-disable @typescript-eslint/dot-notation */
-import { hexToRgba } from "@io-app/design-system";
+import { withAlpha } from "@io-app/design-system";
 import { ElementType, Fragment, memo } from "react";
 import { StyleSheet, View } from "react-native";
 
@@ -337,7 +337,7 @@ const styles = StyleSheet.create({
     borderRadius: "50%",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: hexToRgba(ACCOMPANYING_PERSON_BACKGROUND_COLOR, 0.5)
+    backgroundColor: withAlpha(ACCOMPANYING_PERSON_BACKGROUND_COLOR, 0.5)
   },
   container: {
     position: "absolute",

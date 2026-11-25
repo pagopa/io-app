@@ -23,6 +23,7 @@ const LIQUID_GLASS_IOS_VERSION = 26;
 
 export const MainTabNavigator = () => {
   const colors = useIOColors();
+
   const navigation = useIONavigation();
 
   const startupLoaded = useIOSelector(isStartupLoaded);
