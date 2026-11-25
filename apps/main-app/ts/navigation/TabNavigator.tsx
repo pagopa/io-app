@@ -2,7 +2,6 @@ import { createNativeBottomTabNavigator } from "@bottom-tabs/react-navigation";
 import { makeFontStyleObject, useIOColors } from "@io-app/design-system";
 import I18n from "i18next";
 import { Platform } from "react-native";
-
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { MessagesHomeScreen } from "../features/messages/screens/MessagesHomeScreen";
@@ -17,7 +16,6 @@ import { isStartupLoaded, StartupStatusEnum } from "../store/reducers/startup";
 import { useIONavigation } from "./params/AppParamsList";
 import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";
-
 const Tab = createNativeBottomTabNavigator<MainTabParamsList>();
 const LIQUID_GLASS_IOS_VERSION = 26;
 
@@ -33,7 +31,6 @@ export const MainTabNavigator = () => {
   const navigateToBarcodeScanScreen = () => {
     navigation.navigate(ROUTES.BARCODE_SCAN);
   };
-
   return (
     <LoadingSpinnerOverlay
       isLoading={startupLoaded === StartupStatusEnum.ONBOARDING}
