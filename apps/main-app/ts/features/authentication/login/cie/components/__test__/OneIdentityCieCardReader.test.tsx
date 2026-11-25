@@ -103,6 +103,8 @@ describe("OneIdentityCieCardReader", () => {
     expect(failureElement.props.failure).toEqual({
       name: "AUTHENTICATION_ERROR"
     });
+    expect(failureElement.props.onCancel).toEqual(expect.any(Function));
+    expect(failureElement.props.onRetry).toEqual(expect.any(Function));
 
     expect(queryByTestId("mock-progress")).toBeNull();
   });

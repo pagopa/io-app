@@ -1,5 +1,11 @@
 import { triggerHaptic } from "@io-app/design-system";
-import { CieLogger, CieManager, NfcError, NfcEvent } from "@io-app/expo-cie";
+import {
+  CieErrorSchema,
+  CieLogger,
+  CieManager,
+  NfcError,
+  NfcEvent
+} from "@io-app/expo-cie";
 import I18n from "i18next";
 import { useCallback, useEffect, useState } from "react";
 import { Platform } from "react-native";
@@ -54,17 +60,6 @@ const IOS_ALERT_MESSAGES: ReadonlyArray<
   ["genericError", I18n.t("authentication.cie.card.iosAlert.genericError")]
 ];
 
-const FAILURE_ERRORS = new Set<NfcError["name"]>([
-  "APDU_ERROR",
-  "AUTHENTICATION_ERROR",
-  "CARD_BLOCKED",
-  "CERTIFICATE_EXPIRED",
-  "CERTIFICATE_REVOKED",
-  "NO_INTERNET_CONNECTION",
-  "NOT_A_CIE",
-  "WRONG_PIN"
-]);
-
 /**
  * Decodes the URL returned by the CIE SDK, falling back to the raw value if
  * malformed.
@@ -79,9 +74,8 @@ const safeDecodeURIComponent = (url: string): string => {
 
 export type CieManagerState =
   | { failure: NfcError; status: "failure" }
-  | { failure: string; status: "reading-failure" }
+  | { progress: number; status: "reading" }
   | { status: "idle" }
-  | { status: "reading" }
   | { status: "success" };
 
 type UseCieManager = (params: { onSuccess: (authUrl: string) => void }) => {
@@ -105,17 +99,14 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
   const [state, setState] = useState<CieManagerState>({ status: "idle" });
 
   const commonErrorHandling = useCallback(
-    (
-      reason: "GENERIC" | NfcError["name"],
-      description: string | undefined,
-      handler: () => void
-    ) => {
+    (error: NfcError, handler: () => void) => {
       trackLoginCieCardReadingError(loginFlow);
 
       dispatch(
         cieAuthenticationError({
-          reason,
-          cieDescription: description ?? cieErrorMessagesMap[reason] ?? "",
+          reason: error.name,
+          cieDescription:
+            error.message ?? cieErrorMessagesMap[error.name] ?? "",
           flow: loginFlow
         })
       );
@@ -127,27 +118,20 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
 
   const handleError = useCallback(
     (error: NfcError) => {
-      handleSendAssistanceLog(choosenTool, error.message ?? error.name);
+      CieManager.stopReading().catch(() => {
+        // Ignore errors on stop reading
+      });
 
-      if (error.name === "TAG_LOST") {
-        commonErrorHandling(error.name, error.message, () =>
-          setState({ failure: error.name, status: "reading-failure" })
-        );
+      // iOS only: the user dismissed the native NFC sheet.
+      // Stay on the reading screen.
+      if (error.name === "CANCELLED_BY_USER") {
         return;
       }
 
-      if (FAILURE_ERRORS.has(error.name)) {
-        commonErrorHandling(error.name, error.message, () =>
-          setState({ failure: error, status: "failure" })
-        );
-        return;
-      }
+      handleSendAssistanceLog(choosenTool, error.name);
 
-      commonErrorHandling("GENERIC", error.message, () =>
-        setState({
-          failure: error.message ?? error.name,
-          status: "reading-failure"
-        })
+      commonErrorHandling(error, () =>
+        setState({ failure: error, status: "failure" })
       );
     },
     [choosenTool, commonErrorHandling]
@@ -157,28 +141,15 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
     (event: NfcEvent) => {
       handleSendAssistanceLog(choosenTool, event.name);
 
-      // Trigger a light haptic feedback and update the state to reflect
-      // the start of the reading when the tag is discovered
+      setState({ status: "reading", progress: event.progress });
+
+      // Trigger a light haptic feedback on the start of the reading
+      // when the tag is discovered
       if (event.name === "ON_TAG_DISCOVERED") {
-        setState({ status: "reading" });
         triggerHaptic("impactLight");
-        return;
       }
-
-      // Handle recoverable errors by allowing
-      // the user to retry the reading process
-      if (event.name === "ON_TAG_LOST" || event.name === "Transmission Error") {
-        commonErrorHandling("TAG_LOST", undefined, () =>
-          setState({ failure: "TAG_LOST", status: "reading-failure" })
-        );
-        return;
-      }
-
-      // Halt the reading process and transition to a failure state.
-      // This delegates the rendering to the specific Failure components.
-      // Any other/unknown progress event is ignored
     },
-    [choosenTool, commonErrorHandling]
+    [choosenTool]
   );
 
   const handleSuccess = useCallback(
@@ -216,9 +187,12 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
 
       try {
         await CieManager.startReading(pin, authUrl);
-      } catch (e: unknown) {
-        const errorMessage = unknownToString(e);
-        handleError({ name: "GENERIC_ERROR", message: errorMessage });
+      } catch (error) {
+        const parsed = CieErrorSchema.safeParse(error);
+        handleError({
+          name: "GENERIC_ERROR",
+          message: parsed.success ? parsed.data.code : unknownToString(error)
+        });
       }
     },
     [handleError, store]

@@ -10,16 +10,21 @@ import { trackLoginCieCardReadingError } from "../../../../common/analytics/cieA
 import { cieAuthenticationError } from "../../store/actions";
 import { useCieManager } from "../useCieManager";
 
-jest.mock("@io-app/expo-cie", () => ({
-  CieLogger: { setLogMode: jest.fn() },
-  CieManager: {
-    addListener: jest.fn(),
-    setAlertMessage: jest.fn(),
-    setCustomIdpUrl: jest.fn(),
-    startReading: jest.fn(async () => undefined),
-    stopReading: jest.fn(async () => undefined)
-  }
-}));
+jest.mock("@io-app/expo-cie", () => {
+  const { CieErrorSchema } = jest.requireActual("@io-app/expo-cie/src/errors");
+
+  return {
+    CieErrorSchema,
+    CieLogger: { setLogMode: jest.fn() },
+    CieManager: {
+      addListener: jest.fn(),
+      setAlertMessage: jest.fn(),
+      setCustomIdpUrl: jest.fn(),
+      startReading: jest.fn(async () => undefined),
+      stopReading: jest.fn(async () => undefined)
+    }
+  };
+});
 
 jest.mock("../../../../common/analytics/cieAnalytics", () => ({
   trackLoginCieCardReadingError: jest.fn(),
@@ -85,7 +90,10 @@ describe("useCieManager", () => {
       emitEvent({ name: "ON_TAG_DISCOVERED", progress: 0.2 });
     });
 
-    expect(result.current.state).toEqual({ status: "reading" });
+    expect(result.current.state).toEqual({
+      status: "reading",
+      progress: 0.2
+    });
   });
 
   it("should call onSuccess after the success event and set the success state", async () => {
@@ -149,7 +157,7 @@ describe("useCieManager", () => {
     }
   );
 
-  it("should set an inline reading-failure state for ON_TAG_LOST and dispatch cieAuthenticationError", async () => {
+  it("should set a failure state for TAG_LOST and dispatch cieAuthenticationError", async () => {
     const store = createTestStore();
     store.dispatch(setStartActiveSessionLogin());
     const dispatchSpy = jest.spyOn(store, "dispatch");
@@ -163,7 +171,11 @@ describe("useCieManager", () => {
       emitError({ name: "TAG_LOST" });
     });
 
-    expect(result.current.state.status).toBe("reading-failure");
+    expect(result.current.state).toEqual({
+      status: "failure",
+      failure: { name: "TAG_LOST" }
+    });
+    expect(mockedCieManager.stopReading).toHaveBeenCalledTimes(1);
     expect(mockedTrackLoginCieCardReadingError).toHaveBeenCalledWith("reauth");
     expect(dispatchSpy).toHaveBeenCalledWith(
       cieAuthenticationError(
@@ -175,7 +187,29 @@ describe("useCieManager", () => {
     );
   });
 
-  it("should set an inline reading-failure state for native errors", async () => {
+  it("should replace the failure if a tag event arrives after TAG_LOST", async () => {
+    const { result } = setupTest();
+
+    await act(async () => {
+      await result.current.startReading("12345678", "https://auth.example.com");
+    });
+
+    act(() => {
+      emitError({ name: "TAG_LOST" });
+    });
+    act(() => {
+      emitEvent({ name: "ON_TAG_DISCOVERED", progress: 0.2 });
+    });
+
+    expect(result.current.state).toEqual({
+      status: "reading",
+      progress: 0.2
+    });
+    expect(mockedCieManager.stopReading).toHaveBeenCalledTimes(1);
+    expect(mockedCieManager.startReading).toHaveBeenCalledTimes(1);
+  });
+
+  it("should set a failure state for a generic native error", async () => {
     const { result } = setupTest();
 
     await act(async () => {
@@ -187,9 +221,48 @@ describe("useCieManager", () => {
     });
 
     expect(result.current.state).toEqual({
-      status: "reading-failure",
-      failure: "native error"
+      status: "failure",
+      failure: { name: "GENERIC_ERROR", message: "native error" }
     });
+  });
+
+  it("should keep a wrong CAN on the failure state", async () => {
+    const { result } = setupTest();
+
+    await act(async () => {
+      await result.current.startReading("12345678", "https://auth.example.com");
+    });
+
+    act(() => {
+      emitError({ name: "WRONG_CAN" });
+    });
+
+    expect(result.current.state).toEqual({
+      status: "failure",
+      failure: { name: "WRONG_CAN" }
+    });
+  });
+
+  it("should stay on the reading screen when the user dismisses the NFC sheet", async () => {
+    const { result } = setupTest();
+
+    await act(async () => {
+      await result.current.startReading("12345678", "https://auth.example.com");
+    });
+
+    act(() => {
+      emitEvent({ name: "ON_TAG_DISCOVERED", progress: 0.2 });
+    });
+    act(() => {
+      emitError({ name: "CANCELLED_BY_USER" });
+    });
+
+    expect(result.current.state).toEqual({
+      status: "reading",
+      progress: 0.2
+    });
+    expect(mockedCieManager.stopReading).toHaveBeenCalledTimes(1);
+    expect(mockedTrackLoginCieCardReadingError).not.toHaveBeenCalled();
   });
 
   it.each([
@@ -237,7 +310,7 @@ describe("useCieManager", () => {
     "STOP_NFC_ERROR",
     "SOME_UNHANDLED_EVENT"
   ] as const)(
-    "should ignore the %s event and keep the current state",
+    "should move to reading on the %s event",
     async unhandledEvent => {
       const { result } = setupTest();
 
@@ -255,20 +328,43 @@ describe("useCieManager", () => {
         });
       });
 
-      expect(result.current.state).toEqual({ status: "idle" });
+      expect(result.current.state).toEqual({
+        status: "reading",
+        progress: 0
+      });
       expect(mockedTrackLoginCieCardReadingError).not.toHaveBeenCalled();
     }
   );
 
-  it("should set a failure state when starting the reading fails", async () => {
-    mockedCieManager.startReading.mockRejectedValueOnce(new Error("boom"));
+  it.each([
+    {
+      name: "a native module error",
+      rejection: { code: "INVALID_AUTH_URL", message: "Auth URL is invalid" },
+      message: "INVALID_AUTH_URL"
+    },
+    {
+      name: "an unexpected rejection",
+      rejection: new Error("boom"),
+      message: expect.stringContaining("boom")
+    }
+  ])(
+    "should set a generic failure when starting the reading fails with $name",
+    async ({ rejection, message }) => {
+      mockedCieManager.startReading.mockRejectedValueOnce(rejection);
 
-    const { result } = setupTest();
+      const { result } = setupTest();
 
-    await act(async () => {
-      await result.current.startReading("12345678", "https://auth.example.com");
-    });
+      await act(async () => {
+        await result.current.startReading(
+          "12345678",
+          "https://auth.example.com"
+        );
+      });
 
-    expect(result.current.state.status).toBe("reading-failure");
-  });
+      expect(result.current.state).toEqual({
+        status: "failure",
+        failure: { name: "GENERIC_ERROR", message }
+      });
+    }
+  );
 });
