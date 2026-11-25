@@ -80,13 +80,8 @@ describe("encodeQualtricsParameters", () => {
       qualtricsParameters
     );
 
-    const { firstTimeOpening, ...rest } = qualtricsParameters;
-
     const parametersBase64Url = Buffer.from(
-      JSON.stringify({
-        ...rest,
-        first_time_opening: firstTimeOpening
-      }),
+      JSON.stringify(qualtricsParameters),
       "utf8"
     ).toString("base64url");
 
@@ -104,10 +99,6 @@ describe("encodeQualtricsParameters", () => {
       parameters: {
         messageType: MessageKind.STANDARD,
         firstTimeOpening: "yes"
-      },
-      expectedParameters: {
-        messageType: MessageKind.STANDARD,
-        first_time_opening: "yes"
       }
     },
     {
@@ -115,10 +106,6 @@ describe("encodeQualtricsParameters", () => {
       parameters: {
         messageType: MessageKind.STANDARD,
         firstTimeOpening: "no"
-      },
-      expectedParameters: {
-        messageType: MessageKind.STANDARD,
-        first_time_opening: "no"
       }
     },
     {
@@ -126,14 +113,8 @@ describe("encodeQualtricsParameters", () => {
       parameters: {
         messageType: MessageKind.SEND,
         firstTimeOpening: "yes",
-        sendOpeningSource: "message",
-        sendUserType: "destinatario"
-      },
-      expectedParameters: {
-        messageType: MessageKind.SEND,
-        first_time_opening: "yes",
-        opening_source: "message",
-        send_user: "destinatario"
+        openingSource: "message",
+        sendUser: "destinatario"
       }
     },
     {
@@ -141,14 +122,8 @@ describe("encodeQualtricsParameters", () => {
       parameters: {
         messageType: MessageKind.SEND,
         firstTimeOpening: "no",
-        sendOpeningSource: "message",
-        sendUserType: "destinatario"
-      },
-      expectedParameters: {
-        messageType: MessageKind.SEND,
-        first_time_opening: "no",
-        opening_source: "message",
-        send_user: "destinatario"
+        openingSource: "message",
+        sendUser: "destinatario"
       }
     },
     {
@@ -156,14 +131,8 @@ describe("encodeQualtricsParameters", () => {
       parameters: {
         messageType: MessageKind.SEND,
         firstTimeOpening: "unknown",
-        sendOpeningSource: "aar",
-        sendUserType: "delegato"
-      },
-      expectedParameters: {
-        messageType: MessageKind.SEND,
-        first_time_opening: "unknown",
-        opening_source: "aar",
-        send_user: "delegato"
+        openingSource: "aar",
+        sendUser: "delegato"
       }
     },
     {
@@ -171,31 +140,23 @@ describe("encodeQualtricsParameters", () => {
       parameters: {
         messageType: MessageKind.SEND,
         firstTimeOpening: "unknown",
-        sendOpeningSource: "aar",
-        sendUserType: "destinatario"
-      },
-      expectedParameters: {
-        messageType: MessageKind.SEND,
-        first_time_opening: "unknown",
-        opening_source: "aar",
-        send_user: "destinatario"
+        openingSource: "aar",
+        sendUser: "destinatario"
       }
     }
   ] as const;
 
   test.each(scenarios)(
     "should encode parameters for $name",
-    ({ parameters, expectedParameters }) => {
+    ({ parameters }) => {
       const encodedParameters = encodeQualtricsParameters(QUALTRICS_URI, {
         ...qualtricsParameters,
         ...parameters
       });
       const parametersBase64Url = Buffer.from(
         JSON.stringify({
-          organizationFiscalCode: qualtricsParameters.organizationFiscalCode,
-          serviceId: qualtricsParameters.serviceId,
-          sendingDate: qualtricsParameters.sendingDate,
-          ...expectedParameters
+          ...qualtricsParameters,
+          ...parameters
         }),
         "utf8"
       ).toString("base64url");
@@ -419,8 +380,8 @@ describe("SendMessageSurveyBanner", () => {
       },
       expectedParameters: {
         firstTimeOpening: "yes",
-        sendOpeningSource: "message",
-        sendUserType: "destinatario"
+        openingSource: "message",
+        sendUser: "destinatario"
       }
     },
     {
@@ -432,8 +393,8 @@ describe("SendMessageSurveyBanner", () => {
       },
       expectedParameters: {
         firstTimeOpening: "no",
-        sendOpeningSource: "message",
-        sendUserType: "destinatario"
+        openingSource: "message",
+        sendUser: "destinatario"
       }
     },
     {
@@ -445,8 +406,8 @@ describe("SendMessageSurveyBanner", () => {
       },
       expectedParameters: {
         firstTimeOpening: "unknown",
-        sendOpeningSource: "aar",
-        sendUserType: "delegato"
+        openingSource: "aar",
+        sendUser: "delegato"
       }
     },
     {
@@ -458,8 +419,8 @@ describe("SendMessageSurveyBanner", () => {
       },
       expectedParameters: {
         firstTimeOpening: "unknown",
-        sendOpeningSource: "aar",
-        sendUserType: "destinatario"
+        openingSource: "aar",
+        sendUser: "destinatario"
       }
     }
   ] as const;

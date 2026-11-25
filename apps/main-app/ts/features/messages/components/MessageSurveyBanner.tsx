@@ -30,10 +30,10 @@ type MessageKind = (typeof MessageKind)[keyof typeof MessageKind];
 type QualtricsParameters = {
   firstTimeOpening: "no" | "unknown" | "yes";
   messageType: MessageKind;
+  openingSource?: "aar" | "message";
   organizationFiscalCode: string;
   sendingDate: string;
-  sendOpeningSource?: "aar" | "message";
-  sendUserType?: "delegato" | "destinatario";
+  sendUser?: "delegato" | "destinatario";
   serviceId: ServiceId;
 };
 
@@ -108,10 +108,10 @@ export const SendMessageSurveyBanner = ({
     <MessageSurveyBanner
       firstTimeOpening={optionalBooleanToYesNoUnknown(firstTimeOpening)}
       messageType={MessageKind.SEND}
+      openingSource={sendOpeningSource === "aar" ? "aar" : "message"}
       organizationFiscalCode={organizationFiscalCode}
       sendingDate={message.created_at.toISOString()}
-      sendOpeningSource={sendOpeningSource === "aar" ? "aar" : "message"}
-      sendUserType={sendUserType === "mandatory" ? "delegato" : "destinatario"}
+      sendUser={sendUserType === "mandatory" ? "delegato" : "destinatario"}
       serviceId={serviceId}
     />
   );
@@ -175,9 +175,9 @@ const encodeQualtricsParameters = (
     serviceId: params.serviceId,
     sendingDate: params.sendingDate,
     messageType: params.messageType,
-    first_time_opening: params.firstTimeOpening,
-    opening_source: params.sendOpeningSource,
-    send_user: params.sendUserType
+    firstTimeOpening: params.firstTimeOpening,
+    openingSource: params.openingSource,
+    sendUser: params.sendUser
   };
   const parametersBase64Url = Buffer.from(
     JSON.stringify(orderedParams),
