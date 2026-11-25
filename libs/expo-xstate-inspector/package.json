@@ -1,0 +1,36 @@
+{
+  "name": "@io-app/expo-xstate-inspector",
+  "version": "1.0.0",
+  "description": "Expo dev tools plugin drawing live XState machine diagrams for io-app",
+  "private": true,
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "react-native": "src/index.ts",
+  "source": "src/index.ts",
+  "files": [
+    "src",
+    "dist",
+    "expo-module.config.json"
+  ],
+  "scripts": {
+    "prepare": "vite build",
+    "dev": "vite",
+    "test": "node --import ./src/__tests__/setup.mjs --test",
+    "tsc-noemit": "tsc --noEmit && tsc -p tsconfig.web.json --noEmit"
+  },
+  "devDependencies": {
+    "@hugeicons/core-free-icons": "^4.4.0",
+    "@tailwindcss/vite": "^4.3.5",
+    "@types/react": "catalog:",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^5.2.0",
+    "expo": "^55.0.8",
+    "react": "catalog:",
+    "react-dom": "19.2.0",
+    "react-native": "catalog:",
+    "tailwindcss": "^4.3.5",
+    "typescript": "catalog:",
+    "vite": "^7.3.5",
+    "xstate": "catalog:"
+  }
+}

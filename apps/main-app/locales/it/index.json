@@ -1103,8 +1103,8 @@
                 "title": "Facile, sicuro, ufficiale"
               },
               "2": {
-                "content": "Potrai aggiungere all’app IO nuovi documenti ufficiali.",
-                "title": "Nuovi documenti in arrivo"
+                "content": "La tua Patente digitale è ora valida anche come documento di riconoscimento e hai nuovi documenti e funzionalità disponibili.",
+                "title": "Nuovi documenti e funzionalità"
               },
               "3": {
                 "content": "Mostri il codice QR della tua Patente digitale: chi verifica non dovrà tenere in mano il tuo dispositivo.",
@@ -1126,7 +1126,7 @@
               "title": "Vuoi rinunciare ai vantaggi di IT-Wallet?"
             },
             "features": {
-              "1": "Nuovi documenti digitali ufficiali, solo sull’app IO",
+              "1": "Nuovi documenti per te: attestato di residenza, titoli di studio e altri",
               "2": "La tua Patente su IO è valida come documento di riconoscimento",
               "3": "Ti basta il tuo telefono per dimostrare la tua identità",
               "4": "Potrai presto accedere in pochi tocchi a servizi digitali pubblici e privati",
@@ -1150,9 +1150,9 @@
       },
       "engagementBanner": {
         "activation": {
-          "action": "Inizia",
-          "description": "Con piena validità ufficiale, digitali e sempre a portata di mano!",
-          "title": "Porta su IO i tuoi documenti"
+          "action": "Attiva IT-Wallet",
+          "description": "Attiva ora IT-Wallet per aggiungere Patente, Tessera sanitaria, attestato di residenza e altri documenti in arrivo.",
+          "title": "Aggiungi i nuovi documenti digitali"
         },
         "l2_banner": {
           "cta": "Aggiungi documento",
@@ -1165,14 +1165,14 @@
           "title": "Riattiva i tuoi documenti digitali su IO"
         },
         "upgrade": {
-          "action": "Inizia",
-          "description": "Il tuo portafoglio digitale pubblico: semplice, sicuro, tuo. Scopri i nuovi documenti ora disponibili!",
-          "title": "IO dà il benvenuto a IT-Wallet"
+          "action": "Passa a IT-Wallet",
+          "description": "Semplice, sicuro, tuo. Scopri le funzionalità evolute e i nuovi documenti digitali che puoi aggiungere!",
+          "title": "Novità: passa al nuovo portafoglio IT-Wallet"
         },
         "upgrade_empty": {
-          "action": "Inizia",
-          "description": "Attivalo ora e scopri le funzionalità evolute dei tuoi documenti digitali su IO.",
-          "title": "Il tuo Portafoglio è ora parte di IT-Wallet"
+          "action": "Attiva IT-Wallet",
+          "description": "Attiva ora IT-Wallet per aggiungere Patente, Tessera sanitaria, attestato di residenza e altri documenti in arrivo.",
+          "title": "Scopri i nuovi documenti digitali"
         },
         "upgrade_from_expired": {
           "action": "Inizia",
@@ -1180,8 +1180,8 @@
           "title": "Attiva IT-Wallet per non perdere i tuoi documenti"
         },
         "upgrade_with_mdl": {
-          "action": "Inizia",
-          "description": "Usa la tua Patente digitale anche come documento di riconoscimento, in modo facile e sicuro!",
+          "action": "Attiva IT-Wallet",
+          "description": "Attiva ora il nuovo portafoglio IT-Wallet per usare la tua patente digitale come documento di riconoscimento.",
           "title": "Dimostra chi sei col tuo dispositivo"
         }
       },
@@ -1715,7 +1715,7 @@
       },
       "loginEngagement": {
         "action": "Attiva IT-Wallet",
-        "description": "L’app IO è ora parte del sistema nazionale di portafogli digitali IT-Wallet: più documenti, con funzionalità evolute, sempre a portata di mano.",
+        "description": "Nuovi documenti su IO (attestato di residenza, titoli di studio e altri), funzionalità evolute e la tua Patente digitale è valida anche come documento di riconoscimento.",
         "secondaryAction": "Non attivare",
         "title": "È disponibile per te il nuovo portafoglio IT-Wallet"
       },
@@ -2005,8 +2005,8 @@
           "mdl": {
             "walletUpgradeBanner": {
               "action": "Attiva IT-Wallet",
-              "content": "Attiva IT-Wallet per usare la tua Patente anche come documento d'identità!",
-              "title": "Novità IT-Wallet"
+              "content": "Attiva il nuovo portafoglio IT-Wallet per usarla anche come documento di riconoscimento.",
+              "title": "Ottieni il massimo dalla tua Patente digitale su IO"
             }
           },
           "newCredentialValidityAlert": {
@@ -2394,7 +2394,7 @@
           "requiredClaims": "Dati necessari",
           "subtitle": "Saranno condivisi con **{{relyingParty}}** solo per il tempo necessario all'accesso ai servizi richiesti.",
           "title": "Consenti la verifica di questi dati per continuare",
-          "tos": "I tuoi dati saranno trattati in sicurezza. Se prosegui, dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d'uso]({{privacyUrl}})."
+          "tos": "I tuoi dati saranno trattati in sicurezza. Se prosegui, dichiari di aver letto e compreso l'**[Informativa Privacy e i Termini e Condizioni d'uso]({{privacyUrl}})**."
         },
         "statusAssertionUnknown": {
           "content": "Riprova. Se il problema persiste, dovrai aggiornare il documento digitale.",
@@ -3785,8 +3785,8 @@
         "title": "Per continuare dobbiamo verificare questi dati"
       },
       "beforeContinue": {
-        "requestBonus": "Richiedi il bonus",
-        "adviseText": "Premendo \"{{ctaText}}\" dichiari di aver letto, compreso e accettato l'[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni d'uso]({{tosUrl}})."
+        "adviseText": "Premendo \"{{ctaText}}\" dichiari di aver letto, compreso e accettato l'[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni d'uso]({{tosUrl}}).",
+        "requestBonus": "Richiedi il bonus"
       },
       "boolPrerequisites": {
         "emptyValueError": "Seleziona un’opzione per continuare",
