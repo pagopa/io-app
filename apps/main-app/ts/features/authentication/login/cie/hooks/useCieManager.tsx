@@ -27,26 +27,32 @@ import { cieAuthenticationError } from "../store/actions";
 import { cieEnvSelector } from "../store/selectors";
 import { getCieIdpUrl } from "../utils/endpoints";
 
-const CIE_ALERT_MESSAGES = {
-  readingInstructions: I18n.t(
-    "authentication.cie.card.iosAlert.readingInstructions"
-  ),
-  moreTags: I18n.t("authentication.cie.card.iosAlert.moreTags"),
-  readingInProgress: I18n.t(
-    "authentication.cie.card.iosAlert.readingInProgress"
-  ),
-  readingSuccess: I18n.t("authentication.cie.card.iosAlert.readingSuccess"),
-  invalidCard: I18n.t("authentication.cie.card.iosAlert.invalidCard"),
-  tagLost: I18n.t("authentication.cie.card.iosAlert.tagLost"),
-  cardLocked: I18n.t("authentication.cie.card.iosAlert.cardLocked"),
-  wrongPin1AttemptLeft: I18n.t(
-    "authentication.cie.card.iosAlert.wrongPin1AttemptLeft"
-  ),
-  wrongPin2AttemptLeft: I18n.t(
-    "authentication.cie.card.iosAlert.wrongPin2AttemptLeft"
-  ),
-  genericError: I18n.t("authentication.cie.card.iosAlert.genericError")
-};
+const IOS_ALERT_MESSAGES: ReadonlyArray<
+  readonly [Parameters<typeof CieManager.setAlertMessage>[0], string]
+> = [
+  [
+    "readingInstructions",
+    I18n.t("authentication.cie.card.iosAlert.readingInstructions")
+  ],
+  ["moreTags", I18n.t("authentication.cie.card.iosAlert.moreTags")],
+  [
+    "readingInProgress",
+    I18n.t("authentication.cie.card.iosAlert.readingInProgress")
+  ],
+  ["readingSuccess", I18n.t("authentication.cie.card.iosAlert.readingSuccess")],
+  ["invalidCard", I18n.t("authentication.cie.card.iosAlert.invalidCard")],
+  ["tagLost", I18n.t("authentication.cie.card.iosAlert.tagLost")],
+  ["cardLocked", I18n.t("authentication.cie.card.iosAlert.cardLocked")],
+  [
+    "wrongPin1AttemptLeft",
+    I18n.t("authentication.cie.card.iosAlert.wrongPin1AttemptLeft")
+  ],
+  [
+    "wrongPin2AttemptLeft",
+    I18n.t("authentication.cie.card.iosAlert.wrongPin2AttemptLeft")
+  ],
+  ["genericError", I18n.t("authentication.cie.card.iosAlert.genericError")]
+];
 
 const FAILURE_ERRORS = new Set<NfcError["name"]>([
   "APDU_ERROR",
@@ -220,11 +226,8 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
 
   useEffect(() => {
     if (Platform.OS === "ios") {
-      Object.entries(CIE_ALERT_MESSAGES).forEach(([key, value]) => {
-        CieManager.setAlertMessage(
-          key as keyof typeof CIE_ALERT_MESSAGES,
-          value
-        );
+      IOS_ALERT_MESSAGES.forEach(([key, message]) => {
+        CieManager.setAlertMessage(key, message);
       });
     }
 
