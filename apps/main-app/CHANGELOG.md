@@ -1,3 +1,60 @@
+## 3.44.0-canary.8243 (2026-11-25)
+
+### Features
+
+- **IT-Wallet:** [[SIW-4415](https://pagopa.atlassian.net/browse/SIW-4415)] Reversed field and label Trust RP ([#8899](https://github.com/pagopa/io-app/pull/8899))
+
+### Bug Fixes
+
+- **IT-Wallet:** [[SIW-4909](https://pagopa.atlassian.net/browse/SIW-4909)] Show IT-Wallet copy after PID reissuance ([#8911](https://github.com/pagopa/io-app/pull/8911))
+- **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] serialize CieID WebView errors in ITW_ID_REQUEST_FAILURE ([#8913](https://github.com/pagopa/io-app/pull/8913))
+- [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Show IT-Wallet upgrade banner in inbox ([#8909](https://github.com/pagopa/io-app/pull/8909))
+- **IT-Wallet:** [[SIW-5474](https://pagopa.atlassian.net/browse/SIW-5474)] Track intro events in credential offer ([#8891](https://github.com/pagopa/io-app/pull/8891))
+- [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] `react-native-screens` patch ([#8905](https://github.com/pagopa/io-app/pull/8905))
+- android tab bar spacing ([f323ecb50](https://github.com/pagopa/io-app/commit/f323ecb50))
+- android activeIndicatorColor at theme update ([554ed4ddb](https://github.com/pagopa/io-app/commit/554ed4ddb))
+- hide tab bar at archive activation ([09d95ba1e](https://github.com/pagopa/io-app/commit/09d95ba1e))
+- list bottom padding using useBottomTabBarHeight ([0d5edd6a3](https://github.com/pagopa/io-app/commit/0d5edd6a3))
+- android label visibility ([f8a5d3b32](https://github.com/pagopa/io-app/commit/f8a5d3b32))
+- payment cta position ([de6064bfc](https://github.com/pagopa/io-app/commit/de6064bfc))
+- tab navigator header visibility ([495cd6643](https://github.com/pagopa/io-app/commit/495cd6643))
+
+### Chores
+
+- adjust podfile ([9b9d0fb73](https://github.com/pagopa/io-app/commit/9b9d0fb73))
+- bottom tabs update, remove patch ([7f4206457](https://github.com/pagopa/io-app/commit/7f4206457))
+- format ([5673ddc24](https://github.com/pagopa/io-app/commit/5673ddc24))
+- release 3.44.0-rc.7 ([08ab74b0b](https://github.com/pagopa/io-app/commit/08ab74b0b))
+- [[IOPLT-2309](https://pagopa.atlassian.net/browse/IOPLT-2309)] Bump `knip` to `6.48.0` ([#8917](https://github.com/pagopa/io-app/pull/8917))
+- release 3.44.0-rc.6 ([f9fc22c80](https://github.com/pagopa/io-app/commit/f9fc22c80))
+- [[IOCOM-3410](https://pagopa.atlassian.net/browse/IOCOM-3410)] removal of SEND feature flag ([#8912](https://github.com/pagopa/io-app/pull/8912))
+- release 3.44.0-rc.5 ([e037456fb](https://github.com/pagopa/io-app/commit/e037456fb))
+- release 3.43.0-rc.13 ([353589e67](https://github.com/pagopa/io-app/commit/353589e67))
+- release 3.44.0-rc.4 ([ba4099889](https://github.com/pagopa/io-app/commit/ba4099889))
+- release 3.42.3-rc.0 ([#8906](https://github.com/pagopa/io-app/pull/8906))
+- release 3.44.0-rc.3 ([15bc81a2e](https://github.com/pagopa/io-app/commit/15bc81a2e))
+- [[IOPLT-2300](https://pagopa.atlassian.net/browse/IOPLT-2300)] Enforce the `no-hardcoded-colors` lint rule ([#8894](https://github.com/pagopa/io-app/pull/8894))
+- disable tab bar collapse ([23335656f](https://github.com/pagopa/io-app/commit/23335656f))
+- sync lock file ([c19c897d5](https://github.com/pagopa/io-app/commit/c19c897d5))
+- adjust pods ([bdd246f32](https://github.com/pagopa/io-app/commit/bdd246f32))
+- apply bottom-tabs patch ([517bc4c87](https://github.com/pagopa/io-app/commit/517bc4c87))
+- setup contentInsetAdjustmentBehavior hook ([d08a26554](https://github.com/pagopa/io-app/commit/d08a26554))
+- solve tsc errors ([34f6b67ea](https://github.com/pagopa/io-app/commit/34f6b67ea))
+- filled icon ([5cbd67d50](https://github.com/pagopa/io-app/commit/5cbd67d50))
+- update lock file ([484fd79fd](https://github.com/pagopa/io-app/commit/484fd79fd))
+- update android theme ([4ca24aecb](https://github.com/pagopa/io-app/commit/4ca24aecb))
+- **deps:** setup bottom tabs ([a03a17832](https://github.com/pagopa/io-app/commit/a03a17832))
+
+### ❤️ Thank You
+
+- Alessandro Mazzon
+- Damiano Plebani
+- Emanuele Dall'Ara @LeleDallas
+- Federico Mastrini @mastro993
+- Martino Cesari Tomba @forrest57
+- MonicaRungi-EY
+- Riccardo Sacco @riccardosacco99
+
 ## 3.44.0-rc.7 (2026-11-24)
 
 ### Features
