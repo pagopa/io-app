@@ -286,17 +286,21 @@ export const useIOBarcodeCameraScanner = ({
   };
 };
 
-const LoadingMarkerComponent = () => (
-  <Animated.View
-    entering={FadeIn}
-    style={{
-      flex: 1,
-      justifyContent: "center"
-    }}
-  >
-    <LoadingSpinner color="white" size={48} />
-  </Animated.View>
-);
+const LoadingMarkerComponent = () => {
+  const colors = useIOColors();
+
+  return (
+    <Animated.View
+      entering={FadeIn}
+      style={{
+        flex: 1,
+        justifyContent: "center"
+      }}
+    >
+      <LoadingSpinner color={colors.foreground.onAccent.default} size={48} />
+    </Animated.View>
+  );
+};
 
 const styles = StyleSheet.create({
   cameraContainer: {

@@ -25,9 +25,7 @@ export const ContactsListItem = ({
   const { present, bottomSheet } = useIOBottomSheetModal({
     component: (
       <>
-        <Body color="grey-700">
-          {I18n.t("messageDetails.contactsBottomSheet.body")}
-        </Body>
+        <Body>{I18n.t("messageDetails.contactsBottomSheet.body")}</Body>
         <VSpacer size={8} />
         <ServiceContactListItem
           testID="contacts-web-url"

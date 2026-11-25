@@ -6,7 +6,7 @@ import {
   Icon,
   ScrollViewWithStickyFooterActions,
   Tag,
-  useIOTheme,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import { pipe } from "fp-ts/lib/function";
@@ -66,7 +66,7 @@ export const MessageDetails = ({
     RA.partition(attachment => attachment.category === ATTACHMENT_CATEGORY.F24)
   );
 
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   const attachmentList = SEP.left(partitionedAttachments);
 
@@ -121,7 +121,7 @@ export const MessageDetails = ({
                   accessibilityLabel={I18n.t(
                     "messageDetails.accessibilityAttachmentIcon"
                   )}
-                  color={theme["icon-default"]}
+                  color={colors.icon.default}
                   name="paperclip"
                   size={16}
                   testID="attachment-tag"

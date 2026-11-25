@@ -1,3 +1,62 @@
+## 3.43.1-rc.0 (2026-11-25)
+
+### Bug Fixes
+
+- **IT-Wallet:** [[SIW-0000](https://pagopa.atlassian.net/browse/SIW-0000)] display all EuropeanDisabilityCard claims in skeuomorphic card ([#8922](https://github.com/pagopa/io-app/pull/8922))
+- **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] serialize CieID WebView errors in ITW_ID_REQUEST_FAILURE ([#8913](https://github.com/pagopa/io-app/pull/8913))
+- [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Show IT-Wallet upgrade banner in inbox ([#8909](https://github.com/pagopa/io-app/pull/8909))
+
+### Chores
+
+- align Android versionCode for hotfix ([9392f8f6e](https://github.com/pagopa/io-app/commit/9392f8f6e))
+- Update translations from Lokalise ([#8918](https://github.com/pagopa/io-app/pull/8918))
+
+### ❤️ Thank You
+
+- Alessandro Mazzon
+- Emanuele Dall'Ara @LeleDallas
+- Federico Mastrini @mastro993
+- Gianluca Spada
+
+## 3.44.0-rc.7 (2026-11-24)
+
+### Features
+
+- **IT-Wallet:** [[SIW-4415](https://pagopa.atlassian.net/browse/SIW-4415)] Reversed field and label Trust RP ([#8899](https://github.com/pagopa/io-app/pull/8899))
+
+### Bug Fixes
+
+- **IT-Wallet:** [[SIW-4909](https://pagopa.atlassian.net/browse/SIW-4909)] Show IT-Wallet copy after PID reissuance ([#8911](https://github.com/pagopa/io-app/pull/8911))
+- **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] serialize CieID WebView errors in ITW_ID_REQUEST_FAILURE ([#8913](https://github.com/pagopa/io-app/pull/8913))
+- [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Show IT-Wallet upgrade banner in inbox ([#8909](https://github.com/pagopa/io-app/pull/8909))
+
+### Chores
+
+- [[IOPLT-2309](https://pagopa.atlassian.net/browse/IOPLT-2309)] Bump `knip` to `6.48.0` ([#8917](https://github.com/pagopa/io-app/pull/8917))
+
+### ❤️ Thank You
+
+- Alessandro Mazzon
+- Damiano Plebani
+- Federico Mastrini @mastro993
+- MonicaRungi-EY
+- Riccardo Sacco @riccardosacco99
+
+## 3.44.0-rc.6 (2026-11-23)
+
+### Bug Fixes
+
+- **IT-Wallet:** [[SIW-5474](https://pagopa.atlassian.net/browse/SIW-5474)] Track intro events in credential offer ([#8891](https://github.com/pagopa/io-app/pull/8891))
+
+### Chores
+
+- [[IOCOM-3410](https://pagopa.atlassian.net/browse/IOCOM-3410)] removal of SEND feature flag ([#8912](https://github.com/pagopa/io-app/pull/8912))
+
+### ❤️ Thank You
+
+- Martino Cesari Tomba @forrest57
+- MonicaRungi-EY
+
 ## 3.44.0-rc.5 (2026-11-20)
 
 ### Chores

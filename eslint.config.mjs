@@ -436,7 +436,6 @@ export default defineConfig([
     files: [
       "**/src/components/{icons,pictograms}/svg/**/*.tsx",
       "**/src/components/logos/**/*.tsx",
-      "**/src/core/IOColorsLegacy.ts",
       "**/src/core/tokens/colors/palette.ts"
     ],
 
@@ -476,6 +475,16 @@ export default defineConfig([
           ]
         }
       ]
+    }
+  },
+  {
+    // Browser helpers speaking the Expo dev tools protocol.
+    files: ["libs/expo-xstate-inspector/web/src/**/*.{ts,tsx}"],
+
+    rules: {
+      "functional/immutable-data": "off",
+      "i18next/no-literal-string": "off",
+      "no-underscore-dangle": "off"
     }
   },
   {

@@ -1,4 +1,5 @@
 import { useIOToast } from "@io-app/design-system";
+import { inspect } from "@io-app/expo-xstate-inspector";
 import { createActorContext } from "@xstate/react";
 import { PropsWithChildren } from "react";
 
@@ -23,6 +24,7 @@ export const ItwEidIssuanceMachineProvider = (props: PropsWithChildren) => {
     <ItwEidIssuanceMachineContext.Provider
       logic={itwEidIssuanceMachine}
       options={{
+        inspect,
         input: {
           deps: { env, navigation, store, toast }
         }

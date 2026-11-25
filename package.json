@@ -28,7 +28,7 @@
     "@swc/helpers": "~0.5.18",
     "eslint": "catalog:",
     "jest": "catalog:",
-    "knip": "6.31.0",
+    "knip": "6.48.0",
     "lefthook": "^2.1.10",
     "nx": "catalog:",
     "oxfmt": "catalog:",

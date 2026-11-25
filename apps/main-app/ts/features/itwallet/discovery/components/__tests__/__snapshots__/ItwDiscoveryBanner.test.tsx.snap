@@ -701,8 +701,8 @@ exports[`ItwDiscoveryBanner snapshots should match snapshot for MDL upgrade bann
                     >
                       <View
                         accessibilityLabel="Dimostra chi sei col tuo dispositivo
-Usa la tua Patente digitale anche come documento di riconoscimento, in modo facile e sicuro!
-Inizia"
+Attiva ora il nuovo portafoglio IT-⁠Wallet per usare la tua patente digitale come documento di riconoscimento.
+Attiva IT-⁠Wallet"
                         accessibilityRole="button"
                         accessible={true}
                         onAccessibilityTap={[Function]}
@@ -1169,7 +1169,7 @@ Inizia"
                                     ]
                                   }
                                 >
-                                  Usa la tua Patente digitale anche come documento di riconoscimento, in modo facile e sicuro!
+                                  Attiva ora il nuovo portafoglio IT-⁠Wallet per usare la tua patente digitale come documento di riconoscimento.
                                 </Text>
                               </View>
                             </View>
@@ -1218,7 +1218,7 @@ Inizia"
                             }
                           />
                           <View
-                            accessibilityLabel="Inizia"
+                            accessibilityLabel="Attiva IT-⁠Wallet"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -1428,7 +1428,7 @@ Inizia"
                                     ]
                                   }
                                 >
-                                  Inizia
+                                  Attiva IT-⁠Wallet
                                 </Text>
                               </View>
                             </View>
@@ -1765,9 +1765,9 @@ exports[`ItwDiscoveryBanner snapshots should match snapshot for activation banne
                       }
                     >
                       <View
-                        accessibilityLabel="Porta su IO i tuoi documenti
-Con piena validità ufficiale, digitali e sempre a portata di mano!
-Inizia"
+                        accessibilityLabel="Aggiungi i nuovi documenti digitali
+Attiva ora IT-⁠Wallet per aggiungere Patente, Tessera sanitaria, attestato di residenza e altri documenti in arrivo.
+Attiva IT-⁠Wallet"
                         accessibilityRole="button"
                         accessible={true}
                         onAccessibilityTap={[Function]}
@@ -2046,7 +2046,7 @@ Inizia"
                                   ]
                                 }
                               >
-                                Porta su IO i tuoi documenti
+                                Aggiungi i nuovi documenti digitali
                               </Text>
                               <View
                                 accessibilityLabel="Chiudi"
@@ -2234,7 +2234,7 @@ Inizia"
                                     ]
                                   }
                                 >
-                                  Con piena validità ufficiale, digitali e sempre a portata di mano!
+                                  Attiva ora IT-⁠Wallet per aggiungere Patente, Tessera sanitaria, attestato di residenza e altri documenti in arrivo.
                                 </Text>
                               </View>
                             </View>
@@ -2283,7 +2283,7 @@ Inizia"
                             }
                           />
                           <View
-                            accessibilityLabel="Inizia"
+                            accessibilityLabel="Attiva IT-⁠Wallet"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -2493,7 +2493,7 @@ Inizia"
                                     ]
                                   }
                                 >
-                                  Inizia
+                                  Attiva IT-⁠Wallet
                                 </Text>
                               </View>
                             </View>
@@ -2830,9 +2830,9 @@ exports[`ItwDiscoveryBanner snapshots should match snapshot for default upgrade 
                       }
                     >
                       <View
-                        accessibilityLabel="IO dà il benvenuto a IT-⁠Wallet
-Il tuo portafoglio digitale pubblico: semplice, sicuro, tuo. Scopri i nuovi documenti ora disponibili!
-Inizia"
+                        accessibilityLabel="Novità: passa al nuovo portafoglio IT-⁠Wallet
+Semplice, sicuro, tuo. Scopri le funzionalità evolute e i nuovi documenti digitali che puoi aggiungere!
+Passa a IT-⁠Wallet"
                         accessibilityRole="button"
                         accessible={true}
                         onAccessibilityTap={[Function]}
@@ -3111,7 +3111,7 @@ Inizia"
                                   ]
                                 }
                               >
-                                IO dà il benvenuto a IT-⁠Wallet
+                                Novità: passa al nuovo portafoglio IT-⁠Wallet
                               </Text>
                               <View
                                 accessibilityLabel="Chiudi"
@@ -3299,7 +3299,7 @@ Inizia"
                                     ]
                                   }
                                 >
-                                  Il tuo portafoglio digitale pubblico: semplice, sicuro, tuo. Scopri i nuovi documenti ora disponibili!
+                                  Semplice, sicuro, tuo. Scopri le funzionalità evolute e i nuovi documenti digitali che puoi aggiungere!
                                 </Text>
                               </View>
                             </View>
@@ -3348,7 +3348,7 @@ Inizia"
                             }
                           />
                           <View
-                            accessibilityLabel="Inizia"
+                            accessibilityLabel="Passa a IT-⁠Wallet"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -3558,7 +3558,7 @@ Inizia"
                                     ]
                                   }
                                 >
-                                  Inizia
+                                  Passa a IT-⁠Wallet
                                 </Text>
                               </View>
                             </View>
@@ -3895,9 +3895,9 @@ exports[`ItwDiscoveryBanner snapshots should match snapshot for empty wallet ban
                       }
                     >
                       <View
-                        accessibilityLabel="Il tuo Portafoglio è ora parte di IT-⁠Wallet
-Attivalo ora e scopri le funzionalità evolute dei tuoi documenti digitali su IO.
-Inizia"
+                        accessibilityLabel="Scopri i nuovi documenti digitali
+Attiva ora IT-⁠Wallet per aggiungere Patente, Tessera sanitaria, attestato di residenza e altri documenti in arrivo.
+Attiva IT-⁠Wallet"
                         accessibilityRole="button"
                         accessible={true}
                         onAccessibilityTap={[Function]}
@@ -4176,7 +4176,7 @@ Inizia"
                                   ]
                                 }
                               >
-                                Il tuo Portafoglio è ora parte di IT-⁠Wallet
+                                Scopri i nuovi documenti digitali
                               </Text>
                             </View>
                             <View
@@ -4205,7 +4205,7 @@ Inizia"
                                     ]
                                   }
                                 >
-                                  Attivalo ora e scopri le funzionalità evolute dei tuoi documenti digitali su IO.
+                                  Attiva ora IT-⁠Wallet per aggiungere Patente, Tessera sanitaria, attestato di residenza e altri documenti in arrivo.
                                 </Text>
                               </View>
                             </View>
@@ -4254,7 +4254,7 @@ Inizia"
                             }
                           />
                           <View
-                            accessibilityLabel="Inizia"
+                            accessibilityLabel="Attiva IT-⁠Wallet"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -4464,7 +4464,7 @@ Inizia"
                                     ]
                                   }
                                 >
-                                  Inizia
+                                  Attiva IT-⁠Wallet
                                 </Text>
                               </View>
                             </View>

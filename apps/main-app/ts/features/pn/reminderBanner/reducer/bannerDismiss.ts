@@ -11,10 +11,7 @@ import { getType } from "typesafe-actions";
 
 import { differentProfileLoggedIn } from "../../../../store/actions/crossSessions";
 import { Action } from "../../../../store/actions/types";
-import {
-  isPnRemoteEnabledSelector,
-  pnMessagingServiceIdSelector
-} from "../../../../store/reducers/backendStatus/remoteConfig";
+import { pnMessagingServiceIdSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../store/reducers/types";
 import { isDevEnv, isTestEnv } from "../../../../utils/environment";
 import { servicePreferenceByChannelPotSelector } from "../../../services/details/store/selectors";
@@ -76,10 +73,9 @@ export const isPnActivationReminderBannerRenderableSelector = (
 ) => {
   const hasBannerBeenDismissed =
     state.features.pn.bannerDismiss.dismissed === true;
-  const isPnRemoteEnabled = isPnRemoteEnabledSelector(state);
   const isPnInboxEnabled = isPnServiceEnabled(state) ?? true;
 
-  return isPnRemoteEnabled && !hasBannerBeenDismissed && !isPnInboxEnabled;
+  return !hasBannerBeenDismissed && !isPnInboxEnabled;
 };
 
 export const testable = isTestEnv

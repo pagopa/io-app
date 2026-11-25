@@ -1,10 +1,4 @@
-import {
-  BodySmall,
-  H3,
-  IOColorsLegacy,
-  useIOTheme,
-  VSpacer
-} from "@io-app/design-system";
+import { BodySmall, H3, useIOColors, VSpacer } from "@io-app/design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
@@ -26,7 +20,7 @@ import {
 const FiscalCodeScreen = () => {
   useMaxBrightness();
 
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   const titleRef = useRef<View>(null);
   const [isCFCopied, setIsCFCopied] = useState(false);
@@ -81,17 +75,14 @@ const FiscalCodeScreen = () => {
             { fiscalCode }
           )}
           accessible
-          style={[
-            styles.card,
-            { borderColor: IOColorsLegacy[theme["cardBorder-default"]] }
-          ]}
+          style={[styles.card, { borderColor: colors.stroke.default }]}
           testID="barcode-box"
         >
           <BodySmall weight="Semibold">{nameSurname}</BodySmall>
           <Barcode
             background={"transparent"}
             height={80}
-            lineColor={IOColorsLegacy[theme["textHeading-default"]]}
+            lineColor={colors.foreground.default}
             value={fiscalCode}
             width={1.3}
           />

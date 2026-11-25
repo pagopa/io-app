@@ -11,7 +11,7 @@ import {
   IOMarkdownLite,
   IOToast,
   ListItemInfo,
-  useIOTheme,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -110,7 +110,7 @@ const FaqManager = (props: FaqManagerProps) => {
   );
   const contextualHelpData = pot.getOrElse(potContextualData, undefined);
 
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   const [lastContextualDataUpdate, setLastContextualDataUpdate] =
     useState<Date>(new Date());
@@ -163,7 +163,7 @@ const FaqManager = (props: FaqManagerProps) => {
     contextualHelpData && (
       <>
         {!isStringNullyOrEmpty(contextualHelpData.title) && (
-          <H4 accessible={true} color={theme["textHeading-default"]}>
+          <H4 accessible={true} color={colors.text.heading.default}>
             {contextualHelpData.title}
           </H4>
         )}

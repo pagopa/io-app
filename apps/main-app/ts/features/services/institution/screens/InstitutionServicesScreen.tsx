@@ -2,11 +2,9 @@ import { ServiceId } from "@io-app/api-types/generated/definitions/services/Serv
 import { ServiceMinified } from "@io-app/api-types/generated/definitions/services/ServiceMinified";
 import {
   Divider,
-  IOColorsLegacy,
   IODimensions,
   IOToast,
   ListItemNav,
-  useIOTheme,
   VSpacer
 } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
@@ -16,6 +14,7 @@ import { ListRenderItemInfo, RefreshControl } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { useFeatureColors } from "../../../../hooks/useFeatureColors";
 import {
   HeaderSecondLevelHookProps,
   useHeaderSecondLevel
@@ -24,6 +23,7 @@ import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppPa
 import { useIODispatch } from "../../../../store/hooks";
 import { getListItemAccessibilityLabelCount } from "../../../../utils/accessibility";
 import * as analytics from "../../common/analytics";
+import { servicesColors } from "../../common/components/colors";
 import { ServiceListSkeleton } from "../../common/components/ServiceListSkeleton";
 import { ServicesHeaderSection } from "../../common/components/ServicesHeaderSection";
 import { useFirstRender } from "../../common/hooks/useFirstRender";
@@ -51,7 +51,7 @@ export const InstitutionServicesScreen = ({
   const { institutionId, institutionName } = route.params;
 
   const insets = useSafeAreaInsets();
-  const theme = useIOTheme();
+  const { header } = useFeatureColors(servicesColors);
   const dispatch = useIODispatch();
   const animatedFlatListRef =
     useAnimatedRef<Animated.FlatList<ServiceMinified>>();
@@ -92,7 +92,7 @@ export const InstitutionServicesScreen = ({
 
   const headerConfig = useMemo<HeaderSecondLevelHookProps>(
     () => ({
-      backgroundColor: IOColorsLegacy[theme["appBackground-secondary"]],
+      backgroundColor: header.background,
       goBack,
       headerShown: !!data || !isError,
       enableDiscreteTransition: true,
@@ -100,7 +100,14 @@ export const InstitutionServicesScreen = ({
       supportRequest: true,
       title: institutionName
     }),
-    [animatedFlatListRef, data, goBack, isError, institutionName, theme]
+    [
+      animatedFlatListRef,
+      data,
+      goBack,
+      isError,
+      institutionName,
+      header.background
+    ]
   );
 
   useHeaderSecondLevel(headerConfig);

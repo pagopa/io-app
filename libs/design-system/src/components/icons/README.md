@@ -113,7 +113,7 @@ You can add the recently added icon with the following declaration:
 
 ```jsx
 // Default size: 24×24px
-// Default color: Grey-700
+// Default color: `icon.default`
 <Icon name="spid">
 ```
 
