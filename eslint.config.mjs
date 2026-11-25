@@ -478,6 +478,16 @@ export default defineConfig([
     }
   },
   {
+    // Browser helpers speaking the Expo dev tools protocol.
+    files: ["libs/expo-xstate-inspector/web/src/**/*.{ts,tsx}"],
+
+    rules: {
+      "functional/immutable-data": "off",
+      "i18next/no-literal-string": "off",
+      "no-underscore-dangle": "off"
+    }
+  },
+  {
     // Dev-only screens: the Design System showcase, playgrounds, debug tools
     files: [
       "**/{design-system,playgrounds,devMode,debug,__mocks__}/**/*.{ts,tsx}"
