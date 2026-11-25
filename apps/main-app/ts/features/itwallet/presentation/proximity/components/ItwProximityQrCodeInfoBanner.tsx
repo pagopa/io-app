@@ -12,8 +12,8 @@ import {
 } from "../../../analytics";
 import { itwCloseBanner } from "../../../common/store/actions/banners";
 
-const HOW_AND_WHEN_TO_USE_IO_DOCUMENTS =
-  "https://assistenza.ioapp.it/hc/it/articles/31106401885841-Quando-e-come-usare-i-documenti-digitali";
+const HOW_DIGITAL_DOCUMENTS_VERIFICATION_WORKS =
+  "https://assistenza.ioapp.it/hc/it/articles/50616347827473-Come-funziona-la-verifica-dei-documenti-digitali-IT-Wallet";
 
 const ItwProximityQrCodeInfoBanner = () => {
   const dispatch = useIODispatch();
@@ -22,7 +22,7 @@ const ItwProximityQrCodeInfoBanner = () => {
     () => ({
       banner_id: "itwQrCodeInfos",
       banner_page: "ITW_QR_CODE",
-      banner_landing: HOW_AND_WHEN_TO_USE_IO_DOCUMENTS
+      banner_landing: HOW_DIGITAL_DOCUMENTS_VERIFICATION_WORKS
     }),
     []
   );
@@ -35,7 +35,7 @@ const ItwProximityQrCodeInfoBanner = () => {
 
   const handleOnPress = () => {
     trackItwBannerTap(trackBannerProperties);
-    openWebUrl(HOW_AND_WHEN_TO_USE_IO_DOCUMENTS, () =>
+    openWebUrl(HOW_DIGITAL_DOCUMENTS_VERIFICATION_WORKS, () =>
       IOToast.error(I18n.t("global.jserror.title"))
     );
   };
