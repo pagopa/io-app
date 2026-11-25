@@ -127,7 +127,7 @@
     "react-native-barcode-builder": "^2.0.0",
     "react-native-ble-plx": "^3.5.1",
     "react-native-blob-util": "0.24.6",
-    "react-native-bottom-tabs": "^1.5.0",
+    "react-native-bottom-tabs": "^1.5.1",
     "react-native-config": "^1.6.1",
     "react-native-easing-gradient": "catalog:",
     "react-native-exception-handler": "^2.10.8",
