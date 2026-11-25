@@ -417,7 +417,7 @@ importers:
         specifier: 0.5.2
         version: 0.5.2(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
       '@pagopa/io-react-native-crypto':
-        specifier: workspace:@io-app/expo-crypto@*
+        specifier: workspace:@pagopa/expo-crypto@*
         version: link:../../libs/expo-crypto
       '@pagopa/io-react-native-integrity':
         specifier: 1.0.0
