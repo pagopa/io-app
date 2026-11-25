@@ -1,0 +1,29 @@
+appId: it.pagopa.app.io
+name: Returning user unlocks the existing session
+---
+- runScript: seed-message.js
+- runFlow: shared/login.yaml
+- stopApp
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: number-pad
+    timeout: 60000
+- tapOn: "3"
+- tapOn: "8"
+- tapOn: "1"
+- tapOn: "6"
+- tapOn: "2"
+- tapOn: "0"
+- assertVisible: Riprova
+- assertVisible:
+    id: number-pad
+- assertNotVisible:
+    id: message_list_inbox
+- runFlow: shared/pin.yaml
+- tapOn:
+    id: wrapped_message_list_item_.*
+    text: ${".*" + output.subject + ".*"}
+- assertVisible:
+    id: message-header-subject
+    text: ${output.subject}

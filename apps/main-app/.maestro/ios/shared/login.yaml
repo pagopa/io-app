@@ -1,0 +1,54 @@
+appId: it.pagopa.app.io
+---
+- launchApp:
+    clearState: true
+    clearKeychain: true
+- extendedWaitUntil:
+    visible:
+      id: landing-button-login-spid
+    timeout: 120000
+# RN groups this debug banner into one accessibility element on iOS.
+- tapOn:
+    text: ".*, Open debugger to view warnings\\."
+    point: "95%,50%"
+    optional: true
+- tapOn:
+    id: landing-button-login-spid
+- scrollUntilVisible:
+    element:
+      id: idp-arubaid-button
+    direction: DOWN
+    visibilityPercentage: 100
+- tapOn:
+    id: idp-arubaid-button
+- tapOn: "LOGIN"
+- assertVisible: Non condividere
+- waitForAnimationToEnd
+- tapOn: Non condividere
+- tapOn: Conferma
+- extendedWaitUntil:
+    visible:
+      id: pin-creation-screen
+    timeout: 30000
+- repeat:
+    times: 2
+    commands:
+      - runFlow: pin.yaml
+- assertVisible:
+    id: not-enrolled-biometric-confirm
+- waitForAnimationToEnd
+- tapOn:
+    id: not-enrolled-biometric-confirm
+- tapOn:
+    text: Consenti
+    optional: true
+- tapOn:
+    id: sendEngagementOnFirstAppOpenSecondaryActionID
+    optional: true
+- tapOn:
+    id: sendDismissalID
+    optional: true
+- extendedWaitUntil:
+    visible:
+      id: message_list_inbox
+    timeout: 30000

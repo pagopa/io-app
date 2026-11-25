@@ -1,0 +1,8 @@
+appId: it.pagopa.app.io
+---
+- tapOn: "3"
+- tapOn: "8"
+- tapOn: "1"
+- tapOn: "6"
+- tapOn: "2"
+- tapOn: "9"

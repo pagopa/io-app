@@ -186,13 +186,25 @@ pnpm nx run main-app:run-ios
 pnpm nx run main-app:run-ios "--simulator='iPhone 15'"
 ```
 
-### Maestro pilot: iOS login to inbox
+### Maestro pilot: iOS smoke tests
 
 The [smoke flow](.maestro/ios/login-message.yaml) exercises a fresh local login,
 PIN creation and opening a specific inbox message. It uses the bundled dev API
 server's simulated SPID page, not a real identity provider. Before each run it
 [creates a message](.maestro/ios/seed-message.js) and looks up its sender, then
 checks the subject, organization and body in the app.
+
+Three more flows each start with the same [clean login](.maestro/ios/shared/login.yaml)
+and can run individually:
+
+- [Returning session](.maestro/ios/session-pin.yaml): terminate and relaunch
+  without clearing data, reject one wrong PIN, then unlock with the correct
+  PIN and open the seeded message.
+- [Archive and restore](.maestro/ios/archive-restore.yaml): move a fresh
+  message between inbox and archive, checking both lists in each direction.
+- [Payment notice](.maestro/ios/payment-notice.yaml): open the default
+  payable message from the dev API and compare the summary's creditor and
+  amount with its fixture. The flow stops before starting a transaction.
 
 1. Use a **dedicated iPhone simulator** with Italian as its language and no
    Face ID enrolled. Each run clears the app's data **and the simulator keychain**.
@@ -207,10 +219,11 @@ checks the subject, organization and body in the app.
 
    ```bash
    xcrun simctl list devices booted
-   maestro --device "$SIMULATOR_UDID" test apps/main-app/.maestro/ios/login-message.yaml
+   maestro --device "$SIMULATOR_UDID" test apps/main-app/.maestro/ios
    ```
 
    Set `SIMULATOR_UDID` to the dedicated simulator's UUID before running.
+   To run just one scenario, pass its YAML file instead of the directory.
    Maestro prints the path to its local logs and screenshots on failure.
    Run serially against a dedicated dev API instance. This pilot is not a PR
    gate; look for ten consecutive passes without retries before promoting it.

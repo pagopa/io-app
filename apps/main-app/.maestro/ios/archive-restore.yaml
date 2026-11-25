@@ -1,0 +1,36 @@
+appId: it.pagopa.app.io
+name: Archive and restore the same inbox message
+---
+- runScript: seed-message.js
+- runFlow: shared/login.yaml
+- longPressOn:
+    id: wrapped_message_list_item_.*
+    text: ${".*" + output.subject + ".*"}
+- tapOn: Archivia
+- assertNotVisible: Archivia
+- assertNotVisible:
+    text: ${".*" + output.subject + ".*"}
+# The success toast temporarily overlaps the center of the category tabs.
+- tapOn:
+    id: home_tab_item_archive
+    point: "50%,95%"
+- assertVisible:
+    id: message_list_archive
+- longPressOn:
+    id: wrapped_message_list_item_.*
+    text: ${".*" + output.subject + ".*"}
+- tapOn: Ripristina
+- assertNotVisible: Ripristina
+- assertNotVisible:
+    text: ${".*" + output.subject + ".*"}
+- tapOn:
+    id: home_tab_item_inbox
+    point: "50%,95%"
+- assertVisible:
+    id: message_list_inbox
+- tapOn:
+    id: wrapped_message_list_item_.*
+    text: ${".*" + output.subject + ".*"}
+- assertVisible:
+    id: message-header-subject
+    text: ${output.subject}

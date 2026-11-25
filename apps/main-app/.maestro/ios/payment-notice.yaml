@@ -1,0 +1,20 @@
+appId: it.pagopa.app.io
+name: Open a payable notice and check its summary
+---
+- runScript: payment-fixture.js
+- runFlow: shared/login.yaml
+- scrollUntilVisible:
+    element:
+      id: wrapped_message_list_item_.*
+      text: ${".*" + output.noticeSubject + ".*"}
+    direction: DOWN
+- tapOn:
+    id: wrapped_message_list_item_.*
+    text: ${".*" + output.noticeSubject + ".*"}
+- tapOn: Paga
+- assertVisible:
+    text: ${"Ente Creditore; " + output.creditor}
+- assertVisible:
+    text: ${"Importo; " + output.amount}
+- assertVisible:
+    id: wallet-payment-detail-make-payment-button
