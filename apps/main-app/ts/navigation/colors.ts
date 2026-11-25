@@ -9,7 +9,8 @@ export const navigationColors = (s: IOColorTheme) => ({
       inactive: s.text.content.tertiary
     },
     background: {
-      default: s.background.default
+      default: s.background.default,
+      activeIndicator: s.surface.accent
     }
   }
 });

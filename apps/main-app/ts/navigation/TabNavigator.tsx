@@ -41,7 +41,7 @@ export const MainTabNavigator = () => {
       loadingOpacity={1}
     >
       <Tab.Navigator
-        activeIndicatorColor={tabBar.foreground.active}
+        activeIndicatorColor={tabBar.background.activeIndicator}
         disablePageAnimations={
           Platform.OS === "ios" &&
           parseInt(String(Platform.Version), 10) < LIQUID_GLASS_IOS_VERSION
