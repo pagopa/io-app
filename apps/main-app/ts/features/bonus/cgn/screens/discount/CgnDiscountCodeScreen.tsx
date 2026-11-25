@@ -4,8 +4,7 @@ import {
   H2,
   H4,
   Icon,
-  IOColors,
-  useIOTheme,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import { Second } from "@pagopa/ts-commons/lib/units";
@@ -51,7 +50,7 @@ const CgnDiscountCodeScreen = () => {
   const discountOtp = useIOSelector(cgnOtpDataSelector);
   const [isDiscountCodeExpired, setIsDiscountCodeExpired] = useState(false);
   const navigation = useIONavigation();
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   const generateNewDiscountCode = () => {
     dispatch(
@@ -120,13 +119,18 @@ const CgnDiscountCodeScreen = () => {
             }
           }}
         >
-          <H2 accessibilityRole="header" color={theme["textHeading-default"]}>
+          <H2 accessibilityRole="header" color={colors.text.heading.default}>
             {I18n.t(`bonus.cgn.merchantDetail.discount.title`)}
           </H2>
           <VSpacer size={24} />
-          <View style={styles.discountCodeContainer}>
+          <View
+            style={[
+              styles.discountCodeContainer,
+              { borderColor: colors.stroke.default }
+            ]}
+          >
             <View style={{ flexDirection: "row", alignSelf: "center" }}>
-              <Icon color={theme["icon-decorative"]} name="tag" />
+              <Icon color={colors.icon.decorative} name="tag" />
             </View>
             <VSpacer size={4} />
             <Barcode
@@ -173,7 +177,6 @@ const CgnDiscountCodeScreen = () => {
 
 const styles = StyleSheet.create({
   discountCodeContainer: {
-    borderColor: IOColors["grey-100"],
     borderWidth: 1,
     padding: 16,
     borderRadius: 8

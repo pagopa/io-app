@@ -1,19 +1,14 @@
 import {
   BottomSheetBackdrop,
   BottomSheetBackdropProps,
+  BottomSheetBackgroundProps,
   BottomSheetFooter,
   BottomSheetFooterProps,
   BottomSheetModal,
   BottomSheetScrollView,
   useBottomSheetModal
 } from "@gorhom/bottom-sheet";
-import {
-  IOBottomSheetHeaderRadius,
-  IOColors,
-  IOVisualCostants,
-  useIOTheme,
-  VSpacer
-} from "@io-app/design-system";
+import { IODimensions, useIOColors, VSpacer } from "@io-app/design-system";
 import { NonEmptyArray } from "fp-ts/lib/NonEmptyArray";
 import {
   JSX,
@@ -39,20 +34,26 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BottomSheetHeader } from "../../components/bottomSheet/BottomSheetHeader";
 import { useHardwareBackButtonToDismiss } from "../../hooks/useHardwareBackButton";
 import { isScreenReaderEnabled } from "../accessibility";
-import { useModalStyle } from "./useModalStyle";
 
 const screenHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
   bottomSheet: {
-    borderTopRightRadius: IOBottomSheetHeaderRadius,
-    borderTopLeftRadius: IOBottomSheetHeaderRadius,
+    borderTopRightRadius: IODimensions.radius.bottomSheet,
+    borderTopLeftRadius: IODimensions.radius.bottomSheet,
     borderCurve: "continuous",
     // Don't delete the overflow property
     // oterwise the above borderRadius won't work
     overflow: "hidden"
   }
 });
+
+const NonAccessibleBottomSheetBackground = ({
+  pointerEvents,
+  style
+}: BottomSheetBackgroundProps) => (
+  <View accessible={false} pointerEvents={pointerEvents} style={style} />
+);
 
 export type IOBottomSheetModal = {
   bottomSheet: JSX.Element;
@@ -99,7 +100,6 @@ export const useIOBottomSheetModal = ({
   forceFullscreen
 }: BottomSheetOptions): IOBottomSheetModal => {
   const insets = useSafeAreaInsets();
-  const theme = useIOTheme();
   const { dismissAll } = useBottomSheetModal();
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const { onOpen, onClose } = useHardwareBackButtonToDismiss(dismissAll);
@@ -115,17 +115,16 @@ export const useIOBottomSheetModal = ({
     [dismissAll]
   );
 
-  const {
-    backdrop: { opacity: backdropOpacity },
-    modal: { backgroundColor }
-  } = useModalStyle();
+  const colors = useIOColors();
+  const backdropColor = colors.background.overlay;
+  const backgroundColor = colors.background.default;
 
   const header = <BottomSheetHeader onClose={dismissAll} title={title} />;
   const bottomSheetContent = (
     <BottomSheetScrollView
       overScrollMode={"never"}
       style={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault
+        paddingHorizontal: IODimensions.padding.screen.default
       }}
     >
       {component}
@@ -157,10 +156,11 @@ export const useIOBottomSheetModal = ({
         {...backdropProps}
         appearsOnIndex={0}
         disappearsOnIndex={-1}
-        opacity={backdropOpacity}
+        opacity={1}
+        style={[backdropProps.style, { backgroundColor: backdropColor }]}
       />
     ),
-    [backdropOpacity]
+    [backdropColor]
   );
 
   useEffect(() => {
@@ -192,6 +192,9 @@ export const useIOBottomSheetModal = ({
       <BottomSheetModal
         accessible={false}
         backdropComponent={BackdropElement}
+        backgroundComponent={
+          Platform.OS === "ios" ? NonAccessibleBottomSheetBackground : undefined
+        }
         backgroundStyle={{ backgroundColor }}
         containerComponent={
           Platform.OS === "android" && !screenReaderEnabled && !forceFullscreen
@@ -207,7 +210,7 @@ export const useIOBottomSheetModal = ({
               // bottomInset={insets.bottom}
               style={{
                 paddingBottom: insets.bottom,
-                backgroundColor: IOColors[theme["appBackground-primary"]]
+                backgroundColor
               }}
             >
               {footer}

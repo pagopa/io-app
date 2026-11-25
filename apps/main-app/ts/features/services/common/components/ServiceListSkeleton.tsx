@@ -1,9 +1,8 @@
 import {
   Divider,
+  IODimensions,
   IOListItemStyles,
-  IOListItemVisualParams,
   IOSkeleton,
-  IOVisualCostants,
   VSpacer
 } from "@io-app/design-system";
 import { Fragment } from "react";
@@ -52,11 +51,13 @@ const ServiceListItemSkeleton = ({
   <View style={IOListItemStyles.listItem}>
     <View style={IOListItemStyles.listItemInner}>
       {avatarShown && (
-        <View style={{ marginRight: IOListItemVisualParams.iconMargin }}>
+        <View
+          style={{ marginRight: IODimensions.gap.listItem.default.leading }}
+        >
           <IOSkeleton
-            radius={IOVisualCostants.avatarRadiusSizeSmall}
+            radius={IODimensions.radius.avatar.small}
             shape="square"
-            size={IOVisualCostants.avatarSizeSmall}
+            size={IODimensions.size.avatar.small}
           />
         </View>
       )}

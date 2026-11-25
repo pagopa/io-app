@@ -1,0 +1,37 @@
+import { Banner } from "@io-app/design-system";
+import I18n from "i18next";
+
+import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useIOSelector } from "../../../../store/hooks";
+import { itwIsWalletEmptySelector } from "../../credentials/store/selectors";
+import { ITW_ROUTES } from "../../navigation/routes";
+
+export const DocSuIOEngagementBanner = () => {
+  const navigation = useIONavigation();
+  const shouldRender = useIOSelector(itwIsWalletEmptySelector);
+
+  const handleOnPress = () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.L3_ONBOARDING
+    });
+  };
+  const guardedHandleOnPress = useOfflineToastGuard(handleOnPress);
+
+  if (!shouldRender) {
+    return null;
+  }
+  return (
+    <Banner
+      action={I18n.t("features.itWallet.engagementBanner.l2_banner.cta")}
+      color="neutral"
+      content={I18n.t(
+        "features.itWallet.engagementBanner.l2_banner.description"
+      )}
+      onPress={guardedHandleOnPress}
+      pictogramName="cardAdd"
+      testID="itwWalletL2BannerTestID"
+      title={I18n.t("features.itWallet.engagementBanner.l2_banner.title")}
+    />
+  );
+};

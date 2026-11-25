@@ -1,7 +1,3 @@
-import {
-  isLoginUtilsError,
-  LoginUtilsError
-} from "@pagopa/io-react-native-login-utils";
 import * as B from "fp-ts/lib/boolean";
 import { pipe } from "fp-ts/lib/function";
 import {
@@ -159,6 +155,21 @@ export function trackKeychainFailures() {
   clearKeychainError();
 }
 
+export function trackLoginError(
+  idpName: string | undefined,
+  error: Error | WebViewErrorEvent | WebViewHttpErrorEvent
+) {
+  const errorPayload = extractLoginErrorPayload(error);
+  if (!errorPayload) {
+    return;
+  }
+
+  void mixpanelTrack("SPID_ERROR", {
+    idp: idpName,
+    ...errorPayload
+  });
+}
+
 export function trackLollipopIdpLoginFailure(reason: string) {
   void mixpanelTrack("LOLLIPOP_IDP_LOGIN_FAILURE", {
     reason
@@ -191,25 +202,17 @@ export function trackLollipopKeyGenerationFailure(reason: string) {
   });
 }
 
+// End of lollipop events
+
 export function trackLollipopKeyGenerationSuccess(keyType?: string) {
   void mixpanelTrack("LOLLIPOP_KEY_GENERATION_SUCCESS", {
     kty: keyType
   });
 }
 
-// End of lollipop events
-
-const extractLoginErrorPayload = (
-  error: Error | LoginUtilsError | WebViewErrorEvent | WebViewHttpErrorEvent
-) => {
-  if (isLoginUtilsError(error)) {
-    return {
-      code: error.userInfo?.statusCode,
-      description: error.userInfo?.error,
-      domain: error.userInfo?.url
-    };
-  }
-
+function extractLoginErrorPayload(
+  error: Error | WebViewErrorEvent | WebViewHttpErrorEvent
+) {
   if (isWebViewHttpErrorEvent(error)) {
     const { description, statusCode, url } = error.nativeEvent;
     return {
@@ -217,14 +220,14 @@ const extractLoginErrorPayload = (
       description,
       domain: toUrlWithoutQueryParams(url)
     };
-  }
-
-  if (isWebViewErrorEvent(error)) {
+  } else if (isWebViewErrorEvent(error)) {
     const { code, description, domain } = error.nativeEvent;
-    return { code, description, domain };
-  }
-
-  if (error.message !== undefined) {
+    return {
+      code,
+      description,
+      domain
+    };
+  } else if (error.message !== undefined) {
     return {
       code: error.message,
       description: error.message,
@@ -234,21 +237,6 @@ const extractLoginErrorPayload = (
 
   const unknownError = unknownToString(error);
   return { code: "unknown", description: unknownError, domain: "unknown" };
-};
-
-export function trackLoginError(
-  idpName: string | undefined,
-  error: Error | LoginUtilsError | WebViewErrorEvent | WebViewHttpErrorEvent
-) {
-  const errorPayload = extractLoginErrorPayload(error);
-  if (!errorPayload) {
-    return;
-  }
-
-  void mixpanelTrack("SPID_ERROR", {
-    idp: idpName,
-    ...errorPayload
-  });
 }
 
 // #region Help Center

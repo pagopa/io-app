@@ -6,14 +6,14 @@ import {
   ContentWrapper,
   ForceScrollDownView,
   H2,
-  hexToRgba,
   HStack,
   Icon,
   IOButton,
   IOColors,
+  IODimensions,
   IOMarkdownLite,
-  IOVisualCostants,
   ListItemHeader,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -44,6 +44,7 @@ export const FimsFlowSuccessBody = ({
   consents,
   onAbort
 }: FimsSuccessBodyProps) => {
+  const colors = useIOColors();
   const dispatch = useIODispatch();
   const store = useIOStore();
   const serviceId = consents.service_id as ServiceId;
@@ -128,10 +129,23 @@ export const FimsFlowSuccessBody = ({
         <HStack space={8} style={{ alignItems: "center" }}>
           {/* TODO: We need to add a variant of `Avatar` that
           lets you set a custom icon with a custom colour. */}
-          <View style={styles.outlineContainer}>
-            <Icon color={"blueIO-500"} name="productIOApp" size={"100%"} />
+          <View
+            style={[
+              styles.outlineContainer,
+              {
+                backgroundColor: colors.component.avatar.background.logo,
+                borderColor: colors.component.avatar.border
+              }
+            ]}
+          >
+            {/* The tile is white in both modes */}
+            <Icon
+              color={IOColors.light.foreground.accent}
+              name="productIOApp"
+              size={"100%"}
+            />
           </View>
-          <Icon color="grey-450" name="transactions" />
+          <Icon color={colors.icon.default} name="transactions" />
           <Avatar logoUri={serviceLogo} size={"small"} />
         </HStack>
 
@@ -158,7 +172,7 @@ export const FimsFlowSuccessBody = ({
 
         <FimsPrivacyInfo privacyUrl={privacyUrl} />
 
-        <VSpacer size={32} />
+        <VSpacer size={IODimensions.padding.screen.end} />
       </ContentWrapper>
       {BottomSheet.bottomSheet}
     </ForceScrollDownView>
@@ -181,15 +195,13 @@ const generateBottomSheetProps = (privacyUrl: string): BSPropType => ({
 
 const styles = StyleSheet.create({
   outlineContainer: {
-    borderWidth: 1,
+    borderWidth: IODimensions.stroke.default,
     padding: 8,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 8,
-    borderColor: hexToRgba(IOColors.black, 0.1),
+    borderRadius: IODimensions.radius.avatar.small,
     borderCurve: "continuous",
-    backgroundColor: IOColors.white,
-    width: IOVisualCostants.avatarSizeSmall,
-    height: IOVisualCostants.avatarSizeSmall
+    width: IODimensions.size.avatar.small,
+    height: IODimensions.size.avatar.small
   }
 });

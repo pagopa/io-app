@@ -4,6 +4,7 @@ import { State } from "react-native-ble-plx";
 import type { ProximityDetails, VerifierRequest } from "../utils/types";
 
 export type ProximityEvents =
+  | Back
   | BluetoothStateChanged
   | Close
   | Consent
@@ -20,6 +21,10 @@ export type ProximityEvents =
   | Start
   | StartNfcPresentment
   | StoreConsent;
+
+type Back = {
+  type: "back";
+};
 
 type BluetoothStateChanged = {
   state: State;

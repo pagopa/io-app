@@ -24,8 +24,8 @@ import {
   WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY
 } from "../../../common/utils/constants";
 import { cieAuthenticationError } from "../store/actions";
-import { isCieLoginUatEnabledSelector } from "../store/selectors";
-import { getCieUatEndpoint } from "../utils/endpoints";
+import { cieEnvSelector } from "../store/selectors";
+import { getCieIdpUrl } from "../utils/endpoints";
 
 const CIE_ALERT_MESSAGES = {
   readingInstructions: I18n.t(
@@ -204,12 +204,9 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
       if (Platform.OS === "ios") {
         CieLogger.setLogMode(isDevEnv ? "FILE" : "DISABLED");
       }
-      // Set the IDP URL based on the environment:
-      // Uses the UAT endpoint for Pre-production or null to fallback to PROD (default).
-      const idpUrl = isCieLoginUatEnabledSelector(store.getState())
-        ? (getCieUatEndpoint() ?? undefined)
-        : undefined;
-      CieManager.setCustomIdpUrl(idpUrl);
+      // Set the IDP URL based on the environment (undefined falls back to PROD).
+      const idpUrl = getCieIdpUrl(cieEnvSelector(store.getState()));
+      CieManager.setCustomIdpUrl(idpUrl ?? undefined);
 
       try {
         await CieManager.startReading(pin, authUrl);

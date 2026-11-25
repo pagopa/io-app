@@ -1,12 +1,10 @@
-import { IOSpacingScale } from "@io-app/design-system";
+import { IODimensions } from "@io-app/design-system";
 import { StyleSheet, View } from "react-native";
 
 import { useCredentialCardConfig } from "../../common/components/ItwCredentialCard/config";
 import { ItwCredentialClaimsCard } from "../../common/components/ItwCredentialClaimsCard";
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { ItwCredentialPreviewClaimsList } from "./ItwCredentialPreviewClaimsList";
-
-const cardSpacing: IOSpacingScale = 16;
 
 type Props = {
   /** The credential whose claims are rendered inside the card. */
@@ -38,6 +36,6 @@ export const ItwCredentialPreviewClaimsCard = ({ title, data }: Props) => {
 
 const styles = StyleSheet.create({
   body: {
-    paddingHorizontal: cardSpacing
+    paddingHorizontal: IODimensions.padding.card
   }
 });

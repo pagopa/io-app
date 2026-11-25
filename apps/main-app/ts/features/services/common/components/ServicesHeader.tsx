@@ -2,17 +2,18 @@ import {
   Avatar,
   BodySmall,
   H3,
-  IOColors,
+  IODimensions,
+  IODimensionScale,
   IOSkeleton,
-  IOSpacingScale,
-  IOVisualCostants,
-  useIOTheme,
   VStack
 } from "@io-app/design-system";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
 
-const ITEM_PADDING_VERTICAL: IOSpacingScale = 6;
-const AVATAR_MARGIN_RIGHT: IOSpacingScale = 16;
+import { useFeatureColors } from "../../../../hooks/useFeatureColors";
+import { servicesColors } from "./colors";
+
+const ITEM_PADDING_VERTICAL: IODimensionScale = 6;
+const AVATAR_MARGIN_RIGHT: IODimensionScale = 16;
 
 const styles = StyleSheet.create({
   container: {
@@ -37,7 +38,7 @@ export const ServicesHeader = ({
   title,
   subTitle
 }: ServicesHeaderProps) => {
-  const theme = useIOTheme();
+  const { header } = useFeatureColors(servicesColors);
 
   return (
     <View
@@ -54,10 +55,10 @@ export const ServicesHeader = ({
         <Avatar logoUri={logoUri} size="medium" />
       </View>
       <View style={{ flex: 1 }}>
-        <H3 accessibilityRole="header" color={theme["textHeading-secondary"]}>
+        <H3 accessibilityRole="header" color={header.title}>
           {title}
         </H3>
-        <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
+        <BodySmall color={header.subtitle} weight="Regular">
           {subTitle}
         </BodySmall>
       </View>
@@ -65,43 +66,47 @@ export const ServicesHeader = ({
   );
 };
 
-export const ServicesHeaderSkeleton = () => (
-  <View
-    accessibilityState={{ busy: true }}
-    accessible={true}
-    style={styles.container}
-    testID="services-header-skeleton"
-  >
-    <View style={styles.itemAvatar}>
-      <IOSkeleton
-        color={IOColors["grey-200"]}
-        radius={IOVisualCostants.avatarRadiusSizeMedium}
-        shape="square"
-        size={IOVisualCostants.avatarSizeMedium}
-      />
+export const ServicesHeaderSkeleton = () => {
+  const { header } = useFeatureColors(servicesColors);
+
+  return (
+    <View
+      accessibilityState={{ busy: true }}
+      accessible={true}
+      style={styles.container}
+      testID="services-header-skeleton"
+    >
+      <View style={styles.itemAvatar}>
+        <IOSkeleton
+          color={header.skeleton}
+          radius={IODimensions.radius.avatar.medium}
+          shape="square"
+          size={IODimensions.size.avatar.medium}
+        />
+      </View>
+      <VStack space={8} style={{ flex: 1 }}>
+        <IOSkeleton
+          color={header.skeleton}
+          height={16}
+          radius={8}
+          shape="rectangle"
+          width={"100%"}
+        />
+        <IOSkeleton
+          color={header.skeleton}
+          height={16}
+          radius={8}
+          shape="rectangle"
+          width={"80%"}
+        />
+        <IOSkeleton
+          color={header.skeleton}
+          height={8}
+          radius={8}
+          shape="rectangle"
+          width={"60%"}
+        />
+      </VStack>
     </View>
-    <VStack space={8} style={{ flex: 1 }}>
-      <IOSkeleton
-        color={IOColors["grey-200"]}
-        height={16}
-        radius={8}
-        shape="rectangle"
-        width={"100%"}
-      />
-      <IOSkeleton
-        color={IOColors["grey-200"]}
-        height={16}
-        radius={8}
-        shape="rectangle"
-        width={"80%"}
-      />
-      <IOSkeleton
-        color={IOColors["grey-200"]}
-        height={8}
-        radius={8}
-        shape="rectangle"
-        width={"60%"}
-      />
-    </VStack>
-  </View>
-);
+  );
+};

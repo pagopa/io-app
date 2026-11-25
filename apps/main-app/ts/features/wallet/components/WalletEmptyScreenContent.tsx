@@ -1,9 +1,4 @@
-import {
-  Body,
-  IOButton,
-  IOVisualCostants,
-  Pictogram
-} from "@io-app/design-system";
+import { Body, IOButton, IODimensions, Pictogram } from "@io-app/design-system";
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
 
@@ -42,7 +37,7 @@ const WalletEmptyScreenContent = () => {
         testID="walletEmptyScreenContentItWalletTestID"
       >
         <ItwDeckImage height={80} width={140} />
-        <Body color="grey-650" style={styles.text} weight="Regular">
+        <Body style={styles.text} weight="Regular">
           {I18n.t("features.wallet.home.screen.emptyMessage")}
         </Body>
         <IOButton
@@ -59,7 +54,7 @@ const WalletEmptyScreenContent = () => {
   return (
     <View style={styles.container} testID="walletEmptyScreenContentTestID">
       <Pictogram name="cardAdd" />
-      <Body color="grey-650" style={styles.text} weight="Regular">
+      <Body style={styles.text} weight="Regular">
         {I18n.t("features.wallet.home.screen.legacy.emptyMessage")}
       </Body>
       <IOButton
@@ -78,7 +73,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     gap: 24,
-    paddingHorizontal: IOVisualCostants.appMarginDefault,
+    paddingHorizontal: IODimensions.padding.screen.default,
     justifyContent: "center",
     alignItems: "center"
   },

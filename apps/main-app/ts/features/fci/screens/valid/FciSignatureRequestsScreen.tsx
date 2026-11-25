@@ -1,6 +1,6 @@
 import { ToolEnum } from "@io-app/api-types/generated/definitions/content/AssistanceToolConfig";
 import { SignatureRequestListView } from "@io-app/api-types/generated/definitions/fci/SignatureRequestListView";
-import { H2, IOVisualCostants } from "@io-app/design-system";
+import { H2, IODimensions } from "@io-app/design-system";
 import I18n from "i18next";
 import { useEffect } from "react";
 import { ScrollView, SectionList } from "react-native";
@@ -104,7 +104,7 @@ const FciSignatureRequestsScreenComponent = () => {
       {/* TODO: Replace with `IOScrollView` component. */}
       <ScrollView
         contentContainerStyle={{
-          paddingHorizontal: IOVisualCostants.appMarginDefault
+          paddingHorizontal: IODimensions.padding.screen.default
         }}
       >
         <H2>{I18n.t("features.fci.requests.title")}</H2>

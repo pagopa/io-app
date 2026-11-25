@@ -14,12 +14,8 @@ import Animated, {
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { useIOTheme } from "../../context";
-import {
-  alertEdgeToEdgeInsetTransitionConfig,
-  IOColors,
-  IOVisualCostants
-} from "../../core";
+import { useIOColors } from "../../context";
+import { alertEdgeToEdgeInsetTransitionConfig, IODimensions } from "../../core";
 import { WithTestID } from "../../utils/types";
 import { IconButton } from "../buttons";
 import { HStack } from "../layout";
@@ -45,8 +41,8 @@ type Variant = "contrast" | "primary";
 
 const styles = StyleSheet.create({
   headerInner: {
-    paddingHorizontal: IOVisualCostants.appMarginDefault,
-    height: IOVisualCostants.headerHeight,
+    paddingHorizontal: IODimensions.padding.screen.default,
+    height: IODimensions.height.header,
     width: "100%",
     flexDirection: "row",
     alignItems: "center",
@@ -73,7 +69,7 @@ export const HeaderFirstLevel = ({
 }: HeaderFirstLevel) => {
   const titleRef = createRef<View>();
   const insets = useSafeAreaInsets();
-  const theme = useIOTheme();
+  const headerColors = useIOColors().component.header;
   const paddingTop = useSharedValue(ignoreSafeAreaMargin ? 0 : insets.top);
   const isPrimary = variant === "primary";
 
@@ -111,8 +107,8 @@ export const HeaderFirstLevel = ({
       style={[
         {
           backgroundColor: isPrimary
-            ? IOColors[theme["appBackground-primary"]]
-            : IOColors[theme["appBackground-accent"]]
+            ? headerColors.background.default
+            : headerColors.background.accent
         },
         animatedStyle
       ]}
@@ -124,7 +120,7 @@ export const HeaderFirstLevel = ({
           style={[
             {
               ...styles.headerDivider,
-              backgroundColor: IOColors[theme["divider-default"]]
+              backgroundColor: headerColors.border
             },
             animatedDivider
           ]}
@@ -136,8 +132,8 @@ export const HeaderFirstLevel = ({
           <H2
             color={
               isPrimary
-                ? theme["textHeading-default"]
-                : theme["textHeading-constrast"]
+                ? headerColors.foreground.default
+                : headerColors.foreground.onAccent
             }
             maxFontSizeMultiplier={1.25}
             numberOfLines={1}
@@ -147,7 +143,10 @@ export const HeaderFirstLevel = ({
             {title}
           </H2>
         </View>
-        <HStack space={16} style={{ flexShrink: 0 }}>
+        <HStack
+          space={IODimensions.gap.header.actions}
+          style={{ flexShrink: 0 }}
+        >
           {actions.map(action => (
             <IconButton
               key={`header-first-level-action-${action.icon}`}

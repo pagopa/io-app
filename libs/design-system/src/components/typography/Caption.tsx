@@ -1,22 +1,20 @@
-import { useIOTheme } from "../../context";
+import { useIOColors } from "../../context";
 import { IOTypography } from "../../core";
 import { IOText, IOTextProps, TypographicStyleProps } from "./IOText";
 
-const {
-  caption: { colorToken, ...captionStyle }
-} = IOTypography;
+const { caption: captionStyle } = IOTypography;
 
 /** `Caption` typographic style */
 export const Caption = ({
   color: customColor,
   ...props
 }: TypographicStyleProps) => {
-  const theme = useIOTheme();
+  const typographyColors = useIOColors().component.typography;
 
   const CaptionProps: IOTextProps = {
     ...props,
     ...captionStyle,
-    color: customColor ?? theme[colorToken]
+    color: customColor ?? typographyColors.caption
   };
 
   return <IOText {...CaptionProps}>{props.children}</IOText>;

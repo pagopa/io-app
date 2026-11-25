@@ -5,10 +5,9 @@
 
 import {
   Dismissable,
-  IOColors,
-  IOVisualCostants,
+  IODimensions,
   ToastNotification,
-  useIOTheme
+  useIOColors
 } from "@io-app/design-system";
 import I18n from "i18next";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
@@ -62,10 +61,10 @@ const UpdateAppModal: FC = () => {
     setIsError(false);
   }, []);
 
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
-    <Modal backdropColor={IOColors[theme["appBackground-primary"]]}>
+    <Modal backdropColor={colors.background.default}>
       <OperationResultScreenContent
         action={{
           label: actionLabel,
@@ -102,8 +101,8 @@ const UpdateAppModal: FC = () => {
 const styles = StyleSheet.create({
   alertContainer: {
     position: "absolute",
-    right: IOVisualCostants.appMarginDefault,
-    left: IOVisualCostants.appMarginDefault,
+    right: IODimensions.padding.screen.default,
+    left: IODimensions.padding.screen.default,
     zIndex: 1000
   }
 });

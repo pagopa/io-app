@@ -16,6 +16,9 @@ import {
   ITW_TOUR_STEP_ADD_BUTTON
 } from "../utils/constants";
 
+// A new object on every render would re-register the tour step on every render
+const HEADER_CUTOUT_STYLE = { cornerRadius: 0 };
+
 export const useItwGuidedTour = () => {
   const dispatch = useIODispatch();
   const headerHeight = useHeaderHeight();
@@ -45,7 +48,7 @@ export const useItwGuidedTour = () => {
     title: I18n.t("features.itWallet.tour.addCredential.title"),
     description: I18n.t("features.itWallet.tour.addCredential.description"),
     region: headerRegion,
-    cutoutStyle: { cornerRadius: 0 }
+    cutoutStyle: HEADER_CUTOUT_STYLE
   });
 
   /**

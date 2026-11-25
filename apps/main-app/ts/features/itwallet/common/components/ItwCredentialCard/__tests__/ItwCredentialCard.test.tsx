@@ -14,6 +14,10 @@ import {
   ItwJwtCredentialStatus
 } from "../../../utils/itwTypesUtils";
 
+afterEach(() => {
+  jest.restoreAllMocks();
+});
+
 describe("ItwCredentialCard", () => {
   it.each([
     CredentialType.PID,
@@ -112,8 +116,8 @@ describe("ItwCredentialCardLegacy", () => {
       .mockReturnValue(false);
 
     const component = renderComponent(
-      <ItwCredentialCard credentialType={type} />
-    );
+      <ItwCredentialCardLegacy credentialType={type} />
+    ).toJSON();
 
     expect(component).toMatchSnapshot();
   });
@@ -127,8 +131,10 @@ describe("ItwCredentialCardLegacy", () => {
       .mockReturnValue(true);
 
     const component = renderComponent(
-      <ItwCredentialCard credentialType={CredentialType.DRIVING_LICENSE} />
-    );
+      <ItwCredentialCardLegacy
+        credentialType={CredentialType.DRIVING_LICENSE}
+      />
+    ).toJSON();
 
     expect(component).toMatchSnapshot();
   });

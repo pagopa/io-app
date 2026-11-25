@@ -2,14 +2,15 @@ import { ComponentProps, useCallback } from "react";
 import { GestureResponderEvent, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { useIOTheme } from "../../context";
-import { IOColors, IOListItemStyles, IOListItemVisualParams } from "../../core";
+import { useIOColors } from "../../context";
+import { IODimensions } from "../../core";
 import { triggerHaptic } from "../../functions";
 import { useListItemAnimation } from "../../hooks";
 import { useIOFontDynamicScale } from "../../utils/accessibility";
 import { WithTestID } from "../../utils/types";
 import { AnimatedIcon, IOIcons } from "../icons";
 import { ButtonText } from "../typography/ButtonText";
+import { IOListItemStyles } from "./styles";
 
 export type ListItemAction = Pick<
   ComponentProps<typeof Pressable>,
@@ -43,19 +44,13 @@ export const ListItemAction = ({
     [onPress]
   );
 
-  const theme = useIOTheme();
+  const listItemColors = useIOColors().component.listItem;
 
   const { dynamicFontScale, spacingScaleMultiplier } = useIOFontDynamicScale();
 
   const listItemAccessibilityLabel = accessibilityLabel || `${label}`;
 
-  const mapForegroundColor: Record<
-    NonNullable<ListItemAction["variant"]>,
-    IOColors
-  > = {
-    primary: theme["interactiveElem-default"],
-    danger: theme.errorText
-  };
+  const foregroundColor = listItemColors.foreground.action[variant];
 
   return (
     <Pressable
@@ -79,7 +74,7 @@ export const ListItemAction = ({
             IOListItemStyles.listItemInner,
             {
               columnGap:
-                IOListItemVisualParams.iconMargin *
+                IODimensions.gap.listItem.default.leading *
                 dynamicFontScale *
                 spacingScaleMultiplier
             },
@@ -89,13 +84,13 @@ export const ListItemAction = ({
           {icon && (
             <AnimatedIcon
               allowFontScaling
-              color={IOColors[mapForegroundColor[variant]]}
+              color={foregroundColor}
               name={icon}
-              size={IOListItemVisualParams.iconSize}
+              size={IODimensions.size.icon.listItem}
             />
           )}
           <View style={{ flexGrow: 1, flexShrink: 1 }}>
-            <ButtonText color={mapForegroundColor[variant]}>{label}</ButtonText>
+            <ButtonText color={foregroundColor}>{label}</ButtonText>
           </View>
         </Animated.View>
       </Animated.View>

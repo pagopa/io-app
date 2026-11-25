@@ -1,4 +1,4 @@
-import { IOColors, IOVisualCostants, useIOTheme } from "@io-app/design-system";
+import { IODimensions, useIOColors } from "@io-app/design-system";
 import { useLinkTo } from "@react-navigation/native";
 import { memo, ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderCurve: "continuous",
     borderWidth: 1,
-    marginHorizontal: IOVisualCostants.appMarginDefault,
+    marginHorizontal: IODimensions.padding.screen.default,
     padding: 24
   }
 });
@@ -24,15 +24,15 @@ type CardWithMarkdownContentProps = {
 };
 
 const CardWrapper = ({ children }: { children: ReactNode }) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <View
       style={[
         styles.card,
         {
-          backgroundColor: IOColors[theme["appBackground-primary"]],
-          borderColor: IOColors[theme["cardBorder-default"]]
+          backgroundColor: colors.surface.default,
+          borderColor: colors.stroke.default
         }
       ]}
     >

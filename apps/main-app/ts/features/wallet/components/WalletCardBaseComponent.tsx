@@ -13,6 +13,12 @@ export type WalletCardComponentBaseProps<P> = WithTestID<{
   isStacked?: boolean;
 }>;
 
+// Shared animation builders: a new builder on every render would make
+// Reanimated reconfigure the card animations on every render
+const CARD_ENTERING = FadeIn.duration(200);
+const CARD_EXITING = FadeOut.duration(200);
+const CARD_LAYOUT = LinearTransition.duration(200);
+
 export const withWalletCardBaseComponent =
   <
     CardProps extends object,
@@ -22,9 +28,9 @@ export const withWalletCardBaseComponent =
   ) =>
   ({ cardProps, isStacked = true, testID }: ContentProps) => (
     <Animated.View
-      entering={FadeIn.duration(200)}
-      exiting={FadeOut.duration(200)}
-      layout={LinearTransition.duration(200)}
+      entering={CARD_ENTERING}
+      exiting={CARD_EXITING}
+      layout={CARD_LAYOUT}
       style={[styles.container, isStacked && styles.containerStacked]}
       testID={testID}
     >

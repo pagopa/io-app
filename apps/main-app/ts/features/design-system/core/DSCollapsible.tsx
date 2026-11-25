@@ -2,7 +2,6 @@ import {
   AccordionItem,
   Body,
   H4,
-  useIOTheme,
   VSpacer,
   VStack
 } from "@io-app/design-system";
@@ -11,6 +10,11 @@ import { FlatList, ListRenderItemInfo, View } from "react-native";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const assistanceData: Array<AccordionItem> = [
+  {
+    title: "Come posso pagare su IO?",
+    body: "Puoi pagare con carte di debito, credito e prepagate, con PayPal o BANCOMAT Pay.",
+    icon: "creditCard"
+  },
   {
     title: "Come posso pagare su IO?",
     body: "Puoi pagare con carte di debito, credito e prepagate, con PayPal o BANCOMAT Pay."
@@ -42,16 +46,14 @@ const assistanceData: Array<AccordionItem> = [
 ];
 
 export const DSCollapsible = () => {
-  const theme = useIOTheme();
-
   const renderAccordionHeader = () => (
     <View style={{ marginBottom: 24 }}>
-      <H4 color={theme["textHeading-default"]}>AccordionItem</H4>
+      <H4>AccordionItem</H4>
     </View>
   );
 
   const renderItem = ({ item }: ListRenderItemInfo<AccordionItem>) => (
-    <AccordionItem body={item.body} title={item.title} />
+    <AccordionItem body={item.body} icon={item.icon} title={item.title} />
   );
 
   return (

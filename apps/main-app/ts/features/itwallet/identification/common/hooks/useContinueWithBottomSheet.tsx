@@ -4,9 +4,9 @@ import {
   BodySmall,
   HStack,
   Icon,
+  IODimensions,
   IOIcons,
-  IOListItemVisualParams,
-  useIOTheme,
+  useIOColors,
   VStack
 } from "@io-app/design-system";
 import I18n from "i18next";
@@ -165,15 +165,15 @@ export const useContinueWithBottomSheet = ({
 };
 
 const ListItem = (props: { content: string; icon: IOIcons }) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <HStack space={16} style={styles.listItem}>
       <Icon
         allowFontScaling
-        color={theme["icon-decorative"]}
+        color={colors.icon.decorative}
         name={props.icon}
-        size={IOListItemVisualParams.iconSize}
+        size={IODimensions.size.icon.listItem}
       />
       <Body style={{ flex: 1, flexWrap: "wrap" }}>{props.content}</Body>
     </HStack>

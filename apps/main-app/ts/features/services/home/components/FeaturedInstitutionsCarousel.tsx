@@ -1,8 +1,4 @@
-import {
-  HSpacer,
-  IOSpacingScale,
-  IOVisualCostants
-} from "@io-app/design-system";
+import { HSpacer, IODimensions, IODimensionScale } from "@io-app/design-system";
 import { FlatList, FlatListProps, StyleSheet } from "react-native";
 
 import { TestID, WithTestID } from "../../../../types/WithTestID";
@@ -17,13 +13,13 @@ export type FeaturedInstitutionsCarouselProps = WithTestID<{
   institutions: Array<FeaturedInstitutionCardProps>;
 }>;
 
-const CARD_SPACING: IOSpacingScale = 8;
+const CARD_SPACING: IODimensionScale = 8;
 const CARD_TOTAL_WIDTH = CARD_WIDTH + CARD_SPACING;
 
 const style = StyleSheet.create({
   list: {
-    marginHorizontal: -IOVisualCostants.appMarginDefault,
-    paddingHorizontal: IOVisualCostants.appMarginDefault
+    marginHorizontal: -IODimensions.padding.screen.default,
+    paddingHorizontal: IODimensions.padding.screen.default
   }
 });
 

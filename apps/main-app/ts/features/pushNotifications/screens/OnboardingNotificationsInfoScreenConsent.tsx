@@ -5,8 +5,9 @@ import {
   H2,
   H6,
   IconButton,
-  IOVisualCostants,
+  IODimensions,
   ListItemInfo,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import I18n from "i18next";
@@ -34,16 +35,17 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     flexDirection: "row",
     paddingBottom: 18,
-    paddingRight: IOVisualCostants.appMarginDefault,
+    paddingRight: IODimensions.padding.screen.default,
     paddingTop: 24
   },
   listContainer: {
-    marginHorizontal: IOVisualCostants.appMarginDefault
+    marginHorizontal: IODimensions.padding.screen.default
   }
 });
 
 export const OnboardingNotificationsInfoScreenConsent = () => {
   const dispatch = useIODispatch();
+  const colors = useIOColors();
   const remindersEnabled = useIOSelector(
     pushNotificationRemindersEnabledSelector
   );
@@ -170,7 +172,7 @@ export const OnboardingNotificationsInfoScreenConsent = () => {
       <VSpacer size={16} />
       <Body>{I18n.t("onboarding.infoConsent.subTitle")}</Body>
       <VSpacer size={16} />
-      <H6 color="grey-700">
+      <H6 color={colors.text.heading.tertiary}>
         {I18n.t("onboarding.infoConsent.instructions.title")}
       </H6>
       <VSpacer size={8} />

@@ -1,10 +1,11 @@
 import { ServiceId } from "@io-app/api-types/generated/definitions/services/ServiceId";
-import { IOColors, useIOTheme } from "@io-app/design-system";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
+import { useFeatureColors } from "../../../../hooks/useFeatureColors";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useSpecialCtaPn } from "../../../pn/hooks/useSpecialCtaPn";
+import { servicesColors } from "../../common/components/colors";
 import { ServiceDetailsScreenBase } from "../types";
 import { getServiceActionsProps } from "../utils";
 
@@ -21,11 +22,11 @@ export const ServiceDetailsScreenPn = ({
   onPressCta,
   title = ""
 }: ServiceDetailsScreenPnProps) => {
-  const theme = useIOTheme();
+  const { header } = useFeatureColors(servicesColors);
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
 
   useHeaderSecondLevel({
-    backgroundColor: IOColors[theme["appBackground-secondary"]],
+    backgroundColor: header.background,
     enableDiscreteTransition: true,
     animatedRef: animatedScrollViewRef,
     supportRequest: true,

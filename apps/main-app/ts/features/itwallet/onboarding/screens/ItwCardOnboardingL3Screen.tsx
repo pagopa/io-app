@@ -6,12 +6,12 @@ import {
   Divider,
   H6,
   IOButton,
-  IOListItemVisualParams,
+  IODimensions,
   ListItemHeader,
   ModuleCredential,
   TabItem,
   TabNavigation,
-  useIOTheme,
+  useIOColors,
   VStack
 } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
@@ -46,10 +46,10 @@ import { PoweredByItWalletText } from "../../common/components/PoweredByItWallet
 import { selectItwEnv } from "../../common/store/selectors/environment.ts";
 import {
   itwIsL2FallbackSelector,
-  itwIsL3EnabledSelector,
-  itwShouldRenderL3UpgradeBannerSelector
+  itwIsL3EnabledSelector
 } from "../../common/store/selectors/index.ts";
 import { itwIsActivationDisabledSelector } from "../../common/store/selectors/preferences.ts";
+import { itwCanUpgradeToL3Selector } from "../../common/store/selectors/upgrade.ts";
 import {
   isL2Credential,
   isUpcomingCredential
@@ -134,24 +134,21 @@ const ItwCardOnboardingL3Screen = ({ route }: Props) => {
 };
 
 const ItwCredentialOnboardingSection = () => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const navigation = useItwNavigation();
 
   const env = useIOSelector(selectItwEnv);
   const isWalletEnabled = useIOSelector(itwLifecycleIsValidSelector);
   const isITWalletEnabled = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const isL2Fallback = useIOSelector(itwIsL2FallbackSelector);
-  const isUpgradeAvailable = useIOSelector(
-    itwShouldRenderL3UpgradeBannerSelector
-  );
+  const canUpgradeToL3 = useIOSelector(itwCanUpgradeToL3Selector);
   const isItWalletActivationDisabled = useIOSelector(
     itwIsActivationDisabledSelector
   );
   const catalogueCredentials = useIOSelector(
     itwAvailableCredentialsListSelector
   );
-  const shouldRenderUpgradeBanner =
-    !isItWalletActivationDisabled && isL2Fallback && isUpgradeAvailable;
+  const shouldRenderUpgradeBanner = isL2Fallback && canUpgradeToL3;
 
   useFocusEffect(
     useCallback(() => {
@@ -195,7 +192,7 @@ const ItwCredentialOnboardingSection = () => {
   return (
     <View>
       <View style={styles.header}>
-        <H6 color={theme["textBody-tertiary"]} role="heading">
+        <H6 color={colors.text.content.tertiary} role="heading">
           {I18n.t("features.wallet.onboarding.sections.itw")}
         </H6>
         {!shouldShowL2Credentials && <PoweredByItWalletText />}
@@ -336,9 +333,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingVertical: IOListItemVisualParams.paddingVertical,
-    paddingHorizontal: IOListItemVisualParams.paddingHorizontal,
-    marginHorizontal: -IOListItemVisualParams.paddingHorizontal
+    paddingVertical: IODimensions.padding.listItem.default.vertical,
+    paddingHorizontal: IODimensions.padding.listItem.default.horizontal,
+    marginHorizontal: -IODimensions.padding.listItem.default.horizontal
   }
 });
 

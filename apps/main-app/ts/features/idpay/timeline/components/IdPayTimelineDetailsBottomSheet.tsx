@@ -3,7 +3,13 @@ import { OperationListDTO } from "@io-app/api-types/generated/definitions/idpay/
 import { OperationTypeEnum as RefundOperationTypeEnum } from "@io-app/api-types/generated/definitions/idpay/RefundOperationDTO";
 import { OperationTypeEnum as TransactionOperationTypeEnum } from "@io-app/api-types/generated/definitions/idpay/TransactionDetailDTO";
 import { ChannelEnum } from "@io-app/api-types/generated/definitions/idpay/TransactionOperationDTO";
-import { H6, IOSkeleton, Pictogram, VSpacer } from "@io-app/design-system";
+import {
+  H6,
+  IODimensions,
+  IOSkeleton,
+  Pictogram,
+  VSpacer
+} from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { enumType } from "@pagopa/ts-commons/lib/types";
 import * as E from "fp-ts/lib/Either";
@@ -169,7 +175,7 @@ const ErrorComponent = () => (
   <View
     style={{ paddingTop: 16, justifyContent: "center", alignItems: "center" }}
   >
-    <Pictogram name="attention" size={72} />
+    <Pictogram name="attention" size={IODimensions.size.pictogram.inline} />
     <VSpacer size={16} />
     <H6>{I18n.t("idpay.initiative.operationDetails.errorBody")}</H6>
   </View>

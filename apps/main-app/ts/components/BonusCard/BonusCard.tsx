@@ -3,6 +3,7 @@ import {
   BodySmall,
   H2,
   HSpacer,
+  IODimensions,
   IOSkeleton,
   VSpacer
 } from "@io-app/design-system";
@@ -106,7 +107,10 @@ const BonusCardContent = (props: BonusCardWithColorSchemeValues) => {
             const isLast = index === counters.length - 1;
             return (
               <Fragment key={`${counter.label}_${index}`}>
-                <BonusCardCounter {...counter} />
+                <BonusCardCounter
+                  {...counter}
+                  labelColor={cardColorSchemeValues.text}
+                />
                 {!isLast && <HSpacer size={16} />}
               </Fragment>
             );
@@ -198,12 +202,14 @@ const BonusCardSkeleton = (props: BonusCardWithColorSchemeValues) => {
       <View style={styles.counters}>
         <BonusCardCounter
           isLoading={true}
+          labelColor={props.cardColorSchemeValues.text}
           skeletonColor={foregroundColor}
           type="ValueWithProgress"
         />
         <HSpacer size={16} />
         <BonusCardCounter
           isLoading={true}
+          labelColor={props.cardColorSchemeValues.text}
           skeletonColor={foregroundColor}
           type="Value"
         />
@@ -214,7 +220,7 @@ const BonusCardSkeleton = (props: BonusCardWithColorSchemeValues) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 8,
+    marginHorizontal: IODimensions.padding.screen.heroCard,
     paddingBottom: 24,
     overflow: "hidden"
   },

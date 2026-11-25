@@ -1,12 +1,9 @@
 import {
   BodySmall,
   H6,
-  hexToRgba,
-  IOColors,
+  IODimensions,
   IOSkeleton,
   Tag,
-  useIOTheme,
-  useIOThemeContext,
   VStack,
   WithTestID
 } from "@io-app/design-system";
@@ -18,6 +15,8 @@ import { StyleSheet, View } from "react-native";
 import BPayLogo from "../../../../../img/wallet/payment-methods/bpay_logo_full.svg";
 import PayPalLogo from "../../../../../img/wallet/payment-methods/paypal/paypal_logo_ext.svg";
 import { LogoPaymentWithFallback } from "../../../../components/ui/utils/components/LogoPaymentWithFallback";
+import { useFeatureColors } from "../../../../hooks/useFeatureColors";
+import { paymentsColors } from "../colors";
 
 export type PaymentCardComponentProps = WithTestID<
   | (PaymentCardProps & {
@@ -39,19 +38,13 @@ export type PaymentCardProps = {
 };
 
 const usePaymentCardStyles = () => {
-  const theme = useIOTheme();
-  const { themeType } = useIOThemeContext();
+  const { card } = useFeatureColors(paymentsColors);
 
-  const isDarkMode = themeType === "dark";
-
-  const textColor = theme["textHeading-default"];
-  const backgroundColor = IOColors[theme["appBackground-tertiary"]];
-  const borderColor = isDarkMode ? IOColors.black : IOColors["grey-200"];
-  const errorBorderColor = IOColors[theme.errorText];
-
-  const skeletonColor = isDarkMode
-    ? hexToRgba(IOColors["grey-450"], 0.5)
-    : IOColors["grey-200"];
+  const textColor = card.text;
+  const backgroundColor = card.background;
+  const borderColor = card.border;
+  const errorBorderColor = card.expired.border;
+  const skeletonColor = card.skeleton;
 
   return {
     textColor,
@@ -250,10 +243,10 @@ const PaymentCardSkeleton = () => {
 
 const styles = StyleSheet.create({
   card: {
-    padding: 16,
+    padding: IODimensions.padding.card,
     paddingTop: 8,
     aspectRatio: 16 / 10,
-    borderRadius: 8,
+    borderRadius: IODimensions.radius.card,
     borderWidth: 2,
     borderCurve: "continuous"
   },

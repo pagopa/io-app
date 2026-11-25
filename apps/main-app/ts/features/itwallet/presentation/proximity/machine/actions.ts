@@ -1,7 +1,10 @@
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { ActionArgs, assign } from "xstate";
 
 import { assert } from "../../../../../utils/assert";
 import {
+  trackItwProximityBluetoothAccessClose,
+  trackItwProximityBluetoothActivationClose,
   trackItwProximityPresentationCompleted,
   trackItwProximityQrCodeLoadingFailure,
   trackItwProximityStart
@@ -67,6 +70,20 @@ export const navigateToNfcPresentmentScreenAction = ({
 export const navigateToPresentmentScreenAction = ({
   context
 }: ActionArgs<Context, ProximityEvents, ProximityEvents>) => {
+  const proximityRoute = context.deps.navigation
+    .getState()
+    ?.routes.find(({ name }) => name === ITW_PROXIMITY_ROUTES.MAIN);
+
+  // A redundant navigation commits while the modal is still opening, which
+  // makes it flicker on Android
+  if (
+    proximityRoute &&
+    getFocusedRouteNameFromRoute(proximityRoute) ===
+      ITW_PROXIMITY_ROUTES.PRESENTMENT
+  ) {
+    return;
+  }
+
   context.deps.navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
     screen: ITW_PROXIMITY_ROUTES.PRESENTMENT,
     params: {},
@@ -153,6 +170,14 @@ export const trackProximityStartAction = ({
   trackItwProximityStart({
     proximity_flow: getProximityFlow(context)
   });
+};
+
+export const trackBluetoothAccessCloseAction = () => {
+  trackItwProximityBluetoothAccessClose();
+};
+
+export const trackBluetoothActivationCloseAction = () => {
+  trackItwProximityBluetoothActivationClose();
 };
 
 export const trackProximitySuccessAction = ({

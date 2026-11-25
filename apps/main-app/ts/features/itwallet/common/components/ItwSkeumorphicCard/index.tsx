@@ -1,9 +1,4 @@
-import {
-  hexToRgba,
-  IOColors,
-  Tag,
-  useScaleAnimation
-} from "@io-app/design-system";
+import { Tag, useScaleAnimation } from "@io-app/design-system";
 import { Canvas } from "@shopify/react-native-skia";
 import I18n from "i18next";
 import { ReactNode, useMemo } from "react";
@@ -17,11 +12,14 @@ import {
 } from "react-native";
 import Animated from "react-native-reanimated";
 
+import { RotationSensor } from "../../../../../components/RotationSensor";
+import { useFeatureColors } from "../../../../../hooks/useFeatureColors";
+import { useRotationEffectEnabled } from "../../../../../hooks/useRotationSensor";
+import { itwColors } from "../../../colors";
 import { useItwCredentialName } from "../../hooks/useItwCredentialName";
 import { useLayoutSize } from "../../hooks/useLayoutSize";
 import {
   isItwCredential,
-  useBorderColorByStatus,
   useTagPropsByStatus,
   validCredentialStatuses
 } from "../../utils/itwCredentialUtils";
@@ -58,10 +56,15 @@ export const ItwSkeumorphicCard = ({
   const isItw = useMemo(() => isItwCredential(credential), [credential]);
 
   const credentialName = useItwCredentialName(credential.credentialType);
+  const isRotationEffectEnabled = useRotationEffectEnabled();
 
   const FrontSide = useMemo(
     () => (
-      <CardSideBase isItw={isItw} status={status}>
+      <CardSideBase
+        isAnimated={isRotationEffectEnabled && !isFlipped}
+        isItw={isItw}
+        status={status}
+      >
         <CardBackground
           credentialType={credential.credentialType}
           side="front"
@@ -73,12 +76,23 @@ export const ItwSkeumorphicCard = ({
         />
       </CardSideBase>
     ),
-    [credential, status, valuesHidden, isItw]
+    [
+      credential,
+      status,
+      valuesHidden,
+      isItw,
+      isRotationEffectEnabled,
+      isFlipped
+    ]
   );
 
   const BackSide = useMemo(
     () => (
-      <CardSideBase isItw={isItw} status={status}>
+      <CardSideBase
+        isAnimated={isRotationEffectEnabled && isFlipped}
+        isItw={isItw}
+        status={status}
+      >
         <CardBackground
           credentialType={credential.credentialType}
           side="back"
@@ -90,7 +104,14 @@ export const ItwSkeumorphicCard = ({
         />
       </CardSideBase>
     ),
-    [credential, status, valuesHidden, isItw]
+    [
+      credential,
+      status,
+      valuesHidden,
+      isItw,
+      isRotationEffectEnabled,
+      isFlipped
+    ]
   );
 
   const accessibilityProps = useMemo(() => {
@@ -166,29 +187,41 @@ const gradientVariantByStatus: Record<
 
 type CardSideBaseProps = {
   children: ReactNode;
+  /** Animates the border; the hidden face keeps it at rest. */
+  isAnimated: boolean;
   isItw: boolean;
   status: ItwCredentialStatus;
 };
 
-const CardSideBase = ({ status, children, isItw }: CardSideBaseProps) => {
-  const borderColorMap = useBorderColorByStatus();
+const CardSideBase = ({
+  status,
+  children,
+  isItw,
+  isAnimated
+}: CardSideBaseProps) => {
+  const { credentialCard, skeumorphicCard } = useFeatureColors(itwColors);
   const tagPropsByStatus = useTagPropsByStatus();
 
   const { size, onLayout } = useLayoutSize();
 
   const statusTagProps = tagPropsByStatus[status];
-  const borderColor = borderColorMap[status];
   // Include "jwtExpired" as a valid status because the credential skeumorphic card with this state
   // should not appear faded. Only the "expired" status should be displayed with reduced opacity.
   const isValid = [...validCredentialStatuses, "jwtExpired"].includes(status);
 
   const dynamicStyle: StyleProp<ViewStyle> = {
-    borderColor,
-    backgroundColor: isValid ? undefined : "rgba(255,255,255,0.7)"
+    borderColor: credentialCard.border[status],
+    backgroundColor: isValid ? undefined : skeumorphicCard.fadedOverlay
   };
 
   return (
-    <View onLayout={onLayout} style={styles.container}>
+    <View
+      onLayout={onLayout}
+      style={[
+        styles.container,
+        { boxShadow: `0px 4px 24px ${skeumorphicCard.shadow}` }
+      ]}
+    >
       <CardWidthContext.Provider value={size.width}>
         {/* Status badge  */}
         {statusTagProps && (
@@ -214,13 +247,18 @@ const CardSideBase = ({ status, children, isItw }: CardSideBaseProps) => {
             testID="itWalletBrandBorderTestID"
           >
             {/* Animated gradient border */}
-            <ItwBrandedSkiaBorder
-              borderRadius={8}
-              height={size.height}
-              thickness={4}
-              variant={gradientVariantByStatus[status]}
-              width={size.width}
-            />
+            <RotationSensor enabled={isAnimated}>
+              {roll => (
+                <ItwBrandedSkiaBorder
+                  borderRadius={8}
+                  height={size.height}
+                  roll={roll}
+                  thickness={4}
+                  variant={gradientVariantByStatus[status]}
+                  width={size.width}
+                />
+              )}
+            </RotationSensor>
           </Canvas>
         )}
       </CardWidthContext.Provider>
@@ -236,8 +274,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     borderRadius: 8,
-    overflow: "hidden",
-    boxShadow: `0px 4px 24px ${hexToRgba(IOColors.black, 0.1)}`
+    overflow: "hidden"
   },
   card: {
     aspectRatio: SKEUMORPHIC_CARD_ASPECT_RATIO

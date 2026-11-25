@@ -38,6 +38,6 @@ export const useAppThemeConfiguration = () => {
   }, [setTheme, systemColorScheme]);
 
   useEffect(() => {
-    updateNavigationBarColor(themeType === "unspecified" ? "auto" : themeType);
+    updateNavigationBarColor(themeType);
   }, [themeType]);
 };

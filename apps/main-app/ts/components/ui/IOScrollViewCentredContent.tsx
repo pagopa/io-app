@@ -1,6 +1,7 @@
 import {
   H3,
   IOButton,
+  IODimensions,
   IOMarkdownLite,
   IOPictograms,
   Pictogram,
@@ -49,7 +50,7 @@ export const IOScrollViewCentredContent = ({
     {...scrollViewProps}
   >
     <VStack space={16} style={{ alignItems: "center" }}>
-      <Pictogram name={pictogram} size={120} />
+      <Pictogram name={pictogram} size={IODimensions.size.pictogram.screen} />
       <View style={{ paddingHorizontal: 24 }}>
         <VStack space={8} style={{ alignItems: "center" }}>
           <H3 accessibilityRole="header" style={{ textAlign: "center" }}>

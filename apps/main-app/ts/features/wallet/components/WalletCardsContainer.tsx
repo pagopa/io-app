@@ -3,17 +3,18 @@ import I18n from "i18next";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
+import { shallowEqual } from "react-redux";
 
 import { useDebugInfo } from "../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../store/hooks";
-import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
+import { DocSuIODiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/DocSuIODiscoveryBannerStandalone";
+import { DocSuIOEngagementBanner } from "../../itwallet/common/components/DocSuIOEngagementBanner";
 import ItwActivationSuccessFeedbackBanner from "../../itwallet/common/components/ItwActivationSuccessFeedbackBanner";
 import { ItwEnvironmentAlert } from "../../itwallet/common/components/ItwEnvironmentAlert";
-import { ItwL2EngagementBanner } from "../../itwallet/common/components/ItwL2EngagementBanner";
 import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
 import {
-  itwShouldRenderL2EngagementBannerForInactiveWalletSelector,
-  itwShouldRenderWalletDiscoveryBannerSelector
+  itwShouldRenderWalletDiscoveryBannerSelector,
+  shouldRenderDocSuIOEngagementBannerForInactiveWalletSelector
 } from "../../itwallet/common/store/selectors";
 import { itwIsActivationSuccessFeedbackBannerVisibleSelector } from "../../itwallet/common/store/selectors/banners";
 import { itwWalletActivationFeedbackBannerDataSelector } from "../../itwallet/common/store/selectors/preferences";
@@ -31,6 +32,10 @@ import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
+
+// A new builder on every render would make Reanimated reconfigure the
+// container animation on every render
+const CONTAINER_LAYOUT = LinearTransition.duration(200);
 
 /**
  * A component which renders the wallet cards container It handles the loading
@@ -50,8 +55,8 @@ const WalletCardsContainer = () => {
   const shouldRenderItwDiscoveryBanner = useIOSelector(
     itwShouldRenderWalletDiscoveryBannerSelector
   );
-  const shouldRenderL2EngagementBanner = useIOSelector(
-    itwShouldRenderL2EngagementBannerForInactiveWalletSelector
+  const shouldRenderDocSuIOEngagementBanner = useIOSelector(
+    shouldRenderDocSuIOEngagementBannerForInactiveWalletSelector
   );
   const isActivationSuccessFeedbackBannerVisible = useIOSelector(
     itwIsActivationSuccessFeedbackBannerVisibleSelector
@@ -72,7 +77,7 @@ const WalletCardsContainer = () => {
     }
     return (
       <>
-        {shouldRenderL2EngagementBanner && <ItwL2EngagementBanner />}
+        {shouldRenderDocSuIOEngagementBanner && <DocSuIOEngagementBanner />}
         {shouldRenderItwDiscoveryBanner && (
           <ItwDiscoveryBanner style={{ marginVertical: 8 }} />
         )}
@@ -95,19 +100,16 @@ const WalletCardsContainer = () => {
     shouldRenderEmptyState,
     shouldRenderItwCardsContainer,
     shouldRenderItwDiscoveryBanner,
-    shouldRenderL2EngagementBanner,
+    shouldRenderDocSuIOEngagementBanner,
     isActivationSuccessFeedbackBannerVisible,
     activationSuccessFeedbackBannerData
   ]);
 
   return (
-    <Animated.View
-      layout={LinearTransition.duration(200)}
-      style={styles.container}
-    >
+    <Animated.View layout={CONTAINER_LAYOUT} style={styles.container}>
       <ItwEnvironmentAlert />
       <ItwWalletNotAvailableBanner />
-      <ItwDiscoveryBannerStandalone />
+      <DocSuIODiscoveryBannerStandalone />
 
       {walletContent}
     </Animated.View>
@@ -125,7 +127,7 @@ const WalletCardsContainerSkeleton = () => (
 
 /** Card container for the other cards (payments, bonus, etc.) */
 const OtherWalletCardsContainer = withWalletCategoryFilter("other", () => {
-  const cards = useIOSelector(selectWalletOtherCards);
+  const cards = useIOSelector(selectWalletOtherCards, shallowEqual);
 
   useDebugInfo({
     other: {
@@ -138,7 +140,10 @@ const OtherWalletCardsContainer = withWalletCategoryFilter("other", () => {
   }
 
   return (
-    <View>
+    // Not flattened on Android: TalkBack would otherwise sort the section
+    // children together with the rest of the wallet, announcing the header
+    // after the cards
+    <View collapsable={false} testID="otherWalletCardsSectionTestID">
       <ListItemHeader
         label={I18n.t("features.wallet.cards.categories.other")}
         testID={"walletCardsCategoryOtherHeaderTestID"}

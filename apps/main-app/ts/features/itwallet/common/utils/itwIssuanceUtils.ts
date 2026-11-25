@@ -5,8 +5,12 @@ import {
   ItwVersion
 } from "@pagopa/io-react-native-wallet";
 
-import { type IdentificationContext } from "../../machine/eid/context";
-import { pidScopes } from "./constants";
+import {
+  type EidIssuanceLevel,
+  type EidIssuanceMode,
+  type IdentificationContext
+} from "../../machine/eid/context";
+import { CURRENT_ITW_SPECS_VERSION, pidScopes } from "./constants";
 import { Env } from "./environment";
 import { AuthorizedCredentialMetadata } from "./itwCredentialIssuanceUtils";
 import { extractVerification } from "./itwCredentialUtils";
@@ -331,3 +335,16 @@ const getPidSdJwtConfigurationId = (
   }
   return result[0];
 };
+
+/**
+ * Returns the IT-Wallet specs version to use for the given issuance mode and
+ * level. A user might use a different version outside the issuance machine:
+ *
+ * - A user with a 1.0 PID who upgrades to IT-Wallet uses the current version.
+ * - A whitelisted user who falls back to Documenti su IO uses 1.0.
+ */
+export const getIssuanceItwVersion = (
+  mode: EidIssuanceMode,
+  level: EidIssuanceLevel
+): ItwVersion =>
+  mode === "upgrade" || level === "l3" ? CURRENT_ITW_SPECS_VERSION : "1.0.0";

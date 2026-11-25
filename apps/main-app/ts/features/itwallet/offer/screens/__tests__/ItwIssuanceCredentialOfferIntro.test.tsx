@@ -1,3 +1,4 @@
+import { IOColors } from "@io-app/design-system";
 import { createStackNavigator } from "@react-navigation/stack";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
@@ -10,12 +11,17 @@ import { startupLoadSuccess } from "../../../../../store/actions/startup";
 import { appReducer } from "../../../../../store/reducers";
 import { StartupStatusEnum } from "../../../../../store/reducers/startup";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { findAllByStyle, withDarkTheme } from "../../../../../utils/testColors";
 import { reproduceSequence } from "../../../../../utils/tests";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as itwCommonSelectors from "../../../common/store/selectors";
 import * as credentialStatusUtils from "../../../common/utils/itwCredentialStatusUtils";
 import * as credentialsSelectors from "../../../credentials/store/selectors";
 import * as catalogSelectors from "../../../credentialsCatalogue/store/selectors";
+import {
+  trackItwCredentialIntro,
+  trackItwCredentialStartIssuing
+} from "../../../issuance/analytics";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import {
@@ -34,6 +40,11 @@ import { ItwIssuanceCredentialOfferIntroScreen } from "../ItwIssuanceCredentialO
 
 jest.mock("../../../../../hooks/useHeaderSecondLevel", () => ({
   useHeaderSecondLevel: jest.fn()
+}));
+
+jest.mock("../../../issuance/analytics", () => ({
+  trackItwCredentialIntro: jest.fn(),
+  trackItwCredentialStartIssuing: jest.fn()
 }));
 
 jest.mock("../../../presentation/remote/analytics", () => ({
@@ -68,6 +79,9 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
     jest
       .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
       .mockReturnValue("valid");
+    jest
+      .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+      .mockReturnValue(true);
     jest
       .spyOn(itwCommonSelectors, "itwIsL3EnabledSelector")
       .mockReturnValue(true);
@@ -288,6 +302,51 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
     expect(queryByText(expectedTitle)).not.toBeNull();
   });
 
+  it("tracks the intro view and the start of the issuance when the user continues", () => {
+    jest
+      .spyOn(catalogSelectors, "itwCredentialIntroContentSelector")
+      .mockReturnValue(() => "Introduction content");
+
+    const { getByText } = renderComponent(jest.fn());
+
+    expect(trackItwCredentialIntro).toHaveBeenCalledTimes(1);
+    expect(trackItwCredentialIntro).toHaveBeenCalledWith("ITW_ED");
+    expect(trackItwCredentialStartIssuing).not.toHaveBeenCalled();
+
+    fireEvent.press(getByText(I18n.t("global.buttons.continue")));
+
+    expect(trackItwCredentialStartIssuing).toHaveBeenCalledTimes(1);
+    expect(trackItwCredentialStartIssuing).toHaveBeenCalledWith("ITW_ED");
+    expect(machineSend).toHaveBeenCalledWith({
+      type: "confirm-credential-offer"
+    });
+  });
+
+  it.each([
+    { name: "the intro is skipped", setup: () => undefined },
+    {
+      name: "the wallet is not active",
+      setup: () =>
+        jest
+          .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
+          .mockReturnValue(false)
+    },
+    {
+      name: "the eID must be reissued",
+      setup: () =>
+        jest
+          .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
+          .mockReturnValue("jwtExpired")
+    }
+  ])("does not track intro events when $name", ({ setup }) => {
+    setup();
+
+    renderComponent(jest.fn());
+
+    expect(trackItwCredentialIntro).not.toHaveBeenCalled();
+    expect(trackItwCredentialStartIssuing).not.toHaveBeenCalled();
+  });
+
   it("blocks the flow when the offered credential is already in the wallet and valid", () => {
     jest
       .spyOn(credentialsSelectors, "itwCredentialSelector")
@@ -328,6 +387,21 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
       type: "confirm-credential-offer"
     });
   });
+
+  it("draws the introduction box border with the dark stroke token in dark mode", () => {
+    jest
+      .spyOn(catalogSelectors, "itwCredentialIntroContentSelector")
+      .mockReturnValue(() => "Introduction content");
+
+    const { toJSON } = renderComponent(jest.fn(), jest.fn(), "dark");
+
+    expect(
+      findAllByStyle(toJSON(), {
+        borderColor: IOColors.dark.stroke.default,
+        borderWidth: 1
+      })
+    ).toHaveLength(1);
+  });
 });
 
 const renderComponent = (
@@ -338,7 +412,8 @@ const renderComponent = (
     params:
       | ItwParamsList[typeof ITW_ROUTES.IDENTIFICATION.MODE_SELECTION]
       | undefined
-  ) => void = jest.fn()
+  ) => void = jest.fn(),
+  theme: "dark" | "light" = "light"
 ) => {
   const sequenceOfActions: ReadonlyArray<Action> = [
     applicationChangeState("active"),
@@ -354,7 +429,11 @@ const renderComponent = (
     () => (
       <Stack.Navigator screenOptions={{ animation: "none" }}>
         <Stack.Screen
-          component={ItwIssuanceCredentialOfferIntroScreen}
+          component={
+            theme === "dark"
+              ? withDarkTheme(ItwIssuanceCredentialOfferIntroScreen)
+              : ItwIssuanceCredentialOfferIntroScreen
+          }
           initialParams={{ itwCredentialOfferUri: T_CREDENTIAL_OFFER_URI }}
           name={ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER_INTRO}
         />

@@ -1,5 +1,4 @@
 export * from "./ListItemAction";
-export * from "./ListItemAmount";
 export * from "./ListItemCheckbox";
 export * from "./ListItemHeader";
 export * from "./ListItemInfo";
@@ -11,3 +10,4 @@ export * from "./ListItemRadioWithAmount";
 export * from "./ListItemSwitch";
 export * from "./ListItemTransaction";
 export * from "./PressableListItemBase";
+export { IOListItemStyles } from "./styles";

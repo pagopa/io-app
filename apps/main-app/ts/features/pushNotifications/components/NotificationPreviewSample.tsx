@@ -3,16 +3,15 @@ import {
   H6,
   HSpacer,
   Icon,
-  IOColors,
-  IOSpacingScale,
-  useIOTheme
+  IODimensionScale,
+  useIOColors
 } from "@io-app/design-system";
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
 
-const notificationMarginVertical: IOSpacingScale = 4;
-const notificationPaddingVertical: IOSpacingScale = 8;
-const notificationPaddingHorizontal: IOSpacingScale = 24;
+const notificationMarginVertical: IODimensionScale = 4;
+const notificationPaddingVertical: IODimensionScale = 8;
+const notificationPaddingHorizontal: IODimensionScale = 24;
 
 const styles = StyleSheet.create({
   notification: {
@@ -85,15 +84,15 @@ export const NotificationPreviewSample = ({
     remindersEnabled
   );
 
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <View
       style={[
         styles.notification,
         {
-          backgroundColor: IOColors[theme["appBackground-primary"]],
-          borderColor: IOColors[theme["cardBorder-default"]]
+          backgroundColor: colors.surface.default,
+          borderColor: colors.stroke.default
         }
       ]}
     >

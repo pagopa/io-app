@@ -4,15 +4,13 @@ import {
   Alert,
   ContentWrapper,
   Divider,
-  IOColors,
+  IODimensions,
   IOLogoPaymentType,
-  IORadiusScale,
   IOSkeleton,
-  IOVisualCostants,
   ListItemHeader,
   ListItemInfo,
   ListItemInfoCopy,
-  useIOTheme,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import I18n from "i18next";
@@ -39,8 +37,8 @@ const ReceiptInfoSection = ({
   loading,
   showUnavailableReceiptBanner
 }: Props) => {
-  const theme = useIOTheme();
-  const backgroundColor = IOColors[theme["appBackground-primary"]];
+  const colors = useIOColors();
+  const backgroundColor = colors.surface.default;
 
   const transactionInfo = transaction?.infoNotice;
 
@@ -50,8 +48,8 @@ const ReceiptInfoSection = ({
       <ContentWrapper style={{ flexGrow: 1 }}>
         <ContentWrapper
           style={{
-            borderRadius: IORadiusScale["1"],
-            marginVertical: IOVisualCostants.appMarginDefault,
+            borderRadius: IODimensions.radius.default,
+            marginVertical: IODimensions.padding.screen.default,
             backgroundColor
           }}
         >

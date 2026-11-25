@@ -10,10 +10,9 @@ import {
   ContentWrapper,
   H3,
   IOButton,
-  IOColors,
   IOPictograms,
   triggerHaptic,
-  useIOTheme,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import { CieManager, NfcError, NfcEvent } from "@io-app/expo-cie";
@@ -60,8 +59,9 @@ import {
   cieAuthenticationError,
   CieAuthenticationErrorReason
 } from "../../../login/cie/store/actions";
-import { isCieLoginUatEnabledSelector } from "../../../login/cie/store/selectors";
-import { getCieUatEndpoint } from "../../../login/cie/utils/endpoints";
+import { cieEnvSelector } from "../../../login/cie/store/selectors";
+import { CieEnv } from "../../../login/cie/utils";
+import { getCieIdpUrl } from "../../../login/cie/utils/endpoints";
 import { getTextForState, TextForState } from "../../shared/utils";
 
 export type ActiveSessionCieCardReaderScreenNavigationParams = {
@@ -119,11 +119,11 @@ const ActiveSessionLoginCieCardReaderScreen = ({
 }: ActiveSessionLoginCieCardReaderScreenProps) => {
   const { authorizationUri, ciePin, loginType } = route.params;
 
-  const theme = useIOTheme();
+  const colors = useIOColors();
   const dispatch = useIODispatch();
 
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
-  const isCieUatEnabled = useIOSelector(isCieLoginUatEnabledSelector);
+  const cieEnv = useIOSelector(cieEnvSelector);
   const isScreenReaderEnabled = useIOSelector(isScreenReaderEnabledSelector);
 
   const [readingState, setReadingState] = useState<ReadingState>(
@@ -314,7 +314,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
   );
 
   const startCie = useCallback(
-    async (useUat: boolean) => {
+    async (env: CieEnv) => {
       CieManager.removeAllListeners();
       CieManager.addListener("onEvent", handleCieEvent);
       CieManager.addListener("onError", handleCieError);
@@ -327,9 +327,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
           );
         });
       }
-      CieManager.setCustomIdpUrl(
-        useUat ? (getCieUatEndpoint() ?? undefined) : undefined
-      );
+      CieManager.setCustomIdpUrl(getCieIdpUrl(env) ?? undefined);
 
       try {
         await CieManager.startReading(ciePin, authorizationUri);
@@ -354,7 +352,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
   });
 
   useEffect(() => {
-    void startCie(isCieUatEnabled);
+    void startCie(cieEnv);
 
     // Cleanup on unmount
     return () => {
@@ -363,7 +361,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
       });
       CieManager.removeAllListeners();
     };
-  }, [isCieUatEnabled, startCie]);
+  }, [cieEnv, startCie]);
 
   const footerComponent = useMemo(
     () =>
@@ -384,7 +382,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
             <View>
               <IOButton
                 label={I18n.t("authentication.cie.nfc.retry")}
-                onPress={() => void startCie(isCieUatEnabled)}
+                onPress={() => void startCie(cieEnv)}
                 variant="solid"
               />
             </View>
@@ -399,7 +397,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
           </View>
         )
       }),
-    [navigation.popToTop, startCie, isCieUatEnabled]
+    [navigation.popToTop, startCie, cieEnv]
   );
 
   return (
@@ -411,7 +409,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
         >
           <ContentWrapper>
             <CieCardReadingAnimation
-              circleColor={IOColors[theme["interactiveElem-default"]]}
+              circleColor={colors.foreground.accent}
               pictogramName={getPictogramName(readingState)}
               readingState={readingState}
             />

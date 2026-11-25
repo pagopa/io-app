@@ -1,8 +1,8 @@
 import { NotificationStatusHistory } from "@io-app/api-types/generated/definitions/pn/NotificationStatusHistory";
 import {
   Alert,
+  IODimensions,
   IOMaxFontSizeMultiplier,
-  IOVisualCostants,
   ListItemAction
 } from "@io-app/design-system";
 import I18n from "i18next";
@@ -96,7 +96,7 @@ export const TimelineListItem = ({
         onLayout={layoutChangeEvent =>
           setFooterHeight(layoutChangeEvent.nativeEvent.layout.height)
         }
-        style={{ padding: IOVisualCostants.appMarginDefault }}
+        style={{ padding: IODimensions.padding.screen.default }}
       >
         <Alert
           action={
