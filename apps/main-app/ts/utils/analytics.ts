@@ -110,35 +110,6 @@ export const trackAppCaughtError = (
   void mixpanelTrack(eventName, properties);
 };
 
-export function extractLoginErrorPayload(
-  error: Error | WebViewErrorEvent | WebViewHttpErrorEvent
-) {
-  if (isWebViewHttpErrorEvent(error)) {
-    const { description, statusCode, url } = error.nativeEvent;
-    return {
-      code: statusCode,
-      description,
-      domain: toUrlWithoutQueryParams(url)
-    };
-  } else if (isWebViewErrorEvent(error)) {
-    const { code, description, domain } = error.nativeEvent;
-    return {
-      code,
-      description,
-      domain
-    };
-  } else if (error.message !== undefined) {
-    return {
-      code: error.message,
-      description: error.message,
-      domain: error.message
-    };
-  }
-
-  const unknownError = unknownToString(error);
-  return { code: "unknown", description: unknownError, domain: "unknown" };
-}
-
 /**
  * Track the event when the user taps on the [Help Center
  * CTA](https://www.figma.com/design/BDwCywRh6ibbfuvfq8DavO?node-id=12490-33561#1130270800)
@@ -225,18 +196,47 @@ export function trackLollipopIsKeyStrongboxBackedSuccess(
   );
 }
 
-// End of lollipop events
-
 export function trackLollipopKeyGenerationFailure(reason: string) {
   void mixpanelTrack("LOLLIPOP_KEY_GENERATION_FAILURE", {
     reason
   });
 }
 
+// End of lollipop events
+
 export function trackLollipopKeyGenerationSuccess(keyType?: string) {
   void mixpanelTrack("LOLLIPOP_KEY_GENERATION_SUCCESS", {
     kty: keyType
   });
+}
+
+function extractLoginErrorPayload(
+  error: Error | WebViewErrorEvent | WebViewHttpErrorEvent
+) {
+  if (isWebViewHttpErrorEvent(error)) {
+    const { description, statusCode, url } = error.nativeEvent;
+    return {
+      code: statusCode,
+      description,
+      domain: toUrlWithoutQueryParams(url)
+    };
+  } else if (isWebViewErrorEvent(error)) {
+    const { code, description, domain } = error.nativeEvent;
+    return {
+      code,
+      description,
+      domain
+    };
+  } else if (error.message !== undefined) {
+    return {
+      code: error.message,
+      description: error.message,
+      domain: error.message
+    };
+  }
+
+  const unknownError = unknownToString(error);
+  return { code: "unknown", description: unknownError, domain: "unknown" };
 }
 
 // #region Help Center

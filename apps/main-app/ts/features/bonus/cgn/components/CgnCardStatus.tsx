@@ -2,14 +2,14 @@ import { Card } from "@io-app/api-types/generated/definitions/cgn/Card";
 import { CardActivated } from "@io-app/api-types/generated/definitions/cgn/CardActivated";
 import { CardExpired } from "@io-app/api-types/generated/definitions/cgn/CardExpired";
 import { CardRevoked } from "@io-app/api-types/generated/definitions/cgn/CardRevoked";
-import { LabelMini, Tag, useIOTheme } from "@io-app/design-system";
+import { LabelMini, Tag, useIOColors } from "@io-app/design-system";
 import I18n from "i18next";
 import { Fragment } from "react";
 
 import { formatDateAsShortFormat } from "../../../../utils/dates";
 
 export function CgnCardStatus({ card }: { card: Card }) {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <Fragment>
@@ -29,7 +29,7 @@ export function CgnCardStatus({ card }: { card: Card }) {
       )}
       {CardActivated.is(card) && (
         <LabelMini
-          color={theme["textBody-tertiary"]}
+          color={colors.text.content.tertiary}
           testID="card-bottom-content"
           weight="Regular"
         >

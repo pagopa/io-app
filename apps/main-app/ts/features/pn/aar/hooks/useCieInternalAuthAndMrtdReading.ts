@@ -40,7 +40,7 @@ type SuccessState = {
   status: ReadStatus.SUCCESS;
 };
 
-export const isIdleState = (state: CieReadState): state is IdleState =>
+const isIdleState = (state: CieReadState): state is IdleState =>
   state.status === ReadStatus.IDLE;
 export const isReadingState = (state: CieReadState): state is ReadingState =>
   state.status === ReadStatus.READING;

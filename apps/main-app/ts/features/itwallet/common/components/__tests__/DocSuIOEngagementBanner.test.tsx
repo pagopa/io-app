@@ -14,7 +14,7 @@ import {
   itwDisableItwActivation,
   itwSetL2Fallback
 } from "../../store/actions/preferences";
-import { ItwL2EngagementBanner } from "../ItwL2EngagementBanner";
+import { DocSuIOEngagementBanner } from "../DocSuIOEngagementBanner";
 
 const mockNavigate = jest.fn();
 
@@ -23,7 +23,7 @@ jest.mock("@react-navigation/native", () => ({
   useNavigation: () => ({ addListener: jest.fn(), navigate: mockNavigate })
 }));
 
-describe("ItwL2EngagementBanner", () => {
+describe("DocSuIOEngagementBanner", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     jest
@@ -91,7 +91,7 @@ const renderComponent = (
 ) => {
   const store = configureMockStore<GlobalState>()(state);
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    ItwL2EngagementBanner,
+    DocSuIOEngagementBanner,
     ROUTES.WALLET_HOME,
     {},
     store

@@ -66,7 +66,9 @@ export const itwIsL2FallbackSelector = (state: GlobalState) =>
  * @param state The application global state
  * @returns True if the banner should be rendered, false otherwise
  */
-export const isItwDiscoveryBannerRenderableSelector = (state: GlobalState) =>
+export const isDocSuIODiscoveryBannerRenderableSelector = (
+  state: GlobalState
+) =>
   offlineAccessReasonSelector(state) === undefined &&
   !itwLifecycleIsValidSelector(state) &&
   isItwEnabledSelector(state) &&
@@ -77,11 +79,11 @@ export const isItwDiscoveryBannerRenderableSelector = (state: GlobalState) =>
  * user's preference: after being closed by the user it should stay hidden for 6
  * months.
  */
-export const isItwPersistedDiscoveryBannerRenderableSelector = (
+export const isDocSuIOPersistedDiscoveryBannerRenderableSelector = (
   state: GlobalState
 ) =>
   itwIsDiscoveryBannerVisibleSelector(state) &&
-  isItwDiscoveryBannerRenderableSelector(state);
+  isDocSuIODiscoveryBannerRenderableSelector(state);
 
 /**
  * Returns if the wallet ready banner should be visible. The banner is visible
@@ -178,19 +180,20 @@ export const itwShouldRenderAgeVerificationUsageDetailsBannerSelector = (
 ): boolean => itwIsAgeVerificationUsageDetailsBannerVisibleSelector(state);
 
 /**
- * Returns whether the new IT-Wallet activation banner should be rendered.
+ * Returns whether the IT-Wallet activation or upgrade banner should be
+ * rendered.
  *
  * - The IT Wallet feature flag is enabled
  * - The wallet is not offline
  * - The L3 feature flag is enabled
- * - The wallet is not valid (not yet active)
+ * - The IT-Wallet is not already active
  * - The itw activation is not disabled (nfc available)
  */
 export const itwShouldRenderDiscoveryBannerSelector = (state: GlobalState) =>
   isItwEnabledSelector(state) &&
   offlineAccessReasonSelector(state) === undefined &&
   itwIsL3EnabledSelector(state) &&
-  !itwLifecycleIsValidSelector(state) &&
+  !itwLifecycleIsITWalletValidSelector(state) &&
   !itwIsActivationDisabledSelector(state);
 
 /**
@@ -211,13 +214,14 @@ export const itwShouldRenderInboxDiscoveryBannerSelector = (
 };
 
 /**
- * Returns whether the new IT-Wallet activation banner in the messages inbox
- * screen should be rendered
+ * Returns whether the new IT-Wallet activation banner in the wallet screen
+ * should be rendered.
  */
 export const itwShouldRenderWalletDiscoveryBannerSelector = (
   state: GlobalState
 ) =>
   itwShouldRenderDiscoveryBannerSelector(state) &&
+  !itwLifecycleIsValidSelector(state) &&
   itwIsBannerVisibleSelector("discovery_wallet")(state);
 
 /**
@@ -229,7 +233,7 @@ export const itwShouldRenderWalletDiscoveryBannerSelector = (
  *   their normal, non-restricted experience and this banner does not apply
  * - The wallet is not active (because the device does not have the nfc)
  */
-export const itwShouldRenderL2EngagementBannerForInactiveWalletSelector = (
+export const shouldRenderDocSuIOEngagementBannerForInactiveWalletSelector = (
   state: GlobalState
 ) =>
   offlineAccessReasonSelector(state) === undefined &&
@@ -242,7 +246,9 @@ export const itwShouldRenderL2EngagementBannerForInactiveWalletSelector = (
  * Offers restricted documents after fallback activation or when NFC is
  * unsupported.
  */
-export const itwShouldRenderL2EngagementBannerSelector = (state: GlobalState) =>
+export const shouldRenderDocSuIOEngagementBannerSelector = (
+  state: GlobalState
+) =>
   offlineAccessReasonSelector(state) === undefined &&
   !itwLifecycleIsITWalletValidSelector(state) &&
   itwIsL3EnabledSelector(state) &&

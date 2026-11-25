@@ -5,10 +5,9 @@ import {
   H3,
   IOButton,
   IOButtonProps,
-  IOColorsLegacy,
   IODimensions,
   IOMarkdownLite,
-  useIOTheme,
+  useIOColors,
   VSpacer,
   VStack
 } from "@io-app/design-system";
@@ -55,7 +54,7 @@ export const LoadingScreenContent = ({
   animatedPictogramSource,
   banner
 }: LoadingScreenContentProps) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   useEffect(() => {
     // Since the screen is shown for a very short time,
@@ -72,10 +71,7 @@ export const LoadingScreenContent = ({
   return (
     <SafeAreaView
       edges={headerVisible ? ["bottom"] : undefined}
-      style={[
-        styles.container,
-        { backgroundColor: IOColorsLegacy[theme["appBackground-primary"]] }
-      ]}
+      style={[styles.container, { backgroundColor: colors.background.default }]}
       testID={testID}
     >
       <ContentWrapper style={{ flex: 1 }}>
@@ -101,7 +97,7 @@ export const LoadingScreenContent = ({
           <VStack space={8} style={{ alignItems: "center" }}>
             <H3
               accessibilityLabel={title}
-              color={theme["textHeading-secondary"]}
+              color={colors.text.heading.secondary}
               style={{ textAlign: "center" }}
             >
               {title}
