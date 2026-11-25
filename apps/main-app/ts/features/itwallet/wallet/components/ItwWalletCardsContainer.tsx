@@ -66,6 +66,8 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
     shouldRenderDocSuIOEngagementBannerSelector
   );
   const isItWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const shouldRenderWalletReadyBanner =
+    !shouldRenderDocSuIOEngagementBanner && !shouldRenderUpgradeBanner;
 
   // Cards of other categories rebuild this array even when ITW cards are unchanged
   const cards = useIOSelector(
@@ -114,6 +116,8 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
             label={I18n.t("features.wallet.cards.categories.itw")}
             testID={"walletCardsCategoryItwIdCardHeaderTestID"}
           />
+          {/* The wallet ready banner sits above the PID card to promote the catalog */}
+          {shouldRenderWalletReadyBanner && <ItwWalletReadyBanner />}
           {/* IT-Wallet renders the PID card below the header */}
           <View style={styles.cardsWrapper}>
             <ItwWalletIdCard isStacked={hasCards} />
@@ -154,7 +158,8 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
     eidInfoBottomSheet.present,
     iconColor,
     isItWalletValid,
-    isNewItwRenderable
+    isNewItwRenderable,
+    shouldRenderWalletReadyBanner
   ]);
 
   const eidLifecycleAlert = shouldHideEidAlert ? null : (
@@ -210,7 +215,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
 
         {shouldRenderDocSuIOEngagementBanner && <DocSuIOEngagementBanner />}
 
-        {!shouldRenderDocSuIOEngagementBanner && !shouldRenderUpgradeBanner && (
+        {!isNewItwRenderable && shouldRenderWalletReadyBanner && (
           <ItwWalletReadyBanner />
         )}
       </View>

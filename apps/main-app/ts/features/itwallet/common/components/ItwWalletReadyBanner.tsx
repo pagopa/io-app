@@ -76,6 +76,6 @@ const styles = StyleSheet.create({
   },
   containerItw: {
     marginHorizontal: 0,
-    marginTop: 16
+    marginBottom: 16
   }
 });

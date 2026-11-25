@@ -12,6 +12,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import * as connectivitySelectors from "../../../connectivity/store/selectors";
 import * as ingressSelectors from "../../../ingress/store/selectors";
+import { ItwWalletReadyBanner } from "../../../itwallet/common/components/ItwWalletReadyBanner";
 import * as itwSelectors from "../../../itwallet/common/store/selectors";
 import * as itwBannersSelectors from "../../../itwallet/common/store/selectors/banners";
 import * as itwPreferencesSelectors from "../../../itwallet/common/store/selectors/preferences";
@@ -23,6 +24,7 @@ import {
 import { ItwJwtCredentialStatus } from "../../../itwallet/common/utils/itwTypesUtils";
 import * as itwCredentialsSelectors from "../../../itwallet/credentials/store/selectors";
 import * as itwLifecycleSelectors from "../../../itwallet/lifecycle/store/selectors";
+import { ItwWalletIdCard } from "../../../itwallet/wallet/components/ItwWalletIdCard";
 import * as itwWalletInstanceSelectors from "../../../itwallet/walletInstance/store/selectors";
 import { TourProvider } from "../../../tour/components/TourProvider";
 import { WalletCardsState } from "../../store/reducers/cards";
@@ -245,6 +247,52 @@ describe("WalletCardsContainer", () => {
       }
     }
   );
+
+  it("should render the activation success feedback banner below the IT-Wallet cards", () => {
+    jest
+      .spyOn(walletSelectors, "shouldRenderWalletLoadingStateSelector")
+      .mockImplementation(() => false);
+    jest
+      .spyOn(walletSelectors, "shouldRenderWalletEmptyStateSelector")
+      .mockImplementation(() => false);
+    jest
+      .spyOn(walletSelectors, "shouldRenderItwCardsContainerSelector")
+      .mockImplementation(() => true);
+    jest
+      .spyOn(walletSelectors, "selectWalletOtherCards")
+      .mockImplementation(() => [T_CARDS["1"]]);
+    jest
+      .spyOn(
+        itwBannersSelectors,
+        "itwIsActivationSuccessFeedbackBannerVisibleSelector"
+      )
+      .mockImplementation(() => true);
+    jest
+      .spyOn(
+        itwPreferencesSelectors,
+        "itwWalletActivationFeedbackBannerDataSelector"
+      )
+      .mockImplementation(() => ({
+        authMethod: "spid",
+        docStatus: "not_active"
+      }));
+
+    const sectionTestIDs = [
+      "itwWalletCardsSectionTestID",
+      "itwActivationSuccessFeedbackBannerTestID",
+      "otherWalletCardsSectionTestID"
+    ];
+    const { UNSAFE_root } = renderComponent(<WalletCardsContainer />);
+    const renderedOrder = _.uniq(
+      UNSAFE_root.findAll(
+        node =>
+          typeof node.type === "string" &&
+          sectionTestIDs.includes(node.props.testID)
+      ).map(node => node.props.testID)
+    );
+
+    expect(renderedOrder).toEqual(sectionTestIDs);
+  });
 });
 
 describe("ItwWalletCardsContainer", () => {
@@ -425,6 +473,35 @@ describe("ItwWalletCardsContainer", () => {
     expect(queryByTestId("walletCardsCategoryItwHeaderTestID")).toBeNull();
 
     newItWalletSpy.mockRestore();
+  });
+
+  it("should render the wallet ready banner above the IT-Wallet ID card", () => {
+    jest
+      .spyOn(walletSelectors, "shouldRenderItwCardsContainerSelector")
+      .mockReturnValue(true);
+    jest
+      .spyOn(itwSelectors, "itwShouldRenderNewItWalletSelector")
+      .mockReturnValue(true);
+    jest
+      .spyOn(itwSelectors, "itwShouldRenderWalletReadyBannerSelector")
+      .mockReturnValue(true);
+    jest
+      .spyOn(itwSelectors, "shouldRenderDocSuIOEngagementBannerSelector")
+      .mockReturnValue(false);
+    jest
+      .spyOn(itwUpgradeSelectors, "itwShouldRenderUpgradeBannerSelector")
+      .mockReturnValue(false);
+    jest
+      .spyOn(walletSelectors, "selectWalletCardsByCategory")
+      .mockReturnValue([]);
+
+    const { UNSAFE_root } = renderComponent(<ItwWalletCardsContainer />);
+    const renderedOrder = UNSAFE_root.findAll(
+      node =>
+        node.type === ItwWalletReadyBanner || node.type === ItwWalletIdCard
+    ).map(node => node.type);
+
+    expect(renderedOrder).toEqual([ItwWalletReadyBanner, ItwWalletIdCard]);
   });
 
   it.each([

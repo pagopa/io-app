@@ -1068,8 +1068,8 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                       <View
                         style={
                           {
+                            "marginBottom": 16,
                             "marginHorizontal": 0,
-                            "marginTop": 16,
                           }
                         }
                       >
