@@ -4,8 +4,7 @@ import {
   IOButton,
   IODimensions,
   IOSkeleton,
-  useIOColors,
-  useIOTheme
+  useIOColors
 } from "@io-app/design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
@@ -61,7 +60,6 @@ type Props = {
 };
 
 export const ItwProximityQrCodeImage = ({ source }: Props) => {
-  const theme = useIOTheme();
   const colors = useIOColors();
   const machineRef = ItwProximityMachineContext.useActorRef();
   const isModalOpened = useHasModalTransitionEnded();
@@ -140,7 +138,7 @@ export const ItwProximityQrCodeImage = ({ source }: Props) => {
           entering={FadeIn.duration(QR_CODE_FADE_DURATION)}
         >
           <QRCode
-            color={theme["textBody-default"]}
+            color={colors.text.content.default}
             errorCorrectionLevel="H"
             logo={QR_CODE_LOGO}
             logoAreaBorderRadius={8}

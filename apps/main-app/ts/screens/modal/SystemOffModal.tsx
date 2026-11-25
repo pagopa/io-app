@@ -3,7 +3,7 @@
  * could not work properly. This is due to avoid user tries to access features
  * or services potentially can't work as expected
  */
-import { IOColorsLegacy, useIOTheme } from "@io-app/design-system";
+import { useIOColors } from "@io-app/design-system";
 import I18n from "i18next";
 import _ from "lodash";
 import { memo, useMemo } from "react";
@@ -24,10 +24,10 @@ const SystemOffModal = () => {
     return `${message ? message + "\n" : ""}${I18n.t("systemsOff.closeApp")}`;
   }, [locale, backendInfoMessage]);
 
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
-    <Modal backdropColor={IOColorsLegacy[theme["appBackground-primary"]]}>
+    <Modal backdropColor={colors.background.default}>
       <OperationResultScreenContent
         pictogram="umbrella"
         subtitle={subtitle}

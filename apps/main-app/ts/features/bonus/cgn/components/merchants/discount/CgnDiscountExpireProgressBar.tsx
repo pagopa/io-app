@@ -1,4 +1,4 @@
-import { BodySmall, VSpacer } from "@io-app/design-system";
+import { BodySmall, useIOColors, VSpacer } from "@io-app/design-system";
 import { format } from "date-fns";
 import I18n from "i18next";
 import { useEffect, useState } from "react";
@@ -17,6 +17,7 @@ export const CgnDiscountExpireProgressBar = ({
   secondsExpirationTotal,
   setIsExpired
 }: Props) => {
+  const colors = useIOColors();
   const [seconds, setSeconds] = useState(secondsToExpiration);
   const isCodeExpired = seconds <= 0;
 
@@ -43,10 +44,10 @@ export const CgnDiscountExpireProgressBar = ({
       <ProgressBar progressPercentage={seconds / secondsExpirationTotal} />
       <VSpacer size={8} />
       <View style={{ flexDirection: "row", justifyContent: "center" }}>
-        <BodySmall color="black" weight="Regular">
+        <BodySmall color={colors.text.content.default} weight="Regular">
           {I18n.t("idpay.barCode.resultScreen.success.expiresIn")}
         </BodySmall>
-        <BodySmall color="black" weight="Semibold">
+        <BodySmall color={colors.text.content.default} weight="Semibold">
           {formattedSecondsToExpiration}
         </BodySmall>
       </View>

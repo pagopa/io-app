@@ -1,4 +1,4 @@
-import { H3, H6, IOSkeleton, useIOTheme } from "@io-app/design-system";
+import { H3, H6, IOSkeleton, useIOColors } from "@io-app/design-system";
 import I18n from "i18next";
 import { View } from "react-native";
 
@@ -10,7 +10,7 @@ type Props = {
 };
 
 export const ReceiptTotalAmount = ({ totalAmount, loading }: Props) => {
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   return (
     <View
@@ -21,7 +21,7 @@ export const ReceiptTotalAmount = ({ totalAmount, loading }: Props) => {
         alignItems: "center"
       }}
     >
-      <H6 color={theme["textBody-tertiary"]}>
+      <H6 color={colors.text.content.tertiary}>
         {I18n.t("transaction.details.totalAmount")}
       </H6>
       {loading && (

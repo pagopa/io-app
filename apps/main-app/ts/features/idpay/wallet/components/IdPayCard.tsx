@@ -4,24 +4,20 @@ import {
   Body,
   H3,
   H6,
-  IOColorsLegacy,
   useIOThemeContext,
   VSpacer
 } from "@io-app/design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { format } from "date-fns";
 import I18n from "i18next";
-import {
-  ColorSchemeName,
-  ImageURISource,
-  StyleSheet,
-  View
-} from "react-native";
+import { ImageURISource, StyleSheet, View } from "react-native";
 
 import WalletCardShape from "../../../../../img/features/idpay/wallet_card.svg";
 import DarkModeWalletCardShape from "../../../../../img/features/idpay/wallet_card_dark.svg";
+import { useFeatureColors } from "../../../../hooks/useFeatureColors";
 import { useIOSelector } from "../../../../store/hooks";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
+import { idPayColors } from "../../colors";
 import { idPayWalletInitiativeListSelector } from "../store/reducers";
 
 export type IdPayCardProps = {
@@ -29,29 +25,6 @@ export type IdPayCardProps = {
   avatarSource: ImageURISource;
   expireDate: Date;
   name: string;
-};
-
-const idPayCardColorPalette: Record<
-  NonNullable<Exclude<ColorSchemeName, "unspecified">>,
-  {
-    amountLabel: IOColorsLegacy;
-    amountValue: IOColorsLegacy;
-    expirationDate: IOColorsLegacy;
-    title: IOColorsLegacy;
-  }
-> = {
-  light: {
-    title: "blueIO-850",
-    amountLabel: "blueIO-850",
-    amountValue: "blueIO-500",
-    expirationDate: "blueIO-850"
-  },
-  dark: {
-    title: "blueIO-50",
-    amountLabel: "white",
-    amountValue: "blueIO-300",
-    expirationDate: "blueIO-100"
-  }
 };
 
 /** Component that renders the ID PAy card in the wallet */
@@ -70,9 +43,7 @@ export const IdPayCard = (props: IdPayCardProps) => {
 
   const isDarkMode = themeType === "dark";
 
-  const cardColors = isDarkMode
-    ? idPayCardColorPalette.dark
-    : idPayCardColorPalette.light;
+  const cardColors = useFeatureColors(idPayColors).walletCard;
 
   return (
     <View style={styles.container}>

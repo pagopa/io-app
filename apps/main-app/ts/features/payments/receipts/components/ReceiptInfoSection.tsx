@@ -4,14 +4,13 @@ import {
   Alert,
   ContentWrapper,
   Divider,
-  IOColorsLegacy,
   IODimensions,
   IOLogoPaymentType,
   IOSkeleton,
   ListItemHeader,
   ListItemInfo,
   ListItemInfoCopy,
-  useIOTheme,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import I18n from "i18next";
@@ -38,8 +37,8 @@ const ReceiptInfoSection = ({
   loading,
   showUnavailableReceiptBanner
 }: Props) => {
-  const theme = useIOTheme();
-  const backgroundColor = IOColorsLegacy[theme["appBackground-primary"]];
+  const colors = useIOColors();
+  const backgroundColor = colors.surface.default;
 
   const transactionInfo = transaction?.infoNotice;
 

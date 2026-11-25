@@ -4,7 +4,7 @@ import {
   H2,
   HeaderSecondLevel,
   IOMarkdownLite,
-  useIOTheme,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
@@ -55,7 +55,7 @@ export const IOListViewWithLargeHeader = <T,>({
   const [titleHeight, setTitleHeight] = useState(0);
 
   const navigation = useNavigation();
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   const getTitleHeight = (event: LayoutChangeEvent) => {
     const { height } = event.nativeEvent.layout;
@@ -102,14 +102,14 @@ export const IOListViewWithLargeHeader = <T,>({
         <>
           <View onLayout={getTitleHeight}>
             {title.section && (
-              <BodySmall color={theme["textBody-tertiary"]} weight="Semibold">
+              <BodySmall color={colors.text.content.tertiary} weight="Semibold">
                 {title.section}
               </BodySmall>
             )}
             <H2
               accessibilityLabel={title.accessibilityLabel ?? title.label}
               accessibilityRole="header"
-              color={theme["textHeading-default"]}
+              color={colors.text.heading.default}
               ref={ref ?? titleRef}
               testID={title?.testID}
             >

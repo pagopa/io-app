@@ -34,27 +34,11 @@ describe("useSpecialCtaPn", () => {
     testingAction = undefined;
   });
 
-  it("should return undefined when PN is not enabled", () => {
-    const mockDispatch = jest.fn();
-    jest.spyOn(HOOKS, "useIODispatch").mockImplementation(() => mockDispatch);
-
-    renderHook({
-      isPnEnabled: false,
-      isPnSupported: true,
-      servicePreferenceByChannel: true,
-      isLoadingServicePreferenceByChannel: false,
-      isLoadingPnActivation: false
-    });
-
-    expect(testingAction).toBeUndefined();
-  });
-
   it("should return undefined when servicePreferenceByChannel is undefined", () => {
     const mockDispatch = jest.fn();
     jest.spyOn(HOOKS, "useIODispatch").mockImplementation(() => mockDispatch);
 
     renderHook({
-      isPnEnabled: true,
       isPnSupported: true,
       servicePreferenceByChannel: undefined,
       isLoadingServicePreferenceByChannel: false,
@@ -68,7 +52,6 @@ describe("useSpecialCtaPn", () => {
     const mockOpenAppStore = jest.mocked(openAppStoreUrl);
 
     renderHook({
-      isPnEnabled: true,
       isPnSupported: false,
       servicePreferenceByChannel: false,
       isLoadingServicePreferenceByChannel: false,
@@ -88,7 +71,6 @@ describe("useSpecialCtaPn", () => {
       .mockImplementation(jest.fn());
 
     renderHook({
-      isPnEnabled: true,
       isPnSupported: true,
       servicePreferenceByChannel: false,
       isLoadingServicePreferenceByChannel: false,
@@ -116,7 +98,6 @@ describe("useSpecialCtaPn", () => {
       .mockImplementation(jest.fn());
 
     renderHook({
-      isPnEnabled: true,
       isPnSupported: true,
       servicePreferenceByChannel: true,
       isLoadingServicePreferenceByChannel: false,
@@ -142,7 +123,6 @@ describe("useSpecialCtaPn", () => {
 
     renderHook(
       {
-        isPnEnabled: true,
         isPnSupported: true,
         servicePreferenceByChannel: false,
         isLoadingServicePreferenceByChannel: false,
@@ -167,7 +147,6 @@ describe("useSpecialCtaPn", () => {
     const mockSuccessToast = IOToast.success;
 
     renderHook({
-      isPnEnabled: true,
       isPnSupported: true,
       servicePreferenceByChannel: false,
       isLoadingServicePreferenceByChannel: false,
@@ -190,7 +169,6 @@ describe("useSpecialCtaPn", () => {
     const mockErrorToast = IOToast.error;
 
     renderHook({
-      isPnEnabled: true,
       isPnSupported: true,
       servicePreferenceByChannel: false,
       isLoadingServicePreferenceByChannel: false,
@@ -213,7 +191,6 @@ describe("useSpecialCtaPn", () => {
 type HookState = {
   isLoadingPnActivation: boolean;
   isLoadingServicePreferenceByChannel: boolean;
-  isPnEnabled: boolean;
   isPnSupported: boolean;
   servicePreferenceByChannel: boolean | undefined;
 };
@@ -229,9 +206,6 @@ const renderHook = (state: HookState, activateFlag = false) => {
 
   // Mock the servicePreferenceByChannel hook
   jest.spyOn(HOOKS, "useIOSelector").mockImplementation(selector => {
-    if (selector.name === "isPnRemoteEnabledSelector") {
-      return state.isPnEnabled;
-    }
     if (selector.name === "isPnAppVersionSupportedSelector") {
       return state.isPnSupported;
     }

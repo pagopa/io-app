@@ -17,7 +17,7 @@ import { ITW_ROUTES } from "../../../navigation/routes";
 import { useItwDiscoveryBannerType } from "../../hooks/useItwDiscoveryBannerType";
 import { itwCloseBanner } from "../../store/actions/banners";
 
-export type ItwDiscoveryBannerProps = {
+export type DocSuIODiscoveryBannerProps = {
   closable?: boolean;
   handleOnClose?: () => void;
   ignoreMargins?: boolean;
@@ -30,12 +30,12 @@ export type ItwDiscoveryBannerProps = {
  *
  * @deprecated this banners is for the legacy Documenti su IO flow.
  */
-export const ItwDiscoveryBannerLegacy = ({
+export const DocSuIODiscoveryBanner = ({
   withTitle = true,
   ignoreMargins = false,
   closable,
   handleOnClose
-}: ItwDiscoveryBannerProps) => {
+}: DocSuIODiscoveryBannerProps) => {
   const bannerRef = createRef<View>();
   const dispatch = useIODispatch();
   const navigation = useIONavigation();

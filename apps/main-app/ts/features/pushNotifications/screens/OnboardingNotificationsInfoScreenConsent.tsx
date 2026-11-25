@@ -7,6 +7,7 @@ import {
   IconButton,
   IODimensions,
   ListItemInfo,
+  useIOColors,
   VSpacer
 } from "@io-app/design-system";
 import I18n from "i18next";
@@ -44,6 +45,7 @@ const styles = StyleSheet.create({
 
 export const OnboardingNotificationsInfoScreenConsent = () => {
   const dispatch = useIODispatch();
+  const colors = useIOColors();
   const remindersEnabled = useIOSelector(
     pushNotificationRemindersEnabledSelector
   );
@@ -170,7 +172,7 @@ export const OnboardingNotificationsInfoScreenConsent = () => {
       <VSpacer size={16} />
       <Body>{I18n.t("onboarding.infoConsent.subTitle")}</Body>
       <VSpacer size={16} />
-      <H6 color="grey-700">
+      <H6 color={colors.text.heading.tertiary}>
         {I18n.t("onboarding.infoConsent.instructions.title")}
       </H6>
       <VSpacer size={8} />

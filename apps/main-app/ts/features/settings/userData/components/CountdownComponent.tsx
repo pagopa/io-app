@@ -1,4 +1,9 @@
-import { Body, ProgressLoader, VSpacer } from "@io-app/design-system";
+import {
+  Body,
+  ProgressLoader,
+  useIOColors,
+  VSpacer
+} from "@io-app/design-system";
 import I18n from "i18next";
 import { useEffect } from "react";
 import { View } from "react-native";
@@ -12,6 +17,7 @@ type CountdownProps = {
 
 const Countdown = (props: CountdownProps) => {
   const { visible } = props;
+  const colors = useIOColors();
   const { timerCount, resetTimer, startTimer, isRunning } = useCountdown();
 
   useEffect(() => {
@@ -37,9 +43,13 @@ const Countdown = (props: CountdownProps) => {
         {/* Adding this due to https://github.com/facebook/react-native/issues/47635 */}
         <ProgressLoader progress={Math.floor((timerCount / 60) * 100)} />
         <VSpacer size={8} />
-        <Body color="black" style={{ textAlign: "center" }} weight="Regular">
+        <Body
+          color={colors.text.content.default}
+          style={{ textAlign: "center" }}
+          weight="Regular"
+        >
           {I18n.t("email.newvalidate.countdowntext")}{" "}
-          <Body color="black" weight="Semibold">
+          <Body color={colors.text.content.default} weight="Semibold">
             {timerCount}s
           </Body>
         </Body>

@@ -6,7 +6,7 @@ import {
   HStack,
   Icon,
   IOMarkdownLite,
-  useIOTheme,
+  useIOColors,
   VStack
 } from "@io-app/design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
@@ -87,7 +87,7 @@ const ContentView = ({ eid }: ContentViewProps) => {
   const isReissuance = mode === "reissuance";
   const mixPanelCredential = isL3 ? "ITW_PID" : "ITW_ID_V2";
 
-  const theme = useIOTheme();
+  const colors = useIOColors();
 
   useFocusEffect(
     useCallback(() => {
@@ -196,12 +196,7 @@ const ContentView = ({ eid }: ContentViewProps) => {
         <ContentWrapper style={{ flexGrow: 1 }}>
           <VStack space={24}>
             <HStack space={8} style={{ alignItems: "center" }}>
-              {!isL3 && (
-                <Icon
-                  color={theme["interactiveElem-default"]}
-                  name="legalValue"
-                />
-              )}
+              {!isL3 && <Icon color={colors.icon.action} name="legalValue" />}
               <H2>
                 {isL3
                   ? I18n.t("features.itWallet.issuance.eidPreview.titleL3")
