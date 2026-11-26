@@ -1,3 +1,33 @@
+## 3.44.0-rc.9 (2026-11-26)
+
+### Features
+
+- **IT-Wallet:** [[SIW-5563](https://pagopa.atlassian.net/browse/SIW-5563)] Move add document banner to top of wallet ([#8927](https://github.com/pagopa/io-app/pull/8927))
+- **IT-Wallet:** [[SIW-5565](https://pagopa.atlassian.net/browse/SIW-5565)] Add "Aggiungi" CTA to wallet documents header ([#8934](https://github.com/pagopa/io-app/pull/8934))
+- **IT-Wallet:** [[SIW-5566](https://pagopa.atlassian.net/browse/SIW-5566)] guide users to upgrade their documents ([#8936](https://github.com/pagopa/io-app/pull/8936))
+- **IT-Wallet:** [[SIW-5562](https://pagopa.atlassian.net/browse/SIW-5562)] Add tooltip for PID expiration date ([#8929](https://github.com/pagopa/io-app/pull/8929))
+- **IT-WalleT:** [[SIW-5559](https://pagopa.atlassian.net/browse/SIW-5559)] track CieID native error message in Mixpanel ([#8931](https://github.com/pagopa/io-app/pull/8931))
+- [[IOPLT-2316](https://pagopa.atlassian.net/browse/IOPLT-2316)] Keep guided tour tooltip in light mode ([#8932](https://github.com/pagopa/io-app/pull/8932))
+
+### Bug Fixes
+
+- [[IOCOM-3415](https://pagopa.atlassian.net/browse/IOCOM-3415)] messages list fastLogin softlock ([#8938](https://github.com/pagopa/io-app/pull/8938))
+- **IT-Wallet:** [[SIW-0000](https://pagopa.atlassian.net/browse/SIW-0000)] Open L3 onboarding from wallet ready banner ([#8926](https://github.com/pagopa/io-app/pull/8926))
+
+### Chores
+
+- Update translations from Lokalise ([#8939](https://github.com/pagopa/io-app/pull/8939))
+- **IT-Wallet:** [[SIW-5556](https://pagopa.atlassian.net/browse/SIW-5556)] Track new user discovery screen on empty state ([#8923](https://github.com/pagopa/io-app/pull/8923))
+
+### ❤️ Thank You
+
+- Alessandro Mazzon
+- Damiano Plebani
+- DavideOnano @DavideOnano
+- Federico Mastrini @mastro993
+- Martino Cesari Tomba @forrest57
+- MonicaRungi-EY
+
 ## 3.44.0-rc.8 (2026-11-25)
 
 ### Features
