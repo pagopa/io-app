@@ -1,4 +1,5 @@
-import { Event as CEvent } from "@pagopa/react-native-cie";
+import type { NfcError } from "@io-app/expo-cie";
+
 /** Action types and action creator related to authentication by CIE */
 import {
   ActionType,
@@ -26,7 +27,7 @@ export type CieAuthenticationErrorPayload = {
   reason: CieAuthenticationErrorReason;
 };
 
-export type CieAuthenticationErrorReason = "GENERIC" | CEvent["event"];
+export type CieAuthenticationErrorReason = "GENERIC" | NfcError["name"];
 
 export const cieAuthenticationError = createStandardAction(
   "CIE_AUTHENTICATION_ERROR"

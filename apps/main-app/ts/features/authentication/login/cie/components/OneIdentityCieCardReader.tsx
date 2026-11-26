@@ -40,7 +40,13 @@ export const OneIdentityCieCardReader = ({
   });
 
   if (state.status === "failure") {
-    return <OneIdentityCieCardReaderFailure failure={state.failure} />;
+    return (
+      <OneIdentityCieCardReaderFailure
+        failure={state.failure}
+        onCancel={handleCancel}
+        onRetry={handleRetry}
+      />
+    );
   }
 
   return (

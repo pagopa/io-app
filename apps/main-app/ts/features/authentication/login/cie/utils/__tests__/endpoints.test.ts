@@ -10,7 +10,7 @@ describe("getCieIdpUrl", () => {
   const SCENARIOS = [
     { os: "ios" as const, expected: `${BASE_URL}Authn/SSL/Login2` },
     { os: "android" as const, expected: BASE_URL },
-    { os: "windows" as const, expected: null }
+    { os: "windows" as const, expected: undefined }
   ];
 
   it.each(SCENARIOS)(
@@ -27,11 +27,11 @@ describe("getCieIdpUrl", () => {
     }
   );
 
-  it("should return null for prod", () => {
-    expect(getCieIdpUrl("production")).toBeNull();
+  it("should return undefined for prod", () => {
+    expect(getCieIdpUrl("production")).toBeUndefined();
   });
 
-  it("should return null for an unknown environment", () => {
-    expect(getCieIdpUrl("unknown" as CieEnv)).toBeNull();
+  it("should return undefined for an unknown environment", () => {
+    expect(getCieIdpUrl("unknown" as CieEnv)).toBeUndefined();
   });
 });

@@ -1,5 +1,11 @@
 import { triggerHaptic } from "@io-app/design-system";
-import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
+import {
+  CieErrorSchema,
+  CieLogger,
+  CieManager,
+  NfcError,
+  NfcEvent
+} from "@io-app/expo-cie";
 import I18n from "i18next";
 import { useCallback, useEffect, useState } from "react";
 import { Platform } from "react-native";
@@ -27,45 +33,32 @@ import { cieAuthenticationError } from "../store/actions";
 import { cieEnvSelector } from "../store/selectors";
 import { getCieIdpUrl } from "../utils/endpoints";
 
-const CIE_ALERT_MESSAGES_CONFIG = Platform.select<
-  Parameters<typeof cieManager.start>[0]
->({
-  ios: {
-    readingInstructions: I18n.t(
-      "authentication.cie.card.iosAlert.readingInstructions"
-    ),
-    moreTags: I18n.t("authentication.cie.card.iosAlert.moreTags"),
-    readingInProgress: I18n.t(
-      "authentication.cie.card.iosAlert.readingInProgress"
-    ),
-    readingSuccess: I18n.t("authentication.cie.card.iosAlert.readingSuccess"),
-    invalidCard: I18n.t("authentication.cie.card.iosAlert.invalidCard"),
-    tagLost: I18n.t("authentication.cie.card.iosAlert.tagLost"),
-    cardLocked: I18n.t("authentication.cie.card.iosAlert.cardLocked"),
-    wrongPin1AttemptLeft: I18n.t(
-      "authentication.cie.card.iosAlert.wrongPin1AttemptLeft"
-    ),
-    wrongPin2AttemptLeft: I18n.t(
-      "authentication.cie.card.iosAlert.wrongPin2AttemptLeft"
-    ),
-    genericError: I18n.t("authentication.cie.card.iosAlert.genericError")
-  },
-  default: undefined
-});
-
-const FAILURE_EVENTS = new Set<"Function not supported" | CEvent["event"]>([
-  "AUTHENTICATION_ERROR",
-  "CERTIFICATE_EXPIRED",
-  "CERTIFICATE_REVOKED",
-  "EXTENDED_APDU_NOT_SUPPORTED",
-  "Function not supported",
-  "ON_CARD_PIN_LOCKED",
-  "ON_NO_INTERNET_CONNECTION",
-  "ON_PIN_ERROR",
-  "ON_TAG_DISCOVERED_NOT_CIE",
-  "PIN Locked",
-  "TAG_ERROR_NFC_NOT_SUPPORTED"
-]);
+const IOS_ALERT_MESSAGES: ReadonlyArray<
+  readonly [Parameters<typeof CieManager.setAlertMessage>[0], string]
+> = [
+  [
+    "readingInstructions",
+    I18n.t("authentication.cie.card.iosAlert.readingInstructions")
+  ],
+  ["moreTags", I18n.t("authentication.cie.card.iosAlert.moreTags")],
+  [
+    "readingInProgress",
+    I18n.t("authentication.cie.card.iosAlert.readingInProgress")
+  ],
+  ["readingSuccess", I18n.t("authentication.cie.card.iosAlert.readingSuccess")],
+  ["invalidCard", I18n.t("authentication.cie.card.iosAlert.invalidCard")],
+  ["tagLost", I18n.t("authentication.cie.card.iosAlert.tagLost")],
+  ["cardLocked", I18n.t("authentication.cie.card.iosAlert.cardLocked")],
+  [
+    "wrongPin1AttemptLeft",
+    I18n.t("authentication.cie.card.iosAlert.wrongPin1AttemptLeft")
+  ],
+  [
+    "wrongPin2AttemptLeft",
+    I18n.t("authentication.cie.card.iosAlert.wrongPin2AttemptLeft")
+  ],
+  ["genericError", I18n.t("authentication.cie.card.iosAlert.genericError")]
+];
 
 /**
  * Decodes the URL returned by the CIE SDK, falling back to the raw value if
@@ -80,10 +73,9 @@ const safeDecodeURIComponent = (url: string): string => {
 };
 
 export type CieManagerState =
-  | { failure: CEvent; status: "failure" }
-  | { failure: string; status: "reading-failure" }
+  | { failure: NfcError; status: "failure" }
+  | { progress: number; status: "reading" }
   | { status: "idle" }
-  | { status: "reading" }
   | { status: "success" };
 
 type UseCieManager = (params: { onSuccess: (authUrl: string) => void }) => {
@@ -107,17 +99,14 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
   const [state, setState] = useState<CieManagerState>({ status: "idle" });
 
   const commonErrorHandling = useCallback(
-    (
-      reason: "GENERIC" | CEvent["event"],
-      description: string | undefined,
-      handler: () => void
-    ) => {
+    (error: NfcError, handler: () => void) => {
       trackLoginCieCardReadingError(loginFlow);
 
       dispatch(
         cieAuthenticationError({
-          reason,
-          cieDescription: description ?? cieErrorMessagesMap[reason] ?? "",
+          reason: error.name,
+          cieDescription:
+            error.message ?? cieErrorMessagesMap[error.name] ?? "",
           flow: loginFlow
         })
       );
@@ -128,51 +117,39 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
   );
 
   const handleError = useCallback(
-    (errorMessage: string) => {
-      handleSendAssistanceLog(choosenTool, errorMessage);
+    (error: NfcError) => {
+      CieManager.stopReading().catch(() => {
+        // Ignore errors on stop reading
+      });
 
-      commonErrorHandling("GENERIC", errorMessage, () =>
-        setState({ failure: errorMessage, status: "reading-failure" })
+      // iOS only: the user dismissed the native NFC sheet.
+      // Stay on the reading screen.
+      if (error.name === "CANCELLED_BY_USER") {
+        return;
+      }
+
+      handleSendAssistanceLog(choosenTool, error.name);
+
+      commonErrorHandling(error, () =>
+        setState({ failure: error, status: "failure" })
       );
     },
     [choosenTool, commonErrorHandling]
   );
 
   const handleEvent = useCallback(
-    (event: CEvent) => {
-      handleSendAssistanceLog(choosenTool, event.event);
+    (event: NfcEvent) => {
+      handleSendAssistanceLog(choosenTool, event.name);
 
-      // Trigger a light haptic feedback and update the state to reflect
-      // the start of the reading when the tag is discovered
-      if (event.event === "ON_TAG_DISCOVERED") {
-        setState({ status: "reading" });
+      setState({ status: "reading", progress: event.progress });
+
+      // Trigger a light haptic feedback on the start of the reading
+      // when the tag is discovered
+      if (event.name === "ON_TAG_DISCOVERED") {
         triggerHaptic("impactLight");
-        return;
       }
-
-      // Handle recoverable errors by allowing
-      // the user to retry the reading process
-      if (
-        event.event === "ON_TAG_LOST" ||
-        event.event === "Transmission Error"
-      ) {
-        commonErrorHandling(event.event, undefined, () =>
-          setState({ failure: event.event, status: "reading-failure" })
-        );
-        return;
-      }
-
-      // Halt the reading process and transition to a failure state.
-      // This delegates the rendering to the specific Failure components.
-      if (FAILURE_EVENTS.has(event.event)) {
-        commonErrorHandling(event.event, undefined, () =>
-          setState({ failure: event, status: "failure" })
-        );
-        return;
-      }
-      // Any other/unknown event is ignored
     },
-    [choosenTool, commonErrorHandling]
+    [choosenTool]
   );
 
   const handleSuccess = useCallback(
@@ -201,40 +178,46 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
     async (pin: string, authUrl: string) => {
       setState({ status: "idle" });
 
-      cieManager.removeAllListeners();
-      cieManager.onEvent(handleEvent);
-      cieManager.onError(error => handleError(error.message));
-      cieManager.onSuccess(handleSuccess);
-
-      cieManager.enableLog(isDevEnv);
-      // Set the IDP URL based on the environment (null falls back to PROD)
+      if (Platform.OS === "ios") {
+        CieLogger.setLogMode(isDevEnv ? "FILE" : "DISABLED");
+      }
+      // Set the IDP URL based on the environment (undefined falls back to PROD).
       const idpUrl = getCieIdpUrl(cieEnvSelector(store.getState()));
-      cieManager.setCustomIdpUrl(idpUrl);
-      cieManager.setAuthenticationUrl(authUrl);
+      CieManager.setCustomIdpUrl(idpUrl);
 
       try {
-        await cieManager.setPin(pin);
-        await cieManager.start(CIE_ALERT_MESSAGES_CONFIG);
-        await cieManager.startListeningNFC();
-      } catch (e) {
-        const errorMessage = unknownToString(e);
-        handleError(errorMessage);
+        await CieManager.startReading(pin, authUrl);
+      } catch (error) {
+        const parsed = CieErrorSchema.safeParse(error);
+        handleError({
+          name: "GENERIC_ERROR",
+          message: parsed.success ? parsed.data.code : unknownToString(error)
+        });
       }
     },
-    [handleEvent, handleError, handleSuccess, store]
+    [handleError, store]
   );
 
-  useEffect(
-    () =>
-      // Cleanup on unmount
-      () => {
-        void cieManager.stopListeningNFC().catch(() => {
-          // Ignore errors on stop listening NFC
-        });
-        cieManager.removeAllListeners();
-      },
-    []
-  );
+  useEffect(() => {
+    if (Platform.OS === "ios") {
+      IOS_ALERT_MESSAGES.forEach(([key, message]) => {
+        CieManager.setAlertMessage(key, message);
+      });
+    }
+
+    const cleanup = [
+      CieManager.addListener("onEvent", handleEvent),
+      CieManager.addListener("onError", handleError),
+      CieManager.addListener("onSuccess", handleSuccess)
+    ];
+
+    return () => {
+      cleanup.forEach(remove => remove());
+      void CieManager.stopReading().catch(() => {
+        // Ignore errors on stop reading
+      });
+    };
+  }, [handleError, handleEvent, handleSuccess]);
 
   return {
     state,

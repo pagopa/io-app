@@ -2,9 +2,9 @@ import { Platform } from "react-native";
 
 import { CieEnv } from ".";
 
-// `null` means the CieManager default IDP (production) is used
-const CIE_IDP_BASE_URL_MAP: Record<CieEnv, null | string> = {
-  production: null,
+// `undefined` means the CieManager default IDP (production) is used
+const CIE_IDP_BASE_URL_MAP: Record<CieEnv, string | undefined> = {
+  production: undefined,
   preprod: "https://preproduzione.idserver.servizicie.interno.gov.it/idp/"
 };
 
@@ -12,13 +12,13 @@ const CIE_IDP_BASE_URL_MAP: Record<CieEnv, null | string> = {
 export const getCieIdpUrl = (cieEnv: CieEnv) => {
   const baseUrl = CIE_IDP_BASE_URL_MAP[cieEnv];
 
-  if (baseUrl == null) {
-    return null;
+  if (!baseUrl) {
+    return undefined;
   }
 
   return Platform.select({
     ios: `${baseUrl}Authn/SSL/Login2`,
     android: baseUrl,
-    default: null
+    default: undefined
   });
 };

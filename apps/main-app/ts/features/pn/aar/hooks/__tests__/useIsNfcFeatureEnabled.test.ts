@@ -1,4 +1,4 @@
-import cieSdk from "@pagopa/react-native-cie";
+import { CieUtils } from "@io-app/expo-cie";
 import { act, renderHook } from "@testing-library/react-native";
 import { Platform } from "react-native";
 
@@ -20,8 +20,8 @@ describe.each(platforms)(
 
     it(`${
       isAndroid ? "should" : "should not"
-    } invoke "cieSdk.isNFCEnabled"`, async () => {
-      const spyOnIsNFCEnabled = jest.spyOn(cieSdk, "isNFCEnabled");
+    } invoke "CieUtils.isNfcEnabled"`, async () => {
+      const spyOnIsNfcEnabled = jest.spyOn(CieUtils, "isNfcEnabled");
 
       const { result } = renderHook(() => useIsNfcFeatureEnabled());
 
@@ -30,15 +30,15 @@ describe.each(platforms)(
       });
 
       if (isAndroid) {
-        expect(spyOnIsNFCEnabled).toHaveBeenCalledTimes(1);
+        expect(spyOnIsNfcEnabled).toHaveBeenCalledTimes(1);
       } else {
-        expect(spyOnIsNFCEnabled).not.toHaveBeenCalled();
+        expect(spyOnIsNfcEnabled).not.toHaveBeenCalled();
       }
     });
     it(`${
       isAndroid ? "should" : "should not"
-    } invoke "cieSdk.openNFCSettings"`, async () => {
-      const spyOnOpenNFCSettings = jest.spyOn(cieSdk, "openNFCSettings");
+    } invoke "CieUtils.openNfcSettings"`, async () => {
+      const spyOnOpenNfcSettings = jest.spyOn(CieUtils, "openNfcSettings");
 
       const { result } = renderHook(() => useIsNfcFeatureEnabled());
 
@@ -47,9 +47,9 @@ describe.each(platforms)(
       });
 
       if (isAndroid) {
-        expect(spyOnOpenNFCSettings).toHaveBeenCalledTimes(1);
+        expect(spyOnOpenNfcSettings).toHaveBeenCalledTimes(1);
       } else {
-        expect(spyOnOpenNFCSettings).not.toHaveBeenCalled();
+        expect(spyOnOpenNfcSettings).not.toHaveBeenCalled();
       }
     });
   }

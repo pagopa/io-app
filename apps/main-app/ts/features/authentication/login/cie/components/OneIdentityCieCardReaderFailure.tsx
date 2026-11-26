@@ -1,4 +1,6 @@
-import { Event as CEvent } from "@pagopa/react-native-cie";
+import type { NfcError } from "@io-app/expo-cie";
+
+import I18n from "i18next";
 import { useMemo } from "react";
 
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
@@ -7,48 +9,64 @@ import CieExtendedApduNotSupportedScreen from "../screens/CieExtendedApduNotSupp
 import CieUnexpectedErrorScreen from "../screens/CieUnexpectedErrorScreen";
 import CieWrongCardScreen from "../screens/CieWrongCardScreen";
 import { CieWrongPin } from "./CieWrongPin";
+import { OneIdentityCieCardReaderProgressContent } from "./OneIdentityCieCardReaderProgressContent";
 
 export type OneIdentityCieCardReaderFailureProps = {
-  failure: CEvent;
+  failure: NfcError;
+  onCancel: () => void;
+  onRetry: () => void;
 };
 
 export const OneIdentityCieCardReaderFailure = ({
-  failure
+  failure,
+  onCancel,
+  onRetry
 }: OneIdentityCieCardReaderFailureProps) => {
   const debugInfo = useMemo(() => ({ failure }), [failure]);
   useDebugInfo(debugInfo);
 
-  switch (failure.event) {
-    // "Function not supported" seems to be TAG_ERROR_NFC_NOT_SUPPORTED
-    // for the iOS SDK
-    case "Function not supported" as unknown:
-    case "ON_TAG_DISCOVERED_NOT_CIE":
-    case "TAG_ERROR_NFC_NOT_SUPPORTED": {
-      return <CieWrongCardScreen />;
+  const closeAction = {
+    label: I18n.t("global.buttons.close"),
+    onPress: onCancel
+  };
+
+  const retryAction = {
+    label: I18n.t("authentication.cie.nfc.retry"),
+    onPress: onRetry
+  };
+
+  switch (failure.name) {
+    case "APDU_ERROR": {
+      return <CieExtendedApduNotSupportedScreen />;
     }
     case "AUTHENTICATION_ERROR":
-    case "ON_NO_INTERNET_CONNECTION": {
+    case "GENERIC_ERROR":
+    case "NO_INTERNET_CONNECTION": {
       return <CieUnexpectedErrorScreen />;
     }
+    // The card is temporarily locked. Unlock is available by CieID app
+    case "CARD_BLOCKED":
+      return <CieWrongPin remainingCount={0} />;
     // CIE is Expired or Revoked
     case "CERTIFICATE_EXPIRED":
     case "CERTIFICATE_REVOKED": {
       return <CieExpiredOrInvalidScreen />;
     }
-    case "EXTENDED_APDU_NOT_SUPPORTED": {
-      return <CieExtendedApduNotSupportedScreen />;
+    case "NOT_A_CIE": {
+      return <CieWrongCardScreen />;
     }
-    // The card is temporarily locked. Unlock is available by CieID app
-    case "ON_CARD_PIN_LOCKED":
-    case "ON_PIN_ERROR":
-    case "PIN Locked":
+    case "TAG_LOST":
       return (
-        <CieWrongPin
-          remainingCount={
-            failure.event === "ON_CARD_PIN_LOCKED" ? 0 : failure.attemptsLeft
-          }
+        <OneIdentityCieCardReaderProgressContent
+          pictogram="empty"
+          primaryAction={retryAction}
+          secondaryAction={closeAction}
+          status="error"
+          title={I18n.t("authentication.cie.card.error.readerCardLostTitle")}
         />
       );
+    case "WRONG_PIN":
+      return <CieWrongPin remainingCount={failure.attemptsLeft} />;
     default:
       return null;
   }

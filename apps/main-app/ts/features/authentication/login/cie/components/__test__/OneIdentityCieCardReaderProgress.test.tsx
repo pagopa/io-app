@@ -66,7 +66,7 @@ describe("OneIdentityCieCardReaderProgress", () => {
         <OneIdentityCieCardReaderProgress
           onCancel={mockCancel}
           onRetry={mockRetry}
-          state={{ status: "reading" }}
+          state={{ status: "reading", progress: 0.2 }}
         />
       );
 
@@ -77,21 +77,6 @@ describe("OneIdentityCieCardReaderProgress", () => {
       expect(props.title).toBe(
         I18n.t("authentication.cie.card.readerCardTitle")
       );
-    });
-
-    it("should render error status", () => {
-      const { getByTestId } = render(
-        <OneIdentityCieCardReaderProgress
-          onCancel={mockCancel}
-          onRetry={mockRetry}
-          state={{ status: "reading-failure", failure: "boom" }}
-        />
-      );
-
-      const props = getByTestId("ProgressContent")
-        .props as OneIdentityCieCardReaderProgressContentProps;
-
-      expect(props.status).toBe("error");
     });
 
     it("should render success status without actions", () => {

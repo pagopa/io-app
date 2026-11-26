@@ -71,26 +71,6 @@ export const OneIdentityCieCardReaderProgress = ({
               ...actionsProps
             };
 
-      case "reading-failure":
-        return isIos
-          ? {
-              pictogram: "empty",
-              status: "error",
-              title: I18n.t(
-                "authentication.cie.card.error.readerCardLostTitle"
-              ),
-              ...actionsProps
-            }
-          : {
-              pictogram: "empty",
-              status: "error",
-              title: I18n.t(
-                "authentication.cie.card.error.readerCardLostTitle"
-              ),
-              subtitle: I18n.t("authentication.cie.card.error.onTagLost"),
-              ...actionsProps
-            };
-
       case "success":
         return {
           pictogram: "success",

@@ -11,22 +11,14 @@ export const cieErrorMessagesMap: Partial<
   Record<CieAuthenticationErrorReason, string>
 > = {
   AUTHENTICATION_ERROR: I18n.t("authentication.cie.card.error.generic"),
+  APDU_ERROR: I18n.t("authentication.cie.nfc.apduNotSupported"),
+  CARD_BLOCKED: I18n.t("authentication.cie.card.error.generic"),
   CERTIFICATE_EXPIRED: I18n.t("authentication.cie.card.error.generic"),
   CERTIFICATE_REVOKED: I18n.t("authentication.cie.card.error.generic"),
-  EXTENDED_APDU_NOT_SUPPORTED: I18n.t(
-    "authentication.cie.nfc.apduNotSupported"
-  ),
-  ON_CARD_PIN_LOCKED: I18n.t("authentication.cie.card.error.generic"),
-  ON_NO_INTERNET_CONNECTION: I18n.t("authentication.cie.card.error.tryAgain"),
-  ON_PIN_ERROR: I18n.t("authentication.cie.card.error.tryAgain"),
-  ON_TAG_DISCOVERED_NOT_CIE: I18n.t(
-    "authentication.cie.card.error.unknownCardContent"
-  ),
-  ON_TAG_LOST: I18n.t("authentication.cie.card.error.onTagLost"),
-  "PIN Locked": I18n.t("authentication.cie.card.error.generic"),
-  TAG_ERROR_NFC_NOT_SUPPORTED: I18n.t(
-    "authentication.cie.card.error.unknownCardContent"
-  ),
-  // Reading interrupted before the sdk completes the reading
-  "Transmission Error": I18n.t("authentication.cie.card.error.onTagLost")
+  GENERIC_ERROR: I18n.t("authentication.cie.card.error.generic"),
+  NO_INTERNET_CONNECTION: I18n.t("authentication.cie.card.error.tryAgain"),
+  NOT_A_CIE: I18n.t("authentication.cie.card.error.unknownCardContent"),
+  TAG_LOST: I18n.t("authentication.cie.card.error.onTagLost"),
+  WRONG_CAN: I18n.t("authentication.cie.card.error.tryAgain"),
+  WRONG_PIN: I18n.t("authentication.cie.card.error.tryAgain")
 };
