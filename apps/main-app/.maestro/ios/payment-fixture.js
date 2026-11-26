@@ -9,14 +9,21 @@ function get(url) {
 function literal(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
-const notice = get(messages + "?enrich_result_data=true").items.find(
-  item =>
-    item.category.tag === "PAYMENT" &&
-    item.message_title.trim() === "💰✅ payment - 0"
-);
+function findNotice(archived) {
+  return get(
+    messages + "?enrich_result_data=true&archived=" + archived
+  ).items.find(
+    item =>
+      item.category.tag === "PAYMENT" &&
+      item.message_title.trim() === "💰✅ payment - 0"
+  );
+}
+const inboxNotice = findNotice(false);
+const notice = inboxNotice || findNotice(true);
+output.noticeArchived = !inboxNotice;
 if (!notice) {
   throw new Error(
-    "Default payable notice missing from local inbox; restart the dedicated dev API."
+    "Default payable notice missing from both inbox and archive."
   );
 }
 const payment = get(messages + "/" + notice.id).content.payment_data;

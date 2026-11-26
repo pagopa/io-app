@@ -5,12 +5,21 @@ name: A cold notification tap opens its own message after unlock
     start: 25%,1%
     end: 25%,85%
 - waitForAnimationToEnd
-- swipe:
-    from:
-      id: NotificationShortLookView
-      text: ${".*" + TITLE + ".*"}
-    direction: RIGHT
-- tapOn: Apri
+- tapOn:
+    id: NotificationShortLookView
+    text: ${".*" + TITLE + ".*"}
+- runFlow:
+    when:
+      visible:
+        id: NotificationShortLookView
+        text: ${".*" + TITLE + ".*"}
+    commands:
+      - swipe:
+          from:
+            id: NotificationShortLookView
+            text: ${".*" + TITLE + ".*"}
+          direction: RIGHT
+      - tapOn: Apri
 - extendedWaitUntil:
     visible:
       id: number-pad

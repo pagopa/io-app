@@ -203,7 +203,7 @@ and, when opening a seeded message, the [subject check](.maestro/ios/shared/open
 - [Archive and restore](.maestro/ios/archive-restore.yaml): move a fresh
   message between inbox and archive, checking both lists in each direction.
 - [Payment notice](.maestro/ios/payment-notice.yaml): open the default
-  payable message from the dev API and compare the summary's creditor and
+  payable message from the dev API in its current folder (inbox or archive) and compare the summary's creditor and
   amount with its fixture. The flow stops before starting a transaction.
 - [Already paid notice](.maestro/ios/paid-notice.yaml): create a separate
   notice marked as paid, verify its duplicate-payment response and check that
@@ -235,7 +235,7 @@ and, when opening a seeded message, the [subject check](.maestro/ios/shared/open
    The recovery test clears its simulated outage on completion; if the runner is
    killed, the outage expires automatically after three minutes.
 3. Install the [Maestro CLI](https://docs.maestro.dev/get-started/installing-maestro)
-   (pilot tested with 2.12.1). From the repository root, explicitly select the
+   (pilot tested with 2.12.1 on iOS 26.5 and 27.2). From the repository root, explicitly select the
    dedicated simulator:
 
    ```bash

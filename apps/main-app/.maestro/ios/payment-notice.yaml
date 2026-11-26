@@ -3,6 +3,12 @@ name: Open a payable notice and check its summary
 ---
 - runScript: payment-fixture.js
 - runFlow: shared/login.yaml
+- runFlow:
+    when:
+      true: ${output.noticeArchived}
+    commands:
+      - tapOn:
+          id: home_tab_item_archive
 - scrollUntilVisible:
     element:
       id: wrapped_message_list_item_.*
