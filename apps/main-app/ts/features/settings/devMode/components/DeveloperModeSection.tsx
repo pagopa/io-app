@@ -459,6 +459,45 @@ const PlaygroundsSection = () => {
   );
 };
 
+const FormLibrariesPocSection = () => {
+  const navigation = useIONavigation();
+
+  return (
+    <>
+      <ListItemHeader label="POC librerie gestione form" />
+      <ListItemNav
+        accessibilityLabel="React Hook Form + zod"
+        label="React Hook Form + zod"
+        onPress={() =>
+          navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+            screen: SETTINGS_ROUTES.FORM_POC_REACT_HOOK_FORM
+          })
+        }
+      />
+      <Divider />
+      <ListItemNav
+        accessibilityLabel="React Hook Form + zod (inline)"
+        label="React Hook Form + zod (inline)"
+        onPress={() =>
+          navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+            screen: SETTINGS_ROUTES.FORM_POC_REACT_HOOK_FORM_INLINE
+          })
+        }
+      />
+      <Divider />
+      <ListItemNav
+        accessibilityLabel="TanStack Form + zod"
+        label="TanStack Form + zod"
+        onPress={() =>
+          navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+            screen: SETTINGS_ROUTES.FORM_POC_TANSTACK_FORM
+          })
+        }
+      />
+    </>
+  );
+};
+
 const DeveloperTestEnvironmentSection = ({
   showRestartAlert
 }: {
@@ -629,6 +668,12 @@ const DeveloperModeSection = () => {
 
       {/* Playgrounds */}
       {isPlaygroundsEnabled && <PlaygroundsSection />}
+
+      {isPlaygroundsEnabled && (
+        <ContentWrapper>
+          <FormLibrariesPocSection />
+        </ContentWrapper>
+      )}
 
       <VSpacer size={24} />
 

@@ -10,6 +10,9 @@ import { AppFeedbackPlayground } from "../../devMode/playgrounds/AppFeedbackPlay
 import { BottomSheetPlayground } from "../../devMode/playgrounds/BottomSheetPlayground";
 import CgnLandingPlayground from "../../devMode/playgrounds/CgnLandingPlayground";
 import { CiePlaygroundsNavigator } from "../../devMode/playgrounds/Cie/navigation/CiePlaygroundsNavigator";
+import { ReactHookFormInlinePlayground } from "../../devMode/playgrounds/formLibraries/ReactHookFormInlinePlayground";
+import { ReactHookFormPlayground } from "../../devMode/playgrounds/formLibraries/ReactHookFormPlayground";
+import { TanStackFormPlayground } from "../../devMode/playgrounds/formLibraries/TanStackFormPlayground";
 import { GuidedTourPlayground } from "../../devMode/playgrounds/GuidedTourPlayground";
 import { IdPayCodePlayGround } from "../../devMode/playgrounds/IdPayCodePlayground";
 import IdPayOnboardingPlayground from "../../devMode/playgrounds/IdPayOnboardingPlayground";
@@ -209,6 +212,18 @@ const SettingsStackNavigator = () => (
     <Stack.Screen
       component={BottomSheetPlayground}
       name={SETTINGS_ROUTES.BOTTOM_SHEET_PLAYGROUND}
+    />
+    <Stack.Screen
+      component={ReactHookFormPlayground}
+      name={SETTINGS_ROUTES.FORM_POC_REACT_HOOK_FORM}
+    />
+    <Stack.Screen
+      component={ReactHookFormInlinePlayground}
+      name={SETTINGS_ROUTES.FORM_POC_REACT_HOOK_FORM_INLINE}
+    />
+    <Stack.Screen
+      component={TanStackFormPlayground}
+      name={SETTINGS_ROUTES.FORM_POC_TANSTACK_FORM}
     />
 
     <Stack.Screen
