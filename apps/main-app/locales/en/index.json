@@ -1425,7 +1425,7 @@
           "description": {
             "l2-issuance": "This is a necessary step to ensure the security of your data.",
             "l2-reissuance": "This is a necessary step to continue using Documenti su IO without restrictions.",
-            "l3-issuance": "This is a necessary security step to link digital documents to your identity.",
+            "l3-issuance": "This is a necessary security step to link your digital documents to your identity. Please have your CIE handy.",
             "l3-reissuance": "This is a necessary step to continue using IT-Wallet without restrictions."
           },
           "frequency": {
@@ -1612,11 +1612,11 @@
               "title": "Your IT-Wallet is ready!",
               "withDocuments": {
                 "primaryAction": "Add document",
-                "subtitle": "Discover the new documents and add them to your Wallet."
+                "subtitle": "Now you can add the new documents that are available!"
               },
               "withoutDocuments": {
                 "primaryAction": "Explore IT-Wallet",
-                "subtitle": "You now have access to the benefits of the new digital wallet."
+                "subtitle": "Now you can add your first digital document to IO!"
               }
             },
             "primaryAction": "Add first document",
@@ -1632,9 +1632,9 @@
         },
         "emptyWallet": {
           "readyBanner": {
-            "action": "Add document",
-            "content": "It only takes a few seconds to have your personal documents always at your fingertips!",
-            "title": "Add your first document"
+            "action": "Complete your wallet",
+            "content": "Add the new documents to your wallet so you always have them at your fingertips!",
+            "title": "Get the most out of your IT-Wallet"
           },
           "readyBannerL2": {
             "content": "You can now add your first document to the IO Wallet.",
@@ -1689,6 +1689,11 @@
           "title": "Document coming soon"
         },
         "upgrade": {
+          "banner": {
+            "action": "Got it",
+            "content": "Thank you for activating IT-Wallet! Tap on a document to update it with the new features.",
+            "title": "You can now update your documents"
+          },
           "failure": {
             "primaryAction": "Explore IT-Wallet",
             "subtitle": "Your IT-Wallet is ready, but a technical error in the systems of the institution that issues the digital versions of the documents has prevented it from being updated. Please try adding the documents again.",
@@ -2058,6 +2063,12 @@
               "message": "You will delete the documents you added to the Wallet.\nIf you change your mind, you can attivate again IT-Wallet in the future.",
               "title": "Are you sure you want to disable IT-Wallet?"
             }
+          },
+          "expirationDateInfo": {
+            "accessibilityLabel": "Information About the Expiration Date",
+            "content": "This is the expiration date of your IT-Wallet, and it depends on the activation method you chose. As this date approaches, you'll receive instructions in the app on how to verify your identity and keep your wallet active.",
+            "primaryAction": "Got it",
+            "title": "What does this mean?"
           },
           "listItemHeader": "My IT-Wallet ID information",
           "listItemHeaderHideValues": "Hide your IT-Wallet ID information",
