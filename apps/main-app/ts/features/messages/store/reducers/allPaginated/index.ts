@@ -105,6 +105,9 @@ export const isLoadingOrUpdatingInbox = (state: GlobalState) => {
 export const shownMessageCategorySelector = (state: GlobalState) =>
   state.entities.messages.allPaginated.shownCategory;
 
+export const allPaginatedSelector = (state: GlobalState) =>
+  state.entities.messages.allPaginated;
+
 export const messageListForCategorySelector = (
   state: GlobalState,
   category: MessageListCategory

@@ -27,6 +27,7 @@ import {
   handleClearAttachment
 } from "../handleClearAttachments";
 import { handleDownloadAttachment } from "../handleDownloadAttachment";
+import { handleInterruptedMessageListRequests } from "../handleInterruptedMessageListRequests";
 import { handleLoadMessageById } from "../handleLoadMessageById";
 import { handleLoadMessageData } from "../handleLoadMessageData";
 import { handleLoadMessageDetails } from "../handleLoadMessageDetails";
@@ -95,6 +96,8 @@ describe("watchMessagesSaga", () => {
       .next()
       .takeLeading(addCalendarEventRequest, handleAddCalendarEvent)
       .next()
+      .call(handleInterruptedMessageListRequests)
+      .next()
       .put(setMessageSagasRegisteredAction())
       .next()
       .select(retryDataAfterFastLoginSessionExpirationSelector)
@@ -158,6 +161,8 @@ describe("watchMessagesSaga", () => {
       .takeLatest(getMessageDataAction.request, handleLoadMessageData)
       .next()
       .takeLeading(addCalendarEventRequest, handleAddCalendarEvent)
+      .next()
+      .call(handleInterruptedMessageListRequests)
       .next()
       .put(setMessageSagasRegisteredAction())
       .next()

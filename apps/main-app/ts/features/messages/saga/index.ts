@@ -1,5 +1,6 @@
 import { SagaIterator } from "redux-saga";
 import {
+  call,
   fork,
   put,
   select,
@@ -34,6 +35,7 @@ import {
   handleClearAttachment
 } from "./handleClearAttachments";
 import { handleDownloadAttachment } from "./handleDownloadAttachment";
+import { handleInterruptedMessageListRequests } from "./handleInterruptedMessageListRequests";
 import { handleLoadMessageById } from "./handleLoadMessageById";
 import { handleLoadMessageData } from "./handleLoadMessageData";
 import { handleLoadMessageDetails } from "./handleLoadMessageDetails";
@@ -113,6 +115,8 @@ export function* watchMessagesSaga(): SagaIterator {
 
   // ignore repeated reminder requests while one is in progress
   yield* takeLeading(addCalendarEventRequest, handleAddCalendarEvent);
+
+  yield* call(handleInterruptedMessageListRequests);
 
   // Signal that message's sagas are ready
   yield* put(setMessageSagasRegisteredAction());
