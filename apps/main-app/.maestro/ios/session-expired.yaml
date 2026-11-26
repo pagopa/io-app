@@ -1,0 +1,41 @@
+appId: it.pagopa.app.io
+name: An expired session cannot open a protected message until a fresh SPID login
+---
+- runScript: seed-message.js
+- runFlow: shared/login.yaml
+- pressKey: Home
+- runScript: shared/expire-session.js
+- launchApp:
+    stopApp: false
+- runFlow:
+    when:
+      visible:
+        id: number-pad
+    commands:
+      - runFlow: shared/pin.yaml
+- tapOn:
+    id: wrapped_message_list_item_.*
+    text: ${".*" + output.subject + ".*"}
+- extendedWaitUntil:
+    visible:
+      id: landing-button-login-spid
+    timeout: 60000
+- assertNotVisible:
+    id: message-header-subject
+- runFlow: shared/authenticate.yaml
+- extendedWaitUntil:
+    visible:
+      id: not-enrolled-biometric-confirm
+    timeout: 30000
+- tapOn:
+    id: not-enrolled-biometric-confirm
+- extendedWaitUntil:
+    visible:
+      id: message_list_inbox
+    timeout: 30000
+- tapOn:
+    id: wrapped_message_list_item_.*
+    text: ${".*" + output.subject + ".*"}
+- assertVisible:
+    id: message-header-subject
+    text: ${output.subject}

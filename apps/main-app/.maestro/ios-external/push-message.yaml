@@ -1,0 +1,27 @@
+appId: it.pagopa.app.io
+name: A cold notification tap opens its own message after unlock
+---
+- swipe:
+    start: 25%,1%
+    end: 25%,85%
+- waitForAnimationToEnd
+- swipe:
+    from:
+      id: NotificationShortLookView
+      text: ${".*" + TITLE + ".*"}
+    direction: RIGHT
+- tapOn: Apri
+- extendedWaitUntil:
+    visible:
+      id: number-pad
+    timeout: 60000
+- assertNotVisible:
+    id: message-header-subject
+- runFlow: ../ios/shared/pin.yaml
+- assertVisible:
+    id: message-header-subject
+    text: \Q${SUBJECT}\E
+- scrollUntilVisible:
+    element:
+      text: \Q${BODY}\E
+    direction: DOWN

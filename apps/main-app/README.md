@@ -220,6 +220,9 @@ and can run individually:
 - [Cold deep link](.maestro/ios/service-link-cold.yaml): terminate IO, open the
   same link, verify the detail is hidden at the PIN prompt, then unlock and
   verify the destination without delivering the link again.
+- [Expired session](.maestro/ios/session-expired.yaml): background IO and expire
+  its synthetic session on the mock. Opening a protected message must require
+  SPID again; repeat the operation successfully without clearing app data.
 
 1. Use a **dedicated iPhone simulator** with Italian as its language and no
    Face ID enrolled. Each run clears the app's data **and the simulator keychain**.
@@ -256,6 +259,18 @@ With the same simulator, Metro and fixture server, run:
 ```bash
 maestro --device "$SIMULATOR_UDID" test apps/main-app/.maestro/ios-external/service-universal-link.yaml
 ```
+
+To test a cold notification open, use the [push runner](.maestro/ios-external/push-message.sh)
+on the same dedicated simulator (requires `jq`, `curl`, Xcode and Maestro):
+
+```bash
+SIMULATOR_UDID="$SIMULATOR_UDID" bash apps/main-app/.maestro/ios-external/push-message.sh
+```
+
+It terminates IO, seeds a newer message, then uses `simctl push` for the older
+one. Maestro opens the notification from Notification Center and verifies the
+PIN gate and the older message's subject and body. This tests iOS delivery and
+routing, not APNs registration or delivery from a provider.
 
 ### Android emulator
 

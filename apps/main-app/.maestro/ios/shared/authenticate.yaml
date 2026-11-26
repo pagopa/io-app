@@ -1,0 +1,21 @@
+appId: it.pagopa.app.io
+---
+- extendedWaitUntil:
+    visible:
+      id: landing-button-login-spid
+    timeout: 120000
+# RN groups this debug banner into one accessibility element on iOS.
+- tapOn:
+    text: ".*, Open debugger to view warnings\\."
+    point: "95%,50%"
+    optional: true
+- tapOn:
+    id: landing-button-login-spid
+- scrollUntilVisible:
+    element:
+      id: idp-arubaid-button
+    direction: DOWN
+    visibilityPercentage: 100
+- tapOn:
+    id: idp-arubaid-button
+- tapOn: "LOGIN"
