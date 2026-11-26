@@ -1,4 +1,3 @@
-import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import {
   NavigatorScreenParams,
   ParamListBase,
@@ -143,14 +142,5 @@ export type IOStackNavigationRouteProps<
   navigation: IOStackNavigationProp<ParamList, RouteName>;
   route: RouteProp<ParamList, RouteName>;
 };
-export type IOTabNavigationProp<
-  ParamList extends ParamListBase,
-  RouteName extends keyof ParamList = string
-> = BottomTabNavigationProp<MainTabParamsList & ParamList, RouteName>;
-
 export const useIONavigation = () =>
   useNavigation<IOStackNavigationProp<AppParamsList, keyof AppParamsList>>();
-export const useIOTabNavigation = () =>
-  useNavigation<
-    IOTabNavigationProp<MainTabParamsList, keyof MainTabParamsList>
-  >();

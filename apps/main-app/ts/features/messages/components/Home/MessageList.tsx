@@ -145,10 +145,12 @@ export const MessageList = forwardRef<
   return (
     <FlashList
       contentContainerStyle={styles.contentContainer}
+      contentInsetAdjustmentBehavior="automatic"
       data={data}
       getItemType={getItemType}
       ItemSeparatorComponent={isLoading ? undefined : Divider}
       keyExtractor={keyExtractor}
+
       ListEmptyComponent={<EmptyList category={category} />}
       ListFooterComponent={<Footer category={category} />}
       ListHeaderComponent={ListHeader}

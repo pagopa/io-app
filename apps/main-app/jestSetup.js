@@ -434,4 +434,16 @@ jest.mock("@pagopa/io-react-native-iso18013", () => ({
   COSE: {}
 }));
 
+jest.mock("@bottom-tabs/react-navigation", () => ({
+  createNativeBottomTabNavigator: jest.fn(() => ({
+    Navigator: ({ children }) => children,
+    Screen: ({ children }) => children,
+    Group: ({ children }) => children
+  }))
+}));
+
+jest.mock("react-native-bottom-tabs", () => ({
+  useBottomTabBarHeight: jest.fn(() => 0)
+}));
+
 jest.mock("@io-app/expo-xstate-inspector", () => ({ inspect: undefined }));
