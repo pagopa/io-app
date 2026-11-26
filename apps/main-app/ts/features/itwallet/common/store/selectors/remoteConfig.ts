@@ -54,6 +54,13 @@ export const isItwFeedbackBannerEnabledSelector = createSelector(
   ({ feedback_banner_visible }) => feedback_banner_visible ?? false
 );
 
+/** Return whether the IT Wallet credential upgrade banner is remotely enabled. */
+export const isItwUpgradeCredentialsBannerEnabledSelector = createSelector(
+  itwRemoteConfigSelector,
+  ({ upgrade_credentials_banner_visible }) =>
+    upgrade_credentials_banner_visible ?? false
+);
+
 /**
  * Return whether the Wallet activation is disabled. This is purely a "cosmetic"
  * configuration to disable UI elements, it does not disable the entire IT

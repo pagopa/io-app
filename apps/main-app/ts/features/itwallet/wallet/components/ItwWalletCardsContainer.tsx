@@ -28,7 +28,8 @@ import {
 import {
   itwShouldHideEidLifecycleAlert,
   itwShouldRenderNonDismissibleUpgradeBannerSelector,
-  itwShouldRenderUpgradeBannerSelector
+  itwShouldRenderUpgradeBannerSelector,
+  itwShouldRenderUpgradeCredentialsBannerSelector
 } from "../../common/store/selectors/upgrade";
 import { ItwEidStatus } from "../../common/utils/itwTypesUtils.ts";
 import {
@@ -43,6 +44,7 @@ import {
   ITW_TOUR_GROUP_ID,
   ITW_TOUR_STEP_CREDENTIALS
 } from "../../tour/utils/constants.ts";
+import { ItwUpgradeCredentialsBanner } from "./ItwUpgradeCredentialsBanner";
 import { ItwWalletIdCard } from "./ItwWalletIdCard.tsx";
 
 const LIFECYCLE_STATUS: Array<ItwEidStatus> = [
@@ -66,6 +68,9 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
     shouldRenderDocSuIOEngagementBannerSelector
   );
   const isItWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const shouldRenderUpgradeCredentialsBanner = useIOSelector(
+    itwShouldRenderUpgradeCredentialsBannerSelector
+  );
 
   // Cards of other categories rebuild this array even when ITW cards are unchanged
   const cards = useIOSelector(
@@ -170,6 +175,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
     // children together with the rest of the wallet, announcing the header
     // after the cards
     <View collapsable={false} testID="itwWalletCardsSectionTestID">
+      {shouldRenderUpgradeCredentialsBanner && <ItwUpgradeCredentialsBanner />}
       {/* With IT-Wallet the lifecycle alert must be displayed above the header. */}
       {isNewItwRenderable ? (
         <>
