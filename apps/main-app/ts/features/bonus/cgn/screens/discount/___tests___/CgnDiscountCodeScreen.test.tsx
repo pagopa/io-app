@@ -1,6 +1,6 @@
 import { OtpCode } from "@io-app/api-types/generated/definitions/cgn/OtpCode";
 import { IOColors } from "@io-app/design-system";
-import { fireEvent } from "@testing-library/react-native";
+import { act, fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 
 import { remoteReady } from "../../../../../../common/model/RemoteValue";
@@ -13,6 +13,7 @@ import {
 } from "../../../../../../utils/testColors";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import CGN_ROUTES from "../../../navigation/routes";
+import { cgnGenerateOtp } from "../../../store/actions/otp";
 import CgnDiscountCodeScreen from "../CgnDiscountCodeScreen";
 
 const renderComponent = (
@@ -106,6 +107,46 @@ describe("CgnDiscountCodeScreen", () => {
     fireEvent.press(generateButton);
 
     expect(mockNavigate).not.toHaveBeenCalled();
+  });
+
+  it("should disable the generate button while a new code is loading", () => {
+    const expiredState: GlobalState = {
+      ...defaultState,
+      bonus: {
+        ...defaultState.bonus,
+        cgn: {
+          ...defaultState.bonus.cgn,
+          otp: {
+            ...defaultState.bonus.cgn.otp,
+            data: remoteReady({
+              code: "123456" as OtpCode,
+              expires_at: new Date(),
+              ttl: 0
+            })
+          }
+        }
+      }
+    };
+    const store = createStore(appReducer, expiredState as any);
+    const component = renderScreenWithNavigationStoreContext(
+      CgnDiscountCodeScreen,
+      CGN_ROUTES.DETAILS.MERCHANTS.DISCOUNT_CODE,
+      {},
+      store
+    );
+    expect(
+      component.getByTestId("generate-button").props.accessibilityState
+    ).not.toMatchObject({ disabled: true });
+
+    act(() => {
+      store.dispatch(
+        cgnGenerateOtp.request({ onSuccess: () => null, onError: () => null })
+      );
+    });
+
+    expect(
+      component.getByTestId("generate-button").props.accessibilityState
+    ).toMatchObject({ disabled: true });
   });
 
   it("should draw the code box border with the dark stroke token in dark mode", () => {
