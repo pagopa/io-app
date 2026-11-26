@@ -13,10 +13,7 @@ import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { itwShowBanner } from "../../../common/store/actions/banners";
 import { itwSetL2Fallback } from "../../../common/store/actions/preferences";
-import {
-  itwSetActivationExitSurvey,
-  itwSetFeedbackBottomSheetVisible
-} from "../../../common/store/actions/ui";
+import { itwSetActivationExitSurvey } from "../../../common/store/actions/ui";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { testEidIssuanceDeps, testMachineStore } from "../../utils/testDeps";
 import {
@@ -43,21 +40,15 @@ const buildArgs = ({
   mode,
   level,
   event = { type: "close" },
-  isSurveyHidden = false,
   credentialType
 }: {
   credentialType?: string;
   event?: EidIssuanceEvents;
-  isSurveyHidden?: boolean;
   level: EidIssuanceLevel;
   mode: EidIssuanceMode;
 }) => {
   const dispatch = jest.fn();
-  const state: GlobalState = _.set(
-    _.cloneDeep(baseState),
-    "features.itWallet.preferences.isPidReissuingSurveyHidden",
-    isSurveyHidden
-  );
+  const state: GlobalState = _.cloneDeep(baseState);
   const deps = testEidIssuanceDeps({
     store: testMachineStore({ dispatch, getState: () => state })
   });
@@ -180,40 +171,18 @@ describe("storeL2FallbackAction", () => {
 });
 
 describe("closeIssuanceAction", () => {
-  // SIW-5129: the reissuance survey is reserved to Documenti su IO (L2) reissuance
-  it("shows the reissuance survey on Documenti su IO (L2) reissuance exit", () => {
-    const { args, dispatch } = buildArgs({ mode: "reissuance", level: "l2" });
-    closeIssuanceAction(args);
-    expect(dispatch).toHaveBeenCalledWith(
-      itwSetFeedbackBottomSheetVisible(true)
-    );
-  });
-
-  it("does not show any survey on IT-Wallet (L3) reissuance exit", () => {
+  // SIW-5526: the eID reissuance surveys have been removed
+  test.each<{ level: EidIssuanceLevel; name: string }>([
+    { name: "Documenti su IO (L2)", level: "l2" },
+    { name: "IT-Wallet (L3)", level: "l3" }
+  ])("does not show any survey on $name reissuance exit", ({ level }) => {
     const { args, dispatch } = buildArgs({
       mode: "reissuance",
-      level: "l3",
+      level,
       event: { type: "close", surveyStep: "select_method" }
     });
     closeIssuanceAction(args);
-    expect(dispatch).not.toHaveBeenCalledWith(
-      itwSetFeedbackBottomSheetVisible(true)
-    );
-    expect(dispatch).not.toHaveBeenCalledWith(
-      itwSetActivationExitSurvey({ step: "select_method" })
-    );
-  });
-
-  it("does not show the reissuance survey when the user already answered it", () => {
-    const { args, dispatch } = buildArgs({
-      mode: "reissuance",
-      level: "l2",
-      isSurveyHidden: true
-    });
-    closeIssuanceAction(args);
-    expect(dispatch).not.toHaveBeenCalledWith(
-      itwSetFeedbackBottomSheetVisible(true)
-    );
+    expect(dispatch).not.toHaveBeenCalled();
   });
 
   // SIW-4993: the IT-Wallet activation exit survey must never leak into Documenti su IO flows
@@ -227,9 +196,6 @@ describe("closeIssuanceAction", () => {
       event: { type: "close", surveyStep: "select_method" }
     });
     closeIssuanceAction(args);
-    expect(dispatch).not.toHaveBeenCalledWith(
-      itwSetFeedbackBottomSheetVisible(true)
-    );
     expect(dispatch).not.toHaveBeenCalledWith(
       itwSetActivationExitSurvey({ step: "select_method" })
     );

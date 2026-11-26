@@ -178,7 +178,6 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "ui": {
       "activationExitSurvey": undefined,
       "credentialExitSurvey": undefined,
-      "itwFeedbackBottomSheet": false,
     },
     "walletInstance": {
       "attestation": undefined,

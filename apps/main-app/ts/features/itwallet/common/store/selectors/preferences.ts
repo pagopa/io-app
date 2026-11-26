@@ -22,15 +22,6 @@ export const itwIsClaimValueHiddenSelector = (state: GlobalState) =>
 export const itwIsFiscalCodeWhitelisted = (state: GlobalState) =>
   !!state.features.itWallet.preferences.isFiscalCodeWhitelisted;
 
-/**
- * Selects the state that indicates whether the bottom sheet of survey is
- * visible. Returns `true` if the bottom sheet is visible, `false` if the user
- * has already checked the survey, with the state being persisted through
- * Redux.
- */
-export const itwIsPidReissuingSurveyHiddenSelector = (state: GlobalState) =>
-  state.features.itWallet.preferences.isPidReissuingSurveyHidden;
-
 /** Returns the list of credential types that failed the upgrade process. */
 export const itwCredentialUpgradeFailedSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.credentialUpgradeFailed ?? [];

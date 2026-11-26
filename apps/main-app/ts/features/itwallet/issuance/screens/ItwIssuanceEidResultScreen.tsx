@@ -12,7 +12,6 @@ import {
   toSurveyAuthMethod
 } from "../../analytics/utils";
 import ItwActivationSuccessFeedbackBanner from "../../common/components/ItwActivationSuccessFeedbackBanner";
-import { ItwReissuanceFeedbackBanner } from "../../common/components/ItwReissuanceFeedbackBanner.tsx";
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils.ts";
@@ -388,9 +387,6 @@ const ItwIssuanceEidUpgradeResultContent = ({
 const ItwIssuanceEidReissuanceResultContent = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
-  const isL3 = ItwEidIssuanceMachineContext.useSelector(
-    isL3FeaturesEnabledSelector
-  );
   const route = useRoute();
 
   if (isLoading) {
@@ -418,10 +414,7 @@ const ItwIssuanceEidReissuanceResultContent = () => {
       title={I18n.t(
         "features.itWallet.issuance.eidResult.success.reissuance.title"
       )}
-    >
-      {/* This survey is reserved to "Documenti su IO" (L2) reissuance */}
-      {!isL3 && <ItwReissuanceFeedbackBanner />}
-    </OperationResultScreenContent>
+    />
   );
 };
 

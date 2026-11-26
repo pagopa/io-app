@@ -1208,19 +1208,6 @@
             "content": "Raccontaci la tua esperienza con l’attivazione di IT-Wallet e aiutaci a migliorare.",
             "title": "Puoi dirci com’è andata?"
           }
-        },
-        "reissuance": {
-          "banner": {
-            "action": "Inizia",
-            "content": "Raccontaci la tua esperienza con la verifica e aiutaci a migliorare.",
-            "title": "Puoi dirci com’è andata?"
-          },
-          "bottomSheet": {
-            "content": "Hai deciso di non continuare: facci sapere il perché, così potremo migliorare la tua esperienza in app. Ci vorrà un minuto!",
-            "primaryAction": "Dicci la tua",
-            "secondaryAction": "Non ora",
-            "title": "Ti va di dirci perché?"
-          }
         }
       },
       "generic": {

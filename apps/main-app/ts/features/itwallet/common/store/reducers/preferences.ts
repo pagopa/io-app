@@ -17,7 +17,6 @@ import {
   itwSetFiscalCodeWhitelisted,
   itwSetIdentificationMode,
   itwSetL2Fallback,
-  itwSetPidReissuingSurveyHidden,
   itwSetProximityNfcLocallyEnabled,
   itwSetWalletActivationFeedbackBannerData,
   itwSetWhatsNewLocallyEnabled,
@@ -46,9 +45,6 @@ export type ItwPreferencesState = {
    * or upgrade.
    */
   isL2Fallback?: boolean;
-  // Indicates whether the bottom sheet survey is visible when the user quits
-  // the reissuing flow only for the first time
-  isPidReissuingSurveyHidden?: boolean;
   // Local feature flag enabling NFC engagement in the Proximity presentation
   isProximityNfcLocallyEnabled?: boolean;
   // Local feature flag enabling the What's New engagement screen
@@ -165,13 +161,6 @@ const reducer = (
 
     case getType(itwSetL2Fallback):
       return { ...state, isL2Fallback: action.payload };
-
-    case getType(itwSetPidReissuingSurveyHidden): {
-      return {
-        ...state,
-        isPidReissuingSurveyHidden: action.payload
-      };
-    }
 
     case getType(itwSetProximityNfcLocallyEnabled):
       return { ...state, isProximityNfcLocallyEnabled: action.payload };
