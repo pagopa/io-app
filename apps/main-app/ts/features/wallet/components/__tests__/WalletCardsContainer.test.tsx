@@ -12,7 +12,6 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import * as connectivitySelectors from "../../../connectivity/store/selectors";
 import * as ingressSelectors from "../../../ingress/store/selectors";
-import { ItwWalletReadyBanner } from "../../../itwallet/common/components/ItwWalletReadyBanner";
 import * as itwSelectors from "../../../itwallet/common/store/selectors";
 import * as itwBannersSelectors from "../../../itwallet/common/store/selectors/banners";
 import * as itwPreferencesSelectors from "../../../itwallet/common/store/selectors/preferences";
@@ -24,7 +23,6 @@ import {
 import { ItwJwtCredentialStatus } from "../../../itwallet/common/utils/itwTypesUtils";
 import * as itwCredentialsSelectors from "../../../itwallet/credentials/store/selectors";
 import * as itwLifecycleSelectors from "../../../itwallet/lifecycle/store/selectors";
-import { ItwWalletIdCard } from "../../../itwallet/wallet/components/ItwWalletIdCard";
 import * as itwWalletInstanceSelectors from "../../../itwallet/walletInstance/store/selectors";
 import { TourProvider } from "../../../tour/components/TourProvider";
 import { WalletCardsState } from "../../store/reducers/cards";
@@ -495,13 +493,22 @@ describe("ItwWalletCardsContainer", () => {
       .spyOn(walletSelectors, "selectWalletCardsByCategory")
       .mockReturnValue([]);
 
+    // Documenti header → wallet ready banner → IT-Wallet ID card
+    const expectedOrder = [
+      "walletCardsCategoryItwIdCardHeaderTestID",
+      "itwWalletReadyBannerTestID",
+      "itwWalletIdCardTestID"
+    ];
     const { UNSAFE_root } = renderComponent(<ItwWalletCardsContainer />);
-    const renderedOrder = UNSAFE_root.findAll(
-      node =>
-        node.type === ItwWalletReadyBanner || node.type === ItwWalletIdCard
-    ).map(node => node.type);
+    const renderedOrder = _.uniq(
+      UNSAFE_root.findAll(
+        node =>
+          typeof node.type === "string" &&
+          expectedOrder.includes(node.props.testID)
+      ).map(node => node.props.testID)
+    );
 
-    expect(renderedOrder).toEqual([ItwWalletReadyBanner, ItwWalletIdCard]);
+    expect(renderedOrder).toEqual(expectedOrder);
   });
 
   it.each([

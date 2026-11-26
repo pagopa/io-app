@@ -124,7 +124,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
           {/* The wallet ready banner sits above the PID card to promote the catalog */}
           {shouldRenderItwWalletReadyBanner && <ItwWalletReadyBanner />}
           {/* IT-Wallet renders the PID card below the header */}
-          <View style={styles.cardsWrapper}>
+          <View style={styles.cardsWrapper} testID="itwWalletIdCardTestID">
             <ItwWalletIdCard isStacked={hasCards} />
           </View>
         </>
