@@ -1,4 +1,4 @@
-import { isCieIdAvailable } from "@pagopa/io-react-native-cieid";
+import { isCieIdAvailable } from "@io-app/expo-cieid";
 import I18n from "i18next";
 import { memo, useCallback, useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";

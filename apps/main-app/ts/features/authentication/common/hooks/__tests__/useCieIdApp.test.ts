@@ -1,12 +1,8 @@
-import { openCieIdApp } from "@pagopa/io-react-native-cieid";
+import { openCieIdApp } from "@io-app/expo-cieid";
 import { renderHook, waitFor } from "@testing-library/react-native";
 import { Linking } from "react-native";
 
 import { useCieIdApp } from "../useCieIdApp";
-
-jest.mock("@pagopa/io-react-native-cieid", () => ({
-  openCieIdApp: jest.fn()
-}));
 
 const mockedOpenCieIdApp = jest.mocked(openCieIdApp);
 
@@ -167,7 +163,7 @@ describe("useCieIdApp", () => {
 
     it("should call onFailure with the error code when openCieIdApp fails", () => {
       mockedOpenCieIdApp.mockImplementationOnce((_url, callback) => {
-        callback({ id: "ERROR", code: "GENERIC_ERROR", userInfo: null });
+        callback({ id: "ERROR", code: "GENERIC_ERROR" });
       });
 
       const { result } = renderHook(() =>
