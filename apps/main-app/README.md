@@ -5,7 +5,7 @@
 
 <p align="center">
   <a href="https://github.com/pagopa/io-app/actions/workflows/nightly-build.yml">
-    <img src="https://github.com/pagopa/io-app/actions/workflows/publish-app-build-nightly.yml/badge.svg?branch=master" alt="Nightly build" />
+    <img src="https://github.com/pagopa/io-app/actions/workflows/nightly-build.yml/badge.svg?branch=master" alt="Nightly build" />
   </a>
   <a href="https://codecov.io/gh/pagopa/io-app">
     <img src="https://codecov.io/gh/pagopa/io-app/branch/master/graph/badge.svg" alt="Codecov" />
