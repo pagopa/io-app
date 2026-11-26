@@ -2515,6 +2515,12 @@
           "releasedByPid": "Emissione IT-Wallet ID"
         }
       },
+      "wallet": {
+        "addCredentialButton": {
+          "accessibilityLabel": "Aggiungi un documento",
+          "label": "Aggiungi"
+        }
+      },
       "walletInstanceRevoked": {
         "alert": {
           "closeButton": "Chiudi",

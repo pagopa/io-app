@@ -39,6 +39,7 @@ import {
 import { ItwDiscoveryBanner } from "../../discovery/components/ItwDiscoveryBanner.tsx";
 import { ItwNonDismissibleUpgradeBanner } from "../../discovery/components/ItwNonDismissibleUpgradeBanner.tsx";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { ITW_ROUTES } from "../../navigation/routes";
 import { useItwGuidedTour } from "../../tour/hooks/useItwGuidedTour.ts";
 import {
   ITW_TOUR_GROUP_ID,
@@ -118,6 +119,22 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
       return (
         <>
           <ListItemHeader
+            endElement={{
+              type: "buttonLink",
+              componentProps: {
+                accessibilityLabel: I18n.t(
+                  "features.itWallet.wallet.addCredentialButton.accessibilityLabel"
+                ),
+                label: I18n.t(
+                  "features.itWallet.wallet.addCredentialButton.label"
+                ),
+                onPress: () =>
+                  navigation.navigate(ITW_ROUTES.MAIN, {
+                    screen: ITW_ROUTES.L3_ONBOARDING
+                  }),
+                testID: "walletCardsCategoryItwAddButtonTestID"
+              }
+            }}
             label={I18n.t("features.wallet.cards.categories.itw")}
             testID={"walletCardsCategoryItwIdCardHeaderTestID"}
           />
@@ -164,6 +181,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
     iconColor,
     isItWalletValid,
     isNewItwRenderable,
+    navigation,
     shouldRenderItwWalletReadyBanner
   ]);
 
