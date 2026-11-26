@@ -1,3 +1,29 @@
+## 3.44.0-rc.8 (2026-11-25)
+
+### Features
+
+- [[IOPLT-2315](https://pagopa.atlassian.net/browse/IOPLT-2315)] Increase guided tour overlay contrast ([#8928](https://github.com/pagopa/io-app/pull/8928))
+- **IT-Wallet:** [[SIW-2557](https://pagopa.atlassian.net/browse/SIW-2557)] Add XState inspector support ([#8558](https://github.com/pagopa/io-app/pull/8558))
+
+### Bug Fixes
+
+- **IT-Wallet:** [[SIW-0000](https://pagopa.atlassian.net/browse/SIW-0000)] display all EuropeanDisabilityCard claims in skeuomorphic card ([#8922](https://github.com/pagopa/io-app/pull/8922))
+- **IT-Wallet:** [[SIW-5557](https://pagopa.atlassian.net/browse/SIW-5557)] Fix "Scopri di più" link in proximity verification banner ([#8920](https://github.com/pagopa/io-app/pull/8920))
+
+### Chores
+
+- release 3.43.1-rc.0 ([83f4d60b7](https://github.com/pagopa/io-app/commit/83f4d60b7))
+- Update translations from Lokalise ([#8918](https://github.com/pagopa/io-app/pull/8918))
+
+### ❤️ Thank You
+
+- Alessandro Mazzon
+- Damiano Plebani
+- Emanuele Dall'Ara @LeleDallas
+- Federico Mastrini @mastro993
+- Gianluca Spada
+- MonicaRungi-EY
+
 ## 3.43.1-rc.0 (2026-11-25)
 
 ### Bug Fixes
