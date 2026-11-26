@@ -87,9 +87,10 @@ export const serializeFailureReason = (
  * these specific error cases. Instead of sending a plain string, we return a
  * structured object with a code and errorDescription.
  */
-const createReasonObject = (message: string) => ({
+const createReasonObject = (errorDescription: string, message?: string) => ({
   code: "UNEXPECTED",
-  errorDescription: message
+  errorDescription,
+  ...(message && { message })
 });
 
 /**
@@ -104,7 +105,10 @@ const mapFailureReason = (reason: unknown) => {
   }
 
   if (reason instanceof Error) {
-    return createReasonObject(reason.message);
+    return createReasonObject(
+      reason.message,
+      typeof reason.cause === "string" ? reason.cause : undefined
+    );
   }
 
   return reason;

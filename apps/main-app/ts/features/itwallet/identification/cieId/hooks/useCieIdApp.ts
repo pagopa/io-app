@@ -1,7 +1,6 @@
-import { CieIdErrorResult, openCieIdApp } from "@pagopa/io-react-native-cieid";
+import { openCieIdApp } from "@pagopa/io-react-native-cieid";
 import { useCallback, useEffect, useState } from "react";
 import { Linking } from "react-native";
-import { z } from "zod";
 
 import { useIOSelector } from "../../../../../store/hooks";
 import { convertUnknownToError } from "../../../../../utils/errors";
@@ -29,14 +28,6 @@ type CieIdHookResult = {
   startCieIdAppAuthentication: (url: string) => void;
 };
 
-const cieIdAppError = z.object({
-  id: z.literal("ERROR"),
-  code: z.string()
-});
-
-const isCieIdAppError = (e: unknown): e is CieIdErrorResult =>
-  cieIdAppError.safeParse(e).success;
-
 const extractCieIdErrorFromUrl = (url: string) =>
   url.includes(CIE_ID_ERROR)
     ? (url.split(CIE_ID_ERROR_MESSAGE)[1] ?? "Unexpected error from CieID")
@@ -60,22 +51,9 @@ export const useCieIdApp = (): CieIdHookResult => {
     [machineRef]
   );
 
-  const goBack = useCallback(
-    () => machineRef.send({ type: "back" }),
-    [machineRef]
-  );
-
   const handleAuthenticationFailure = useCallback(
-    (error: unknown) => {
-      if (isCieIdAppError(error)) {
-        return error.code === "CIEID_OPERATION_CANCEL"
-          ? goBack()
-          : sendErrorToMachine(new Error(error.code));
-      }
-
-      sendErrorToMachine(convertUnknownToError(error));
-    },
-    [sendErrorToMachine, goBack]
+    (error: unknown) => sendErrorToMachine(convertUnknownToError(error)),
+    [sendErrorToMachine]
   );
 
   const startCieIdAppAuthentication = useCallback(
@@ -87,8 +65,12 @@ export const useCieIdApp = (): CieIdHookResult => {
           result => {
             if (result.id === "URL") {
               setAuthUrl(result.url);
+            } else if (result.code === "CIEID_OPERATION_CANCEL") {
+              machineRef.send({ type: "back" });
             } else {
-              handleAuthenticationFailure(result);
+              sendErrorToMachine(
+                new Error(result.code, { cause: result.message })
+              );
             }
           },
           cieIdEnvironment
@@ -102,7 +84,12 @@ export const useCieIdApp = (): CieIdHookResult => {
           .catch(handleAuthenticationFailure);
       }
     },
-    [handleAuthenticationFailure, cieIdEnvironment]
+    [
+      handleAuthenticationFailure,
+      sendErrorToMachine,
+      machineRef,
+      cieIdEnvironment
+    ]
   );
 
   useEffect(() => {
