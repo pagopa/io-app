@@ -39,9 +39,13 @@ export const CgnDiscountExpireProgressBar = ({
     "mm:ss"
   );
 
+  // Guard against a non-positive total (e.g. an already expired OTP), which would yield NaN/Infinity
+  const progressPercentage =
+    secondsExpirationTotal > 0 ? seconds / secondsExpirationTotal : 0;
+
   return (
     <View style={{ alignContent: "center" }}>
-      <ProgressBar progressPercentage={seconds / secondsExpirationTotal} />
+      <ProgressBar progressPercentage={progressPercentage} />
       <VSpacer size={8} />
       <View style={{ flexDirection: "row", justifyContent: "center" }}>
         <BodySmall color={colors.text.content.default} weight="Regular">
