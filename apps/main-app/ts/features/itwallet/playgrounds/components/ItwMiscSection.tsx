@@ -14,10 +14,12 @@ import { isTourCompletedSelector } from "../../../tour/store/selectors";
 import {
   itwResetEngagementScreenShown,
   itwSetDiscoverMoreCEDEnabled,
+  itwSetUpgradeCredentialsBannerLocallyEnabled,
   itwSetWhatsNewLocallyEnabled
 } from "../../common/store/actions/preferences.ts";
 import {
   itwIsDiscoverMoreCEDLocallyEnabledSelector,
+  itwIsUpgradeCredentialsBannerLocallyEnabledSelector,
   itwIsWhatsNewLocallyEnabledSelector
 } from "../../common/store/selectors/preferences";
 import { itwIsEngagementScreenShownSelector } from "../../loginEngagement/store/selectors";
@@ -35,6 +37,9 @@ export const ItwMiscSection = () => {
   );
   const isWhatsNewLocallyEnabled = useIOSelector(
     itwIsWhatsNewLocallyEnabledSelector
+  );
+  const isUpgradeCredentialsBannerLocallyEnabled = useIOSelector(
+    itwIsUpgradeCredentialsBannerLocallyEnabledSelector
   );
 
   const isTourCompleted = useIOSelector(state =>
@@ -96,6 +101,15 @@ export const ItwMiscSection = () => {
           dispatch(itwSetDiscoverMoreCEDEnabled(value))
         }
         value={isDiscoverMoreCEDEnabled}
+      />
+      <ListItemHeader label="Upgrade documenti" />
+      <ListItemSwitch
+        description="Se abilitato, il banner per aggiornare i documenti viene mostrato anche con il flag remoto disattivato."
+        label="Banner aggiornamento documenti"
+        onSwitchValueChange={value =>
+          dispatch(itwSetUpgradeCredentialsBannerLocallyEnabled(value))
+        }
+        value={isUpgradeCredentialsBannerLocallyEnabled}
       />
     </View>
   );

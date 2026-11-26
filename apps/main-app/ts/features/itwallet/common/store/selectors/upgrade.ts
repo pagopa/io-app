@@ -3,17 +3,43 @@ import { isConnectedSelector } from "../../../../connectivity/store/selectors";
 import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
 import {
   itwAreEidAndAnyCredentialExpiredSelector,
-  itwCredentialsEidStatusSelector
+  itwCredentialsEidStatusSelector,
+  itwCredentialsTypesSelector
 } from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
-import { itwIsWalletDiscoveryBannerVisibleSelector } from "./banners";
+import {
+  itwIsBannerVisibleSelector,
+  itwIsWalletDiscoveryBannerVisibleSelector
+} from "./banners";
 import {
   itwIsL2FallbackSelector,
   itwIsL3EnabledSelector,
   itwShouldRenderNewItWalletSelector
 } from "./index";
-import { itwIsActivationDisabledSelector } from "./preferences";
-import { isItwEnabledSelector } from "./remoteConfig";
+import {
+  itwCredentialUpgradeFailedSelector,
+  itwIsActivationDisabledSelector,
+  itwIsUpgradeCredentialsBannerLocallyEnabledSelector
+} from "./preferences";
+import {
+  isItwEnabledSelector,
+  isItwUpgradeCredentialsBannerEnabledSelector
+} from "./remoteConfig";
+
+const isUpgradeCredentialsBannerVisible =
+  itwIsBannerVisibleSelector("upgradeCredentials");
+
+export const itwShouldRenderUpgradeCredentialsBannerSelector = (
+  state: GlobalState
+) =>
+  (isItwUpgradeCredentialsBannerEnabledSelector(state) ||
+    itwIsUpgradeCredentialsBannerLocallyEnabledSelector(state)) &&
+  itwLifecycleIsITWalletValidSelector(state) &&
+  itwCredentialsEidStatusSelector(state) === "valid" &&
+  isUpgradeCredentialsBannerVisible(state) &&
+  itwCredentialUpgradeFailedSelector(state).some(type =>
+    itwCredentialsTypesSelector(state).includes(type)
+  );
 
 /*
  * Selectors for the upgrade from Documenti su IO (L2) to IT-Wallet (L3).
