@@ -25,11 +25,9 @@ import {
   loadNextPageMessages,
   loadPreviousPageMessages,
   reloadAllMessages,
-  requestAutomaticMessagesRefresh,
   setShownMessageCategoryAction,
   upsertMessageStatusAttributes
 } from "../../actions";
-import { reduceAutomaticMessageRefreshRequest } from "./automaticMessagesRefresh.ts";
 import { reduceLoadNextPage } from "./loadNextPage.ts";
 import { reduceLoadPreviousPage } from "./loadPreviousPage.ts";
 import { reduceReloadAll } from "./reloadAll.ts";
@@ -74,8 +72,6 @@ const reducer = (
     case getType(reloadAllMessages.success):
       return reduceReloadAll(state, action);
 
-    case getType(requestAutomaticMessagesRefresh):
-      return reduceAutomaticMessageRefreshRequest(state, action);
     case getType(setShownMessageCategoryAction):
       return {
         ...state,
@@ -108,6 +104,9 @@ export const isLoadingOrUpdatingInbox = (state: GlobalState) => {
 
 export const shownMessageCategorySelector = (state: GlobalState) =>
   state.entities.messages.allPaginated.shownCategory;
+
+export const allPaginatedSelector = (state: GlobalState) =>
+  state.entities.messages.allPaginated;
 
 export const messageListForCategorySelector = (
   state: GlobalState,
