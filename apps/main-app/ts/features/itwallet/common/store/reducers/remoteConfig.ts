@@ -28,10 +28,12 @@ const reducer = (
   }
 };
 
-const CURRENT_REDUX_ITW_REMOTE_CONFIG_STORE_VERSION = 0;
+const CURRENT_REDUX_ITW_REMOTE_CONFIG_STORE_VERSION = 1;
 
 export const migrations: MigrationManifest = {
-  "0": state => (state ? { ...state, discover_more_ced: undefined } : state)
+  "0": state => (state ? { ...state, discover_more_ced: undefined } : state),
+  "1": state =>
+    state ? { ...state, upgrade_credentials_banner_visible: false } : state
 };
 
 const itwCredentialsPersistConfig: PersistConfig = {

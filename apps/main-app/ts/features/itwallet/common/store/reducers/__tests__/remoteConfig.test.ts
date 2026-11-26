@@ -32,6 +32,19 @@ describe("ITW remote config persist shape", () => {
 });
 
 describe("ITW remote config migration", () => {
+  test("keeps the upgrade banner disabled until the remote config is refreshed", async () => {
+    const previousState = {
+      enabled: true,
+      feedback_banner_visible: true,
+      _persist: { version: 0, rehydrated: true }
+    };
+
+    await expect(createMigrate(migrations)(previousState, 1)).resolves.toEqual({
+      ...previousState,
+      upgrade_credentials_banner_visible: false
+    });
+  });
+
   test("leaves CED opportunities disabled while preserving the previous remote configuration", async () => {
     const previousState = {
       enabled: true,

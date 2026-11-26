@@ -1689,6 +1689,11 @@
           "title": "Documento in arrivo"
         },
         "upgrade": {
+          "banner": {
+            "action": "Ho capito",
+            "content": "Grazie per aver attivato IT-Wallet! Premi su un documento per aggiornarlo alle nuove funzionalità.",
+            "title": "Ora puoi aggiornare i tuoi documenti"
+          },
           "failure": {
             "primaryAction": "Esplora IT-Wallet",
             "subtitle": "Il tuo IT-Wallet è pronto ma un errore tecnico sui sistemi dell’ente che emette la versione digitale dei documenti ne ha impedito l’aggiornamento. Prova ad aggiungere di nuovo i documenti.",

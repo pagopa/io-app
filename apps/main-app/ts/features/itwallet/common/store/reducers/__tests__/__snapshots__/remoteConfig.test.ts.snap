@@ -136,6 +136,7 @@ exports[`ITW remote config persist shape should freeze ItwConfig [if this test f
       },
     ],
     "showcase_url": "string",
+    "upgrade_credentials_banner_visible": "boolean",
     "wallet_activation_disabled": "boolean",
     "whats_new": [
       {},
