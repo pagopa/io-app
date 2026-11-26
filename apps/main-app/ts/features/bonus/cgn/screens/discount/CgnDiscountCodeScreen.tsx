@@ -80,9 +80,14 @@ const CgnDiscountCodeScreen = () => {
     }
   }, [discountOtp]);
 
-  if (isDiscountCodeExpired) {
+  useEffect(() => {
     // reset discount code if expired to avoid showing it again when server is down
-    dispatch(resetMerchantDiscountCode());
+    if (isDiscountCodeExpired) {
+      dispatch(resetMerchantDiscountCode());
+    }
+  }, [dispatch, isDiscountCodeExpired]);
+
+  if (isDiscountCodeExpired) {
     return (
       <OperationResultScreenContent
         action={{
