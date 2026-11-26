@@ -1425,7 +1425,7 @@
           "description": {
             "l2-issuance": "È un passaggio necessario per garantire la sicurezza dei tuoi dati.",
             "l2-reissuance": "È un passaggio necessario per continuare ad usare Documenti su IO senza limitazioni.",
-            "l3-issuance": "È un passaggio di sicurezza necessario per associare i documenti digitali alla tua identità.",
+            "l3-issuance": "È un passaggio di sicurezza necessario per associare i documenti digitali alla tua identità. Tieni la CIE a portata di mano.",
             "l3-reissuance": "È un passaggio necessario per continuare ad usare IT-Wallet senza limitazioni."
           },
           "frequency": {
@@ -1612,11 +1612,11 @@
               "title": "Il tuo portafoglio IT-Wallet è pronto!",
               "withDocuments": {
                 "primaryAction": "Aggiungi documento",
-                "subtitle": "Scopri i nuovi documenti e aggiungili al tuo Portafoglio."
+                "subtitle": "Ora puoi aggiungere i nuovi documenti disponibili!"
               },
               "withoutDocuments": {
                 "primaryAction": "Esplora IT-Wallet",
-                "subtitle": "Ora hai accesso ai vantaggi del nuovo portafoglio digitale."
+                "subtitle": "Ora puoi aggiungere il tuo primo documento digitale su IO!"
               }
             },
             "primaryAction": "Aggiungi primo documento",
@@ -1632,9 +1632,9 @@
         },
         "emptyWallet": {
           "readyBanner": {
-            "action": "Aggiungi documento",
-            "content": "Ti bastano pochi secondi per avere i tuoi documenti personali sempre a portata di mano!",
-            "title": "Aggiungi il tuo primo documento"
+            "action": "Completa il portafoglio",
+            "content": "Arricchiscilo con i nuovi documenti disponibili per averli sempre a portata di mano!",
+            "title": "Ottieni il massimo dal tuo portafoglio IT-Wallet"
           },
           "readyBannerL2": {
             "content": "Ora puoi aggiungere il primo documento al Portafoglio di IO.",
@@ -2066,7 +2066,7 @@
           },
           "expirationDateInfo": {
             "accessibilityLabel": "Informazioni sulla data di scadenza",
-            "content": "La validità del portafoglio IT-Wallet dipende dal metodo di attivazione che hai scelto. In prossimità della scadenza riceverai istruzioni in app per confermare di nuovo la tua identità.",
+            "content": "È la data di scadenza del portafoglio IT-Wallet e dipende dal metodo di attivazione che hai scelto. In prossimità di questa data riceverai istruzioni in app per confermare la tua identità e mantenere la funzionalità attiva.",
             "primaryAction": "Ho capito",
             "title": "Cosa significa?"
           },
@@ -2513,6 +2513,12 @@
           },
           "releasedBy": "Emissione versione digitale",
           "releasedByPid": "Emissione IT-Wallet ID"
+        }
+      },
+      "wallet": {
+        "addCredentialButton": {
+          "accessibilityLabel": "Aggiungi un documento",
+          "label": "Aggiungi"
         }
       },
       "walletInstanceRevoked": {

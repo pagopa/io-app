@@ -1,5 +1,6 @@
 import { SagaIterator } from "redux-saga";
 import {
+  call,
   fork,
   put,
   select,
@@ -34,6 +35,7 @@ import {
   handleClearAttachment
 } from "./handleClearAttachments";
 import { handleDownloadAttachment } from "./handleDownloadAttachment";
+import { handleInterruptedMessageListRequests } from "./handleInterruptedMessageListRequests";
 import { handleLoadMessageById } from "./handleLoadMessageById";
 import { handleLoadMessageData } from "./handleLoadMessageData";
 import { handleLoadMessageDetails } from "./handleLoadMessageDetails";
@@ -116,6 +118,8 @@ export function* watchMessagesSaga(): SagaIterator {
 
   // Signal that message's sagas are ready
   yield* put(setMessageSagasRegisteredAction());
+
+  yield* call(handleInterruptedMessageListRequests);
 
   const retryDataOrUndefined = yield* select(
     retryDataAfterFastLoginSessionExpirationSelector

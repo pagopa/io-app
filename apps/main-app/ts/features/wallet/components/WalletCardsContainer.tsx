@@ -81,16 +81,16 @@ const WalletCardsContainer = () => {
         {shouldRenderItwDiscoveryBanner && (
           <ItwDiscoveryBanner style={{ marginVertical: 8 }} />
         )}
-        {isActivationSuccessFeedbackBannerVisible &&
-          activationSuccessFeedbackBannerData && (
-            <ItwActivationSuccessFeedbackBanner
-              authMethod={activationSuccessFeedbackBannerData.authMethod}
-              docStatus={activationSuccessFeedbackBannerData.docStatus}
-              style={{ marginVertical: 8 }}
-            />
-          )}
         <View style={styles.walletContent} testID="walletCardsContainerTestID">
           {shouldRenderItwCardsContainer && <ItwWalletCardsContainer />}
+          {/* Below the IT-Wallet cards so it does not push down the wallet ready banner */}
+          {isActivationSuccessFeedbackBannerVisible &&
+            activationSuccessFeedbackBannerData && (
+              <ItwActivationSuccessFeedbackBanner
+                authMethod={activationSuccessFeedbackBannerData.authMethod}
+                docStatus={activationSuccessFeedbackBannerData.docStatus}
+              />
+            )}
           <OtherWalletCardsContainer />
         </View>
       </>

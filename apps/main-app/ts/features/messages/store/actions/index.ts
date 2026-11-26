@@ -292,10 +292,6 @@ export const setShownMessageCategoryAction = createStandardAction(
   "SET_SHOWN_MESSAGE_CATEGORY"
 )<MessageListCategory>();
 
-export const requestAutomaticMessagesRefresh = createStandardAction(
-  "REQUEST_AUTOMATIC_MESSAGE_REFRESH"
-)<MessageListCategory>();
-
 export const setMessageSagasRegisteredAction = createStandardAction(
   "SET_MESSAGE_SAGAS_REGISTERED"
 )();
@@ -333,7 +329,6 @@ export type MessagesActions = ActionType<
   | typeof reloadAllMessages
   | typeof removeCachedAttachment
   | typeof removeScheduledMessageArchivingAction
-  | typeof requestAutomaticMessagesRefresh
   | typeof resetGetMessageDataAction
   | typeof resetMessageArchivingAction
   | typeof retrievingDataPreconditionStatusAction

@@ -486,7 +486,7 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                                 </View>
                               </View>
                               <View
-                                accessibilityLabel="Aggiungi documento"
+                                accessibilityLabel="Completa il portafoglio"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -540,7 +540,7 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                                     ]
                                   }
                                 >
-                                  Aggiungi documento
+                                  Completa il portafoglio
                                 </Text>
                               </View>
                             </View>
@@ -1068,8 +1068,8 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                       <View
                         style={
                           {
+                            "marginBottom": 16,
                             "marginHorizontal": 0,
-                            "marginTop": 16,
                           }
                         }
                       >
@@ -1172,7 +1172,7 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                               }
                             >
                               <View
-                                accessibilityLabel="Aggiungi il tuo primo documento Ti bastano pochi secondi per avere i tuoi documenti personali sempre a portata di mano!"
+                                accessibilityLabel="Ottieni il massimo dal tuo portafoglio IT-⁠Wallet Arricchiscilo con i nuovi documenti disponibili per averli sempre a portata di mano!"
                                 accessibilityRole="text"
                                 accessible={true}
                                 style={
@@ -1209,7 +1209,7 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                                       ]
                                     }
                                   >
-                                    Aggiungi il tuo primo documento
+                                    Ottieni il massimo dal tuo portafoglio IT-⁠Wallet
                                   </Text>
                                   <Text
                                     accessible={false}
@@ -1230,12 +1230,12 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                                       ]
                                     }
                                   >
-                                    Ti bastano pochi secondi per avere i tuoi documenti personali sempre a portata di mano!
+                                    Arricchiscilo con i nuovi documenti disponibili per averli sempre a portata di mano!
                                   </Text>
                                 </View>
                               </View>
                               <View
-                                accessibilityLabel="Aggiungi documento"
+                                accessibilityLabel="Completa il portafoglio"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -1289,7 +1289,7 @@ exports[`ItwWalletReadyBanner should render the expected banner when isItWallet 
                                     ]
                                   }
                                 >
-                                  Aggiungi documento
+                                  Completa il portafoglio
                                 </Text>
                               </View>
                             </View>

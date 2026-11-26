@@ -39,6 +39,7 @@ import {
 import { ItwDiscoveryBanner } from "../../discovery/components/ItwDiscoveryBanner.tsx";
 import { ItwNonDismissibleUpgradeBanner } from "../../discovery/components/ItwNonDismissibleUpgradeBanner.tsx";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { ITW_ROUTES } from "../../navigation/routes";
 import { useItwGuidedTour } from "../../tour/hooks/useItwGuidedTour.ts";
 import {
   ITW_TOUR_GROUP_ID,
@@ -68,6 +69,8 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
     shouldRenderDocSuIOEngagementBannerSelector
   );
   const isItWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const shouldRenderItwWalletReadyBanner =
+    !shouldRenderDocSuIOEngagementBanner && !shouldRenderUpgradeBanner;
   const shouldRenderUpgradeCredentialsBanner = useIOSelector(
     itwShouldRenderUpgradeCredentialsBannerSelector
   );
@@ -116,11 +119,29 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
       return (
         <>
           <ListItemHeader
+            endElement={{
+              type: "buttonLink",
+              componentProps: {
+                accessibilityLabel: I18n.t(
+                  "features.itWallet.wallet.addCredentialButton.accessibilityLabel"
+                ),
+                label: I18n.t(
+                  "features.itWallet.wallet.addCredentialButton.label"
+                ),
+                onPress: () =>
+                  navigation.navigate(ITW_ROUTES.MAIN, {
+                    screen: ITW_ROUTES.L3_ONBOARDING
+                  }),
+                testID: "walletCardsCategoryItwAddButtonTestID"
+              }
+            }}
             label={I18n.t("features.wallet.cards.categories.itw")}
             testID={"walletCardsCategoryItwIdCardHeaderTestID"}
           />
+          {/* The wallet ready banner sits above the PID card to promote the catalog */}
+          {shouldRenderItwWalletReadyBanner && <ItwWalletReadyBanner />}
           {/* IT-Wallet renders the PID card below the header */}
-          <View style={styles.cardsWrapper}>
+          <View style={styles.cardsWrapper} testID="itwWalletIdCardTestID">
             <ItwWalletIdCard isStacked={hasCards} />
           </View>
         </>
@@ -159,7 +180,9 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
     eidInfoBottomSheet.present,
     iconColor,
     isItWalletValid,
-    isNewItwRenderable
+    isNewItwRenderable,
+    navigation,
+    shouldRenderItwWalletReadyBanner
   ]);
 
   const eidLifecycleAlert = shouldHideEidAlert ? null : (
@@ -216,7 +239,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
 
         {shouldRenderDocSuIOEngagementBanner && <DocSuIOEngagementBanner />}
 
-        {!shouldRenderDocSuIOEngagementBanner && !shouldRenderUpgradeBanner && (
+        {!isNewItwRenderable && shouldRenderItwWalletReadyBanner && (
           <ItwWalletReadyBanner />
         )}
       </View>
