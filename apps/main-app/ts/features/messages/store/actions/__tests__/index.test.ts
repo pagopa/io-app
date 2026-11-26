@@ -19,7 +19,6 @@ import {
   loadThirdPartyMessage,
   reloadAllMessages,
   removeCachedAttachment,
-  requestAutomaticMessagesRefresh,
   resetGetMessageDataAction,
   setMessageSagasRegisteredAction,
   setShownMessageCategoryAction,
@@ -708,16 +707,6 @@ describe("index", () => {
       it(`should match expected type and payload (category ${category})`, () => {
         const action = setShownMessageCategoryAction(category);
         expect(action.type).toBe("SET_SHOWN_MESSAGE_CATEGORY");
-        expect(action.payload).toBe(category);
-      });
-    });
-  });
-
-  describe("requestAutomaticMessagesRefresh", () => {
-    (["INBOX", "ARCHIVE"] as const).forEach(category => {
-      it(`should match expected type and payload (category ${category})`, () => {
-        const action = requestAutomaticMessagesRefresh(category);
-        expect(action.type).toBe("REQUEST_AUTOMATIC_MESSAGE_REFRESH");
         expect(action.payload).toBe(category);
       });
     });
