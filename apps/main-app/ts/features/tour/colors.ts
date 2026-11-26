@@ -9,16 +9,12 @@ import {
  * Guided tour colors of a mode. Read the current mode's with
  * `useFeatureColors(tourColors)`
  */
-export const tourColors = (s: IOColorTheme, mode: IOColorMode) => ({
+export const tourColors = (_: IOColorTheme, mode: IOColorMode) => ({
   /** Backdrop dimming the screen around the cutout */
   overlay: {
     background:
       mode === "dark"
         ? withAlpha(IOColorPalette.greyscale.black, 0.9)
         : withAlpha(IOColorPalette.greyscale.black, 0.5)
-  },
-  /** Hole over the highlighted element */
-  cutout: {
-    border: s.stroke.default
   }
 });
