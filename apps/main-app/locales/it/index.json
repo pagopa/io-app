@@ -2059,6 +2059,12 @@
               "title": "Vuoi davvero disattivare IT-Wallet?"
             }
           },
+          "expirationDateInfo": {
+            "accessibilityLabel": "Informazioni sulla data di scadenza",
+            "content": "La validità del portafoglio IT-Wallet dipende dal metodo di attivazione che hai scelto. In prossimità della scadenza riceverai istruzioni in app per confermare di nuovo la tua identità.",
+            "primaryAction": "Ho capito",
+            "title": "Cosa significa?"
+          },
           "listItemHeader": "Dati del tuo IT-Wallet ID",
           "listItemHeaderHideValues": "Nascondi dati del tuo IT-⁠Wallet ID",
           "listItemHeaderShowValues": "Mostra dati del tuo IT-Wallet ID"

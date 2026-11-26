@@ -1,15 +1,23 @@
 /* eslint-disable functional/no-let */
-import { isCieIdAvailable, openCieIdApp } from "@pagopa/io-react-native-cieid";
-import { fireEvent, waitFor } from "@testing-library/react-native";
+import {
+  CieIdErrorResult,
+  isCieIdAvailable,
+  openCieIdApp
+} from "@pagopa/io-react-native-cieid";
+import { fireEvent, renderHook, waitFor } from "@testing-library/react-native";
 import _ from "lodash";
 import { Linking } from "react-native";
 import { createStore } from "redux";
 import { ActorRefFrom, createActor } from "xstate";
 
+import * as Mixpanel from "../../../../../../mixpanel";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { ITW_ISSUANCE_ERRORS_EVENTS } from "../../../../issuance/analytics/enum";
+import { useEidEventsTracking } from "../../../../issuance/hooks/useEidEventsTracking";
+import { IssuanceFailureType } from "../../../../machine/eid/failure";
 import { itwEidIssuanceMachine } from "../../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../../machine/eid/provider";
 import { testEidIssuanceDeps } from "../../../../machine/utils/testDeps";
@@ -45,7 +53,100 @@ jest.mock("../../../../../../utils/platform", () => ({
 }));
 
 describe("ItwCieIdLoginScreen", () => {
-  afterEach(jest.clearAllMocks);
+  afterEach(() => {
+    jest.clearAllMocks();
+    jest.mocked(openCieIdApp).mockReset();
+    jest.restoreAllMocks();
+  });
+
+  const simulateCieIdError = (
+    code: CieIdErrorResult["code"],
+    message?: CieIdErrorResult["message"]
+  ) => {
+    jest.mocked(isCieIdAvailable).mockReturnValue(true);
+    jest.mocked(openCieIdApp).mockImplementation((_url, callback) => {
+      callback({ id: "ERROR", code, message, userInfo: null });
+    });
+    mockIsAndroid = true;
+    mockIsIOS = false;
+
+    const { getByTestId, getFailure } = renderComponent();
+    fireEvent(getByTestId("cieid-webview"), "onShouldStartLoadWithRequest", {
+      url: "https://idserver.servizicie.interno.gov.it/idp/login/livello2"
+    });
+    return getFailure();
+  };
+
+  it.each([
+    { message: "IDP_HTTP_ERROR" as const, expectedMessage: "IDP_HTTP_ERROR" },
+    { message: undefined, expectedMessage: undefined }
+  ])(
+    "forwards the native error to Mixpanel (message: $message)",
+    ({ message, expectedMessage }) => {
+      const mixpanelTrack = jest
+        .spyOn(Mixpanel, "mixpanelTrack")
+        .mockImplementation();
+
+      const failure = simulateCieIdError("AUTHENTICATION_ERROR", message);
+      expect(failure?.type).toBe(IssuanceFailureType.UNEXPECTED);
+      if (!failure) {
+        throw new Error("Expected CieID authentication to fail");
+      }
+
+      renderHook(() =>
+        useEidEventsTracking({
+          credential: "ITW_ID",
+          failure,
+          identification: { mode: "cieId", level: "L2" },
+          issuanceLevel: "l3"
+        })
+      );
+
+      expect(mixpanelTrack).toHaveBeenCalledWith(
+        ITW_ISSUANCE_ERRORS_EVENTS.ITW_ID_REQUEST_UNEXPECTED_FAILURE,
+        expect.objectContaining({
+          reason: {
+            code: "UNEXPECTED",
+            errorDescription: "AUTHENTICATION_ERROR",
+            message: expectedMessage
+          }
+        })
+      );
+    }
+  );
+
+  it("maps CIE_NOT_REGISTERED to its dedicated failure", () => {
+    expect(simulateCieIdError("CIE_NOT_REGISTERED", "INVALID_REQUEST")).toEqual(
+      {
+        type: IssuanceFailureType.CIE_NOT_REGISTERED,
+        reason: "CIE_NOT_REGISTERED"
+      }
+    );
+  });
+
+  it("goes back without reporting a failure when CieID is cancelled", () => {
+    jest.mocked(isCieIdAvailable).mockReturnValue(true);
+    jest.mocked(openCieIdApp).mockImplementation((_url, callback) => {
+      callback({
+        id: "ERROR",
+        code: "CIEID_OPERATION_CANCEL",
+        message: "USER_CANCELLED",
+        userInfo: null
+      });
+    });
+    mockIsAndroid = true;
+    mockIsIOS = false;
+
+    const { getByTestId, getFailure, getMachineState } = renderComponent();
+    fireEvent(getByTestId("cieid-webview"), "onShouldStartLoadWithRequest", {
+      url: "https://idserver.servizicie.interno.gov.it/idp/login/livello2"
+    });
+
+    expect(getFailure()).toBeUndefined();
+    expect(getMachineState()).toEqual({
+      UserIdentification: "Identification"
+    });
+  });
 
   it("should continue in the webview when CieID is not installed", () => {
     (isCieIdAvailable as jest.Mock).mockImplementation(() => false);
@@ -154,7 +255,11 @@ const renderComponent = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const logic = itwEidIssuanceMachine.provide({
-    actions: { onInit: jest.fn(), navigateToFailureScreen: jest.fn() }
+    actions: {
+      onInit: jest.fn(),
+      navigateToFailureScreen: jest.fn(),
+      navigateToIdentificationScreen: jest.fn()
+    }
   });
 
   const initialSnapshot = createActor(logic, {
@@ -191,6 +296,7 @@ const renderComponent = () => {
 
   return {
     ...rendered,
-    getFailure: () => machineRef?.getSnapshot().context.failure
+    getFailure: () => machineRef?.getSnapshot().context.failure,
+    getMachineState: () => machineRef?.getSnapshot().value
   };
 };

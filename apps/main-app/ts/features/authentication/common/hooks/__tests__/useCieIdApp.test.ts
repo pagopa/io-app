@@ -167,7 +167,7 @@ describe("useCieIdApp", () => {
 
     it("should call onFailure with the error code when openCieIdApp fails", () => {
       mockedOpenCieIdApp.mockImplementationOnce((_url, callback) => {
-        callback({ id: "ERROR", code: "GENERIC_ERROR" });
+        callback({ id: "ERROR", code: "GENERIC_ERROR", userInfo: null });
       });
 
       const { result } = renderHook(() =>
