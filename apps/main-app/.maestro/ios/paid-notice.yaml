@@ -3,12 +3,7 @@ name: Already paid notice cannot be paid again
 ---
 - runScript: paid-message.js
 - runFlow: shared/login.yaml
-- tapOn:
-    id: wrapped_message_list_item_.*
-    text: ${".*" + output.subject + ".*"}
-- assertVisible:
-    id: message-header-subject
-    text: ${output.subject}
+- runFlow: shared/open-message.yaml
 - scrollUntilVisible:
     element:
       text: ".*Pagato.*"

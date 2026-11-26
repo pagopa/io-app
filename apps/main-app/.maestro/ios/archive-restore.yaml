@@ -28,9 +28,4 @@ name: Archive and restore the same inbox message
     point: "50%,95%"
 - assertVisible:
     id: message_list_inbox
-- tapOn:
-    id: wrapped_message_list_item_.*
-    text: ${".*" + output.subject + ".*"}
-- assertVisible:
-    id: message-header-subject
-    text: ${output.subject}
+- runFlow: shared/open-message.yaml

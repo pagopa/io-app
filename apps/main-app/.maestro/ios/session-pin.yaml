@@ -21,9 +21,4 @@ name: Returning user unlocks the existing session
 - assertNotVisible:
     id: message_list_inbox
 - runFlow: shared/pin.yaml
-- tapOn:
-    id: wrapped_message_list_item_.*
-    text: ${".*" + output.subject + ".*"}
-- assertVisible:
-    id: message-header-subject
-    text: ${output.subject}
+- runFlow: shared/open-message.yaml

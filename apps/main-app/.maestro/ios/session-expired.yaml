@@ -33,9 +33,4 @@ name: An expired session cannot open a protected message until a fresh SPID logi
     visible:
       id: message_list_inbox
     timeout: 30000
-- tapOn:
-    id: wrapped_message_list_item_.*
-    text: ${".*" + output.subject + ".*"}
-- assertVisible:
-    id: message-header-subject
-    text: ${output.subject}
+- runFlow: shared/open-message.yaml

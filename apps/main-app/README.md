@@ -194,8 +194,8 @@ server's simulated SPID page, not a real identity provider. Before each run it
 [creates a message](.maestro/ios/seed-message.js) and looks up its sender, then
 checks the subject, organization and body in the app.
 
-The other flows each start with the same [clean login](.maestro/ios/shared/login.yaml)
-and can run individually:
+Each scenario can run individually. Flows share the [clean login](.maestro/ios/shared/login.yaml)
+and, when opening a seeded message, the [subject check](.maestro/ios/shared/open-message.yaml).
 
 - [Returning session](.maestro/ios/session-pin.yaml): terminate and relaunch
   without clearing data, reject one wrong PIN, then unlock with the correct
