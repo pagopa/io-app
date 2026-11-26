@@ -24,7 +24,7 @@ const Tab = createNativeBottomTabNavigator<MainTabParamsList>();
 const LIQUID_GLASS_IOS_VERSION = 26;
 
 export const MainTabNavigator = () => {
-  const { tabBar } = useFeatureColors(navigationColors);
+  const { screen, tabBar } = useFeatureColors(navigationColors);
   const navigation = useIONavigation();
 
   const startupLoaded = useIOSelector(isStartupLoaded);
@@ -48,6 +48,9 @@ export const MainTabNavigator = () => {
         }
         labeled
         minimizeBehavior="never"
+        screenOptions={{
+          sceneStyle: { backgroundColor: screen.background }
+        }}
         scrollEdgeAppearance="transparent"
         tabBarActiveTintColor={tabBar.foreground.active}
         tabBarHidden={!isArchivingDisabled}
