@@ -27,6 +27,7 @@ import {
   handleClearAttachment
 } from "../handleClearAttachments";
 import { handleDownloadAttachment } from "../handleDownloadAttachment";
+import { handleInterruptedMessageListRequests } from "../handleInterruptedMessageListRequests";
 import { handleLoadMessageById } from "../handleLoadMessageById";
 import { handleLoadMessageData } from "../handleLoadMessageData";
 import { handleLoadMessageDetails } from "../handleLoadMessageDetails";
@@ -97,6 +98,8 @@ describe("watchMessagesSaga", () => {
       .next()
       .put(setMessageSagasRegisteredAction())
       .next()
+      .call(handleInterruptedMessageListRequests)
+      .next()
       .select(retryDataAfterFastLoginSessionExpirationSelector)
       .next(undefined) // Simulate no retry data
       .isDone();
@@ -160,6 +163,8 @@ describe("watchMessagesSaga", () => {
       .takeLeading(addCalendarEventRequest, handleAddCalendarEvent)
       .next()
       .put(setMessageSagasRegisteredAction())
+      .next()
+      .call(handleInterruptedMessageListRequests)
       .next()
       .select(retryDataAfterFastLoginSessionExpirationSelector)
       .next(retryData) // Simulate retry data is present
