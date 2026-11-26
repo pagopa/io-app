@@ -38,6 +38,7 @@ allowBuilds:
   "@swc/core": true
   cbor-extract: true
   core-js: true
+  esbuild: true
   lefthook: true
   nx: true
   tls-impersonate: false

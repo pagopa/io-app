@@ -445,3 +445,5 @@ jest.mock("@bottom-tabs/react-navigation", () => ({
 jest.mock("react-native-bottom-tabs", () => ({
   useBottomTabBarHeight: jest.fn(() => 0)
 }));
+
+jest.mock("@io-app/expo-xstate-inspector", () => ({ inspect: undefined }));
