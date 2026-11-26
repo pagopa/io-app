@@ -245,6 +245,52 @@ describe("WalletCardsContainer", () => {
       }
     }
   );
+
+  it("should render the activation success feedback banner below the IT-Wallet cards", () => {
+    jest
+      .spyOn(walletSelectors, "shouldRenderWalletLoadingStateSelector")
+      .mockImplementation(() => false);
+    jest
+      .spyOn(walletSelectors, "shouldRenderWalletEmptyStateSelector")
+      .mockImplementation(() => false);
+    jest
+      .spyOn(walletSelectors, "shouldRenderItwCardsContainerSelector")
+      .mockImplementation(() => true);
+    jest
+      .spyOn(walletSelectors, "selectWalletOtherCards")
+      .mockImplementation(() => [T_CARDS["1"]]);
+    jest
+      .spyOn(
+        itwBannersSelectors,
+        "itwIsActivationSuccessFeedbackBannerVisibleSelector"
+      )
+      .mockImplementation(() => true);
+    jest
+      .spyOn(
+        itwPreferencesSelectors,
+        "itwWalletActivationFeedbackBannerDataSelector"
+      )
+      .mockImplementation(() => ({
+        authMethod: "spid",
+        docStatus: "not_active"
+      }));
+
+    const sectionTestIDs = [
+      "itwWalletCardsSectionTestID",
+      "itwActivationSuccessFeedbackBannerTestID",
+      "otherWalletCardsSectionTestID"
+    ];
+    const { UNSAFE_root } = renderComponent(<WalletCardsContainer />);
+    const renderedOrder = _.uniq(
+      UNSAFE_root.findAll(
+        node =>
+          typeof node.type === "string" &&
+          sectionTestIDs.includes(node.props.testID)
+      ).map(node => node.props.testID)
+    );
+
+    expect(renderedOrder).toEqual(sectionTestIDs);
+  });
 });
 
 describe("ItwWalletCardsContainer", () => {
@@ -425,6 +471,44 @@ describe("ItwWalletCardsContainer", () => {
     expect(queryByTestId("walletCardsCategoryItwHeaderTestID")).toBeNull();
 
     newItWalletSpy.mockRestore();
+  });
+
+  it("should render the wallet ready banner above the IT-Wallet ID card", () => {
+    jest
+      .spyOn(walletSelectors, "shouldRenderItwCardsContainerSelector")
+      .mockReturnValue(true);
+    jest
+      .spyOn(itwSelectors, "itwShouldRenderNewItWalletSelector")
+      .mockReturnValue(true);
+    jest
+      .spyOn(itwSelectors, "itwShouldRenderWalletReadyBannerSelector")
+      .mockReturnValue(true);
+    jest
+      .spyOn(itwSelectors, "shouldRenderDocSuIOEngagementBannerSelector")
+      .mockReturnValue(false);
+    jest
+      .spyOn(itwUpgradeSelectors, "itwShouldRenderUpgradeBannerSelector")
+      .mockReturnValue(false);
+    jest
+      .spyOn(walletSelectors, "selectWalletCardsByCategory")
+      .mockReturnValue([]);
+
+    // Documenti header → wallet ready banner → IT-Wallet ID card
+    const expectedOrder = [
+      "walletCardsCategoryItwIdCardHeaderTestID",
+      "itwWalletReadyBannerTestID",
+      "itwWalletIdCardTestID"
+    ];
+    const { UNSAFE_root } = renderComponent(<ItwWalletCardsContainer />);
+    const renderedOrder = _.uniq(
+      UNSAFE_root.findAll(
+        node =>
+          typeof node.type === "string" &&
+          expectedOrder.includes(node.props.testID)
+      ).map(node => node.props.testID)
+    );
+
+    expect(renderedOrder).toEqual(expectedOrder);
   });
 
   it.each([
