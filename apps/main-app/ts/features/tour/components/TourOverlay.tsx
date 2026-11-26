@@ -26,6 +26,7 @@
  * the displayed step indicator and controls in sync with the visual
  * transition.
  */
+import { IOThemeContextProvider } from "@io-app/design-system";
 import {
   Canvas,
   Group,
@@ -39,7 +40,6 @@ import Animated, {
   cancelAnimation,
   Easing,
   useAnimatedStyle,
-  useDerivedValue,
   useSharedValue,
   withTiming
 } from "react-native-reanimated";
@@ -65,8 +65,6 @@ import { useTourContext } from "./TourProvider";
 import { TourTooltip } from "./TourTooltip";
 
 const CUTOUT_BORDER_RADIUS = 8;
-const CUTOUT_BORDER_WIDTH = 1;
-const CUTOUT_BORDER_INSET = CUTOUT_BORDER_WIDTH / 2;
 const ANIMATION_DURATION = 350;
 const STEP_EASING = Easing.inOut(Easing.quad);
 
@@ -132,14 +130,6 @@ export const TourOverlay = () => {
   const cutoutR = useSharedValue(CUTOUT_BORDER_RADIUS);
 
   const colors = useFeatureColors(tourColors);
-  // Inset the stroke by half its width so it stays inside the cutout
-  const borderX = useDerivedValue(() => cutoutX.value + CUTOUT_BORDER_INSET);
-  const borderY = useDerivedValue(() => cutoutY.value + CUTOUT_BORDER_INSET);
-  const borderW = useDerivedValue(() => cutoutW.value - CUTOUT_BORDER_WIDTH);
-  const borderH = useDerivedValue(() => cutoutH.value - CUTOUT_BORDER_WIDTH);
-  const borderR = useDerivedValue(() =>
-    Math.max(cutoutR.value - CUTOUT_BORDER_INSET, 0)
-  );
 
   // When tour becomes active, mount the overlay and reset state
   useEffect(() => {
@@ -493,34 +483,25 @@ export const TourOverlay = () => {
             />
           </Group>
         </Group>
-        <Group opacity={cutoutOpacity}>
-          <RoundedRect
-            color={colors.cutout.border}
-            height={borderH}
-            r={borderR}
-            strokeWidth={CUTOUT_BORDER_WIDTH}
-            style="stroke"
-            width={borderW}
-            x={borderX}
-            y={borderY}
-          />
-        </Group>
       </Canvas>
       {tooltipReady && tooltipConfig && (
-        <TourTooltip
-          cutoutH={cutoutH}
-          cutoutW={cutoutW}
-          cutoutX={cutoutX}
-          cutoutY={cutoutY}
-          description={tooltipConfig.description}
-          onBack={handleBack}
-          onNext={handleNext}
-          onSkip={handleSkip}
-          opacity={cutoutOpacity}
-          stepIndex={stepIndex}
-          title={tooltipConfig.title}
-          totalSteps={items.length}
-        />
+        // Force light mode even in dark mode
+        <IOThemeContextProvider theme="light">
+          <TourTooltip
+            cutoutH={cutoutH}
+            cutoutW={cutoutW}
+            cutoutX={cutoutX}
+            cutoutY={cutoutY}
+            description={tooltipConfig.description}
+            onBack={handleBack}
+            onNext={handleNext}
+            onSkip={handleSkip}
+            opacity={cutoutOpacity}
+            stepIndex={stepIndex}
+            title={tooltipConfig.title}
+            totalSteps={items.length}
+          />
+        </IOThemeContextProvider>
       )}
     </Animated.View>
   );

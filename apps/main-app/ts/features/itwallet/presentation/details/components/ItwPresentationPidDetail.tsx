@@ -1,4 +1,11 @@
-import { Divider, ListItemHeader } from "@io-app/design-system";
+import {
+  Divider,
+  IOButton,
+  IOMarkdownLite,
+  ListItemHeader,
+  ListItemInfo,
+  VStack
+} from "@io-app/design-system";
 import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useMemo } from "react";
@@ -7,6 +14,7 @@ import { Fragment } from "react/jsx-runtime";
 
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { ItwCredentialClaim } from "../../../common/components/ItwCredentialClaim";
 import { ItwEidLifecycleAlert } from "../../../common/components/ItwEidLifecycleAlert";
 import { ItwIssuanceMetadata } from "../../../common/components/ItwIssuanceMetadata";
@@ -27,6 +35,38 @@ export const ItwPresentationPidDetail = ({ credential }: Props) => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const { name: currentScreenName } = useRoute();
+  const expirationDateInfo = useIOBottomSheetModal({
+    title: I18n.t(
+      "features.itWallet.presentation.itWalletId.expirationDateInfo.title"
+    ),
+    component: (
+      <VStack space={24}>
+        <IOMarkdownLite
+          content={I18n.t(
+            "features.itWallet.presentation.itWalletId.expirationDateInfo.content"
+          )}
+        />
+        <IOButton
+          fullWidth
+          label={I18n.t(
+            "features.itWallet.presentation.itWalletId.expirationDateInfo.primaryAction"
+          )}
+          onPress={() => expirationDateInfo.dismiss()}
+          variant="solid"
+        />
+      </VStack>
+    )
+  });
+  const expirationDateEndElement: ListItemInfo["endElement"] = {
+    type: "iconButton",
+    componentProps: {
+      accessibilityLabel: I18n.t(
+        "features.itWallet.presentation.itWalletId.expirationDateInfo.accessibilityLabel"
+      ),
+      icon: "info",
+      onPress: expirationDateInfo.present
+    }
+  };
 
   const listItemHeaderLabel = I18n.t(
     "features.itWallet.presentation.itWalletId.listItemHeader"
@@ -75,11 +115,17 @@ export const ItwPresentationPidDetail = ({ credential }: Props) => {
       {claims.map((claim, index) => (
         <Fragment key={claim.id}>
           {index !== 0 && <Divider />}
-          <ItwCredentialClaim claim={claim} hidden={claimsHidden} isPreview />
+          <ItwCredentialClaim
+            claim={claim}
+            endElement={expirationDateEndElement}
+            hidden={claimsHidden}
+            isPreview
+          />
         </Fragment>
       ))}
       {claims.length > 0 && <Divider />}
       <ItwIssuanceMetadata credential={credential} />
+      {expirationDateInfo.bottomSheet}
     </View>
   );
 };
