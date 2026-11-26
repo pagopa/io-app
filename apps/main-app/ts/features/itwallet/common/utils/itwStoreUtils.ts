@@ -90,7 +90,7 @@ export const serializeFailureReason = (
 const createReasonObject = (errorDescription: string, message?: string) => ({
   code: "UNEXPECTED",
   errorDescription,
-  ...(message && { message })
+  message
 });
 
 /**
@@ -100,7 +100,7 @@ const createReasonObject = (errorDescription: string, message?: string) => ({
  * as-is.
  */
 const mapFailureReason = (reason: unknown) => {
-  if (!reason) {
+  if (reason === undefined || reason === null) {
     return createReasonObject("Reason not provided");
   }
 
