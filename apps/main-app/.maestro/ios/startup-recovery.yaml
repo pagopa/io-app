@@ -1,0 +1,39 @@
+appId: it.pagopa.app.io
+name: Recover the existing session after a profile outage
+onFlowComplete:
+  - runScript:
+      file: profile-outage.js
+      env:
+        ENABLE: "no"
+---
+- runScript: seed-message.js
+- runFlow: shared/login.yaml
+- stopApp
+- runScript:
+    file: profile-outage.js
+    env:
+      ENABLE: "yes"
+- launchApp
+- extendedWaitUntil:
+    visible: Non siamo riusciti ad autenticarti
+    timeout: 150000
+- assertVisible: Chiudi l'app e riprova tra qualche minuto\.
+- assertNotVisible:
+    id: message_list_inbox
+- runScript:
+    file: profile-outage.js
+    env:
+      ENABLE: "no"
+- stopApp
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: number-pad
+    timeout: 60000
+- runFlow: shared/pin.yaml
+- tapOn:
+    id: wrapped_message_list_item_.*
+    text: ${".*" + output.subject + ".*"}
+- assertVisible:
+    id: message-header-subject
+    text: ${output.subject}

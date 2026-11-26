@@ -194,7 +194,7 @@ server's simulated SPID page, not a real identity provider. Before each run it
 [creates a message](.maestro/ios/seed-message.js) and looks up its sender, then
 checks the subject, organization and body in the app.
 
-Three more flows each start with the same [clean login](.maestro/ios/shared/login.yaml)
+The other flows each start with the same [clean login](.maestro/ios/shared/login.yaml)
 and can run individually:
 
 - [Returning session](.maestro/ios/session-pin.yaml): terminate and relaunch
@@ -205,14 +205,27 @@ and can run individually:
 - [Payment notice](.maestro/ios/payment-notice.yaml): open the default
   payable message from the dev API and compare the summary's creditor and
   amount with its fixture. The flow stops before starting a transaction.
+- [Already paid notice](.maestro/ios/paid-notice.yaml): create a separate
+  notice marked as paid, verify its duplicate-payment response and check that
+  the message shows the paid status rather than offering a second payment.
+- [Logout and relaunch](.maestro/ios/logout-relaunch.yaml): confirm logout,
+  restart without clearing data, and check that credentials are required again
+  instead of showing the PIN pad or inbox.
+- [Startup recovery](.maestro/ios/startup-recovery.yaml): return 503 for the
+  profile endpoint until the app shows its transient error. Restore the endpoint
+  and follow the on-screen instruction to relaunch; the existing PIN must unlock
+  the same inbox message without another SPID login.
 
 1. Use a **dedicated iPhone simulator** with Italian as its language and no
    Face ID enrolled. Each run clears the app's data **and the simulator keychain**.
    Use a Debug build configured for the local backend as described under
    [Environment variables](#environment-variables); never use a production build.
-2. Start `pnpm nx run @io-app/dev-api-server:start` with the default dev profile
+2. Start `MAESTRO_FIXTURES=1 pnpm nx run @io-app/dev-api-server:start` with the default dev profile
    and flags. Leave it running on `127.0.0.1:3000`. In another terminal, build
    and launch the app on that simulator as above and keep Metro running.
+   The flag enables loopback-only fixture controls on the dedicated mock server.
+   The recovery test clears its simulated outage on completion; if the runner is
+   killed, the outage expires automatically after three minutes.
 3. Install the [Maestro CLI](https://docs.maestro.dev/get-started/installing-maestro)
    (pilot tested with 2.12.1). From the repository root, explicitly select the
    dedicated simulator:

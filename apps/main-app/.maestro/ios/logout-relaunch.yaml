@@ -1,0 +1,29 @@
+appId: it.pagopa.app.io
+name: Logout survives relaunch without PIN access to messages
+---
+- runFlow: shared/login.yaml
+- tapOn: Impostazioni
+- scrollUntilVisible:
+    element:
+      id: logoutButton
+    direction: DOWN
+- tapOn:
+    id: logoutButton
+- assertVisible: Vuoi davvero uscire\?
+- tapOn: Esci
+- extendedWaitUntil:
+    visible:
+      id: landing-button-login-spid
+    timeout: 30000
+- stopApp
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: landing-button-login-spid
+    timeout: 60000
+- assertVisible:
+    id: landing-button-login-cie
+- assertNotVisible:
+    id: number-pad
+- assertNotVisible:
+    id: message_list_inbox

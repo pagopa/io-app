@@ -35,6 +35,7 @@ import { fastLoginRouter } from "./routers/features/fastLogin";
 import { fciRouter } from "./routers/features/fci";
 import { idpayRouter } from "./routers/features/idpay";
 import { lollipopRouter } from "./routers/features/lollipop";
+import { maestroRouter } from "./routers/maestro";
 import { miscRouter } from "./routers/misc";
 import { profileRouter } from "./routers/profile";
 import { publicRouter } from "./routers/public";
@@ -70,6 +71,9 @@ app.use(
 app.use(errorMiddleware);
 app.use(cookieParser());
 app.use(fastLoginMiddleware);
+if (process.env.MAESTRO_FIXTURES === "1") {
+  app.use(maestroRouter);
+}
 
 [
   publicRouter,
