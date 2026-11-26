@@ -70,44 +70,61 @@ Yes. You need either a [SPID account](https://www.agid.gov.it/en/platforms/spid)
 <details>
 <summary><b>Android</b></summary>
 
-| Permission                                         | Purpose                          |
-| -------------------------------------------------- | -------------------------------- |
-| `INTERNET`                                         | Network connectivity             |
-| `ACCESS_NETWORK_STATE`                             | Monitor connection quality       |
-| `CAMERA`                                           | QR code scanning                 |
-| `NFC`                                              | NFC I/O operations               |
-| `RECEIVE_BOOT_COMPLETED`                           | Push notification initialisation |
-| `VIBRATE`                                          | Haptic feedback                  |
-| `WAKE_LOCK`                                        | Push notification delivery       |
-| `READ_APP_BADGE`                                   | Notification badge on app icon   |
-| `READ_CALENDAR` / `WRITE_CALENDAR`                 | Adding reminders to calendar     |
-| `READ_EXTERNAL_STORAGE` / `WRITE_EXTERNAL_STORAGE` | Image and document handling      |
-| `USE_FINGERPRINT`                                  | Biometric login (API 23–28)      |
-| `USE_BIOMETRIC`                                    | Biometric login (API 28+)        |
-| `SCHEDULE_EXACT_ALARM`                             | Local notifications              |
-| `DOWNLOAD_WITHOUT_NOTIFICATION`                    | Background file download         |
-| `POST_NOTIFICATIONS`                               | Push notifications (Android 13+) |
+The table lists the permissions in the merged manifest of the production release build. _Used by_ lists the `package.json` dependencies that need each permission. A dependency may declare a permission in its own manifest, directly or through a native library it bundles, or rely on the app manifest to declare it.
 
-Additional manufacturer-specific permissions are also declared for notification badge support on Samsung, Huawei, Sony, OPPO, and other devices.
+| Permission                                                               | Why it is needed                                                                                                                             | Used by                                                                                                                                                                                                            |
+| ------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `INTERNET`                                                               | Network connectivity for every backend call                                                                                                  | `react-native`, `@io-app/expo-crypto`, `@io-app/expo-http-client`, `@io-app/expo-zendesk`, `@pagopa/react-native-cie`, `expo-file-system`, `expo-notifications`, `mixpanel-react-native`, `react-native-blob-util` |
+| `ACCESS_NETWORK_STATE`                                                   | Detect whether the device is online and react to connectivity changes                                                                        | `@react-native-community/netinfo`, `@io-app/expo-zendesk`, `@pagopa/react-native-cie`, `expo-background-task`, `expo-notifications`, `react-native-blob-util`                                                      |
+| `NFC`                                                                    | Read the CIE (electronic identity card) for login and IT-Wallet identification; NFC engagement for IT-Wallet proximity presentation          | `@pagopa/react-native-cie`, `@pagopa/io-react-native-iso18013`                                                                                                                                                     |
+| `CAMERA`                                                                 | QR code and barcode scanning                                                                                                                 | `react-native-vision-camera`, `@io-app/expo-zendesk`, `expo-image-picker`                                                                                                                                          |
+| `USE_BIOMETRIC` / `USE_FINGERPRINT`                                      | Unlock the app with biometrics (`USE_FINGERPRINT` covers Android 6–8)                                                                        | `expo-local-authentication`, `react-native-keychain`                                                                                                                                                               |
+| `READ_CALENDAR` / `WRITE_CALENDAR`                                       | Add message due-date reminders to the user's calendar                                                                                        | `expo-calendar`                                                                                                                                                                                                    |
+| `POST_NOTIFICATIONS`                                                     | Show push notifications (Android 13+)                                                                                                        | `expo-notifications`                                                                                                                                                                                               |
+| `RECEIVE_BOOT_COMPLETED`                                                 | Restore notification and background-task scheduling after a reboot                                                                           | `expo-background-task`, `expo-notifications`                                                                                                                                                                       |
+| `com.google.android.c2dm.permission.RECEIVE`                             | Receive push messages from Firebase Cloud Messaging                                                                                          | `expo-notifications`                                                                                                                                                                                               |
+| `WAKE_LOCK`                                                              | Keep the CPU awake while handling push messages, background timers, downloads, and background tasks                                          | `expo-background-task`, `expo-notifications`, `react-native-background-timer`, `react-native-blob-util`                                                                                                            |
+| `FOREGROUND_SERVICE`                                                     | Run background tasks, such as the IT-Wallet status list refresh, through WorkManager                                                         | `expo-background-task`                                                                                                                                                                                             |
+| `VIBRATE`                                                                | Haptic feedback                                                                                                                              | `react-native-pulsar`                                                                                                                                                                                              |
+| `BLUETOOTH_SCAN` / `BLUETOOTH_CONNECT` / `BLUETOOTH_ADVERTISE`           | Present IT-Wallet credentials in proximity (ISO 18013-5) over Bluetooth Low Energy (Android 12+)                                             | `@pagopa/io-react-native-iso18013` (BLE transport), `react-native-ble-plx` (Bluetooth state; scan and connect only)                                                                                                |
+| `BLUETOOTH` / `BLUETOOTH_ADMIN`                                          | Same as above on Android 11 and earlier (`maxSdkVersion` 30)                                                                                 | `@pagopa/io-react-native-iso18013`, `react-native-ble-plx`                                                                                                                                                         |
+| `ACCESS_FINE_LOCATION` / `ACCESS_COARSE_LOCATION`                        | Required by Android 6–11 to scan for Bluetooth devices. The app does not use the user's location                                             | `@pagopa/io-react-native-iso18013`, `react-native-ble-plx`                                                                                                                                                         |
+| `READ_EXTERNAL_STORAGE` / `WRITE_EXTERNAL_STORAGE`                       | Save and open downloaded documents (message attachments, receipts, signature documents) and pick an image from the gallery to scan a QR code | `expo-file-system`, `expo-image-picker`, `expo-screen-capture` (read only), `react-native-blob-util`                                                                                                               |
+| `DOWNLOAD_WITHOUT_NOTIFICATION`                                          | Download files through the system download manager without showing a notification                                                            | `react-native-blob-util`                                                                                                                                                                                           |
+| `DETECT_SCREEN_CAPTURE`                                                  | Detect screenshots on screens that show sensitive data (Android 14+)                                                                         | `expo-screen-capture`                                                                                                                                                                                              |
+| `com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE` | Read the Play Store install referrer                                                                                                         | `expo-application`                                                                                                                                                                                                 |
+| `it.pagopa.io.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION`              | Signature-level permission that protects the app's internal, non-exported broadcast receivers                                                | AndroidX Core, a transitive dependency of `react-native` and most native modules                                                                                                                                   |
+
+`expo-notifications` declares 16 badge permissions in total through its `ShortcutBadger` dependency. Besides `READ_APP_BADGE` (ZUK), it adds permissions defined by third-party launchers. These are not system permissions and grant no access beyond the icon badge:
+
+- Samsung: `com.sec.android.provider.badge.permission.READ` / `WRITE`
+- HTC: `com.htc.launcher.permission.READ_SETTINGS` / `UPDATE_SHORTCUT`
+- Sony: `com.sonyericsson.home.permission.BROADCAST_BADGE`, `com.sonymobile.home.permission.PROVIDER_INSERT_BADGE`
+- Apex: `com.anddoes.launcher.permission.UPDATE_COUNT`
+- Solid: `com.majeur.launcher.permission.UPDATE_BADGE`
+- Huawei: `com.huawei.android.launcher.permission.CHANGE_BADGE` / `READ_SETTINGS` / `WRITE_SETTINGS`
+- OPPO: `com.oppo.launcher.permission.READ_SETTINGS` / `WRITE_SETTINGS`
+- EvMe: `me.everything.badger.permission.BADGE_COUNT_READ` / `BADGE_COUNT_WRITE`
 
 </details>
 
 <details>
 <summary><b>iOS</b></summary>
 
-| Permission                                                             | Purpose                               |
-| ---------------------------------------------------------------------- | ------------------------------------- |
-| `NSCameraUsageDescription`                                             | QR code scanning                      |
-| `NSFaceIDUsageDescription`                                             | Face ID biometric login               |
-| `NSCalendarsUsageDescription`                                          | Adding event reminders                |
-| `NSContactsUsageDescription`                                           | Attaching contacts to calendar events |
-| `NSMicrophoneUsageDescription`                                         | Voice note in the assistance flow     |
-| `NSSpeechRecognitionUsageDescription`                                  | Speech-to-text in the assistance flow |
-| `NSPhotoLibraryUsageDescription` / `NSPhotoLibraryAddUsageDescription` | QR code scanning from gallery         |
-| `NSLocationWhenInUseUsageDescription`                                  | Location-based features               |
-| `NSBluetoothAlwaysUsageDescription`                                    | Bluetooth connectivity                |
-| `Remote Notification`                                                  | Push notifications                    |
-| `NFC Tag Reading`                                                      | NFC operations                        |
+The table lists the permission purpose strings in `ios/IO/Info.plist`. _Used by_ lists the `package.json` dependencies whose native code references the API behind each entry; iOS requires the purpose string as soon as the API is linked, even if the app never calls it.
+
+| Permission                                                                    | Why it is needed                                                                                         | Used by                                                                                                       |
+| ----------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `NSCameraUsageDescription`                                                    | QR code and barcode scanning                                                                             | `react-native-vision-camera`, `@io-app/expo-zendesk`, `@pagopa/io-react-native-iso18013`, `expo-image-picker` |
+| `NSFaceIDUsageDescription`                                                    | Unlock the app with Face ID                                                                              | `expo-local-authentication`, `react-native-keychain`                                                          |
+| `NSCalendarsUsageDescription` / `NSCalendarsFullAccessUsageDescription`       | Add message due-date reminders to the user's calendar                                                    | `expo-calendar`                                                                                               |
+| `NSRemindersUsageDescription` / `NSRemindersFullAccessUsageDescription`       | Required because the library links the Reminders API; the app only writes calendar events                | `expo-calendar`                                                                                               |
+| `NSPhotoLibraryUsageDescription`                                              | Pick an image from the gallery to scan a QR code, and attach images in support requests                  | `expo-image-picker`, `react-native-permissions`, `@io-app/expo-zendesk`, `expo-file-system`                   |
+| `NSPhotoLibraryAddUsageDescription`                                           | Required because the library links the API that saves photos to the gallery                              | `expo-image-picker`                                                                                           |
+| `NSBluetoothAlwaysUsageDescription` / `NSBluetoothPeripheralUsageDescription` | Present IT-Wallet credentials in proximity (ISO 18013-5) over Bluetooth Low Energy                       | `@pagopa/io-react-native-iso18013`, `react-native-ble-plx`, `react-native-permissions`                        |
+| `NSMicrophoneUsageDescription`                                                | Required because the library links audio capture for video recording; the app never records              | `react-native-vision-camera`                                                                                  |
+| `NSLocationWhenInUseUsageDescription` / `NSLocationAlwaysUsageDescription`    | Required because the library links location tagging for photos; the app does not use the user's location | `react-native-vision-camera`                                                                                  |
+| `NFCReaderUsageDescription`                                                   | Read the CIE (electronic identity card) for login and IT-Wallet identification                           | `@pagopa/io-react-native-cie`, `@pagopa/react-native-cie`                                                     |
 
 </details>
 
