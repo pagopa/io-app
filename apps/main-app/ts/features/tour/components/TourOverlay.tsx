@@ -39,13 +39,16 @@ import Animated, {
   cancelAnimation,
   Easing,
   useAnimatedStyle,
+  useDerivedValue,
   useSharedValue,
   withTiming
 } from "react-native-reanimated";
 import { scheduleOnRN } from "react-native-worklets";
 
+import { useFeatureColors } from "../../../hooks/useFeatureColors";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { trackTourGuideAction } from "../analytics";
+import { tourColors } from "../colors";
 import {
   completeTourAction,
   nextTourStepAction,
@@ -61,8 +64,9 @@ import { TourItemMeasurement } from "../types";
 import { useTourContext } from "./TourProvider";
 import { TourTooltip } from "./TourTooltip";
 
-const OVERLAY_COLOR = "rgba(0,0,0,0.5)";
 const CUTOUT_BORDER_RADIUS = 8;
+const CUTOUT_BORDER_WIDTH = 1;
+const CUTOUT_BORDER_INSET = CUTOUT_BORDER_WIDTH / 2;
 const ANIMATION_DURATION = 350;
 const STEP_EASING = Easing.inOut(Easing.quad);
 
@@ -126,6 +130,16 @@ export const TourOverlay = () => {
   const opacity = useSharedValue(0);
   const cutoutOpacity = useSharedValue(1);
   const cutoutR = useSharedValue(CUTOUT_BORDER_RADIUS);
+
+  const colors = useFeatureColors(tourColors);
+  // Inset the stroke by half its width so it stays inside the cutout
+  const borderX = useDerivedValue(() => cutoutX.value + CUTOUT_BORDER_INSET);
+  const borderY = useDerivedValue(() => cutoutY.value + CUTOUT_BORDER_INSET);
+  const borderW = useDerivedValue(() => cutoutW.value - CUTOUT_BORDER_WIDTH);
+  const borderH = useDerivedValue(() => cutoutH.value - CUTOUT_BORDER_WIDTH);
+  const borderR = useDerivedValue(() =>
+    Math.max(cutoutR.value - CUTOUT_BORDER_INSET, 0)
+  );
 
   // When tour becomes active, mount the overlay and reset state
   useEffect(() => {
@@ -462,7 +476,7 @@ export const TourOverlay = () => {
       <Canvas pointerEvents="none" style={styles.overlay}>
         <Group layer={<Paint />}>
           <Rect
-            color={OVERLAY_COLOR}
+            color={colors.overlay.background}
             height={SCREEN_HEIGHT}
             width={SCREEN_WIDTH}
             x={0}
@@ -478,6 +492,18 @@ export const TourOverlay = () => {
               y={cutoutY}
             />
           </Group>
+        </Group>
+        <Group opacity={cutoutOpacity}>
+          <RoundedRect
+            color={colors.cutout.border}
+            height={borderH}
+            r={borderR}
+            strokeWidth={CUTOUT_BORDER_WIDTH}
+            style="stroke"
+            width={borderW}
+            x={borderX}
+            y={borderY}
+          />
         </Group>
       </Canvas>
       {tooltipReady && tooltipConfig && (
