@@ -103,6 +103,13 @@ export const trackItwDiscoveryBanner = (
   );
 };
 
+export const trackItwDiscoveryNewUser = () => {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_DISCOVERY_NEW_USER,
+    buildEventProperties("UX", "screen_view")
+  );
+};
+
 export const trackItwSurveyRequest = (properties: TrackQualtricsSurvey) => {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.SURVEY_REQUEST,

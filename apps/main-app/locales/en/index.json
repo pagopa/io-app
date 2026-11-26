@@ -677,6 +677,9 @@
           }
         },
         "discountOf": "{{discount}}% discount",
+        "featuredOpportunities": {
+          "title": "Highlighted"
+        },
         "filter": {
           "categories": "Categories"
         },
@@ -1100,8 +1103,8 @@
                 "title": "Easy, secure, official"
               },
               "2": {
-                "content": "You'll be able to add new official documents to the IO app.",
-                "title": "New documents coming soon"
+                "content": "Your digital driver's license is now also valid as a form of identification, and you have new documents and features available.",
+                "title": "New documents and features"
               },
               "3": {
                 "content": "Show the QR code for your digital Driver's License: the person checking it won't need to hold your device.",
@@ -1123,7 +1126,7 @@
               "title": "Do you want to opt out of IT-Wallet benefits?"
             },
             "features": {
-              "1": "New official digital documents, available only on the IO app",
+              "1": "New documents for you: proof of residence, educational credentials, and more",
               "2": "Your driving licence on IO is valid as proof of identity",
               "3": "All you need is your phone to prove your identity",
               "4": "You’ll soon be able to access public and private digital services in just a few taps",
@@ -1147,9 +1150,9 @@
       },
       "engagementBanner": {
         "activation": {
-          "action": "Get started",
-          "description": "Fully valid, digital, and always at your fingertips!",
-          "title": "Get your documents onto IO"
+          "action": "Activate IT-Wallet",
+          "description": "Activate IT-Wallet now to add your driver's license, health insurance card, proof of residence, and other documents coming soon.",
+          "title": "Add the new digital documents"
         },
         "l2_banner": {
           "cta": "Add document",
@@ -1162,14 +1165,14 @@
           "title": "Reactivate your digital documents on IO"
         },
         "upgrade": {
-          "action": "Get started",
-          "description": "Your public digital wallet: simple, secure, and all yours. Check out the new documents now available!",
-          "title": "IO welcomes IT-Wallet"
+          "action": "Switch to IT-Wallet",
+          "description": "Simple, secure, and all yours. Discover the advanced features and new digital documents you can add!",
+          "title": "New: Switch to the new IT-Wallet"
         },
         "upgrade_empty": {
-          "action": "Get started",
-          "description": "Activate it now and discover the advanced features of your digital documents on IO.",
-          "title": "Your Wallet is now part of IT-Wallet"
+          "action": "Activate IT-Wallet",
+          "description": "Activate IT-Wallet now to add your driver's license, health insurance card, proof of residence, and other documents coming soon.",
+          "title": "Discover the new digital documents"
         },
         "upgrade_from_expired": {
           "action": "Start",
@@ -1177,8 +1180,8 @@
           "title": "Activate IT-Wallet so you don't lose access to your documents"
         },
         "upgrade_with_mdl": {
-          "action": "Get started",
-          "description": "Use your digital driver's license as an ID, it's easy and secure!",
+          "action": "Activate IT-Wallet",
+          "description": "Activate the new IT-Wallet now to use your digital driver's license as a form of identification.",
           "title": "Show who you are with your device"
         }
       },
@@ -1712,7 +1715,7 @@
       },
       "loginEngagement": {
         "action": "Activate IT-Wallet",
-        "description": "The IO app is now part of the national digital wallet system, IT-Wallet: more documents, with advanced features, always at your fingertips.",
+        "description": "New documents on IO (proof of residence, educational credentials, and others), advanced features, and your digital driver's license is also valid as a form of identification.",
         "secondaryAction": "Do not activate",
         "title": "The new IT-Wallet is now available to you"
       },
@@ -2002,8 +2005,8 @@
           "mdl": {
             "walletUpgradeBanner": {
               "action": "Activate IT-Wallet",
-              "content": "Activate IT-Wallet to use your driver's license as an ID card too!",
-              "title": "IT-Wallet News"
+              "content": "Activate the new IT-Wallet to use it as a form of identification as well.",
+              "title": "Get the most out of your digital driver's license on IO"
             }
           },
           "newCredentialValidityAlert": {
@@ -2391,7 +2394,7 @@
           "requiredClaims": "Required information",
           "subtitle": "They will be shared with **{{relyingParty}}** only for as long as necessary to access the requested services.",
           "title": "Allow verification of this data to continue.",
-          "tos": "Your information will be processed securely. By continuing, you acknowledge that you have read and understood the [Privacy Policy and Terms and Conditions of Use]({{privacyUrl}})."
+          "tos": "Your information will be processed securely. By continuing, you acknowledge that you have read and understood the **[Privacy Policy and Terms and Conditions of Use]({{privacyUrl}})**."
         },
         "statusAssertionUnknown": {
           "content": "Try again. If the problem persists, you'll need to update the digital document.",
@@ -3225,6 +3228,10 @@
       "otpInput": {
         "valueText": "You entered {{valueLength}} of {{length}} digits."
       },
+      "pinInput": {
+        "deletedBullet": "Bullet point removed",
+        "valueText": "{{valueLength}} by {{length}} values entered"
+      },
       "progressTracker": "{{index}} of {{total}}",
       "reload": "Recharge",
       "scrollToBottom": "Scroll to the bottom",
@@ -3778,6 +3785,7 @@
         "title": "To continue, we need to verify this information"
       },
       "beforeContinue": {
+        "adviseText": "By clicking \"{{ctaText}},\" you acknowledge that you have read, understood, and accepted the [Privacy Policy]({{privacyUrl}}) and the [Terms and Conditions of Use]({{tosUrl}}).",
         "requestBonus": "Claim the bonus"
       },
       "boolPrerequisites": {

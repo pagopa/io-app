@@ -1,9 +1,11 @@
 import { fireEvent } from "@testing-library/react-native";
+import I18n from "i18next";
 import { createStore } from "redux";
 
 import { applicationChangeState } from "../../../../../../store/actions/application.ts";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types.ts";
+import * as bottomSheet from "../../../../../../utils/hooks/bottomSheet";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper.tsx";
 import {
   ITW_ISSUING_AUTHORITY_CLAIM_MOCK_LABEL,
@@ -15,6 +17,57 @@ import { ITW_ROUTES } from "../../../../navigation/routes.ts";
 import { ItwPresentationPidDetail } from "../ItwPresentationPidDetail.tsx";
 
 describe("ItwPresentationPidDetail", () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it.each([{ name: "expiry_date" }, { name: "date_of_expiry" }])(
+    "should open and dismiss the expiration info for $name",
+    ({ name }) => {
+      const title = I18n.t(
+        "features.itWallet.presentation.itWalletId.expirationDateInfo.title"
+      );
+      const present = jest.fn();
+      const dismiss = jest.fn();
+      const originalBottomSheetModal = bottomSheet.useIOBottomSheetModal;
+      jest
+        .spyOn(bottomSheet, "useIOBottomSheetModal")
+        .mockImplementation(options => {
+          const sheet = originalBottomSheetModal(options);
+          return options.title === title
+            ? { ...sheet, present, dismiss }
+            : sheet;
+        });
+
+      const credential = ItwStoredCredentialsMocks.eid;
+      const { component } = renderComponentWithStore(false, {
+        ...credential,
+        parsedCredential: {
+          ...credential.parsedCredential,
+          [name]: { name: "Data di scadenza", value: "2099-12-31" }
+        }
+      });
+
+      fireEvent.press(
+        component.getByLabelText(
+          I18n.t(
+            "features.itWallet.presentation.itWalletId.expirationDateInfo.accessibilityLabel"
+          )
+        )
+      );
+      expect(present).toHaveBeenCalledTimes(1);
+
+      fireEvent.press(
+        component.getByText(
+          I18n.t(
+            "features.itWallet.presentation.itWalletId.expirationDateInfo.primaryAction"
+          )
+        )
+      );
+      expect(dismiss).toHaveBeenCalledTimes(1);
+    }
+  );
+
   it("should read the claim values visibility from the persisted preference", () => {
     const { component } = renderComponentWithStore(true);
 

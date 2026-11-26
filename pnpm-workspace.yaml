@@ -38,6 +38,7 @@ allowBuilds:
   "@swc/core": true
   cbor-extract: true
   core-js: true
+  esbuild: true
   lefthook: true
   nx: true
   tls-impersonate: false
@@ -95,3 +96,4 @@ minimumReleaseAgeExclude:
   - "@pagopa/io-react-native-wallet@3.9.1"
   - "@pagopa/io-react-native-iso18013@0.9.1"
   - "@pagopa/io-react-native-integrity@1.0.0"
+  - "@pagopa/io-react-native-cieid@0.6.0"

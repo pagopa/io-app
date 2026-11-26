@@ -13,14 +13,133 @@ import * as proximityCredentialsSelectors from "../../../../presentation/proximi
 import * as walletInstanceSelectors from "../../../../walletInstance/store/selectors";
 import { CredentialType } from "../../../utils/itwMocksUtils";
 import { CredentialMetadata, ItwEidStatus } from "../../../utils/itwTypesUtils";
+import { itwCloseBanner } from "../../actions/banners";
 import {
+  itwSetCredentialUpgradeFailed,
   itwSetFiscalCodeWhitelisted,
-  itwSetL2Fallback
+  itwSetL2Fallback,
+  itwSetUpgradeCredentialsBannerLocallyEnabled
 } from "../../actions/preferences";
 import * as bannersSelectors from "../banners";
 import * as preferencesSelectors from "../preferences";
 import * as remoteConfigSelectors from "../remoteConfig";
 import * as upgradeSelectors from "../upgrade";
+
+describe("credential upgrade banner", () => {
+  const mdl = CredentialType.DRIVING_LICENSE;
+
+  afterEach(() => jest.restoreAllMocks());
+
+  test.each<{
+    failures: ReadonlyArray<CredentialType>;
+    flag: boolean | undefined;
+    identityStatus?: ItwEidStatus;
+    isItWallet?: boolean;
+    localFlag?: boolean;
+    name: string;
+    visible: boolean;
+  }>([
+    { name: "failed upgrade", flag: true, failures: [mdl], visible: true },
+    { name: "disabled flag", flag: false, failures: [mdl], visible: false },
+    { name: "missing flag", flag: undefined, failures: [mdl], visible: false },
+    {
+      name: "local flag",
+      flag: false,
+      failures: [mdl],
+      localFlag: true,
+      visible: true
+    },
+    {
+      name: "local flag with identity expired",
+      flag: false,
+      failures: [mdl],
+      identityStatus: "jwtExpired",
+      localFlag: true,
+      visible: false
+    },
+    { name: "successful upgrade", flag: true, failures: [], visible: false },
+    {
+      name: "identity expiring",
+      flag: true,
+      failures: [mdl],
+      identityStatus: "jwtExpiring",
+      visible: false
+    },
+    {
+      name: "identity expired",
+      flag: true,
+      failures: [mdl],
+      identityStatus: "jwtExpired",
+      visible: false
+    },
+    {
+      name: "identity invalid",
+      flag: true,
+      failures: [mdl],
+      identityStatus: "invalid",
+      visible: false
+    },
+    {
+      name: "Documenti su IO wallet",
+      flag: true,
+      failures: [mdl],
+      isItWallet: false,
+      visible: false
+    },
+    {
+      name: "removed credential",
+      flag: true,
+      failures: [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD],
+      visible: false
+    }
+  ])(
+    "$name",
+    ({
+      flag,
+      failures,
+      visible,
+      identityStatus = "valid",
+      isItWallet = true,
+      localFlag = false
+    }) => {
+      const initial = appReducer(undefined, applicationChangeState("active"));
+      const state = [
+        itwSetCredentialUpgradeFailed(failures),
+        itwSetUpgradeCredentialsBannerLocallyEnabled(localFlag)
+      ].reduce(appReducer, {
+        ...initial,
+        features: {
+          ...initial.features,
+          itWallet: {
+            ...initial.features.itWallet,
+            remoteConfig: {
+              ...initial.features.itWallet.remoteConfig,
+              upgrade_credentials_banner_visible: flag
+            }
+          }
+        }
+      });
+      jest
+        .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+        .mockReturnValue(isItWallet);
+      jest
+        .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
+        .mockReturnValue(identityStatus);
+      jest
+        .spyOn(credentialsSelectors, "itwCredentialsTypesSelector")
+        .mockReturnValue([mdl]);
+
+      expect(
+        upgradeSelectors.itwShouldRenderUpgradeCredentialsBannerSelector(state)
+      ).toBe(visible);
+      expect(
+        upgradeSelectors.itwShouldRenderUpgradeCredentialsBannerSelector(
+          appReducer(state, itwCloseBanner("upgradeCredentials"))
+        )
+      ).toBe(false);
+    }
+  );
+});
 
 describe("fallback wallet banners", () => {
   afterEach(() => {

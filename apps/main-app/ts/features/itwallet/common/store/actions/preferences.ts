@@ -63,6 +63,12 @@ export const itwSetWhatsNewLocallyEnabled = createStandardAction(
   "ITW_SET_WHATS_NEW_LOCALLY_ENABLED"
 )<boolean>();
 
+/** Local override showing the credential upgrade banner. */
+export const itwSetUpgradeCredentialsBannerLocallyEnabled =
+  createStandardAction(
+    "ITW_SET_UPGRADE_CREDENTIALS_BANNER_LOCALLY_ENABLED"
+  )<boolean>();
+
 export type ItwWalletActivationFeedbackBannerData = {
   authMethod: string;
   docStatus: "active" | "not_active";
@@ -95,5 +101,6 @@ export type ItwPreferencesActions =
   | ActionType<typeof itwSetL2Fallback>
   | ActionType<typeof itwSetPidReissuingSurveyHidden>
   | ActionType<typeof itwSetProximityNfcLocallyEnabled>
+  | ActionType<typeof itwSetUpgradeCredentialsBannerLocallyEnabled>
   | ActionType<typeof itwSetWalletActivationFeedbackBannerData>
   | ActionType<typeof itwSetWhatsNewLocallyEnabled>;
