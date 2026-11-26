@@ -18,9 +18,13 @@ import {
 } from "./index";
 import {
   itwCredentialUpgradeFailedSelector,
-  itwIsActivationDisabledSelector
+  itwIsActivationDisabledSelector,
+  itwIsUpgradeCredentialsBannerLocallyEnabledSelector
 } from "./preferences";
-import { isItwEnabledSelector } from "./remoteConfig";
+import {
+  isItwEnabledSelector,
+  isItwUpgradeCredentialsBannerEnabledSelector
+} from "./remoteConfig";
 
 const isUpgradeCredentialsBannerVisible =
   itwIsBannerVisibleSelector("upgradeCredentials");
@@ -28,8 +32,8 @@ const isUpgradeCredentialsBannerVisible =
 export const itwShouldRenderUpgradeCredentialsBannerSelector = (
   state: GlobalState
 ) =>
-  state.features.itWallet.remoteConfig.upgrade_credentials_banner_visible ===
-    true &&
+  (isItwUpgradeCredentialsBannerEnabledSelector(state) ||
+    itwIsUpgradeCredentialsBannerLocallyEnabledSelector(state)) &&
   itwLifecycleIsITWalletValidSelector(state) &&
   itwCredentialsEidStatusSelector(state) === "valid" &&
   isUpgradeCredentialsBannerVisible(state) &&

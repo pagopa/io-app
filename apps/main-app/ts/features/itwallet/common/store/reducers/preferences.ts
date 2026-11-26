@@ -19,6 +19,7 @@ import {
   itwSetL2Fallback,
   itwSetPidReissuingSurveyHidden,
   itwSetProximityNfcLocallyEnabled,
+  itwSetUpgradeCredentialsBannerLocallyEnabled,
   itwSetWalletActivationFeedbackBannerData,
   itwSetWhatsNewLocallyEnabled,
   ItwWalletActivationFeedbackBannerData
@@ -51,6 +52,8 @@ export type ItwPreferencesState = {
   isPidReissuingSurveyHidden?: boolean;
   // Local feature flag enabling NFC engagement in the Proximity presentation
   isProximityNfcLocallyEnabled?: boolean;
+  // Local feature flag enabling the credential upgrade banner
+  isUpgradeCredentialsBannerLocallyEnabled?: boolean;
   // Local feature flag enabling the What's New engagement screen
   isWhatsNewLocallyEnabled?: boolean;
   // Set when a credential is successfully added together with an IT Wallet eID activation.
@@ -59,6 +62,25 @@ export type ItwPreferencesState = {
 };
 
 export const itwPreferencesInitialState: ItwPreferencesState = {};
+
+const reduceLocalFeatureFlags = (
+  state: ItwPreferencesState,
+  action: Action
+): ItwPreferencesState => {
+  switch (action.type) {
+    case getType(itwSetProximityNfcLocallyEnabled):
+      return { ...state, isProximityNfcLocallyEnabled: action.payload };
+    case getType(itwSetUpgradeCredentialsBannerLocallyEnabled):
+      return {
+        ...state,
+        isUpgradeCredentialsBannerLocallyEnabled: action.payload
+      };
+    case getType(itwSetWhatsNewLocallyEnabled):
+      return { ...state, isWhatsNewLocallyEnabled: action.payload };
+    default:
+      return state;
+  }
+};
 
 const reducer = (
   state: ItwPreferencesState = itwPreferencesInitialState,
@@ -90,7 +112,8 @@ const reducer = (
       // - isFiscalCodeWhitelisted: avoids to have the value undefined after a wallet reset
       // - isItwActivationDisabled: should persist across wallet resets
       // - isL2Fallback: preserves the restricted experience during reissuance
-      // - isProximityNfcLocallyEnabled, isWhatsNewLocallyEnabled: local feature flags
+      // - isProximityNfcLocallyEnabled, isUpgradeCredentialsBannerLocallyEnabled,
+      //   isWhatsNewLocallyEnabled: local feature flags
       const {
         claimValuesHidden,
         engagementScreenShownByUser,
@@ -98,6 +121,7 @@ const reducer = (
         isItwActivationDisabled,
         isL2Fallback,
         isProximityNfcLocallyEnabled,
+        isUpgradeCredentialsBannerLocallyEnabled,
         isWhatsNewLocallyEnabled
       } = state;
       return {
@@ -108,6 +132,7 @@ const reducer = (
         isItwActivationDisabled,
         isL2Fallback,
         isProximityNfcLocallyEnabled,
+        isUpgradeCredentialsBannerLocallyEnabled,
         isWhatsNewLocallyEnabled
       };
 
@@ -173,9 +198,6 @@ const reducer = (
       };
     }
 
-    case getType(itwSetProximityNfcLocallyEnabled):
-      return { ...state, isProximityNfcLocallyEnabled: action.payload };
-
     case getType(itwSetWalletActivationFeedbackBannerData): {
       return {
         ...state,
@@ -183,11 +205,8 @@ const reducer = (
       };
     }
 
-    case getType(itwSetWhatsNewLocallyEnabled):
-      return { ...state, isWhatsNewLocallyEnabled: action.payload };
-
     default:
-      return state;
+      return reduceLocalFeatureFlags(state, action);
   }
 };
 

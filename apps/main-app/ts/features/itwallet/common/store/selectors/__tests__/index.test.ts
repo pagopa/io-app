@@ -17,7 +17,8 @@ import { itwCloseBanner } from "../../actions/banners";
 import {
   itwSetCredentialUpgradeFailed,
   itwSetFiscalCodeWhitelisted,
-  itwSetL2Fallback
+  itwSetL2Fallback,
+  itwSetUpgradeCredentialsBannerLocallyEnabled
 } from "../../actions/preferences";
 import * as bannersSelectors from "../banners";
 import * as preferencesSelectors from "../preferences";
@@ -34,12 +35,28 @@ describe("credential upgrade banner", () => {
     flag: boolean | undefined;
     identityStatus?: ItwEidStatus;
     isItWallet?: boolean;
+    localFlag?: boolean;
     name: string;
     visible: boolean;
   }>([
     { name: "failed upgrade", flag: true, failures: [mdl], visible: true },
     { name: "disabled flag", flag: false, failures: [mdl], visible: false },
     { name: "missing flag", flag: undefined, failures: [mdl], visible: false },
+    {
+      name: "local flag",
+      flag: false,
+      failures: [mdl],
+      localFlag: true,
+      visible: true
+    },
+    {
+      name: "local flag with identity expired",
+      flag: false,
+      failures: [mdl],
+      identityStatus: "jwtExpired",
+      localFlag: true,
+      visible: false
+    },
     { name: "successful upgrade", flag: true, failures: [], visible: false },
     {
       name: "identity expiring",
@@ -82,25 +99,26 @@ describe("credential upgrade banner", () => {
       failures,
       visible,
       identityStatus = "valid",
-      isItWallet = true
+      isItWallet = true,
+      localFlag = false
     }) => {
       const initial = appReducer(undefined, applicationChangeState("active"));
-      const state = appReducer(
-        {
-          ...initial,
-          features: {
-            ...initial.features,
-            itWallet: {
-              ...initial.features.itWallet,
-              remoteConfig: {
-                ...initial.features.itWallet.remoteConfig,
-                upgrade_credentials_banner_visible: flag
-              }
+      const state = [
+        itwSetCredentialUpgradeFailed(failures),
+        itwSetUpgradeCredentialsBannerLocallyEnabled(localFlag)
+      ].reduce(appReducer, {
+        ...initial,
+        features: {
+          ...initial.features,
+          itWallet: {
+            ...initial.features.itWallet,
+            remoteConfig: {
+              ...initial.features.itWallet.remoteConfig,
+              upgrade_credentials_banner_visible: flag
             }
           }
-        },
-        itwSetCredentialUpgradeFailed(failures)
-      );
+        }
+      });
       jest
         .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
         .mockReturnValue(isItWallet);
