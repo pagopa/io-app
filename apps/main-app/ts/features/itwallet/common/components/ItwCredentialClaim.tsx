@@ -145,6 +145,7 @@ const PlainTextClaimItem = ({
  * @param label - The label of the claim
  * @param claim - The value of the claim
  * @param status - The status of the claim, used to show an expiration badge
+ * @param dateEndElement - An optional action shown beside the date
  * @param hidden - A flag to hide the claim value. Long press is disabled when
  *   hidden
  * @param onLongPress - Callback invoked when the claim value is long pressed
@@ -154,9 +155,11 @@ const DateClaimItem = ({
   claim,
   status,
   hidden,
-  onLongPress
+  onLongPress,
+  dateEndElement
 }: {
   claim: SimpleDate;
+  dateEndElement?: ListItemInfo["endElement"];
   hidden?: boolean;
   label: string;
   onLongPress?: ItwClaimLongPressHandler;
@@ -231,7 +234,7 @@ const DateClaimItem = ({
             ? [label, displayValue, statusText].join("; ")
             : undefined
       }
-      endElement={endElement}
+      endElement={dateEndElement ?? endElement}
       key={`${label}-${displayValue}`}
       label={label}
       onLongPress={
@@ -443,6 +446,7 @@ const DrivingPrivilegesClaimItem = ({
  *   date claims
  * @param credentialType - The type of the credential, forwarded to nested
  *   claims for analytics tracking
+ * @param endElement - An optional action beside the expiration date
  * @param onLongPress - Callback invoked when a text or date claim value is long
  *   pressed. It is never invoked for hidden claims
  */
@@ -452,11 +456,13 @@ export const ItwCredentialClaim = ({
   isPreview,
   credentialStatus,
   credentialType,
+  endElement,
   onLongPress
 }: {
   claim: ClaimDisplayFormat;
   credentialStatus?: ItwCredentialStatus;
   credentialType?: string;
+  endElement?: ListItemInfo["endElement"];
   hidden?: boolean;
   isPreview?: boolean;
   onLongPress?: ItwClaimLongPressHandler;
@@ -476,6 +482,9 @@ export const ItwCredentialClaim = ({
           return (
             <DateClaimItem
               claim={parsed.value}
+              dateEndElement={
+                isExpirationDateClaim(claim) ? endElement : undefined
+              }
               hidden={hidden}
               label={claim.label}
               onLongPress={onLongPress}

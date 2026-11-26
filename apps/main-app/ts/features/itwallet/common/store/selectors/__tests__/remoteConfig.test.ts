@@ -8,6 +8,7 @@ import {
   isItwMinAppVersionSupportedSelector,
   isItwProximityMinAppVersionSupportedSelector,
   isItwProximityNfcMinAppVersionSupportedSelector,
+  isItwUpgradeCredentialsBannerEnabledSelector,
   itwDisabledCredentialsSelector,
   itwDisabledIdentificationMethodsSelector,
   itwHiddenCredentialsSelector,
@@ -197,6 +198,11 @@ describe.each([
     "feedback banner",
     isItwFeedbackBannerEnabledSelector,
     { feedback_banner_visible: true }
+  ] as const,
+  [
+    "credential upgrade banner",
+    isItwUpgradeCredentialsBannerEnabledSelector,
+    { upgrade_credentials_banner_visible: true }
   ] as const,
   [
     "wallet activation disabled",

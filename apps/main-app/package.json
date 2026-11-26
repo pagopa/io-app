@@ -1,6 +1,6 @@
 {
   "name": "@io-app/main-app",
-  "version": "3.44.0-rc.7",
+  "version": "3.44.0-rc.8",
   "private": true,
   "scripts": {
     "start": "expo start",
@@ -51,9 +51,10 @@
     "@io-app/expo-http-client": "workspace:*",
     "@io-app/expo-pdf-high-res-generator": "workspace:*",
     "@io-app/expo-switch-access": "workspace:*",
+    "@io-app/expo-xstate-inspector": "workspace:*",
     "@pagopa/io-pagopa-commons": "^3.1.0",
     "@pagopa/io-react-native-cie": "1.3.6",
-    "@pagopa/io-react-native-cieid": "0.5.2",
+    "@pagopa/io-react-native-cieid": "0.6.0",
     "@pagopa/io-react-native-crypto": "^1.2.5",
     "@pagopa/io-react-native-integrity": "1.0.0",
     "@pagopa/io-react-native-iso18013": "0.9.1",

@@ -24,11 +24,11 @@ type DataComponentProps = {
 const ACCOMPANYING_PERSON_MARK = "A";
 
 /**
- * Mapping of new claims to old claims for MDL. Some of them have been renamed
- * between specs 0.7 and 1.0, so this is necessary to ensure backward
- * compatibility.
+ * Mapping of new claims to old claims for MDL/EDC. Some of them have been
+ * renamed between specs 0.7 and 1.0, so this is necessary to ensure backward
+ * compatibility. TODO: invert the mapping new -> legacy
  */
-const mdlClaimsFallback: Record<string, string> = {
+const legacyToNewClaims: Record<string, string> = {
   portrait: "picture",
   issue_date: "issuance_date",
   expiry_date: "date_of_expiry",
@@ -46,7 +46,7 @@ const MdlFrontData = ({ claims, valuesHidden }: DataComponentProps) => {
   );
   const cols: ReadonlyArray<number> = [34, 57.5];
   const getClaim = (claimName: string) =>
-    claims[claimName] ?? claims[mdlClaimsFallback[claimName]];
+    claims[claimName] ?? claims[legacyToNewClaims[claimName]];
 
   return (
     <View style={styles.container} testID="mdlFrontDataTestID">
@@ -236,6 +236,9 @@ const DcFrontData = ({ claims, valuesHidden }: DataComponentProps) => {
     (_, i) => row + rowStep * i
   );
 
+  const getClaim = (claimName: string) =>
+    claims[claimName] ?? claims[legacyToNewClaims[claimName]];
+
   return (
     <View style={styles.container} testID="dcFrontDataTestID">
       {claims["constant_attendance_allowance"]?.value === true &&
@@ -248,7 +251,7 @@ const DcFrontData = ({ claims, valuesHidden }: DataComponentProps) => {
           </CardClaimContainer>
         )}
       <CardClaim
-        claim={claims["portrait"]}
+        claim={getClaim("portrait")}
         dimensions={{
           width: "24.7%",
           aspectRatio: 73 / 106 // This aspect ration was extracted from the Figma design
@@ -257,27 +260,27 @@ const DcFrontData = ({ claims, valuesHidden }: DataComponentProps) => {
         position={{ left: "2.55%", bottom: "1.%" }}
       />
       <CardClaim
-        claim={claims["given_name"]}
+        claim={getClaim("given_name")}
         hidden={valuesHidden}
         position={{ right: "3.5%", top: `${rows[0]}%` }}
       />
       <CardClaim
-        claim={claims["family_name"]}
+        claim={getClaim("family_name")}
         hidden={valuesHidden}
         position={{ right: "3.5%", top: `${rows[1]}%` }}
       />
       <CardClaim
-        claim={claims["birth_date"]}
+        claim={getClaim("birth_date")}
         hidden={valuesHidden}
         position={{ right: "3.5%", top: `${rows[2]}%` }}
       />
       <CardClaim
-        claim={claims["document_number"]}
+        claim={getClaim("document_number")}
         hidden={valuesHidden}
         position={{ right: "3.5%", top: `${rows[3]}%` }}
       />
       <CardClaim
-        claim={claims["expiry_date"]}
+        claim={getClaim("expiry_date")}
         hidden={valuesHidden}
         position={{ right: "3.5%", top: `${rows[4]}%` }}
       />

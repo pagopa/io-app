@@ -12,6 +12,7 @@ import {
   itwSetIdentificationMode,
   itwSetL2Fallback,
   itwSetProximityNfcLocallyEnabled,
+  itwSetUpgradeCredentialsBannerLocallyEnabled,
   itwSetWalletActivationFeedbackBannerData,
   itwSetWhatsNewLocallyEnabled,
   ItwWalletActivationFeedbackBannerData
@@ -121,6 +122,17 @@ describe("IT Wallet preferences reducer", () => {
       itwLifecycleStoresReset()
     );
     expect(state.isWhatsNewLocallyEnabled).toBe(true);
+  });
+
+  it("preserves the local credential upgrade banner flag through wallet resets", () => {
+    const state = reducer(
+      reducer(
+        INITIAL_STATE,
+        itwSetUpgradeCredentialsBannerLocallyEnabled(true)
+      ),
+      itwLifecycleStoresReset()
+    );
+    expect(state.isUpgradeCredentialsBannerLocallyEnabled).toBe(true);
   });
 
   it("should handle itwSetClaimValuesHidden action", () => {

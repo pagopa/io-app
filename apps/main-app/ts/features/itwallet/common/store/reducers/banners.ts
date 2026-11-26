@@ -38,6 +38,7 @@ export type ItwBannerId =
   | "mdlDetailsInfo" // Informational banner within MDL details screen
   | "proximity_qr_code_info" // Info banner shown on the proximity QR code screen
   | "tsDetailsInfo" // Informational banner within TS (Tessera Sanitaria) details screen
+  | "upgradeCredentials"
   | "upgradeMDLDetails" // Upgrade to IT Wallet banner placed in MDL details screen
   | ItwCredentialValidityBannerId;
 

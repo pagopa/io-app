@@ -1,3 +1,4 @@
+import { inspect } from "@io-app/expo-xstate-inspector";
 import { createActorContext } from "@xstate/react";
 import { ReactNode } from "react";
 
@@ -52,7 +53,7 @@ export const IdPayPaymentMachineProvider = (props: Props) => {
   });
 
   return (
-    <IdPayPaymentMachineContext.Provider logic={machine}>
+    <IdPayPaymentMachineContext.Provider logic={machine} options={{ inspect }}>
       {props.children}
     </IdPayPaymentMachineContext.Provider>
   );
