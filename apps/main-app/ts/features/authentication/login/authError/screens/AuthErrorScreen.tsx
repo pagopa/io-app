@@ -15,7 +15,7 @@ import AuthErrorComponent from "../../../common/components/AuthErrorComponent";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { AuthLevel } from "../../../common/utils";
-import { FailureData } from "../../../common/utils/loginErrorDebugInfo";
+import { LoginFailure } from "../../../common/utils/loginFailure";
 import {
   resetSpidLoginState,
   setSpidLoginInLoadingState
@@ -24,9 +24,10 @@ import {
 export type AuthErrorScreenParams = {
   authLevel: AuthLevel;
   authMethod: AuthMethod;
-  errorCodeOrMessage?: string;
-  /** What went wrong, shown only in debug mode. */
-  failureData?: FailureData;
+  /** The login failure: it selects the content and is shown in debug mode. */
+  failure?: LoginFailure;
+  /** The SPID IdP of the failed login, shown in debug mode. */
+  idp?: string;
 };
 
 export type AuthMethod = "CIE" | "CIE_ID" | "SPID";
@@ -39,15 +40,14 @@ type AuthErrorScreenProps = IOStackNavigationRouteProps<
 const AuthErrorScreen = ({ navigation, route }: AuthErrorScreenProps) => {
   useAvoidHardwareBackButton();
 
-  const { errorCodeOrMessage, authMethod, authLevel, failureData } =
-    route.params;
+  const { authMethod, authLevel, failure, idp } = route.params;
 
   const dispatch = useIODispatch();
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
 
   const screenDebugInfo = useMemo(
-    () => ({ errorCodeOrMessage, authMethod, authLevel, ...failureData }),
-    [errorCodeOrMessage, authMethod, authLevel, failureData]
+    () => ({ authMethod, authLevel, failure, idp }),
+    [authMethod, authLevel, failure, idp]
   );
   useDebugInfo(screenDebugInfo);
 
@@ -101,7 +101,7 @@ const AuthErrorScreen = ({ navigation, route }: AuthErrorScreenProps) => {
   return (
     <AuthErrorComponent
       authLevel={authLevel}
-      errorCodeOrMessage={errorCodeOrMessage}
+      failure={failure}
       onCancel={handleCancel}
       onRetry={handleRetry}
     />

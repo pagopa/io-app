@@ -52,7 +52,7 @@ export const useLollipopLoginSource = (
   const verifyLollipop = useCallback(
     (eventUrl: string, urlEncodedSamlRequest: string, publicKey: PublicKey) => {
       setWebviewSource(undefined);
-      lollipopSamlVerify(
+      void lollipopSamlVerify(
         urlEncodedSamlRequest,
         publicKey,
         () => {

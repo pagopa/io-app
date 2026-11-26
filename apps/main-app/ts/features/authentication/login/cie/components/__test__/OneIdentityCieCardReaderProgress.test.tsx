@@ -84,7 +84,7 @@ describe("OneIdentityCieCardReaderProgress", () => {
         <OneIdentityCieCardReaderProgress
           onCancel={mockCancel}
           onRetry={mockRetry}
-          state={{ status: "reading-failure", failure: "boom" }}
+          state={{ status: "reading-failure" }}
         />
       );
 

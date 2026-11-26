@@ -191,10 +191,7 @@ describe("useCieManager", () => {
       emitError(new Error("native error"));
     });
 
-    expect(result.current.state).toEqual({
-      status: "reading-failure",
-      failure: "native error"
-    });
+    expect(result.current.state).toEqual({ status: "reading-failure" });
   });
 
   it.each([
@@ -227,7 +224,10 @@ describe("useCieManager", () => {
 
       expect(result.current.state).toEqual({
         status: "failure",
-        failure: { event: failureEvent, attemptsLeft: 0 }
+        failure: {
+          kind: "cieCard",
+          details: { attemptsLeft: 0, event: failureEvent }
+        }
       });
       expect(mockedTrackLoginCieCardReadingError).toHaveBeenCalled();
     }

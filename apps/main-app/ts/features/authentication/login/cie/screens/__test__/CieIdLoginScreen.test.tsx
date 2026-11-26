@@ -317,9 +317,11 @@ describe(CieIdLoginScreen, () => {
   });
 });
 
-const authErrorReplaceAction = (errorCodeOrMessage?: string) =>
+// The legacy flow passes every failure as a backend error code, also the
+// errors of the CieID app
+const authErrorReplaceAction = (errorCode?: string) =>
   StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
-    errorCodeOrMessage,
+    failure: { kind: "backend", details: { errorCode } },
     authMethod: "CIE_ID",
     authLevel: AUTH_LEVELS.L2
   });

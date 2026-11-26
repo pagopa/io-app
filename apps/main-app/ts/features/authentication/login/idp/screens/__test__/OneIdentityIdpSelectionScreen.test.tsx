@@ -14,6 +14,7 @@ import { setIdpSelectedActiveSessionLogin } from "../../../../activeSessionLogin
 import * as analytics from "../../../../common/analytics/spidAnalytics";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import { idpSelected } from "../../../../common/store/actions";
+import { LoginFailure } from "../../../../common/utils/loginFailure";
 import { OneIdentityIdpSelectionFailureContent } from "../../components/OneIdentityIdpSelectionFailureContent";
 import { Idps } from "../../types/idps";
 import { OneIdentityIdpSelectionScreen } from "../OneIdentityIdpSelectionScreen";
@@ -75,7 +76,16 @@ describe("OneIdentityIdpSelectionScreen", () => {
 
   it("should render the loading error content when the fetch fails", () => {
     mockUseGetIdps.mockReturnValue({
-      state: { status: "failure", error: new Error("network error") }
+      state: {
+        status: "failure",
+        failure: {
+          kind: "idpList",
+          details: {
+            reason: "network error",
+            url: "https://example.com/idps.json"
+          }
+        }
+      }
     });
 
     const { queryByTestId, getByTestId } = renderComponent();
@@ -86,21 +96,19 @@ describe("OneIdentityIdpSelectionScreen", () => {
     ).toBeTruthy();
   });
 
-  it("should forward the failure reason and URL to useDebugInfo when the fetch fails", () => {
-    mockUseGetIdps.mockReturnValue({
-      state: {
-        status: "failure",
-        error: "IDP_LIST_FETCH_ERROR",
+  it("should forward the failure to useDebugInfo when the fetch fails", () => {
+    const failure: LoginFailure = {
+      kind: "idpList",
+      details: {
+        reason: "IDP_LIST_FETCH_ERROR",
         url: "https://example.com/idps.json"
       }
-    });
+    };
+    mockUseGetIdps.mockReturnValue({ state: { status: "failure", failure } });
 
     renderComponent();
 
-    expect(mockUseDebugInfo).toHaveBeenCalledWith({
-      reason: "IDP_LIST_FETCH_ERROR",
-      url: "https://example.com/idps.json"
-    });
+    expect(mockUseDebugInfo).toHaveBeenCalledWith(failure);
   });
 
   it("should forward no debug data to useDebugInfo when the fetch is not failing", () => {

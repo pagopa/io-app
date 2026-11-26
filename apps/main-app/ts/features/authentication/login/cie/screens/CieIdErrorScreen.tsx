@@ -14,7 +14,7 @@ import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { idpSelected } from "../../../common/store/actions";
-import { FailureData } from "../../../common/utils/loginErrorDebugInfo";
+import { LoginFailure } from "../../../common/utils/loginFailure";
 import useNavigateToLoginMethod, {
   IdpCIE
 } from "../../hooks/useNavigateToLoginMethod";
@@ -27,10 +27,10 @@ import {
 
 export type CieIdErrorScreenParams = {
   /**
-   * What went wrong, shown only in debug mode. Missing when the screen is
+   * The login failure, shown only in debug mode. Missing when the screen is
    * reached from the legacy login flow.
    */
-  failureData?: FailureData;
+  failure?: LoginFailure;
 };
 
 type CieIdErrorScreenProps = IOStackNavigationRouteProps<
@@ -43,15 +43,15 @@ const CieIdErrorScreen = ({ navigation, route }: CieIdErrorScreenProps) => {
   const dispatch = useIODispatch();
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
 
-  const failureData = route.params?.failureData;
+  const failure = route.params?.failure;
 
   const screenDebugInfo = useMemo(
     () => ({
-      ...failureData,
+      failure,
       flow: isActiveSessionLogin ? "reauth" : "auth",
       isCieSupported
     }),
-    [failureData, isActiveSessionLogin, isCieSupported]
+    [failure, isActiveSessionLogin, isCieSupported]
   );
   useDebugInfo(screenDebugInfo);
 

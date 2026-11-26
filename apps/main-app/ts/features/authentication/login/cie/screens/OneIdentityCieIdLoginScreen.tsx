@@ -1,6 +1,5 @@
 import { useCallback, useMemo } from "react";
 
-import { apiUrlPrefix } from "../../../../../config";
 import {
   HeaderSecondLevelHookProps,
   useHeaderSecondLevel
@@ -9,18 +8,23 @@ import { IOStackNavigationRouteProps } from "../../../../../navigation/params/Ap
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { useOnboardingAbortAlert } from "../../../../onboarding/hooks/useOnboardingAbortAlert";
 import { trackLoginSpidError } from "../../../common/analytics/spidAnalytics";
-import {
-  CieIdWebViewLogin,
-  CieIdWebViewLoginEvent
-} from "../../../common/components/CieIdWebViewLogin";
+import { CieIdWebViewLogin } from "../../../common/components/CieIdWebViewLogin";
 import { IdpSuccessfulAuthentication } from "../../../common/components/IdpSuccessfulAuthentication";
 import { useCieIdWebViewLoginNavigation } from "../../../common/hooks/useCieIdWebViewLoginNavigation";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { loginFailure, loginSuccess } from "../../../common/store/actions";
 import { loggedInAuthSelector } from "../../../common/store/selectors";
-import { AUTH_LEVELS, LOGIN_TYPES } from "../../../common/utils";
-import { CANCELLED_LOGIN_FAILURE_DATA } from "../../../common/utils/loginErrorDebugInfo";
+import {
+  AUTH_LEVELS,
+  isForbiddenOutsideIoApi,
+  LOGIN_TYPES
+} from "../../../common/utils";
+import {
+  getAuthErrorKey,
+  getLoginFailureReason,
+  LoginFailure
+} from "../../../common/utils/loginFailure";
 import {
   cieEnvSelector,
   cieIDSelectedSecurityLevelSelector
@@ -80,22 +84,24 @@ const OneIdentityCieIdLoginScreenContent = () => {
   } = useCieIdWebViewLoginNavigation({ authLevel });
 
   const handleLoginFailure = useCallback(
-    (reason: string, code?: string, message?: string) => {
-      const errorCodeOrMessage = code ?? message;
+    (failure: LoginFailure) => {
+      const authErrorKey = getAuthErrorKey(failure);
+      const { errorMessage } =
+        failure.kind === "backend" ? failure.details : {};
 
-      trackLoginSpidError(errorCodeOrMessage, {
+      trackLoginSpidError(authErrorKey, {
         idp: IdpCIE_ID.id,
         flow: LOGIN_TYPES.AUTH,
-        "error message": message
+        "error message": errorMessage
       });
 
       dispatch(
         loginFailure({
-          error: new Error(reason),
+          error: new Error(getLoginFailureReason(failure)),
           idp: "cieid"
         })
       );
-      navigateToAuthErrorScreen(errorCodeOrMessage, { reason });
+      navigateToAuthErrorScreen(failure);
     },
     [dispatch, navigateToAuthErrorScreen]
   );
@@ -107,53 +113,38 @@ const OneIdentityCieIdLoginScreenContent = () => {
     [dispatch]
   );
 
-  const handleEvent = useCallback(
-    (event: CieIdWebViewLoginEvent) => {
-      switch (event.type) {
-        case "CANCEL": {
-          navigateToCieIdAuthenticationError(CANCELLED_LOGIN_FAILURE_DATA);
-          break;
-        }
-        case "LOGIN_FAILURE": {
-          const { code, message, reason } = event.payload;
-          handleLoginFailure(reason, code, message);
-          break;
-        }
-        case "LOGIN_SUCCESS": {
-          const { token } = event.payload;
-          handleLoginSuccess(token);
-          break;
-        }
-        case "NOT_ALLOWED_URL": {
-          const { url } = event.payload;
-          navigateToCieIdAuthUrlError(url);
-          break;
-        }
-        case "ONE_IDENTITY_LOGIN_FAILURE":
-        case "WEBVIEW_ERROR": {
-          navigateToCieIdAuthenticationError(event.payload.failureData);
-          break;
-        }
-        case "WEBVIEW_HTTP_ERROR": {
-          const { statusCode, url } = event.payload;
-          // Ignore 403 errors for URLs that are not part of the API login URL prefix
-          if (!url.includes(apiUrlPrefix) && statusCode === 403) {
-            break;
+  const handleFailure = useCallback(
+    (failure: LoginFailure) => {
+      switch (failure.kind) {
+        case "backend":
+        case "cieIdApp":
+        case "idpAppNotOpened":
+          handleLoginFailure(failure);
+          return;
+        case "cieIdUrlNotAllowed":
+          navigateToCieIdAuthUrlError(failure.details.url);
+          return;
+        case "webViewHttp":
+          if (!isForbiddenOutsideIoApi(failure)) {
+            navigateToCieIdAuthenticationError(failure);
           }
-          navigateToCieIdAuthenticationError(event.payload.failureData);
-          break;
-        }
+          return;
         default:
-          break;
+          navigateToCieIdAuthenticationError(failure);
       }
     },
     [
       handleLoginFailure,
-      handleLoginSuccess,
       navigateToCieIdAuthUrlError,
       navigateToCieIdAuthenticationError
     ]
   );
 
-  return <CieIdWebViewLogin cieEnv={cieEnv} onEvent={handleEvent} />;
+  return (
+    <CieIdWebViewLogin
+      cieEnv={cieEnv}
+      onFailure={handleFailure}
+      onSuccess={handleLoginSuccess}
+    />
+  );
 };

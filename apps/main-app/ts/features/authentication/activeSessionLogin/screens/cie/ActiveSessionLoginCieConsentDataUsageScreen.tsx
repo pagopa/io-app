@@ -31,6 +31,10 @@ import {
 } from "../../../common/utils";
 import { AUTH_ERRORS } from "../../../common/utils/authError";
 import { ReauthLoginType } from "../../../common/utils/index";
+import {
+  getBackendFailure,
+  withBackendCodeAndMessage
+} from "../../../common/utils/loginFailure";
 import { LoaderComponent } from "../../shared/components/LoaderComponent";
 import { ACS_PATH } from "../../shared/utils";
 import {
@@ -67,10 +71,10 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
   });
 
   const navigateToErrorScreen = useCallback(
-    (errorCodeOrMessageProp?: string) => {
+    (code?: string, message?: string) => {
       navigation.dispatch(
         StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
-          errorCodeOrMessage: errorCodeOrMessageProp,
+          failure: getBackendFailure(code, message),
           authMethod: "CIE",
           authLevel: AUTH_LEVELS.L3
         })
@@ -109,7 +113,7 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
         trackLoginCieDataSharingError(loginType);
       }
       setHasError(true);
-      navigateToErrorScreen(code || message);
+      navigateToErrorScreen(code, message);
       trackLoginFailure({
         reason: `login CIE failure with code ${code || message || "n/a"}`,
         idp: "cie",
@@ -140,7 +144,7 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
   const handleShouldStartLoading = useCallback(
     (event: WebViewNavigation): boolean => {
       const isLoginUrlWithToken = onLoginUriChanged(
-        handleLoginFailure,
+        withBackendCodeAndMessage(handleLoginFailure),
         handleLoginSuccess,
         "cie",
         "reauth"

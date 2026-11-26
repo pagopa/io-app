@@ -25,7 +25,7 @@ import {
 import { createRetriableFetch } from "../../authentication/common/utils/fetch";
 import { LoginType } from "../../authentication/common/utils/index";
 import { jsonFetchToSchema } from "../../authentication/common/utils/jsonFetchToSchema";
-import { LoginFailureData } from "../../authentication/common/utils/loginErrorDebugInfo";
+import { LoginFailure } from "../../authentication/common/utils/loginFailure";
 import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store/selectors";
 import {
   ephemeralKeyTagSelector,
@@ -67,11 +67,11 @@ const reserveEndpointPath = "/api/auth/v1/reserve";
  *   WebView can stay mounted without navigating: OneIdentity binds the flow to
  *   a session cookie set by `/authorize`, which an `incognito` WebView would
  *   lose if remounted.
- * - `failure`: The `/reserve` request, ephemeral key generation, or SAML
- *   verification failed.
+ * - `failure`: ephemeral key generation, the `/reserve` request, the native
+ *   redirects or the SAML verification failed.
  */
 type LoginSourceState =
-  | { error: string; status: "failure" }
+  | { failure: LoginFailure; status: "failure" }
   | {
       status: "assertion-ref-verified" | "one-identity-authorize";
       webviewSource: WebViewSourceUri;
@@ -183,7 +183,7 @@ export type UseOneIdentityLoginSource = (params: {
    */
   minAuthLevel?: AuthLevel;
   /** Handler called upon a failure during the login flow. */
-  onFailure: (failureData: LoginFailureData) => void;
+  onFailure: (failure: LoginFailure) => void;
 }) => {
   /**
    * Handler that restarts the login flow by generating a new login source. It
@@ -230,6 +230,14 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
       : isActiveSessionFastLoginEnabledSelector(store.getState());
   const oneIdentityEnv = useIOSelector(oneIdentityEnvSelector);
 
+  const handleFailure = useCallback(
+    (failure: LoginFailure) => {
+      setLoginSourceState({ status: "failure", failure });
+      onFailure(failure);
+    },
+    [onFailure]
+  );
+
   const shouldBlockUrlNavigationWhileCheckingLollipop = useCallback(
     (url: string) => {
       if (loginSourceState.status === "verifying-assertion-ref") {
@@ -255,7 +263,7 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
           url,
           webviewSource: loginSourceState.webviewSource
         });
-        lollipopSamlVerify(
+        void lollipopSamlVerify(
           urlEncodedSamlRequest,
           maybeEphemeralPublicKey,
           () => {
@@ -265,12 +273,8 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
             });
           },
           reason => {
-            setLoginSourceState({
-              status: "failure",
-              error: reason
-            });
             trackLollipopIdpLoginFailure(reason);
-            onFailure({ reason, url });
+            handleFailure({ kind: "lollipop", details: { reason, url } });
           }
         );
         return true;
@@ -278,7 +282,7 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
 
       return false;
     },
-    [loginSourceState, maybeEphemeralPublicKey, onFailure]
+    [handleFailure, loginSourceState, maybeEphemeralPublicKey]
   );
 
   const generateLoginSource = useCallback(async () => {
@@ -303,11 +307,7 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
     );
 
     if (!publicKey) {
-      setLoginSourceState({
-        status: "failure",
-        error: "Unable to generate ephemeral public key"
-      });
-      onFailure({ reason: "Unable to generate ephemeral public key" });
+      handleFailure({ kind: "keyGeneration", details: {} });
       return;
     }
 
@@ -335,8 +335,10 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
       }
 
       abortControllerRef.current = null;
-      setLoginSourceState({ status: "failure", error: result.error });
-      onFailure({ reason: result.error, url: reserveUrl });
+      handleFailure({
+        kind: "reserve",
+        details: { reason: result.error, url: reserveUrl }
+      });
       return;
     }
 
@@ -357,15 +359,19 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
       }
 
       if (redirectResult.isErr()) {
-        const { reason, url } = redirectResult.error;
+        const failure = redirectResult.error;
 
-        if (isOneIdentityErrorUrl(url)) {
-          trackLoginOIConfigurationError(url, flow);
+        // Only a last redirect without `SAMLRequest` can be the OneIdentity
+        // error page: the other URLs are `/authorize` or an IdP page
+        if (
+          failure.kind === "nativeRedirects" &&
+          isOneIdentityErrorUrl(failure.details.url)
+        ) {
+          trackLoginOIConfigurationError(failure.details.url, flow);
         }
 
         abortControllerRef.current = null;
-        setLoginSourceState({ status: "failure", error: reason });
-        onFailure({ reason });
+        handleFailure(failure);
         return;
       }
 
@@ -393,7 +399,7 @@ export const useOneIdentityLoginSource: UseOneIdentityLoginSource = ({
     minAuthLevel,
     isFastLogin,
     hashedFiscalCode,
-    onFailure,
+    handleFailure,
     flow
   ]);
 

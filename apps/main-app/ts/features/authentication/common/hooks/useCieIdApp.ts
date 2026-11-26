@@ -10,6 +10,7 @@ import {
   IO_LOGIN_CIE_SOURCE_APP,
   IO_LOGIN_CIE_URL_SCHEME
 } from "../../login/cie/utils/cie";
+import { LoginFailure } from "../utils/loginFailure";
 
 /**
  * Extracts the error message from a CIE ID app deep-link (`iologincie://...`)
@@ -26,11 +27,20 @@ const extractCieIdErrorFromUrl = (url: string): string | undefined => {
   return errorMessage;
 };
 
+/** The `code` of a native module rejection (e.g. `EUNSPECIFIED`), if any. */
+const getErrorCode = (error: unknown): string | undefined =>
+  typeof error === "object" &&
+  error !== null &&
+  "code" in error &&
+  typeof error.code === "string"
+    ? error.code
+    : undefined;
+
 type UseCieIdApp = (params: {
   /** CIE environment targeted by the CieID app. Defaults to production. */
   cieEnv?: CieEnv;
   /** Handler called upon failure of the CIE authentication flow. */
-  onFailure: (error: string) => void;
+  onFailure: (failure: LoginFailure) => void;
   /** Handler called upon successful CIE authentication flow. */
   onSuccess: (authenticationUrl: string) => void;
 }) => {
@@ -54,7 +64,10 @@ export const useCieIdApp: UseCieIdApp = ({
         const cieIdError = extractCieIdErrorFromUrl(continueUrl);
 
         if (cieIdError) {
-          onFailure(cieIdError);
+          onFailure({
+            kind: "cieIdApp",
+            details: { errorMessage: cieIdError }
+          });
           return;
         }
 
@@ -75,7 +88,10 @@ export const useCieIdApp: UseCieIdApp = ({
             if (result.id === "URL") {
               onSuccess(result.url);
             } else {
-              onFailure(result.code);
+              onFailure({
+                kind: "cieIdApp",
+                details: { errorCode: result.code }
+              });
             }
           },
           cieEnv
@@ -84,9 +100,14 @@ export const useCieIdApp: UseCieIdApp = ({
 
       // Try to directly open the CieID app on iOS
       if (isIos) {
-        Linking.openURL(
-          `CIEID://${url}&sourceApp=${IO_LOGIN_CIE_SOURCE_APP}`
-        ).catch(onFailure);
+        const cieIdAppUrl = `CIEID://${url}&sourceApp=${IO_LOGIN_CIE_SOURCE_APP}`;
+        Linking.openURL(cieIdAppUrl).catch((error: unknown) =>
+          onFailure({
+            kind: "idpAppNotOpened",
+            // The rejection message is just the URL with a prefix
+            details: { code: getErrorCode(error), url: cieIdAppUrl }
+          })
+        );
       }
     },
     [cieEnv, onFailure, onSuccess]

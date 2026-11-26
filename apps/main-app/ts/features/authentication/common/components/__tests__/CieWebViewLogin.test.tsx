@@ -20,7 +20,8 @@ jest.mock("react-native-webview", () => {
 });
 
 describe("CieWebViewLogin", () => {
-  const onEvent = jest.fn();
+  const onFailure = jest.fn();
+  const onSuccess = jest.fn();
   const url = "https://idserver.example.com/idp/profile/SAML2/POST/SSO";
 
   beforeEach(() => {
@@ -39,7 +40,12 @@ describe("CieWebViewLogin", () => {
       const errorUrl =
         "https://dev.oneid.pagopa.it/login/error?error_code=GENERIC_HTML_ERROR";
       const { getByTestId } = render(
-        <CieWebViewLogin flow={flow} onEvent={onEvent} url={url} />
+        <CieWebViewLogin
+          flow={flow}
+          onFailure={onFailure}
+          onSuccess={onSuccess}
+          url={url}
+        />
       );
       const webview = getByTestId("cie-webview");
 
@@ -56,7 +62,7 @@ describe("CieWebViewLogin", () => {
 
   it("should render the WebView with the given url as source", () => {
     const { getByTestId } = render(
-      <CieWebViewLogin onEvent={onEvent} url={url} />
+      <CieWebViewLogin onFailure={onFailure} onSuccess={onSuccess} url={url} />
     );
 
     const webview = getByTestId("cie-webview");
@@ -65,7 +71,7 @@ describe("CieWebViewLogin", () => {
 
   it("should not render the WebView in incognito mode, as the CIE+PIN flow relies on cookies shared across WebViews", () => {
     const { getByTestId } = render(
-      <CieWebViewLogin onEvent={onEvent} url={url} />
+      <CieWebViewLogin onFailure={onFailure} onSuccess={onSuccess} url={url} />
     );
 
     const webview = getByTestId("cie-webview");
@@ -74,7 +80,7 @@ describe("CieWebViewLogin", () => {
 
   it("should render a loading indicator in the WebView's renderLoading content", () => {
     const { getByTestId } = render(
-      <CieWebViewLogin onEvent={onEvent} url={url} />
+      <CieWebViewLogin onFailure={onFailure} onSuccess={onSuccess} url={url} />
     );
 
     const webview = getByTestId("cie-webview");
@@ -85,9 +91,9 @@ describe("CieWebViewLogin", () => {
     expect(getByTestIdInLoading("LoadingIndicator")).toBeTruthy();
   });
 
-  it("should call onEvent with WEBVIEW_ERROR when there is a WebViewErrorEvent", () => {
+  it("should call onFailure with webViewNative when there is a WebViewErrorEvent", () => {
     const { getByTestId } = render(
-      <CieWebViewLogin onEvent={onEvent} url={url} />
+      <CieWebViewLogin onFailure={onFailure} onSuccess={onSuccess} url={url} />
     );
 
     const webview = getByTestId("cie-webview");
@@ -98,22 +104,19 @@ describe("CieWebViewLogin", () => {
     };
     fireEvent(webview, "onError", { nativeEvent });
 
-    expect(onEvent).toHaveBeenCalledWith({
-      type: "WEBVIEW_ERROR",
-      payload: {
-        url: nativeEvent.url,
-        failureData: {
-          description: nativeEvent.description,
-          code: nativeEvent.code,
-          url: nativeEvent.url
-        }
+    expect(onFailure).toHaveBeenCalledWith({
+      kind: "webViewNative",
+      details: {
+        code: nativeEvent.code,
+        description: nativeEvent.description,
+        url: nativeEvent.url
       }
     });
   });
 
-  it("should call onEvent with WEBVIEW_HTTP_ERROR when there is a WebViewHttpErrorEvent", () => {
+  it("should call onFailure with webViewHttp when there is a WebViewHttpErrorEvent", () => {
     const { getByTestId } = render(
-      <CieWebViewLogin onEvent={onEvent} url={url} />
+      <CieWebViewLogin onFailure={onFailure} onSuccess={onSuccess} url={url} />
     );
 
     const webview = getByTestId("cie-webview");
@@ -123,23 +126,15 @@ describe("CieWebViewLogin", () => {
     };
     fireEvent(webview, "onHttpError", { nativeEvent });
 
-    expect(onEvent).toHaveBeenCalledWith({
-      type: "WEBVIEW_HTTP_ERROR",
-      payload: {
-        url: nativeEvent.url,
-        statusCode: nativeEvent.statusCode,
-        failureData: {
-          description: `Unexpected HTTP status ${nativeEvent.statusCode}`,
-          code: nativeEvent.statusCode,
-          url: nativeEvent.url
-        }
-      }
+    expect(onFailure).toHaveBeenCalledWith({
+      kind: "webViewHttp",
+      details: { statusCode: nativeEvent.statusCode, url: nativeEvent.url }
     });
   });
 
-  it("should call onEvent with LOGIN_SUCCESS and block navigation on a successful login URL", () => {
+  it("should call onSuccess with the token and block navigation on a successful login URL", () => {
     const { getByTestId } = render(
-      <CieWebViewLogin onEvent={onEvent} url={url} />
+      <CieWebViewLogin onFailure={onFailure} onSuccess={onSuccess} url={url} />
     );
 
     const webview = getByTestId("cie-webview");
@@ -150,16 +145,14 @@ describe("CieWebViewLogin", () => {
       url: successUrl
     });
 
-    expect(onEvent).toHaveBeenCalledWith({
-      type: "LOGIN_SUCCESS",
-      payload: { token: "session-token-123" }
-    });
+    expect(onSuccess).toHaveBeenCalledWith("session-token-123");
+    expect(onFailure).not.toHaveBeenCalled();
     expect(returnValue).toBe(false);
   });
 
-  it("should call onEvent with LOGIN_FAILURE on a failed login URL", () => {
+  it("should call onFailure with backend on a failed login URL", () => {
     const { getByTestId } = render(
-      <CieWebViewLogin onEvent={onEvent} url={url} />
+      <CieWebViewLogin onFailure={onFailure} onSuccess={onSuccess} url={url} />
     );
 
     const webview = getByTestId("cie-webview");
@@ -168,21 +161,15 @@ describe("CieWebViewLogin", () => {
 
     fireEvent(webview, "onShouldStartLoadWithRequest", { url: failureUrl });
 
-    expect(onEvent).toHaveBeenCalledWith(
-      expect.objectContaining({
-        type: "LOGIN_FAILURE",
-        payload: {
-          code: "19",
-          message: "annullato",
-          reason: expect.any(String)
-        }
-      })
-    );
+    expect(onFailure).toHaveBeenCalledWith({
+      kind: "backend",
+      details: { errorCode: "19", errorMessage: "annullato" }
+    });
   });
 
-  it("should not block navigation and should not call onEvent for a generic URL", () => {
+  it("should not block navigation and should not call the callbacks for a generic URL", () => {
     const { getByTestId } = render(
-      <CieWebViewLogin onEvent={onEvent} url={url} />
+      <CieWebViewLogin onFailure={onFailure} onSuccess={onSuccess} url={url} />
     );
 
     const webview = getByTestId("cie-webview");
@@ -190,7 +177,8 @@ describe("CieWebViewLogin", () => {
       url: "https://idserver.example.com/some-intermediate-step"
     });
 
-    expect(onEvent).not.toHaveBeenCalled();
+    expect(onFailure).not.toHaveBeenCalled();
+    expect(onSuccess).not.toHaveBeenCalled();
     expect(returnValue).toBe(true);
   });
 });

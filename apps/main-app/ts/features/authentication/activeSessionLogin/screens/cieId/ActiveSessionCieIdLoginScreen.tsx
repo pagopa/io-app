@@ -27,6 +27,10 @@ import {
   defaultUserAgent,
   WHITELISTED_DOMAINS
 } from "../../../common/utils/cie";
+import {
+  getBackendFailure,
+  withBackendCodeAndMessage
+} from "../../../common/utils/loginFailure";
 import { LoadingOverlay } from "../../../login/cie/shared/LoadingSpinnerOverlay";
 import { cieEnvSelector } from "../../../login/cie/store/selectors";
 import {
@@ -137,7 +141,7 @@ const ActiveSessionCieIdLoginScreen = () => {
       // params list.
       navigation.dispatch(
         StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
-          errorCodeOrMessage: code || message,
+          failure: getBackendFailure(code, message),
           authMethod: "CIE_ID",
           authLevel: AUTH_LEVELS.L2
         })
@@ -226,7 +230,7 @@ const ActiveSessionCieIdLoginScreen = () => {
     }
 
     isLoginUrlWithTokenRef.current = onLoginUriChanged(
-      handleLoginFailure,
+      withBackendCodeAndMessage(handleLoginFailure),
       handleLoginSuccess,
       "cieid",
       "reauth"

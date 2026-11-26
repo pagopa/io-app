@@ -12,10 +12,7 @@ import { IOStackNavigationProp } from "../../../../../navigation/params/AppParam
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { SpidIdp } from "../../../../../utils/idps";
 import { trackLoginFailure } from "../../../common/analytics";
-import {
-  IdpWebViewLogin,
-  WebViewLoginEvent
-} from "../../../common/components/IdpWebViewLogin";
+import { IdpWebViewLogin } from "../../../common/components/IdpWebViewLogin";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import {
@@ -25,9 +22,9 @@ import {
 } from "../../../common/utils";
 import { AUTH_ERRORS } from "../../../common/utils/authError";
 import {
-  FailureData,
-  LoginFailureData
-} from "../../../common/utils/loginErrorDebugInfo";
+  getLoginFailureReason,
+  LoginFailure
+} from "../../../common/utils/loginFailure";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess
@@ -82,30 +79,33 @@ const OneIdentityActiveSessionIdpLoginScreenContent = ({
   const { forceLogoutAndNavigateToLanding } = useActiveSessionLoginNavigation();
 
   const navigateToAuthErrorScreen = useCallback(
-    (errorCodeOrMessage: string | undefined, failureData: FailureData) => {
+    (failure: LoginFailure) => {
       // `replace` drops the failed login webview, so it doesn't stay
       // mounted behind the error screen.
       navigation.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
-        errorCodeOrMessage,
         authMethod: "SPID",
         authLevel: AUTH_LEVELS.L2,
-        failureData: { ...failureData, idp: idp.id }
+        failure,
+        idp: idp.id
       });
     },
     [navigation, idp.id]
   );
 
   const handleLoginFailure = useCallback(
-    (failureData: LoginFailureData, code?: string, message?: string) => {
-      if (code !== AUTH_ERRORS.ERROR_1004) {
+    (failure: LoginFailure) => {
+      const isDifferentFiscalCode =
+        failure.kind === "backend" &&
+        failure.details.errorCode === AUTH_ERRORS.ERROR_1004;
+      if (!isDifferentFiscalCode) {
         dispatch(activeSessionLoginFailure());
       }
       trackLoginFailure({
-        reason: failureData.reason,
+        reason: getLoginFailureReason(failure),
         idp: idp.id as keyof IdpData,
         flow: LOGIN_TYPES.REAUTH
       });
-      navigateToAuthErrorScreen(code || message, failureData);
+      navigateToAuthErrorScreen(failure);
     },
     [dispatch, idp.id, navigateToAuthErrorScreen]
   );
@@ -117,42 +117,29 @@ const OneIdentityActiveSessionIdpLoginScreenContent = ({
     [dispatch]
   );
 
-  const handleEvent = useCallback(
-    (event: WebViewLoginEvent) => {
-      switch (event.type) {
-        case "LOGIN_FAILURE": {
-          const { code, message, failureData } = event.payload;
-          handleLoginFailure(failureData, code, message);
-          break;
-        }
-        case "LOGIN_SUCCESS": {
-          const { token } = event.payload;
-          handleLoginSuccess(token);
-          break;
-        }
-        case "WEBVIEW_ERROR": {
-          navigateToAuthErrorScreen(undefined, event.payload.failureData);
-          break;
-        }
-        case "WEBVIEW_HTTP_ERROR": {
-          const { url, statusCode } = event.payload;
-
+  const handleFailure = useCallback(
+    (failure: LoginFailure) => {
+      switch (failure.kind) {
+        case "webViewHttp": {
+          const { statusCode, url } = failure.details;
           if (isValidCallbackUrl(url)) {
             // The callback URL failed to load: force a logout.
             forceLogoutAndNavigateToLanding();
           } else if (statusCode !== 403) {
-            navigateToAuthErrorScreen(undefined, event.payload.failureData);
+            navigateToAuthErrorScreen(failure);
           }
-          break;
+          return;
         }
+        case "webViewNative":
+          navigateToAuthErrorScreen(failure);
+          return;
         default:
-          break;
+          handleLoginFailure(failure);
       }
     },
     [
       forceLogoutAndNavigateToLanding,
       handleLoginFailure,
-      handleLoginSuccess,
       navigateToAuthErrorScreen
     ]
   );
@@ -161,7 +148,8 @@ const OneIdentityActiveSessionIdpLoginScreenContent = ({
     <IdpWebViewLogin
       flow={LOGIN_TYPES.REAUTH}
       idp={idp}
-      onEvent={handleEvent}
+      onFailure={handleFailure}
+      onSuccess={handleLoginSuccess}
     />
   );
 };

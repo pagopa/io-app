@@ -94,7 +94,10 @@ describe("useCieIdApp", () => {
 
       renderHook(() => useCieIdApp({ onFailure, onSuccess }));
 
-      expect(onFailure).toHaveBeenCalledWith("generic_error");
+      expect(onFailure).toHaveBeenCalledWith({
+        kind: "cieIdApp",
+        details: { errorMessage: "generic_error" }
+      });
       expect(onSuccess).not.toHaveBeenCalled();
     });
 
@@ -176,7 +179,10 @@ describe("useCieIdApp", () => {
 
       result.current.startCieIdApp("https://example.com/auth");
 
-      expect(onFailure).toHaveBeenCalledWith("GENERIC_ERROR");
+      expect(onFailure).toHaveBeenCalledWith({
+        kind: "cieIdApp",
+        details: { errorCode: "GENERIC_ERROR" }
+      });
       expect(onSuccess).not.toHaveBeenCalled();
     });
 
@@ -215,20 +221,41 @@ describe("useCieIdApp", () => {
       });
     });
 
-    it("should call onFailure when Linking.openURL rejects", async () => {
-      const openURLError = new Error("Unable to open URL");
-      jest.spyOn(Linking, "openURL").mockRejectedValue(openURLError);
+    it.each([
+      {
+        name: "with the code of the rejection",
+        rejection: Object.assign(new Error("Unable to open URL"), {
+          code: "EUNSPECIFIED"
+        }),
+        expectedCode: "EUNSPECIFIED"
+      },
+      {
+        name: "without a code when the rejection has none",
+        rejection: new Error("Unable to open URL"),
+        expectedCode: undefined
+      }
+    ])(
+      "should call onFailure $name when Linking.openURL rejects",
+      async ({ expectedCode, rejection }) => {
+        jest.spyOn(Linking, "openURL").mockRejectedValue(rejection);
 
-      const { result } = renderHook(() =>
-        useCieIdApp({ onFailure, onSuccess })
-      );
+        const { result } = renderHook(() =>
+          useCieIdApp({ onFailure, onSuccess })
+        );
 
-      result.current.startCieIdApp("https://example.com/auth");
+        result.current.startCieIdApp("https://example.com/auth");
 
-      await waitFor(() => {
-        expect(onFailure).toHaveBeenCalledWith(openURLError);
-      });
-    });
+        await waitFor(() => {
+          expect(onFailure).toHaveBeenCalledWith({
+            kind: "idpAppNotOpened",
+            details: {
+              code: expectedCode,
+              url: "CIEID://https://example.com/auth&sourceApp=iologincie"
+            }
+          });
+        });
+      }
+    );
 
     it("should not call openCieIdApp", () => {
       const { result } = renderHook(() =>

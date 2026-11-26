@@ -86,7 +86,10 @@ describe("OneIdentityCieCardReader", () => {
       startReading: mockStartReading,
       state: {
         status: "failure",
-        failure: { event: "AUTHENTICATION_ERROR", attemptsLeft: 0 }
+        failure: {
+          kind: "cieCard",
+          details: { attemptsLeft: 0, event: "AUTHENTICATION_ERROR" }
+        }
       }
     });
 
@@ -101,8 +104,8 @@ describe("OneIdentityCieCardReader", () => {
 
     const failureElement = getByTestId("mock-failure");
     expect(failureElement.props.failure).toEqual({
-      event: "AUTHENTICATION_ERROR",
-      attemptsLeft: 0
+      kind: "cieCard",
+      details: { attemptsLeft: 0, event: "AUTHENTICATION_ERROR" }
     });
 
     expect(queryByTestId("mock-progress")).toBeNull();

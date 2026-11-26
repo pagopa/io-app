@@ -2,6 +2,7 @@ import { PublicKey } from "@io-app/expo-crypto";
 import { getRedirects } from "@io-app/login-utils";
 import { err } from "neverthrow";
 
+import { NATIVE_REDIRECTS_FAILURE_REASONS } from "../../../authentication/common/utils/loginFailure";
 import { followNativeRedirectsAndVerifySaml } from "../login";
 
 jest.mock("@io-app/login-utils", () => ({
@@ -30,7 +31,7 @@ describe("followNativeRedirectsAndVerifySaml", () => {
         "https://oneid.example.com/login/error?error_code=GENERIC_HTML_ERROR"
       ],
       expected: {
-        reason: "Missing SAMLRequest parameter in URL",
+        reason: NATIVE_REDIRECTS_FAILURE_REASONS.MISSING_SAML_REQUEST,
         url: "https://oneid.example.com/login/error?error_code=GENERIC_HTML_ERROR"
       }
     },
@@ -38,14 +39,17 @@ describe("followNativeRedirectsAndVerifySaml", () => {
       name: "SAMLRequest is missing on an ordinary URL",
       redirects: [authorizeUrl, "https://oneid.example.com/other"],
       expected: {
-        reason: "Missing SAMLRequest parameter in URL",
+        reason: NATIVE_REDIRECTS_FAILURE_REASONS.MISSING_SAML_REQUEST,
         url: "https://oneid.example.com/other"
       }
     },
     {
       name: "no redirects are returned",
       redirects: [],
-      expected: { reason: "Missing Redirects" }
+      expected: {
+        reason: NATIVE_REDIRECTS_FAILURE_REASONS.MISSING_REDIRECTS,
+        url: authorizeUrl
+      }
     }
   ])("returns an error when $name", async ({ redirects, expected }) => {
     jest.mocked(getRedirects).mockResolvedValue(redirects);
@@ -56,10 +60,10 @@ describe("followNativeRedirectsAndVerifySaml", () => {
       publicKey
     );
 
-    expect(result).toEqual(err(expected));
+    expect(result).toEqual(err({ kind: "nativeRedirects", details: expected }));
   });
 
-  it("returns the native failure reason without a URL", async () => {
+  it("returns the native failure reason with the starting URL", async () => {
     jest
       .mocked(getRedirects)
       .mockRejectedValue(new Error("Native redirect failed"));
@@ -71,7 +75,13 @@ describe("followNativeRedirectsAndVerifySaml", () => {
     );
 
     expect(result).toEqual(
-      err({ reason: expect.stringContaining("Native redirect failed") })
+      err({
+        kind: "nativeRedirects",
+        details: {
+          reason: expect.stringContaining("Native redirect failed"),
+          url: authorizeUrl
+        }
+      })
     );
   });
 });

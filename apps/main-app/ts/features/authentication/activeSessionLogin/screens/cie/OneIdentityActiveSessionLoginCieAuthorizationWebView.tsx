@@ -12,10 +12,7 @@ import {
   trackLoginCieConsentDataUsageScreen,
   trackLoginCieDataSharingError
 } from "../../../common/analytics/cieAnalytics";
-import {
-  CieWebViewLogin,
-  CieWebViewLoginEvent
-} from "../../../common/components/CieWebViewLogin";
+import { CieWebViewLogin } from "../../../common/components/CieWebViewLogin";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import {
@@ -24,7 +21,10 @@ import {
   LOGIN_TYPES
 } from "../../../common/utils";
 import { AUTH_ERRORS } from "../../../common/utils/authError";
-import { LoginFailureData } from "../../../common/utils/loginErrorDebugInfo";
+import {
+  getLoginFailureReason,
+  LoginFailure
+} from "../../../common/utils/loginFailure";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess,
@@ -64,34 +64,38 @@ export const OneIdentityActiveSessionLoginCieAuthorizationWebView = ({
   }, [dispatch, navigation]);
 
   const navigateToAuthErrorScreen = useCallback(
-    (errorCodeOrMessage: string | undefined, failureData: LoginFailureData) =>
+    (failure: LoginFailure) =>
       navigation.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
-        errorCodeOrMessage,
         authMethod: "CIE",
         authLevel: AUTH_LEVELS.L3,
-        failureData
+        failure
       }),
     [navigation]
   );
 
   const handleLoginFailure = useCallback(
-    (failureData: LoginFailureData, code?: string, message?: string) => {
-      const errorCodeOrMessage = code ?? message;
+    (failure: LoginFailure) => {
+      const isDifferentFiscalCode =
+        failure.kind === "backend" &&
+        failure.details.errorCode === AUTH_ERRORS.ERROR_1004;
+      const isDataSharingDenied =
+        failure.kind === "backend" &&
+        failure.details.errorCode === AUTH_ERRORS.ERROR_22;
 
-      if (code !== AUTH_ERRORS.ERROR_1004) {
+      if (!isDifferentFiscalCode) {
         dispatch(activeSessionLoginFailure());
       }
 
-      if (code === AUTH_ERRORS.ERROR_22) {
+      if (isDataSharingDenied) {
         trackLoginCieDataSharingError(LOGIN_TYPES.REAUTH);
       }
 
       trackLoginFailure({
-        reason: failureData.reason,
+        reason: getLoginFailureReason(failure),
         idp: "cie",
         flow: LOGIN_TYPES.REAUTH
       });
-      navigateToAuthErrorScreen(errorCodeOrMessage, failureData);
+      navigateToAuthErrorScreen(failure);
     },
     [dispatch, navigateToAuthErrorScreen]
   );
@@ -103,52 +107,31 @@ export const OneIdentityActiveSessionLoginCieAuthorizationWebView = ({
     [dispatch]
   );
 
-  const handleEvent = useCallback(
-    (event: CieWebViewLoginEvent) => {
-      switch (event.type) {
-        case "LOGIN_FAILURE": {
-          const { code, message, reason } = event.payload;
-          handleLoginFailure({ reason }, code, message);
-          break;
-        }
-        case "LOGIN_SUCCESS": {
-          const { token } = event.payload;
-          handleLoginSuccess(token);
-          break;
-        }
-        case "WEBVIEW_ERROR": {
-          const { url, failureData } = event.payload;
-          handleLoginFailure({
-            ...failureData,
-            reason: `WebView error for URL ${url}`
-          });
-          break;
-        }
-        case "WEBVIEW_HTTP_ERROR": {
-          const { statusCode, url, failureData } = event.payload;
-
+  const handleFailure = useCallback(
+    (failure: LoginFailure) => {
+      switch (failure.kind) {
+        case "webViewHttp": {
+          const { statusCode, url } = failure.details;
           if (isValidCallbackUrl(url)) {
             // The callback URL failed to load: force a logout.
             forceLogoutAndNavigateToLanding();
           } else if (statusCode !== 403) {
-            handleLoginFailure({
-              ...failureData,
-              reason: `WebView HTTP error ${statusCode} for URL ${url}`
-            });
+            handleLoginFailure(failure);
           }
-          break;
+          return;
         }
         default:
-          break;
+          handleLoginFailure(failure);
       }
     },
-    [handleLoginFailure, handleLoginSuccess, forceLogoutAndNavigateToLanding]
+    [forceLogoutAndNavigateToLanding, handleLoginFailure]
   );
 
   return (
     <CieWebViewLogin
       flow={LOGIN_TYPES.REAUTH}
-      onEvent={handleEvent}
+      onFailure={handleFailure}
+      onSuccess={handleLoginSuccess}
       url={authorizationUrl}
     />
   );

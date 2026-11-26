@@ -34,50 +34,46 @@ import {
   onLoginUriChanged,
   originSchemasWhiteList
 } from "../utils";
-import {
-  getWebViewFailureData,
-  LoginFailureData,
-  WebViewFailureData
-} from "../utils/loginErrorDebugInfo";
+import { getWebViewFailure, LoginFailure } from "../utils/loginFailure";
 
 // To ensure the server recognizes the client as a valid mobile device, we use a custom user agent.
 const defaultUserAgent =
   "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X; Linux; Android 10) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1";
+
+/**
+ * The text appended to the assistance (Zendesk) log when a SPID login ends on a
+ * Session Manager page without a token. Do not change it.
+ */
+const getSpidBackendFailureAssistanceLog = (failure: LoginFailure): string => {
+  const { errorCode, errorMessage } =
+    failure.kind === "backend" ? failure.details : {};
+  return errorCode
+    ? `login failed with code (${errorCode}) : ${getSpidErrorCodeDescription(
+        errorCode
+      )}`
+    : errorMessage
+      ? `login failed with message ${errorMessage}`
+      : "login failed with no error code or message available";
+};
 
 export type IdpWebViewLoginProps = {
   /** The login flow this WebView is part of; defaults to a first-time login. */
   flow?: LoginType;
   /** The IDP the user selected to login with. */
   idp: SpidIdp;
-  /** Callback invoked for various authentication-related events. */
-  onEvent: (event: WebViewLoginEvent) => void;
+  /** Called when the login fails, whatever the cause. */
+  onFailure: (failure: LoginFailure) => void;
+  /** Called with the session token when the login succeeds. */
+  onSuccess: (token: string) => void;
 };
 
-export type WebViewLoginEvent =
-  | {
-      payload: {
-        code?: string;
-        failureData: LoginFailureData;
-        message?: string;
-      };
-      type: "LOGIN_FAILURE";
-    }
-  | {
-      payload: {
-        failureData: WebViewFailureData;
-        statusCode: number;
-        url: string;
-      };
-      type: "WEBVIEW_HTTP_ERROR";
-    }
-  | {
-      payload: { failureData: WebViewFailureData; url: string };
-      type: "WEBVIEW_ERROR";
-    }
-  | { payload: { token: string }; type: "LOGIN_SUCCESS" };
-
 export const IdpWebViewLogin = memo(
-  ({ idp, flow = LOGIN_TYPES.AUTH, onEvent }: IdpWebViewLoginProps) => {
+  ({
+    idp,
+    flow = LOGIN_TYPES.AUTH,
+    onFailure,
+    onSuccess
+  }: IdpWebViewLoginProps) => {
     const dispatch = useIODispatch();
 
     const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
@@ -88,21 +84,11 @@ export const IdpWebViewLogin = memo(
 
     const lastTrackedUrl = useRef<string | undefined>(undefined);
 
-    const handleFailure = useCallback(
-      (failureData: LoginFailureData) => {
-        onEvent({
-          type: "LOGIN_FAILURE",
-          payload: { failureData }
-        });
-      },
-      [onEvent]
-    );
-
     const { loginSourceState, shouldBlockUrlNavigationWhileCheckingLollipop } =
       useOneIdentityLoginSource({
         flow,
         idpId: idp.id,
-        onFailure: handleFailure,
+        onFailure,
         minAuthLevel: AUTH_LEVELS.L2
       });
 
@@ -111,59 +97,33 @@ export const IdpWebViewLogin = memo(
       presentOnce: presentOncePosteIdBottomSheet
     } = useOneIdentityPosteIDApp2AppEducational(idp);
 
-    const handleError = useCallback(
+    const handleWebViewError = useCallback(
       (event: WebViewErrorEvent | WebViewHttpErrorEvent): void => {
         trackLoginError(idp.id, event);
 
-        const { nativeEvent } = event;
-        if ("statusCode" in nativeEvent) {
-          onEvent({
-            type: "WEBVIEW_HTTP_ERROR",
-            payload: {
-              url: nativeEvent.url,
-              statusCode: nativeEvent.statusCode,
-              failureData: getWebViewFailureData(event)
-            }
-          });
-          return;
-        }
-
-        onEvent({
-          type: "WEBVIEW_ERROR",
-          payload: {
-            url: nativeEvent.url,
-            failureData: getWebViewFailureData(event)
-          }
-        });
+        onFailure(getWebViewFailure(event));
       },
-      [idp.id, onEvent]
+      [idp.id, onFailure]
     );
 
-    const handleLoginFailure = useCallback(
-      (code?: string, message?: string) => {
-        const reason = code
-          ? `login failed with code (${code}) : ${getSpidErrorCodeDescription(
-              code
-            )}`
-          : message
-            ? `login failed with message ${message}`
-            : "login failed with no error code or message available";
-        handleSendAssistanceLog(choosenTool, reason);
+    const handleError = useCallback(
+      (failure: LoginFailure) => {
+        handleSendAssistanceLog(
+          choosenTool,
+          getSpidBackendFailureAssistanceLog(failure)
+        );
 
-        onEvent({
-          type: "LOGIN_FAILURE",
-          payload: { code, message, failureData: { reason } }
-        });
+        onFailure(failure);
       },
-      [choosenTool, onEvent]
+      [choosenTool, onFailure]
     );
 
     const handleLoginSuccess = useCallback(
       (token: string) => {
         handleSendAssistanceLog(choosenTool, "login success");
-        onEvent({ type: "LOGIN_SUCCESS", payload: { token } });
+        onSuccess(token);
       },
-      [choosenTool, onEvent]
+      [choosenTool, onSuccess]
     );
 
     const handleShouldStartLoading = useCallback(
@@ -187,7 +147,7 @@ export const IdpWebViewLogin = memo(
         }
 
         const isLoginUrlWithToken = onLoginUriChanged(
-          handleLoginFailure,
+          handleError,
           handleLoginSuccess,
           idp.id as keyof IdpData,
           flow
@@ -197,7 +157,7 @@ export const IdpWebViewLogin = memo(
       },
       [
         flow,
-        handleLoginFailure,
+        handleError,
         handleLoginSuccess,
         idp,
         shouldBlockUrlNavigationWhileCheckingLollipop
@@ -240,8 +200,8 @@ export const IdpWebViewLogin = memo(
               androidMicrophoneAccessDisabled
               cacheEnabled={false}
               incognito
-              onError={handleError}
-              onHttpError={handleError}
+              onError={handleWebViewError}
+              onHttpError={handleWebViewError}
               onLoad={presentOncePosteIdBottomSheet}
               onNavigationStateChange={handleNavigationStateChange}
               onShouldStartLoadWithRequest={handleShouldStartLoading}

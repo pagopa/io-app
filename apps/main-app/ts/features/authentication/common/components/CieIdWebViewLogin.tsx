@@ -30,70 +30,30 @@ import {
   originSchemasWhiteList
 } from "../utils/cie";
 import { LoginType } from "../utils/index";
-import {
-  getWebViewFailureData,
-  LoginFailureData,
-  WebViewFailureData
-} from "../utils/loginErrorDebugInfo";
-
-export type CieIdWebViewLoginEvent =
-  | {
-      payload: { code?: string; message?: string; reason: string };
-      type: "LOGIN_FAILURE";
-    }
-  | {
-      payload: { failureData: LoginFailureData };
-      type: "ONE_IDENTITY_LOGIN_FAILURE";
-    }
-  | {
-      payload: {
-        failureData: WebViewFailureData;
-        statusCode: number;
-        url: string;
-      };
-      type: "WEBVIEW_HTTP_ERROR";
-    }
-  | {
-      payload: { failureData: WebViewFailureData; url: string };
-      type: "WEBVIEW_ERROR";
-    }
-  | { payload: { token: string }; type: "LOGIN_SUCCESS" }
-  | { payload: { url: string }; type: "NOT_ALLOWED_URL" }
-  | { type: "CANCEL" };
+import { getWebViewFailure, LoginFailure } from "../utils/loginFailure";
 
 export type CieIdWebViewLoginProps = {
   /** The CIE environment to authenticate against. */
   cieEnv: CieEnv;
   /** The login flow this WebView is part of; defaults to a first-time login. */
   flow?: LoginType;
-  /** Callback invoked for various authentication-related events. */
-  onEvent: (event: CieIdWebViewLoginEvent) => void;
+  /** Called when the login fails, whatever the cause. */
+  onFailure: (failure: LoginFailure) => void;
+  /** Called with the session token when the login succeeds. */
+  onSuccess: (token: string) => void;
 };
 
 export const CieIdWebViewLogin = memo(
-  ({ flow = LOGIN_TYPES.AUTH, cieEnv, onEvent }: CieIdWebViewLoginProps) => {
+  ({
+    flow = LOGIN_TYPES.AUTH,
+    cieEnv,
+    onFailure,
+    onSuccess
+  }: CieIdWebViewLoginProps) => {
     const [authenticatedUrl, setAuthenticatedUrl] = useState<null | string>(
       null
     );
     const store = useIOStore();
-
-    const handleLoginSuccess = useCallback(
-      (token: string) => {
-        onEvent({ type: "LOGIN_SUCCESS", payload: { token } });
-      },
-      [onEvent]
-    );
-
-    const handleLoginFailure = useCallback(
-      (code?: string, message?: string) => {
-        const reason = `Login failed with code (${code}) and message (${message})`;
-        onEvent({
-          type: "LOGIN_FAILURE",
-          payload: { code, message, reason }
-        });
-      },
-      [onEvent]
-    );
 
     const handleAuthenticationSuccess = useCallback(
       (url: string) => {
@@ -101,35 +61,25 @@ export const CieIdWebViewLogin = memo(
           store.getState()
         );
         if (!isAllowedUrl(url, allowedCieOrigins)) {
-          onEvent({ type: "NOT_ALLOWED_URL", payload: { url } });
+          onFailure({ kind: "cieIdUrlNotAllowed", details: { url } });
           return;
         }
         setAuthenticatedUrl(url);
       },
-      [store, onEvent]
+      [store, onFailure]
     );
 
     const { startCieIdApp } = useCieIdApp({
-      onFailure: handleLoginFailure,
+      onFailure,
       onSuccess: handleAuthenticationSuccess,
       cieEnv
     });
-
-    const handleFailure = useCallback(
-      (failureData: LoginFailureData) => {
-        onEvent({
-          type: "ONE_IDENTITY_LOGIN_FAILURE",
-          payload: { failureData }
-        });
-      },
-      [onEvent]
-    );
 
     const { loginSourceState, shouldBlockUrlNavigationWhileCheckingLollipop } =
       useOneIdentityLoginSource({
         flow,
         idpId: getCieIdpId(cieEnv),
-        onFailure: handleFailure,
+        onFailure,
         minAuthLevel: AUTH_LEVELS.L2
       });
 
@@ -151,8 +101,8 @@ export const CieIdWebViewLogin = memo(
         }
 
         const isLoginUrlWithToken = onLoginUriChanged(
-          handleLoginFailure,
-          handleLoginSuccess,
+          onFailure,
+          onSuccess,
           "cieid",
           flow
         )(event);
@@ -163,42 +113,22 @@ export const CieIdWebViewLogin = memo(
       [
         shouldBlockUrlNavigationWhileCheckingLollipop,
         startCieIdApp,
-        handleLoginFailure,
-        handleLoginSuccess,
+        onFailure,
+        onSuccess,
         flow
       ]
     );
 
-    const handleError = useCallback(
+    const handleWebViewError = useCallback(
       (event: WebViewErrorEvent | WebViewHttpErrorEvent): void => {
-        const { nativeEvent } = event;
-
-        if ("statusCode" in nativeEvent) {
-          onEvent({
-            type: "WEBVIEW_HTTP_ERROR",
-            payload: {
-              url: nativeEvent.url,
-              statusCode: nativeEvent.statusCode,
-              failureData: getWebViewFailureData(event)
-            }
-          });
-          return;
-        }
-
-        onEvent({
-          type: "WEBVIEW_ERROR",
-          payload: {
-            url: nativeEvent.url,
-            failureData: getWebViewFailureData(event)
-          }
-        });
+        onFailure(getWebViewFailure(event));
       },
-      [onEvent]
+      [onFailure]
     );
 
     const handleCancel = useCallback(() => {
-      onEvent({ type: "CANCEL" });
-    }, [onEvent]);
+      onFailure({ kind: "cancelled", details: {} });
+    }, [onFailure]);
 
     if (loginSourceState.status === "failure") {
       return null;
@@ -225,8 +155,8 @@ export const CieIdWebViewLogin = memo(
             androidCameraAccessDisabled
             androidMicrophoneAccessDisabled
             incognito
-            onError={handleError}
-            onHttpError={handleError}
+            onError={handleWebViewError}
+            onHttpError={handleWebViewError}
             onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
             originWhitelist={originSchemasWhiteList}
             renderLoading={() => <LoadingOverlay onCancel={handleCancel} />}

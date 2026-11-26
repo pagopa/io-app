@@ -10,19 +10,24 @@ import UnlockAccessComponent, {
   UnlockAccessProps
 } from "../../login/unlockAccess/components/UnlockAccessComponent";
 import { AUTH_ERRORS, getAuthErrorDetails } from "../utils/authError";
+import { getAuthErrorKey, LoginFailure } from "../utils/loginFailure";
 
 export type AuthErrorComponentProps = UnlockAccessProps & {
-  errorCodeOrMessage?: string;
+  /** The login failure, which selects the content. Generic content if missing. */
+  failure?: LoginFailure;
   onCancel: () => void;
   onRetry: () => void;
 };
 
 const AuthErrorComponent = ({
-  errorCodeOrMessage = AUTH_ERRORS.GENERIC_ERROR,
+  failure,
   authLevel,
   onRetry,
   onCancel
 }: AuthErrorComponentProps) => {
+  const authErrorKey =
+    (failure && getAuthErrorKey(failure)) ?? AUTH_ERRORS.GENERIC_ERROR;
+
   const footerWithCloseButton = useMemo(
     () => ({
       action: {
@@ -50,11 +55,10 @@ const AuthErrorComponent = ({
   );
 
   const errorDetails: OperationResultScreenContentProps = useMemo(() => {
-    const { pictogram, title, subtitle } =
-      getAuthErrorDetails(errorCodeOrMessage);
+    const { pictogram, title, subtitle } = getAuthErrorDetails(authErrorKey);
     const footer =
-      errorCodeOrMessage === AUTH_ERRORS.ERROR_23 ||
-      errorCodeOrMessage === AUTH_ERRORS.ERROR_1001
+      authErrorKey === AUTH_ERRORS.ERROR_23 ||
+      authErrorKey === AUTH_ERRORS.ERROR_1001
         ? footerWithCloseButton
         : footerWithCloseAndRetryButtons;
 
@@ -64,13 +68,9 @@ const AuthErrorComponent = ({
       subtitle,
       ...footer
     };
-  }, [
-    errorCodeOrMessage,
-    footerWithCloseAndRetryButtons,
-    footerWithCloseButton
-  ]);
+  }, [authErrorKey, footerWithCloseAndRetryButtons, footerWithCloseButton]);
 
-  switch (errorCodeOrMessage) {
+  switch (authErrorKey) {
     case AUTH_ERRORS.ERROR_1002:
       return <UnlockAccessComponent authLevel={authLevel} />;
     case AUTH_ERRORS.ERROR_1004:

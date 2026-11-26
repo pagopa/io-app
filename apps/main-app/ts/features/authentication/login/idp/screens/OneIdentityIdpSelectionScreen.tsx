@@ -65,8 +65,7 @@ export const OneIdentityIdpSelectionScreen = ({
   // Set only on failure, so the debug indicator doesn't show up while the
   // list is loading or once it has loaded
   const debugInfo = useMemo(
-    () =>
-      state.status === "failure" ? { reason: state.error, url: state.url } : {},
+    () => (state.status === "failure" ? state.failure : {}),
     [state]
   );
   useDebugInfo(debugInfo);

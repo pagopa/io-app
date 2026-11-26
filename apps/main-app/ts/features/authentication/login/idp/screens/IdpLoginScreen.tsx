@@ -53,6 +53,11 @@ import {
   onLoginUriChanged,
   originSchemasWhiteList
 } from "../../../common/utils";
+import {
+  getBackendFailure,
+  LoginFailure,
+  withBackendCodeAndMessage
+} from "../../../common/utils/loginFailure";
 import { usePosteIDApp2AppEducational } from "../hooks/usePosteIDApp2AppEducational";
 import { setSpidLoginRequestState } from "../store/actions";
 import { spidLoginRequestInfoSelector } from "../store/selectors";
@@ -93,9 +98,7 @@ const IdpLoginScreen = () => {
   );
 
   const { requestState } = useIOSelector(spidLoginRequestInfoSelector);
-  const [errorCodeOrMessage, setErrorCodeOrMessage] = useState<
-    string | undefined
-  >(undefined);
+  const [failure, setFailure] = useState<LoginFailure | undefined>(undefined);
   const [loginTrace, setLoginTrace] = useState<string | undefined>(undefined);
   const posteIdBottomsheet = usePosteIDApp2AppEducational({
     selectedIdp,
@@ -176,7 +179,7 @@ const IdpLoginScreen = () => {
 
       handleSendAssistanceLog(choosenTool, logText);
       setRequestState(pot.noneError(SpidLoginErrorType.LOGIN_ERROR));
-      setErrorCodeOrMessage(code || message);
+      setFailure(getBackendFailure(code, message));
     },
     [dispatch, choosenTool, idp, setRequestState]
   );
@@ -234,7 +237,7 @@ const IdpLoginScreen = () => {
       }
 
       const isLoginUrlWithToken = onLoginUriChanged(
-        handleLoginFailure,
+        withBackendCodeAndMessage(handleLoginFailure),
         handleLoginSuccess,
         idp
       )(event);
@@ -269,11 +272,11 @@ const IdpLoginScreen = () => {
     // `replace` drops the failed login webview, so it doesn't stay
     // mounted behind the error screen.
     replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
-      errorCodeOrMessage,
+      failure,
       authMethod: "SPID",
       authLevel: AUTH_LEVELS.L2
     });
-  }, [errorCodeOrMessage, replace]);
+  }, [failure, replace]);
 
   useEffect(() => {
     if (pot.isError(requestState)) {

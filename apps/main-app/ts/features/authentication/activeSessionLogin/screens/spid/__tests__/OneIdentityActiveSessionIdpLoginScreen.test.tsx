@@ -7,6 +7,7 @@ import * as IOHooks from "../../../../../../store/hooks";
 import { appReducer } from "../../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import * as useOneIdentityLoginSourceModule from "../../../../../lollipop/hooks/useOneIdentityLoginSource";
+import { trackLoginFailure } from "../../../../common/analytics";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import { AUTH_LEVELS, AuthLevel } from "../../../../common/utils";
 import { AUTH_ERRORS } from "../../../../common/utils/authError";
@@ -141,17 +142,19 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
     });
 
     expect(mockDispatch).toHaveBeenCalledWith(activeSessionLoginFailure());
+    expect(trackLoginFailure).toHaveBeenCalledWith({
+      reason: "login failure with code (err-code)",
+      idp: mockIdp.id,
+      flow: "reauth"
+    });
 
     expect(mockReplace).toHaveBeenCalledWith(
       AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
       {
-        errorCodeOrMessage: "err-code",
         authMethod: "SPID",
         authLevel: MOCK_AUTH_LEVEL_L2,
-        failureData: {
-          reason: expect.stringContaining("(err-code)"),
-          idp: mockIdp.id
-        }
+        failure: { kind: "backend", details: { errorCode: "err-code" } },
+        idp: mockIdp.id
       }
     );
   });
@@ -169,13 +172,13 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
     expect(mockReplace).toHaveBeenCalledWith(
       AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
       {
-        errorCodeOrMessage: AUTH_ERRORS.ERROR_1004,
         authMethod: "SPID",
         authLevel: MOCK_AUTH_LEVEL_L2,
-        failureData: {
-          reason: expect.stringContaining(AUTH_ERRORS.ERROR_1004),
-          idp: mockIdp.id
-        }
+        failure: {
+          kind: "backend",
+          details: { errorCode: AUTH_ERRORS.ERROR_1004 }
+        },
+        idp: mockIdp.id
       }
     );
   });
@@ -207,15 +210,16 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
     expect(mockReplace).toHaveBeenCalledWith(
       AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
       {
-        errorCodeOrMessage: undefined,
         authMethod: "SPID",
         authLevel: MOCK_AUTH_LEVEL_L2,
-        failureData: {
-          description: "Unexpected HTTP status 500",
-          code: 500,
-          url: `${MOCK_VALID_CALLBACK_URL}/extra-path`,
-          idp: mockIdp.id
-        }
+        failure: {
+          kind: "webViewHttp",
+          details: {
+            statusCode: 500,
+            url: `${MOCK_VALID_CALLBACK_URL}/extra-path`
+          }
+        },
+        idp: mockIdp.id
       }
     );
   });
@@ -243,15 +247,13 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
     expect(mockReplace).toHaveBeenCalledWith(
       AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
       {
-        errorCodeOrMessage: undefined,
         authMethod: "SPID",
         authLevel: MOCK_AUTH_LEVEL_L2,
-        failureData: {
-          description: "Unexpected HTTP status 500",
-          code: 500,
-          url: "https://example.com/some-path",
-          idp: mockIdp.id
-        }
+        failure: {
+          kind: "webViewHttp",
+          details: { statusCode: 500, url: "https://example.com/some-path" }
+        },
+        idp: mockIdp.id
       }
     );
     expect(mockForceLogoutAndNavigateToLanding).not.toHaveBeenCalled();
@@ -272,15 +274,17 @@ describe("OneIdentityActiveSessionIdpLoginScreen", () => {
     expect(mockReplace).toHaveBeenCalledWith(
       AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
       {
-        errorCodeOrMessage: undefined,
         authMethod: "SPID",
         authLevel: MOCK_AUTH_LEVEL_L2,
-        failureData: {
-          description: "net::ERR_INTERNET_DISCONNECTED",
-          code: -2,
-          url: "https://example.com/authorize",
-          idp: mockIdp.id
-        }
+        failure: {
+          kind: "webViewNative",
+          details: {
+            code: -2,
+            description: "net::ERR_INTERNET_DISCONNECTED",
+            url: "https://example.com/authorize"
+          }
+        },
+        idp: mockIdp.id
       }
     );
   });

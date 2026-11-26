@@ -4,6 +4,7 @@ import { withStore } from "../../../../../utils/jest/withStore";
 import * as useOneIdentityLoginSourceModule from "../../../../lollipop/hooks/useOneIdentityLoginSource";
 import * as analytics from "../../analytics";
 import * as useCieIdAppModule from "../../hooks/useCieIdApp";
+import { LoginFailure } from "../../utils/loginFailure";
 import { CieIdWebViewLogin as CieIdWebViewLoginComponent } from "../CieIdWebViewLogin";
 
 const CieIdWebViewLogin = withStore(CieIdWebViewLoginComponent);
@@ -49,7 +50,8 @@ const mockUseOneIdentityLoginSource = (
     });
 
 describe("CieIdWebViewLogin", () => {
-  const onEvent = jest.fn();
+  const onFailure = jest.fn();
+  const onSuccess = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -73,7 +75,12 @@ describe("CieIdWebViewLogin", () => {
       const errorUrl =
         "https://dev.oneid.pagopa.it/login/error?error_code=GENERIC_HTML_ERROR";
       const { getByTestId } = render(
-        <CieIdWebViewLogin cieEnv="production" flow={flow} onEvent={onEvent} />
+        <CieIdWebViewLogin
+          cieEnv="production"
+          flow={flow}
+          onFailure={onFailure}
+          onSuccess={onSuccess}
+        />
       );
       const webview = getByTestId("cie-id-webview");
 
@@ -98,7 +105,11 @@ describe("CieIdWebViewLogin", () => {
         mockUseOneIdentityLoginSource({ loginSourceState: { status } });
 
         const { getByTestId, queryByTestId } = render(
-          <CieIdWebViewLogin cieEnv="production" onEvent={onEvent} />
+          <CieIdWebViewLogin
+            cieEnv="production"
+            onFailure={onFailure}
+            onSuccess={onSuccess}
+          />
         );
 
         expect(getByTestId("refreshIndicator")).toBeTruthy();
@@ -110,7 +121,11 @@ describe("CieIdWebViewLogin", () => {
       mockUseOneIdentityLoginSource();
 
       const { getByTestId } = render(
-        <CieIdWebViewLogin cieEnv="production" onEvent={onEvent} />
+        <CieIdWebViewLogin
+          cieEnv="production"
+          onFailure={onFailure}
+          onSuccess={onSuccess}
+        />
       );
 
       const webview = getByTestId("cie-id-webview");
@@ -132,7 +147,11 @@ describe("CieIdWebViewLogin", () => {
       });
 
       const { getByTestId, queryByTestId } = render(
-        <CieIdWebViewLogin cieEnv="production" onEvent={onEvent} />
+        <CieIdWebViewLogin
+          cieEnv="production"
+          onFailure={onFailure}
+          onSuccess={onSuccess}
+        />
       );
 
       expect(queryByTestId("refreshIndicator")).toBeNull();
@@ -142,10 +161,14 @@ describe("CieIdWebViewLogin", () => {
     it("should keep the same WebView instance from the /authorize request to the IDP SSO page", () => {
       const authorizeSource = { uri: "https://example.com/authorize" };
       const ssoUrl = "https://idserver.example.com/sso?SAMLRequest=abc";
-      // A new `onEvent` on every step bypasses `memo`, so that the component
+      // A new `onFailure` on every step bypasses `memo`, so that the component
       // re-renders and reads the new mocked login source state
       const renderStep = () => (
-        <CieIdWebViewLogin cieEnv="production" onEvent={e => onEvent(e)} />
+        <CieIdWebViewLogin
+          cieEnv="production"
+          onFailure={f => onFailure(f)}
+          onSuccess={onSuccess}
+        />
       );
 
       mockUseOneIdentityLoginSource({
@@ -185,11 +208,18 @@ describe("CieIdWebViewLogin", () => {
 
     it("should render nothing when status is failure", () => {
       mockUseOneIdentityLoginSource({
-        loginSourceState: { status: "failure", error: "some error" }
+        loginSourceState: {
+          status: "failure",
+          failure: { kind: "keyGeneration", details: {} }
+        }
       });
 
       const { queryByTestId } = render(
-        <CieIdWebViewLogin cieEnv="production" onEvent={onEvent} />
+        <CieIdWebViewLogin
+          cieEnv="production"
+          onFailure={onFailure}
+          onSuccess={onSuccess}
+        />
       );
 
       expect(queryByTestId("cie-id-webview")).toBeNull();
@@ -204,7 +234,11 @@ describe("CieIdWebViewLogin", () => {
         });
 
         const { getByTestId } = render(
-          <CieIdWebViewLogin cieEnv="production" onEvent={onEvent} />
+          <CieIdWebViewLogin
+            cieEnv="production"
+            onFailure={onFailure}
+            onSuccess={onSuccess}
+          />
         );
 
         const webview = getByTestId("cie-id-webview");
@@ -216,7 +250,11 @@ describe("CieIdWebViewLogin", () => {
       mockUseOneIdentityLoginSource();
 
       const { getByTestId } = render(
-        <CieIdWebViewLogin cieEnv="production" onEvent={onEvent} />
+        <CieIdWebViewLogin
+          cieEnv="production"
+          onFailure={onFailure}
+          onSuccess={onSuccess}
+        />
       );
 
       const webview = getByTestId("cie-id-webview");
@@ -229,27 +267,37 @@ describe("CieIdWebViewLogin", () => {
       mockUseOneIdentityLoginSource();
     });
 
-    it("should call onEvent with ONE_IDENTITY_LOGIN_FAILURE and the failure data when the login source fails", () => {
-      render(<CieIdWebViewLogin cieEnv="production" onEvent={onEvent} />);
-      const { onFailure } = jest.mocked(
+    it("should call onFailure with the failure of the login source", () => {
+      render(
+        <CieIdWebViewLogin
+          cieEnv="production"
+          onFailure={onFailure}
+          onSuccess={onSuccess}
+        />
+      );
+      const { onFailure: onLoginSourceFailure } = jest.mocked(
         useOneIdentityLoginSourceModule.useOneIdentityLoginSource
       ).mock.calls[0][0];
-      const failureData = {
-        reason: "Unexpected HTTP status 500",
-        url: "https://example.com/api/auth/v1/reserve"
+      const failure: LoginFailure = {
+        kind: "reserve",
+        details: {
+          reason: "Unexpected HTTP status 500",
+          url: "https://example.com/api/auth/v1/reserve"
+        }
       };
 
-      onFailure(failureData);
+      onLoginSourceFailure(failure);
 
-      expect(onEvent).toHaveBeenCalledWith({
-        type: "ONE_IDENTITY_LOGIN_FAILURE",
-        payload: { failureData }
-      });
+      expect(onFailure).toHaveBeenCalledWith(failure);
     });
 
-    it("should call onEvent with WEBVIEW_ERROR when there is a WebViewErrorEvent", () => {
+    it("should call onFailure with webViewNative when there is a WebViewErrorEvent", () => {
       const { getByTestId } = render(
-        <CieIdWebViewLogin cieEnv="production" onEvent={onEvent} />
+        <CieIdWebViewLogin
+          cieEnv="production"
+          onFailure={onFailure}
+          onSuccess={onSuccess}
+        />
       );
 
       const webview = getByTestId("cie-id-webview");
@@ -260,22 +308,23 @@ describe("CieIdWebViewLogin", () => {
       };
       fireEvent(webview, "onError", { nativeEvent });
 
-      expect(onEvent).toHaveBeenCalledWith({
-        type: "WEBVIEW_ERROR",
-        payload: {
-          url: nativeEvent.url,
-          failureData: {
-            description: nativeEvent.description,
-            code: nativeEvent.code,
-            url: nativeEvent.url
-          }
+      expect(onFailure).toHaveBeenCalledWith({
+        kind: "webViewNative",
+        details: {
+          code: nativeEvent.code,
+          description: nativeEvent.description,
+          url: nativeEvent.url
         }
       });
     });
 
-    it("should call onEvent with WEBVIEW_HTTP_ERROR when there is a WebViewHttpErrorEvent", () => {
+    it("should call onFailure with webViewHttp when there is a WebViewHttpErrorEvent", () => {
       const { getByTestId } = render(
-        <CieIdWebViewLogin cieEnv="production" onEvent={onEvent} />
+        <CieIdWebViewLogin
+          cieEnv="production"
+          onFailure={onFailure}
+          onSuccess={onSuccess}
+        />
       );
 
       const webview = getByTestId("cie-id-webview");
@@ -285,17 +334,9 @@ describe("CieIdWebViewLogin", () => {
       };
       fireEvent(webview, "onHttpError", { nativeEvent });
 
-      expect(onEvent).toHaveBeenCalledWith({
-        type: "WEBVIEW_HTTP_ERROR",
-        payload: {
-          url: nativeEvent.url,
-          statusCode: nativeEvent.statusCode,
-          failureData: {
-            description: `Unexpected HTTP status ${nativeEvent.statusCode}`,
-            code: nativeEvent.statusCode,
-            url: nativeEvent.url
-          }
-        }
+      expect(onFailure).toHaveBeenCalledWith({
+        kind: "webViewHttp",
+        details: { statusCode: nativeEvent.statusCode, url: nativeEvent.url }
       });
     });
   });
@@ -309,7 +350,11 @@ describe("CieIdWebViewLogin", () => {
       mockShouldBlockUrlNavigationWhileCheckingLollipop.mockReturnValue(true);
 
       const { getByTestId } = render(
-        <CieIdWebViewLogin cieEnv="production" onEvent={onEvent} />
+        <CieIdWebViewLogin
+          cieEnv="production"
+          onFailure={onFailure}
+          onSuccess={onSuccess}
+        />
       );
 
       const webview = getByTestId("cie-id-webview");
@@ -318,13 +363,18 @@ describe("CieIdWebViewLogin", () => {
         url: "https://idserver.example.com/sso?SAMLRequest=encoded"
       });
 
-      expect(onEvent).not.toHaveBeenCalled();
+      expect(onFailure).not.toHaveBeenCalled();
+      expect(onSuccess).not.toHaveBeenCalled();
       expect(mockStartCieIdApp).not.toHaveBeenCalled();
     });
 
     it("should start the CieID app when the URL is an authentication URL", () => {
       const { getByTestId } = render(
-        <CieIdWebViewLogin cieEnv="production" onEvent={onEvent} />
+        <CieIdWebViewLogin
+          cieEnv="production"
+          onFailure={onFailure}
+          onSuccess={onSuccess}
+        />
       );
 
       const webview = getByTestId("cie-id-webview");
@@ -334,12 +384,17 @@ describe("CieIdWebViewLogin", () => {
       fireEvent(webview, "onShouldStartLoadWithRequest", { url: authUrl });
 
       expect(mockStartCieIdApp).toHaveBeenCalledWith(authUrl);
-      expect(onEvent).not.toHaveBeenCalled();
+      expect(onFailure).not.toHaveBeenCalled();
+      expect(onSuccess).not.toHaveBeenCalled();
     });
 
-    it("should call onEvent with LOGIN_SUCCESS on a successful login URL", () => {
+    it("should call onSuccess with the token on a successful login URL", () => {
       const { getByTestId } = render(
-        <CieIdWebViewLogin cieEnv="production" onEvent={onEvent} />
+        <CieIdWebViewLogin
+          cieEnv="production"
+          onFailure={onFailure}
+          onSuccess={onSuccess}
+        />
       );
 
       const webview = getByTestId("cie-id-webview");
@@ -351,15 +406,17 @@ describe("CieIdWebViewLogin", () => {
         url: successUrl
       });
 
-      expect(onEvent).toHaveBeenCalledWith({
-        type: "LOGIN_SUCCESS",
-        payload: { token: "session-token-123" }
-      });
+      expect(onSuccess).toHaveBeenCalledWith("session-token-123");
+      expect(onFailure).not.toHaveBeenCalled();
     });
 
-    it("should call onEvent with LOGIN_FAILURE on a failed login URL", () => {
+    it("should call onFailure with backend on a failed login URL", () => {
       const { getByTestId } = render(
-        <CieIdWebViewLogin cieEnv="production" onEvent={onEvent} />
+        <CieIdWebViewLogin
+          cieEnv="production"
+          onFailure={onFailure}
+          onSuccess={onSuccess}
+        />
       );
 
       const webview = getByTestId("cie-id-webview");
@@ -370,16 +427,10 @@ describe("CieIdWebViewLogin", () => {
         url: failureUrl
       });
 
-      expect(onEvent).toHaveBeenCalledWith(
-        expect.objectContaining({
-          type: "LOGIN_FAILURE",
-          payload: {
-            code: "19",
-            message: "annullato",
-            reason: expect.any(String)
-          }
-        })
-      );
+      expect(onFailure).toHaveBeenCalledWith({
+        kind: "backend",
+        details: { errorCode: "19", errorMessage: "annullato" }
+      });
     });
   });
 
@@ -388,52 +439,70 @@ describe("CieIdWebViewLogin", () => {
       mockUseOneIdentityLoginSource();
     });
 
-    it("should call onEvent with INVALID_URL when the CieID app returns an untrusted URL", () => {
-      render(<CieIdWebViewLogin cieEnv="production" onEvent={onEvent} />);
+    it("should call onFailure with cieIdUrlNotAllowed when the CieID app returns an untrusted URL", () => {
+      render(
+        <CieIdWebViewLogin
+          cieEnv="production"
+          onFailure={onFailure}
+          onSuccess={onSuccess}
+        />
+      );
 
-      const { onSuccess } = jest.mocked(useCieIdAppModule.useCieIdApp).mock
-        .calls[0][0];
+      const { onSuccess: onCieIdAppSuccess } = jest.mocked(
+        useCieIdAppModule.useCieIdApp
+      ).mock.calls[0][0];
 
-      onSuccess("https://not-allowed.example.com/callback");
+      onCieIdAppSuccess("https://not-allowed.example.com/callback");
 
-      expect(onEvent).toHaveBeenCalledWith({
-        type: "NOT_ALLOWED_URL",
-        payload: { url: "https://not-allowed.example.com/callback" }
+      expect(onFailure).toHaveBeenCalledWith({
+        kind: "cieIdUrlNotAllowed",
+        details: { url: "https://not-allowed.example.com/callback" }
       });
     });
 
-    it("should call onEvent with LOGIN_FAILURE when the CieID app fails", () => {
-      render(<CieIdWebViewLogin cieEnv="production" onEvent={onEvent} />);
+    it("should call onFailure with the failure of the CieID app", () => {
+      render(
+        <CieIdWebViewLogin
+          cieEnv="production"
+          onFailure={onFailure}
+          onSuccess={onSuccess}
+        />
+      );
 
-      const { onFailure } = jest.mocked(useCieIdAppModule.useCieIdApp).mock
-        .calls[0][0];
+      const { onFailure: onCieIdAppFailure } = jest.mocked(
+        useCieIdAppModule.useCieIdApp
+      ).mock.calls[0][0];
+      const failure: LoginFailure = {
+        kind: "cieIdApp",
+        details: { errorCode: "GENERIC_ERROR" }
+      };
 
-      onFailure("some-error-code");
+      onCieIdAppFailure(failure);
 
-      expect(onEvent).toHaveBeenCalledWith({
-        type: "LOGIN_FAILURE",
-        payload: {
-          code: "some-error-code",
-          message: undefined,
-          reason: expect.any(String)
-        }
-      });
+      expect(onFailure).toHaveBeenCalledWith(failure);
     });
   });
 
   describe("onCancel", () => {
-    it("should call onEvent with CANCEL when the loading overlay's cancel button is pressed", () => {
+    it("should call onFailure with cancelled when the loading overlay's cancel button is pressed", () => {
       mockUseOneIdentityLoginSource({
         loginSourceState: { status: "reserving-public-key" }
       });
 
       const { getByTestId } = render(
-        <CieIdWebViewLogin cieEnv="production" onEvent={onEvent} />
+        <CieIdWebViewLogin
+          cieEnv="production"
+          onFailure={onFailure}
+          onSuccess={onSuccess}
+        />
       );
 
       fireEvent.press(getByTestId("loadingSpinnerOverlayCancelButton"));
 
-      expect(onEvent).toHaveBeenCalledWith({ type: "CANCEL" });
+      expect(onFailure).toHaveBeenCalledWith({
+        kind: "cancelled",
+        details: {}
+      });
     });
   });
 });

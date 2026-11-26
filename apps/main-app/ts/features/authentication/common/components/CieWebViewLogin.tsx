@@ -17,59 +17,26 @@ import {
 } from "../utils";
 import { defaultUserAgent, originSchemasWhiteList } from "../utils/cie";
 import { LoginType } from "../utils/index";
-import {
-  getWebViewFailureData,
-  WebViewFailureData
-} from "../utils/loginErrorDebugInfo";
-
-export type CieWebViewLoginEvent =
-  | {
-      payload: { code?: string; message?: string; reason: string };
-      type: "LOGIN_FAILURE";
-    }
-  | {
-      payload: {
-        failureData: WebViewFailureData;
-        statusCode: number;
-        url: string;
-      };
-      type: "WEBVIEW_HTTP_ERROR";
-    }
-  | {
-      payload: { failureData: WebViewFailureData; url: string };
-      type: "WEBVIEW_ERROR";
-    }
-  | { payload: { token: string }; type: "LOGIN_SUCCESS" };
+import { getWebViewFailure, LoginFailure } from "../utils/loginFailure";
 
 export type CieWebViewLoginProps = {
   /** The login flow this WebView is part of. */
   flow?: LoginType;
-  /** Callback invoked for various authentication-related events. */
-  onEvent: (event: CieWebViewLoginEvent) => void;
+  /** Called when the login fails, whatever the cause. */
+  onFailure: (failure: LoginFailure) => void;
+  /** Called with the session token when the login succeeds. */
+  onSuccess: (token: string) => void;
   /** The URL to load in the WebView. */
   url: string;
 };
 
 export const CieWebViewLogin = memo(
-  ({ url, onEvent, flow = LOGIN_TYPES.AUTH }: CieWebViewLoginProps) => {
-    const handleLoginSuccess = useCallback(
-      (token: string) => {
-        onEvent({ type: "LOGIN_SUCCESS", payload: { token } });
-      },
-      [onEvent]
-    );
-
-    const handleLoginFailure = useCallback(
-      (code?: string, message?: string) => {
-        const reason = `Login failed with code (${code}) and message (${message})`;
-        onEvent({
-          type: "LOGIN_FAILURE",
-          payload: { code, message, reason }
-        });
-      },
-      [onEvent]
-    );
-
+  ({
+    url,
+    onFailure,
+    onSuccess,
+    flow = LOGIN_TYPES.AUTH
+  }: CieWebViewLoginProps) => {
     const handleOnShouldStartLoadWithRequest = useCallback(
       (event: WebViewNavigation): boolean => {
         if (isOneIdentityErrorUrl(event.url)) {
@@ -77,8 +44,8 @@ export const CieWebViewLogin = memo(
         }
 
         const bearerTokenFoundInUrl = onLoginUriChanged(
-          handleLoginFailure,
-          handleLoginSuccess,
+          onFailure,
+          onSuccess,
           "cie",
           flow
         )(event);
@@ -86,34 +53,14 @@ export const CieWebViewLogin = memo(
         // URL can be loaded if it's not containing the token
         return !bearerTokenFoundInUrl;
       },
-      [handleLoginFailure, handleLoginSuccess, flow]
+      [onFailure, onSuccess, flow]
     );
 
-    const handleError = useCallback(
+    const handleWebViewError = useCallback(
       (event: WebViewErrorEvent | WebViewHttpErrorEvent): void => {
-        const { nativeEvent } = event;
-
-        if ("statusCode" in nativeEvent) {
-          onEvent({
-            type: "WEBVIEW_HTTP_ERROR",
-            payload: {
-              url: nativeEvent.url,
-              statusCode: nativeEvent.statusCode,
-              failureData: getWebViewFailureData(event)
-            }
-          });
-          return;
-        }
-
-        onEvent({
-          type: "WEBVIEW_ERROR",
-          payload: {
-            url: nativeEvent.url,
-            failureData: getWebViewFailureData(event)
-          }
-        });
+        onFailure(getWebViewFailure(event));
       },
-      [onEvent]
+      [onFailure]
     );
 
     return (
@@ -122,8 +69,8 @@ export const CieWebViewLogin = memo(
           androidCameraAccessDisabled={true}
           androidMicrophoneAccessDisabled={true}
           javaScriptEnabled={true}
-          onError={handleError}
-          onHttpError={handleError}
+          onError={handleWebViewError}
+          onHttpError={handleWebViewError}
           onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
           originWhitelist={originSchemasWhiteList}
           renderLoading={CieWebViewLoginLoading}

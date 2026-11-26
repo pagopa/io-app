@@ -28,6 +28,10 @@ import {
   onLoginUriChanged,
   originSchemasWhiteList
 } from "../../../common/utils";
+import {
+  getBackendFailure,
+  withBackendCodeAndMessage
+} from "../../../common/utils/loginFailure";
 
 export type CieConsentDataUsageScreenNavigationParams = {
   cieConsentUri: string;
@@ -114,7 +118,7 @@ const CieConsentDataUsageScreen = () => {
   const handleShouldStartLoading = useCallback(
     (event: WebViewNavigation): boolean => {
       const isLoginUrlWithToken = onLoginUriChanged(
-        handleLoginFailure,
+        withBackendCodeAndMessage(handleLoginFailure),
         handleLoginSuccess,
         "cie"
       )(event);
@@ -140,7 +144,7 @@ const CieConsentDataUsageScreen = () => {
     if (hasError) {
       navigation.dispatch(
         StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
-          errorCodeOrMessage,
+          failure: getBackendFailure(errorCodeOrMessage),
           authMethod: "CIE",
           authLevel: AUTH_LEVELS.L3
         })

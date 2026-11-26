@@ -1,7 +1,15 @@
-import { Event as CEvent } from "@pagopa/react-native-cie";
 import { render, screen } from "@testing-library/react-native";
 
+import {
+  CieSdkEvent,
+  LoginFailure
+} from "../../../../common/utils/loginFailure";
 import { OneIdentityCieCardReaderFailure } from "../OneIdentityCieCardReaderFailure";
+
+const cieCardFailure = (
+  event: CieSdkEvent,
+  attemptsLeft: number
+): LoginFailure => ({ kind: "cieCard", details: { attemptsLeft, event } });
 
 const mockUseDebugInfo = jest.fn();
 jest.mock("../../../../../../hooks/useDebugInfo", () => ({
@@ -70,11 +78,8 @@ jest.mock("../CieWrongPin", () => ({
 }));
 
 describe("OneIdentityCieCardReaderFailure", () => {
-  it.each<[CEvent["event"], string]>([
-    [
-      "Function not supported" as unknown as CEvent["event"],
-      "CieWrongCardScreen"
-    ],
+  it.each<[CieSdkEvent, string]>([
+    ["Function not supported", "CieWrongCardScreen"],
     ["ON_TAG_DISCOVERED_NOT_CIE", "CieWrongCardScreen"],
     ["TAG_ERROR_NFC_NOT_SUPPORTED", "CieWrongCardScreen"],
     ["AUTHENTICATION_ERROR", "CieUnexpectedErrorScreen"],
@@ -86,9 +91,7 @@ describe("OneIdentityCieCardReaderFailure", () => {
     "should render the expected screen when failure.event is %s",
     (event, expectedTestId) => {
       render(
-        <OneIdentityCieCardReaderFailure
-          failure={{ event, attemptsLeft: 0 } as unknown as CEvent}
-        />
+        <OneIdentityCieCardReaderFailure failure={cieCardFailure(event, 0)} />
       );
       expect(screen.getByTestId(expectedTestId)).toBeTruthy();
     }
@@ -97,48 +100,49 @@ describe("OneIdentityCieCardReaderFailure", () => {
   it("should render CieWrongPin with remainingCount 0 when the card pin is locked", () => {
     render(
       <OneIdentityCieCardReaderFailure
-        failure={
-          { event: "ON_CARD_PIN_LOCKED", attemptsLeft: 3 } as unknown as CEvent
-        }
+        failure={cieCardFailure("ON_CARD_PIN_LOCKED", 3)}
       />
     );
     const wrongPinElement = screen.getByTestId("CieWrongPin");
     expect(wrongPinElement.props.remainingCount).toBe(0);
   });
 
-  it.each<CEvent["event"]>(["ON_PIN_ERROR", "PIN Locked"])(
+  it.each<CieSdkEvent>(["ON_PIN_ERROR", "PIN Locked"])(
     "should render CieWrongPin with the failure's attemptsLeft when failure.event is %s",
     event => {
       render(
-        <OneIdentityCieCardReaderFailure
-          failure={{ event, attemptsLeft: 2 } as unknown as CEvent}
-        />
+        <OneIdentityCieCardReaderFailure failure={cieCardFailure(event, 2)} />
       );
       const wrongPinElement = screen.getByTestId("CieWrongPin");
       expect(wrongPinElement.props.remainingCount).toBe(2);
     }
   );
 
-  it.each<{ event: CEvent["event"]; name: string }>([
+  it.each<{ event: CieSdkEvent; name: string }>([
     { name: "a wrong PIN", event: "ON_PIN_ERROR" },
     { name: "a wrong card", event: "ON_TAG_DISCOVERED_NOT_CIE" },
     { name: "an expired card", event: "CERTIFICATE_EXPIRED" },
     { name: "an unhandled event", event: "Transmission Error" }
   ])("should set the failure event as debug data on $name", ({ event }) => {
-    const failure = { event, attemptsLeft: 1 } as unknown as CEvent;
+    const failure = cieCardFailure(event, 1);
 
     render(<OneIdentityCieCardReaderFailure failure={failure} />);
 
     expect(mockUseDebugInfo).toHaveBeenLastCalledWith({ failure });
   });
 
-  it("should render nothing for an unhandled failure event", () => {
+  it.each<{ failure: LoginFailure; name: string }>([
+    {
+      name: "an unhandled failure event",
+      failure: cieCardFailure("Transmission Error", 0)
+    },
+    {
+      name: "a failure that is not of the CIE card",
+      failure: { kind: "keyGeneration", details: {} }
+    }
+  ])("should render nothing for $name", ({ failure }) => {
     const { toJSON } = render(
-      <OneIdentityCieCardReaderFailure
-        failure={
-          { event: "Transmission Error", attemptsLeft: 0 } as unknown as CEvent
-        }
-      />
+      <OneIdentityCieCardReaderFailure failure={failure} />
     );
     expect(toJSON()).toBeNull();
   });

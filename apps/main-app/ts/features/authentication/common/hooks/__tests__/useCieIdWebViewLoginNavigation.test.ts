@@ -3,6 +3,7 @@ import { renderHook } from "@testing-library/react-native";
 
 import { AUTHENTICATION_ROUTES } from "../../navigation/routes";
 import { AUTH_LEVELS } from "../../utils";
+import { LoginFailure } from "../../utils/loginFailure";
 import { useCieIdWebViewLoginNavigation } from "../useCieIdWebViewLoginNavigation";
 
 const mockReplace = jest.fn();
@@ -26,24 +27,24 @@ jest.mock("../../../../../store/hooks", () => ({
 
 describe("useCieIdWebViewLoginNavigation", () => {
   const authLevel = AUTH_LEVELS.L2;
+  const failure: LoginFailure = {
+    kind: "backend",
+    details: { errorCode: "err-code" }
+  };
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it("navigateToCieIdAuthenticationError should replace with CIE_ID_ERROR and the failure data", () => {
+  it("navigateToCieIdAuthenticationError should replace with CIE_ID_ERROR and the failure", () => {
     const { result } = renderHook(() =>
       useCieIdWebViewLoginNavigation({ authLevel })
     );
 
-    result.current.navigateToCieIdAuthenticationError({
-      reason: "some reason"
-    });
+    result.current.navigateToCieIdAuthenticationError(failure);
 
     expect(mockDispatch).toHaveBeenCalledWith(
-      StackActions.replace(AUTHENTICATION_ROUTES.CIE_ID_ERROR, {
-        failureData: { reason: "some reason" }
-      })
+      StackActions.replace(AUTHENTICATION_ROUTES.CIE_ID_ERROR, { failure })
     );
   });
 
@@ -66,16 +67,13 @@ describe("useCieIdWebViewLoginNavigation", () => {
       useCieIdWebViewLoginNavigation({ authLevel })
     );
 
-    result.current.navigateToAuthErrorScreen("err-code", {
-      reason: "some reason"
-    });
+    result.current.navigateToAuthErrorScreen(failure);
 
     expect(mockDispatch).toHaveBeenCalledWith(
       StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
-        errorCodeOrMessage: "err-code",
         authMethod: "CIE_ID",
         authLevel,
-        failureData: { reason: "some reason" }
+        failure
       })
     );
     expect(mockReplace).not.toHaveBeenCalled();

@@ -12,6 +12,7 @@ import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import { loginFailure, loginSuccess } from "../../../../common/store/actions";
 import * as commonStoreSelector from "../../../../common/store/selectors";
 import { AUTH_LEVELS } from "../../../../common/utils";
+import { LoginFailure } from "../../../../common/utils/loginFailure";
 import { OneIdentityIdpLoginScreen } from "../OneIdentityIdpLoginScreen";
 
 jest.mock("react-native-webview", () => {
@@ -145,7 +146,7 @@ describe("OneIdentityIdpLoginScreen", () => {
 
     expect(mockDispatch).toHaveBeenCalledWith(
       loginFailure({
-        error: expect.any(Error),
+        error: new Error("login failure with code (err-code)"),
         idp: mockIdp.id as keyof IdpData
       })
     );
@@ -153,13 +154,10 @@ describe("OneIdentityIdpLoginScreen", () => {
     expect(mockReplace).toHaveBeenCalledWith(
       AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
       {
-        errorCodeOrMessage: "err-code",
         authMethod: "SPID",
         authLevel: AUTH_LEVELS.L2,
-        failureData: {
-          reason: expect.stringContaining("(err-code)"),
-          idp: mockIdp.id
-        }
+        failure: { kind: "backend", details: { errorCode: "err-code" } },
+        idp: mockIdp.id
       }
     );
   });
@@ -178,15 +176,13 @@ describe("OneIdentityIdpLoginScreen", () => {
     expect(mockReplace).toHaveBeenCalledWith(
       AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
       {
-        errorCodeOrMessage: undefined,
         authMethod: "SPID",
         authLevel: AUTH_LEVELS.L2,
-        failureData: {
-          description: "Unexpected HTTP status 403",
-          code: 403,
-          url: `${apiUrlPrefix}/some-path`,
-          idp: mockIdp.id
-        }
+        failure: {
+          kind: "webViewHttp",
+          details: { statusCode: 403, url: `${apiUrlPrefix}/some-path` }
+        },
+        idp: mockIdp.id
       }
     );
   });
@@ -219,30 +215,31 @@ describe("OneIdentityIdpLoginScreen", () => {
     expect(mockReplace).toHaveBeenCalledWith(
       AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
       {
-        errorCodeOrMessage: undefined,
         authMethod: "SPID",
         authLevel: AUTH_LEVELS.L2,
-        failureData: {
-          description: "Unexpected HTTP status 500",
-          code: 500,
-          url: `${apiUrlPrefix}/some-path`,
-          idp: mockIdp.id
-        }
+        failure: {
+          kind: "webViewHttp",
+          details: { statusCode: 500, url: `${apiUrlPrefix}/some-path` }
+        },
+        idp: mockIdp.id
       }
     );
   });
 
-  it("should track the reason and pass the failure data to AuthErrorScreen when the login source fails", () => {
+  it("should track the reason and pass the failure to AuthErrorScreen when the login source fails", () => {
     renderComponent();
     const { onFailure } = jest.mocked(
       useOneIdentityLoginSourceModule.useOneIdentityLoginSource
     ).mock.calls[0][0];
-    const failureData = {
-      reason: "Unexpected HTTP status 500",
-      url: "https://example.com/api/auth/v1/reserve"
+    const failure: LoginFailure = {
+      kind: "reserve",
+      details: {
+        reason: "Unexpected HTTP status 500",
+        url: "https://example.com/api/auth/v1/reserve"
+      }
     };
 
-    onFailure(failureData);
+    onFailure(failure);
 
     expect(mockDispatch).toHaveBeenCalledWith(
       loginFailure({
@@ -253,10 +250,10 @@ describe("OneIdentityIdpLoginScreen", () => {
     expect(mockReplace).toHaveBeenCalledWith(
       AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
       {
-        errorCodeOrMessage: undefined,
         authMethod: "SPID",
         authLevel: AUTH_LEVELS.L2,
-        failureData: { ...failureData, idp: mockIdp.id }
+        failure,
+        idp: mockIdp.id
       }
     );
   });
@@ -276,15 +273,17 @@ describe("OneIdentityIdpLoginScreen", () => {
     expect(mockReplace).toHaveBeenCalledWith(
       AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
       {
-        errorCodeOrMessage: undefined,
         authMethod: "SPID",
         authLevel: AUTH_LEVELS.L2,
-        failureData: {
-          description: "net::ERR_INTERNET_DISCONNECTED",
-          code: -2,
-          url: "https://example.com/authorize",
-          idp: mockIdp.id
-        }
+        failure: {
+          kind: "webViewNative",
+          details: {
+            code: -2,
+            description: "net::ERR_INTERNET_DISCONNECTED",
+            url: "https://example.com/authorize"
+          }
+        },
+        idp: mockIdp.id
       }
     );
   });

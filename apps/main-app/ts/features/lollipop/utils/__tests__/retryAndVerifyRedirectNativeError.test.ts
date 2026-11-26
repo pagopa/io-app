@@ -2,6 +2,7 @@ import { PublicKey } from "@io-app/expo-crypto";
 import { err } from "neverthrow";
 
 import { AppDispatch } from "../../../../App";
+import { toRedirectsFailureReason } from "../../../authentication/common/utils/loginFailure";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../login";
 
 const jwkPublicKey: PublicKey = {
@@ -45,20 +46,26 @@ describe("Lollipop regenerate key, get redirects and verification", () => {
       dispatch
     );
 
+    const expectedReason = JSON.stringify({
+      message: JSON.stringify({
+        userInfo: {
+          Error: "fake network error",
+          URL: "fake url",
+          StatusCode: 409,
+          Parameter: undefined
+        }
+      }),
+      code: "NativeRedirectError"
+    });
+
     expect(result).toEqual(
       err({
-        reason: JSON.stringify({
-          message: JSON.stringify({
-            userInfo: {
-              Error: "fake network error",
-              URL: "fake url",
-              StatusCode: 409,
-              Parameter: undefined
-            }
-          }),
-          code: "NativeRedirectError"
-        })
+        kind: "nativeRedirects",
+        details: { reason: expectedReason, url: "loginUri" }
       })
+    );
+    expect(result.isErr() && toRedirectsFailureReason(result.error)).toBe(
+      expectedReason
     );
   });
 });

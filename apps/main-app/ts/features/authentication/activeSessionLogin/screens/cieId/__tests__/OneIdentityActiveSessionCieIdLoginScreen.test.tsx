@@ -9,9 +9,14 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import * as IOHooks from "../../../../../../store/hooks";
 import { appReducer } from "../../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { trackLoginFailure } from "../../../../common/analytics";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import { AUTH_LEVELS, AuthLevel } from "../../../../common/utils";
 import { AUTH_ERRORS } from "../../../../common/utils/authError";
+import {
+  getLoginFailureReason,
+  LoginFailure
+} from "../../../../common/utils/loginFailure";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess,
@@ -87,61 +92,82 @@ describe("OneIdentityActiveSessionCieIdLoginScreen", () => {
     expect(getByTestId("cie-id-webview-login-mock")).toBeTruthy();
   });
 
-  it("should dispatch activeSessionLoginSuccess on LOGIN_SUCCESS event", () => {
+  it("should dispatch activeSessionLoginSuccess on success", () => {
     const { getByTestId } = renderComponent();
-    const cieIdLoginMock = getByTestId("cie-id-webview-login-mock");
 
-    fireEvent(cieIdLoginMock, "event", {
-      type: "LOGIN_SUCCESS",
-      payload: { token: "session-token" }
-    });
+    fireEvent(
+      getByTestId("cie-id-webview-login-mock"),
+      "success",
+      "session-token"
+    );
 
     expect(mockDispatch).toHaveBeenCalledWith(
       activeSessionLoginSuccess("session-token")
     );
   });
 
-  it("should dispatch activeSessionLoginFailure and navigate to AuthErrorScreen on LOGIN_FAILURE event", () => {
+  it.each<{ failure: LoginFailure; name: string }>([
+    {
+      name: "a backend failure",
+      failure: { kind: "backend", details: { errorCode: "err-code" } }
+    },
+    {
+      name: "a CieID app failure",
+      failure: { kind: "cieIdApp", details: { errorCode: "GENERIC_ERROR" } }
+    },
+    {
+      name: "a CieID app not opened",
+      failure: {
+        kind: "idpAppNotOpened",
+        details: { code: "EUNSPECIFIED", url: "CIEID://auth" }
+      }
+    }
+  ])(
+    "should dispatch activeSessionLoginFailure, track and navigate to AuthErrorScreen on $name",
+    ({ failure }) => {
+      const { getByTestId } = renderComponent();
+
+      fireEvent(getByTestId("cie-id-webview-login-mock"), "failure", failure);
+
+      expect(mockDispatch).toHaveBeenCalledWith(activeSessionLoginFailure());
+      expect(trackLoginFailure).toHaveBeenCalledWith({
+        reason: getLoginFailureReason(failure),
+        idp: "cieid",
+        flow: "reauth"
+      });
+      expect(mockNavigationDispatch).toHaveBeenCalledWith(
+        authErrorReplaceAction(failure)
+      );
+      expect(mockReplace).not.toHaveBeenCalled();
+    }
+  );
+
+  it("should not dispatch activeSessionLoginFailure but still navigate to AuthErrorScreen on the ERROR_1004 backend failure", () => {
     const { getByTestId } = renderComponent();
-    const cieIdLoginMock = getByTestId("cie-id-webview-login-mock");
+    const failure: LoginFailure = {
+      kind: "backend",
+      details: { errorCode: AUTH_ERRORS.ERROR_1004 }
+    };
 
-    fireEvent(cieIdLoginMock, "event", {
-      type: "LOGIN_FAILURE",
-      payload: { code: "err-code", reason: "some-reason" }
-    });
-
-    expect(mockDispatch).toHaveBeenCalledWith(activeSessionLoginFailure());
-    expect(mockNavigationDispatch).toHaveBeenCalledWith(
-      authErrorReplaceAction("err-code", { reason: "some-reason" })
-    );
-    expect(mockReplace).not.toHaveBeenCalled();
-  });
-
-  it("should not dispatch activeSessionLoginFailure but still navigate to AuthErrorScreen when LOGIN_FAILURE code is ERROR_1004", () => {
-    const { getByTestId } = renderComponent();
-    const cieIdLoginMock = getByTestId("cie-id-webview-login-mock");
-
-    fireEvent(cieIdLoginMock, "event", {
-      type: "LOGIN_FAILURE",
-      payload: { code: AUTH_ERRORS.ERROR_1004, reason: "some-reason" }
-    });
+    fireEvent(getByTestId("cie-id-webview-login-mock"), "failure", failure);
 
     expect(mockDispatch).not.toHaveBeenCalledWith(activeSessionLoginFailure());
     expect(mockNavigationDispatch).toHaveBeenCalledWith(
-      authErrorReplaceAction(AUTH_ERRORS.ERROR_1004, {
-        reason: "some-reason"
-      })
+      authErrorReplaceAction(failure)
     );
     expect(mockReplace).not.toHaveBeenCalled();
   });
 
-  it("should force logout and navigate to landing on WEBVIEW_HTTP_ERROR on the callback URL", () => {
+  it("should force logout and navigate to landing on a HTTP error on the callback URL", () => {
     const { getByTestId } = renderComponent();
-    const cieIdLoginMock = getByTestId("cie-id-webview-login-mock");
 
-    fireEvent(cieIdLoginMock, "event", {
-      type: "WEBVIEW_HTTP_ERROR",
-      payload: { url: MOCK_VALID_CALLBACK_URL, statusCode: 500 }
+    fireEvent(getByTestId("cie-id-webview-login-mock"), "failure", {
+      kind: "webViewHttp",
+      details: {
+        description: "",
+        statusCode: 500,
+        url: MOCK_VALID_CALLBACK_URL
+      }
     });
 
     expect(mockForceLogoutAndNavigateToLanding).toHaveBeenCalled();
@@ -149,29 +175,45 @@ describe("OneIdentityActiveSessionCieIdLoginScreen", () => {
     expect(mockNavigationDispatch).not.toHaveBeenCalled();
   });
 
-  it("should navigate to AuthErrorScreen on WEBVIEW_HTTP_ERROR outside the callback URL", () => {
+  // Regression: it used to navigate to AuthErrorScreen, unlike the first login
+  // and the legacy active session login
+  it("should navigate to CIE_ID_ERROR on a HTTP error that isn't 403 outside the callback URL", () => {
     const { getByTestId } = renderComponent();
-    const cieIdLoginMock = getByTestId("cie-id-webview-login-mock");
+    const failure: LoginFailure = {
+      kind: "webViewHttp",
+      details: {
+        description: "",
+        statusCode: 500,
+        url: "https://other.example.com"
+      }
+    };
 
-    fireEvent(cieIdLoginMock, "event", {
-      type: "WEBVIEW_HTTP_ERROR",
-      payload: { url: "https://other.example.com", statusCode: 500 }
-    });
+    fireEvent(getByTestId("cie-id-webview-login-mock"), "failure", failure);
 
     expect(mockForceLogoutAndNavigateToLanding).not.toHaveBeenCalled();
     expect(mockNavigationDispatch).toHaveBeenCalledWith(
-      authErrorReplaceAction(undefined)
+      StackActions.replace(AUTHENTICATION_ROUTES.CIE_ID_ERROR, { failure })
+    );
+    expect(mockNavigationDispatch).not.toHaveBeenCalledWith(
+      expect.objectContaining({
+        payload: expect.objectContaining({
+          name: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN
+        })
+      })
     );
     expect(mockReplace).not.toHaveBeenCalled();
   });
 
-  it("should not navigate anywhere on WEBVIEW_HTTP_ERROR with 403 outside the callback URL", () => {
+  it("should not navigate anywhere on a HTTP 403 error outside the callback URL", () => {
     const { getByTestId } = renderComponent();
-    const cieIdLoginMock = getByTestId("cie-id-webview-login-mock");
 
-    fireEvent(cieIdLoginMock, "event", {
-      type: "WEBVIEW_HTTP_ERROR",
-      payload: { url: "https://other.example.com", statusCode: 403 }
+    fireEvent(getByTestId("cie-id-webview-login-mock"), "failure", {
+      kind: "webViewHttp",
+      details: {
+        description: "",
+        statusCode: 403,
+        url: "https://other.example.com"
+      }
     });
 
     expect(mockForceLogoutAndNavigateToLanding).not.toHaveBeenCalled();
@@ -179,13 +221,12 @@ describe("OneIdentityActiveSessionCieIdLoginScreen", () => {
     expect(mockNavigationDispatch).not.toHaveBeenCalled();
   });
 
-  it("should navigate to CIE_ID_INCORRECT_URL on NOT_ALLOWED_URL event", () => {
+  it("should navigate to CIE_ID_INCORRECT_URL when the CieID app returns a URL not allowed", () => {
     const { getByTestId } = renderComponent();
-    const cieIdLoginMock = getByTestId("cie-id-webview-login-mock");
 
-    fireEvent(cieIdLoginMock, "event", {
-      type: "NOT_ALLOWED_URL",
-      payload: { url: "https://not-whitelisted.example.com" }
+    fireEvent(getByTestId("cie-id-webview-login-mock"), "failure", {
+      kind: "cieIdUrlNotAllowed",
+      details: { url: "https://not-whitelisted.example.com" }
     });
 
     expect(mockNavigationDispatch).toHaveBeenCalledWith(
@@ -195,46 +236,35 @@ describe("OneIdentityActiveSessionCieIdLoginScreen", () => {
     );
   });
 
-  it.each([
+  it.each<{ failure: LoginFailure; name: string }>([
+    { name: "a cancelled login", failure: { kind: "cancelled", details: {} } },
     {
-      name: "CANCEL",
-      event: { type: "CANCEL" },
-      failureData: { reason: "Login cancelled by the user" }
+      name: "a login source failure",
+      failure: {
+        kind: "reserve",
+        details: { reason: "some-reason", url: "https://example.com/reserve" }
+      }
     },
     {
-      name: "ONE_IDENTITY_LOGIN_FAILURE",
-      event: {
-        type: "ONE_IDENTITY_LOGIN_FAILURE",
-        payload: { failureData: { reason: "some-reason" } }
-      },
-      failureData: { reason: "some-reason" }
-    },
-    {
-      name: "WEBVIEW_ERROR",
-      event: {
-        type: "WEBVIEW_ERROR",
-        payload: {
-          url: "https://example.com",
-          failureData: {
-            description: "net::ERR_INTERNET_DISCONNECTED",
-            code: -2
-          }
+      name: "a WebView native error",
+      failure: {
+        kind: "webViewNative",
+        details: {
+          code: -2,
+          description: "net::ERR_INTERNET_DISCONNECTED",
+          url: "https://example.com"
         }
-      },
-      failureData: { description: "net::ERR_INTERNET_DISCONNECTED", code: -2 }
+      }
     }
   ])(
-    "should navigate to CIE_ID_ERROR with the failure data on $name event",
-    ({ event, failureData }) => {
+    "should navigate to CIE_ID_ERROR with the failure on $name",
+    ({ failure }) => {
       const { getByTestId } = renderComponent();
-      const cieIdLoginMock = getByTestId("cie-id-webview-login-mock");
 
-      fireEvent(cieIdLoginMock, "event", event);
+      fireEvent(getByTestId("cie-id-webview-login-mock"), "failure", failure);
 
       expect(mockNavigationDispatch).toHaveBeenCalledWith(
-        StackActions.replace(AUTHENTICATION_ROUTES.CIE_ID_ERROR, {
-          failureData
-        })
+        StackActions.replace(AUTHENTICATION_ROUTES.CIE_ID_ERROR, { failure })
       );
     }
   );
@@ -255,15 +285,11 @@ describe("OneIdentityActiveSessionCieIdLoginScreen", () => {
   });
 });
 
-const authErrorReplaceAction = (
-  errorCodeOrMessage: string | undefined,
-  failureData?: Record<string, unknown>
-) =>
+const authErrorReplaceAction = (failure: LoginFailure) =>
   StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
-    errorCodeOrMessage,
     authMethod: "CIE_ID",
     authLevel: MOCK_AUTH_LEVEL_L2,
-    failureData
+    failure
   });
 
 const renderComponent = (
