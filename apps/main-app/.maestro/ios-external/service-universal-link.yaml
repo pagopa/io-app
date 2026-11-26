@@ -1,0 +1,15 @@
+appId: it.pagopa.app.io
+name: Safari hands a real HTTPS service link to IO
+---
+- runScript: ../ios/shared/service-link.js
+- runFlow: ../ios/shared/login.yaml
+- openLink: http://127.0.0.1:3000/maestro/service-link
+- runFlow:
+    when:
+      visible:
+        id: TipView
+    commands:
+      - tapOn:
+          id: xmark.circle.fill
+- tapOn: Open the IO test service
+- runFlow: ../ios/shared/assert-service.yaml

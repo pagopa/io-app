@@ -21,6 +21,14 @@ controls.use((req, res, next) => {
   next();
 });
 
+controls.get("/service-link", (_, res) => {
+  res
+    .type("html")
+    .send(
+      '<meta name="viewport" content="width=device-width, initial-scale=1"><a href="https://continua.io.pagopa.it/services/service-detail?serviceId=service1">Open the IO test service</a>'
+    );
+});
+
 controls.post("/paid-message", (_, res) => {
   const message = MessagesService.createMessage();
   const result = withPaymentData(message);

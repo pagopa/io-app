@@ -1,0 +1,7 @@
+appId: it.pagopa.app.io
+name: Open a service link from the authenticated inbox
+---
+- runScript: shared/service-link.js
+- runFlow: shared/login.yaml
+- runFlow: shared/open-service-link.yaml
+- runFlow: shared/assert-service.yaml

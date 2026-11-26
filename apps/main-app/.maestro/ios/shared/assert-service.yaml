@@ -1,0 +1,8 @@
+appId: it.pagopa.app.io
+---
+- extendedWaitUntil:
+    visible:
+      id: services-header
+    timeout: 30000
+- assertVisible:
+    text: ${output.serviceName}

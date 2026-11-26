@@ -1,0 +1,17 @@
+appId: it.pagopa.app.io
+name: Cold service link opens its destination only after PIN
+---
+- runScript: shared/service-link.js
+- runFlow: shared/login.yaml
+- stopApp
+- runFlow: shared/open-service-link.yaml
+- extendedWaitUntil:
+    visible:
+      id: number-pad
+    timeout: 60000
+- assertNotVisible:
+    text: ${output.serviceName}
+- assertNotVisible:
+    id: services-header
+- runFlow: shared/pin.yaml
+- runFlow: shared/assert-service.yaml

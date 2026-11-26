@@ -1,0 +1,6 @@
+appId: it.pagopa.app.io
+---
+- openLink: ${output.serviceLink}
+- tapOn:
+    text: Apri
+    optional: true

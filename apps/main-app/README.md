@@ -215,6 +215,11 @@ and can run individually:
   profile endpoint until the app shows its transient error. Restore the endpoint
   and follow the on-screen instruction to relaunch; the existing PIN must unlock
   the same inbox message without another SPID login.
+- [Warm deep link](.maestro/ios/service-link-warm.yaml): open an `ioit://` service
+  link from the authenticated inbox and verify the service name from the local catalog.
+- [Cold deep link](.maestro/ios/service-link-cold.yaml): terminate IO, open the
+  same link, verify the detail is hidden at the PIN prompt, then unlock and
+  verify the destination without delivering the link again.
 
 1. Use a **dedicated iPhone simulator** with Italian as its language and no
    Face ID enrolled. Each run clears the app's data **and the simulator keychain**.
@@ -240,6 +245,17 @@ and can run individually:
    Maestro prints the path to its local logs and screenshots on failure.
    Run serially against a dedicated dev API instance. This pilot is not a PR
    gate; look for ten consecutive passes without retries before promoting it.
+
+The [Safari Universal Link test](.maestro/ios-external/service-universal-link.yaml)
+is separate from the local suite. It taps an HTTPS link on a loopback page and
+expects the matching native service detail, not just IO in the foreground.
+Use Safari as the default browser. The installed build must be associated with
+`continua.io.pagopa.it`; iOS needs access to the domain's association data.
+With the same simulator, Metro and fixture server, run:
+
+```bash
+maestro --device "$SIMULATOR_UDID" test apps/main-app/.maestro/ios-external/service-universal-link.yaml
+```
 
 ### Android emulator
 
