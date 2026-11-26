@@ -1,7 +1,7 @@
 import { requireNativeModule } from "expo-modules-core";
 import { Platform } from "react-native";
 
-import { isCieIdAvailable, openCieIdApp } from "..";
+import { type CieIdErrorResult, isCieIdAvailable, openCieIdApp } from "..";
 
 jest.mock("react-native", () => ({
   Platform: {
@@ -85,14 +85,29 @@ describe("CIE ID Expo wrapper", () => {
     expect(callback).toHaveBeenCalledWith(result);
   });
 
-  it("forwards authentication errors to the callback", async () => {
-    const result = { id: "ERROR", code: "CIEID_OPERATION_CANCEL" };
-    nativeModule.launchCieIdForResult.mockResolvedValue(result);
-    const callback = jest.fn();
-    openCieIdApp("https://example.com/auth", callback);
-    await Promise.resolve();
-    expect(callback).toHaveBeenCalledWith(result);
-  });
+  test.each([
+    { name: "legacy cancellation", code: "CIEID_OPERATION_CANCEL" },
+    {
+      name: "NFC cancellation",
+      code: "CIEID_OPERATION_CANCEL",
+      message: "NFC_READ_ERROR"
+    },
+    {
+      name: "service failure",
+      code: "AUTHENTICATION_ERROR",
+      message: "IDP_HTTP_ERROR"
+    }
+  ] as const)(
+    "forwards $name to the callback",
+    async ({ name: _name, ...error }) => {
+      const result: CieIdErrorResult = { id: "ERROR", userInfo: {}, ...error };
+      nativeModule.launchCieIdForResult.mockResolvedValue(result);
+      const callback = jest.fn();
+      openCieIdApp("https://example.com/auth", callback);
+      await Promise.resolve();
+      expect(callback).toHaveBeenCalledWith(result);
+    }
+  );
 
   it("converts native rejections to the existing error contract", async () => {
     nativeModule.launchCieIdForResult.mockRejectedValue(

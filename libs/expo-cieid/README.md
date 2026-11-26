@@ -91,7 +91,8 @@ openCieIdApp("https://your-app.com/auth-callback", result => {
   } else if (result.id === "ERROR") {
     console.error(
       "Authentication on CieID failed with error code:",
-      result.code
+      result.code,
+      result.message
     );
   }
 });
@@ -115,6 +116,34 @@ The function returns `void`. The native Expo implementation resolves a Promise i
 This method uses the Android package name to open the CieID app and requires the app's package visibility in the manifest. The method will automatically pick the package name matching the `environment` parameter: `'it.ipzs.cieid'` for `'production'`, `'it.ipzs.cieid.collaudo'` for `'preprod'` and `'it.ipzs.cieid.coll'` for `'coll'`.
 
 Only one authentication can be pending at a time. A concurrent launch receives `CIEID_OPERATION_NOT_SUCCESSFUL` through its callback without replacing the pending operation. Cancellation returns `CIEID_OPERATION_CANCEL`.
+
+When CieID supplies an `error_message` extra on `RESULT_OK` without a redirect URL or on `RESULT_CANCELED`, the callback receives it as `result.message`. Successful redirects never include a message. Use `result.code` when the message is absent, including for generic cancellations from older CieID versions.
+
+##### Android error messages
+
+`CieIdErrorMessage` lists the known values of `result.message`. A `CIEID_OPERATION_CANCEL` result can carry any applicable error detail, not just a voluntary cancellation.
+
+| `result.message`                 | Authentication level | When it occurs                                                                            | Recommended handling                                                                                                               |
+| -------------------------------- | -------------------- | ----------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `IDP_HTTP_ERROR`                 | L3                   | The identity provider returns an HTTP error.                                              | Ask the user to try again later.                                                                                                   |
+| `IDP_EMPTY_RESPONSE`             | L3                   | The identity provider returns an empty response.                                          | Suggest retrying. If the problem persists, report the date and time to IPZS.                                                       |
+| `IDP_INVALID_CODE`               | L3                   | The identity provider response lacks an authentication code in the expected format.       | Report the date, time, and requested authentication level to IPZS. The user cannot correct the response.                           |
+| `IDP_RESPONSE_PARSING_ERROR`     | L3                   | CieID cannot parse the identity provider response.                                        | Report the date, time, and requested authentication level to IPZS.                                                                 |
+| `CERTIFICATE_REVOKED`            | L3                   | The card's authentication certificate has been revoked.                                   | Explain that the card is no longer valid for authentication. Direct the user to their municipality rather than suggesting a retry. |
+| `CERTIFICATE_EXPIRED`            | L3                   | The card's authentication certificate has expired.                                        | Tell the user the card has expired. Do not suggest retrying.                                                                       |
+| `USER_CANCELLED_AFTER_WRONG_PIN` | L3                   | The user enters an incorrect PIN and cancels instead of retrying.                         | Treat this as a voluntary cancellation. If helpful, remind the user to check their PIN.                                            |
+| `CIE_NOT_REGISTERED`             | L3                   | The user requests L3 authentication without a registered card in CieID.                   | Ask the user to register their card in CieID before retrying.                                                                      |
+| `USER_CANCELLED`                 | L1, L2, L3           | The user goes back or cancels without seeing an error.                                    | Return to the access-method selection without showing an error.                                                                    |
+| `USER_CANCELLED_DURING_NFC`      | L3                   | The user goes back while CieID reads the card.                                            | Treat this as a voluntary cancellation.                                                                                            |
+| `NFC_TIMEOUT`                    | L3                   | The user does not present the card in time and cancels.                                   | Ask the user to retry with the card held against the phone.                                                                        |
+| `NFC_READ_ERROR`                 | L3                   | The card read fails or stops before completion, and the user exits.                       | Ask the user to keep the card still against the phone while retrying.                                                              |
+| `NOT_A_CIE`                      | L3                   | The user presents a card other than a CIE and exits.                                      | Ask the user to use their electronic identity card (CIE).                                                                          |
+| `NO_INTERNET_CONNECTION`         | L1, L2, L3           | CieID cannot reach the identity provider or the connection times out, and the user exits. | Ask the user to check their internet connection and retry.                                                                         |
+| `CARD_PIN_LOCKED`                | L3                   | The card's PIN is locked.                                                                 | Tell the user they can unlock the PIN with their PUK in CieID.                                                                     |
+| `CARD_PUK_LOCKED`                | L3                   | The card's PUK is also locked.                                                            | Direct the user to their municipality.                                                                                             |
+| `AUTHENTICATION_FAILED`          | L1, L2               | Authentication with CieID credentials fails.                                              | Suggest retrying or choosing another access method.                                                                                |
+| `DEVICE_NOT_SECURE`              | L1, L2, L3           | CieID detects a modified (rooted) device and refuses authentication.                      | Do not suggest retrying on the same device.                                                                                        |
+| `INVALID_REQUEST`                | L1, L2, L3           | CieID does not accept the URL. At L3, it accepts only the `OpenApp` URL.                  | Check the URL the app passed in the Android intent.                                                                                |
 
 #### iOS:
 
@@ -239,8 +268,9 @@ The authentication and wallet identification features in `main-app` contain comp
           url,
           (result) => {
             if (result.id === 'ERROR') {
-              console.error('^--^ -->', JSON.stringify(result, null, 2));
-              navigation.goBack();
+              Alert.alert('CieID error', JSON.stringify(result, null, 2), [
+                { text: 'OK', onPress: () => navigation.goBack() }
+              ]);
             } else {
               console.log('^--^ -->', result.id, result.url);
               setAuthenticatedUrl(result.url);

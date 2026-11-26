@@ -83,26 +83,42 @@ class ExpoCieIdModule : Module() {
   private fun authenticationResult(resultCode: Int, data: Intent?): Map<String, Any> =
     when (resultCode) {
       Activity.RESULT_OK -> {
-        val url = data?.getStringExtra("URL")
+        val url = data?.getStringExtra(ReturnType.URL.toString())
         if (!url.isNullOrEmpty()) {
-          mapOf("id" to "URL", "url" to url)
+          mapOf("id" to ReturnType.URL.toString(), "url" to url)
         } else {
-          val error = when (data?.getIntExtra("ERROR", RedirectionError.GENERIC_ERROR.code)) {
+          val errorCode = data?.getIntExtra(
+            ReturnType.ERROR.toString(),
+            RedirectionError.GENERIC_ERROR.code
+          )
+          val errorMessage = data?.getStringExtra(ReturnType.ERROR_MESSAGE.toString())
+          val error = when (errorCode) {
             RedirectionError.GENERIC_ERROR.code -> ModuleError.GENERIC_ERROR
             RedirectionError.CIE_NOT_REGISTERED.code -> ModuleError.CIE_NOT_REGISTERED
             RedirectionError.AUTHENTICATION_ERROR.code -> ModuleError.AUTHENTICATION_ERROR
             RedirectionError.NO_SECURE_DEVICE.code -> ModuleError.NO_SECURE_DEVICE
             else -> ModuleError.CIEID_EMPTY_URL_AND_ERROR_EXTRAS
           }
-          errorResult(error)
+          errorResult(error, message = errorMessage)
         }
       }
-      Activity.RESULT_CANCELED -> errorResult(ModuleError.CIEID_OPERATION_CANCEL)
+      Activity.RESULT_CANCELED -> {
+        val errorMessage = data?.getStringExtra(ReturnType.ERROR_MESSAGE.toString())
+        errorResult(ModuleError.CIEID_OPERATION_CANCEL, message = errorMessage)
+      }
       else -> errorResult(ModuleError.CIEID_OPERATION_NOT_SUCCESSFUL)
     }
 
-  private fun errorResult(error: ModuleError, userInfo: Map<String, String> = emptyMap()): Map<String, Any> =
-    mapOf("id" to "ERROR", "code" to error.name, "userInfo" to userInfo)
+  private fun errorResult(
+    error: ModuleError,
+    userInfo: Map<String, String> = emptyMap(),
+    message: String? = null
+  ): Map<String, Any> = buildMap {
+    put("id", ReturnType.ERROR.toString())
+    put("code", error.name)
+    put("userInfo", userInfo)
+    if (message != null) put("message", message)
+  }
 
   private fun isSignatureValid(packageManager: PackageManager, packageName: String, signature: String): Boolean {
     val packageInfo = packageManager.getPackageInfoCompat(packageName)
@@ -148,6 +164,14 @@ class ExpoCieIdModule : Module() {
     CIE_NOT_REGISTERED(1),
     AUTHENTICATION_ERROR(2),
     NO_SECURE_DEVICE(3)
+  }
+
+  private enum class ReturnType(private val key: String) {
+    ERROR("ERROR"),
+    URL("URL"),
+    ERROR_MESSAGE("error_message");
+
+    override fun toString() = key
   }
 
   private companion object {

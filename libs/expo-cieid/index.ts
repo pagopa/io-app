@@ -10,9 +10,31 @@ export type AndroidCiedIdPackageName =
  * certificate.
  */
 export type CieIdEnvironment = "coll" | "preprod" | "production";
+export type CieIdErrorMessage =
+  | "AUTHENTICATION_FAILED"
+  | "CARD_PIN_LOCKED"
+  | "CARD_PUK_LOCKED"
+  | "CERTIFICATE_EXPIRED"
+  | "CERTIFICATE_REVOKED"
+  | "CIE_NOT_REGISTERED"
+  | "DEVICE_NOT_SECURE"
+  | "IDP_EMPTY_RESPONSE"
+  | "IDP_HTTP_ERROR"
+  | "IDP_INVALID_CODE"
+  | "IDP_RESPONSE_PARSING_ERROR"
+  | "INVALID_REQUEST"
+  | "NFC_READ_ERROR"
+  | "NFC_TIMEOUT"
+  | "NO_INTERNET_CONNECTION"
+  | "NOT_A_CIE"
+  | "USER_CANCELLED"
+  | "USER_CANCELLED_AFTER_WRONG_PIN"
+  | "USER_CANCELLED_DURING_NFC";
+
 export type CieIdErrorResult = {
   code: CieIdModuleErrorCodes;
   id: "ERROR";
+  message?: CieIdErrorMessage | null;
   userInfo?: Record<string, string>;
 };
 
