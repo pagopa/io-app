@@ -96,9 +96,9 @@ describe("watchMessagesSaga", () => {
       .next()
       .takeLeading(addCalendarEventRequest, handleAddCalendarEvent)
       .next()
-      .call(handleInterruptedMessageListRequests)
-      .next()
       .put(setMessageSagasRegisteredAction())
+      .next()
+      .call(handleInterruptedMessageListRequests)
       .next()
       .select(retryDataAfterFastLoginSessionExpirationSelector)
       .next(undefined) // Simulate no retry data
@@ -162,9 +162,9 @@ describe("watchMessagesSaga", () => {
       .next()
       .takeLeading(addCalendarEventRequest, handleAddCalendarEvent)
       .next()
-      .call(handleInterruptedMessageListRequests)
-      .next()
       .put(setMessageSagasRegisteredAction())
+      .next()
+      .call(handleInterruptedMessageListRequests)
       .next()
       .select(retryDataAfterFastLoginSessionExpirationSelector)
       .next(retryData) // Simulate retry data is present

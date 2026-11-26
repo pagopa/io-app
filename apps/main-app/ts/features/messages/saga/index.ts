@@ -116,10 +116,10 @@ export function* watchMessagesSaga(): SagaIterator {
   // ignore repeated reminder requests while one is in progress
   yield* takeLeading(addCalendarEventRequest, handleAddCalendarEvent);
 
-  yield* call(handleInterruptedMessageListRequests);
-
   // Signal that message's sagas are ready
   yield* put(setMessageSagasRegisteredAction());
+
+  yield* call(handleInterruptedMessageListRequests);
 
   const retryDataOrUndefined = yield* select(
     retryDataAfterFastLoginSessionExpirationSelector
