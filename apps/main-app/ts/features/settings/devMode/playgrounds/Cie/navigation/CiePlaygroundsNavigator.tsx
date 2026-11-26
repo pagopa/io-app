@@ -1,10 +1,11 @@
-import { CieLogger } from "@pagopa/io-react-native-cie";
+import { CieLogger } from "@io-app/expo-cie";
 import { useNavigation } from "@react-navigation/native";
 import {
   createStackNavigator,
   StackNavigationProp
 } from "@react-navigation/stack";
 import { useEffect } from "react";
+import { Platform } from "react-native";
 
 import { isGestureEnabled } from "../../../../../../utils/navigation";
 import { CieAttributesScreen } from "../screens/CieAttributesScreen";
@@ -26,6 +27,9 @@ export const CiePlaygroundsNavigator = () => {
    * disable it when unmounted.
    */
   useEffect(() => {
+    if (Platform.OS !== "ios") {
+      return;
+    }
     CieLogger.setLogMode("FILE");
     return () => {
       CieLogger.setLogMode("DISABLED");

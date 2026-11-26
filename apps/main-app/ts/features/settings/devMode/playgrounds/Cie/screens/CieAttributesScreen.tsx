@@ -1,5 +1,5 @@
 import { IOButton, VSpacer } from "@io-app/design-system";
-import { CieManager, type NfcEvent } from "@pagopa/io-react-native-cie";
+import { CieManager, type NfcEvent } from "@io-app/expo-cie";
 import { useEffect, useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";

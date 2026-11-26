@@ -6,7 +6,7 @@ import {
   useIOToast,
   VStack
 } from "@io-app/design-system";
-import { CieLogger, CieUtils } from "@pagopa/io-react-native-cie";
+import { CieLogger, CieUtils } from "@io-app/expo-cie";
 import { Fragment, useCallback, useState } from "react";
 import { Platform } from "react-native";
 

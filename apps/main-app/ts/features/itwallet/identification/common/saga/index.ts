@@ -1,4 +1,4 @@
-import { CieUtils } from "@pagopa/io-react-native-cie";
+import { CieUtils } from "@io-app/expo-cie";
 import { call, put } from "typed-redux-saga/macro";
 
 import {
