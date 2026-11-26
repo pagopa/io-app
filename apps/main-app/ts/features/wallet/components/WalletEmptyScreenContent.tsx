@@ -1,11 +1,16 @@
 import { Body, IOButton, IODimensions, Pictogram } from "@io-app/design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
+import { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 
 import ItwDeckImage from "../../../../img/features/itWallet/brand/itw_deck_wallet.svg";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
-import { trackWalletAdd } from "../../itwallet/analytics";
+import {
+  trackItwDiscoveryNewUser,
+  trackWalletAdd
+} from "../../itwallet/analytics";
 import { PoweredByItWalletText } from "../../itwallet/common/components/PoweredByItWalletText";
 import { itwIsL3EnabledSelector } from "../../itwallet/common/store/selectors";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
@@ -13,6 +18,14 @@ import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 const WalletEmptyScreenContent = () => {
   const navigation = useIONavigation();
   const isItWalletEnabled = useIOSelector(itwIsL3EnabledSelector);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (isItWalletEnabled) {
+        trackItwDiscoveryNewUser();
+      }
+    }, [isItWalletEnabled])
+  );
 
   const handleAddToWalletButtonPress = () => {
     trackWalletAdd();
