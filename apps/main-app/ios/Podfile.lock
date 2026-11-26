@@ -214,7 +214,7 @@ PODS:
     - React-Core
   - MultiplatformBleAdapter (0.2.0)
   - OpenSSL-Universal (3.6.2000)
-  - pagopa-io-react-native-cieid (0.5.2):
+  - pagopa-io-react-native-cieid (0.6.0):
     - boost
     - DoubleConversion
     - fast_float
@@ -4319,7 +4319,7 @@ SPEC CHECKSUMS:
   MixpanelReactNative: 1f0d8718b2be7174f719ed5db8e8f75d7975dea4
   MultiplatformBleAdapter: b1fddd0d499b96b607e00f0faa8e60648343dc1d
   OpenSSL-Universal: ecee7b138fa75a74ecf00d7ffd248fb584739b9e
-  pagopa-io-react-native-cieid: 3969ed1784e0b9041baf892b461be3640315acd1
+  pagopa-io-react-native-cieid: 63784e10541a12320a6fb6f05a11f6c17e4fd117
   pagopa-io-react-native-integrity: c96d85212859750bcc3901501ef27d05475f8476
   pagopa-io-react-native-jwt: a5231b3f09cb69b54abd76dac34e1bddff596fe2
   pagopa-io-react-native-secure-storage: 64dcc5dff82ec5ce136d7904bc076d70db157dec

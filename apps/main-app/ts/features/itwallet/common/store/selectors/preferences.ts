@@ -65,3 +65,10 @@ export const itwIsDiscoverMoreCEDLocallyEnabledSelector = (
 /** Returns whether the What's New engagement screen is locally enabled. */
 export const itwIsWhatsNewLocallyEnabledSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.isWhatsNewLocallyEnabled ?? false;
+
+/** Returns whether the credential upgrade banner is locally enabled. */
+export const itwIsUpgradeCredentialsBannerLocallyEnabledSelector = (
+  state: GlobalState
+) =>
+  state.features.itWallet.preferences
+    .isUpgradeCredentialsBannerLocallyEnabled ?? false;
