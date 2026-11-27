@@ -4,6 +4,7 @@ import {
   H3,
   HStack,
   IODimensions,
+  SearchInput,
   VSpacer
 } from "@io-app/design-system";
 import I18n from "i18next";
@@ -25,17 +26,19 @@ type CgnAnimatedHeaderProps = {
   children?: React.ReactNode;
   /** 0 = idle, 1 = refreshing */
   isRefreshingValue?: SharedValue<number>;
+  onSearch: () => void;
   /** 0–1 value tracking how far the user has pulled (from scroll offset) */
   pullProgress?: SharedValue<number>;
   ref?: React.Ref<View>;
 };
 
-const HEIGHT = Platform.select({ ios: 210, android: 185, default: 185 });
+const HEIGHT = Platform.select({ ios: 250, android: 225, default: 225 });
 const CARD_BORDER_RADIUS = 24;
 
 const CgnAnimatedHeader = ({
   children,
   ref,
+  onSearch,
   pullProgress,
   isRefreshingValue
 }: CgnAnimatedHeaderProps) => {
@@ -86,7 +89,7 @@ const CgnAnimatedHeader = ({
           pointerEvents="none"
           style={{ ...StyleSheet.absoluteFill, zIndex: 0 }}
         >
-          <CgnAnimatedBackground />
+          <CgnAnimatedBackground variant="discovery" />
         </View>
         {Platform.OS === "ios" && (
           <Animated.View
@@ -109,8 +112,8 @@ const CgnAnimatedHeader = ({
             paddingBottom: IODimensions.padding.screen.default
           }}
         >
-          <HStack space={16} style={{ alignItems: "center" }}>
-            <Avatar logoUri={cgnLogo} size="medium" />
+          <HStack space={8} style={{ alignItems: "center" }}>
+            <Avatar logoUri={cgnLogo} size="small" />
             <View
               accessibilityRole="header"
               accessible
@@ -120,6 +123,18 @@ const CgnAnimatedHeader = ({
               <H3>{I18n.t("bonus.cgn.merchantsList.screenTitle")}</H3>
             </View>
           </HStack>
+          <VSpacer size={24} />
+          <SearchInput
+            accessibilityLabel={I18n.t(
+              "bonus.cgn.merchantSearch.input.placeholder"
+            )}
+            cancelButtonLabel={I18n.t("bonus.cgn.merchantSearch.input.cancel")}
+            clearAccessibilityLabel={I18n.t(
+              "bonus.cgn.merchantSearch.input.clear"
+            )}
+            placeholder={I18n.t("bonus.cgn.merchantSearch.input.placeholder")}
+            pressable={{ onPress: onSearch }}
+          />
         </ContentWrapper>
       </View>
       <VSpacer size={16} />

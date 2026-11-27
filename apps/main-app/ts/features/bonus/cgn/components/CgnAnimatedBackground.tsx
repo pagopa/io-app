@@ -1,10 +1,11 @@
-import { Canvas, Path, Skia } from "@shopify/react-native-skia";
+import { Canvas, Path, Skia, type SkPath } from "@shopify/react-native-skia";
 import { useEffect } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import {
   cancelAnimation,
   Easing,
   interpolate,
+  ReduceMotion,
   useDerivedValue,
   useSharedValue,
   withRepeat,
@@ -12,12 +13,13 @@ import {
 } from "react-native-reanimated";
 
 import { useFeatureColors } from "../../../../hooks/useFeatureColors";
+import { useReduceMotionEnabled } from "../../../../hooks/useReduceMotionEnabled";
 import { cgnColors } from "../colors";
 
 // Blob configuration
 const NUM_BLOB_POINTS = 7;
 const BLOB_BASE_RADIUS = 80;
-const WOBBLE_AMPLITUDE = 25; // How much the blob wobbles (±pixels)
+const WOBBLE_RATIO = 25 / BLOB_BASE_RADIUS;
 
 // Elliptical motion path parameters (as fraction of canvas dimensions)
 const MOTION_PATH_RADIUS_X_RATIO = 0.35;
@@ -31,10 +33,24 @@ const SCALE_RANGE = [0.95, 1.5] as const;
 const OPACITY_RANGE = [0.4, 0.5] as const;
 const SEED_RANGE = [1, 7] as const;
 
+// Keep the two lower shapes behind the searchbar throughout the animation.
+// Positions, radii and drift are relative to the header's dimensions.
+const HEADER_BLOBS = [
+  { centerX: 0.18, centerY: 0.94, radiusX: 0.57, radiusY: 0.72 },
+  { centerX: 0.5, centerY: -0.14, radiusX: 0.29, radiusY: 0.51 },
+  { centerX: 0.94, centerY: 0.73, radiusX: 0.44, radiusY: 0.66 }
+] as const;
+const HEADER_DRIFT_X_RATIO = 0.012;
+const HEADER_DRIFT_Y_RATIO = 0.018;
+const HEADER_WOBBLE_RATIO = 0.07;
+
 interface AnimatedBlobProps {
+  anchor?: (typeof HEADER_BLOBS)[number];
+  blobCount: number;
   canvasSize: { value: { height: number; width: number } };
   color: string;
   index: number;
+  reduceMotion: boolean;
 }
 
 /**
@@ -74,12 +90,12 @@ const generateBlobPath = (
   time: number,
   centerX: number,
   centerY: number,
-  scale: number
-): ReturnType<typeof Skia.Path.Make> => {
+  radiusX: number,
+  radiusY: number,
+  wobbleRatio: number
+): SkPath => {
   "worklet";
-  const path = Skia.Path.Make();
-  const scaledRadius = BLOB_BASE_RADIUS * scale;
-  const scaledAmplitude = WOBBLE_AMPLITUDE * scale;
+  const builder = Skia.PathBuilder.Make();
 
   const points: Array<{ x: number; y: number }> = Array.from(
     { length: NUM_BLOB_POINTS },
@@ -87,22 +103,18 @@ const generateBlobPath = (
       const angle = (i / NUM_BLOB_POINTS) * Math.PI * 2;
 
       // Each point gets unique wobble based on its index
-      const wobble = organicWobble(i, time, seed);
-
-      // Map wobble (-1 to 1) to radius variation
-      const radiusOffset = wobble * scaledAmplitude;
-      const radius = scaledRadius + radiusOffset;
+      const radiusFactor = 1 + organicWobble(i, time, seed) * wobbleRatio;
 
       return {
-        x: centerX + radius * Math.cos(angle),
-        y: centerY + radius * Math.sin(angle)
+        x: centerX + radiusX * radiusFactor * Math.cos(angle),
+        y: centerY + radiusY * radiusFactor * Math.sin(angle)
       };
     }
   );
 
   // Create smooth closed curve using cubic Bezier approximation of Catmull-Rom spline
   if (points.length < 3) {
-    return path;
+    return builder.detach();
   }
 
   // Helper to get point with wrapping
@@ -114,7 +126,7 @@ const generateBlobPath = (
     x: (getPoint(-1).x + getPoint(0).x) / 2,
     y: (getPoint(-1).y + getPoint(0).y) / 2
   };
-  path.moveTo(startMid.x, startMid.y);
+  builder.moveTo(startMid.x, startMid.y);
 
   // Draw smooth curves through each point
   points.forEach((_, i) => {
@@ -125,19 +137,25 @@ const generateBlobPath = (
     const mid2 = { x: (p1.x + p2.x) / 2, y: (p1.y + p2.y) / 2 };
 
     // Quadratic curve through the control point to the next midpoint
-    path.quadTo(p1.x, p1.y, mid2.x, mid2.y);
+    builder.quadTo(p1.x, p1.y, mid2.x, mid2.y);
   });
 
-  path.close();
-  return path;
+  builder.close();
+  return builder.detach();
 };
 
-const AnimatedBlob = ({ index, canvasSize, color }: AnimatedBlobProps) => {
+const AnimatedBlob = ({
+  anchor,
+  blobCount,
+  index,
+  canvasSize,
+  color,
+  reduceMotion
+}: AnimatedBlobProps) => {
   // Derive properties from index using interpolation
   // This distributes blobs evenly and creates variety without repetitive config
-  const pathOffset = index / NUM_BLOBS; // Evenly distributed around ellipse
-  // Interpolate properties directly from blob index (0 to NUM_BLOBS-1)
-  const blobIndexRange = [0, NUM_BLOBS - 1] as const;
+  const pathOffset = index / blobCount;
+  const blobIndexRange = [0, blobCount - 1] as const;
   const seed = interpolate(index, blobIndexRange, SEED_RANGE);
   const scale = interpolate(index, blobIndexRange, SCALE_RANGE);
   const opacity = interpolate(index, blobIndexRange, OPACITY_RANGE);
@@ -149,64 +167,96 @@ const AnimatedBlob = ({ index, canvasSize, color }: AnimatedBlobProps) => {
 
   // Generate morphing blob path at current orbit position
   const blobPath = useDerivedValue(() => {
-    // Get center from canvas size (centered relative to the card)
     const { width, height } = canvasSize.value;
-    const ellipseCenterX = width / 2;
-    const ellipseCenterY = height / 2;
+    const ellipseCenterX = width * (anchor?.centerX ?? 0.5);
+    const ellipseCenterY = height * (anchor?.centerY ?? 0.5);
 
     // Calculate position on elliptical motion path (radii scale with canvas size)
     const angle = (pathOffset + orbitProgress.value) * Math.PI * 2;
-    const motionRadiusX = width * MOTION_PATH_RADIUS_X_RATIO;
-    const motionRadiusY = height * MOTION_PATH_RADIUS_Y_RATIO;
+    const motionRadiusX =
+      width * (anchor ? HEADER_DRIFT_X_RATIO : MOTION_PATH_RADIUS_X_RATIO);
+    const motionRadiusY =
+      height * (anchor ? HEADER_DRIFT_Y_RATIO : MOTION_PATH_RADIUS_Y_RATIO);
     const posX = ellipseCenterX + motionRadiusX * Math.cos(angle);
     const posY = ellipseCenterY + motionRadiusY * Math.sin(angle);
 
     // morphTime drives the blob shape deformation
     const morphTime = orbitProgress.value * MORPH_SPEED;
 
-    return generateBlobPath(seed, morphTime, posX, posY, scale);
+    const radius = BLOB_BASE_RADIUS * scale;
+    return generateBlobPath(
+      seed,
+      morphTime,
+      posX,
+      posY,
+      anchor ? width * anchor.radiusX : radius,
+      anchor ? height * anchor.radiusY : radius,
+      anchor ? HEADER_WOBBLE_RATIO : WOBBLE_RATIO
+    );
   });
 
   useEffect(() => {
+    if (reduceMotion) {
+      return;
+    }
+
+    // The live system preference above owns playback, not Reanimated's startup setting.
+    orbitProgress.value = 0;
     orbitProgress.value = withRepeat(
       withTiming(1, {
         duration: ORBIT_DURATION,
-        easing: Easing.linear
+        easing: Easing.linear,
+        reduceMotion: ReduceMotion.Never
       }),
       -1,
-      false
+      false,
+      undefined,
+      ReduceMotion.Never
     );
 
     return () => {
       cancelAnimation(orbitProgress);
     };
-  }, [orbitProgress]);
+  }, [orbitProgress, reduceMotion]);
 
   return <Path color={foregroundColor} opacity={opacity} path={blobPath} />;
 };
 
-export const CgnAnimatedBackground = () => {
-  // Canvas size is provided via onSize callback and updated on the UI thread
+export const CgnAnimatedBackground = ({
+  variant = "card"
+}: {
+  variant?: "card" | "discovery";
+}) => {
   const canvasSize = useSharedValue({ width: 0, height: 0 });
   const colors = useFeatureColors(cgnColors);
+  const reduceMotion = useReduceMotionEnabled();
 
   const backgroundColor = colors.detailCard.background;
   const foregroundColor = colors.detailCard.foreground;
+  const anchors = variant === "discovery" ? HEADER_BLOBS : undefined;
+  const blobCount = anchors?.length ?? NUM_BLOBS;
 
   return (
-    <Canvas
-      onSize={canvasSize}
+    <View
+      onLayout={({ nativeEvent: { layout } }) => {
+        canvasSize.value = { width: layout.width, height: layout.height };
+      }}
       pointerEvents="none"
       style={[StyleSheet.absoluteFill, { backgroundColor }]}
     >
-      {Array.from({ length: NUM_BLOBS }, (_, index) => (
-        <AnimatedBlob
-          canvasSize={canvasSize}
-          color={foregroundColor}
-          index={index}
-          key={`blob-${index}`}
-        />
-      ))}
-    </Canvas>
+      <Canvas style={StyleSheet.absoluteFill}>
+        {Array.from({ length: blobCount }, (_, index) => (
+          <AnimatedBlob
+            anchor={anchors?.[index]}
+            blobCount={blobCount}
+            canvasSize={canvasSize}
+            color={foregroundColor}
+            index={index}
+            key={`blob-${index}`}
+            reduceMotion={reduceMotion}
+          />
+        ))}
+      </Canvas>
+    </View>
   );
 };
