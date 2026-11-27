@@ -133,10 +133,10 @@ describe("PreferencesScreen", () => {
     });
   });
 
-  it("should show alert and open settings if permission is denied", async () => {
+  it("should show alert and open settings after calendar permission is denied", async () => {
     (checkAndRequestPermission as jest.Mock).mockResolvedValue({
       authorized: false,
-      asked: false
+      asked: true
     });
 
     const alertSpy = jest.spyOn(Alert, "alert");
