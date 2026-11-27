@@ -29,6 +29,7 @@ type ButtonProps = Pick<
   IOButtonProps,
   | "accessibilityLabel"
   | "color"
+  | "disabled"
   | "icon"
   | "iconPosition"
   | "label"
