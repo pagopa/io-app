@@ -68,8 +68,7 @@ function* handleRefreshSessionToken(
   // Dismiss Zendesk Support Screen if it is visible
   yield* call(dismissSupport);
 
-  const maybePin = yield* call(getPin);
-  const isPinAvailable = maybePin != null;
+  const isPinAvailable = (yield* call(getPin)) !== undefined;
   const { withUserInteraction } = refreshSessionTokenRequestAction.payload;
 
   if (!isPinAvailable) {
