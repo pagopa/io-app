@@ -4,6 +4,10 @@ import {
   ListItemInfo,
   VStack
 } from "@io-app/design-system";
+import {
+  getNfcAntennaPosition,
+  type NfcAntennaPositionInfo
+} from "@io-app/expo-nfc-antenna-info";
 import { useState } from "react";
 import { Platform, View } from "react-native";
 
@@ -38,10 +42,63 @@ export const NfcPlayground = () => {
   return (
     <IOScrollView>
       <VStack space={16}>
+        <AntennaPosition />
         <HostCardEmulationInfo />
         <AntennaInfo />
       </VStack>
     </IOScrollView>
+  );
+};
+
+const AntennaPosition = () => {
+  const [result, setResult] = useState<NfcAntennaPositionInfo>();
+  const [failure, setFailure] = useState<Error>();
+
+  useOnFirstRender(() => {
+    getNfcAntennaPosition().then(setResult).catch(setFailure);
+  });
+
+  useDebugInfo({
+    nfcAntennaPosition: result,
+    nfcAntennaPositionFailure: failure
+  });
+
+  return (
+    <View>
+      <ListItemHeader label="NFC Antenna Position" />
+      <ListItemInfo
+        endElement={{
+          type: "badge",
+          componentProps: {
+            text: failure?.message ?? result?.position ?? "undefined",
+            variant: failure ? "error" : "default"
+          }
+        }}
+        value="Position"
+      />
+      <Divider />
+      <ListItemInfo
+        endElement={{
+          type: "badge",
+          componentProps: {
+            text: result?.source ?? "undefined",
+            variant: "default"
+          }
+        }}
+        value="Source"
+      />
+      <Divider />
+      <ListItemInfo
+        endElement={{
+          type: "badge",
+          componentProps: {
+            text: result?.confidence ?? "undefined",
+            variant: "default"
+          }
+        }}
+        value="Confidence"
+      />
+    </View>
   );
 };
 

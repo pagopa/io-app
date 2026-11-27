@@ -6,7 +6,6 @@ import { setConnectionStatus } from "../../../connectivity/store/actions";
 import { isConnectedSelector } from "../../../connectivity/store/selectors";
 import {
   syncItwAnalyticsProperties,
-  updateNfcInfoTrackingProperties,
   watchItwAnalyticsSaga
 } from "../../analytics/saga";
 import { watchItwCredentialsSaga } from "../../credentials/saga";
@@ -109,8 +108,6 @@ export function* watchItwSaga(): SagaIterator {
   yield* fork(handleWalletCredentialsRehydration);
   // Clean up stale Key Attestations
   yield* fork(handleKeyAttestationsCleanUp);
-  // TODO remove this fork when NFC antenna info tracking is not needed anymore
-  yield* fork(updateNfcInfoTrackingProperties);
   // Sync ITW analytics properties
   yield* fork(syncItwAnalyticsProperties);
 

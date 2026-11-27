@@ -5,8 +5,9 @@
     "module": "commonjs",
     "strict": true,
     "esModuleInterop": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "types": ["jest"]
   },
-  "include": ["index.ts"],
+  "include": ["index.ts", "position/**/*.ts", "__tests__/**/*.ts"],
   "exclude": ["node_modules"]
 }
