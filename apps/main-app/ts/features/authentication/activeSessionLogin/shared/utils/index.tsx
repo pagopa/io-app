@@ -11,8 +11,7 @@ export type TextForState = {
 
 // some texts changes depending on current running Platform
 export const getTextForState = (
-  state: ReadingState.error | ReadingState.waiting_card,
-  errorMessage = ""
+  state: ReadingState.error | ReadingState.waiting_card
 ): TextForState => {
   const texts: Record<
     ReadingState.error | ReadingState.waiting_card,
@@ -46,8 +45,8 @@ export const getTextForState = (
       },
       [ReadingState.error]: {
         title: I18n.t("authentication.cie.card.error.readerCardLostTitle"),
-        subtitle: I18n.t("authentication.cie.card.error.onTagLost"),
-        content: errorMessage
+        subtitle: "",
+        content: ""
       }
     }
   });

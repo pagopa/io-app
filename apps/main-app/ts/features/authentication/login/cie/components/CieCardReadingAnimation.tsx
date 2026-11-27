@@ -105,6 +105,12 @@ const CieCardReadingAnimation = ({
     };
   }, [createAnimation]);
 
+  const resetProgress = useCallback(() => {
+    progressAnimation.current?.stop();
+    progressAnimatedValue.current.setValue(0);
+    setProgressBarValue(0);
+  }, []);
+
   // React to readingState transitions (replaces componentDidUpdate)
   const prevReadingStateRef = useRef(readingState);
   useEffect(() => {
@@ -112,19 +118,22 @@ const CieCardReadingAnimation = ({
 
     prevReadingStateRef.current = readingState;
 
-    if (
-      prevState !== ReadingState.reading &&
-      readingState === ReadingState.reading
-    ) {
-      startAnimation();
-    } else if (
-      progressAnimation.current !== null &&
-      prevState === ReadingState.reading &&
-      readingState !== ReadingState.reading
-    ) {
-      progressAnimation.current.stop();
+    if (readingState === ReadingState.reading) {
+      if (prevState !== ReadingState.reading) {
+        startAnimation();
+      }
+      return;
     }
-  }, [readingState, startAnimation]);
+
+    if (readingState === ReadingState.completed) {
+      progressAnimation.current?.stop();
+      return;
+    }
+
+    // Waiting and error keep an empty ring. Retry sets waiting_card, which
+    // would otherwise redraw the accent stroke over the last reading value.
+    resetProgress();
+  }, [readingState, resetProgress, startAnimation]);
 
   return (
     <View accessible={false} style={{ alignSelf: "center" }}>
