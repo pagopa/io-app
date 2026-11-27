@@ -12,17 +12,17 @@ import {
   trackLoginCieConsentDataUsageScreen,
   trackLoginCieDataSharingError
 } from "../../../common/analytics/cieAnalytics";
-import {
-  CieWebViewLogin,
-  CieWebViewLoginEvent
-} from "../../../common/components/CieWebViewLogin";
+import { CieWebViewLogin } from "../../../common/components/CieWebViewLogin";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { loginFailure, loginSuccess } from "../../../common/store/actions";
 import { AUTH_LEVELS, LOGIN_TYPES } from "../../../common/utils";
 import { AUTH_ERRORS } from "../../../common/utils/authError";
 import { LoginType } from "../../../common/utils/index";
-import { LoginFailureData } from "../../../common/utils/loginErrorDebugInfo";
+import {
+  getLoginFailureReason,
+  LoginFailure
+} from "../../../common/utils/loginFailure";
 
 type OneIdentityCieAuthorizationWebViewProps = {
   authorizationUrl: string;
@@ -83,30 +83,31 @@ const OneIdentityCieAuthorizationWebViewContent = ({
   });
 
   const navigateToAuthErrorScreen = useCallback(
-    (errorCodeOrMessage: string | undefined, failureData: LoginFailureData) =>
+    (failure: LoginFailure) =>
       navigation.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
-        errorCodeOrMessage,
         authMethod: "CIE",
         authLevel: AUTH_LEVELS.L3,
-        failureData
+        failure
       }),
     [navigation]
   );
 
   const handleLoginFailure = useCallback(
-    (failureData: LoginFailureData, code?: string, message?: string) => {
-      if (code === AUTH_ERRORS.ERROR_22) {
+    (failure: LoginFailure) => {
+      const isDataSharingDenied =
+        failure.kind === "backend" &&
+        failure.details.errorCode === AUTH_ERRORS.ERROR_22;
+      if (isDataSharingDenied) {
         trackLoginCieDataSharingError();
       }
 
       dispatch(
         loginFailure({
-          error: new Error(failureData.reason),
+          error: new Error(getLoginFailureReason(failure)),
           idp: "cie" as keyof IdpData
         })
       );
-      const errorCodeOrMessage = code ?? message;
-      navigateToAuthErrorScreen(errorCodeOrMessage, failureData);
+      navigateToAuthErrorScreen(failure);
     },
     [dispatch, navigateToAuthErrorScreen]
   );
@@ -124,41 +125,11 @@ const OneIdentityCieAuthorizationWebViewContent = ({
     [dispatch]
   );
 
-  const handleEvent = useCallback(
-    (event: CieWebViewLoginEvent) => {
-      switch (event.type) {
-        case "LOGIN_FAILURE": {
-          const { code, message, reason } = event.payload;
-          handleLoginFailure({ reason }, code, message);
-          break;
-        }
-        case "LOGIN_SUCCESS": {
-          const { token } = event.payload;
-          handleLoginSuccess(token);
-          break;
-        }
-        case "WEBVIEW_ERROR": {
-          const { url, failureData } = event.payload;
-          handleLoginFailure({
-            ...failureData,
-            reason: `WebView error for URL ${url}`
-          });
-          break;
-        }
-        case "WEBVIEW_HTTP_ERROR": {
-          const { statusCode, url, failureData } = event.payload;
-          handleLoginFailure({
-            ...failureData,
-            reason: `WebView HTTP error ${statusCode} for URL ${url}`
-          });
-          break;
-        }
-        default:
-          break;
-      }
-    },
-    [handleLoginFailure, handleLoginSuccess]
+  return (
+    <CieWebViewLogin
+      onFailure={handleLoginFailure}
+      onSuccess={handleLoginSuccess}
+      url={authorizationUrl}
+    />
   );
-
-  return <CieWebViewLogin onEvent={handleEvent} url={authorizationUrl} />;
 };

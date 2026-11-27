@@ -7,11 +7,13 @@ import * as IOHooks from "../../../../../../store/hooks";
 import { appReducer } from "../../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import * as useOneIdentityLoginSourceModule from "../../../../../lollipop/hooks/useOneIdentityLoginSource";
+import { trackLoginSpidError } from "../../../../common/analytics/spidAnalytics";
 import * as useCieIdAppModule from "../../../../common/hooks/useCieIdApp";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import { loginFailure, loginSuccess } from "../../../../common/store/actions";
 import * as commonStoreSelector from "../../../../common/store/selectors";
 import { AUTH_LEVELS } from "../../../../common/utils";
+import { LoginFailure } from "../../../../common/utils/loginFailure";
 import { OneIdentityCieIdLoginScreen } from "../OneIdentityCieIdLoginScreen";
 
 jest.mock("react-native-webview", () => {
@@ -125,14 +127,20 @@ describe("OneIdentityCieIdLoginScreen", () => {
 
     expect(mockDispatch).toHaveBeenCalledWith(
       loginFailure({
-        error: expect.any(Error),
+        error: new Error("login failure with code (err-code)"),
         idp: "cieid"
       })
     );
+    expect(trackLoginSpidError).toHaveBeenCalledWith("err-code", {
+      idp: "cieid",
+      flow: "auth",
+      "error message": undefined
+    });
 
     expect(mockNavigationDispatch).toHaveBeenCalledWith(
-      authErrorReplaceAction("err-code", {
-        reason: expect.stringContaining("err-code")
+      authErrorReplaceAction({
+        kind: "backend",
+        details: { errorCode: "err-code" }
       })
     );
     expect(mockReplace).not.toHaveBeenCalled();
@@ -166,25 +174,24 @@ describe("OneIdentityCieIdLoginScreen", () => {
 
     expect(mockNavigationDispatch).toHaveBeenCalledWith(
       StackActions.replace(AUTHENTICATION_ROUTES.CIE_ID_ERROR, {
-        failureData: {
-          description: "net::ERR_INTERNET_DISCONNECTED",
-          code: -2,
-          url: "https://example.com/authorize"
+        failure: {
+          kind: "webViewNative",
+          details: {
+            code: -2,
+            description: "net::ERR_INTERNET_DISCONNECTED",
+            url: "https://example.com/authorize"
+          }
         }
       })
     );
   });
 });
 
-const authErrorReplaceAction = (
-  errorCodeOrMessage: string | undefined,
-  failureData: Record<string, unknown>
-) =>
+const authErrorReplaceAction = (failure: LoginFailure) =>
   StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
-    errorCodeOrMessage,
     authMethod: "CIE_ID",
     authLevel: AUTH_LEVELS.L2,
-    failureData
+    failure
   });
 
 const renderComponent = () => {

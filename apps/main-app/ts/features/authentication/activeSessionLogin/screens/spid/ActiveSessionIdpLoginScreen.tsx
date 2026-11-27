@@ -41,6 +41,11 @@ import {
   originSchemasWhiteList
 } from "../../../common/utils";
 import { AUTH_ERRORS } from "../../../common/utils/authError";
+import {
+  getBackendFailure,
+  LoginFailure,
+  withBackendCodeAndMessage
+} from "../../../common/utils/loginFailure";
 import { usePosteIDApp2AppEducational } from "../../../login/idp/hooks/usePosteIDApp2AppEducational";
 import { ErrorType as SpidLoginErrorType } from "../../../login/idp/store/types";
 import { getSpidErrorCodeDescription } from "../../../login/idp/utils/spidErrorCode";
@@ -97,9 +102,7 @@ const ActiveSessionIdpLoginScreen = () => {
   const [requestState, setRequestState] = useState<
     pot.Pot<true, SpidLoginErrorType>
   >(pot.none);
-  const [errorCodeOrMessage, setErrorCodeOrMessage] = useState<
-    string | undefined
-  >(undefined);
+  const [failure, setFailure] = useState<LoginFailure | undefined>(undefined);
   const [loginTrace, setLoginTrace] = useState<string | undefined>(undefined);
   const posteIdBottomsheet = usePosteIDApp2AppEducational({
     selectedIdp,
@@ -183,7 +186,7 @@ const ActiveSessionIdpLoginScreen = () => {
 
       handleSendAssistanceLog(choosenTool, logText);
       setRequestState(pot.noneError(SpidLoginErrorType.LOGIN_ERROR));
-      setErrorCodeOrMessage(code || message);
+      setFailure(getBackendFailure(code, message));
     },
     [choosenTool, dispatch, idp]
   );
@@ -242,7 +245,7 @@ const ActiveSessionIdpLoginScreen = () => {
       }
 
       const isLoginUrlWithToken = onLoginUriChanged(
-        handleLoginFailure,
+        withBackendCodeAndMessage(handleLoginFailure),
         handleLoginSuccess,
         idp,
         "reauth"
@@ -282,11 +285,11 @@ const ActiveSessionIdpLoginScreen = () => {
     // `replace` drops the failed login webview, so it doesn't stay
     // mounted behind the error screen.
     replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
-      errorCodeOrMessage,
+      failure,
       authMethod: "SPID",
       authLevel: AUTH_LEVELS.L2
     });
-  }, [errorCodeOrMessage, replace]);
+  }, [failure, replace]);
 
   useEffect(() => {
     if (pot.isError(requestState)) {

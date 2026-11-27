@@ -38,6 +38,7 @@ import {
   remoteApiLoginUrlPrefixSelector
 } from "../../../activeSessionLogin/store/selectors";
 import { AUTH_LEVELS, getIdpLoginUri } from "../../../common/utils";
+import { toRedirectsFailureReason } from "../../../common/utils/loginFailure";
 import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
 import { cieEnvSelector } from "../store/selectors";
 import { cieFlowForDevServerEnabled, getCieEntityId } from "../utils";
@@ -256,7 +257,9 @@ const CieWebView = (props: Props) => {
       );
 
       if (redirectResult.isErr()) {
-        handleOnError(new Error(redirectResult.error.reason));
+        handleOnError(
+          new Error(toRedirectsFailureReason(redirectResult.error))
+        );
         return;
       }
 

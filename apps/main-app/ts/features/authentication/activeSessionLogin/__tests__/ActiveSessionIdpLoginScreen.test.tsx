@@ -109,7 +109,7 @@ describe("ActiveSessionIdpLoginScreen", () => {
     expect(mockReplace).toHaveBeenCalledWith(
       AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
       {
-        errorCodeOrMessage: undefined,
+        failure: undefined,
         authMethod: "SPID",
         authLevel: AUTH_LEVELS.L2
       }

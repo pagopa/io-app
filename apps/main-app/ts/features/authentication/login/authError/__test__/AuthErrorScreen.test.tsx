@@ -16,6 +16,7 @@ import {
 } from "../../../activeSessionLogin/store/actions";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { AUTH_LEVELS } from "../../../common/utils";
+import { LoginFailure } from "../../../common/utils/loginFailure";
 import {
   resetSpidLoginState,
   setSpidLoginInLoadingState
@@ -44,67 +45,65 @@ jest.mock("../../../../../hooks/useDebugInfo", () => ({
 
 const mockRouteParams = jest.fn<{ params: AuthErrorScreenParams }, []>();
 
+const backendFailure = (errorCode: string): LoginFailure => ({
+  kind: "backend",
+  details: { errorCode }
+});
+
 describe("AuthErrorScreen", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it("should forward the raw error code to useDebugInfo for a mapped error", () => {
-    mockIsActiveSessionLogin(false);
-    mockRouteParams.mockReturnValue({
-      params: {
-        errorCodeOrMessage: "25",
+  it.each([
+    { name: "a mapped error", errorCode: "25" },
+    { name: "an unmapped error", errorCode: "some_unmapped_raw_error" }
+  ])(
+    "should forward the failure and the IdP to useDebugInfo for $name",
+    ({ errorCode }) => {
+      mockIsActiveSessionLogin(false);
+      const failure = backendFailure(errorCode);
+      mockRouteParams.mockReturnValue({
+        params: {
+          failure,
+          authMethod: "SPID",
+          authLevel: AUTH_LEVELS.L2,
+          idp: "posteid"
+        }
+      });
+
+      renderComponent();
+
+      expect(mockUseDebugInfo).toHaveBeenCalledWith({
         authMethod: "SPID",
-        authLevel: AUTH_LEVELS.L2
-      }
-    });
+        authLevel: AUTH_LEVELS.L2,
+        failure,
+        idp: "posteid"
+      });
+    }
+  );
 
-    renderComponent();
-
-    expect(mockUseDebugInfo).toHaveBeenCalledWith({
-      errorCodeOrMessage: "25",
-      authMethod: "SPID",
-      authLevel: AUTH_LEVELS.L2
-    });
-  });
-
-  it("should forward the raw error code to useDebugInfo for an unmapped error", () => {
+  it("should forward a WebView failure to useDebugInfo", () => {
     mockIsActiveSessionLogin(false);
-    mockRouteParams.mockReturnValue({
-      params: {
-        errorCodeOrMessage: "some_unmapped_raw_error",
-        authMethod: "SPID",
-        authLevel: AUTH_LEVELS.L2
+    const failure: LoginFailure = {
+      kind: "webViewNative",
+      details: {
+        code: -2,
+        description: "net::ERR_INTERNET_DISCONNECTED",
+        url: "https://example.com/authorize"
       }
-    });
-
-    renderComponent();
-
-    expect(mockUseDebugInfo).toHaveBeenCalledWith({
-      errorCodeOrMessage: "some_unmapped_raw_error",
-      authMethod: "SPID",
-      authLevel: AUTH_LEVELS.L2
-    });
-  });
-
-  it("should add the received failure data to useDebugInfo", () => {
-    mockIsActiveSessionLogin(false);
-    const failureData = {
-      description: "net::ERR_INTERNET_DISCONNECTED",
-      code: -2,
-      url: "https://example.com/authorize"
     };
     mockRouteParams.mockReturnValue({
-      params: { authMethod: "CIE", authLevel: AUTH_LEVELS.L3, failureData }
+      params: { authMethod: "CIE", authLevel: AUTH_LEVELS.L3, failure }
     });
 
     renderComponent();
 
     expect(mockUseDebugInfo).toHaveBeenCalledWith({
-      errorCodeOrMessage: undefined,
       authMethod: "CIE",
       authLevel: AUTH_LEVELS.L3,
-      ...failureData
+      failure,
+      idp: undefined
     });
   });
 
@@ -112,7 +111,7 @@ describe("AuthErrorScreen", () => {
     mockIsActiveSessionLogin(false);
     mockRouteParams.mockReturnValue({
       params: {
-        errorCodeOrMessage: "25",
+        failure: backendFailure("25"),
         authMethod: "SPID",
         authLevel: AUTH_LEVELS.L2
       }
@@ -134,7 +133,7 @@ describe("AuthErrorScreen", () => {
         mockIsActiveSessionLogin(false);
         mockRouteParams.mockReturnValue({
           params: {
-            errorCodeOrMessage: "25",
+            failure: backendFailure("25"),
             authMethod,
             authLevel: AUTH_LEVELS.L2
           }
@@ -159,7 +158,7 @@ describe("AuthErrorScreen", () => {
       mockIsActiveSessionLogin(false);
       mockRouteParams.mockReturnValue({
         params: {
-          errorCodeOrMessage: "25",
+          failure: backendFailure("25"),
           authMethod: "CIE",
           authLevel: AUTH_LEVELS.L2
         }
@@ -178,7 +177,7 @@ describe("AuthErrorScreen", () => {
       mockIsActiveSessionLogin(false);
       mockRouteParams.mockReturnValue({
         params: {
-          errorCodeOrMessage: "25",
+          failure: backendFailure("25"),
           authMethod: "CIE_ID",
           authLevel: AUTH_LEVELS.L2
         }
@@ -197,7 +196,7 @@ describe("AuthErrorScreen", () => {
       mockIsActiveSessionLogin(true);
       mockRouteParams.mockReturnValue({
         params: {
-          errorCodeOrMessage: "25",
+          failure: backendFailure("25"),
           authMethod: "CIE_ID",
           authLevel: AUTH_LEVELS.L2
         }
@@ -216,7 +215,7 @@ describe("AuthErrorScreen", () => {
       mockIsActiveSessionLogin(true);
       mockRouteParams.mockReturnValue({
         params: {
-          errorCodeOrMessage: "25",
+          failure: backendFailure("25"),
           authMethod: "SPID",
           authLevel: AUTH_LEVELS.L2
         }
@@ -238,7 +237,7 @@ describe("AuthErrorScreen", () => {
       mockIsActiveSessionLogin(false);
       mockRouteParams.mockReturnValue({
         params: {
-          errorCodeOrMessage: "25",
+          failure: backendFailure("25"),
           authMethod: "SPID",
           authLevel: AUTH_LEVELS.L2
         }
@@ -256,7 +255,7 @@ describe("AuthErrorScreen", () => {
       mockIsActiveSessionLogin(true);
       mockRouteParams.mockReturnValue({
         params: {
-          errorCodeOrMessage: "25",
+          failure: backendFailure("25"),
           authMethod: "SPID",
           authLevel: AUTH_LEVELS.L2
         }
@@ -281,7 +280,7 @@ describe("AuthErrorScreen", () => {
       mockIsActiveSessionLogin(false);
       mockRouteParams.mockReturnValue({
         params: {
-          errorCodeOrMessage: "25",
+          failure: backendFailure("25"),
           authMethod: "SPID",
           authLevel: AUTH_LEVELS.L2
         }

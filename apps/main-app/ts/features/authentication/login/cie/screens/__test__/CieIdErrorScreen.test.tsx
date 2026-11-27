@@ -84,11 +84,10 @@ describe("CieIdErrorScreen debug info", () => {
 
   it.each([
     {
-      name: "the received failure data",
-      params: { failureData: { reason: "some reason", code: 500 } },
+      name: "the received failure",
+      params: { failure: { kind: "cancelled", details: {} } as const },
       expected: {
-        reason: "some reason",
-        code: 500,
+        failure: { kind: "cancelled", details: {} },
         flow: "auth",
         isCieSupported: true
       }
@@ -96,7 +95,7 @@ describe("CieIdErrorScreen debug info", () => {
     {
       name: "only the flow when reached from the legacy flow",
       params: undefined,
-      expected: { flow: "auth", isCieSupported: true }
+      expected: { failure: undefined, flow: "auth", isCieSupported: true }
     }
   ])("Should set $name as debug data", ({ params, expected }) => {
     renderScreen(params);

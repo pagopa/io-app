@@ -2,6 +2,7 @@ import { PublicKey } from "@io-app/expo-crypto";
 import { err } from "neverthrow";
 
 import { AppDispatch } from "../../../../App";
+import { toRedirectsFailureReason } from "../../../authentication/common/utils/loginFailure";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../login";
 
 const wrongJwkPublicKey: PublicKey = {
@@ -39,7 +40,16 @@ describe("Lollipop regenerate key, get redirects and verification", () => {
     );
 
     expect(result).toEqual(
-      err({ reason: "Mismatch between local and remote ID parameter content" })
+      err({
+        kind: "lollipop",
+        details: {
+          reason: "Mismatch between local and remote ID parameter content",
+          url
+        }
+      })
+    );
+    expect(result.isErr() && toRedirectsFailureReason(result.error)).toBe(
+      "Mismatch between local and remote ID parameter content"
     );
   });
 });

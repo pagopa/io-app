@@ -23,6 +23,7 @@ import {
   WAIT_TIMEOUT_NAVIGATION,
   WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY
 } from "../../../common/utils/constants";
+import { CieSdkEvent, LoginFailure } from "../../../common/utils/loginFailure";
 import { cieAuthenticationError } from "../store/actions";
 import { cieEnvSelector } from "../store/selectors";
 import { getCieIdpUrl } from "../utils/endpoints";
@@ -53,7 +54,8 @@ const CIE_ALERT_MESSAGES_CONFIG = Platform.select<
   default: undefined
 });
 
-const FAILURE_EVENTS = new Set<"Function not supported" | CEvent["event"]>([
+/** The SDK events that halt the reading, with a dedicated failure screen. */
+const FAILURE_EVENTS = new Set<CieSdkEvent>([
   "AUTHENTICATION_ERROR",
   "CERTIFICATE_EXPIRED",
   "CERTIFICATE_REVOKED",
@@ -80,10 +82,12 @@ const safeDecodeURIComponent = (url: string): string => {
 };
 
 export type CieManagerState =
-  | { failure: CEvent; status: "failure" }
-  | { failure: string; status: "reading-failure" }
+  /** The reading halted: a dedicated failure screen is shown. */
+  | { failure: LoginFailure; status: "failure" }
   | { status: "idle" }
   | { status: "reading" }
+  /** A recoverable reading failure (tag lost, transmission, SDK error). */
+  | { status: "reading-failure" }
   | { status: "success" };
 
 type UseCieManager = (params: { onSuccess: (authUrl: string) => void }) => {
@@ -132,7 +136,7 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
       handleSendAssistanceLog(choosenTool, errorMessage);
 
       commonErrorHandling("GENERIC", errorMessage, () =>
-        setState({ failure: errorMessage, status: "reading-failure" })
+        setState({ status: "reading-failure" })
       );
     },
     [choosenTool, commonErrorHandling]
@@ -157,7 +161,7 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
         event.event === "Transmission Error"
       ) {
         commonErrorHandling(event.event, undefined, () =>
-          setState({ failure: event.event, status: "reading-failure" })
+          setState({ status: "reading-failure" })
         );
         return;
       }
@@ -165,8 +169,12 @@ export const useCieManager: UseCieManager = ({ onSuccess }) => {
       // Halt the reading process and transition to a failure state.
       // This delegates the rendering to the specific Failure components.
       if (FAILURE_EVENTS.has(event.event)) {
+        const failure: LoginFailure = {
+          kind: "cieCard",
+          details: { attemptsLeft: event.attemptsLeft, event: event.event }
+        };
         commonErrorHandling(event.event, undefined, () =>
-          setState({ failure: event, status: "failure" })
+          setState({ failure, status: "failure" })
         );
         return;
       }

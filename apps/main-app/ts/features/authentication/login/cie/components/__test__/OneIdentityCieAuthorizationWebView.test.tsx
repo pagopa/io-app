@@ -18,6 +18,7 @@ import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import * as commonUtils from "../../../../common/utils";
 import { AUTH_LEVELS, LOGIN_TYPES } from "../../../../common/utils";
 import { AUTH_ERRORS } from "../../../../common/utils/authError";
+import { LoginFailure } from "../../../../common/utils/loginFailure";
 import { OneIdentityCieAuthorizationWebView } from "../OneIdentityCieAuthorizationWebView";
 
 jest.mock("../../../../common/components/CieWebViewLogin", () => ({
@@ -69,6 +70,8 @@ describe("OneIdentityActiveSessionLoginCieAuthorizationWebView", () => {
       />
     );
 
+  const getProps = () => jest.mocked(CieWebViewLogin).mock.calls[0][0];
+
   it("should render CieWebViewLogin with the correct props", () => {
     renderComponent();
 
@@ -76,7 +79,8 @@ describe("OneIdentityActiveSessionLoginCieAuthorizationWebView", () => {
       {
         flow: "reauth",
         url: authorizationUrl,
-        onEvent: expect.any(Function)
+        onFailure: expect.any(Function),
+        onSuccess: expect.any(Function)
       },
       undefined
     );
@@ -90,15 +94,10 @@ describe("OneIdentityActiveSessionLoginCieAuthorizationWebView", () => {
     ).toHaveBeenCalledWith("reauth");
   });
 
-  it("should dispatch activeSessionLoginSuccess on LOGIN_SUCCESS event", () => {
+  it("should dispatch activeSessionLoginSuccess on success", () => {
     renderComponent();
 
-    const onEvent = jest.mocked(CieWebViewLogin).mock.calls[0][0].onEvent;
-
-    onEvent({
-      type: "LOGIN_SUCCESS",
-      payload: { token: "session-token" }
-    });
+    getProps().onSuccess("session-token");
 
     expect(mockDispatch).toHaveBeenCalledWith(
       activeSessionLoginSuccess("session-token")
@@ -107,63 +106,48 @@ describe("OneIdentityActiveSessionLoginCieAuthorizationWebView", () => {
 
   it("should dispatch activeSessionLoginFailure, track it, and replace with AUTH_ERROR_SCREEN passing L3 level", () => {
     renderComponent();
-    const onEvent = jest.mocked(CieWebViewLogin).mock.calls[0][0].onEvent;
+    const failure: LoginFailure = {
+      kind: "backend",
+      details: { errorCode: "19", errorMessage: "annullato" }
+    };
 
-    onEvent({
-      type: "LOGIN_FAILURE",
-      payload: { code: "19", message: "annullato", reason: "user aborted" }
-    });
+    getProps().onFailure(failure);
 
     expect(mockDispatch).toHaveBeenCalledWith(activeSessionLoginFailure());
     expect(commonAnalytics.trackLoginFailure).toHaveBeenCalledWith({
-      reason: "user aborted",
+      reason: "login failure with code (19) and message (annullato)",
       idp: "cie",
       flow: "reauth"
     });
-
+    expect(cieAnalytics.trackLoginCieDataSharingError).not.toHaveBeenCalled();
     expect(mockReplace).toHaveBeenCalledWith(
       AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      {
-        errorCodeOrMessage: "19",
-        authMethod: "CIE",
-        authLevel: AUTH_LEVELS.L3,
-        failureData: { reason: "user aborted" }
-      }
+      { authMethod: "CIE", authLevel: AUTH_LEVELS.L3, failure }
     );
   });
 
   it("should NOT dispatch activeSessionLoginFailure for ERROR_1004 (different fiscal code)", () => {
     renderComponent();
-    const onEvent = jest.mocked(CieWebViewLogin).mock.calls[0][0].onEvent;
+    const failure: LoginFailure = {
+      kind: "backend",
+      details: { errorCode: AUTH_ERRORS.ERROR_1004 }
+    };
 
-    onEvent({
-      type: "LOGIN_FAILURE",
-      payload: { code: AUTH_ERRORS.ERROR_1004, reason: "fiscalCodeMismatch" }
-    });
+    getProps().onFailure(failure);
 
     expect(mockDispatch).not.toHaveBeenCalledWith(activeSessionLoginFailure());
     expect(mockReplace).toHaveBeenCalledWith(
       AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      {
-        errorCodeOrMessage: AUTH_ERRORS.ERROR_1004,
-        authMethod: "CIE",
-        authLevel: AUTH_LEVELS.L3,
-        failureData: { reason: "fiscalCodeMismatch" }
-      }
+      { authMethod: "CIE", authLevel: AUTH_LEVELS.L3, failure }
     );
   });
 
   it("should track the data sharing error for ERROR_22", () => {
     renderComponent();
-    const onEvent = jest.mocked(CieWebViewLogin).mock.calls[0][0].onEvent;
 
-    onEvent({
-      type: "LOGIN_FAILURE",
-      payload: {
-        code: AUTH_ERRORS.ERROR_22,
-        message: "annullato",
-        reason: "user aborted"
-      }
+    getProps().onFailure({
+      kind: "backend",
+      details: { errorCode: AUTH_ERRORS.ERROR_22, errorMessage: "annullato" }
     });
 
     expect(cieAnalytics.trackLoginCieDataSharingError).toHaveBeenCalledWith(
@@ -171,50 +155,41 @@ describe("OneIdentityActiveSessionLoginCieAuthorizationWebView", () => {
     );
   });
 
-  it("should treat a WEBVIEW_ERROR as a login failure and replace with AUTH_ERROR_SCREEN", () => {
+  it("should treat a WebView native error as a login failure and replace with AUTH_ERROR_SCREEN", () => {
     renderComponent();
-    const onEvent = jest.mocked(CieWebViewLogin).mock.calls[0][0].onEvent;
-
-    const failureData = {
-      description: "net::ERR_INTERNET_DISCONNECTED",
-      code: -2,
-      url: "https://idserver.example.com/broken"
+    const failure: LoginFailure = {
+      kind: "webViewNative",
+      details: {
+        code: -2,
+        description: "net::ERR_INTERNET_DISCONNECTED",
+        url: "https://idserver.example.com/broken"
+      }
     };
-    onEvent({
-      type: "WEBVIEW_ERROR",
-      payload: { url: "https://idserver.example.com/broken", failureData }
-    });
+
+    getProps().onFailure(failure);
 
     expect(mockDispatch).toHaveBeenCalledWith(activeSessionLoginFailure());
+    expect(commonAnalytics.trackLoginFailure).toHaveBeenCalledWith({
+      reason: "webview error (-2)",
+      idp: "cie",
+      flow: "reauth"
+    });
     expect(mockReplace).toHaveBeenCalledWith(
       AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      {
-        errorCodeOrMessage: undefined,
-        authMethod: "CIE",
-        authLevel: AUTH_LEVELS.L3,
-        failureData: {
-          ...failureData,
-          reason: `WebView error for URL ${failureData.url}`
-        }
-      }
+      { authMethod: "CIE", authLevel: AUTH_LEVELS.L3, failure }
     );
   });
 
-  it("should force logout and navigate to LANDING when WEBVIEW_HTTP_ERROR occurs on a callback URL", () => {
+  it("should force logout and navigate to LANDING on a HTTP error on a callback URL", () => {
     jest.spyOn(commonUtils, "isValidCallbackUrl").mockReturnValue(true);
     renderComponent();
-    const onEvent = jest.mocked(CieWebViewLogin).mock.calls[0][0].onEvent;
 
-    onEvent({
-      type: "WEBVIEW_HTTP_ERROR",
-      payload: {
-        url: "https://api.example.com/api/auth/v2/callback",
+    getProps().onFailure({
+      kind: "webViewHttp",
+      details: {
+        description: "",
         statusCode: 500,
-        failureData: {
-          description: "Unexpected HTTP status 500",
-          code: 500,
-          url: "https://x"
-        }
+        url: "https://api.example.com/api/auth/v2/callback"
       }
     });
 
@@ -227,18 +202,13 @@ describe("OneIdentityActiveSessionLoginCieAuthorizationWebView", () => {
 
   it("should ignore a 403 error for a non-callback URL", () => {
     renderComponent();
-    const onEvent = jest.mocked(CieWebViewLogin).mock.calls[0][0].onEvent;
 
-    onEvent({
-      type: "WEBVIEW_HTTP_ERROR",
-      payload: {
-        url: "https://idserver.example.com/broken",
+    getProps().onFailure({
+      kind: "webViewHttp",
+      details: {
+        description: "",
         statusCode: 403,
-        failureData: {
-          description: "Unexpected HTTP status 403",
-          code: 403,
-          url: "https://x"
-        }
+        url: "https://idserver.example.com/broken"
       }
     });
 
@@ -248,36 +218,26 @@ describe("OneIdentityActiveSessionLoginCieAuthorizationWebView", () => {
 
   it("should treat any other status code for a non-callback URL as a login failure", () => {
     renderComponent();
-    const onEvent = jest.mocked(CieWebViewLogin).mock.calls[0][0].onEvent;
-
-    onEvent({
-      type: "WEBVIEW_HTTP_ERROR",
-      payload: {
-        url: "https://idserver.example.com/broken",
+    const failure: LoginFailure = {
+      kind: "webViewHttp",
+      details: {
+        description: "",
         statusCode: 500,
-        failureData: {
-          description: "Unexpected HTTP status 500",
-          code: 500,
-          url: "https://x"
-        }
+        url: "https://idserver.example.com/broken?token=secret"
       }
-    });
+    };
+
+    getProps().onFailure(failure);
 
     expect(mockDispatch).toHaveBeenCalledWith(activeSessionLoginFailure());
+    expect(commonAnalytics.trackLoginFailure).toHaveBeenCalledWith({
+      reason: "webview http error (500)",
+      idp: "cie",
+      flow: "reauth"
+    });
     expect(mockReplace).toHaveBeenCalledWith(
       AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      {
-        errorCodeOrMessage: undefined,
-        authMethod: "CIE",
-        authLevel: AUTH_LEVELS.L3,
-        failureData: {
-          description: "Unexpected HTTP status 500",
-          code: 500,
-          url: "https://x",
-          reason:
-            "WebView HTTP error 500 for URL https://idserver.example.com/broken"
-        }
-      }
+      { authMethod: "CIE", authLevel: AUTH_LEVELS.L3, failure }
     );
   });
 
@@ -304,36 +264,28 @@ describe("OneIdentityCieAuthorizationWebView", () => {
     jest.spyOn(IOHooks, "useIODispatch").mockReturnValue(jest.fn());
   });
 
-  it("should pass the WebView error details to AUTH_ERROR_SCREEN when the connection drops after the card has been read", () => {
+  it("should pass the WebView failure to AUTH_ERROR_SCREEN when the connection drops after the card has been read", () => {
     render(
       <OneIdentityCieAuthorizationWebView
         authorizationUrl="https://idserver.example.com/authorize"
         flow={LOGIN_TYPES.AUTH}
       />
     );
-    const onEvent = jest.mocked(CieWebViewLogin).mock.calls[0][0].onEvent;
-    const failureData = {
-      description: "net::ERR_INTERNET_DISCONNECTED",
-      code: -2,
-      url: "https://idserver.example.com/authorize"
+    const { onFailure } = jest.mocked(CieWebViewLogin).mock.calls[0][0];
+    const failure: LoginFailure = {
+      kind: "webViewNative",
+      details: {
+        code: -2,
+        description: "net::ERR_INTERNET_DISCONNECTED",
+        url: "https://idserver.example.com/authorize"
+      }
     };
 
-    onEvent({
-      type: "WEBVIEW_ERROR",
-      payload: { url: "https://idserver.example.com/authorize", failureData }
-    });
+    onFailure(failure);
 
     expect(mockReplace).toHaveBeenCalledWith(
       AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      {
-        errorCodeOrMessage: undefined,
-        authMethod: "CIE",
-        authLevel: AUTH_LEVELS.L3,
-        failureData: {
-          ...failureData,
-          reason: `WebView error for URL ${failureData.url}`
-        }
-      }
+      { authMethod: "CIE", authLevel: AUTH_LEVELS.L3, failure }
     );
   });
 });

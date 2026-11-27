@@ -3,6 +3,7 @@ import { getRedirects } from "@io-app/login-utils";
 import { err } from "neverthrow";
 
 import { AppDispatch } from "../../../../App";
+import { toRedirectsFailureReason } from "../../../authentication/common/utils/loginFailure";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../login";
 
 const jwkPublicKey: PublicKey = {
@@ -31,27 +32,37 @@ describe("Lollipop regenerate key, get redirects and verification", () => {
     {
       name: "no redirects are returned",
       redirects: [],
-      expectedError: { reason: "Missing Redirects" }
+      expectedReason: "Missing Redirects",
+      expectedUrl: "loginUri"
     },
     {
       name: "the last redirect has no SAMLRequest",
       redirects: ["https://idp.example.com/sso"],
-      expectedError: {
-        reason: "Missing SAMLRequest parameter in URL",
-        url: "https://idp.example.com/sso"
-      }
+      expectedReason: "Missing SAMLRequest parameter in URL",
+      expectedUrl: "https://idp.example.com/sso"
     }
-  ])("should fail when $name", async ({ redirects, expectedError }) => {
-    jest.mocked(getRedirects).mockResolvedValue(redirects);
+  ])(
+    "should fail when $name",
+    async ({ redirects, expectedReason, expectedUrl }) => {
+      jest.mocked(getRedirects).mockResolvedValue(redirects);
 
-    const result = await regenerateKeyGetRedirectsAndVerifySaml(
-      "loginUri",
-      "keyTag",
-      false,
-      false,
-      dispatch
-    );
+      const result = await regenerateKeyGetRedirectsAndVerifySaml(
+        "loginUri",
+        "keyTag",
+        false,
+        false,
+        dispatch
+      );
 
-    expect(result).toEqual(err(expectedError));
-  });
+      expect(result).toEqual(
+        err({
+          kind: "nativeRedirects",
+          details: { reason: expectedReason, url: expectedUrl }
+        })
+      );
+      expect(result.isErr() && toRedirectsFailureReason(result.error)).toBe(
+        expectedReason
+      );
+    }
+  );
 });

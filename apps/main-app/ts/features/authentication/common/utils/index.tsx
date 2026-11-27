@@ -13,6 +13,7 @@ import {
   trackSessionTokenSource
 } from "../analytics";
 import { trackLoginSpidError } from "../analytics/spidAnalytics";
+import { LoginFailure } from "./loginFailure";
 
 export const LOGIN_TYPES = {
   AUTH: "auth",
@@ -31,13 +32,13 @@ export const SPID_AUTH_LEVEL_MAP: Record<AuthLevel, SpidAuthLevel> = {
   [AUTH_LEVELS.L3]: "SpidL3"
 };
 
-type LoginFailure = {
+type LoginResult = LoginResultFailure | LoginSuccess;
+
+type LoginResultFailure = {
   errorCode?: string;
   errorMessage?: string;
   success: false;
 };
-
-type LoginResult = LoginFailure | LoginSuccess;
 
 type LoginSuccess = {
   success: true;
@@ -134,6 +135,7 @@ export const extractLoginResult = (
   return undefined;
 };
 
+// TODO: remove together with the IO login flow
 /** For a given idp id get the relative login uri */
 export const getIdpLoginUri = (
   idpId: string,
@@ -148,7 +150,7 @@ export const getIdpLoginUri = (
  */
 export const onLoginUriChanged =
   (
-    onFailure: (errorCode?: string, errorMessage?: string) => void,
+    onFailure: (failure: LoginFailure) => void,
     onSuccess: (_: string) => void,
     idp?: keyof IdpData,
     flow: LoginType = "auth"
@@ -164,7 +166,8 @@ export const onLoginUriChanged =
           return true;
         } else {
           // In case of login failure
-          onFailure(loginResult.errorCode, loginResult.errorMessage);
+          const { errorCode, errorMessage } = loginResult;
+          onFailure({ kind: "backend", details: { errorCode, errorMessage } });
         }
       }
     }
@@ -236,6 +239,15 @@ export const isValidCallbackUrl = (url: string) => {
 
   return validUrls.includes(url);
 };
+
+/**
+ * Whether an HTTP failure is a 403 on a page outside the IO APIs (e.g. an IdP
+ * page), which the first login ignores.
+ */
+export const isForbiddenOutsideIoApi = (failure: LoginFailure) =>
+  failure.kind === "webViewHttp" &&
+  failure.details.statusCode === 403 &&
+  !failure.details.url.includes(apiUrlPrefix);
 
 /** The path used to identify OneIdentity error page. */
 const ONE_IDENTITY_ERROR_PATH = "/login/error";

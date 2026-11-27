@@ -4,7 +4,6 @@ import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 
 import { LoadingScreenContent } from "../../../../../components/screens/LoadingScreenContent";
-import { apiUrlPrefix } from "../../../../../config";
 import {
   HeaderSecondLevelHookProps,
   useHeaderSecondLevel
@@ -13,10 +12,7 @@ import { IOStackNavigationProp } from "../../../../../navigation/params/AppParam
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { SpidIdp } from "../../../../../utils/idps";
 import { IdpSuccessfulAuthentication } from "../../../common/components/IdpSuccessfulAuthentication";
-import {
-  IdpWebViewLogin,
-  WebViewLoginEvent
-} from "../../../common/components/IdpWebViewLogin";
+import { IdpWebViewLogin } from "../../../common/components/IdpWebViewLogin";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { loginFailure, loginSuccess } from "../../../common/store/actions";
@@ -24,11 +20,11 @@ import {
   loggedInAuthSelector,
   loggedOutWithIdpAuthSelector
 } from "../../../common/store/selectors";
-import { AUTH_LEVELS } from "../../../common/utils";
+import { AUTH_LEVELS, isForbiddenOutsideIoApi } from "../../../common/utils";
 import {
-  FailureData,
-  LoginFailureData
-} from "../../../common/utils/loginErrorDebugInfo";
+  getLoginFailureReason,
+  LoginFailure
+} from "../../../common/utils/loginFailure";
 
 export const OneIdentityIdpLoginScreen = () => {
   const loggedInAuth = useIOSelector(loggedInAuthSelector);
@@ -74,28 +70,28 @@ const OneIdentityIdpLoginScreenContent = ({
     useNavigation<IOStackNavigationProp<AuthenticationParamsList>>();
 
   const navigateToAuthErrorScreen = useCallback(
-    (errorCodeOrMessage: string | undefined, failureData: FailureData) => {
+    (failure: LoginFailure) => {
       // `replace` drops the failed login webview, so it doesn't stay
       // mounted behind the error screen.
       navigation.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
-        errorCodeOrMessage,
         authMethod: "SPID",
         authLevel: AUTH_LEVELS.L2,
-        failureData: { ...failureData, idp: idp.id }
+        failure,
+        idp: idp.id
       });
     },
     [navigation, idp.id]
   );
 
   const handleLoginFailure = useCallback(
-    (failureData: LoginFailureData, code?: string, message?: string) => {
+    (failure: LoginFailure) => {
       dispatch(
         loginFailure({
-          error: new Error(failureData.reason),
+          error: new Error(getLoginFailureReason(failure)),
           idp: idp.id as keyof IdpData
         })
       );
-      navigateToAuthErrorScreen(code ?? message, failureData);
+      navigateToAuthErrorScreen(failure);
     },
     [dispatch, idp.id, navigateToAuthErrorScreen]
   );
@@ -113,38 +109,29 @@ const OneIdentityIdpLoginScreenContent = ({
     [dispatch, idp.id]
   );
 
-  const handleEvent = useCallback(
-    (event: WebViewLoginEvent) => {
-      switch (event.type) {
-        case "LOGIN_FAILURE": {
-          const { code, message, failureData } = event.payload;
-          handleLoginFailure(failureData, code, message);
-          break;
-        }
-        case "LOGIN_SUCCESS": {
-          const { token } = event.payload;
-          handleLoginSuccess(token);
-          break;
-        }
-        case "WEBVIEW_ERROR": {
-          navigateToAuthErrorScreen(undefined, event.payload.failureData);
-          break;
-        }
-        case "WEBVIEW_HTTP_ERROR": {
-          const { statusCode, url } = event.payload;
-
-          if (!url.includes(apiUrlPrefix) && statusCode === 403) {
-            break;
+  const handleFailure = useCallback(
+    (failure: LoginFailure) => {
+      switch (failure.kind) {
+        case "webViewHttp":
+          if (!isForbiddenOutsideIoApi(failure)) {
+            navigateToAuthErrorScreen(failure);
           }
-          navigateToAuthErrorScreen(undefined, event.payload.failureData);
-          break;
-        }
+          return;
+        case "webViewNative":
+          navigateToAuthErrorScreen(failure);
+          return;
         default:
-          break;
+          handleLoginFailure(failure);
       }
     },
-    [handleLoginFailure, handleLoginSuccess, navigateToAuthErrorScreen]
+    [handleLoginFailure, navigateToAuthErrorScreen]
   );
 
-  return <IdpWebViewLogin idp={idp} onEvent={handleEvent} />;
+  return (
+    <IdpWebViewLogin
+      idp={idp}
+      onFailure={handleFailure}
+      onSuccess={handleLoginSuccess}
+    />
+  );
 };

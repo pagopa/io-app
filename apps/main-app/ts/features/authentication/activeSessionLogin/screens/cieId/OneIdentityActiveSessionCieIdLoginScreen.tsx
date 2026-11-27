@@ -5,10 +5,7 @@ import { IOStackNavigationRouteProps } from "../../../../../navigation/params/Ap
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { trackLoginFailure } from "../../../common/analytics";
 import { trackLoginSpidError } from "../../../common/analytics/spidAnalytics";
-import {
-  CieIdWebViewLogin,
-  CieIdWebViewLoginEvent
-} from "../../../common/components/CieIdWebViewLogin";
+import { CieIdWebViewLogin } from "../../../common/components/CieIdWebViewLogin";
 import { useCieIdWebViewLoginNavigation } from "../../../common/hooks/useCieIdWebViewLoginNavigation";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
@@ -18,7 +15,11 @@ import {
   LOGIN_TYPES
 } from "../../../common/utils";
 import { AUTH_ERRORS } from "../../../common/utils/authError";
-import { CANCELLED_LOGIN_FAILURE_DATA } from "../../../common/utils/loginErrorDebugInfo";
+import {
+  getAuthErrorKey,
+  getLoginFailureReason,
+  LoginFailure
+} from "../../../common/utils/loginFailure";
 import { cieEnvSelector } from "../../../login/cie/store/selectors";
 import { IdpCIE_ID } from "../../../login/hooks/useNavigateToLoginMethod";
 import {
@@ -58,20 +59,29 @@ export const OneIdentityActiveSessionCieIdLoginScreen = ({
   } = useCieIdWebViewLoginNavigation({ authLevel });
 
   const handleLoginFailure = useCallback(
-    (reason: string, code?: string, message?: string) => {
-      const errorCodeOrMessage = code ?? message;
+    (failure: LoginFailure) => {
+      const authErrorKey = getAuthErrorKey(failure);
+      const { errorMessage } =
+        failure.kind === "backend" ? failure.details : {};
+      const isDifferentFiscalCode =
+        failure.kind === "backend" &&
+        failure.details.errorCode === AUTH_ERRORS.ERROR_1004;
 
-      if (code !== AUTH_ERRORS.ERROR_1004) {
+      if (!isDifferentFiscalCode) {
         dispatch(activeSessionLoginFailure());
       }
 
-      trackLoginFailure({ reason, idp: "cieid", flow: LOGIN_TYPES.REAUTH });
-      trackLoginSpidError(errorCodeOrMessage, {
+      trackLoginFailure({
+        reason: getLoginFailureReason(failure),
+        idp: "cieid",
+        flow: LOGIN_TYPES.REAUTH
+      });
+      trackLoginSpidError(authErrorKey, {
         idp: IdpCIE_ID.id,
         flow: LOGIN_TYPES.REAUTH,
-        "error message": message
+        "error message": errorMessage
       });
-      navigateToAuthErrorScreen(errorCodeOrMessage, { reason });
+      navigateToAuthErrorScreen(failure);
     },
     [dispatch, navigateToAuthErrorScreen]
   );
@@ -83,53 +93,34 @@ export const OneIdentityActiveSessionCieIdLoginScreen = ({
     [dispatch]
   );
 
-  const handleEvent = useCallback(
-    (event: CieIdWebViewLoginEvent) => {
-      switch (event.type) {
-        case "CANCEL": {
-          navigateToCieIdAuthenticationError(CANCELLED_LOGIN_FAILURE_DATA);
-          break;
-        }
-        case "LOGIN_FAILURE": {
-          const { code, message, reason } = event.payload;
-          handleLoginFailure(reason, code, message);
-          break;
-        }
-        case "LOGIN_SUCCESS": {
-          const { token } = event.payload;
-          handleLoginSuccess(token);
-          break;
-        }
-        case "NOT_ALLOWED_URL": {
-          const { url } = event.payload;
-          navigateToCieIdAuthUrlError(url);
-          break;
-        }
-        case "ONE_IDENTITY_LOGIN_FAILURE":
-        case "WEBVIEW_ERROR": {
-          navigateToCieIdAuthenticationError(event.payload.failureData);
-          break;
-        }
-        case "WEBVIEW_HTTP_ERROR": {
-          const { url, statusCode } = event.payload;
-
+  const handleFailure = useCallback(
+    (failure: LoginFailure) => {
+      switch (failure.kind) {
+        case "backend":
+        case "cieIdApp":
+        case "idpAppNotOpened":
+          handleLoginFailure(failure);
+          return;
+        case "cieIdUrlNotAllowed":
+          navigateToCieIdAuthUrlError(failure.details.url);
+          return;
+        case "webViewHttp": {
+          const { statusCode, url } = failure.details;
           if (isValidCallbackUrl(url)) {
             // The callback URL failed to load: force a logout.
             forceLogoutAndNavigateToLanding();
           } else if (statusCode !== 403) {
-            navigateToAuthErrorScreen(undefined, event.payload.failureData);
+            navigateToCieIdAuthenticationError(failure);
           }
-          break;
+          return;
         }
         default:
-          break;
+          navigateToCieIdAuthenticationError(failure);
       }
     },
     [
       forceLogoutAndNavigateToLanding,
       handleLoginFailure,
-      handleLoginSuccess,
-      navigateToAuthErrorScreen,
       navigateToCieIdAuthUrlError,
       navigateToCieIdAuthenticationError
     ]
@@ -149,7 +140,8 @@ export const OneIdentityActiveSessionCieIdLoginScreen = ({
     <CieIdWebViewLogin
       cieEnv={cieEnv}
       flow={LOGIN_TYPES.REAUTH}
-      onEvent={handleEvent}
+      onFailure={handleFailure}
+      onSuccess={handleLoginSuccess}
     />
   );
 };

@@ -102,13 +102,13 @@ const getAuthErrorDetailsMap = (): { [key: string]: AuthErrorDetails } => ({
  * falling back to the generic error entry when the code is unknown or missing.
  */
 export const getAuthErrorDetails = (
-  errorCodeOrMessage?: string
+  authErrorKey?: string
 ): AuthErrorDetails => {
   const detailsByError = getAuthErrorDetailsMap();
   const genericDetails = detailsByError[AUTH_ERRORS.GENERIC_ERROR];
 
-  if (!errorCodeOrMessage) {
+  if (!authErrorKey) {
     return genericDetails;
   }
-  return detailsByError[errorCodeOrMessage] ?? genericDetails;
+  return detailsByError[authErrorKey] ?? genericDetails;
 };

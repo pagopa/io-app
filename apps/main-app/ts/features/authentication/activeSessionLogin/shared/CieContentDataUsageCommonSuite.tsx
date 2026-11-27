@@ -59,7 +59,7 @@ export const runConsentScreenSuite = (cfg: ConsentSuiteConfig) => {
 
       expect(cfg.mockNavigation.dispatch).toHaveBeenCalledWith(
         StackActions.replace(AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN, {
-          errorCodeOrMessage: undefined,
+          failure: { kind: "backend", details: {} },
           authMethod: "CIE",
           authLevel: AUTH_LEVELS.L3
         })

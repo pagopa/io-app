@@ -4,9 +4,12 @@ import { Linking } from "react-native";
 import * as IOHooks from "../../../../../store/hooks";
 import * as analyticsUtils from "../../../../../utils/analytics";
 import { SpidIdp } from "../../../../../utils/idps";
+import * as supportAssistance from "../../../../../utils/supportAssistance";
 import * as useOneIdentityLoginSourceModule from "../../../../lollipop/hooks/useOneIdentityLoginSource";
+import { getSpidErrorCodeDescription } from "../../../login/idp/utils/spidErrorCode";
 import * as analytics from "../../analytics";
 import * as usePosteIDEducationalModule from "../../hooks/useOneIdentityPosteIDApp2AppEducational";
+import { LoginFailure } from "../../utils/loginFailure";
 import { IdpWebViewLogin } from "../IdpWebViewLogin";
 
 const mockWebViewMount = jest.fn();
@@ -60,7 +63,8 @@ const mockUseOneIdentityLoginSource = (
 
 describe("IdpWebViewLogin", () => {
   const mockDispatch = jest.fn();
-  const onEvent = jest.fn();
+  const onFailure = jest.fn();
+  const onSuccess = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -69,6 +73,9 @@ describe("IdpWebViewLogin", () => {
     jest.spyOn(IOHooks, "useIOSelector").mockReturnValue(undefined);
 
     jest.spyOn(analyticsUtils, "trackLoginError").mockImplementation();
+    jest
+      .spyOn(supportAssistance, "handleSendAssistanceLog")
+      .mockImplementation();
     jest.spyOn(Linking, "openURL").mockResolvedValue(undefined);
 
     mockShouldBlockUrlNavigationWhileCheckingLollipop.mockReturnValue(false);
@@ -87,7 +94,12 @@ describe("IdpWebViewLogin", () => {
       const errorUrl =
         "https://dev.oneid.pagopa.it/login/error?error_code=GENERIC_HTML_ERROR";
       const { getByTestId } = render(
-        <IdpWebViewLogin flow={flow} idp={mockIdp} onEvent={onEvent} />
+        <IdpWebViewLogin
+          flow={flow}
+          idp={mockIdp}
+          onFailure={onFailure}
+          onSuccess={onSuccess}
+        />
       );
       const webview = getByTestId("webview-idp-login-screen");
 
@@ -112,7 +124,11 @@ describe("IdpWebViewLogin", () => {
         mockUseOneIdentityLoginSource({ loginSourceState: { status } });
 
         const { getByTestId, queryByTestId } = render(
-          <IdpWebViewLogin idp={mockIdp} onEvent={onEvent} />
+          <IdpWebViewLogin
+            idp={mockIdp}
+            onFailure={onFailure}
+            onSuccess={onSuccess}
+          />
         );
 
         expect(getByTestId("refreshIndicator")).toBeTruthy();
@@ -124,7 +140,11 @@ describe("IdpWebViewLogin", () => {
       mockUseOneIdentityLoginSource();
 
       const { getByTestId } = render(
-        <IdpWebViewLogin idp={mockIdp} onEvent={onEvent} />
+        <IdpWebViewLogin
+          idp={mockIdp}
+          onFailure={onFailure}
+          onSuccess={onSuccess}
+        />
       );
 
       const webview = getByTestId("webview-idp-login-screen");
@@ -146,7 +166,11 @@ describe("IdpWebViewLogin", () => {
       });
 
       const { getByTestId, queryByTestId } = render(
-        <IdpWebViewLogin idp={mockIdp} onEvent={onEvent} />
+        <IdpWebViewLogin
+          idp={mockIdp}
+          onFailure={onFailure}
+          onSuccess={onSuccess}
+        />
       );
 
       expect(queryByTestId("refreshIndicator")).toBeNull();
@@ -158,10 +182,14 @@ describe("IdpWebViewLogin", () => {
     it("should keep the same WebView instance from the /authorize request to the IDP SSO page", () => {
       const authorizeSource = { uri: "https://example.com/authorize" };
       const ssoUrl = "https://idp.example.com/sso?SAMLRequest=abc";
-      // A new `onEvent` on every step bypasses `memo`, so that the component
+      // A new `onFailure` on every step bypasses `memo`, so that the component
       // re-renders and reads the new mocked login source state
       const renderStep = () => (
-        <IdpWebViewLogin idp={mockIdp} onEvent={e => onEvent(e)} />
+        <IdpWebViewLogin
+          idp={mockIdp}
+          onFailure={f => onFailure(f)}
+          onSuccess={onSuccess}
+        />
       );
 
       mockUseOneIdentityLoginSource({
@@ -201,11 +229,18 @@ describe("IdpWebViewLogin", () => {
 
     it("should render nothing when status is failure", () => {
       mockUseOneIdentityLoginSource({
-        loginSourceState: { status: "failure", error: "some error" }
+        loginSourceState: {
+          status: "failure",
+          failure: { kind: "keyGeneration", details: {} }
+        }
       });
 
       const { queryByTestId } = render(
-        <IdpWebViewLogin idp={mockIdp} onEvent={onEvent} />
+        <IdpWebViewLogin
+          idp={mockIdp}
+          onFailure={onFailure}
+          onSuccess={onSuccess}
+        />
       );
 
       expect(queryByTestId("webview-idp-login-screen")).toBeNull();
@@ -220,7 +255,11 @@ describe("IdpWebViewLogin", () => {
         });
 
         const { getByTestId } = render(
-          <IdpWebViewLogin idp={mockIdp} onEvent={onEvent} />
+          <IdpWebViewLogin
+            idp={mockIdp}
+            onFailure={onFailure}
+            onSuccess={onSuccess}
+          />
         );
 
         const webview = getByTestId("webview-idp-login-screen");
@@ -232,7 +271,11 @@ describe("IdpWebViewLogin", () => {
       mockUseOneIdentityLoginSource();
 
       const { getByTestId } = render(
-        <IdpWebViewLogin idp={mockIdp} onEvent={onEvent} />
+        <IdpWebViewLogin
+          idp={mockIdp}
+          onFailure={onFailure}
+          onSuccess={onSuccess}
+        />
       );
 
       const webview = getByTestId("webview-idp-login-screen");
@@ -245,27 +288,37 @@ describe("IdpWebViewLogin", () => {
       mockUseOneIdentityLoginSource();
     });
 
-    it("should call onEvent with LOGIN_FAILURE and the failure data when the login source fails", () => {
-      render(<IdpWebViewLogin idp={mockIdp} onEvent={onEvent} />);
-      const { onFailure } = jest.mocked(
+    it("should call onFailure with the failure of the login source", () => {
+      render(
+        <IdpWebViewLogin
+          idp={mockIdp}
+          onFailure={onFailure}
+          onSuccess={onSuccess}
+        />
+      );
+      const { onFailure: onLoginSourceFailure } = jest.mocked(
         useOneIdentityLoginSourceModule.useOneIdentityLoginSource
       ).mock.calls[0][0];
-      const failureData = {
-        reason: "Unexpected HTTP status 500",
-        url: "https://example.com/api/auth/v1/reserve"
+      const failure: LoginFailure = {
+        kind: "reserve",
+        details: {
+          reason: "Unexpected HTTP status 500",
+          url: "https://example.com/api/auth/v1/reserve"
+        }
       };
 
-      onFailure(failureData);
+      onLoginSourceFailure(failure);
 
-      expect(onEvent).toHaveBeenCalledWith({
-        type: "LOGIN_FAILURE",
-        payload: { failureData }
-      });
+      expect(onFailure).toHaveBeenCalledWith(failure);
     });
 
-    it("should call onEvent with WEBVIEW_ERROR and track the error when there is a WebViewErrorEvent", () => {
+    it("should call onFailure with webViewNative and track the error when there is a WebViewErrorEvent", () => {
       const { getByTestId } = render(
-        <IdpWebViewLogin idp={mockIdp} onEvent={onEvent} />
+        <IdpWebViewLogin
+          idp={mockIdp}
+          onFailure={onFailure}
+          onSuccess={onSuccess}
+        />
       );
 
       const webview = getByTestId("webview-idp-login-screen");
@@ -276,15 +329,12 @@ describe("IdpWebViewLogin", () => {
       };
       fireEvent(webview, "onError", { nativeEvent });
 
-      expect(onEvent).toHaveBeenCalledWith({
-        type: "WEBVIEW_ERROR",
-        payload: {
-          url: nativeEvent.url,
-          failureData: {
-            description: nativeEvent.description,
-            code: nativeEvent.code,
-            url: nativeEvent.url
-          }
+      expect(onFailure).toHaveBeenCalledWith({
+        kind: "webViewNative",
+        details: {
+          code: nativeEvent.code,
+          description: nativeEvent.description,
+          url: nativeEvent.url
         }
       });
       expect(analyticsUtils.trackLoginError).toHaveBeenCalledWith(mockIdp.id, {
@@ -292,9 +342,13 @@ describe("IdpWebViewLogin", () => {
       });
     });
 
-    it("should call onEvent with WEBVIEW_HTTP_ERROR and track the error when there is a WebViewHttpErrorEvent", () => {
+    it("should call onFailure with webViewHttp and track the error when there is a WebViewHttpErrorEvent", () => {
       const { getByTestId } = render(
-        <IdpWebViewLogin idp={mockIdp} onEvent={onEvent} />
+        <IdpWebViewLogin
+          idp={mockIdp}
+          onFailure={onFailure}
+          onSuccess={onSuccess}
+        />
       );
 
       const webview = getByTestId("webview-idp-login-screen");
@@ -304,16 +358,11 @@ describe("IdpWebViewLogin", () => {
       };
       fireEvent(webview, "onHttpError", { nativeEvent });
 
-      expect(onEvent).toHaveBeenCalledWith({
-        type: "WEBVIEW_HTTP_ERROR",
-        payload: {
-          url: nativeEvent.url,
+      expect(onFailure).toHaveBeenCalledWith({
+        kind: "webViewHttp",
+        details: {
           statusCode: nativeEvent.statusCode,
-          failureData: {
-            description: `Unexpected HTTP status ${nativeEvent.statusCode}`,
-            code: nativeEvent.statusCode,
-            url: nativeEvent.url
-          }
+          url: nativeEvent.url
         }
       });
       expect(analyticsUtils.trackLoginError).toHaveBeenCalledWith(mockIdp.id, {
@@ -329,7 +378,11 @@ describe("IdpWebViewLogin", () => {
 
     it("should open the intent fallback URL and block navigation", () => {
       const { getByTestId } = render(
-        <IdpWebViewLogin idp={mockIdp} onEvent={onEvent} />
+        <IdpWebViewLogin
+          idp={mockIdp}
+          onFailure={onFailure}
+          onSuccess={onSuccess}
+        />
       );
 
       const webview = getByTestId("webview-idp-login-screen");
@@ -349,7 +402,11 @@ describe("IdpWebViewLogin", () => {
       mockShouldBlockUrlNavigationWhileCheckingLollipop.mockReturnValue(true);
 
       const { getByTestId } = render(
-        <IdpWebViewLogin idp={mockIdp} onEvent={onEvent} />
+        <IdpWebViewLogin
+          idp={mockIdp}
+          onFailure={onFailure}
+          onSuccess={onSuccess}
+        />
       );
 
       const webview = getByTestId("webview-idp-login-screen");
@@ -358,12 +415,17 @@ describe("IdpWebViewLogin", () => {
         url: "https://idp.example.com/sso?SAMLRequest=encoded"
       });
 
-      expect(onEvent).not.toHaveBeenCalled();
+      expect(onFailure).not.toHaveBeenCalled();
+      expect(onSuccess).not.toHaveBeenCalled();
     });
 
-    it("should call onEvent with LOGIN_SUCCESS on a successful login URL", () => {
+    it("should call onSuccess with the token on a successful login URL", () => {
       const { getByTestId } = render(
-        <IdpWebViewLogin idp={mockIdp} onEvent={onEvent} />
+        <IdpWebViewLogin
+          idp={mockIdp}
+          onFailure={onFailure}
+          onSuccess={onSuccess}
+        />
       );
 
       const webview = getByTestId("webview-idp-login-screen");
@@ -375,15 +437,17 @@ describe("IdpWebViewLogin", () => {
         url: successUrl
       });
 
-      expect(onEvent).toHaveBeenCalledWith({
-        type: "LOGIN_SUCCESS",
-        payload: { token: "session-token-123" }
-      });
+      expect(onSuccess).toHaveBeenCalledWith("session-token-123");
+      expect(onFailure).not.toHaveBeenCalled();
     });
 
-    it("should call onEvent with LOGIN_FAILURE on a failed login URL", () => {
+    it("should call onFailure with backend and log it for assistance on a failed login URL", () => {
       const { getByTestId } = render(
-        <IdpWebViewLogin idp={mockIdp} onEvent={onEvent} />
+        <IdpWebViewLogin
+          idp={mockIdp}
+          onFailure={onFailure}
+          onSuccess={onSuccess}
+        />
       );
 
       const webview = getByTestId("webview-idp-login-screen");
@@ -394,15 +458,13 @@ describe("IdpWebViewLogin", () => {
         url: failureUrl
       });
 
-      expect(onEvent).toHaveBeenCalledWith(
-        expect.objectContaining({
-          type: "LOGIN_FAILURE",
-          payload: {
-            code: "19",
-            message: "annullato",
-            failureData: { reason: expect.any(String) }
-          }
-        })
+      expect(onFailure).toHaveBeenCalledWith({
+        kind: "backend",
+        details: { errorCode: "19", errorMessage: "annullato" }
+      });
+      expect(supportAssistance.handleSendAssistanceLog).toHaveBeenCalledWith(
+        expect.anything(),
+        `login failed with code (19) : ${getSpidErrorCodeDescription("19")}`
       );
     });
   });
@@ -414,7 +476,11 @@ describe("IdpWebViewLogin", () => {
 
     it("should dispatch idpLoginUrlChanged only when the URL basepath changes", () => {
       const { getByTestId } = render(
-        <IdpWebViewLogin idp={mockIdp} onEvent={onEvent} />
+        <IdpWebViewLogin
+          idp={mockIdp}
+          onFailure={onFailure}
+          onSuccess={onSuccess}
+        />
       );
 
       const webview = getByTestId("webview-idp-login-screen");
@@ -453,7 +519,11 @@ describe("IdpWebViewLogin", () => {
 
     it("should present the bottom sheet when the WebView loads", () => {
       const { getByTestId } = render(
-        <IdpWebViewLogin idp={mockIdp} onEvent={onEvent} />
+        <IdpWebViewLogin
+          idp={mockIdp}
+          onFailure={onFailure}
+          onSuccess={onSuccess}
+        />
       );
 
       expect(mockPresentOnce).not.toHaveBeenCalled();
@@ -476,7 +546,11 @@ describe("IdpWebViewLogin", () => {
       "should not present the bottom sheet on $name",
       ({ name, nativeEvent }) => {
         const { getByTestId } = render(
-          <IdpWebViewLogin idp={mockIdp} onEvent={onEvent} />
+          <IdpWebViewLogin
+            idp={mockIdp}
+            onFailure={onFailure}
+            onSuccess={onSuccess}
+          />
         );
 
         fireEvent(getByTestId("webview-idp-login-screen"), name, {

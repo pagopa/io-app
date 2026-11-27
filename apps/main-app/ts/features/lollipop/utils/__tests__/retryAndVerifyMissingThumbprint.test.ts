@@ -1,6 +1,7 @@
 import { err } from "neverthrow";
 
 import { AppDispatch } from "../../../../App";
+import { toRedirectsFailureReason } from "../../../authentication/common/utils/loginFailure";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../login";
 
 const url =
@@ -28,6 +29,9 @@ describe("Lollipop regenerate key, get redirects and verification", () => {
       dispatch
     );
 
-    expect(result).toEqual(err({ reason: "Missing publicKey" }));
+    expect(result).toEqual(err({ kind: "keyGeneration", details: {} }));
+    expect(result.isErr() && toRedirectsFailureReason(result.error)).toBe(
+      "Missing publicKey"
+    );
   });
 });
