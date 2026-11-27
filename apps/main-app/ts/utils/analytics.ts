@@ -277,3 +277,22 @@ export const trackContentNotAvailable = (content: string) => {
 };
 
 // #endregion
+
+// #region expo-secure-store
+
+export const trackPinOperation = (
+  operation: "GET" | "REMOVE" | "SET",
+  succeeded: boolean,
+  error?: unknown
+) => {
+  const result = succeeded ? "SUCCESS" : "FAILURE";
+  void mixpanelTrack(
+    `PIN_KEYCHAIN_${operation}_${result}`,
+    buildEventProperties(
+      succeeded ? "TECH" : "KO",
+      succeeded ? undefined : "error",
+      succeeded ? {} : { reason: unknownToString(error) }
+    )
+  );
+};
+// #endregion
