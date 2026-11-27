@@ -189,16 +189,35 @@ describe("CgnMerchantsCategoriesSelectionScreen", () => {
     ).toBeTruthy();
   });
 
-  it("should navigate to search screen when search button is pressed", () => {
-    const { getByTestId } = renderComponent(defaultState);
+  it.each([
+    {
+      name: "categories",
+      tab: CgnMerchantsHomeTabRoutes.CGN_CATEGORIES
+    },
+    {
+      name: "merchants",
+      tab: CgnMerchantsHomeTabRoutes.CGN_MERCHANTS_ALL
+    }
+  ])("opens search from the inline searchbar in the $name tab", ({ tab }) => {
+    const { getByRole, getByTestId, queryByTestId } =
+      renderComponent(defaultState);
 
-    const searchButton = getByTestId("search-button");
-
-    fireEvent.press(searchButton);
+    fireEvent.press(getByTestId(`cgn-merchants-tab-${tab}`));
+    fireEvent.press(
+      getByRole("button", {
+        name: I18n.t("bonus.cgn.merchantSearch.input.placeholder")
+      })
+    );
 
     expect(mockNavigate).toHaveBeenCalledWith(CGN_ROUTES.DETAILS.MAIN, {
       screen: CGN_ROUTES.DETAILS.MERCHANTS.SEARCH
     });
+    expect(queryByTestId("search-button")).toBeNull();
+    expect(
+      getByRole("button", {
+        name: I18n.t("global.accessibility.contextualHelp.open.label")
+      })
+    ).toBeTruthy();
   });
 
   it("should navigate to categories screen when categories tab is pressed", () => {
