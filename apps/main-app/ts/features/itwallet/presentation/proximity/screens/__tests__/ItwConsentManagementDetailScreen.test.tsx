@@ -1,6 +1,6 @@
 import { act, fireEventAsync } from "@testing-library/react-native";
 import I18n from "i18next";
-import { Alert } from "react-native";
+import { Alert, AlertButton } from "react-native";
 import { createStore } from "redux";
 
 import { applicationChangeState } from "../../../../../../store/actions/application";
@@ -11,6 +11,15 @@ import { ITW_ROUTES } from "../../../../navigation/routes";
 import * as analytics from "../../analytics";
 import { StoredConsentData } from "../../store/types";
 import { ItwConsentManagementDetailScreen } from "../ItwConsentManagementDetailScreen";
+
+const pressAlertButton = async (style: "cancel" | "destructive") => {
+  const alertButtons: Array<AlertButton> = (Alert.alert as jest.Mock).mock
+    .calls[0][2];
+  const button = alertButtons.find(b => b.style === style);
+  await act(async () => {
+    button?.onPress?.();
+  });
+};
 
 const mockGoBack = jest.fn();
 const mockNavigationDispatch = jest.fn();
@@ -69,10 +78,7 @@ describe("ItwConsentManagementDetailScreen", () => {
     );
     expect(Alert.alert).toHaveBeenCalledTimes(1);
 
-    const alertButtons = (Alert.alert as jest.Mock).mock.calls[0][2];
-    await act(async () => {
-      alertButtons[0].onPress();
-    });
+    await pressAlertButton("destructive");
 
     expect(
       store.getState().features.itWallet.proximity.consents[consentKey]
@@ -115,10 +121,7 @@ describe("ItwConsentManagementDetailScreen", () => {
       await fireEventAsync.press(
         component.getByTestId("revoke-consent-action")
       );
-      const alertButtons = (Alert.alert as jest.Mock).mock.calls[0][2];
-      await act(async () => {
-        alertButtons[0].onPress();
-      });
+      await pressAlertButton("destructive");
 
       expect(store.getState().features.itWallet.proximity.consents).toEqual(
         otherConsents
@@ -143,10 +146,7 @@ describe("ItwConsentManagementDetailScreen", () => {
 
     await fireEventAsync.press(component.getByTestId("revoke-consent-action"));
 
-    const alertButtons = (Alert.alert as jest.Mock).mock.calls[0][2];
-    await act(async () => {
-      alertButtons[1].onPress();
-    });
+    await pressAlertButton("cancel");
 
     expect(
       analytics.trackItwRevokeConsentOperationBlockAction

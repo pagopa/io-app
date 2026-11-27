@@ -8,7 +8,7 @@ import {
 import { StackActions, useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo, useRef } from "react";
-import { Alert, View } from "react-native";
+import { Alert, AlertButton, View } from "react-native";
 
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
@@ -71,6 +71,33 @@ export const ItwConsentManagementScreen = ({ navigation, route }: Props) => {
   );
 
   const showRevokeAllAlert = () => {
+    const confirmButton: AlertButton = {
+      onPress: () => {
+        isRevoking.current = true;
+        trackItwRevokeConsentOperationBlockAction("confirm");
+        dispatch(itwRevokeProximityConsentsByCredentialType(credentialType));
+        navigation.dispatch(
+          StackActions.replace(
+            ITW_ROUTES.PRESENTATION.CONSENT_REVOCATION_SUCCESS,
+            {
+              credentialType
+            }
+          )
+        );
+      },
+      style: "destructive",
+      text: I18n.t(
+        "features.itWallet.presentation.proximity.consentManagement.alert.confirm"
+      )
+    };
+    const cancelButton: AlertButton = {
+      onPress: () => trackItwRevokeConsentOperationBlockAction("cancel"),
+      style: "cancel",
+      text: I18n.t(
+        "features.itWallet.presentation.proximity.consentManagement.alert.cancel"
+      )
+    };
+
     trackItwRevokeConsentOperationBlock();
     Alert.alert(
       I18n.t(
@@ -79,36 +106,7 @@ export const ItwConsentManagementScreen = ({ navigation, route }: Props) => {
       I18n.t(
         "features.itWallet.presentation.proximity.consentManagement.revokeAll.alert.message"
       ),
-      [
-        {
-          onPress: () => {
-            isRevoking.current = true;
-            trackItwRevokeConsentOperationBlockAction("confirm");
-            dispatch(
-              itwRevokeProximityConsentsByCredentialType(credentialType)
-            );
-            navigation.dispatch(
-              StackActions.replace(
-                ITW_ROUTES.PRESENTATION.CONSENT_REVOCATION_SUCCESS,
-                {
-                  credentialType
-                }
-              )
-            );
-          },
-          style: "destructive",
-          text: I18n.t(
-            "features.itWallet.presentation.proximity.consentManagement.alert.confirm"
-          )
-        },
-        {
-          onPress: () => trackItwRevokeConsentOperationBlockAction("cancel"),
-          style: "cancel",
-          text: I18n.t(
-            "features.itWallet.presentation.proximity.consentManagement.alert.cancel"
-          )
-        }
-      ]
+      [confirmButton, cancelButton]
     );
   };
 
