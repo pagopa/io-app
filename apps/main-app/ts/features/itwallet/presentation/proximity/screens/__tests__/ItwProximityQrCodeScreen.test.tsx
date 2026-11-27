@@ -222,7 +222,7 @@ describe("ItwProximityPresentmentScreen", () => {
     }
   );
 
-  it("should use the dark neutral banner background for the error box in dark mode", () => {
+  it("should keep the light neutral banner background for the error box in dark mode", () => {
     const { toJSON } = renderComponent(
       { machineState: "error" },
       { source: "WALLET_HOME" },
@@ -232,10 +232,28 @@ describe("ItwProximityPresentmentScreen", () => {
     expect(
       findAllByStyle(toJSON(), {
         aspectRatio: 1,
-        backgroundColor: IOColors.dark.component.banner.background.neutral
+        backgroundColor: IOColors.light.component.banner.background.neutral
       })
     ).toHaveLength(1);
   });
+
+  it.each([
+    { name: "light", theme: "light" },
+    { name: "dark", theme: "dark" }
+  ] as const)(
+    "should draw the QR code dark on light in $name mode",
+    ({ theme }) => {
+      renderComponent(
+        { machineState: "displayQrCode", qrCodeString: "mock-qr-code-string" },
+        { source: "WALLET_HOME" },
+        theme
+      );
+
+      expect(mockQRCode.mock.calls.at(-1)[0].color).toBe(
+        IOColors.light.text.content.default
+      );
+    }
+  );
 
   it("should render the QR code only after the modal transition ends", () => {
     const parentNavigation = { addListener: jest.fn() };
