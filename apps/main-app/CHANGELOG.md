@@ -1,3 +1,18 @@
+## 3.44.0-rc.11 (2026-11-27)
+
+### Features
+
+- [[SIW-0000](https://pagopa.atlassian.net/browse/SIW-0000)] track credential upgrade banner ([#8944](https://github.com/pagopa/io-app/pull/8944))
+
+### Bug Fixes
+
+- [[IOPLT-2322](https://pagopa.atlassian.net/browse/IOPLT-2322)] Android calendar permission visibility ([#8946](https://github.com/pagopa/io-app/pull/8946))
+
+### ❤️ Thank You
+
+- Emanuele Dall'Ara @LeleDallas
+- Federico Mastrini @mastro993
+
 ## 3.44.0-rc.10 (2026-11-27)
 
 ### Features
