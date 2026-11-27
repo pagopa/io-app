@@ -77,36 +77,32 @@ const PreferencesScreen = () => {
       buttonPositive: I18n.t("global.buttons.choose")
     });
 
-    void checkAndRequestPermission()
-      .then(calendarPermission => {
-        if (calendarPermission.authorized) {
-          navigateToCalendarPreferenceScreen();
-        } else if (!calendarPermission.asked) {
-          // Authorized is false (denied, restricted or undetermined)
-          // If the user denied permission previously (not in this session)
-          // prompt an alert to inform that his calendar permissions could have been turned off
-          Alert.alert(
-            I18n.t("messages.cta.calendarPermDenied.preferencesTitle"),
-            I18n.t("messages.cta.calendarPermDenied.description"),
-            [
-              {
-                text: I18n.t("messages.cta.calendarPermDenied.cancel"),
-                style: "cancel"
-              },
-              {
-                text: I18n.t("messages.cta.calendarPermDenied.ok"),
-                style: "default",
-                onPress: () => {
-                  // open app settings to turn on the calendar permissions
-                  openAppSettings();
-                }
+    void checkAndRequestPermission().then(calendarPermission => {
+      if (calendarPermission.authorized) {
+        navigateToCalendarPreferenceScreen();
+      } else {
+        // If access remains denied, offer a shortcut to the app settings.
+        Alert.alert(
+          I18n.t("messages.cta.calendarPermDenied.preferencesTitle"),
+          I18n.t("messages.cta.calendarPermDenied.description"),
+          [
+            {
+              text: I18n.t("messages.cta.calendarPermDenied.cancel"),
+              style: "cancel"
+            },
+            {
+              text: I18n.t("messages.cta.calendarPermDenied.ok"),
+              style: "default",
+              onPress: () => {
+                // open app settings to turn on the calendar permissions
+                openAppSettings();
               }
-            ],
-            { cancelable: true }
-          );
-        }
-      })
-      .catch();
+            }
+          ],
+          { cancelable: true }
+        );
+      }
+    });
   };
 
   const preferencesNavListItems: ReadonlyArray<PreferencesNavListItem> = [
