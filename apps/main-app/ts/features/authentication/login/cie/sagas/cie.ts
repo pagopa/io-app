@@ -13,11 +13,11 @@ import { cieIsSupported, nfcIsEnabled } from "../store/actions";
  * https://github.com/pagopa/io-cie-android-sdk/blob/29cc1165bbd3d90d61239369f22ec78b2e4c8f6c/index.js#L125
  */
 export function* checkCieAvailabilitySaga(
-  isCIEAuthenticationSupported: typeof CieUtils.isCieAuthenticationSupported
+  isCieAuthenticationSupported: typeof CieUtils.isCieAuthenticationSupported
 ): SagaIterator {
   try {
-    const response: SagaCallReturnType<typeof isCIEAuthenticationSupported> =
-      yield* call(isCIEAuthenticationSupported);
+    const response: SagaCallReturnType<typeof isCieAuthenticationSupported> =
+      yield* call(isCieAuthenticationSupported);
     yield* put(cieIsSupported.success(response));
   } catch (e) {
     yield* put(cieIsSupported.failure(convertUnknownToError(e)));
