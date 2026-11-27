@@ -1,3 +1,13 @@
+## 3.44.0-rc.10 (2026-11-27)
+
+### Features
+
+- [[IEG-3404](https://pagopa.atlassian.net/browse/IEG-3404)] Add inline searchbar to CGN discovery ([#8904](https://github.com/pagopa/io-app/pull/8904))
+
+### ❤️ Thank You
+
+- Angelo Sanfilippo
+
 ## 3.44.0-rc.9 (2026-11-26)
 
 ### Features

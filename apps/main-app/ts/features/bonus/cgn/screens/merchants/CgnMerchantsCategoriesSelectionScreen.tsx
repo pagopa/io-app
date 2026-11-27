@@ -133,19 +133,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
     animatedRef: animatedFlatListRef,
     transparent: true,
     supportRequest: true,
-    canGoBack: true,
-    secondAction: {
-      icon: "search",
-      testID: "search-button",
-      onPress() {
-        navigate(CGN_ROUTES.DETAILS.MAIN, {
-          screen: CGN_ROUTES.DETAILS.MERCHANTS.SEARCH
-        });
-      },
-      accessibilityLabel: I18n.t(
-        "bonus.cgn.merchantSearch.goToSearchAccessibilityLabel"
-      )
-    }
+    canGoBack: true
   });
 
   const [isPullRefresh, setIsPullRefresh] = useState(false);
@@ -171,6 +159,11 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
       <>
         <CgnAnimatedHeader
           isRefreshingValue={isRefreshingSharedValue}
+          onSearch={() =>
+            navigate(CGN_ROUTES.DETAILS.MAIN, {
+              screen: CGN_ROUTES.DETAILS.MERCHANTS.SEARCH
+            })
+          }
           pullProgress={pullProgress}
         />
         <View style={{ flexGrow: 0, flexShrink: 0 }}>
