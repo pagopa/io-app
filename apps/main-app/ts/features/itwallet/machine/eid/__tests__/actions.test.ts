@@ -85,11 +85,20 @@ describe("navigateToCredentialCatalogAction", () => {
     "opens the correct catalogue after $name activation",
     ({ level, expected }) => {
       const { args } = buildArgs({ level, mode: "issuance" });
-      const navigate = jest.spyOn(args.context.deps.navigation, "navigate");
+      const { navigation } = args.context.deps;
+      const popTo = jest.spyOn(navigation, "popTo");
+      const navigate = jest.spyOn(navigation, "navigate");
       navigateToCredentialCatalogAction(args);
-      expect(navigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
-        state: { routes: [{ name: expected }] }
+      expect(popTo).toHaveBeenCalledWith(ROUTES.MAIN, {
+        screen: ROUTES.WALLET_HOME,
+        params: {}
       });
+      expect(navigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
+        screen: expected
+      });
+      expect(popTo.mock.invocationCallOrder[0]).toBeLessThan(
+        navigate.mock.invocationCallOrder[0]
+      );
     }
   );
 });

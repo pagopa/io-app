@@ -169,18 +169,15 @@ export const navigateToWalletAction = ({ context }: EidActionArgs) => {
 export const navigateToCredentialCatalogAction = ({
   context
 }: EidActionArgs) => {
-  // Resets only the nested ITW stack, keeping the navigator and its machines mounted
-  context.deps.navigation.navigate(ITW_ROUTES.MAIN, {
-    state: {
-      routes: [
-        {
-          name:
-            context.level === "l2"
-              ? ITW_ROUTES.ONBOARDING
-              : ITW_ROUTES.L3_ONBOARDING
-        }
-      ]
-    }
+  const { navigation } = context.deps;
+  // After activation, leaving the catalogue or cancelling issuance returns to Wallet.
+  navigation.popTo(ROUTES.MAIN, {
+    screen: ROUTES.WALLET_HOME,
+    params: {}
+  });
+  navigation.navigate(ITW_ROUTES.MAIN, {
+    screen:
+      context.level === "l2" ? ITW_ROUTES.ONBOARDING : ITW_ROUTES.L3_ONBOARDING
   });
 };
 
