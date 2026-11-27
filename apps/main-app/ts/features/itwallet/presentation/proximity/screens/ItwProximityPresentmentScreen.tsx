@@ -5,6 +5,7 @@ import {
   HeaderSecondLevel,
   IOButton,
   IODimensions,
+  IOThemeContextProvider,
   useIOColors,
   VSpacer,
   VStack
@@ -161,30 +162,34 @@ export const ItwProximityPresentmentScreen = ({
         </Animated.View>
       )}
 
-      <ItwBrandedBox
-        backgroundVariant={"gradient"}
-        style={{ boxShadow: `0px 4px 32px ${colors.surface.shadow}` }}
-        variant={isFailure ? "error" : "default"}
-      >
-        <VStack space={16}>
-          {!isFailure && (
-            <VStack space={8} style={{ marginHorizontal: 16 }}>
-              <H6 style={{ textAlign: "center" }}>
-                {I18n.t(
-                  "features.itWallet.presentation.proximity.engagement.title"
-                )}
-              </H6>
-              <BodySmall style={{ textAlign: "center" }}>
-                {I18n.t(
-                  "features.itWallet.presentation.proximity.engagement.instruction"
-                )}
-              </BodySmall>
-            </VStack>
-          )}
+      {/* Light in both modes, as the fiscal code: verifier apps may not read an
+      inverted QR code */}
+      <IOThemeContextProvider theme="light">
+        <ItwBrandedBox
+          backgroundVariant={"gradient"}
+          style={{ boxShadow: `0px 4px 32px ${colors.surface.shadow}` }}
+          variant={isFailure ? "error" : "default"}
+        >
+          <VStack space={16}>
+            {!isFailure && (
+              <VStack space={8} style={{ marginHorizontal: 16 }}>
+                <H6 style={{ textAlign: "center" }}>
+                  {I18n.t(
+                    "features.itWallet.presentation.proximity.engagement.title"
+                  )}
+                </H6>
+                <BodySmall style={{ textAlign: "center" }}>
+                  {I18n.t(
+                    "features.itWallet.presentation.proximity.engagement.instruction"
+                  )}
+                </BodySmall>
+              </VStack>
+            )}
 
-          <ItwProximityQrCodeImage source={source} />
-        </VStack>
-      </ItwBrandedBox>
+            <ItwProximityQrCodeImage source={source} />
+          </VStack>
+        </ItwBrandedBox>
+      </IOThemeContextProvider>
 
       {isNfcPresentmentSupported && (
         <View style={styles.nfcSection} testID="itwNfcSectionTestID">
