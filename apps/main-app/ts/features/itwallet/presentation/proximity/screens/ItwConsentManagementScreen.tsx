@@ -8,7 +8,7 @@ import {
 import { StackActions, useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo, useRef } from "react";
-import { Alert, AlertButton, Platform, View } from "react-native";
+import { Alert, AlertButton, View } from "react-native";
 
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
@@ -98,7 +98,6 @@ export const ItwConsentManagementScreen = ({ navigation, route }: Props) => {
       )
     };
 
-    // On Android the first button is rendered on the left: keep cancel there.
     trackItwRevokeConsentOperationBlock();
     Alert.alert(
       I18n.t(
@@ -107,9 +106,7 @@ export const ItwConsentManagementScreen = ({ navigation, route }: Props) => {
       I18n.t(
         "features.itWallet.presentation.proximity.consentManagement.revokeAll.alert.message"
       ),
-      Platform.OS === "android"
-        ? [cancelButton, confirmButton]
-        : [confirmButton, cancelButton]
+      [confirmButton, cancelButton]
     );
   };
 

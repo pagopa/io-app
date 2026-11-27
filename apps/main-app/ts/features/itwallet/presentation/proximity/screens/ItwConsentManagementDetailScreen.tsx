@@ -10,7 +10,7 @@ import {
 import { StackActions, useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useEffect, useMemo, useRef } from "react";
-import { Alert, AlertButton, Platform } from "react-native";
+import { Alert, AlertButton } from "react-native";
 
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import {
@@ -148,11 +148,7 @@ export const ItwConsentManagementDetailScreen = ({ route }: Props) => {
         "features.itWallet.presentation.proximity.consentManagement.alert.message",
         { relyingParty }
       ),
-      // On Android the first button is rendered on the left, so the cancel
-      // action must come first to keep the confirm action on the right.
-      Platform.OS === "android"
-        ? [cancelButton, confirmButton]
-        : [confirmButton, cancelButton]
+      [confirmButton, cancelButton]
     );
   }, [consent, relyingParty, revokeConsent]);
 
