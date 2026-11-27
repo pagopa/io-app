@@ -242,7 +242,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - pagopa-io-react-native-integrity (1.0.0):
+  - pagopa-io-react-native-integrity (1.1.0):
     - boost
     - DoubleConversion
     - fast_float
@@ -4320,7 +4320,7 @@ SPEC CHECKSUMS:
   MultiplatformBleAdapter: b1fddd0d499b96b607e00f0faa8e60648343dc1d
   OpenSSL-Universal: ecee7b138fa75a74ecf00d7ffd248fb584739b9e
   pagopa-io-react-native-cieid: 63784e10541a12320a6fb6f05a11f6c17e4fd117
-  pagopa-io-react-native-integrity: c96d85212859750bcc3901501ef27d05475f8476
+  pagopa-io-react-native-integrity: bc655b621e1ee74a65205166398e517b609bc3df
   pagopa-io-react-native-jwt: a5231b3f09cb69b54abd76dac34e1bddff596fe2
   pagopa-io-react-native-secure-storage: 64dcc5dff82ec5ce136d7904bc076d70db157dec
   Pulsar: b74a2333a1f655d04a8bc144a7273cb7ffdf7122

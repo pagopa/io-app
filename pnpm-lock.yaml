@@ -420,8 +420,8 @@ importers:
         specifier: workspace:@io-app/expo-crypto@*
         version: link:../../libs/expo-crypto
       '@pagopa/io-react-native-integrity':
-        specifier: 1.0.0
-        version: 1.0.0(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
+        specifier: 1.1.0
+        version: 1.1.0(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
       '@pagopa/io-react-native-iso18013':
         specifier: 0.9.1
         version: 0.9.1(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)
@@ -3875,8 +3875,8 @@ packages:
       react: '>=19.1'
       react-native: '>=0.81'
 
-  '@pagopa/io-react-native-integrity@1.0.0':
-    resolution: {integrity: sha512-fA5en1sWwRZRMIDKWAtAAig0BWl2Ka6m5Gr/qoUQ1kPUnWGMveIoF2cJBSezlewDKIMW4z4dImt6/Ibk/F2/2g==}
+  '@pagopa/io-react-native-integrity@1.1.0':
+    resolution: {integrity: sha512-OjG2zR8yD3N+eby0go1JOCqUz6395ZEh/tm8tq6LDqsGg6dUQaZff/bUpWa4KX0VCx1pFK1UbnaDgHrrK3kZcQ==}
     peerDependencies:
       react: '*'
       react-native: '*'
@@ -17356,7 +17356,7 @@ snapshots:
       react: 19.2.0
       react-native: 0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)
 
-  '@pagopa/io-react-native-integrity@1.0.0(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)':
+  '@pagopa/io-react-native-integrity@1.1.0(react-native@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1))(react@19.2.0)':
     dependencies:
       react: 19.2.0
       react-native: 0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(@react-native-community/cli@20.2.0(supports-color@8.1.1)(typescript@6.0.3))(@react-native/metro-config@0.83.10(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.16)(react@19.2.0)(supports-color@8.1.1)
