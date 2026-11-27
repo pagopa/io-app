@@ -6,11 +6,15 @@ import _ from "lodash";
 
 /**
  * Return the same text with each token has the first char in uppercase. Tokens
- * are retrieved by splitting the text with the provided separator
+ * are retrieved by splitting the text with the provided separator. Only the
+ * first character of a token is changed: the rest is left as is, and leading
+ * spaces of a token are preserved. The token is never interpreted as a regular
+ * expression, so names containing `[`, `(` or `+` are safe.
  *
  * @example
- *   capitalize("Hello World"); // "Hello Word"
+ *   capitalize("Hello World"); // "Hello World"
  *   capitalize("hello,world", ","); // "Hello,Word"
+ *   capitalize("McDonald"); // "McDonald"
  *
  * @param text
  * @param separator
@@ -18,14 +22,17 @@ import _ from "lodash";
 export function capitalize(text: string, separator = " ") {
   return text
     .split(separator)
-    .reduce(
-      (acc: string, curr: string, index: number) =>
-        `${acc}${index === 0 ? "" : separator}${curr.replace(
-          new RegExp(curr.trimLeft(), "ig"),
-          _.capitalize(curr.trimLeft())
-        )}`,
-      ""
-    );
+    .map(token => {
+      const trimmedToken = token.trimStart();
+      if (trimmedToken.length === 0) {
+        return token;
+      }
+      const leadingSpaces = token.slice(0, token.length - trimmedToken.length);
+      return `${leadingSpaces}${trimmedToken
+        .charAt(0)
+        .toUpperCase()}${trimmedToken.slice(1)}`;
+    })
+    .join(separator);
 }
 
 /**
