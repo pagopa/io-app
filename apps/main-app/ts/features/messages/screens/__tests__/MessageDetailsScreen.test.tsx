@@ -190,7 +190,8 @@ const renderComponent = (store: Store<GlobalState>) => {
       MESSAGES_ROUTES.MESSAGE_DETAIL,
       {
         messageId: id,
-        serviceId: sender_service_id
+        serviceId: sender_service_id,
+        firstTimeOpening: true
       },
       store
     )

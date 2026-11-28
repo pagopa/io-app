@@ -46,7 +46,8 @@ const qualtricsParameters = {
   organizationFiscalCode: "Comune di Tokyo",
   serviceId: "service-id" as ServiceId,
   sendingDate: "2026-06-18T10:30:00.000Z",
-  messageType: MessageKind.STANDARD
+  messageType: MessageKind.STANDARD,
+  firstTimeOpening: "yes" as const
 };
 
 const messageId = "01JYW0BM2FSGPP8M5RM8V72WJ8";
@@ -78,6 +79,7 @@ describe("encodeQualtricsParameters", () => {
       QUALTRICS_URI,
       qualtricsParameters
     );
+
     const parametersBase64Url = Buffer.from(
       JSON.stringify(qualtricsParameters),
       "utf8"
@@ -90,6 +92,80 @@ describe("encodeQualtricsParameters", () => {
     expect(parametersBase64Url).not.toContain("=");
     expect(parametersBase64Url).not.toMatch(/[+/]/);
   });
+
+  const scenarios = [
+    {
+      name: "standard message first opening",
+      parameters: {
+        messageType: MessageKind.STANDARD,
+        firstTimeOpening: "yes"
+      }
+    },
+    {
+      name: "standard message subsequent opening",
+      parameters: {
+        messageType: MessageKind.STANDARD,
+        firstTimeOpening: "no"
+      }
+    },
+    {
+      name: "SEND first opening from message",
+      parameters: {
+        messageType: MessageKind.SEND,
+        firstTimeOpening: "yes",
+        openingSource: "message",
+        sendUser: "destinatario"
+      }
+    },
+    {
+      name: "SEND subsequent opening from message",
+      parameters: {
+        messageType: MessageKind.SEND,
+        firstTimeOpening: "no",
+        openingSource: "message",
+        sendUser: "destinatario"
+      }
+    },
+    {
+      name: "SEND opening from AAR as delegato",
+      parameters: {
+        messageType: MessageKind.SEND,
+        firstTimeOpening: "unknown",
+        openingSource: "aar",
+        sendUser: "delegato"
+      }
+    },
+    {
+      name: "SEND opening from AAR as destinatario",
+      parameters: {
+        messageType: MessageKind.SEND,
+        firstTimeOpening: "unknown",
+        openingSource: "aar",
+        sendUser: "destinatario"
+      }
+    }
+  ] as const;
+
+  test.each(scenarios)(
+    "should encode parameters for $name",
+    ({ parameters }) => {
+      const encodedParameters = encodeQualtricsParameters(QUALTRICS_URI, {
+        ...qualtricsParameters,
+        ...parameters
+      });
+      const parametersBase64Url = Buffer.from(
+        JSON.stringify({
+          ...qualtricsParameters,
+          ...parameters
+        }),
+        "utf8"
+      ).toString("base64url");
+
+      expect(encodedParameters).toBe(
+        `${QUALTRICS_URI}?Q_EED=${parametersBase64Url}`
+      );
+    }
+  );
 });
 
 describe("messageKindFromStandardMessage", () => {
@@ -205,7 +281,10 @@ describe("StandardMessageSurveyBanner", () => {
 
   it("should not render when message details are not loaded", () => {
     const { queryByTestId } = renderWithState(
-      createElement(StandardMessageSurveyBanner, { message: standardMessage }),
+      createElement(StandardMessageSurveyBanner, {
+        message: standardMessage,
+        firstTimeOpening: true
+      }),
       [backendStatusWithSurveyUri()]
     );
     const surveyBanner = queryByTestId(MESSAGE_SURVEY_BANNER_TEST_ID);
@@ -215,7 +294,10 @@ describe("StandardMessageSurveyBanner", () => {
 
   it("should open the survey url with standard message parameters", () => {
     const { getByTestId } = renderWithState(
-      createElement(StandardMessageSurveyBanner, { message: standardMessage }),
+      createElement(StandardMessageSurveyBanner, {
+        message: standardMessage,
+        firstTimeOpening: true
+      }),
       [
         backendStatusWithSurveyUri(),
         loadMessageDetails.success(loadedMessageDetails)
@@ -230,14 +312,18 @@ describe("StandardMessageSurveyBanner", () => {
         organizationFiscalCode: service_1.organization.fiscal_code,
         serviceId: service_1.id,
         sendingDate: createdAt.toISOString(),
-        messageType: MessageKind.STANDARD
+        messageType: MessageKind.STANDARD,
+        firstTimeOpening: "yes"
       })
     );
   });
 
   it("should open the survey url with attachment message parameters", () => {
     const { getByTestId } = renderWithState(
-      createElement(StandardMessageSurveyBanner, { message: standardMessage }),
+      createElement(StandardMessageSurveyBanner, {
+        message: standardMessage,
+        firstTimeOpening: false
+      }),
       [
         backendStatusWithSurveyUri(),
         loadMessageDetails.success(loadedMessageDetails),
@@ -256,7 +342,8 @@ describe("StandardMessageSurveyBanner", () => {
         organizationFiscalCode: service_1.organization.fiscal_code,
         serviceId: service_1.id,
         sendingDate: createdAt.toISOString(),
-        messageType: MessageKind.ATTACHMENT
+        messageType: MessageKind.ATTACHMENT,
+        firstTimeOpening: "no"
       })
     );
   });
@@ -270,7 +357,10 @@ describe("SendMessageSurveyBanner", () => {
   it("should not render when service details are not loaded", () => {
     const { queryByTestId } = renderWithState(
       createElement(SendMessageSurveyBanner, {
+        firstTimeOpening: true,
         message: sendMessage,
+        sendOpeningSource: "message",
+        sendUserType: "not_set",
         serviceId: service_1.id
       }),
       [backendStatusWithSurveyUri()]
@@ -280,27 +370,87 @@ describe("SendMessageSurveyBanner", () => {
     expect(surveyBanner).toBeNull();
   });
 
-  it("should open the survey url with SEND message parameters", () => {
-    const { getByTestId } = renderWithState(
-      createElement(SendMessageSurveyBanner, {
-        message: sendMessage,
-        serviceId: service_1.id
-      }),
-      [backendStatusWithSurveyUri(), loadServiceDetail.success(service_1)]
-    );
-    const surveyBanner = getByTestId(MESSAGE_SURVEY_BANNER_TEST_ID);
+  const scenarios = [
+    {
+      name: "first opening of a SEND message from messages list",
+      parameters: {
+        firstTimeOpening: true,
+        sendOpeningSource: "message",
+        sendUserType: "not_set"
+      },
+      expectedParameters: {
+        firstTimeOpening: "yes",
+        openingSource: "message",
+        sendUser: "destinatario"
+      }
+    },
+    {
+      name: "subsequent opening of a SEND message from messages list",
+      parameters: {
+        firstTimeOpening: false,
+        sendOpeningSource: "message",
+        sendUserType: "not_set"
+      },
+      expectedParameters: {
+        firstTimeOpening: "no",
+        openingSource: "message",
+        sendUser: "destinatario"
+      }
+    },
+    {
+      name: "opening an AAR message as mandatory",
+      parameters: {
+        firstTimeOpening: undefined,
+        sendOpeningSource: "aar",
+        sendUserType: "mandatory"
+      },
+      expectedParameters: {
+        firstTimeOpening: "unknown",
+        openingSource: "aar",
+        sendUser: "delegato"
+      }
+    },
+    {
+      name: "opening an AAR message as recipient",
+      parameters: {
+        firstTimeOpening: undefined,
+        sendOpeningSource: "aar",
+        sendUserType: "recipient"
+      },
+      expectedParameters: {
+        firstTimeOpening: "unknown",
+        openingSource: "aar",
+        sendUser: "destinatario"
+      }
+    }
+  ] as const;
 
-    fireEvent.press(surveyBanner);
+  test.each(scenarios)(
+    "should open the survey url with parameters for $name",
+    ({ parameters, expectedParameters }) => {
+      const { getByTestId } = renderWithState(
+        createElement(SendMessageSurveyBanner, {
+          ...parameters,
+          message: sendMessage,
+          serviceId: service_1.id
+        }),
+        [backendStatusWithSurveyUri(), loadServiceDetail.success(service_1)]
+      );
+      const surveyBanner = getByTestId(MESSAGE_SURVEY_BANNER_TEST_ID);
 
-    expect(openWebUrl).toHaveBeenCalledWith(
-      encodeQualtricsParameters(QUALTRICS_URI, {
-        organizationFiscalCode: service_1.organization.fiscal_code,
-        serviceId: service_1.id,
-        sendingDate: createdAt.toISOString(),
-        messageType: MessageKind.SEND
-      })
-    );
-  });
+      fireEvent.press(surveyBanner);
+
+      expect(openWebUrl).toHaveBeenCalledWith(
+        encodeQualtricsParameters(QUALTRICS_URI, {
+          organizationFiscalCode: service_1.organization.fiscal_code,
+          serviceId: service_1.id,
+          sendingDate: createdAt.toISOString(),
+          messageType: MessageKind.SEND,
+          ...expectedParameters
+        })
+      );
+    }
+  );
 });
 
 const renderComponent = ({ qualtricsUri }: { qualtricsUri?: string } = {}) => {

@@ -236,6 +236,7 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
   return (
     <>
       <MessageDetails
+        firstTimeOpening={firstTimeOpening}
         message={sendMessageOrUndefined}
         messageId={messageId}
         payments={payments}

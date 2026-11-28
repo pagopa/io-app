@@ -111,7 +111,8 @@ export const MessageRouterScreen = (props: NavigationProps): ReactElement => {
           screen: MESSAGES_ROUTES.MESSAGE_DETAIL,
           params: {
             messageId: data.messageId,
-            serviceId: data.serviceId
+            serviceId: data.serviceId,
+            firstTimeOpening: data.firstTimeOpening
           }
         });
       }

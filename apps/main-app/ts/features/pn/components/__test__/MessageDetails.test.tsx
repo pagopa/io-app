@@ -64,7 +64,10 @@ describe("MessageDetails component", () => {
           );
           const messageId =
             sendOpeningSource === "aar" ? sendMessage.iun : mockMessageId;
+          const firstTimeOpening =
+            sendOpeningSource === "message" ? true : undefined;
           const props = generateComponentProperties(
+            firstTimeOpening,
             messageId,
             sendMessage,
             mockServiceId,
@@ -93,7 +96,10 @@ describe("MessageDetails component", () => {
           );
           const messageId =
             sendOpeningSource === "aar" ? sendMessage.iun : mockMessageId;
+          const firstTimeOpening =
+            sendOpeningSource === "message" ? true : undefined;
           const props = generateComponentProperties(
+            firstTimeOpening,
             messageId,
             sendMessage,
             mockServiceId,
@@ -118,6 +124,7 @@ describe("MessageDetails component", () => {
   it("places the sticky footer placeholder before the message bottom menu", () => {
     const sendMessage = toSENDMessage(thirdPartyMessage)!;
     const props = generateComponentProperties(
+      true,
       mockMessageId,
       sendMessage,
       mockServiceId,
@@ -140,6 +147,7 @@ describe("MessageDetails component", () => {
 });
 
 const generateComponentProperties = (
+  firstTimeOpening: boolean | undefined,
   messageId: string,
   message: PNMessage,
   serviceId: ServiceId,
@@ -147,6 +155,7 @@ const generateComponentProperties = (
   sendUserType: SendUserType,
   payments?: ReadonlyArray<NotificationPaymentInfo>
 ): ComponentProps<typeof MessageDetails> => ({
+  firstTimeOpening,
   messageId,
   message,
   payments,

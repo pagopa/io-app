@@ -8,6 +8,10 @@ import { messageSurveyBannerUriSelector } from "../../../store/reducers/backendS
 import { isTestEnv } from "../../../utils/environment";
 import { openWebUrl } from "../../../utils/url";
 import { PNMessage } from "../../pn/store/types/types";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../pushNotifications/analytics";
 import { serviceDetailsByIdSelector } from "../../services/details/store/selectors";
 import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
 import { hasAttachmentsSelector } from "../store/reducers/thirdPartyById";
@@ -24,15 +28,20 @@ const MessageKind = {
 type MessageKind = (typeof MessageKind)[keyof typeof MessageKind];
 
 type QualtricsParameters = {
+  firstTimeOpening: "no" | "unknown" | "yes";
   messageType: MessageKind;
+  openingSource?: "aar" | "message";
   organizationFiscalCode: string;
   sendingDate: string;
+  sendUser?: "delegato" | "destinatario";
   serviceId: ServiceId;
 };
 
 export const StandardMessageSurveyBanner = ({
+  firstTimeOpening,
   message
 }: {
+  firstTimeOpening: boolean;
   message: UIMessage;
 }) => {
   const messageDetailsPot = useIOSelector(state =>
@@ -49,6 +58,7 @@ export const StandardMessageSurveyBanner = ({
 
   return (
     <MessageSurveyBanner
+      firstTimeOpening={firstTimeOpening ? "yes" : "no"}
       messageType={messageKindFromStandardMessage(
         message,
         messageDetails,
@@ -61,11 +71,28 @@ export const StandardMessageSurveyBanner = ({
   );
 };
 
+const optionalBooleanToYesNoUnknown = (flag?: boolean) => {
+  switch (flag) {
+    case true:
+      return "yes";
+    case false:
+      return "no";
+    default:
+      return "unknown";
+  }
+};
+
 export const SendMessageSurveyBanner = ({
+  firstTimeOpening,
   message,
+  sendOpeningSource,
+  sendUserType,
   serviceId
 }: {
+  firstTimeOpening: boolean | undefined;
   message: PNMessage;
+  sendOpeningSource: SendOpeningSource;
+  sendUserType: SendUserType;
   serviceId: ServiceId;
 }) => {
   const serviceDetails = useIOSelector(state =>
@@ -79,9 +106,12 @@ export const SendMessageSurveyBanner = ({
 
   return (
     <MessageSurveyBanner
+      firstTimeOpening={optionalBooleanToYesNoUnknown(firstTimeOpening)}
       messageType={MessageKind.SEND}
+      openingSource={sendOpeningSource === "aar" ? "aar" : "message"}
       organizationFiscalCode={organizationFiscalCode}
       sendingDate={message.created_at.toISOString()}
+      sendUser={sendUserType === "mandatory" ? "delegato" : "destinatario"}
       serviceId={serviceId}
     />
   );
@@ -144,7 +174,10 @@ const encodeQualtricsParameters = (
     organizationFiscalCode: params.organizationFiscalCode,
     serviceId: params.serviceId,
     sendingDate: params.sendingDate,
-    messageType: params.messageType
+    messageType: params.messageType,
+    firstTimeOpening: params.firstTimeOpening,
+    openingSource: params.openingSource,
+    sendUser: params.sendUser
   };
   const parametersBase64Url = Buffer.from(
     JSON.stringify(orderedParams),
