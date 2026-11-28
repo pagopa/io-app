@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import { Platform, StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
 
-import { isReady } from "../../../../../common/model/RemoteValue";
+import { isLoading, isReady } from "../../../../../common/model/RemoteValue";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { IOScrollView } from "../../../../../components/ui/IOScrollView";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
@@ -80,14 +80,20 @@ const CgnDiscountCodeScreen = () => {
     }
   }, [discountOtp]);
 
-  if (isDiscountCodeExpired) {
+  useEffect(() => {
     // reset discount code if expired to avoid showing it again when server is down
-    dispatch(resetMerchantDiscountCode());
+    if (isDiscountCodeExpired) {
+      dispatch(resetMerchantDiscountCode());
+    }
+  }, [dispatch, isDiscountCodeExpired]);
+
+  if (isDiscountCodeExpired) {
     return (
       <OperationResultScreenContent
         action={{
           label: I18n.t("bonus.cgn.merchantDetail.discount.cta.createNew"),
           onPress: generateNewDiscountCode,
+          disabled: isLoading(discountOtp),
           testID: "generate-button"
         }}
         isHeaderVisible

@@ -1,5 +1,6 @@
 import { PathConfigMap } from "@react-navigation/core";
 import { createStackNavigator } from "@react-navigation/stack";
+import { Platform } from "react-native";
 
 import { AppParamsList } from "../../../../navigation/params/AppParamsList";
 import { isGestureEnabled } from "../../../../utils/navigation";
@@ -102,6 +103,8 @@ const DetailStack = createStackNavigator<CgnDetailsParamsList>();
 
 export const CgnDetailsNavigator = () => (
   <DetailStack.Navigator
+    // Keep the discount detail visible beneath the code modal during iOS transitions.
+    detachInactiveScreens={Platform.OS === "ios" ? false : undefined}
     initialRouteName={CGN_ROUTES.DETAILS.DETAILS}
     screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
   >
